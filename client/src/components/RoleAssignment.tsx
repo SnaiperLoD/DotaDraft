@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ROLES } from '../../../shared/constants/roles';
+import { ROLES } from 'shared';
 import type { DraftHeroView } from '../api/types';
 
 interface Props {

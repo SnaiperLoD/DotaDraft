@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api } from '../api/client';
-import type { HistoryEntry } from '../../../shared/types/draft';
+import type { HistoryEntry } from 'shared';
 
 export default function HistoryPage() {
   const [entries, setEntries] = useState<HistoryEntry[]>([]);

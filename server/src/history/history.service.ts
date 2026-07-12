@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { HeroService } from '../hero/hero.service';
-import type { HistoryEntry } from '../../../shared/types/draft';
+import type { HistoryEntry } from 'shared';
 
 @Injectable()
 export class HistoryService {

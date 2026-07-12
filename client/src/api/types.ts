@@ -1,4 +1,4 @@
-import type { Hero } from '../../../shared/types/hero';
+import type { Hero } from 'shared';
 
 export interface DraftHeroView {
   heroId: number;

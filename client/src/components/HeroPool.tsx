@@ -1,4 +1,4 @@
-import type { Hero } from '../../../shared/types/hero';
+import type { Hero } from 'shared';
 
 interface Props {
   pool: Hero[];

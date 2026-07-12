@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { seededShuffle } from '../common/random';
-import type { Hero } from '../../../shared/types/hero';
+import type { Hero } from 'shared';
 
 @Injectable()
 export class HeroService {

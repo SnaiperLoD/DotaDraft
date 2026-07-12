@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { DraftService } from './draft.service';
-import type { PickRequest, AssignRolesRequest } from '../../../shared/types/draft';
+import type { PickRequest, AssignRolesRequest } from 'shared';
 
 @Controller('draft')
 export class DraftController {

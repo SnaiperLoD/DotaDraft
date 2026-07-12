@@ -4,6 +4,7 @@ import type { DraftStateView } from '../api/types';
 import HeroPool from '../components/HeroPool';
 import RoleAssignment from '../components/RoleAssignment';
 import DraftSummary from '../components/DraftSummary';
+import EvaluationPanel from '../components/EvaluationPanel';
 
 export default function DraftPage() {
   const [draft, setDraft] = useState<DraftStateView | null>(null);
@@ -77,6 +78,7 @@ export default function DraftPage() {
       {draft.status === 'COMPLETED' && (
         <>
           <DraftSummary heroes={draft.heroes} />
+          <EvaluationPanel draftId={draft.id} />
           <button onClick={handleRestart} style={{ marginTop: 16 }}>
             Start new draft
           </button>

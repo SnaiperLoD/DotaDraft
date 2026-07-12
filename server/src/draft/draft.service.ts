@@ -1,8 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { HeroService } from '../hero/hero.service';
-import { ROLES } from '../../../shared/constants/roles';
-import type { Hero } from '../../../shared/types/hero';
+import { ROLES, type Hero } from 'shared';
 
 const POOL_SIZE = 5;
 const ROUNDS = 5;

@@ -7,5 +7,6 @@ import { HeroModule } from '../hero/hero.module';
   imports: [HeroModule],
   controllers: [DraftController],
   providers: [DraftService],
+  exports: [DraftService],
 })
 export class DraftModule {}

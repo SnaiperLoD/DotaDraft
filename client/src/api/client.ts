@@ -1,5 +1,4 @@
-import type { Hero } from '../../../shared/types/hero';
-import type { PickRequest, AssignRolesRequest, HistoryEntry } from '../../../shared/types/draft';
+import type { Hero, PickRequest, AssignRolesRequest, HistoryEntry, EvaluationResult } from 'shared';
 import type { DraftStateView } from './types';
 
 const BASE_URL = '/api';
@@ -36,4 +35,6 @@ export const api = {
     }),
 
   getHistory: () => request<HistoryEntry[]>('/history'),
+
+  getEvaluation: (draftId: string) => request<EvaluationResult>(`/evaluation/${draftId}`),
 };
