@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Hero {
+  id                Int      @id
+  name              String
+  primaryAttribute  String
+  attackType        String
+  roles             String
+  tags              String
+  synergyTags       String
+  counterTags       String
+  evaluationValues  String
+}
+
+model Draft {
+  id        String       @id @default(uuid())
+  status    String       @default("PICKING")
+  seed      Int
+  pool      String
+  createdAt DateTime     @default(now())
+  heroes    DraftHero[]
+}
+
+model DraftHero {
+  id            Int     @id @default(autoincrement())
+  draftId       String
+  heroId        Int
+  assignedRole  String?
+  pickOrder     Int
+  draft         Draft   @relation(fields: [draftId], references: [id])
+
+  @@unique([draftId, heroId])
+}
