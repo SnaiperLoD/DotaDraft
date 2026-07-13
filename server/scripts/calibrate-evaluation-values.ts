@@ -16,7 +16,8 @@ import {
 //   tempo      <- 37.5% win/loss duration gap + 37.5% win-rate-falls-with-duration trend + 25% early kills/game
 //   control    <- stuns per minute
 //   durability <- damage_taken / deaths (summed across matches, not averaged per-match)
-//   map_control <- see server/data/map-control-weights.json (vision + mobility + ability tags)
+//   mobility   <- move-speed extremity + mobility_ability_tier, rank-rescaled (see server/data/map-control-weights.json)
+//   map_control <- see server/data/map-control-weights.json (vision + mobility + ability tags), rank-rescaled
 //   saving     <- 40% hero_healing_per_min (benchmarks) + 60% protects_allies tag (binary, from synergy_tags)
 // A hero missing a given input keeps its existing formula/prior value for
 // that specific axis rather than being scored as an artificial 0 —
@@ -149,7 +150,7 @@ function main() {
   const durabilityRaw = heroes.map((h) => cdvByHeroId.get(h.id)?.durability ?? null);
   const durabilityScores = percentileRankScale(durabilityRaw);
 
-  // --- map control: vision + mobility + ability tags ---
+  // --- map control / mobility: vision + mobility + ability tags ---
   const wardsRaw = heroes.map((h) => cdvByHeroId.get(h.id)?.wardsPerMin ?? null);
   const wardScores = percentileRankScale(wardsRaw);
 
@@ -165,6 +166,36 @@ function main() {
     weights.mobilityScore.moveSpeedExtremityExponent,
   );
 
+  // mobility: real move-speed extremity + hand-tagged mobility abilities.
+  // mobility_ability_tier is 0 for ~85% of heroes (no tagged mobility
+  // ability), so the raw blend clusters near the bottom of 0-10 — a final
+  // percentileRankScale pass rescales it to use the full range based on
+  // rank rather than raw compressed value. This replaces the old hardcoded
+  // 3/6 role-based stub (see Blueprint/10-tech-debt-backlog.md).
+  const mobilityRaw = heroes.map((h, i) =>
+    weightedBlend([
+      { value: moveSpeedScores[i], weight: weights.mobilityScore.baseMoveSpeed },
+      { value: h.mobility_ability_tier ?? 0, weight: weights.mobilityScore.abilityMobilityBonus },
+    ]),
+  );
+  const mobilityScores = percentileRankScale(mobilityRaw);
+
+  // map_control: same compression problem as mobility — vision_ability_tier
+  // is 0 for ~80% of heroes and carries direct blend weight — so the
+  // composite gets the same final percentileRankScale pass.
+  const mapControlRaw = heroes.map((h, i) => {
+    const visionScore = weightedBlend([
+      { value: wardScores[i], weight: weights.visionScore.wardScore },
+      { value: innateVisionScores[i], weight: weights.visionScore.innateVisionRange },
+    ]);
+    return weightedBlend([
+      { value: visionScore, weight: weights.topLevel.visionScore },
+      { value: mobilityRaw[i], weight: weights.topLevel.mobilityScore },
+      { value: h.vision_ability_tier ?? 0, weight: weights.topLevel.abilityVisionBonus },
+    ]);
+  });
+  const mapControlScores = percentileRankScale(mapControlRaw);
+
   // --- saving: real healing data + hand-tagged protects_allies ---
   const healingRaw = heroes.map((h) =>
     medianBenchmarkValue(metaByHeroId.get(h.id)?.benchmarks?.hero_healing_per_min),
@@ -179,6 +210,7 @@ function main() {
     tempo: 0,
     control: 0,
     durability: 0,
+    mobility: 0,
     mapControl: 0,
     saving: 0,
     fallback: 0,
@@ -219,34 +251,8 @@ function main() {
 
     setOrFallback('control', controlScores[i], 'control');
     setOrFallback('durability', durabilityScores[i], 'durability');
-
-    const visionScore = weightedBlend([
-      { value: wardScores[i], weight: weights.visionScore.wardScore },
-      { value: innateVisionScores[i], weight: weights.visionScore.innateVisionRange },
-    ]);
-
-    // Ability tag components use 0 (not null) when a hero simply has no
-    // tagged ability — that's a real "no bonus" data point, not missing
-    // data, so it should pull the blend down rather than being skipped.
-    const abilityVisionForBlend = hero.vision_ability_tier ?? 0;
-    const mobilityAbilityForBlend = hero.mobility_ability_tier ?? 0;
-    const mobilityScore = weightedBlend([
-      { value: moveSpeedScores[i], weight: weights.mobilityScore.baseMoveSpeed },
-      { value: mobilityAbilityForBlend, weight: weights.mobilityScore.abilityMobilityBonus },
-    ]);
-
-    const mapControl = weightedBlend([
-      { value: visionScore, weight: weights.topLevel.visionScore },
-      { value: mobilityScore, weight: weights.topLevel.mobilityScore },
-      { value: abilityVisionForBlend, weight: weights.topLevel.abilityVisionBonus },
-    ]);
-
-    if (mapControl !== null) {
-      hero.evaluation_values.map_control = mapControl;
-      counts.mapControl++;
-    } else {
-      counts.fallback++;
-    }
+    setOrFallback('mobility', mobilityScores[i], 'mobility');
+    setOrFallback('map_control', mapControlScores[i], 'mapControl');
     delete hero.evaluation_values.vision;
 
     // protects_allies is a binary tag (has it or doesn't) — like the ability
