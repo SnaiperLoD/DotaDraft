@@ -1,0 +1,555 @@
+{
+  "generatedAt": "2026-07-13T12:40:05.541Z",
+  "matches": [
+    {
+      "matchId": "8893253595",
+      "radiantName": "OG",
+      "direName": "Virtus.pro",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        38,
+        119,
+        107,
+        9,
+        109
+      ],
+      "direHeroIds": [
+        106,
+        72,
+        155,
+        86,
+        64
+      ],
+      "startTime": "2026-07-12T13:43:00.000Z"
+    },
+    {
+      "matchId": "8893208737",
+      "radiantName": "LGD Gaming",
+      "direName": "Inner Circle x Insanity",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        80,
+        19,
+        128,
+        21,
+        110
+      ],
+      "direHeroIds": [
+        58,
+        100,
+        33,
+        18,
+        13
+      ],
+      "startTime": "2026-07-12T13:19:01.000Z"
+    },
+    {
+      "matchId": "8893165071",
+      "radiantName": "Team Yandex",
+      "direName": "1w",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        12,
+        7,
+        96,
+        112,
+        9
+      ],
+      "direHeroIds": [
+        2,
+        119,
+        51,
+        39,
+        6
+      ],
+      "startTime": "2026-07-12T13:02:00.000Z"
+    },
+    {
+      "matchId": "8893106015",
+      "radiantName": "Virtus.pro",
+      "direName": "OG",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        120,
+        138,
+        96,
+        119,
+        3
+      ],
+      "direHeroIds": [
+        128,
+        19,
+        47,
+        66,
+        36
+      ],
+      "startTime": "2026-07-12T12:20:06.000Z"
+    },
+    {
+      "matchId": "8893079555",
+      "radiantName": "Inner Circle x Insanity",
+      "direName": "LGD Gaming",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        51,
+        112,
+        145,
+        33,
+        128
+      ],
+      "direHeroIds": [
+        36,
+        17,
+        155,
+        123,
+        3
+      ],
+      "startTime": "2026-07-12T12:04:01.000Z"
+    },
+    {
+      "matchId": "8893070561",
+      "radiantName": "1w",
+      "direName": "Team Yandex",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        155,
+        107,
+        31,
+        119,
+        80
+      ],
+      "direHeroIds": [
+        25,
+        28,
+        96,
+        85,
+        123
+      ],
+      "startTime": "2026-07-12T11:58:01.000Z"
+    },
+    {
+      "matchId": "8892958964",
+      "radiantName": "REKONIX",
+      "direName": "Team Nemesis",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        8,
+        87,
+        128,
+        155,
+        38
+      ],
+      "direHeroIds": [
+        131,
+        25,
+        107,
+        19,
+        58
+      ],
+      "startTime": "2026-07-12T10:40:11.000Z"
+    },
+    {
+      "matchId": "8892923329",
+      "radiantName": "Vici Gaming",
+      "direName": "MOUZ",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        21,
+        17,
+        38,
+        90,
+        123
+      ],
+      "direHeroIds": [
+        106,
+        65,
+        14,
+        114,
+        131
+      ],
+      "startTime": "2026-07-12T10:13:00.000Z"
+    },
+    {
+      "matchId": "8892914077",
+      "radiantName": "Team Spirit",
+      "direName": "PVISION",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        89,
+        110,
+        13,
+        86,
+        2
+      ],
+      "direHeroIds": [
+        145,
+        28,
+        120,
+        119,
+        112
+      ],
+      "startTime": "2026-07-12T10:15:00.000Z"
+    },
+    {
+      "matchId": "8892836635",
+      "radiantName": "PVISION",
+      "direName": "Team Spirit",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        145,
+        60,
+        155,
+        91,
+        121
+      ],
+      "direHeroIds": [
+        10,
+        3,
+        74,
+        119,
+        29
+      ],
+      "startTime": "2026-07-12T09:07:03.000Z"
+    },
+    {
+      "matchId": "8892835652",
+      "radiantName": "Team Nemesis",
+      "direName": "REKONIX",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        119,
+        128,
+        56,
+        85,
+        3
+      ],
+      "direHeroIds": [
+        80,
+        31,
+        65,
+        136,
+        25
+      ],
+      "startTime": "2026-07-12T09:05:02.000Z"
+    },
+    {
+      "matchId": "8892829232",
+      "radiantName": "MOUZ",
+      "direName": "Vici Gaming",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        74,
+        65,
+        14,
+        12,
+        85
+      ],
+      "direHeroIds": [
+        41,
+        25,
+        38,
+        51,
+        123
+      ],
+      "startTime": "2026-07-12T09:00:00.000Z"
+    },
+    {
+      "matchId": "8891519142",
+      "radiantName": "Nigma Galaxy ",
+      "direName": "PTime",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        80,
+        123,
+        100,
+        77,
+        53
+      ],
+      "direHeroIds": [
+        6,
+        131,
+        17,
+        47,
+        2
+      ],
+      "startTime": "2026-07-11T13:54:48.000Z"
+    },
+    {
+      "matchId": "8891497910",
+      "radiantName": "Team Liquid",
+      "direName": "Aurora Gaming",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        9,
+        96,
+        106,
+        107,
+        19
+      ],
+      "direHeroIds": [
+        21,
+        13,
+        98,
+        123,
+        64
+      ],
+      "startTime": "2026-07-11T13:37:09.000Z"
+    },
+    {
+      "matchId": "8891438996",
+      "radiantName": "L1 TEAM",
+      "direName": "Level UP esports",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        106,
+        72,
+        3,
+        51,
+        65
+      ],
+      "direHeroIds": [
+        38,
+        126,
+        123,
+        105,
+        11
+      ],
+      "startTime": "2026-07-11T13:07:54.000Z"
+    },
+    {
+      "matchId": "8891371442",
+      "radiantName": "Aurora Gaming",
+      "direName": "Team Liquid",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        12,
+        25,
+        85,
+        123,
+        64
+      ],
+      "direHeroIds": [
+        30,
+        2,
+        107,
+        21,
+        46
+      ],
+      "startTime": "2026-07-11T12:25:00.000Z"
+    },
+    {
+      "matchId": "8891349244",
+      "radiantName": "PTime",
+      "direName": "Nigma Galaxy ",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        19,
+        100,
+        36,
+        69,
+        131
+      ],
+      "direHeroIds": [
+        21,
+        123,
+        55,
+        68,
+        17
+      ],
+      "startTime": "2026-07-11T12:11:00.000Z"
+    },
+    {
+      "matchId": "8891325877",
+      "radiantName": "Level UP esports",
+      "direName": "L1 TEAM",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        2,
+        106,
+        119,
+        105,
+        73
+      ],
+      "direHeroIds": [
+        47,
+        6,
+        85,
+        3,
+        38
+      ],
+      "startTime": "2026-07-11T11:54:55.000Z"
+    },
+    {
+      "matchId": "8891240327",
+      "radiantName": "Team Falcons",
+      "direName": "Xtreme Gaming",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        85,
+        21,
+        106,
+        69,
+        51
+      ],
+      "direHeroIds": [
+        109,
+        128,
+        2,
+        86,
+        3
+      ],
+      "startTime": "2026-07-11T10:45:00.000Z"
+    },
+    {
+      "matchId": "8891227605",
+      "radiantName": "BoomBoys",
+      "direName": "GamerLegion",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        145,
+        28,
+        77,
+        123,
+        85
+      ],
+      "direHeroIds": [
+        138,
+        107,
+        119,
+        2,
+        31
+      ],
+      "startTime": "2026-07-11T10:40:00.000Z"
+    },
+    {
+      "matchId": "8891217710",
+      "radiantName": "Rune Eaters",
+      "direName": "_PowerRangers",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        6,
+        85,
+        26,
+        38,
+        28
+      ],
+      "direHeroIds": [
+        56,
+        13,
+        3,
+        2,
+        91
+      ],
+      "startTime": "2026-07-11T10:32:36.000Z"
+    },
+    {
+      "matchId": "8891145641",
+      "radiantName": "Xtreme Gaming",
+      "direName": "Team Falcons",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        48,
+        128,
+        96,
+        123,
+        110
+      ],
+      "direHeroIds": [
+        131,
+        21,
+        106,
+        36,
+        51
+      ],
+      "startTime": "2026-07-11T09:26:04.000Z"
+    },
+    {
+      "matchId": "8891108985",
+      "radiantName": "GamerLegion",
+      "direName": "BoomBoys",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        36,
+        107,
+        119,
+        33,
+        31
+      ],
+      "direHeroIds": [
+        6,
+        28,
+        38,
+        131,
+        85
+      ],
+      "startTime": "2026-07-11T09:00:55.000Z"
+    },
+    {
+      "matchId": "8891108843",
+      "radiantName": "_PowerRangers",
+      "direName": "Rune Eaters",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        21,
+        13,
+        87,
+        55,
+        51
+      ],
+      "direHeroIds": [
+        11,
+        3,
+        128,
+        9,
+        28
+      ],
+      "startTime": "2026-07-11T09:00:15.000Z"
+    },
+    {
+      "matchId": "8890301402",
+      "radiantName": "Virtus.pro",
+      "direName": "Inner Circle x Insanity",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        28,
+        18,
+        55,
+        51,
+        112
+      ],
+      "direHeroIds": [
+        100,
+        108,
+        13,
+        6,
+        21
+      ],
+      "startTime": "2026-07-10T18:40:41.000Z"
+    }
+  ]
+}

@@ -26,19 +26,19 @@
 
 ---
 
+## Pro Match выборка — по свежести, а не по качеству
+
+`server/scripts/fetch-pro-matches.ts` берёт ~25 самых свежих матчей из `/proMatches` без фильтрации по уровню турнира — это может быть что угодно от tier1 до региональных квалификаций. Pro Similarity Analyzer (`server/src/evaluation/analyzers/pro-similarity.analyzer.ts`) сравнивает драфт игрока именно с этой выборкой.
+
+В будущем — сделать курированную выборку из 100+ матчей именно с tier1-сцены (топ-лиги/турниры, не всё подряд) и сравнивать с ней вместо случайных последних матчей. Требует фильтрации по `leagueid`/tier через OpenDota `/leagues` (там есть поле `tier`) или ручного списка турниров. Раскрывает и `evaluation_values`-калибровку ниже, и потенциальный топ-тир Opponent Pool (см. `06-battle-engine.md`).
+
+---
+
 ## `evaluation_values` в Hero Knowledge Base — формула-заглушка
 
 Значения по 9 осям (`teamfight`, `tempo`, `scaling` и т.д.) в `server/data/heroes.json` рассчитаны формулой от официальных ролей героя (см. `Blueprint/09-hero-knowledge-base.md`), а не экспертной оценкой или реальной статистикой. Из-за этого герои с одинаковым набором ролей (например, Meepo и Zeus) получают одинаковый `burst`, хотя по факту это не так.
 
 Кандидат на калибровку через `/api/benchmarks?hero_id=X` (перцентили GPM/XPM/kills-per-min/hero damage/hero healing/tower damage) — см. `Blueprint/07-development-plan.md`, Milestone 3.
-
----
-
-## Pro Similarity Analyzer — стаб
-
-`server/src/evaluation/analyzers/pro-similarity.analyzer.ts` всегда возвращает `score: null` с пояснением, что данные ещё не импортированы. Вес в Total Score honestly перераспределяется на остальные категории, а не подменяется выдуманным числом.
-
-Разблокируется Milestone 3 (Import Module).
 
 ---
 

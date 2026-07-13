@@ -1,18 +1,30 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { DraftService } from '../draft/draft.service';
+import { ProMatchService } from '../pro-match/pro-match.service';
 import { synergyAnalyzer } from './analyzers/synergy.analyzer';
 import { counterAnalyzer } from './analyzers/counter.analyzer';
 import { createAxisAnalyzer } from './analyzers/axis.analyzer';
-import { proSimilarityAnalyzer } from './analyzers/pro-similarity.analyzer';
+import { createProSimilarityAnalyzer } from './analyzers/pro-similarity.analyzer';
 import type { Analyzer } from './analyzer.interface';
 import type { EvaluationResult, EvaluationSummary, AnalyzerResult } from 'shared';
 
-// Categories eligible for the strengths/weaknesses summary — excludes Pro
-// Similarity since it's a stub (always null) until Milestone 3.
-const SUMMARY_KEYS = ['synergy', 'counter', 'teamfight', 'tempo', 'scaling', 'mobility', 'vision', 'objectives'];
+// Categories eligible for the strengths/weaknesses summary.
+const SUMMARY_KEYS = [
+  'synergy',
+  'counter',
+  'teamfight',
+  'tempo',
+  'scaling',
+  'mobility',
+  'vision',
+  'objectives',
+  'proSimilarity',
+];
 
 // Order matches Blueprint/05-evaluation-engine.md's Output breakdown list.
-const ANALYZERS: Analyzer[] = [
+// Pro Similarity is built per-evaluate() call since it depends on imported
+// match data (see evaluate()) — everything else is static.
+const BASE_ANALYZERS: Analyzer[] = [
   synergyAnalyzer,
   counterAnalyzer,
   createAxisAnalyzer('teamfight', 'Teamfight'),
@@ -21,7 +33,6 @@ const ANALYZERS: Analyzer[] = [
   createAxisAnalyzer('mobility', 'Mobility'),
   createAxisAnalyzer('vision', 'Vision'),
   createAxisAnalyzer('objectives', 'Objectives'),
-  proSimilarityAnalyzer,
 ];
 
 // Initial Weights from Blueprint/05-evaluation-engine.md. `counter` is deliberately
@@ -40,7 +51,10 @@ const WEIGHTS: Record<string, number> = {
 
 @Injectable()
 export class EvaluationService {
-  constructor(private readonly draftService: DraftService) {}
+  constructor(
+    private readonly draftService: DraftService,
+    private readonly proMatchService: ProMatchService,
+  ) {}
 
   async evaluate(draftId: string): Promise<EvaluationResult> {
     const draft = await this.draftService.getById(draftId);
@@ -50,7 +64,9 @@ export class EvaluationService {
     }
 
     const heroes = draft.heroes.map((dh) => dh.hero);
-    const breakdown: AnalyzerResult[] = ANALYZERS.map((analyzer) => {
+    const compositions = await this.proMatchService.getWinningCompositions();
+    const analyzers: Analyzer[] = [...BASE_ANALYZERS, createProSimilarityAnalyzer(compositions)];
+    const breakdown: AnalyzerResult[] = analyzers.map((analyzer) => {
       const result = analyzer.analyze(heroes);
       return {
         key: analyzer.key,

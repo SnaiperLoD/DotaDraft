@@ -39,3 +39,15 @@ model DraftHero {
 
   @@unique([draftId, heroId])
 }
+
+model ProMatch {
+  id             String   @id
+  radiantName    String?
+  direName       String?
+  leagueName     String?
+  radiantWin     Boolean
+  radiantHeroIds String
+  direHeroIds    String
+  startTime      DateTime
+  createdAt      DateTime @default(now())
+}

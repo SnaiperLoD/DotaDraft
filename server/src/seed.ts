@@ -20,12 +20,60 @@ interface HeroMetaEntry {
   positions: { position: string; share: number }[];
 }
 
+interface StoredProMatch {
+  matchId: string;
+  radiantName: string | null;
+  direName: string | null;
+  leagueName: string | null;
+  radiantWin: boolean;
+  radiantHeroIds: number[];
+  direHeroIds: number[];
+  startTime: string;
+}
+
 function loadPositionsByHeroId(): Map<number, HeroMetaEntry['positions']> {
   const metaPath = path.join(__dirname, '..', 'data', 'hero-meta.json');
   if (!fs.existsSync(metaPath)) return new Map();
 
   const meta = JSON.parse(fs.readFileSync(metaPath, 'utf-8')) as { heroes: HeroMetaEntry[] };
   return new Map(meta.heroes.map((h) => [h.heroId, h.positions]));
+}
+
+async function seedProMatches(prisma: PrismaClient) {
+  const matchesPath = path.join(__dirname, '..', 'data', 'pro-matches.json');
+  if (!fs.existsSync(matchesPath)) {
+    console.log('No pro-matches.json found, skipping pro match seed (run `npm run fetch-pro-matches` first).');
+    return;
+  }
+
+  const { matches } = JSON.parse(fs.readFileSync(matchesPath, 'utf-8')) as { matches: StoredProMatch[] };
+
+  for (const match of matches) {
+    await prisma.proMatch.upsert({
+      where: { id: match.matchId },
+      update: {
+        radiantName: match.radiantName,
+        direName: match.direName,
+        leagueName: match.leagueName,
+        radiantWin: match.radiantWin,
+        radiantHeroIds: JSON.stringify(match.radiantHeroIds),
+        direHeroIds: JSON.stringify(match.direHeroIds),
+        startTime: new Date(match.startTime),
+      },
+      create: {
+        id: match.matchId,
+        radiantName: match.radiantName,
+        direName: match.direName,
+        leagueName: match.leagueName,
+        radiantWin: match.radiantWin,
+        radiantHeroIds: JSON.stringify(match.radiantHeroIds),
+        direHeroIds: JSON.stringify(match.direHeroIds),
+        startTime: new Date(match.startTime),
+      },
+    });
+  }
+
+  console.log(`Seeded ${matches.length} pro matches.`);
 }
 
 async function seed() {
@@ -67,6 +115,9 @@ async function seed() {
 
   // eslint-disable-next-line no-console
   console.log(`Seeded ${raw.length} heroes.`);
+
+  await seedProMatches(prisma);
+
   await prisma.$disconnect();
 }
 
