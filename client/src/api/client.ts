@@ -1,4 +1,12 @@
-import type { Hero, PickRequest, AssignRolesRequest, HistoryEntry, EvaluationResult } from 'shared';
+import type {
+  Hero,
+  PickRequest,
+  AssignRolesRequest,
+  HistoryEntry,
+  EvaluationResult,
+  CommitDraftResponse,
+  BattleResultResponse,
+} from 'shared';
 import type { DraftStateView } from './types';
 
 const BASE_URL = '/api';
@@ -37,4 +45,16 @@ export const api = {
   getHistory: () => request<HistoryEntry[]>('/history'),
 
   getEvaluation: (draftId: string) => request<EvaluationResult>(`/evaluation/${draftId}`),
+
+  commitToPool: (draftId: string, submitterToken: string) =>
+    request<CommitDraftResponse>('/opponent-pool/commit', {
+      method: 'POST',
+      body: JSON.stringify({ draftId, submitterToken }),
+    }),
+
+  fightBattle: (draftId: string, submitterToken: string) =>
+    request<BattleResultResponse>('/battle', {
+      method: 'POST',
+      body: JSON.stringify({ draftId, submitterToken }),
+    }),
 };

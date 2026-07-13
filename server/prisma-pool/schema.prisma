@@ -1,0 +1,23 @@
+// Separate schema for the Opponent Pool — the one subsystem that needs
+// shared, dynamically-updated storage instead of the local SQLite datasource
+// used by prisma/schema.prisma (see Blueprint/01-core-rules.md Data Rule
+// exception, Blueprint/06-battle-engine.md Implementation Decisions).
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/pool-client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POOL_DATABASE_URL")
+}
+
+model PooledDraft {
+  id             String   @id @default(uuid())
+  source         String   @default("player") // "player" | "pro"
+  submitterToken String?
+  heroIds        Json
+  teamName       String?
+  leagueName     String?
+  createdAt      DateTime @default(now())
+}

@@ -6,6 +6,8 @@ import RoleAssignment from '../components/RoleAssignment';
 import DraftSummary from '../components/DraftSummary';
 import EvaluationPanel from '../components/EvaluationPanel';
 import PickedHeroesStrip from '../components/PickedHeroesStrip';
+import CommitToPoolButton from '../components/CommitToPoolButton';
+import BattlePanel from '../components/BattlePanel';
 
 export default function DraftPage() {
   const [draft, setDraft] = useState<DraftStateView | null>(null);
@@ -80,6 +82,8 @@ export default function DraftPage() {
         <>
           <DraftSummary heroes={draft.heroes} />
           <EvaluationPanel draftId={draft.id} />
+          <CommitToPoolButton draftId={draft.id} />
+          <BattlePanel draftId={draft.id} heroes={draft.heroes} />
           <button onClick={handleRestart} style={{ marginTop: 16 }}>
             Start new draft
           </button>
