@@ -7,7 +7,7 @@ import {
   weightedBlend,
 } from '../src/hero-meta/benchmark-calibration';
 
-// Replaces all 9 evaluation_values axes with scores grounded in real
+// Replaces all 10 evaluation_values axes with scores grounded in real
 // OpenDota data, per the mapping agreed in Blueprint/09-hero-knowledge-base.md:
 //   teamfight  <- hero_damage_per_min (benchmarks)
 //   burst      <- kills_per_min (benchmarks)
@@ -17,6 +17,7 @@ import {
 //   control    <- stuns per minute
 //   durability <- damage_taken / deaths (summed across matches, not averaged per-match)
 //   map_control <- see server/data/map-control-weights.json (vision + mobility + ability tags)
+//   saving     <- 40% hero_healing_per_min (benchmarks) + 60% protects_allies tag (binary, from synergy_tags)
 // A hero missing a given input keeps its existing formula/prior value for
 // that specific axis rather than being scored as an artificial 0 —
 // weightedBlend() redistributes weight across whatever inputs are present.
@@ -31,6 +32,7 @@ const WEIGHTS_PATH = path.join(__dirname, '..', 'data', 'map-control-weights.jso
 interface RawHero {
   id: number;
   name: string;
+  synergy_tags: string[];
   vision_ability_tier?: number;
   mobility_ability_tier?: number;
   evaluation_values: Record<string, number>;
@@ -143,6 +145,10 @@ function main() {
   const moveSpeedRaw = heroes.map((h) => constantsByHeroId.get(h.id)?.move_speed ?? null);
   const moveSpeedScores = zScoreExtremityScale(moveSpeedRaw, weights.mobilityScore.moveSpeedExtremityExponent);
 
+  // --- saving: real healing data + hand-tagged protects_allies ---
+  const healingRaw = heroes.map((h) => medianBenchmarkValue(metaByHeroId.get(h.id)?.benchmarks?.hero_healing_per_min));
+  const healingScores = percentileRankScale(healingRaw);
+
   const counts = {
     teamfight: 0,
     burst: 0,
@@ -152,6 +158,7 @@ function main() {
     control: 0,
     durability: 0,
     mapControl: 0,
+    saving: 0,
     fallback: 0,
   };
 
@@ -219,6 +226,18 @@ function main() {
       counts.fallback++;
     }
     delete hero.evaluation_values.vision;
+
+    // protects_allies is a binary tag (has it or doesn't) — like the ability
+    // tiers above, absence is a real "no bonus" data point, not missing data.
+    const protectsAlliesForBlend = hero.synergy_tags.includes('protects_allies') ? 10 : 0;
+    setOrFallback(
+      'saving',
+      weightedBlend([
+        { value: healingScores[i], weight: 0.4 },
+        { value: protectsAlliesForBlend, weight: 0.6 },
+      ]),
+      'saving',
+    );
   });
 
   fs.writeFileSync(HEROES_PATH, JSON.stringify(heroes, null, 2) + '\n');

@@ -16,7 +16,8 @@
     "fetch-hero-meta": "ts-node scripts/fetch-hero-meta.ts",
     "fetch-pro-matches": "ts-node scripts/fetch-pro-matches.ts",
     "seed-opponent-pool": "ts-node scripts/seed-opponent-pool.ts",
-    "calibrate-evaluation-values": "ts-node scripts/calibrate-evaluation-values.ts"
+    "calibrate-evaluation-values": "ts-node scripts/calibrate-evaluation-values.ts",
+    "generate-hero-abilities-skeleton": "ts-node scripts/generate-hero-abilities-skeleton.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.0",

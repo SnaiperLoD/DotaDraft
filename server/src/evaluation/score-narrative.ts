@@ -39,6 +39,11 @@ export const AXIS_NARRATIVE: Record<string, NarrativeSet> = {
     mid: "This team can take objectives when needed but isn't specialized for pushing.",
     low: 'This team is weak at taking objectives and should focus on picking up kills over pushing.',
   },
+  saving: {
+    high: 'Strong saving power — healing and defensive tools should keep key heroes alive through bad fights.',
+    mid: "Some saving tools are available, but this team can't bail out every bad engagement.",
+    low: 'Little in the way of healing or defensive cooldowns — a bad engagement is likely to end in a death.',
+  },
 };
 
 export const SYNERGY_NARRATIVE: NarrativeSet = {

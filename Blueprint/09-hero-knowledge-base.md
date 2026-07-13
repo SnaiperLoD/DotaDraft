@@ -12,7 +12,7 @@
 - `id`, `name`, `primary_attribute`, `attack_type`, `roles` — факт, взято из OpenDota API (127 героев, актуально на июль 2026, включая Kez и Largo). Проверять не нужно.
 - `tags`, `synergy_tags`, `counter_tags` — черновая экспертная разметка, сделана по фиксированной таксономии ниже. Требует ревью, особенно `counter_tags` — это самое субъективное поле.
 - `vision_ability_tier`, `mobility_ability_tier` — новые черновые ручные теги (см. Ability Tiers ниже), вход для калибровки `map_control`. Тоже требуют ревью, как и остальные ручные теги.
-- `evaluation_values` — смешанный источник (см. ниже): 8 из 9 осей откалиброваны по реальным данным OpenDota (`server/scripts/calibrate-evaluation-values.ts`), только `mobility` (как отдельная ось, не путать с mobility-компонентом внутри `map_control`) всё ещё формула от официальных ролей.
+- `evaluation_values` — смешанный источник (см. ниже): 9 из 10 осей откалиброваны по реальным данным OpenDota (`server/scripts/calibrate-evaluation-values.ts`), только `mobility` (как отдельная ось, не путать с mobility-компонентом внутри `map_control`) всё ещё формула от официальных ролей.
 
 ## Style Tags (`tags`)
 
@@ -38,7 +38,7 @@ Counter Analyzer должен сопоставлять `counter_tags` одной
 
 ## Evaluation Values
 
-9 числовых осей (0–10). `server/scripts/calibrate-evaluation-values.ts` пересчитывает 8 из 9 при каждом запуске; `mobility` остаётся единственной осью на исходной ролевой формуле.
+10 числовых осей (0–10). `server/scripts/calibrate-evaluation-values.ts` пересчитывает 9 из 10 при каждом запуске; `mobility` остаётся единственной осью на исходной ролевой формуле.
 
 ### Прямые от одной метрики OpenDota (4 оси)
 
@@ -97,11 +97,21 @@ Blink Dagger/Boots of Travel purchase rate по герою рассматрив�
 - 6 — Storm Spirit, Puck, Void Spirit, Earth Spirit, Windranger
 - 3 — Invoker, Lina, Necrophos, Keeper of the Light, Viper, Brewmaster (частые покупатели Boots of Travel — вспомогательный сигнал "хочет map presence", не встроенная механика)
 
+### `saving` — блендинг реальных данных + существующего тега
+
+```
+saving = 0.4×healingScore(hero_healing_per_min, benchmarks) + 0.6×protectsAllies(бинарный тег synergy_tags, есть/нет)
+```
+
+`protects_allies` — уже существующий тег в Hero Knowledge Base (использовался только в Synergy Analyzer для парных правил), переиспользован здесь напрямую, без новой ручной разметки. MVP-версия оси — точная калибровка весов/источника предполагается позже, после полной разметки способностей (см. Ability Tiers выше и `10-tech-debt-backlog.md`).
+
+Пример: Dazzle/Oracle/Winter Wyvern — 10/10, Anti-Mage/Crystal Maiden — ~0.
+
 ### Известные артефакты данных
 
 Meepo: `control` 9/10 и `durability` 10/10 выглядят завышенными — вероятно, артефакт того, что OpenDota агрегирует `stuns`/`damage_taken` в одну строку игрока, а у Meepo фактически несколько юнитов-клонов на поле одновременно. Не исправлено, честно зафиксировано здесь.
 
-Перезапуск полного цикла: `npm run fetch-hero-meta` → `npx ts-node scripts/research-tempo-metric-v3.ts` → `npx ts-node scripts/research-tempo-mobility-data.ts` → `npx ts-node scripts/fetch-control-durability-vision-data.ts` → (обновить `hero-constants.json` через `/api/constants/heroes`) → `npm run calibrate-evaluation-values` → `npm run seed`. Не гонять все Explorer-скрипты подряд без пауз — общий rate-limit OpenDota ловится быстро (см. `11-operational-notes.md`).
+Перезапуск полного цикла: `npm run fetch-hero-meta` → `npx ts-node scripts/research-tempo-metric-v3.ts` → `npx ts-node scripts/research-tempo-mobility-data.ts` → `npx ts-node scripts/fetch-control-durability-vision-data.ts` → (обновить `hero-constants.json` через `/api/constants/heroes`) → `npm run calibrate-evaluation-values` → `npm run seed`. `saving` не требует отдельного фетча — использует уже собранные `hero-meta.json` (healing) и `heroes.json` (`protects_allies`). Не гонять все Explorer-скрипты подряд без пауз — общий rate-limit OpenDota ловится быстро (см. `11-operational-notes.md`).
 
 ## Data File
 

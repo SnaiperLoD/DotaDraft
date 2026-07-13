@@ -29,7 +29,8 @@
       "control": 3.3,
       "durability": 7.4,
       "burst": 8.4,
-      "map_control": 3.2
+      "map_control": 3.2,
+      "saving": 0
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10
@@ -65,7 +66,8 @@
       "control": 7.9,
       "durability": 6.1,
       "burst": 8.9,
-      "map_control": 1.6
+      "map_control": 1.6,
+      "saving": 0
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -101,7 +103,8 @@
       "control": 9.6,
       "durability": 1.7,
       "burst": 0.9,
-      "map_control": 4
+      "map_control": 4,
+      "saving": 0.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -137,7 +140,8 @@
       "control": 2.1,
       "durability": 8.9,
       "burst": 9.1,
-      "map_control": 3.4
+      "map_control": 3.4,
+      "saving": 0.1
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0
@@ -172,7 +176,8 @@
       "control": 9,
       "durability": 0.1,
       "burst": 1.2,
-      "map_control": 2.6
+      "map_control": 2.6,
+      "saving": 0.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -206,7 +211,8 @@
       "control": 0,
       "durability": 4.3,
       "burst": 8.6,
-      "map_control": 1.1
+      "map_control": 1.1,
+      "saving": 0.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -242,7 +248,8 @@
       "control": 9.8,
       "durability": 3.8,
       "burst": 3.6,
-      "map_control": 2.2
+      "map_control": 2.2,
+      "saving": 0.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -276,7 +283,8 @@
       "control": 0.6,
       "durability": 6.9,
       "burst": 8.7,
-      "map_control": 0.8
+      "map_control": 0.8,
+      "saving": 3.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -313,7 +321,8 @@
       "control": 6,
       "durability": 2.6,
       "burst": 3.4,
-      "map_control": 2.3
+      "map_control": 2.3,
+      "saving": 0.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -350,7 +359,8 @@
       "control": 3.9,
       "durability": 6.5,
       "burst": 5.5,
-      "map_control": 3.2
+      "map_control": 3.2,
+      "saving": 3.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10
@@ -383,7 +393,8 @@
       "control": 2.3,
       "durability": 5.6,
       "burst": 9.7,
-      "map_control": 1.5
+      "map_control": 1.5,
+      "saving": 0.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -416,7 +427,8 @@
       "control": 0.8,
       "durability": 7.3,
       "burst": 7.4,
-      "map_control": 0.5
+      "map_control": 0.5,
+      "saving": 0.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -452,7 +464,8 @@
       "control": 3.6,
       "durability": 9.7,
       "burst": 7.3,
-      "map_control": 3.3
+      "map_control": 3.3,
+      "saving": 0.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 6
@@ -488,7 +501,8 @@
       "control": 8.6,
       "durability": 5.3,
       "burst": 4.5,
-      "map_control": 2
+      "map_control": 2,
+      "saving": 0.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -524,7 +538,8 @@
       "control": 0.7,
       "durability": 4.7,
       "burst": 9,
-      "map_control": 0.8
+      "map_control": 0.8,
+      "saving": 0.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -561,7 +576,8 @@
       "control": 7.1,
       "durability": 4.4,
       "burst": 4.3,
-      "map_control": 1.7
+      "map_control": 1.7,
+      "saving": 0.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -598,7 +614,8 @@
       "control": 5.5,
       "durability": 7.8,
       "burst": 8.8,
-      "map_control": 3
+      "map_control": 3,
+      "saving": 0.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 6
@@ -635,7 +652,8 @@
       "control": 5.6,
       "durability": 8.1,
       "burst": 7.8,
-      "map_control": 1.3
+      "map_control": 1.3,
+      "saving": 0.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -674,7 +692,8 @@
       "control": 5.3,
       "durability": 8.7,
       "burst": 4.6,
-      "map_control": 1.2
+      "map_control": 1.2,
+      "saving": 0.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -711,7 +730,8 @@
       "control": 6.3,
       "durability": 1.5,
       "burst": 3.3,
-      "map_control": 2.4
+      "map_control": 2.4,
+      "saving": 6.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -748,7 +768,8 @@
       "control": 6.7,
       "durability": 4.2,
       "burst": 6.8,
-      "map_control": 3.6
+      "map_control": 3.6,
+      "saving": 0.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 6
@@ -782,7 +803,8 @@
       "control": 4,
       "durability": 2.2,
       "burst": 6.1,
-      "map_control": 5.3
+      "map_control": 5.3,
+      "saving": 0.8
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0
@@ -820,7 +842,8 @@
       "control": 7.5,
       "durability": 8,
       "burst": 3.7,
-      "map_control": 1.8
+      "map_control": 1.8,
+      "saving": 0.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -855,7 +878,8 @@
       "control": 6.1,
       "durability": 3.5,
       "burst": 5,
-      "map_control": 2.8
+      "map_control": 2.8,
+      "saving": 0
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 3
@@ -891,7 +915,8 @@
       "control": 9.7,
       "durability": 0.4,
       "burst": 5,
-      "map_control": 2.6
+      "map_control": 2.6,
+      "saving": 0
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -928,7 +953,8 @@
       "control": 9.5,
       "durability": 0.6,
       "burst": 0.4,
-      "map_control": 3
+      "map_control": 3,
+      "saving": 0.9
     },
     "vision_ability_tier": 1,
     "mobility_ability_tier": 0
@@ -965,7 +991,8 @@
       "control": 7.4,
       "durability": 7.7,
       "burst": 4.4,
-      "map_control": 2.3
+      "map_control": 2.3,
+      "saving": 0.9
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0
@@ -1001,7 +1028,8 @@
       "control": 6.8,
       "durability": 7,
       "burst": 1.6,
-      "map_control": 1
+      "map_control": 1,
+      "saving": 1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -1036,7 +1064,8 @@
       "control": 6.6,
       "durability": 0.7,
       "burst": 5.1,
-      "map_control": 3
+      "map_control": 3,
+      "saving": 3.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -1070,7 +1099,8 @@
       "control": 4.3,
       "durability": 0.3,
       "burst": 2.8,
-      "map_control": 3.1
+      "map_control": 3.1,
+      "saving": 1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -1104,7 +1134,8 @@
       "control": 1.7,
       "durability": 3.1,
       "burst": 10,
-      "map_control": 3.1
+      "map_control": 3.1,
+      "saving": 1
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0
@@ -1139,7 +1170,8 @@
       "control": 5.9,
       "durability": 4.9,
       "burst": 1,
-      "map_control": 3.1
+      "map_control": 3.1,
+      "saving": 1.1
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0
@@ -1174,7 +1206,8 @@
       "control": 4.4,
       "durability": 5,
       "burst": 7.7,
-      "map_control": 2.1
+      "map_control": 2.1,
+      "saving": 3.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -1207,7 +1240,8 @@
       "control": 1.7,
       "durability": 2.8,
       "burst": 9.2,
-      "map_control": 2.4
+      "map_control": 2.4,
+      "saving": 1.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -1243,7 +1277,8 @@
       "control": 3.7,
       "durability": 9.2,
       "burst": 9.8,
-      "map_control": 2.1
+      "map_control": 2.1,
+      "saving": 3.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 3
@@ -1278,7 +1313,8 @@
       "control": 3,
       "durability": 0.8,
       "burst": 0.5,
-      "map_control": 4.5
+      "map_control": 4.5,
+      "saving": 9.9
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0
@@ -1315,7 +1351,8 @@
       "control": 7.9,
       "durability": 7.1,
       "burst": 6.4,
-      "map_control": 3.3
+      "map_control": 3.3,
+      "saving": 1.2
     },
     "vision_ability_tier": 6,
     "mobility_ability_tier": 0
@@ -1350,7 +1387,8 @@
       "control": 1,
       "durability": 8.8,
       "burst": 7.9,
-      "map_control": 4.4
+      "map_control": 4.4,
+      "saving": 1.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10
@@ -1387,7 +1425,8 @@
       "control": 1.3,
       "durability": 1.1,
       "burst": 1.4,
-      "map_control": 2.7
+      "map_control": 2.7,
+      "saving": 3.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -1424,7 +1463,8 @@
       "control": 4.1,
       "durability": 7.9,
       "burst": 6,
-      "map_control": 1.4
+      "map_control": 1.4,
+      "saving": 1.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -1460,7 +1500,8 @@
       "control": 6,
       "durability": 9.4,
       "burst": 3,
-      "map_control": 0.9
+      "map_control": 0.9,
+      "saving": 0
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -1496,7 +1537,8 @@
       "control": 3.4,
       "durability": 7.2,
       "burst": 5,
-      "map_control": 2
+      "map_control": 2,
+      "saving": 0
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -1529,7 +1571,8 @@
       "control": 2.1,
       "durability": 3.3,
       "burst": 3,
-      "map_control": 1.1
+      "map_control": 1.1,
+      "saving": 0
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -1563,7 +1606,8 @@
       "control": 0.4,
       "durability": 2,
       "burst": 5,
-      "map_control": 3.3
+      "map_control": 3.3,
+      "saving": 0
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -1597,7 +1641,8 @@
       "control": 1.2,
       "durability": 3.4,
       "burst": 3,
-      "map_control": 2.5
+      "map_control": 2.5,
+      "saving": 0
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0
@@ -1633,7 +1678,8 @@
       "control": 1.5,
       "durability": 4.8,
       "burst": 3,
-      "map_control": 2.2
+      "map_control": 2.2,
+      "saving": 0
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 3
@@ -1667,7 +1713,8 @@
       "control": 4,
       "durability": 5.7,
       "burst": 5,
-      "map_control": 1.6
+      "map_control": 1.6,
+      "saving": 0
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -1704,7 +1751,8 @@
       "control": 7.3,
       "durability": 9.3,
       "burst": 5,
-      "map_control": 1.6
+      "map_control": 1.6,
+      "saving": 0
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -1739,7 +1787,8 @@
       "control": 3.7,
       "durability": 3.2,
       "burst": 5,
-      "map_control": 3.2
+      "map_control": 3.2,
+      "saving": 10
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -1775,7 +1824,8 @@
       "control": 8.7,
       "durability": 2.9,
       "burst": 5,
-      "map_control": 6.2
+      "map_control": 6.2,
+      "saving": 0
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0
@@ -1812,7 +1862,8 @@
       "control": 4.9,
       "durability": 4.4,
       "burst": 6.7,
-      "map_control": 2.8
+      "map_control": 2.8,
+      "saving": 1.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -1847,7 +1898,8 @@
       "control": 2.9,
       "durability": 2.9,
       "burst": 5.8,
-      "map_control": 7.8
+      "map_control": 7.8,
+      "saving": 1.3
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 10
@@ -1883,7 +1935,8 @@
       "control": 2.6,
       "durability": 9.8,
       "burst": 6.6,
-      "map_control": 1.3
+      "map_control": 1.3,
+      "saving": 3.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -1918,7 +1971,8 @@
       "control": 4.6,
       "durability": 6.8,
       "burst": 2.7,
-      "map_control": 1.5
+      "map_control": 1.5,
+      "saving": 3.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -1953,7 +2007,8 @@
       "control": 0.3,
       "durability": 4.5,
       "burst": 9.9,
-      "map_control": 2.2
+      "map_control": 2.2,
+      "saving": 1.4
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0
@@ -1987,7 +2042,8 @@
       "control": 0.5,
       "durability": 6,
       "burst": 0.6,
-      "map_control": 2.7
+      "map_control": 2.7,
+      "saving": 9.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -2022,7 +2078,8 @@
       "control": 3.8,
       "durability": 3.6,
       "burst": 3.5,
-      "map_control": 3.5
+      "map_control": 3.5,
+      "saving": 3.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -2056,7 +2113,8 @@
       "control": 2.7,
       "durability": 9.9,
       "burst": 9.4,
-      "map_control": 2.3
+      "map_control": 2.3,
+      "saving": 1.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -2093,7 +2151,8 @@
       "control": 2.2,
       "durability": 7.5,
       "burst": 8.2,
-      "map_control": 1.4
+      "map_control": 1.4,
+      "saving": 1.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -2128,7 +2187,8 @@
       "control": 0.1,
       "durability": 8.2,
       "burst": 8.1,
-      "map_control": 3.4
+      "map_control": 3.4,
+      "saving": 1.5
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0
@@ -2162,7 +2222,8 @@
       "control": 5.6,
       "durability": 1.8,
       "burst": 1.8,
-      "map_control": 6.8
+      "map_control": 6.8,
+      "saving": 1.5
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0
@@ -2195,7 +2256,8 @@
       "control": 0.9,
       "durability": 6.6,
       "burst": 6.9,
-      "map_control": 4.3
+      "map_control": 4.3,
+      "saving": 1.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10
@@ -2232,7 +2294,8 @@
       "control": 7.1,
       "durability": 1,
       "burst": 0.7,
-      "map_control": 3.3
+      "map_control": 3.3,
+      "saving": 1.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -2267,7 +2330,8 @@
       "control": 8,
       "durability": 5.4,
       "burst": 2.5,
-      "map_control": 2.9
+      "map_control": 2.9,
+      "saving": 1.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -2301,7 +2365,8 @@
       "control": 2.5,
       "durability": 2.3,
       "burst": 0,
-      "map_control": 4.6
+      "map_control": 4.6,
+      "saving": 10
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0
@@ -2336,7 +2401,8 @@
       "control": 1.8,
       "durability": 4.6,
       "burst": 3,
-      "map_control": 4.4
+      "map_control": 4.4,
+      "saving": 0
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0
@@ -2371,7 +2437,8 @@
       "control": 5.2,
       "durability": 0.2,
       "burst": 5,
-      "map_control": 3.2
+      "map_control": 3.2,
+      "saving": 0
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -2408,7 +2475,8 @@
       "control": 4.7,
       "durability": 6.7,
       "burst": 5,
-      "map_control": 1.4
+      "map_control": 1.4,
+      "saving": 0
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -2443,7 +2511,8 @@
       "control": 3.2,
       "durability": 6.2,
       "burst": 3,
-      "map_control": 1.2
+      "map_control": 1.2,
+      "saving": 0
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -2480,7 +2549,8 @@
       "control": 9.4,
       "durability": 2.5,
       "burst": 3,
-      "map_control": 5.1
+      "map_control": 5.1,
+      "saving": 0
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10
@@ -2515,7 +2585,8 @@
       "control": 4.8,
       "durability": 6.3,
       "burst": 5,
-      "map_control": 2.1
+      "map_control": 2.1,
+      "saving": 0
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -2553,7 +2624,8 @@
       "control": 7,
       "durability": 9.4,
       "burst": 5,
-      "map_control": 1.9
+      "map_control": 1.9,
+      "saving": 0
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -2591,7 +2663,8 @@
       "control": 9.3,
       "durability": 3.9,
       "burst": 5,
-      "map_control": 4.5
+      "map_control": 4.5,
+      "saving": 0
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 3
@@ -2628,7 +2701,8 @@
       "control": 0.6,
       "durability": 0.6,
       "burst": 5,
-      "map_control": 3.5
+      "map_control": 3.5,
+      "saving": 0
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -2663,7 +2737,8 @@
       "control": 9.4,
       "durability": 3.7,
       "burst": 5,
-      "map_control": 2.6
+      "map_control": 2.6,
+      "saving": 0
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -2698,7 +2773,8 @@
       "control": 2.5,
       "durability": 9.5,
       "burst": 3,
-      "map_control": 2.8
+      "map_control": 2.8,
+      "saving": 0
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0
@@ -2735,7 +2811,8 @@
       "control": 8.3,
       "durability": 6.7,
       "burst": 4.1,
-      "map_control": 2.6
+      "map_control": 2.6,
+      "saving": 1.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 3
@@ -2771,7 +2848,8 @@
       "control": 6.4,
       "durability": 1.3,
       "burst": 2.3,
-      "map_control": 4.1
+      "map_control": 4.1,
+      "saving": 3.1
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0
@@ -2805,7 +2883,8 @@
       "control": 8.9,
       "durability": 9,
       "burst": 3.9,
-      "map_control": 3.4
+      "map_control": 3.4,
+      "saving": 1.7
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0
@@ -2841,7 +2920,8 @@
       "control": 6.7,
       "durability": 9.6,
       "burst": 8.5,
-      "map_control": 1.9
+      "map_control": 1.9,
+      "saving": 1.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -2879,7 +2959,8 @@
       "control": 9,
       "durability": 10,
       "burst": 7.5,
-      "map_control": 2.2
+      "map_control": 2.2,
+      "saving": 1.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -2916,7 +2997,8 @@
       "control": 8.5,
       "durability": 2.5,
       "burst": 0.2,
-      "map_control": 4.3
+      "map_control": 4.3,
+      "saving": 9.6
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0
@@ -2952,7 +3034,8 @@
       "control": 6.9,
       "durability": 2.1,
       "burst": 1.3,
-      "map_control": 2.9
+      "map_control": 2.9,
+      "saving": 1.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -2987,7 +3070,8 @@
       "control": 1.3,
       "durability": 4,
       "burst": 4.7,
-      "map_control": 3
+      "map_control": 3,
+      "saving": 9.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -3022,7 +3106,8 @@
       "control": 7.8,
       "durability": 1.7,
       "burst": 2.4,
-      "map_control": 3
+      "map_control": 3,
+      "saving": 3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -3058,7 +3143,8 @@
       "control": 0.2,
       "durability": 0.2,
       "burst": 0.3,
-      "map_control": 3.4
+      "map_control": 3.4,
+      "saving": 1.9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -3094,7 +3180,8 @@
       "control": 9.8,
       "durability": 1.3,
       "burst": 5.6,
-      "map_control": 4
+      "map_control": 4,
+      "saving": 1.9
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0
@@ -3132,7 +3219,8 @@
       "control": 8.3,
       "durability": 8.3,
       "burst": 2.6,
-      "map_control": 2.6
+      "map_control": 2.6,
+      "saving": 2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -3167,7 +3255,8 @@
       "control": 2.4,
       "durability": 3.7,
       "burst": 3.8,
-      "map_control": 3.8
+      "map_control": 3.8,
+      "saving": 3.9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 3
@@ -3200,7 +3289,8 @@
       "control": 0.2,
       "durability": 4.1,
       "burst": 0.1,
-      "map_control": 3.3
+      "map_control": 3.3,
+      "saving": 10
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -3236,7 +3326,8 @@
       "control": 6.2,
       "durability": 4,
       "burst": 7,
-      "map_control": 3.6
+      "map_control": 3.6,
+      "saving": 3.1
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0
@@ -3272,7 +3363,8 @@
       "control": 1,
       "durability": 8.7,
       "burst": 5,
-      "map_control": 5.8
+      "map_control": 5.8,
+      "saving": 0
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0
@@ -3306,7 +3398,8 @@
       "control": 5.1,
       "durability": 0,
       "burst": 3,
-      "map_control": 1.4
+      "map_control": 1.4,
+      "saving": 0
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -3341,7 +3434,8 @@
       "control": 7.5,
       "durability": 5.9,
       "burst": 7.1,
-      "map_control": 1.2
+      "map_control": 1.2,
+      "saving": 2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -3378,7 +3472,8 @@
       "control": 7.7,
       "durability": 9.8,
       "burst": 2.2,
-      "map_control": 1.4
+      "map_control": 1.4,
+      "saving": 2.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -3414,7 +3509,8 @@
       "control": 8.1,
       "durability": 5.5,
       "burst": 3.1,
-      "map_control": 2.7
+      "map_control": 2.7,
+      "saving": 2.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -3449,7 +3545,8 @@
       "control": 2.9,
       "durability": 9.1,
       "burst": 5.9,
-      "map_control": 1.6
+      "map_control": 1.6,
+      "saving": 2.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -3484,7 +3581,8 @@
       "control": 1.9,
       "durability": 8.6,
       "burst": 4.8,
-      "map_control": 1.5
+      "map_control": 1.5,
+      "saving": 2.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -3519,7 +3617,8 @@
       "control": 7.2,
       "durability": 2.4,
       "burst": 2,
-      "map_control": 3.5
+      "map_control": 3.5,
+      "saving": 2.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -3554,7 +3653,8 @@
       "control": 2.8,
       "durability": 0.5,
       "burst": 5.7,
-      "map_control": 3.4
+      "map_control": 3.4,
+      "saving": 2.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -3588,7 +3688,8 @@
       "control": 1.6,
       "durability": 6.3,
       "burst": 1.1,
-      "map_control": 3.2
+      "map_control": 3.2,
+      "saving": 9.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -3624,7 +3725,8 @@
       "control": 8.7,
       "durability": 3,
       "burst": 1.9,
-      "map_control": 3.3
+      "map_control": 3.3,
+      "saving": 2.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -3661,7 +3763,8 @@
       "control": 6.3,
       "durability": 5.1,
       "burst": 7.2,
-      "map_control": 2
+      "map_control": 2,
+      "saving": 3.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -3695,7 +3798,8 @@
       "control": 4.2,
       "durability": 2.1,
       "burst": 4.2,
-      "map_control": 3.4
+      "map_control": 3.4,
+      "saving": 2.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -3732,7 +3836,8 @@
       "control": 9.1,
       "durability": 7.5,
       "burst": 9.3,
-      "map_control": 4.9
+      "map_control": 4.9,
+      "saving": 2.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10
@@ -3769,7 +3874,8 @@
       "control": 4.8,
       "durability": 5.2,
       "burst": 4.9,
-      "map_control": 4.3
+      "map_control": 4.3,
+      "saving": 3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 6
@@ -3806,7 +3912,8 @@
       "control": 10,
       "durability": 7.6,
       "burst": 2.1,
-      "map_control": 1.8
+      "map_control": 1.8,
+      "saving": 8.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -3840,7 +3947,8 @@
       "control": 1.4,
       "durability": 9,
       "burst": 5.4,
-      "map_control": 1.9
+      "map_control": 1.9,
+      "saving": 2.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -3877,7 +3985,8 @@
       "control": 3.1,
       "durability": 7.1,
       "burst": 5,
-      "map_control": 3.2
+      "map_control": 3.2,
+      "saving": 10
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -3913,7 +4022,8 @@
       "control": 7.6,
       "durability": 1.2,
       "burst": 5,
-      "map_control": 3.8
+      "map_control": 3.8,
+      "saving": 10
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -3948,7 +4058,8 @@
       "control": 5.8,
       "durability": 1.4,
       "burst": 5,
-      "map_control": 3.7
+      "map_control": 3.7,
+      "saving": 10
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -3982,7 +4093,8 @@
       "control": 1.1,
       "durability": 6.4,
       "burst": 9.6,
-      "map_control": 2.7
+      "map_control": 2.7,
+      "saving": 2.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -4017,7 +4129,8 @@
       "control": 5.4,
       "durability": 5.6,
       "burst": 6.2,
-      "map_control": 2.3
+      "map_control": 2.3,
+      "saving": 2.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -4053,7 +4166,8 @@
       "control": 9.9,
       "durability": 1.6,
       "burst": 3,
-      "map_control": 3.4
+      "map_control": 3.4,
+      "saving": 2.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -4091,7 +4205,8 @@
       "control": 5.7,
       "durability": 4.8,
       "burst": 5.3,
-      "map_control": 2.4
+      "map_control": 2.4,
+      "saving": 2.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -4126,7 +4241,8 @@
       "control": 4.4,
       "durability": 0.9,
       "burst": 1.5,
-      "map_control": 3.4
+      "map_control": 3.4,
+      "saving": 3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -4162,7 +4278,8 @@
       "control": 8.4,
       "durability": 1.9,
       "burst": 3.2,
-      "map_control": 3.6
+      "map_control": 3.6,
+      "saving": 2.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -4198,7 +4315,8 @@
       "control": 2,
       "durability": 5.8,
       "burst": 8,
-      "map_control": 4
+      "map_control": 4,
+      "saving": 2.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 6
@@ -4234,7 +4352,8 @@
       "control": 5.2,
       "durability": 3.3,
       "burst": 7.6,
-      "map_control": 3.2
+      "map_control": 3.2,
+      "saving": 9.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -4271,7 +4390,8 @@
       "control": 9.2,
       "durability": 6,
       "burst": 2.9,
-      "map_control": 1.9
+      "map_control": 1.9,
+      "saving": 2.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -4307,7 +4427,8 @@
       "control": 6.5,
       "durability": 1,
       "burst": 0.8,
-      "map_control": 5.4
+      "map_control": 5.4,
+      "saving": 8.8
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0
@@ -4341,7 +4462,8 @@
       "control": 4.5,
       "durability": 8.3,
       "burst": 5.2,
-      "map_control": 2.2
+      "map_control": 2.2,
+      "saving": 9.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -4378,7 +4500,8 @@
       "control": 8.2,
       "durability": 2.7,
       "burst": 6.5,
-      "map_control": 3.5
+      "map_control": 3.5,
+      "saving": 9.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -4413,7 +4536,8 @@
       "control": 8.8,
       "durability": 7.9,
       "burst": 4,
-      "map_control": 2.3
+      "map_control": 2.3,
+      "saving": 2.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -4447,7 +4571,8 @@
       "control": 5,
       "durability": 5.2,
       "burst": 6.3,
-      "map_control": 3.3
+      "map_control": 3.3,
+      "saving": 2.9
     },
     "vision_ability_tier": 2,
     "mobility_ability_tier": 0
@@ -4481,7 +4606,8 @@
       "control": 3.3,
       "durability": 8.4,
       "burst": 9.5,
-      "map_control": 2.3
+      "map_control": 2.3,
+      "saving": 2.9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0
@@ -4516,7 +4642,8 @@
       "control": 3.5,
       "durability": 8.5,
       "burst": 3,
-      "map_control": 2.9
+      "map_control": 2.9,
+      "saving": 10
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0

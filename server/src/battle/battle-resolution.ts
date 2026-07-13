@@ -28,6 +28,7 @@ const AXES: (keyof HeroEvaluationValues)[] = [
   'durability',
   'burst',
   'map_control',
+  'saving',
 ];
 
 // Win-weight bands per Blueprint/06-battle-engine.md Resolution — the
@@ -120,6 +121,7 @@ const AXIS_LABEL: Record<keyof HeroEvaluationValues, string> = {
   durability: 'durability',
   burst: 'burst damage',
   map_control: 'map control',
+  saving: 'ally saving power',
 };
 
 function describeAxis(axis: keyof HeroEvaluationValues, favorsA: boolean): string {

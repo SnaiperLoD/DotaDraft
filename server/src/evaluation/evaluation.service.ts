@@ -17,6 +17,7 @@ const SUMMARY_KEYS = [
   'scaling',
   'mobility',
   'map_control',
+  'saving',
   'objectives',
   'proSimilarity',
 ];
@@ -32,6 +33,7 @@ const BASE_ANALYZERS: Analyzer[] = [
   createAxisAnalyzer('scaling', 'Scaling'),
   createAxisAnalyzer('mobility', 'Mobility'),
   createAxisAnalyzer('map_control', 'Map Control'),
+  createAxisAnalyzer('saving', 'Saving'),
   createAxisAnalyzer('objectives', 'Objectives'),
 ];
 
@@ -46,6 +48,7 @@ const WEIGHTS: Record<string, number> = {
   objectives: 0.1,
   mobility: 0.05,
   map_control: 0.05,
+  saving: 0.05,
   proSimilarity: 0.05,
 };
 

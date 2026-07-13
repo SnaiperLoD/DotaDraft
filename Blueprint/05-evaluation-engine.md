@@ -27,6 +27,7 @@ Breakdown:
 - Scaling
 - Mobility
 - Map Control
+- Saving
 - Objectives
 - Pro Similarity
 
@@ -39,6 +40,7 @@ Breakdown:
 - Objectives: 10%
 - Mobility: 5%
 - Map Control: 5%
+- Saving: 5%
 - Pro Similarity: 5%
 
 ## Analyzer System
