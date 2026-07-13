@@ -31,6 +31,10 @@ Implement:
 - storage of 100 professional matches;
 - processing of stored teams.
 
+Role in the product: bootstrap/calibration data — used to test that Evaluation/Battle output makes sense against known-strong compositions, and to seed the Opponent Pool's top tier (see `06-battle-engine.md`). NOT the primary opponent source long-term; that's player-submitted drafts (Milestone 4).
+
+Acceptance bar: "plausible and useful for calibrating the system," not "statistically rigorous enough to compete with Stratz/Dotabuff." This is a game, not an analytics product — see `00-project-overview.md`.
+
 Data sources (verified against OpenDota's public API/Explorer):
 
 - Hero-vs-hero win rates: `/api/heroes/{id}/matchups` — built-in, no custom querying needed.
@@ -44,11 +48,17 @@ Data sources (verified against OpenDota's public API/Explorer):
 
 Implement:
 
-- user team vs stored team;
-- comparison;
-- explanation.
+- Opponent Pool storage (shared, dynamically updated — explicit exception to the Data Rule, see `01-core-rules.md`) for player-submitted drafts;
+- mechanism for a player to commit their completed draft into the pool;
+- asynchronous opponent pull (a stored snapshot, not a live match) for the user's Battle Mode run;
+- user draft vs pulled opponent draft — comparison, resolved outcome (Win/Lose), explanation (see `06-battle-engine.md` Resolution);
+- ability to run a series of battles against different pulled opponents within one visit (no persistent cross-session progress yet).
 
 The hero-matchup factor should read from data collected during Milestone 3's import (`/api/heroes/{id}/matchups` snapshot), not be queried live.
+
+Explicitly out of scope for this milestone (see `10-tech-debt-backlog.md`): difficulty brackets/rating for pooled drafts, persistent progression, leaderboards.
+
+Acceptance bar: same as Milestone 3 — "feels like a real match-up with stakes," not statistically airtight.
 
 ## Milestone 5 — UI Improvements
 
