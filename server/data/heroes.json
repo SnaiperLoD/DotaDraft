@@ -29,11 +29,12 @@
       "control": 3.3,
       "durability": 7.4,
       "burst": 8.4,
-      "map_control": 6,
+      "map_control": 4.1,
       "saving": 0
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 10
+    "mobility_ability_tier": 10,
+    "mobility_items_tier": 1.1
   },
   {
     "id": 2,
@@ -61,16 +62,17 @@
       "teamfight": 8,
       "tempo": 6.2,
       "scaling": 5.4,
-      "mobility": 6.7,
+      "mobility": 5.1,
       "objectives": 3.3,
       "control": 7.9,
       "durability": 6.1,
       "burst": 8.9,
-      "map_control": 1.6,
+      "map_control": 2,
       "saving": 0
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.9
   },
   {
     "id": 3,
@@ -98,16 +100,17 @@
       "teamfight": 0.5,
       "tempo": 6,
       "scaling": 1,
-      "mobility": 4.8,
+      "mobility": 5,
       "objectives": 0.9,
       "control": 9.6,
       "durability": 1.7,
       "burst": 0.9,
-      "map_control": 8.5,
+      "map_control": 8.9,
       "saving": 0.1
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.4
   },
   {
     "id": 4,
@@ -135,16 +138,17 @@
       "teamfight": 8.2,
       "tempo": 5.3,
       "scaling": 6.6,
-      "mobility": 0.8,
+      "mobility": 4.5,
       "objectives": 8,
       "control": 2.1,
       "durability": 8.9,
       "burst": 9.1,
-      "map_control": 7.1,
+      "map_control": 7,
       "saving": 0.1
     },
     "vision_ability_tier": 10,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.6
   },
   {
     "id": 5,
@@ -171,16 +175,17 @@
       "teamfight": 1.3,
       "tempo": 5.7,
       "scaling": 1.1,
-      "mobility": 0.2,
+      "mobility": 4.3,
       "objectives": 1.1,
       "control": 9,
       "durability": 0.1,
       "burst": 1.2,
-      "map_control": 4.1,
+      "map_control": 4.2,
       "saving": 0.2
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.4
   },
   {
     "id": 6,
@@ -206,16 +211,17 @@
       "teamfight": 8.4,
       "tempo": 7.4,
       "scaling": 6.3,
-      "mobility": 5.6,
+      "mobility": 5,
       "objectives": 9.7,
       "control": 0,
       "durability": 4.3,
       "burst": 8.6,
-      "map_control": 0.4,
+      "map_control": 0.2,
       "saving": 0.2
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.3
   },
   {
     "id": 7,
@@ -243,16 +249,17 @@
       "teamfight": 5.7,
       "tempo": 2,
       "scaling": 6.1,
-      "mobility": 6.8,
+      "mobility": 5.1,
       "objectives": 3.6,
       "control": 9.8,
       "durability": 3.8,
       "burst": 3.6,
-      "map_control": 2.9,
+      "map_control": 3.6,
       "saving": 0.2
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.7
   },
   {
     "id": 8,
@@ -278,16 +285,17 @@
       "teamfight": 7.4,
       "tempo": 4.6,
       "scaling": 8.9,
-      "mobility": 3.4,
+      "mobility": 4.9,
       "objectives": 10,
       "control": 0.6,
       "durability": 6.9,
       "burst": 8.7,
-      "map_control": 0.1,
+      "map_control": 0.2,
       "saving": 3.8
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.3
   },
   {
     "id": 9,
@@ -316,16 +324,17 @@
       "teamfight": 2.6,
       "tempo": 1.8,
       "scaling": 5.1,
-      "mobility": 0.9,
+      "mobility": 4.5,
       "objectives": 3.7,
       "control": 6,
       "durability": 2.6,
       "burst": 3.4,
-      "map_control": 3.3,
+      "map_control": 2.9,
       "saving": 0.3
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.6
   },
   {
     "id": 10,
@@ -354,16 +363,17 @@
       "teamfight": 3.5,
       "tempo": 3.8,
       "scaling": 7.2,
-      "mobility": 9.6,
+      "mobility": 8.5,
       "objectives": 8.9,
       "control": 3.9,
       "durability": 6.5,
       "burst": 5.5,
-      "map_control": 6,
+      "map_control": 3.7,
       "saving": 3.3
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 10
+    "mobility_ability_tier": 10,
+    "mobility_items_tier": 1
   },
   {
     "id": 11,
@@ -388,7 +398,7 @@
       "teamfight": 8.8,
       "tempo": 8.2,
       "scaling": 6.3,
-      "mobility": 4.8,
+      "mobility": 4.9,
       "objectives": 8.4,
       "control": 2.3,
       "durability": 5.6,
@@ -397,7 +407,8 @@
       "saving": 0.3
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.2
   },
   {
     "id": 12,
@@ -422,7 +433,7 @@
       "teamfight": 6.5,
       "tempo": 2,
       "scaling": 9.4,
-      "mobility": 1,
+      "mobility": 4.4,
       "objectives": 9,
       "control": 0.8,
       "durability": 7.3,
@@ -431,7 +442,8 @@
       "saving": 0.4
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 0.5
   },
   {
     "id": 13,
@@ -459,16 +471,17 @@
       "teamfight": 8.7,
       "tempo": 6,
       "scaling": 5.6,
-      "mobility": 9.3,
+      "mobility": 6.7,
       "objectives": 5.6,
       "control": 3.6,
       "durability": 9.7,
       "burst": 7.3,
-      "map_control": 6.5,
+      "map_control": 5.3,
       "saving": 0.4
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 6
+    "mobility_ability_tier": 6,
+    "mobility_items_tier": 3.8
   },
   {
     "id": 14,
@@ -496,16 +509,17 @@
       "teamfight": 2.9,
       "tempo": 5.4,
       "scaling": 3.8,
-      "mobility": 0.2,
+      "mobility": 4.3,
       "objectives": 1.9,
       "control": 8.6,
       "durability": 5.3,
       "burst": 4.5,
-      "map_control": 2.5,
+      "map_control": 2.3,
       "saving": 0.4
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.9
   },
   {
     "id": 15,
@@ -533,16 +547,17 @@
       "teamfight": 9.1,
       "tempo": 6.1,
       "scaling": 5.9,
-      "mobility": 0.3,
+      "mobility": 4.2,
       "objectives": 7,
       "control": 0.7,
       "durability": 4.7,
       "burst": 9,
-      "map_control": 0.2,
+      "map_control": 0.1,
       "saving": 0.5
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.4
   },
   {
     "id": 16,
@@ -571,16 +586,17 @@
       "teamfight": 7.9,
       "tempo": 5.5,
       "scaling": 4.9,
-      "mobility": 1.6,
+      "mobility": 6.7,
       "objectives": 1.4,
       "control": 7.1,
       "durability": 4.4,
       "burst": 4.3,
-      "map_control": 1.9,
+      "map_control": 4.8,
       "saving": 0.5
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 6,
+    "mobility_items_tier": 4
   },
   {
     "id": 17,
@@ -609,16 +625,17 @@
       "teamfight": 6.6,
       "tempo": 4.2,
       "scaling": 7.4,
-      "mobility": 9.1,
+      "mobility": 6.1,
       "objectives": 4.6,
       "control": 5.5,
       "durability": 7.8,
       "burst": 8.8,
-      "map_control": 5.3,
+      "map_control": 4.4,
       "saving": 0.6
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 6
+    "mobility_ability_tier": 6,
+    "mobility_items_tier": 1.5
   },
   {
     "id": 18,
@@ -647,16 +664,17 @@
       "teamfight": 7.2,
       "tempo": 5.8,
       "scaling": 7.9,
-      "mobility": 7.9,
+      "mobility": 5.5,
       "objectives": 8.6,
       "control": 5.6,
       "durability": 8.1,
       "burst": 7.8,
-      "map_control": 0.8,
+      "map_control": 1.3,
       "saving": 0.6
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.5
   },
   {
     "id": 19,
@@ -687,7 +705,7 @@
       "teamfight": 5.9,
       "tempo": 7.3,
       "scaling": 4.9,
-      "mobility": 0,
+      "mobility": 3.9,
       "objectives": 6.3,
       "control": 5.3,
       "durability": 8.7,
@@ -696,7 +714,8 @@
       "saving": 0.6
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.8
   },
   {
     "id": 20,
@@ -725,16 +744,17 @@
       "teamfight": 2,
       "tempo": 3.1,
       "scaling": 4.8,
-      "mobility": 3.5,
+      "mobility": 4.8,
       "objectives": 4.7,
       "control": 6.3,
       "durability": 1.5,
       "burst": 3.3,
-      "map_control": 3.8,
+      "map_control": 3.7,
       "saving": 6.7
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 0.7
   },
   {
     "id": 21,
@@ -763,16 +783,17 @@
       "teamfight": 4.8,
       "tempo": 5,
       "scaling": 4.8,
-      "mobility": 9.2,
+      "mobility": 6.2,
       "objectives": 7.2,
       "control": 6.7,
       "durability": 4.2,
       "burst": 6.8,
-      "map_control": 8,
+      "map_control": 6,
       "saving": 0.8
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 6
+    "mobility_ability_tier": 6,
+    "mobility_items_tier": 2.3
   },
   {
     "id": 22,
@@ -807,7 +828,8 @@
       "saving": 0.8
     },
     "vision_ability_tier": 10,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.3
   },
   {
     "id": 23,
@@ -837,16 +859,17 @@
       "teamfight": 6.9,
       "tempo": 4.4,
       "scaling": 6.7,
-      "mobility": 6.9,
+      "mobility": 5,
       "objectives": 4,
       "control": 7.5,
       "durability": 8,
       "burst": 3.7,
-      "map_control": 2,
+      "map_control": 2.1,
       "saving": 0.8
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.6
   },
   {
     "id": 25,
@@ -873,16 +896,17 @@
       "teamfight": 4,
       "tempo": 6.4,
       "scaling": 3.9,
-      "mobility": 8.9,
+      "mobility": 4.7,
       "objectives": 3,
       "control": 6.1,
       "durability": 3.5,
       "burst": 5,
-      "map_control": 4.8,
+      "map_control": 2.7,
       "saving": 0
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 3
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2
   },
   {
     "id": 26,
@@ -910,16 +934,17 @@
       "teamfight": 6,
       "tempo": 2.7,
       "scaling": 7.4,
-      "mobility": 1.7,
+      "mobility": 4.8,
       "objectives": 3,
       "control": 9.7,
       "durability": 0.4,
       "burst": 5,
-      "map_control": 4.2,
+      "map_control": 4.4,
       "saving": 0
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.6
   },
   {
     "id": 27,
@@ -948,7 +973,7 @@
       "teamfight": 0.6,
       "tempo": 2.5,
       "scaling": 3.8,
-      "mobility": 1,
+      "mobility": 4.6,
       "objectives": 7.3,
       "control": 9.5,
       "durability": 0.6,
@@ -957,7 +982,8 @@
       "saving": 0.9
     },
     "vision_ability_tier": 1,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.4
   },
   {
     "id": 28,
@@ -986,16 +1012,17 @@
       "teamfight": 2.2,
       "tempo": 5.5,
       "scaling": 4.7,
-      "mobility": 3.6,
+      "mobility": 5,
       "objectives": 4.3,
       "control": 7.4,
       "durability": 7.7,
       "burst": 4.4,
-      "map_control": 3.4,
+      "map_control": 3.8,
       "saving": 0.9
     },
     "vision_ability_tier": 3,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.9
   },
   {
     "id": 29,
@@ -1023,7 +1050,7 @@
       "teamfight": 3.9,
       "tempo": 5.6,
       "scaling": 4.4,
-      "mobility": 3.7,
+      "mobility": 4.9,
       "objectives": 4.2,
       "control": 6.8,
       "durability": 7,
@@ -1032,7 +1059,8 @@
       "saving": 1
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.3
   },
   {
     "id": 30,
@@ -1059,7 +1087,7 @@
       "teamfight": 3.3,
       "tempo": 3.4,
       "scaling": 4,
-      "mobility": 3.7,
+      "mobility": 4.9,
       "objectives": 1,
       "control": 6.6,
       "durability": 0.7,
@@ -1068,7 +1096,8 @@
       "saving": 3.8
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.2
   },
   {
     "id": 31,
@@ -1094,7 +1123,7 @@
       "teamfight": 2.7,
       "tempo": 1.8,
       "scaling": 4.3,
-      "mobility": 1.7,
+      "mobility": 4.7,
       "objectives": 0.3,
       "control": 4.3,
       "durability": 0.3,
@@ -1103,7 +1132,8 @@
       "saving": 1
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.5
   },
   {
     "id": 32,
@@ -1129,16 +1159,17 @@
       "teamfight": 7.1,
       "tempo": 4.5,
       "scaling": 6.9,
-      "mobility": 7,
+      "mobility": 5,
       "objectives": 4.5,
       "control": 1.7,
       "durability": 3.1,
       "burst": 10,
-      "map_control": 5.8,
+      "map_control": 6.1,
       "saving": 1
     },
     "vision_ability_tier": 3,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 0.6
   },
   {
     "id": 33,
@@ -1165,16 +1196,17 @@
       "teamfight": 5.3,
       "tempo": 7.6,
       "scaling": 1.3,
-      "mobility": 0.4,
+      "mobility": 4.4,
       "objectives": 5.5,
       "control": 5.9,
       "durability": 4.9,
       "burst": 1,
-      "map_control": 5.9,
+      "map_control": 6.2,
       "saving": 1.1
     },
     "vision_ability_tier": 5,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.8
   },
   {
     "id": 34,
@@ -1206,11 +1238,12 @@
       "control": 4.4,
       "durability": 5,
       "burst": 7.7,
-      "map_control": 2.7,
+      "map_control": 3.2,
       "saving": 3.5
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.9
   },
   {
     "id": 35,
@@ -1235,7 +1268,7 @@
       "teamfight": 9.7,
       "tempo": 7.4,
       "scaling": 5.7,
-      "mobility": 1.1,
+      "mobility": 4.5,
       "objectives": 7.7,
       "control": 1.7,
       "durability": 2.8,
@@ -1244,7 +1277,8 @@
       "saving": 1.1
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.2
   },
   {
     "id": 36,
@@ -1272,16 +1306,17 @@
       "teamfight": 9.8,
       "tempo": 7.5,
       "scaling": 6.5,
-      "mobility": 8.7,
+      "mobility": 4.3,
       "objectives": 6,
       "control": 3.7,
       "durability": 9.2,
       "burst": 9.8,
-      "map_control": 2.8,
+      "map_control": 1,
       "saving": 3.8
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 3
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2
   },
   {
     "id": 37,
@@ -1308,16 +1343,17 @@
       "teamfight": 3.7,
       "tempo": 5.6,
       "scaling": 1.7,
-      "mobility": 3.8,
+      "mobility": 4.8,
       "objectives": 6.4,
       "control": 3,
       "durability": 0.8,
       "burst": 0.5,
-      "map_control": 9.2,
+      "map_control": 9.4,
       "saving": 9.9
     },
     "vision_ability_tier": 5,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 0.8
   },
   {
     "id": 38,
@@ -1346,16 +1382,17 @@
       "teamfight": 7,
       "tempo": 8.6,
       "scaling": 4.8,
-      "mobility": 5.1,
+      "mobility": 5,
       "objectives": 7.4,
       "control": 7.9,
       "durability": 7.1,
       "burst": 6.4,
-      "map_control": 6.6,
+      "map_control": 7.6,
       "saving": 1.2
     },
     "vision_ability_tier": 6,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.4
   },
   {
     "id": 39,
@@ -1382,16 +1419,17 @@
       "teamfight": 9.2,
       "tempo": 4.3,
       "scaling": 7.7,
-      "mobility": 9.7,
+      "mobility": 8.9,
       "objectives": 4.8,
       "control": 1,
       "durability": 8.8,
       "burst": 7.9,
-      "map_control": 9,
+      "map_control": 8.4,
       "saving": 1.2
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 10
+    "mobility_ability_tier": 10,
+    "mobility_items_tier": 1.2
   },
   {
     "id": 40,
@@ -1420,16 +1458,17 @@
       "teamfight": 6.7,
       "tempo": 6.2,
       "scaling": 2.3,
-      "mobility": 0.5,
+      "mobility": 4.3,
       "objectives": 3.8,
       "control": 1.3,
       "durability": 1.1,
       "burst": 1.4,
-      "map_control": 4.5,
+      "map_control": 4.6,
       "saving": 3.2
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.6
   },
   {
     "id": 41,
@@ -1458,16 +1497,17 @@
       "teamfight": 3.6,
       "tempo": 1.7,
       "scaling": 9.1,
-      "mobility": 3.9,
+      "mobility": 4.8,
       "objectives": 8.1,
       "control": 4.1,
       "durability": 7.9,
       "burst": 6,
-      "map_control": 1,
+      "map_control": 0.7,
       "saving": 1.2
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 0.3
   },
   {
     "id": 42,
@@ -1495,16 +1535,17 @@
       "teamfight": 6,
       "tempo": 8.2,
       "scaling": 1.6,
-      "mobility": 5.7,
+      "mobility": 5,
       "objectives": 3,
       "control": 6,
       "durability": 9.4,
       "burst": 3,
-      "map_control": 0.2,
+      "map_control": 0.4,
       "saving": 0
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3
   },
   {
     "id": 43,
@@ -1532,16 +1573,17 @@
       "teamfight": 3,
       "tempo": 7.1,
       "scaling": 3.8,
-      "mobility": 1.8,
+      "mobility": 4.7,
       "objectives": 6,
       "control": 3.4,
       "durability": 7.2,
       "burst": 5,
-      "map_control": 2.5,
+      "map_control": 2.4,
       "saving": 0
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.1
   },
   {
     "id": 44,
@@ -1566,7 +1608,7 @@
       "teamfight": 3,
       "tempo": 4.6,
       "scaling": 7.7,
-      "mobility": 5.8,
+      "mobility": 5,
       "objectives": 3,
       "control": 2.1,
       "durability": 3.3,
@@ -1575,7 +1617,8 @@
       "saving": 0
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 0.4
   },
   {
     "id": 45,
@@ -1601,16 +1644,17 @@
       "teamfight": 3,
       "tempo": 8,
       "scaling": 0.2,
-      "mobility": 8,
+      "mobility": 5.4,
       "objectives": 6,
       "control": 0.4,
       "durability": 2,
       "burst": 5,
-      "map_control": 6.7,
+      "map_control": 7.1,
       "saving": 0
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.7
   },
   {
     "id": 46,
@@ -1636,16 +1680,17 @@
       "teamfight": 3,
       "tempo": 6.3,
       "scaling": 3.7,
-      "mobility": 5.9,
+      "mobility": 5,
       "objectives": 3,
       "control": 1.2,
       "durability": 3.4,
       "burst": 3,
-      "map_control": 4,
+      "map_control": 4.5,
       "saving": 0
     },
     "vision_ability_tier": 3,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.5
   },
   {
     "id": 47,
@@ -1673,16 +1718,17 @@
       "teamfight": 5,
       "tempo": 8.2,
       "scaling": 2.8,
-      "mobility": 7.9,
+      "mobility": 3.9,
       "objectives": 3,
       "control": 1.5,
       "durability": 4.8,
       "burst": 3,
-      "map_control": 3,
+      "map_control": 1,
       "saving": 0
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 3
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.9
   },
   {
     "id": 48,
@@ -1708,16 +1754,17 @@
       "teamfight": 3,
       "tempo": 6.1,
       "scaling": 4.7,
-      "mobility": 8.1,
+      "mobility": 5.4,
       "objectives": 6,
       "control": 4,
       "durability": 5.7,
       "burst": 5,
-      "map_control": 1.7,
+      "map_control": 2.1,
       "saving": 0
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.4
   },
   {
     "id": 49,
@@ -1746,16 +1793,17 @@
       "teamfight": 5,
       "tempo": 6.1,
       "scaling": 4.4,
-      "mobility": 6,
+      "mobility": 5,
       "objectives": 6,
       "control": 7.3,
       "durability": 9.3,
       "burst": 5,
-      "map_control": 1.7,
+      "map_control": 1.8,
       "saving": 0
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.2
   },
   {
     "id": 50,
@@ -1782,16 +1830,17 @@
       "teamfight": 4,
       "tempo": 4.9,
       "scaling": 2.9,
-      "mobility": 5.2,
+      "mobility": 4.9,
       "objectives": 3,
       "control": 3.7,
       "durability": 3.2,
       "burst": 5,
-      "map_control": 6.1,
+      "map_control": 6.3,
       "saving": 10
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2
   },
   {
     "id": 51,
@@ -1819,7 +1868,7 @@
       "teamfight": 5,
       "tempo": 6.8,
       "scaling": 1.5,
-      "mobility": 6,
+      "mobility": 5,
       "objectives": 3,
       "control": 8.7,
       "durability": 2.9,
@@ -1828,7 +1877,8 @@
       "saving": 0
     },
     "vision_ability_tier": 10,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.2
   },
   {
     "id": 52,
@@ -1857,16 +1907,17 @@
       "teamfight": 9,
       "tempo": 2.5,
       "scaling": 8.2,
-      "mobility": 8.2,
+      "mobility": 5.5,
       "objectives": 8.5,
       "control": 4.9,
       "durability": 4.4,
       "burst": 6.7,
-      "map_control": 4.9,
+      "map_control": 5.6,
       "saving": 1.3
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.1
   },
   {
     "id": 53,
@@ -1893,7 +1944,7 @@
       "teamfight": 7.8,
       "tempo": 8.9,
       "scaling": 4.1,
-      "mobility": 9.8,
+      "mobility": 9,
       "objectives": 8.2,
       "control": 2.9,
       "durability": 2.9,
@@ -1902,7 +1953,8 @@
       "saving": 1.3
     },
     "vision_ability_tier": 10,
-    "mobility_ability_tier": 10
+    "mobility_ability_tier": 10,
+    "mobility_items_tier": 0.6
   },
   {
     "id": 54,
@@ -1930,16 +1982,17 @@
       "teamfight": 7.6,
       "tempo": 2.8,
       "scaling": 8.1,
-      "mobility": 7.5,
+      "mobility": 5.1,
       "objectives": 9.1,
       "control": 2.6,
       "durability": 9.8,
       "burst": 6.6,
-      "map_control": 0.9,
+      "map_control": 1.1,
       "saving": 3.4
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 0.5
   },
   {
     "id": 55,
@@ -1966,16 +2019,17 @@
       "teamfight": 5.4,
       "tempo": 3.1,
       "scaling": 5.2,
-      "mobility": 2.8,
+      "mobility": 4.9,
       "objectives": 3,
       "control": 4.6,
       "durability": 6.8,
       "burst": 2.7,
-      "map_control": 1.4,
+      "map_control": 1.6,
       "saving": 3.4
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3
   },
   {
     "id": 56,
@@ -2002,16 +2056,17 @@
       "teamfight": 9.3,
       "tempo": 4.2,
       "scaling": 7.9,
-      "mobility": 1.2,
+      "mobility": 4.5,
       "objectives": 9.4,
       "control": 0.3,
       "durability": 4.5,
       "burst": 9.9,
-      "map_control": 3.1,
+      "map_control": 3,
       "saving": 1.4
     },
     "vision_ability_tier": 3,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.4
   },
   {
     "id": 57,
@@ -2037,16 +2092,17 @@
       "teamfight": 0.3,
       "tempo": 1.6,
       "scaling": 4.8,
-      "mobility": 6.1,
+      "mobility": 5,
       "objectives": 2.5,
       "control": 0.5,
       "durability": 6,
       "burst": 0.6,
-      "map_control": 4.6,
+      "map_control": 4.8,
       "saving": 9.7
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.4
   },
   {
     "id": 58,
@@ -2073,16 +2129,17 @@
       "teamfight": 1.2,
       "tempo": 6.2,
       "scaling": 1.5,
-      "mobility": 7.6,
+      "mobility": 5.1,
       "objectives": 5.4,
       "control": 3.8,
       "durability": 3.6,
       "burst": 3.5,
-      "map_control": 7.7,
+      "map_control": 8,
       "saving": 3.5
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 0.8
   },
   {
     "id": 59,
@@ -2108,16 +2165,17 @@
       "teamfight": 8.1,
       "tempo": 9.4,
       "scaling": 2.9,
-      "mobility": 1.9,
+      "mobility": 4.8,
       "objectives": 6.5,
       "control": 2.7,
       "durability": 9.9,
       "burst": 9.4,
-      "map_control": 3.5,
+      "map_control": 3.3,
       "saving": 1.4
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.7
   },
   {
     "id": 60,
@@ -2146,16 +2204,17 @@
       "teamfight": 4,
       "tempo": 5.7,
       "scaling": 5.4,
-      "mobility": 2.9,
+      "mobility": 4.9,
       "objectives": 7.1,
       "control": 2.2,
       "durability": 7.5,
       "burst": 8.2,
-      "map_control": 1,
+      "map_control": 1.4,
       "saving": 1.4
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.3
   },
   {
     "id": 61,
@@ -2182,16 +2241,17 @@
       "teamfight": 4.4,
       "tempo": 5.8,
       "scaling": 6.2,
-      "mobility": 1.3,
+      "mobility": 4.5,
       "objectives": 9.8,
       "control": 0.1,
       "durability": 8.2,
       "burst": 8.1,
-      "map_control": 7.1,
+      "map_control": 6.6,
       "saving": 1.5
     },
     "vision_ability_tier": 5,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1
   },
   {
     "id": 62,
@@ -2217,7 +2277,7 @@
       "teamfight": 0.4,
       "tempo": 7.4,
       "scaling": 2.2,
-      "mobility": 8.3,
+      "mobility": 5.4,
       "objectives": 1.5,
       "control": 5.6,
       "durability": 1.8,
@@ -2226,7 +2286,8 @@
       "saving": 1.5
     },
     "vision_ability_tier": 10,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1
   },
   {
     "id": 63,
@@ -2251,16 +2312,17 @@
       "teamfight": 5.6,
       "tempo": 6.2,
       "scaling": 6.2,
-      "mobility": 9.5,
+      "mobility": 7.3,
       "objectives": 7.5,
       "control": 0.9,
       "durability": 6.6,
       "burst": 6.9,
-      "map_control": 8.8,
+      "map_control": 7.7,
       "saving": 1.6
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 10
+    "mobility_ability_tier": 10,
+    "mobility_items_tier": 0.4
   },
   {
     "id": 64,
@@ -2289,7 +2351,7 @@
       "teamfight": 1.6,
       "tempo": 2.1,
       "scaling": 3.7,
-      "mobility": 2,
+      "mobility": 4.7,
       "objectives": 5.8,
       "control": 7.1,
       "durability": 1,
@@ -2298,7 +2360,8 @@
       "saving": 1.6
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.3
   },
   {
     "id": 65,
@@ -2325,16 +2388,17 @@
       "teamfight": 2.1,
       "tempo": 6.6,
       "scaling": 2.7,
-      "mobility": 7.7,
+      "mobility": 5.2,
       "objectives": 1.6,
       "control": 8,
       "durability": 5.4,
       "burst": 2.5,
-      "map_control": 5.1,
+      "map_control": 5.8,
       "saving": 1.6
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.6
   },
   {
     "id": 66,
@@ -2360,16 +2424,17 @@
       "teamfight": 0.1,
       "tempo": 6.8,
       "scaling": 0.3,
-      "mobility": 5.2,
+      "mobility": 4.9,
       "objectives": 5.1,
       "control": 2.5,
       "durability": 2.3,
       "burst": 0,
-      "map_control": 9.4,
+      "map_control": 9.5,
       "saving": 10
     },
     "vision_ability_tier": 5,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1
   },
   {
     "id": 67,
@@ -2396,16 +2461,17 @@
       "teamfight": 3,
       "tempo": 1.5,
       "scaling": 9.8,
-      "mobility": 2.9,
+      "mobility": 4.7,
       "objectives": 3,
       "control": 1.8,
       "durability": 4.6,
       "burst": 3,
-      "map_control": 9.1,
+      "map_control": 9.3,
       "saving": 0
     },
     "vision_ability_tier": 10,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 0.6
   },
   {
     "id": 68,
@@ -2432,16 +2498,17 @@
       "teamfight": 4,
       "tempo": 0.9,
       "scaling": 9.8,
-      "mobility": 1.3,
+      "mobility": 4.5,
       "objectives": 3,
       "control": 5.2,
       "durability": 0.2,
       "burst": 5,
-      "map_control": 6.2,
+      "map_control": 6.3,
       "saving": 0
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.8
   },
   {
     "id": 69,
@@ -2470,16 +2537,17 @@
       "teamfight": 5,
       "tempo": 4,
       "scaling": 6.4,
-      "mobility": 2.1,
+      "mobility": 4.8,
       "objectives": 3,
       "control": 4.7,
       "durability": 6.7,
       "burst": 5,
-      "map_control": 1.1,
+      "map_control": 1.2,
       "saving": 0
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.3
   },
   {
     "id": 70,
@@ -2506,16 +2574,17 @@
       "teamfight": 3,
       "tempo": 2.9,
       "scaling": 8.8,
-      "mobility": 6.2,
+      "mobility": 5,
       "objectives": 3,
       "control": 3.2,
       "durability": 6.2,
       "burst": 3,
-      "map_control": 0.6,
+      "map_control": 0.8,
       "saving": 0
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.8
   },
   {
     "id": 71,
@@ -2544,16 +2613,17 @@
       "teamfight": 5,
       "tempo": 5.6,
       "scaling": 3.4,
-      "mobility": 9.8,
+      "mobility": 9,
       "objectives": 3,
       "control": 9.4,
       "durability": 2.5,
       "burst": 3,
-      "map_control": 9.5,
+      "map_control": 9.4,
       "saving": 0
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 10
+    "mobility_ability_tier": 10,
+    "mobility_items_tier": 0.2
   },
   {
     "id": 72,
@@ -2580,16 +2650,17 @@
       "teamfight": 3,
       "tempo": 3,
       "scaling": 6.3,
-      "mobility": 7.1,
+      "mobility": 5,
       "objectives": 3,
       "control": 4.8,
       "durability": 6.3,
       "burst": 5,
-      "map_control": 2.9,
+      "map_control": 2.8,
       "saving": 0
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.3
   },
   {
     "id": 73,
@@ -2619,16 +2690,17 @@
       "teamfight": 6,
       "tempo": 2.5,
       "scaling": 7.4,
-      "mobility": 3,
+      "mobility": 4.9,
       "objectives": 3,
       "control": 7,
       "durability": 9.4,
       "burst": 5,
-      "map_control": 2.1,
+      "map_control": 2.2,
       "saving": 0
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.2
   },
   {
     "id": 74,
@@ -2658,16 +2730,17 @@
       "teamfight": 3,
       "tempo": 3,
       "scaling": 9.1,
-      "mobility": 8.8,
+      "mobility": 4.6,
       "objectives": 6,
       "control": 9.3,
       "durability": 3.9,
       "burst": 5,
-      "map_control": 9.3,
+      "map_control": 8.6,
       "saving": 0
     },
     "vision_ability_tier": 5,
-    "mobility_ability_tier": 3
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2
   },
   {
     "id": 75,
@@ -2696,7 +2769,7 @@
       "teamfight": 6,
       "tempo": 3.9,
       "scaling": 5.7,
-      "mobility": 4,
+      "mobility": 4.8,
       "objectives": 3,
       "control": 0.6,
       "durability": 0.6,
@@ -2705,7 +2778,8 @@
       "saving": 0
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 0.6
   },
   {
     "id": 76,
@@ -2732,16 +2806,17 @@
       "teamfight": 3,
       "tempo": 4.3,
       "scaling": 8.1,
-      "mobility": 7.1,
+      "mobility": 5.1,
       "objectives": 3,
       "control": 9.4,
       "durability": 3.7,
       "burst": 5,
-      "map_control": 4.3,
+      "map_control": 4.9,
       "saving": 0
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.7
   },
   {
     "id": 77,
@@ -2768,7 +2843,7 @@
       "teamfight": 3,
       "tempo": 9,
       "scaling": 0.2,
-      "mobility": 5.3,
+      "mobility": 4.9,
       "objectives": 6,
       "control": 2.5,
       "durability": 9.5,
@@ -2777,7 +2852,8 @@
       "saving": 0
     },
     "vision_ability_tier": 5,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.8
   },
   {
     "id": 78,
@@ -2806,16 +2882,17 @@
       "teamfight": 4.5,
       "tempo": 3.8,
       "scaling": 5.3,
-      "mobility": 9,
+      "mobility": 5,
       "objectives": 6.9,
       "control": 8.3,
       "durability": 6.7,
       "burst": 4.1,
-      "map_control": 4.4,
+      "map_control": 2.5,
       "saving": 1.7
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 3
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3
   },
   {
     "id": 79,
@@ -2843,16 +2920,17 @@
       "teamfight": 1.5,
       "tempo": 2.6,
       "scaling": 3.3,
-      "mobility": 2.1,
+      "mobility": 4.8,
       "objectives": 0.7,
       "control": 6.4,
       "durability": 1.3,
       "burst": 2.3,
-      "map_control": 8.7,
+      "map_control": 9,
       "saving": 3.1
     },
     "vision_ability_tier": 3,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.9
   },
   {
     "id": 80,
@@ -2878,16 +2956,17 @@
       "teamfight": 4.1,
       "tempo": 3.2,
       "scaling": 6,
-      "mobility": 4,
+      "mobility": 4.8,
       "objectives": 9.6,
       "control": 8.9,
       "durability": 9,
       "burst": 3.9,
-      "map_control": 7.2,
+      "map_control": 7.1,
       "saving": 1.7
     },
     "vision_ability_tier": 5,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.4
   },
   {
     "id": 81,
@@ -2915,16 +2994,17 @@
       "teamfight": 5.5,
       "tempo": 6.2,
       "scaling": 5.6,
-      "mobility": 8.3,
+      "mobility": 5.5,
       "objectives": 7.8,
       "control": 6.7,
       "durability": 9.6,
       "burst": 8.5,
-      "map_control": 2.2,
+      "map_control": 2.9,
       "saving": 1.8
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.8
   },
   {
     "id": 82,
@@ -2954,16 +3034,17 @@
       "teamfight": 3.1,
       "tempo": 9.3,
       "scaling": 4.8,
-      "mobility": 7.2,
+      "mobility": 5,
       "objectives": 8.7,
       "control": 9,
       "durability": 10,
       "burst": 7.5,
-      "map_control": 3.2,
+      "map_control": 3.3,
       "saving": 1.8
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.5
   },
   {
     "id": 83,
@@ -2992,16 +3073,17 @@
       "teamfight": 0.2,
       "tempo": 6.7,
       "scaling": 0.7,
-      "mobility": 0.6,
+      "mobility": 4.3,
       "objectives": 0.6,
       "control": 8.5,
       "durability": 2.5,
       "burst": 0.2,
-      "map_control": 8.9,
+      "map_control": 9.1,
       "saving": 9.6
     },
     "vision_ability_tier": 3,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.2
   },
   {
     "id": 84,
@@ -3029,16 +3111,17 @@
       "teamfight": 3.4,
       "tempo": 1.8,
       "scaling": 5.5,
-      "mobility": 2.2,
+      "mobility": 4.7,
       "objectives": 3.1,
       "control": 6.9,
       "durability": 2.1,
       "burst": 1.3,
-      "map_control": 5.2,
+      "map_control": 5.1,
       "saving": 1.8
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.5
   },
   {
     "id": 85,
@@ -3065,16 +3148,17 @@
       "teamfight": 1.1,
       "tempo": 3.7,
       "scaling": 4.3,
-      "mobility": 4.1,
+      "mobility": 4.9,
       "objectives": 3.4,
       "control": 1.3,
       "durability": 4,
       "burst": 4.7,
-      "map_control": 5.6,
+      "map_control": 5.9,
       "saving": 9.6
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.1
   },
   {
     "id": 86,
@@ -3101,16 +3185,17 @@
       "teamfight": 3.2,
       "tempo": 5.9,
       "scaling": 3,
-      "mobility": 2.3,
+      "mobility": 4.8,
       "objectives": 1.8,
       "control": 7.8,
       "durability": 1.7,
       "burst": 2.4,
-      "map_control": 5.6,
+      "map_control": 6,
       "saving": 3
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.1
   },
   {
     "id": 87,
@@ -3138,16 +3223,17 @@
       "teamfight": 0.7,
       "tempo": 3.5,
       "scaling": 2.5,
-      "mobility": 3.1,
+      "mobility": 4.8,
       "objectives": 0.1,
       "control": 0.2,
       "durability": 0.2,
       "burst": 0.3,
-      "map_control": 7.3,
+      "map_control": 7.2,
       "saving": 1.9
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.6
   },
   {
     "id": 88,
@@ -3175,16 +3261,17 @@
       "teamfight": 4.7,
       "tempo": 4.1,
       "scaling": 3.9,
-      "mobility": 6.3,
+      "mobility": 5,
       "objectives": 0.5,
       "control": 9.8,
       "durability": 1.3,
       "burst": 5.6,
-      "map_control": 8.6,
+      "map_control": 9,
       "saving": 1.9
     },
     "vision_ability_tier": 3,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.4
   },
   {
     "id": 89,
@@ -3214,16 +3301,17 @@
       "teamfight": 2.5,
       "tempo": 3.2,
       "scaling": 6.6,
-      "mobility": 8.7,
+      "mobility": 5.8,
       "objectives": 7.6,
       "control": 8.3,
       "durability": 8.3,
       "burst": 2.6,
-      "map_control": 4.4,
+      "map_control": 5.2,
       "saving": 2
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.8
   },
   {
     "id": 90,
@@ -3250,16 +3338,17 @@
       "teamfight": 6.4,
       "tempo": 8.2,
       "scaling": 3.1,
-      "mobility": 9,
+      "mobility": 5,
       "objectives": 2.2,
       "control": 2.4,
       "durability": 3.7,
       "burst": 3.8,
-      "map_control": 8.3,
+      "map_control": 6.4,
       "saving": 3.9
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 3
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.9
   },
   {
     "id": 91,
@@ -3284,16 +3373,17 @@
       "teamfight": 0,
       "tempo": 7,
       "scaling": 0.6,
-      "mobility": 7.8,
+      "mobility": 5.1,
       "objectives": 3.2,
       "control": 0.2,
       "durability": 4.1,
       "burst": 0.1,
-      "map_control": 6.8,
+      "map_control": 7.3,
       "saving": 10
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 0.3
   },
   {
     "id": 92,
@@ -3321,16 +3411,17 @@
       "teamfight": 4.3,
       "tempo": 8.8,
       "scaling": 3,
-      "mobility": 1.4,
+      "mobility": 4.5,
       "objectives": 9.5,
       "control": 6.2,
       "durability": 4,
       "burst": 7,
-      "map_control": 8.1,
+      "map_control": 7.9,
       "saving": 3.1
     },
     "vision_ability_tier": 5,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.2
   },
   {
     "id": 93,
@@ -3358,7 +3449,7 @@
       "teamfight": 3,
       "tempo": 5.1,
       "scaling": 4.1,
-      "mobility": 4.2,
+      "mobility": 4.8,
       "objectives": 3,
       "control": 1,
       "durability": 8.7,
@@ -3367,7 +3458,8 @@
       "saving": 0
     },
     "vision_ability_tier": 10,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 0.9
   },
   {
     "id": 94,
@@ -3393,16 +3485,17 @@
       "teamfight": 3,
       "tempo": 0.4,
       "scaling": 9.9,
-      "mobility": 0.1,
+      "mobility": 3.8,
       "objectives": 3,
       "control": 5.1,
       "durability": 0,
       "burst": 3,
-      "map_control": 1.2,
+      "map_control": 0.9,
       "saving": 0
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.5
   },
   {
     "id": 95,
@@ -3429,16 +3522,17 @@
       "teamfight": 6.2,
       "tempo": 7.3,
       "scaling": 5.9,
-      "mobility": 2.4,
+      "mobility": 4.7,
       "objectives": 9.3,
       "control": 7.5,
       "durability": 5.9,
       "burst": 7.1,
-      "map_control": 0.7,
+      "map_control": 0.6,
       "saving": 2
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.5
   },
   {
     "id": 96,
@@ -3467,16 +3561,17 @@
       "teamfight": 4.2,
       "tempo": 2.4,
       "scaling": 6.2,
-      "mobility": 4.3,
+      "mobility": 5,
       "objectives": 5.9,
       "control": 7.7,
       "durability": 9.8,
       "burst": 2.2,
-      "map_control": 1.3,
+      "map_control": 1.7,
       "saving": 2.1
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.7
   },
   {
     "id": 97,
@@ -3504,16 +3599,17 @@
       "teamfight": 1.9,
       "tempo": 2.1,
       "scaling": 6,
-      "mobility": 5.4,
+      "mobility": 5,
       "objectives": 2.3,
       "control": 8.1,
       "durability": 5.5,
       "burst": 3.1,
-      "map_control": 4.7,
+      "map_control": 5.2,
       "saving": 2.1
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.8
   },
   {
     "id": 98,
@@ -3540,16 +3636,17 @@
       "teamfight": 6.8,
       "tempo": 1.9,
       "scaling": 7.3,
-      "mobility": 0.6,
+      "mobility": 4.3,
       "objectives": 2.8,
       "control": 2.9,
       "durability": 9.1,
       "burst": 5.9,
-      "map_control": 1.8,
+      "map_control": 1.7,
       "saving": 2.2
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.6
   },
   {
     "id": 99,
@@ -3576,7 +3673,7 @@
       "teamfight": 9.5,
       "tempo": 4,
       "scaling": 6.2,
-      "mobility": 3.2,
+      "mobility": 4.8,
       "objectives": 6.8,
       "control": 1.9,
       "durability": 8.6,
@@ -3585,7 +3682,8 @@
       "saving": 2.2
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 0.9
   },
   {
     "id": 100,
@@ -3612,16 +3710,17 @@
       "teamfight": 0.8,
       "tempo": 6,
       "scaling": 1.9,
-      "mobility": 6.3,
+      "mobility": 5,
       "objectives": 0.4,
       "control": 7.2,
       "durability": 2.4,
       "burst": 2,
-      "map_control": 7.9,
+      "map_control": 8.1,
       "saving": 2.2
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.6
   },
   {
     "id": 101,
@@ -3648,16 +3747,17 @@
       "teamfight": 6,
       "tempo": 3.2,
       "scaling": 4.2,
-      "mobility": 8.4,
+      "mobility": 5.4,
       "objectives": 1.3,
       "control": 2.8,
       "durability": 0.5,
       "burst": 5.7,
-      "map_control": 7.4,
+      "map_control": 8.2,
       "saving": 2.3
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2
   },
   {
     "id": 102,
@@ -3683,16 +3783,17 @@
       "teamfight": 0.9,
       "tempo": 1.6,
       "scaling": 5.4,
-      "mobility": 8.5,
+      "mobility": 5.4,
       "objectives": 3.9,
       "control": 1.6,
       "durability": 6.3,
       "burst": 1.1,
-      "map_control": 6.3,
+      "map_control": 7.4,
       "saving": 9.6
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.5
   },
   {
     "id": 103,
@@ -3720,16 +3821,17 @@
       "teamfight": 2.4,
       "tempo": 7.3,
       "scaling": 1.5,
-      "mobility": 5.5,
+      "mobility": 4.9,
       "objectives": 2.7,
       "control": 8.7,
       "durability": 3,
       "burst": 1.9,
-      "map_control": 6.9,
+      "map_control": 6.7,
       "saving": 2.3
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.4
   },
   {
     "id": 104,
@@ -3758,16 +3860,17 @@
       "teamfight": 7.3,
       "tempo": 4.3,
       "scaling": 6.9,
-      "mobility": 8.6,
+      "mobility": 5.6,
       "objectives": 6.6,
       "control": 6.3,
       "durability": 5.1,
       "burst": 7.2,
-      "map_control": 2.6,
+      "map_control": 3.4,
       "saving": 3.4
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 4
   },
   {
     "id": 105,
@@ -3793,7 +3896,7 @@
       "teamfight": 9.4,
       "tempo": 7.3,
       "scaling": 2.2,
-      "mobility": 6.4,
+      "mobility": 5,
       "objectives": 2.6,
       "control": 4.2,
       "durability": 2.1,
@@ -3802,7 +3905,8 @@
       "saving": 2.4
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.4
   },
   {
     "id": 106,
@@ -3831,16 +3935,17 @@
       "teamfight": 9.9,
       "tempo": 9.3,
       "scaling": 5.3,
-      "mobility": 9.9,
+      "mobility": 9.5,
       "objectives": 4.9,
       "control": 9.1,
       "durability": 7.5,
       "burst": 9.3,
-      "map_control": 9.4,
+      "map_control": 9.2,
       "saving": 2.4
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 10
+    "mobility_ability_tier": 10,
+    "mobility_items_tier": 1.7
   },
   {
     "id": 107,
@@ -3869,16 +3974,17 @@
       "teamfight": 5.1,
       "tempo": 7.2,
       "scaling": 2.3,
-      "mobility": 9.4,
+      "mobility": 6.5,
       "objectives": 2.4,
       "control": 4.8,
       "durability": 5.2,
       "burst": 4.9,
-      "map_control": 9,
+      "map_control": 8.7,
       "saving": 3
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 6
+    "mobility_ability_tier": 6,
+    "mobility_items_tier": 2.1
   },
   {
     "id": 108,
@@ -3907,16 +4013,17 @@
       "teamfight": 4.6,
       "tempo": 1.9,
       "scaling": 6,
-      "mobility": 2.5,
+      "mobility": 4.7,
       "objectives": 5.2,
       "control": 10,
       "durability": 7.6,
       "burst": 2.1,
-      "map_control": 2.1,
+      "map_control": 1.9,
       "saving": 8.4
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.2
   },
   {
     "id": 109,
@@ -3942,16 +4049,17 @@
       "teamfight": 4.9,
       "tempo": 6.6,
       "scaling": 6.1,
-      "mobility": 7.3,
+      "mobility": 5,
       "objectives": 9.9,
       "control": 1.4,
       "durability": 9,
       "burst": 5.4,
-      "map_control": 2.3,
+      "map_control": 2.5,
       "saving": 2.5
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.2
   },
   {
     "id": 110,
@@ -3980,16 +4088,17 @@
       "teamfight": 6,
       "tempo": 5.9,
       "scaling": 4.2,
-      "mobility": 0.7,
+      "mobility": 4.3,
       "objectives": 3,
       "control": 3.1,
       "durability": 7.1,
       "burst": 5,
-      "map_control": 6.3,
+      "map_control": 6.5,
       "saving": 10
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.8
   },
   {
     "id": 111,
@@ -4017,16 +4126,17 @@
       "teamfight": 4,
       "tempo": 4.1,
       "scaling": 4.6,
-      "mobility": 3.3,
+      "mobility": 4.9,
       "objectives": 3,
       "control": 7.6,
       "durability": 1.2,
       "burst": 5,
-      "map_control": 8.4,
+      "map_control": 8.8,
       "saving": 10
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.8
   },
   {
     "id": 112,
@@ -4053,16 +4163,17 @@
       "teamfight": 4,
       "tempo": 6.8,
       "scaling": 1.9,
-      "mobility": 1.5,
+      "mobility": 4.6,
       "objectives": 3,
       "control": 5.8,
       "durability": 1.4,
       "burst": 5,
-      "map_control": 8.3,
+      "map_control": 8.7,
       "saving": 10
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.2
   },
   {
     "id": 113,
@@ -4088,16 +4199,17 @@
       "teamfight": 9.6,
       "tempo": 2.2,
       "scaling": 9.3,
-      "mobility": 4.4,
+      "mobility": 4.9,
       "objectives": 8.8,
       "control": 1.1,
       "durability": 6.4,
       "burst": 9.6,
-      "map_control": 4.8,
+      "map_control": 4.7,
       "saving": 2.5
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2
   },
   {
     "id": 114,
@@ -4124,16 +4236,17 @@
       "teamfight": 6.3,
       "tempo": 7.6,
       "scaling": 4.8,
-      "mobility": 4.4,
+      "mobility": 4.8,
       "objectives": 6.2,
       "control": 5.4,
       "durability": 5.6,
       "burst": 6.2,
-      "map_control": 3.6,
+      "map_control": 3.5,
       "saving": 2.6
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 0.5
   },
   {
     "id": 119,
@@ -4161,7 +4274,7 @@
       "teamfight": 1.4,
       "tempo": 3.7,
       "scaling": 1,
-      "mobility": 2.5,
+      "mobility": 4.8,
       "objectives": 2.1,
       "control": 9.9,
       "durability": 1.6,
@@ -4170,7 +4283,8 @@
       "saving": 2.6
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.7
   },
   {
     "id": 120,
@@ -4200,16 +4314,17 @@
       "teamfight": 6.1,
       "tempo": 7.5,
       "scaling": 5.4,
-      "mobility": 4.5,
+      "mobility": 4.9,
       "objectives": 4.1,
       "control": 5.7,
       "durability": 4.8,
       "burst": 5.3,
-      "map_control": 4,
+      "map_control": 4.3,
       "saving": 2.6
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.4
   },
   {
     "id": 121,
@@ -4236,16 +4351,17 @@
       "teamfight": 1,
       "tempo": 3,
       "scaling": 3.3,
-      "mobility": 2.6,
+      "mobility": 4.8,
       "objectives": 1.2,
       "control": 4.4,
       "durability": 0.9,
       "burst": 1.5,
-      "map_control": 7.6,
+      "map_control": 7.9,
       "saving": 3
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3
   },
   {
     "id": 123,
@@ -4273,16 +4389,17 @@
       "teamfight": 2.3,
       "tempo": 6.8,
       "scaling": 1.9,
-      "mobility": 7.4,
+      "mobility": 5,
       "objectives": 2,
       "control": 8.4,
       "durability": 1.9,
       "burst": 3.2,
-      "map_control": 8.2,
+      "map_control": 8.5,
       "saving": 2.7
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2
   },
   {
     "id": 126,
@@ -4310,16 +4427,17 @@
       "teamfight": 7.7,
       "tempo": 5.3,
       "scaling": 7,
-      "mobility": 9.4,
+      "mobility": 6.4,
       "objectives": 5.3,
       "control": 2,
       "durability": 5.8,
       "burst": 8,
-      "map_control": 8.7,
+      "map_control": 8.3,
       "saving": 2.7
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 6
+    "mobility_ability_tier": 6,
+    "mobility_items_tier": 1.6
   },
   {
     "id": 128,
@@ -4347,16 +4465,17 @@
       "teamfight": 7.5,
       "tempo": 5.9,
       "scaling": 5.3,
-      "mobility": 4.6,
+      "mobility": 4.9,
       "objectives": 4.4,
       "control": 5.2,
       "durability": 3.3,
       "burst": 7.6,
-      "map_control": 6.4,
+      "map_control": 6.8,
       "saving": 9.2
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.8
   },
   {
     "id": 129,
@@ -4385,16 +4504,17 @@
       "teamfight": 3,
       "tempo": 3.3,
       "scaling": 5.1,
-      "mobility": 6.5,
+      "mobility": 5,
       "objectives": 3.5,
       "control": 9.2,
       "durability": 6,
       "burst": 2.9,
-      "map_control": 2.4,
+      "map_control": 2.6,
       "saving": 2.8
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.6
   },
   {
     "id": 131,
@@ -4422,7 +4542,7 @@
       "teamfight": 1.8,
       "tempo": 1.6,
       "scaling": 3.4,
-      "mobility": 6.6,
+      "mobility": 5,
       "objectives": 0.2,
       "control": 6.5,
       "durability": 1,
@@ -4431,7 +4551,8 @@
       "saving": 8.8
     },
     "vision_ability_tier": 5,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.6
   },
   {
     "id": 135,
@@ -4457,16 +4578,17 @@
       "teamfight": 5.8,
       "tempo": 7.1,
       "scaling": 4.8,
-      "mobility": 4.7,
+      "mobility": 4.9,
       "objectives": 6.1,
       "control": 4.5,
       "durability": 8.3,
       "burst": 5.2,
-      "map_control": 3.3,
+      "map_control": 3.1,
       "saving": 9.7
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.7
   },
   {
     "id": 136,
@@ -4495,16 +4617,17 @@
       "teamfight": 2.8,
       "tempo": 5.5,
       "scaling": 4.1,
-      "mobility": 7.5,
+      "mobility": 5,
       "objectives": 5.7,
       "control": 8.2,
       "durability": 2.7,
       "burst": 6.5,
-      "map_control": 7.9,
+      "map_control": 8.3,
       "saving": 9.2
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.8
   },
   {
     "id": 137,
@@ -4531,16 +4654,17 @@
       "teamfight": 5.2,
       "tempo": 2.9,
       "scaling": 5.6,
-      "mobility": 5.6,
+      "mobility": 5,
       "objectives": 2.9,
       "control": 8.8,
       "durability": 7.9,
       "burst": 4,
-      "map_control": 3.7,
+      "map_control": 4,
       "saving": 2.8
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 3.5
   },
   {
     "id": 138,
@@ -4566,16 +4690,17 @@
       "teamfight": 8.5,
       "tempo": 4.6,
       "scaling": 7.1,
-      "mobility": 3.3,
+      "mobility": 4.8,
       "objectives": 7.9,
       "control": 5,
       "durability": 5.2,
       "burst": 6.3,
-      "map_control": 7,
+      "map_control": 6.9,
       "saving": 2.9
     },
     "vision_ability_tier": 2,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.9
   },
   {
     "id": 145,
@@ -4601,16 +4726,17 @@
       "teamfight": 8.6,
       "tempo": 8.3,
       "scaling": 5.6,
-      "mobility": 6.7,
+      "mobility": 5,
       "objectives": 6.7,
       "control": 3.3,
       "durability": 8.4,
       "burst": 9.5,
-      "map_control": 3.7,
+      "map_control": 4,
       "saving": 2.9
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 2.2
   },
   {
     "id": 155,
@@ -4637,15 +4763,16 @@
       "teamfight": 4,
       "tempo": 3.8,
       "scaling": 7.9,
-      "mobility": 2.7,
+      "mobility": 4.7,
       "objectives": 3,
       "control": 3.5,
       "durability": 8.5,
       "burst": 3,
-      "map_control": 5.2,
+      "map_control": 5.6,
       "saving": 10
     },
     "vision_ability_tier": 0,
-    "mobility_ability_tier": 0
+    "mobility_ability_tier": 0,
+    "mobility_items_tier": 1.7
   }
 ]

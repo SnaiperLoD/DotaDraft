@@ -16,7 +16,7 @@ import {
 //   tempo      <- 37.5% win/loss duration gap + 37.5% win-rate-falls-with-duration trend + 25% early kills/game
 //   control    <- stuns per minute
 //   durability <- damage_taken / deaths (summed across matches, not averaged per-match)
-//   mobility   <- move-speed extremity + mobility_ability_tier, rank-rescaled (see server/data/map-control-weights.json)
+//   mobility   <- move-speed extremity + mobility_ability_tier + Blink/BoT purchase rank, rank-rescaled (see server/data/map-control-weights.json)
 //   map_control <- see server/data/map-control-weights.json (vision + mobility + ability tags), rank-rescaled
 //   saving     <- 40% hero_healing_per_min (benchmarks) + 60% protects_allies tag (binary, from synergy_tags)
 // A hero missing a given input keeps its existing formula/prior value for
@@ -41,6 +41,7 @@ interface RawHero {
   synergy_tags: string[];
   vision_ability_tier?: number;
   mobility_ability_tier?: number;
+  mobility_items_tier?: number;
   evaluation_values: Record<string, number>;
   [key: string]: unknown;
 }
@@ -60,6 +61,8 @@ interface TempoTrendEntry {
 interface EarlyKillsEntry {
   heroId: number;
   earlyKillsPerGame: number;
+  blinkRate: number;
+  botRate: number;
 }
 
 interface ControlDurabilityVisionEntry {
@@ -79,7 +82,13 @@ interface HeroConstant {
 interface MapControlWeights {
   topLevel: { visionScore: number; mobilityScore: number; abilityVisionBonus: number };
   visionScore: { wardScore: number; innateVisionRange: number };
-  mobilityScore: { baseMoveSpeed: number; moveSpeedExtremityExponent: number; abilityMobilityBonus: number };
+  mobilityScore: {
+    baseMoveSpeed: number;
+    moveSpeedExtremityExponent: number;
+    abilityMobilityBonus: number;
+    itemsPurchaseBonus: number;
+  };
+  finalMobilityExtremityExponent: number;
 }
 
 function byHeroId<T extends { heroId: number }>(filePath: string): Map<number, T> {
@@ -166,19 +175,51 @@ function main() {
     weights.mobilityScore.moveSpeedExtremityExponent,
   );
 
-  // mobility: real move-speed extremity + hand-tagged mobility abilities.
-  // mobility_ability_tier is 0 for ~85% of heroes (no tagged mobility
-  // ability), so the raw blend clusters near the bottom of 0-10 — a final
-  // percentileRankScale pass rescales it to use the full range based on
-  // rank rather than raw compressed value. This replaces the old hardcoded
-  // 3/6 role-based stub (see Blueprint/10-tech-debt-backlog.md).
+  // mobility_items_tier: Blink Dagger / Boots of Travel purchase rate
+  // (server/scripts/research-tempo-mobility-data.ts), rank-scaled rather
+  // than threshold-tagged — blinkRate has no natural gap in the data (a
+  // smooth decline from 99% to under 50%, dominated by pure initiators
+  // like Sand King/Axe/Legion Commander, not mobile heroes), so a fixed
+  // rate cutoff would either miss real signal or over-tag initiators.
+  // Rank-based scoring sidesteps that: a hero's score depends only on
+  // relative purchase frequency vs. the rest of the roster, not on where
+  // the raw rate happens to sit. botRate does have a clean gap (28.7% ->
+  // 11.6%) but is scored the same way for consistency. Blink is capped at
+  // 4 and BoT at 2 (Blink is the stronger positioning tool) via linear
+  // rescale of the 0-10 rank score, and the two are combined with max()
+  // rather than summed to avoid double-rewarding a hero who buys both.
+  const blinkRateRaw = heroes.map((h) => earlyKillsByHeroId.get(h.id)?.blinkRate ?? null);
+  const blinkScores = percentileRankScale(blinkRateRaw);
+  const botRateRaw = heroes.map((h) => earlyKillsByHeroId.get(h.id)?.botRate ?? null);
+  const botScores = percentileRankScale(botRateRaw);
+  const mobilityItemsRaw = heroes.map((_, i) => {
+    const blinkComponent = blinkScores[i] === null ? 0 : (blinkScores[i] / 10) * 4;
+    const botComponent = botScores[i] === null ? 0 : (botScores[i] / 10) * 2;
+    return Math.round(Math.max(blinkComponent, botComponent) * 10) / 10;
+  });
+
+  // mobility: real move-speed extremity + hand-tagged mobility abilities +
+  // item-purchase signal above. mobility_ability_tier is 0 for 90% of
+  // heroes (no tagged mobility ability) — that flat majority needs a
+  // FINAL pass that does NOT spread them across the full 0-10 range.
+  // percentileRankScale was tried first and rejected: it measures relative
+  // rank, so even within a 90%-flat cluster someone always ranks "above
+  // 70% of the league," which pushed clearly non-mobile heroes (Legion
+  // Commander, Sven, Chaos Knight — zero ability tier, average move speed)
+  // up to 7-9/10. zScoreExtremityScale instead keeps values near the
+  // population mean close to 5 and only pushes genuine outliers (ability
+  // tier 10 heroes) toward 10 — the right shape for a bimodal population
+  // (small genuinely-mobile cluster + large non-mobile majority) rather
+  // than a smooth continuum. This replaces the old hardcoded 3/6
+  // role-based stub (see Blueprint/10-tech-debt-backlog.md).
   const mobilityRaw = heroes.map((h, i) =>
     weightedBlend([
       { value: moveSpeedScores[i], weight: weights.mobilityScore.baseMoveSpeed },
       { value: h.mobility_ability_tier ?? 0, weight: weights.mobilityScore.abilityMobilityBonus },
+      { value: mobilityItemsRaw[i], weight: weights.mobilityScore.itemsPurchaseBonus },
     ]),
   );
-  const mobilityScores = percentileRankScale(mobilityRaw);
+  const mobilityScores = zScoreExtremityScale(mobilityRaw, weights.finalMobilityExtremityExponent);
 
   // map_control: same compression problem as mobility — vision_ability_tier
   // is 0 for ~80% of heroes and carries direct blend weight — so the
@@ -251,6 +292,7 @@ function main() {
 
     setOrFallback('control', controlScores[i], 'control');
     setOrFallback('durability', durabilityScores[i], 'durability');
+    hero.mobility_items_tier = mobilityItemsRaw[i];
     setOrFallback('mobility', mobilityScores[i], 'mobility');
     setOrFallback('map_control', mapControlScores[i], 'mapControl');
     delete hero.evaluation_values.vision;
