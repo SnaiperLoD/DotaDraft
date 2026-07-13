@@ -48,6 +48,14 @@ async function seedProMatches(prisma: PrismaClient) {
 
   const { matches } = JSON.parse(fs.readFileSync(matchesPath, 'utf-8')) as { matches: StoredProMatch[] };
 
+  // pro-matches.json is a full snapshot (see fetch-pro-matches*.ts), not an
+  // incremental feed — drop any previously-seeded match that's no longer in
+  // it (e.g. left over from a non-tier1 import before this one) rather than
+  // silently accumulating stale rows forever.
+  const currentIds = matches.map((m) => m.matchId);
+  const { count: deletedCount } = await prisma.proMatch.deleteMany({ where: { id: { notIn: currentIds } } });
+  if (deletedCount > 0) console.log(`Removed ${deletedCount} stale pro matches no longer in the snapshot.`);
+
   for (const match of matches) {
     await prisma.proMatch.upsert({
       where: { id: match.matchId },

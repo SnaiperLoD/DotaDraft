@@ -28,10 +28,10 @@ Implement:
 Implement:
 
 - OpenDota importer;
-- storage of ~20-25 professional matches;
+- storage of professional matches;
 - processing of stored teams.
 
-Target reduced from an earlier 100-match figure: this milestone is bootstrap/calibration data, not a standalone deliverable, so the target is sized to "enough matches to sanity-check Evaluation/Battle output across a variety of team compositions," not the original spec number. Revisit upward only if 20-25 proves too thin to catch obviously-wrong Evaluation/Battle behavior.
+Started at ~20-25 matches (bootstrap/calibration data, not a standalone deliverable — sized to "enough to sanity-check Evaluation/Battle output," not the original 100-match spec). Later expanded to 100, curated to tier1-vs-tier1 matches only (top-20 teams per Liquipedia rankings, `server/scripts/fetch-pro-matches-tier1.ts`) once the recency-only sample proved worth improving — see `10-tech-debt-backlog.md`.
 
 Role in the product: bootstrap/calibration data — used to test that Evaluation/Battle output makes sense against known-strong compositions, and to seed the Opponent Pool's top tier (see `06-battle-engine.md`). NOT the primary opponent source long-term; that's player-submitted drafts (Milestone 4).
 

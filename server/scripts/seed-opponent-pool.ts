@@ -14,6 +14,18 @@ async function main() {
   const matches = await local.proMatch.findMany();
   console.log(`Seeding ${matches.length} pro matches into the Opponent Pool (winning side only)...`);
 
+  // Local ProMatch is itself a full snapshot (seed.ts prunes it on every
+  // run) — mirror that here so a re-curated import (e.g. switching from
+  // recency-based to tier1-based selection) doesn't leave orphaned 'pro'
+  // rows behind in the pool forever.
+  const currentIds = new Set(matches.map((m) => `pro-${m.id}`));
+  const existingProRows = await pool.pooledDraft.findMany({ where: { source: 'pro' }, select: { id: true } });
+  const staleIds = existingProRows.map((r) => r.id).filter((id) => !currentIds.has(id));
+  if (staleIds.length > 0) {
+    await pool.pooledDraft.deleteMany({ where: { id: { in: staleIds } } });
+    console.log(`Removed ${staleIds.length} stale 'pro' rows no longer in the local snapshot.`);
+  }
+
   for (const match of matches) {
     const heroIds = JSON.parse(match.radiantWin ? match.radiantHeroIds : match.direHeroIds) as number[];
     const teamName = match.radiantWin ? match.radiantName : match.direName;

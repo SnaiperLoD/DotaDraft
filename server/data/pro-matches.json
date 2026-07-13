@@ -1,50 +1,6 @@
 {
-  "generatedAt": "2026-07-13T12:40:05.541Z",
+  "generatedAt": "2026-07-13T19:02:26.760Z",
   "matches": [
-    {
-      "matchId": "8893253595",
-      "radiantName": "OG",
-      "direName": "Virtus.pro",
-      "leagueName": "Esports World Cup 2026",
-      "radiantWin": false,
-      "radiantHeroIds": [
-        38,
-        119,
-        107,
-        9,
-        109
-      ],
-      "direHeroIds": [
-        106,
-        72,
-        155,
-        86,
-        64
-      ],
-      "startTime": "2026-07-12T13:43:00.000Z"
-    },
-    {
-      "matchId": "8893208737",
-      "radiantName": "LGD Gaming",
-      "direName": "Inner Circle x Insanity",
-      "leagueName": "Esports World Cup 2026",
-      "radiantWin": true,
-      "radiantHeroIds": [
-        80,
-        19,
-        128,
-        21,
-        110
-      ],
-      "direHeroIds": [
-        58,
-        100,
-        33,
-        18,
-        13
-      ],
-      "startTime": "2026-07-12T13:19:01.000Z"
-    },
     {
       "matchId": "8893165071",
       "radiantName": "Team Yandex",
@@ -66,50 +22,6 @@
         6
       ],
       "startTime": "2026-07-12T13:02:00.000Z"
-    },
-    {
-      "matchId": "8893106015",
-      "radiantName": "Virtus.pro",
-      "direName": "OG",
-      "leagueName": "Esports World Cup 2026",
-      "radiantWin": true,
-      "radiantHeroIds": [
-        120,
-        138,
-        96,
-        119,
-        3
-      ],
-      "direHeroIds": [
-        128,
-        19,
-        47,
-        66,
-        36
-      ],
-      "startTime": "2026-07-12T12:20:06.000Z"
-    },
-    {
-      "matchId": "8893079555",
-      "radiantName": "Inner Circle x Insanity",
-      "direName": "LGD Gaming",
-      "leagueName": "Esports World Cup 2026",
-      "radiantWin": false,
-      "radiantHeroIds": [
-        51,
-        112,
-        145,
-        33,
-        128
-      ],
-      "direHeroIds": [
-        36,
-        17,
-        155,
-        123,
-        3
-      ],
-      "startTime": "2026-07-12T12:04:01.000Z"
     },
     {
       "matchId": "8893070561",
@@ -134,26 +46,26 @@
       "startTime": "2026-07-12T11:58:01.000Z"
     },
     {
-      "matchId": "8892958964",
-      "radiantName": "REKONIX",
-      "direName": "Team Nemesis",
+      "matchId": "8892914077",
+      "radiantName": "Team Spirit",
+      "direName": "PVISION",
       "leagueName": "Esports World Cup 2026",
-      "radiantWin": true,
+      "radiantWin": false,
       "radiantHeroIds": [
-        8,
-        87,
-        128,
-        155,
-        38
+        89,
+        110,
+        13,
+        86,
+        2
       ],
       "direHeroIds": [
-        131,
-        25,
-        107,
-        19,
-        58
+        145,
+        28,
+        120,
+        119,
+        112
       ],
-      "startTime": "2026-07-12T10:40:11.000Z"
+      "startTime": "2026-07-12T10:15:00.000Z"
     },
     {
       "matchId": "8892923329",
@@ -178,28 +90,6 @@
       "startTime": "2026-07-12T10:13:00.000Z"
     },
     {
-      "matchId": "8892914077",
-      "radiantName": "Team Spirit",
-      "direName": "PVISION",
-      "leagueName": "Esports World Cup 2026",
-      "radiantWin": false,
-      "radiantHeroIds": [
-        89,
-        110,
-        13,
-        86,
-        2
-      ],
-      "direHeroIds": [
-        145,
-        28,
-        120,
-        119,
-        112
-      ],
-      "startTime": "2026-07-12T10:15:00.000Z"
-    },
-    {
       "matchId": "8892836635",
       "radiantName": "PVISION",
       "direName": "Team Spirit",
@@ -220,28 +110,6 @@
         29
       ],
       "startTime": "2026-07-12T09:07:03.000Z"
-    },
-    {
-      "matchId": "8892835652",
-      "radiantName": "Team Nemesis",
-      "direName": "REKONIX",
-      "leagueName": "Esports World Cup 2026",
-      "radiantWin": false,
-      "radiantHeroIds": [
-        119,
-        128,
-        56,
-        85,
-        3
-      ],
-      "direHeroIds": [
-        80,
-        31,
-        65,
-        136,
-        25
-      ],
-      "startTime": "2026-07-12T09:05:02.000Z"
     },
     {
       "matchId": "8892829232",
@@ -266,28 +134,6 @@
       "startTime": "2026-07-12T09:00:00.000Z"
     },
     {
-      "matchId": "8891519142",
-      "radiantName": "Nigma Galaxy ",
-      "direName": "PTime",
-      "leagueName": "Esports World Cup 2026",
-      "radiantWin": true,
-      "radiantHeroIds": [
-        80,
-        123,
-        100,
-        77,
-        53
-      ],
-      "direHeroIds": [
-        6,
-        131,
-        17,
-        47,
-        2
-      ],
-      "startTime": "2026-07-11T13:54:48.000Z"
-    },
-    {
       "matchId": "8891497910",
       "radiantName": "Team Liquid",
       "direName": "Aurora Gaming",
@@ -308,28 +154,6 @@
         64
       ],
       "startTime": "2026-07-11T13:37:09.000Z"
-    },
-    {
-      "matchId": "8891438996",
-      "radiantName": "L1 TEAM",
-      "direName": "Level UP esports",
-      "leagueName": "Esports World Cup 2026",
-      "radiantWin": false,
-      "radiantHeroIds": [
-        106,
-        72,
-        3,
-        51,
-        65
-      ],
-      "direHeroIds": [
-        38,
-        126,
-        123,
-        105,
-        11
-      ],
-      "startTime": "2026-07-11T13:07:54.000Z"
     },
     {
       "matchId": "8891371442",
@@ -354,50 +178,6 @@
       "startTime": "2026-07-11T12:25:00.000Z"
     },
     {
-      "matchId": "8891349244",
-      "radiantName": "PTime",
-      "direName": "Nigma Galaxy ",
-      "leagueName": "Esports World Cup 2026",
-      "radiantWin": false,
-      "radiantHeroIds": [
-        19,
-        100,
-        36,
-        69,
-        131
-      ],
-      "direHeroIds": [
-        21,
-        123,
-        55,
-        68,
-        17
-      ],
-      "startTime": "2026-07-11T12:11:00.000Z"
-    },
-    {
-      "matchId": "8891325877",
-      "radiantName": "Level UP esports",
-      "direName": "L1 TEAM",
-      "leagueName": "Esports World Cup 2026",
-      "radiantWin": true,
-      "radiantHeroIds": [
-        2,
-        106,
-        119,
-        105,
-        73
-      ],
-      "direHeroIds": [
-        47,
-        6,
-        85,
-        3,
-        38
-      ],
-      "startTime": "2026-07-11T11:54:55.000Z"
-    },
-    {
       "matchId": "8891240327",
       "radiantName": "Team Falcons",
       "direName": "Xtreme Gaming",
@@ -418,50 +198,6 @@
         3
       ],
       "startTime": "2026-07-11T10:45:00.000Z"
-    },
-    {
-      "matchId": "8891227605",
-      "radiantName": "BoomBoys",
-      "direName": "GamerLegion",
-      "leagueName": "Esports World Cup 2026",
-      "radiantWin": true,
-      "radiantHeroIds": [
-        145,
-        28,
-        77,
-        123,
-        85
-      ],
-      "direHeroIds": [
-        138,
-        107,
-        119,
-        2,
-        31
-      ],
-      "startTime": "2026-07-11T10:40:00.000Z"
-    },
-    {
-      "matchId": "8891217710",
-      "radiantName": "Rune Eaters",
-      "direName": "_PowerRangers",
-      "leagueName": "Esports World Cup 2026",
-      "radiantWin": true,
-      "radiantHeroIds": [
-        6,
-        85,
-        26,
-        38,
-        28
-      ],
-      "direHeroIds": [
-        56,
-        13,
-        3,
-        2,
-        91
-      ],
-      "startTime": "2026-07-11T10:32:36.000Z"
     },
     {
       "matchId": "8891145641",
@@ -486,70 +222,1984 @@
       "startTime": "2026-07-11T09:26:04.000Z"
     },
     {
-      "matchId": "8891108985",
-      "radiantName": "GamerLegion",
-      "direName": "BoomBoys",
+      "matchId": "8890270555",
+      "radiantName": "1w",
+      "direName": "OG",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        55,
+        90,
+        131,
+        128,
+        67
+      ],
+      "direHeroIds": [
+        52,
+        86,
+        3,
+        69,
+        6
+      ],
+      "startTime": "2026-07-10T18:21:12.000Z"
+    },
+    {
+      "matchId": "8890162325",
+      "radiantName": "OG",
+      "direName": "1w",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        22,
+        105,
+        85,
+        9,
+        19
+      ],
+      "direHeroIds": [
+        2,
+        21,
+        100,
+        25,
+        6
+      ],
+      "startTime": "2026-07-10T17:08:03.000Z"
+    },
+    {
+      "matchId": "8890074597",
+      "radiantName": "Team Spirit",
+      "direName": "REKONIX",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        145,
+        3,
+        74,
+        123,
+        55
+      ],
+      "direHeroIds": [
+        11,
+        65,
+        77,
+        128,
+        5
+      ],
+      "startTime": "2026-07-10T16:12:56.000Z"
+    },
+    {
+      "matchId": "8890036748",
+      "radiantName": "MOUZ",
+      "direName": "PVISION",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        74,
+        55,
+        73,
+        51,
+        3
+      ],
+      "direHeroIds": [
+        6,
+        38,
+        120,
+        90,
+        84
+      ],
+      "startTime": "2026-07-10T15:59:01.000Z"
+    },
+    {
+      "matchId": "8889944251",
+      "radiantName": "REKONIX",
+      "direName": "Team Spirit",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        48,
+        105,
+        137,
+        13,
+        58
+      ],
+      "direHeroIds": [
+        6,
+        31,
+        107,
+        86,
+        69
+      ],
+      "startTime": "2026-07-10T14:58:27.000Z"
+    },
+    {
+      "matchId": "8889914618",
+      "radiantName": "PVISION",
+      "direName": "MOUZ",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        6,
+        155,
+        106,
+        90,
+        105
+      ],
+      "direHeroIds": [
+        13,
+        55,
+        49,
+        83,
+        58
+      ],
+      "startTime": "2026-07-10T14:42:37.000Z"
+    },
+    {
+      "matchId": "8888592426",
+      "radiantName": "Vici Gaming",
+      "direName": "Team Spirit",
       "leagueName": "Esports World Cup 2026",
       "radiantWin": false,
       "radiantHeroIds": [
         36,
+        120,
+        96,
+        21,
+        3
+      ],
+      "direHeroIds": [
+        109,
+        51,
+        128,
+        131,
+        2
+      ],
+      "startTime": "2026-07-09T16:43:01.000Z"
+    },
+    {
+      "matchId": "8888554919",
+      "radiantName": "PVISION",
+      "direName": "REKONIX",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        18,
+        108,
         107,
-        119,
-        33,
+        90,
         31
       ],
       "direHeroIds": [
-        6,
-        28,
-        38,
-        131,
-        85
+        80,
+        17,
+        86,
+        96,
+        121
       ],
-      "startTime": "2026-07-11T09:00:55.000Z"
+      "startTime": "2026-07-09T16:09:12.000Z"
     },
     {
-      "matchId": "8891108843",
-      "radiantName": "_PowerRangers",
-      "direName": "Rune Eaters",
+      "matchId": "8888489297",
+      "radiantName": "Vici Gaming",
+      "direName": "Team Spirit",
       "leagueName": "Esports World Cup 2026",
       "radiantWin": false,
       "radiantHeroIds": [
-        21,
-        13,
-        87,
-        55,
+        109,
+        17,
+        96,
+        101,
+        83
+      ],
+      "direHeroIds": [
+        54,
+        51,
+        106,
+        119,
+        155
+      ],
+      "startTime": "2026-07-09T15:26:18.000Z"
+    },
+    {
+      "matchId": "8888425887",
+      "radiantName": "REKONIX",
+      "direName": "PVISION",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        105,
+        38,
+        137,
+        19,
+        58
+      ],
+      "direHeroIds": [
+        6,
+        135,
+        107,
+        119,
+        112
+      ],
+      "startTime": "2026-07-09T14:46:15.000Z"
+    },
+    {
+      "matchId": "8888083694",
+      "radiantName": "Team Falcons",
+      "direName": "GamerLegion",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        58,
+        19,
+        107,
+        36,
         51
       ],
       "direHeroIds": [
         11,
-        3,
-        128,
-        9,
-        28
+        74,
+        119,
+        60,
+        85
       ],
-      "startTime": "2026-07-11T09:00:15.000Z"
+      "startTime": "2026-07-09T10:55:01.000Z"
     },
     {
-      "matchId": "8890301402",
-      "radiantName": "Virtus.pro",
-      "direName": "Inner Circle x Insanity",
+      "matchId": "8887988797",
+      "radiantName": "GamerLegion",
+      "direName": "Team Falcons",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        6,
+        119,
+        47,
+        2,
+        75
+      ],
+      "direHeroIds": [
+        83,
+        21,
+        128,
+        135,
+        51
+      ],
+      "startTime": "2026-07-09T09:05:35.000Z"
+    },
+    {
+      "matchId": "8887197358",
+      "radiantName": "Vici Gaming",
+      "direName": "PVISION",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        70,
+        17,
+        155,
+        21,
+        131
+      ],
+      "direHeroIds": [
+        54,
+        55,
+        106,
+        107,
+        75
+      ],
+      "startTime": "2026-07-08T17:09:25.000Z"
+    },
+    {
+      "matchId": "8887100676",
+      "radiantName": "Vici Gaming",
+      "direName": "PVISION",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        11,
+        52,
+        65,
+        51,
+        111
+      ],
+      "direHeroIds": [
+        18,
+        55,
+        120,
+        107,
+        112
+      ],
+      "startTime": "2026-07-08T15:50:43.000Z"
+    },
+    {
+      "matchId": "8887075626",
+      "radiantName": "MOUZ",
+      "direName": "REKONIX",
       "leagueName": "Esports World Cup 2026",
       "radiantWin": true,
       "radiantHeroIds": [
-        28,
-        18,
-        55,
         51,
+        55,
+        114,
+        17,
+        123
+      ],
+      "direHeroIds": [
+        138,
+        120,
+        33,
+        131,
+        83
+      ],
+      "startTime": "2026-07-08T15:34:52.000Z"
+    },
+    {
+      "matchId": "8886971456",
+      "radiantName": "MOUZ",
+      "direName": "REKONIX",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        51,
+        65,
+        99,
+        74,
+        3
+      ],
+      "direHeroIds": [
+        72,
+        17,
+        47,
+        100,
+        33
+      ],
+      "startTime": "2026-07-08T14:22:47.000Z"
+    },
+    {
+      "matchId": "8886641793",
+      "radiantName": "GamerLegion",
+      "direName": "Xtreme Gaming",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        36,
+        23,
+        119,
+        112,
+        108
+      ],
+      "direHeroIds": [
+        80,
+        53,
+        128,
+        86,
+        31
+      ],
+      "startTime": "2026-07-08T10:28:00.000Z"
+    },
+    {
+      "matchId": "8886572854",
+      "radiantName": "GamerLegion",
+      "direName": "Xtreme Gaming",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        11,
+        119,
+        155,
+        112,
+        33
+      ],
+      "direHeroIds": [
+        80,
+        25,
+        55,
+        71,
+        31
+      ],
+      "startTime": "2026-07-08T09:08:23.000Z"
+    },
+    {
+      "matchId": "8886005043",
+      "radiantName": "Team Yandex",
+      "direName": "OG",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        109,
+        106,
+        38,
+        51,
+        90
+      ],
+      "direHeroIds": [
+        107,
+        9,
+        119,
+        96,
+        6
+      ],
+      "startTime": "2026-07-07T19:48:00.000Z"
+    },
+    {
+      "matchId": "8885928262",
+      "radiantName": "OG",
+      "direName": "Team Yandex",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        107,
+        9,
+        71,
+        38,
+        73
+      ],
+      "direHeroIds": [
+        145,
+        106,
+        96,
+        112,
+        53
+      ],
+      "startTime": "2026-07-07T18:47:42.000Z"
+    },
+    {
+      "matchId": "8885784652",
+      "radiantName": "Team Spirit",
+      "direName": "MOUZ",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        21,
+        58,
+        22,
+        105,
+        96
+      ],
+      "direHeroIds": [
+        13,
+        29,
+        15,
+        121,
+        83
+      ],
+      "startTime": "2026-07-07T16:59:00.000Z"
+    },
+    {
+      "matchId": "8885723512",
+      "radiantName": "Vici Gaming",
+      "direName": "REKONIX",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        11,
+        17,
+        155,
+        123,
+        85
+      ],
+      "direHeroIds": [
+        6,
+        120,
+        2,
+        21,
+        5
+      ],
+      "startTime": "2026-07-07T16:05:00.000Z"
+    },
+    {
+      "matchId": "8885633666",
+      "radiantName": "MOUZ",
+      "direName": "Team Spirit",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        100,
+        47,
+        114,
+        107,
+        3
+      ],
+      "direHeroIds": [
+        56,
+        51,
+        13,
+        86,
+        69
+      ],
+      "startTime": "2026-07-07T15:06:38.000Z"
+    },
+    {
+      "matchId": "8885614030",
+      "radiantName": "REKONIX",
+      "direName": "Vici Gaming",
+      "leagueName": "Esports World Cup 2026",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        72,
+        17,
+        69,
+        123,
+        22
+      ],
+      "direHeroIds": [
+        11,
+        128,
+        85,
+        9,
+        3
+      ],
+      "startTime": "2026-07-07T14:52:01.000Z"
+    },
+    {
+      "matchId": "8867153677",
+      "radiantName": "Natus Vincere",
+      "direName": "MOUZ",
+      "leagueName": "The International 2026 - Regional Qualifier Europe",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        2,
+        74,
+        46,
+        51,
+        123
+      ],
+      "direHeroIds": [
+        19,
+        33,
+        11,
+        90,
+        155
+      ],
+      "startTime": "2026-06-26T11:42:10.000Z"
+    },
+    {
+      "matchId": "8867047967",
+      "radiantName": "Natus Vincere",
+      "direName": "MOUZ",
+      "leagueName": "The International 2026 - Regional Qualifier Europe",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        21,
+        74,
+        83,
+        65,
+        105
+      ],
+      "direHeroIds": [
+        34,
+        69,
+        36,
+        51,
+        3
+      ],
+      "startTime": "2026-06-26T10:20:12.000Z"
+    },
+    {
+      "matchId": "8861905178",
+      "radiantName": "REKONIX",
+      "direName": "OG",
+      "leagueName": "The International 2026 - Regional Qualifier Southeast Asia",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        145,
+        126,
+        47,
+        123,
+        31
+      ],
+      "direHeroIds": [
+        13,
+        21,
+        77,
+        72,
+        87
+      ],
+      "startTime": "2026-06-22T12:15:13.000Z"
+    },
+    {
+      "matchId": "8861804868",
+      "radiantName": "REKONIX",
+      "direName": "OG",
+      "leagueName": "The International 2026 - Regional Qualifier Southeast Asia",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        72,
+        126,
+        137,
+        123,
+        87
+      ],
+      "direHeroIds": [
+        13,
+        53,
+        85,
+        21,
+        49
+      ],
+      "startTime": "2026-06-22T10:37:12.000Z"
+    },
+    {
+      "matchId": "8861740474",
+      "radiantName": "REKONIX",
+      "direName": "OG",
+      "leagueName": "The International 2026 - Regional Qualifier Southeast Asia",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        19,
+        22,
+        23,
+        26,
+        58
+      ],
+      "direHeroIds": [
+        13,
+        53,
+        2,
+        91,
+        72
+      ],
+      "startTime": "2026-06-22T09:20:27.000Z"
+    },
+    {
+      "matchId": "8861735465",
+      "radiantName": "MOUZ",
+      "direName": "Yellow Submarine",
+      "leagueName": "The International 2026 - Regional Qualifier Europe",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        53,
+        55,
+        6,
+        71,
+        30
+      ],
+      "direHeroIds": [
+        65,
+        19,
+        74,
+        77,
+        131
+      ],
+      "startTime": "2026-06-22T09:13:31.000Z"
+    },
+    {
+      "matchId": "8861682683",
+      "radiantName": "Yellow Submarine",
+      "direName": "MOUZ",
+      "leagueName": "The International 2026 - Regional Qualifier Europe",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        56,
+        65,
+        155,
+        31,
+        19
+      ],
+      "direHeroIds": [
+        74,
+        85,
+        11,
+        123,
+        51
+      ],
+      "startTime": "2026-06-22T08:01:03.000Z"
+    },
+    {
+      "matchId": "8839717574",
+      "radiantName": "Aurora Gaming",
+      "direName": "Team Falcons",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        21,
+        17,
+        120,
+        123,
+        68
+      ],
+      "direHeroIds": [
+        66,
+        54,
+        90,
+        129,
+        51
+      ],
+      "startTime": "2026-06-05T17:03:43.000Z"
+    },
+    {
+      "matchId": "8839625815",
+      "radiantName": "Team Falcons",
+      "direName": "Aurora Gaming",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        75,
+        81,
+        106,
+        15,
+        123
+      ],
+      "direHeroIds": [
+        21,
+        47,
+        69,
+        26,
+        3
+      ],
+      "startTime": "2026-06-05T15:56:10.000Z"
+    },
+    {
+      "matchId": "8839494962",
+      "radiantName": "Aurora Gaming",
+      "direName": "Team Falcons",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        21,
+        17,
+        135,
+        26,
+        37
+      ],
+      "direHeroIds": [
+        3,
+        19,
+        90,
+        99,
+        51
+      ],
+      "startTime": "2026-06-05T14:34:10.000Z"
+    },
+    {
+      "matchId": "8838170936",
+      "radiantName": "Team Falcons",
+      "direName": "Team Liquid",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        110,
+        6,
+        106,
+        108,
+        26
+      ],
+      "direHeroIds": [
+        123,
+        135,
+        74,
+        100,
+        19
+      ],
+      "startTime": "2026-06-04T13:49:59.000Z"
+    },
+    {
+      "matchId": "8838056564",
+      "radiantName": "Team Falcons",
+      "direName": "Team Liquid",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        110,
+        73,
+        106,
+        36,
+        26
+      ],
+      "direHeroIds": [
+        53,
+        128,
+        13,
+        14,
+        19
+      ],
+      "startTime": "2026-06-04T12:24:12.000Z"
+    },
+    {
+      "matchId": "8837957019",
+      "radiantName": "Team Yandex",
+      "direName": "Aurora Gaming",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        19,
+        74,
+        98,
+        112,
+        128
+      ],
+      "direHeroIds": [
+        70,
+        39,
+        2,
+        26,
+        58
+      ],
+      "startTime": "2026-06-04T10:46:59.000Z"
+    },
+    {
+      "matchId": "8837869969",
+      "radiantName": "Aurora Gaming",
+      "direName": "Team Yandex",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        109,
+        39,
+        2,
+        123,
+        58
+      ],
+      "direHeroIds": [
+        46,
+        106,
+        28,
+        51,
+        128
+      ],
+      "startTime": "2026-06-04T08:59:52.000Z"
+    },
+    {
+      "matchId": "8831927547",
+      "radiantName": "Aurora Gaming",
+      "direName": "Team Liquid",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        12,
+        21,
+        2,
+        26,
         112
       ],
       "direHeroIds": [
-        100,
-        108,
+        83,
+        28,
+        126,
+        105,
+        6
+      ],
+      "startTime": "2026-05-30T17:19:00.000Z"
+    },
+    {
+      "matchId": "8831817474",
+      "radiantName": "Team Liquid",
+      "direName": "Aurora Gaming",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        75,
+        135,
+        120,
+        26,
+        54
+      ],
+      "direHeroIds": [
+        21,
         13,
+        2,
+        123,
+        110
+      ],
+      "startTime": "2026-05-30T15:57:03.000Z"
+    },
+    {
+      "matchId": "8831810450",
+      "radiantName": "Team Yandex",
+      "direName": "Team Spirit",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        80,
+        53,
+        2,
+        3,
+        86
+      ],
+      "direHeroIds": [
+        73,
+        123,
+        47,
+        105,
+        120
+      ],
+      "startTime": "2026-05-30T15:40:02.000Z"
+    },
+    {
+      "matchId": "8831663527",
+      "radiantName": "Team Spirit",
+      "direName": "Team Yandex",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        11,
+        100,
+        106,
+        26,
+        155
+      ],
+      "direHeroIds": [
+        46,
+        74,
+        108,
+        51,
+        86
+      ],
+      "startTime": "2026-05-30T14:15:01.000Z"
+    },
+    {
+      "matchId": "8831571711",
+      "radiantName": "OG",
+      "direName": "Team Spirit",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        77,
+        100,
+        98,
+        3,
+        145
+      ],
+      "direHeroIds": [
         6,
+        83,
+        106,
+        131,
+        29
+      ],
+      "startTime": "2026-05-30T13:08:54.000Z"
+    },
+    {
+      "matchId": "8831470213",
+      "radiantName": "Team Spirit",
+      "direName": "OG",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        19,
+        123,
+        39,
+        51,
+        155
+      ],
+      "direHeroIds": [
+        69,
+        86,
+        17,
+        83,
         21
       ],
-      "startTime": "2026-07-10T18:40:41.000Z"
+      "startTime": "2026-05-30T11:56:06.000Z"
+    },
+    {
+      "matchId": "8830529631",
+      "radiantName": "Team Liquid",
+      "direName": "OG",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        3,
+        28,
+        36,
+        123,
+        6
+      ],
+      "direHeroIds": [
+        98,
+        26,
+        120,
+        66,
+        12
+      ],
+      "startTime": "2026-05-29T17:35:49.000Z"
+    },
+    {
+      "matchId": "8830280454",
+      "radiantName": "PVISION",
+      "direName": "Team Falcons",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        11,
+        2,
+        17,
+        101,
+        30
+      ],
+      "direHeroIds": [
+        110,
+        20,
+        128,
+        129,
+        51
+      ],
+      "startTime": "2026-05-29T14:40:38.000Z"
+    },
+    {
+      "matchId": "8830175194",
+      "radiantName": "Xtreme Gaming",
+      "direName": "Aurora Gaming",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        19,
+        17,
+        135,
+        90,
+        110
+      ],
+      "direHeroIds": [
+        53,
+        106,
+        2,
+        51,
+        123
+      ],
+      "startTime": "2026-05-29T13:30:26.000Z"
+    },
+    {
+      "matchId": "8830092075",
+      "radiantName": "Team Spirit",
+      "direName": "OG",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        36,
+        100,
+        120,
+        26,
+        69
+      ],
+      "direHeroIds": [
+        2,
+        119,
+        13,
+        112,
+        20
+      ],
+      "startTime": "2026-05-29T12:28:35.000Z"
+    },
+    {
+      "matchId": "8830022703",
+      "radiantName": "PVISION",
+      "direName": "Team Liquid",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        145,
+        38,
+        47,
+        90,
+        31
+      ],
+      "direHeroIds": [
+        83,
+        69,
+        17,
+        91,
+        6
+      ],
+      "startTime": "2026-05-29T11:27:03.000Z"
+    },
+    {
+      "matchId": "8829947329",
+      "radiantName": "Aurora Gaming",
+      "direName": "OG",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        12,
+        17,
+        2,
+        51,
+        110
+      ],
+      "direHeroIds": [
+        69,
+        83,
+        120,
+        6,
+        26
+      ],
+      "startTime": "2026-05-29T10:08:55.000Z"
+    },
+    {
+      "matchId": "8829882210",
+      "radiantName": "PVISION",
+      "direName": "Team Spirit",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        11,
+        2,
+        17,
+        101,
+        83
+      ],
+      "direHeroIds": [
+        6,
+        51,
+        137,
+        26,
+        65
+      ],
+      "startTime": "2026-05-29T08:51:03.000Z"
+    },
+    {
+      "matchId": "8829839467",
+      "radiantName": "Team Falcons",
+      "direName": "Team Liquid",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        31,
+        19,
+        114,
+        120,
+        26
+      ],
+      "direHeroIds": [
+        51,
+        135,
+        28,
+        91,
+        6
+      ],
+      "startTime": "2026-05-29T07:56:11.000Z"
+    },
+    {
+      "matchId": "8829095250",
+      "radiantName": "Team Spirit",
+      "direName": "Team Liquid",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        6,
+        100,
+        137,
+        21,
+        65
+      ],
+      "direHeroIds": [
+        57,
+        2,
+        13,
+        105,
+        11
+      ],
+      "startTime": "2026-05-28T15:52:26.000Z"
+    },
+    {
+      "matchId": "8829074990",
+      "radiantName": "PVISION",
+      "direName": "Aurora Gaming",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        11,
+        2,
+        126,
+        53,
+        3
+      ],
+      "direHeroIds": [
+        19,
+        39,
+        135,
+        51,
+        40
+      ],
+      "startTime": "2026-05-28T15:37:36.000Z"
+    },
+    {
+      "matchId": "8828847743",
+      "radiantName": "Team Yandex",
+      "direName": "Aurora Gaming",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        48,
+        60,
+        33,
+        128,
+        88
+      ],
+      "direHeroIds": [
+        72,
+        13,
+        2,
+        51,
+        110
+      ],
+      "startTime": "2026-05-28T12:58:43.000Z"
+    },
+    {
+      "matchId": "8828810013",
+      "radiantName": "Xtreme Gaming",
+      "direName": "Team Spirit",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        145,
+        114,
+        38,
+        105,
+        31
+      ],
+      "direHeroIds": [
+        19,
+        121,
+        86,
+        120,
+        28
+      ],
+      "startTime": "2026-05-28T12:28:43.000Z"
+    },
+    {
+      "matchId": "8828662524",
+      "radiantName": "Aurora Gaming",
+      "direName": "Team Liquid",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        19,
+        13,
+        135,
+        26,
+        37
+      ],
+      "direHeroIds": [
+        86,
+        108,
+        106,
+        123,
+        49
+      ],
+      "startTime": "2026-05-28T10:07:41.000Z"
+    },
+    {
+      "matchId": "8828602222",
+      "radiantName": "Team Falcons",
+      "direName": "Team Spirit",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        110,
+        73,
+        137,
+        15,
+        51
+      ],
+      "direHeroIds": [
+        21,
+        100,
+        120,
+        123,
+        43
+      ],
+      "startTime": "2026-05-28T08:54:48.000Z"
+    },
+    {
+      "matchId": "8827784459",
+      "radiantName": "Team Yandex",
+      "direName": "Team Falcons",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        145,
+        22,
+        120,
+        31,
+        21
+      ],
+      "direHeroIds": [
+        110,
+        19,
+        128,
+        104,
+        51
+      ],
+      "startTime": "2026-05-27T15:22:46.000Z"
+    },
+    {
+      "matchId": "8827769920",
+      "radiantName": "Aurora Gaming",
+      "direName": "Team Spirit",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        19,
+        39,
+        155,
+        26,
+        68
+      ],
+      "direHeroIds": [
+        145,
+        83,
+        59,
+        123,
+        57
+      ],
+      "startTime": "2026-05-27T15:12:22.000Z"
+    },
+    {
+      "matchId": "8827492535",
+      "radiantName": "Xtreme Gaming",
+      "direName": "Team Yandex",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        145,
+        34,
+        97,
+        26,
+        110
+      ],
+      "direHeroIds": [
+        21,
+        74,
+        28,
+        31,
+        123
+      ],
+      "startTime": "2026-05-27T11:49:02.000Z"
+    },
+    {
+      "matchId": "8827464470",
+      "radiantName": "Team Falcons",
+      "direName": "Aurora Gaming",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        58,
+        20,
+        7,
+        15,
+        51
+      ],
+      "direHeroIds": [
+        21,
+        126,
+        69,
+        123,
+        3
+      ],
+      "startTime": "2026-05-27T11:23:22.000Z"
+    },
+    {
+      "matchId": "8827351366",
+      "radiantName": "OG",
+      "direName": "Team Yandex",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        69,
+        100,
+        13,
+        31,
+        19
+      ],
+      "direHeroIds": [
+        145,
+        60,
+        120,
+        105,
+        86
+      ],
+      "startTime": "2026-05-27T09:22:17.000Z"
+    },
+    {
+      "matchId": "8827282767",
+      "radiantName": "Xtreme Gaming",
+      "direName": "Team Falcons",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        145,
+        16,
+        60,
+        123,
+        51
+      ],
+      "direHeroIds": [
+        58,
+        73,
+        137,
+        120,
+        26
+      ],
+      "startTime": "2026-05-27T07:56:58.000Z"
+    },
+    {
+      "matchId": "8826591758",
+      "radiantName": "PVISION",
+      "direName": "Team Yandex",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        36,
+        98,
+        17,
+        90,
+        51
+      ],
+      "direHeroIds": [
+        80,
+        28,
+        110,
+        31,
+        86
+      ],
+      "startTime": "2026-05-26T16:38:04.000Z"
+    },
+    {
+      "matchId": "8826437838",
+      "radiantName": "Xtreme Gaming",
+      "direName": "OG",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        19,
+        128,
+        38,
+        90,
+        3
+      ],
+      "direHeroIds": [
+        135,
+        58,
+        120,
+        123,
+        48
+      ],
+      "startTime": "2026-05-26T14:46:36.000Z"
+    },
+    {
+      "matchId": "8826347921",
+      "radiantName": "Team Yandex",
+      "direName": "Team Liquid",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        11,
+        106,
+        38,
+        3,
+        90
+      ],
+      "direHeroIds": [
+        31,
+        69,
+        13,
+        105,
+        21
+      ],
+      "startTime": "2026-05-26T13:47:11.000Z"
+    },
+    {
+      "matchId": "8826258112",
+      "radiantName": "PVISION",
+      "direName": "Xtreme Gaming",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        8,
+        28,
+        47,
+        91,
+        83
+      ],
+      "direHeroIds": [
+        138,
+        128,
+        129,
+        90,
+        103
+      ],
+      "startTime": "2026-05-26T12:43:35.000Z"
+    },
+    {
+      "matchId": "8826168772",
+      "radiantName": "Team Falcons",
+      "direName": "OG",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        66,
+        36,
+        35,
+        120,
+        26
+      ],
+      "direHeroIds": [
+        98,
+        90,
+        114,
+        3,
+        138
+      ],
+      "startTime": "2026-05-26T11:28:24.000Z"
+    },
+    {
+      "matchId": "8826110206",
+      "radiantName": "Team Yandex",
+      "direName": "Team Spirit",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        11,
+        60,
+        33,
+        83,
+        123
+      ],
+      "direHeroIds": [
+        80,
+        110,
+        13,
+        21,
+        2
+      ],
+      "startTime": "2026-05-26T10:27:20.000Z"
+    },
+    {
+      "matchId": "8826052816",
+      "radiantName": "Xtreme Gaming",
+      "direName": "Team Liquid",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        41,
+        128,
+        108,
+        26,
+        58
+      ],
+      "direHeroIds": [
+        30,
+        60,
+        17,
+        90,
+        19
+      ],
+      "startTime": "2026-05-26T09:16:44.000Z"
+    },
+    {
+      "matchId": "8825996999",
+      "radiantName": "PVISION",
+      "direName": "OG",
+      "leagueName": "BLAST SLAM VII",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        109,
+        38,
+        120,
+        86,
+        111
+      ],
+      "direHeroIds": [
+        110,
+        51,
+        128,
+        58,
+        21
+      ],
+      "startTime": "2026-05-26T08:01:27.000Z"
+    },
+    {
+      "matchId": "8823581121",
+      "radiantName": "Team Spirit",
+      "direName": "Aurora Gaming",
+      "leagueName": "DreamLeague Season 29",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        41,
+        86,
+        74,
+        136,
+        104
+      ],
+      "direHeroIds": [
+        89,
+        126,
+        98,
+        26,
+        58
+      ],
+      "startTime": "2026-05-24T11:56:08.000Z"
+    },
+    {
+      "matchId": "8823502263",
+      "radiantName": "Aurora Gaming",
+      "direName": "Team Spirit",
+      "leagueName": "DreamLeague Season 29",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        41,
+        39,
+        69,
+        26,
+        37
+      ],
+      "direHeroIds": [
+        73,
+        110,
+        126,
+        105,
+        137
+      ],
+      "startTime": "2026-05-24T10:55:03.000Z"
+    },
+    {
+      "matchId": "8822593932",
+      "radiantName": "Team Falcons",
+      "direName": "Aurora Gaming",
+      "leagueName": "DreamLeague Season 29",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        31,
+        54,
+        43,
+        29,
+        51
+      ],
+      "direHeroIds": [
+        70,
+        128,
+        2,
+        3,
+        110
+      ],
+      "startTime": "2026-05-23T17:58:00.000Z"
+    },
+    {
+      "matchId": "8822520406",
+      "radiantName": "Aurora Gaming",
+      "direName": "Team Falcons",
+      "leagueName": "DreamLeague Season 29",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        80,
+        114,
+        28,
+        3,
+        110
+      ],
+      "direHeroIds": [
+        31,
+        21,
+        120,
+        98,
+        19
+      ],
+      "startTime": "2026-05-23T17:01:01.000Z"
+    },
+    {
+      "matchId": "8822088303",
+      "radiantName": "PlayTime",
+      "direName": "Team Falcons",
+      "leagueName": "DreamLeague Season 29",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        11,
+        106,
+        47,
+        155,
+        85
+      ],
+      "direHeroIds": [
+        31,
+        19,
+        13,
+        29,
+        128
+      ],
+      "startTime": "2026-05-23T12:00:12.000Z"
+    },
+    {
+      "matchId": "8821954344",
+      "radiantName": "PlayTime",
+      "direName": "Team Falcons",
+      "leagueName": "DreamLeague Season 29",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        11,
+        123,
+        28,
+        51,
+        155
+      ],
+      "direHeroIds": [
+        31,
+        54,
+        120,
+        69,
+        86
+      ],
+      "startTime": "2026-05-23T09:55:22.000Z"
+    },
+    {
+      "matchId": "8820090629",
+      "radiantName": "Team Spirit",
+      "direName": "Aurora Gaming",
+      "leagueName": "DreamLeague Season 29",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        73,
+        123,
+        74,
+        131,
+        137
+      ],
+      "direHeroIds": [
+        21,
+        17,
+        135,
+        51,
+        110
+      ],
+      "startTime": "2026-05-21T19:46:06.000Z"
+    },
+    {
+      "matchId": "8820011939",
+      "radiantName": "Team Spirit",
+      "direName": "Aurora Gaming",
+      "leagueName": "DreamLeague Season 29",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        53,
+        83,
+        17,
+        123,
+        129
+      ],
+      "direHeroIds": [
+        69,
+        106,
+        2,
+        26,
+        110
+      ],
+      "startTime": "2026-05-21T18:32:01.000Z"
+    },
+    {
+      "matchId": "8819933287",
+      "radiantName": "Aurora Gaming",
+      "direName": "Team Spirit",
+      "leagueName": "DreamLeague Season 29",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        54,
+        21,
+        69,
+        105,
+        31
+      ],
+      "direHeroIds": [
+        11,
+        83,
+        23,
+        86,
+        128
+      ],
+      "startTime": "2026-05-21T17:23:02.000Z"
+    },
+    {
+      "matchId": "8819559937",
+      "radiantName": "PlayTime",
+      "direName": "Natus Vincere",
+      "leagueName": "DreamLeague Season 29",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        11,
+        33,
+        120,
+        123,
+        105
+      ],
+      "direHeroIds": [
+        21,
+        79,
+        108,
+        145,
+        40
+      ],
+      "startTime": "2026-05-21T12:31:04.000Z"
+    },
+    {
+      "matchId": "8819488294",
+      "radiantName": "PlayTime",
+      "direName": "Natus Vincere",
+      "leagueName": "DreamLeague Season 29",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        11,
+        55,
+        28,
+        123,
+        85
+      ],
+      "direHeroIds": [
+        108,
+        86,
+        145,
+        109,
+        79
+      ],
+      "startTime": "2026-05-21T11:22:07.000Z"
+    },
+    {
+      "matchId": "8819416362",
+      "radiantName": "Natus Vincere",
+      "direName": "PlayTime",
+      "leagueName": "DreamLeague Season 29",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        138,
+        2,
+        74,
+        86,
+        40
+      ],
+      "direHeroIds": [
+        36,
+        120,
+        123,
+        100,
+        155
+      ],
+      "startTime": "2026-05-21T09:55:59.000Z"
+    },
+    {
+      "matchId": "8818947976",
+      "radiantName": "Xtreme Gaming",
+      "direName": "Team Liquid",
+      "leagueName": "DreamLeague Season 29",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        6,
+        52,
+        96,
+        88,
+        31
+      ],
+      "direHeroIds": [
+        103,
+        69,
+        13,
+        105,
+        21
+      ],
+      "startTime": "2026-05-20T20:15:12.000Z"
+    },
+    {
+      "matchId": "8818882603",
+      "radiantName": "Xtreme Gaming",
+      "direName": "Team Liquid",
+      "leagueName": "DreamLeague Season 29",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        41,
+        38,
+        135,
+        86,
+        58
+      ],
+      "direHeroIds": [
+        110,
+        29,
+        120,
+        90,
+        19
+      ],
+      "startTime": "2026-05-20T19:10:02.000Z"
+    },
+    {
+      "matchId": "8818801707",
+      "radiantName": "Team Liquid",
+      "direName": "Xtreme Gaming",
+      "leagueName": "DreamLeague Season 29",
+      "radiantWin": false,
+      "radiantHeroIds": [
+        31,
+        28,
+        106,
+        123,
+        19
+      ],
+      "direHeroIds": [
+        6,
+        38,
+        135,
+        86,
+        110
+      ],
+      "startTime": "2026-05-20T17:57:05.000Z"
+    },
+    {
+      "matchId": "8817760291",
+      "radiantName": "Aurora Gaming",
+      "direName": "Natus Vincere",
+      "leagueName": "DreamLeague Season 29",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        19,
+        17,
+        135,
+        123,
+        40
+      ],
+      "direHeroIds": [
+        110,
+        120,
+        114,
+        26,
+        98
+      ],
+      "startTime": "2026-05-19T20:14:00.000Z"
+    },
+    {
+      "matchId": "8817670980",
+      "radiantName": "Aurora Gaming",
+      "direName": "Natus Vincere",
+      "leagueName": "DreamLeague Season 29",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        70,
+        13,
+        135,
+        123,
+        110
+      ],
+      "direHeroIds": [
+        41,
+        126,
+        97,
+        128,
+        26
+      ],
+      "startTime": "2026-05-19T18:48:00.000Z"
+    },
+    {
+      "matchId": "8817588541",
+      "radiantName": "Natus Vincere",
+      "direName": "Aurora Gaming",
+      "leagueName": "DreamLeague Season 29",
+      "radiantWin": true,
+      "radiantHeroIds": [
+        46,
+        60,
+        128,
+        75,
+        2
+      ],
+      "direHeroIds": [
+        70,
+        13,
+        110,
+        26,
+        37
+      ],
+      "startTime": "2026-05-19T17:35:29.000Z"
     }
   ]
 }
