@@ -1,34 +1,9 @@
 import { resolveBattle, type MatchupLookup } from './battle-resolution';
 import type { Hero, HeroEvaluationValues } from 'shared';
+import { makeHero, DEFAULT_EVALUATION_VALUES } from '../test-utils/hero-factory';
 
-function values(overrides: Partial<HeroEvaluationValues> = {}): HeroEvaluationValues {
-  return {
-    teamfight: 3,
-    tempo: 3,
-    scaling: 3,
-    mobility: 3,
-    objectives: 3,
-    control: 3,
-    durability: 3,
-    burst: 3,
-    vision: 3,
-    ...overrides,
-  };
-}
-
-function hero(id: number, name: string, overrides: Partial<HeroEvaluationValues> = {}): Hero {
-  return {
-    id,
-    name,
-    primary_attribute: 'strength',
-    attack_type: 'Melee',
-    roles: [],
-    tags: [],
-    synergy_tags: [],
-    counter_tags: [],
-    evaluation_values: values(overrides),
-    presumed_positions: [],
-  };
+function hero(id: number, name: string, axisOverrides: Partial<HeroEvaluationValues> = {}): Hero {
+  return makeHero({ id, name, evaluation_values: { ...DEFAULT_EVALUATION_VALUES, ...axisOverrides } });
 }
 
 const noData: MatchupLookup = {

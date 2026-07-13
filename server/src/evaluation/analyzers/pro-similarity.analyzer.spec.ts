@@ -1,30 +1,10 @@
 import { createProSimilarityAnalyzer } from './pro-similarity.analyzer';
 import type { Hero } from 'shared';
 import type { ProComposition } from '../../pro-match/pro-match.service';
+import { makeHero } from '../../test-utils/hero-factory';
 
 function hero(id: number, name: string): Hero {
-  return {
-    id,
-    name,
-    primary_attribute: 'strength',
-    attack_type: 'Melee',
-    roles: [],
-    tags: [],
-    synergy_tags: [],
-    counter_tags: [],
-    evaluation_values: {
-      teamfight: 0,
-      tempo: 0,
-      scaling: 0,
-      mobility: 0,
-      objectives: 0,
-      control: 0,
-      durability: 0,
-      burst: 0,
-      vision: 0,
-    },
-    presumed_positions: [],
-  };
+  return makeHero({ id, name });
 }
 
 describe('createProSimilarityAnalyzer', () => {

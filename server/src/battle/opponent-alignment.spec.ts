@@ -1,33 +1,9 @@
 import { alignOpponentToRoles } from './opponent-alignment';
-import type { Hero, HeroEvaluationValues, PresumedPosition } from 'shared';
-
-function values(): HeroEvaluationValues {
-  return {
-    teamfight: 3,
-    tempo: 3,
-    scaling: 3,
-    mobility: 3,
-    objectives: 3,
-    control: 3,
-    durability: 3,
-    burst: 3,
-    vision: 3,
-  };
-}
+import type { Hero, PresumedPosition } from 'shared';
+import { makeHero } from '../test-utils/hero-factory';
 
 function hero(id: number, name: string, position: PresumedPosition | null, roles: string[] = []): Hero {
-  return {
-    id,
-    name,
-    primary_attribute: 'strength',
-    attack_type: 'Melee',
-    roles,
-    tags: [],
-    synergy_tags: [],
-    counter_tags: [],
-    evaluation_values: values(),
-    presumed_positions: position ? [{ position, share: 0.9 }] : [],
-  };
+  return makeHero({ id, name, roles, presumed_positions: position ? [{ position, share: 0.9 }] : [] });
 }
 
 describe('alignOpponentToRoles', () => {
