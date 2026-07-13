@@ -1,5 +1,6 @@
 import type { Hero, HeroEvaluationValues } from 'shared';
 import type { Analyzer } from '../analyzer.interface';
+import { AXIS_NARRATIVE, scoreBracket } from '../score-narrative';
 
 type AxisKey = keyof HeroEvaluationValues;
 
@@ -20,6 +21,7 @@ export function createAxisAnalyzer(key: AxisKey, label: string): Analyzer {
       const explanation = [
         `Team average ${label.toLowerCase()}: ${score}/10.`,
         `Strongest contributors: ${top.map((v) => `${v.hero.name} (${v.value})`).join(', ')}.`,
+        AXIS_NARRATIVE[key][scoreBracket(score)],
       ];
 
       return { score, explanation };

@@ -38,6 +38,30 @@ export default function EvaluationPanel({ draftId }: Props) {
   return (
     <div style={{ marginTop: 16 }}>
       <h3>Evaluation — Total Score: {result.totalScore}/10</h3>
+
+      <div style={{ display: 'flex', gap: 16, marginBottom: 16, flexWrap: 'wrap' }}>
+        <div style={{ flex: 1, minWidth: 240 }}>
+          <div style={{ fontWeight: 'bold' }}>Strengths</div>
+          <ul style={{ margin: '4px 0 0', paddingLeft: 20 }}>
+            {result.summary.strengths.map((line, i) => (
+              <li key={i} style={{ fontSize: 13 }}>
+                {line}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div style={{ flex: 1, minWidth: 240 }}>
+          <div style={{ fontWeight: 'bold' }}>Weaknesses</div>
+          <ul style={{ margin: '4px 0 0', paddingLeft: 20 }}>
+            {result.summary.weaknesses.map((line, i) => (
+              <li key={i} style={{ fontSize: 13 }}>
+                {line}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         {result.breakdown.map((item) => (
           <div key={item.key} style={{ border: '1px solid #333', padding: 8 }}>

@@ -5,7 +5,11 @@ import { counterAnalyzer } from './analyzers/counter.analyzer';
 import { createAxisAnalyzer } from './analyzers/axis.analyzer';
 import { proSimilarityAnalyzer } from './analyzers/pro-similarity.analyzer';
 import type { Analyzer } from './analyzer.interface';
-import type { EvaluationResult, AnalyzerResult } from 'shared';
+import type { EvaluationResult, EvaluationSummary, AnalyzerResult } from 'shared';
+
+// Categories eligible for the strengths/weaknesses summary — excludes Pro
+// Similarity since it's a stub (always null) until Milestone 3.
+const SUMMARY_KEYS = ['synergy', 'counter', 'teamfight', 'tempo', 'scaling', 'mobility', 'vision', 'objectives'];
 
 // Order matches Blueprint/05-evaluation-engine.md's Output breakdown list.
 const ANALYZERS: Analyzer[] = [
@@ -57,8 +61,28 @@ export class EvaluationService {
     });
 
     const totalScore = this.weightedTotal(breakdown);
+    const summary = this.buildSummary(breakdown);
 
-    return { draftId, totalScore, breakdown };
+    return { draftId, totalScore, breakdown, summary };
+  }
+
+  private buildSummary(breakdown: AnalyzerResult[]): EvaluationSummary {
+    const ranked = breakdown
+      .filter((b) => SUMMARY_KEYS.includes(b.key) && b.score !== null)
+      .sort((a, b) => (b.score as number) - (a.score as number));
+
+    const describe = (item: AnalyzerResult) => {
+      const narrative = item.explanation[item.explanation.length - 1];
+      return `${item.label} (${item.score}/10): ${narrative}`;
+    };
+
+    const strengths = ranked.slice(0, 2).map(describe);
+    const weaknesses = ranked
+      .slice(-2)
+      .reverse()
+      .map(describe);
+
+    return { strengths, weaknesses };
   }
 
   private weightedTotal(breakdown: AnalyzerResult[]): number {

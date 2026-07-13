@@ -1,5 +1,6 @@
 import type { Hero } from 'shared';
 import type { Analyzer } from '../analyzer.interface';
+import { COUNTER_NARRATIVE, scoreBracket } from '../score-narrative';
 
 // The full counter_tags taxonomy from Blueprint/09-hero-knowledge-base.md.
 const THREAT_CATEGORIES = [
@@ -41,6 +42,7 @@ export const counterAnalyzer: Analyzer = {
         : [
             'This draft has no specialized counters against common threat types (illusions, summons, invisibility, etc.).',
           ];
+    explanation.push(COUNTER_NARRATIVE[scoreBracket(score)]);
 
     return { score, explanation };
   },

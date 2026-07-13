@@ -5,6 +5,7 @@ import HeroPool from '../components/HeroPool';
 import RoleAssignment from '../components/RoleAssignment';
 import DraftSummary from '../components/DraftSummary';
 import EvaluationPanel from '../components/EvaluationPanel';
+import PickedHeroesStrip from '../components/PickedHeroesStrip';
 
 export default function DraftPage() {
   const [draft, setDraft] = useState<DraftStateView | null>(null);
@@ -64,7 +65,7 @@ export default function DraftPage() {
   if (!draft) return <p>Loading...</p>;
 
   return (
-    <div>
+    <div style={{ paddingBottom: draft.status !== 'COMPLETED' ? 64 : 0 }}>
       <h2>Draft — round {draft.heroes.length + (draft.status === 'PICKING' ? 1 : 0)} / 5</h2>
 
       {draft.status === 'PICKING' && (
@@ -83,6 +84,10 @@ export default function DraftPage() {
             Start new draft
           </button>
         </>
+      )}
+
+      {draft.status !== 'COMPLETED' && (
+        <PickedHeroesStrip heroes={draft.heroes} totalSlots={5} />
       )}
     </div>
   );

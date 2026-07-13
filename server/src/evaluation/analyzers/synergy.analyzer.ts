@@ -1,5 +1,6 @@
 import type { Hero } from 'shared';
 import type { Analyzer } from '../analyzer.interface';
+import { SYNERGY_NARRATIVE, scoreBracket } from '../score-narrative';
 
 interface TagPairRule {
   tagA: string;
@@ -95,6 +96,9 @@ export const synergyAnalyzer: Analyzer = {
       explanation.push('No strong hero-to-hero synergies detected in this composition.');
     }
 
-    return { score: Math.min(10, Math.round(score * 10) / 10), explanation };
+    const finalScore = Math.min(10, Math.round(score * 10) / 10);
+    explanation.push(SYNERGY_NARRATIVE[scoreBracket(finalScore)]);
+
+    return { score: finalScore, explanation };
   },
 };
