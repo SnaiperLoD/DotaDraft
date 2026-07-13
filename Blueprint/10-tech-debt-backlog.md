@@ -4,11 +4,13 @@
 
 ---
 
-## ВЫСОКИЙ ПРИОРИТЕТ: Synergy Analyzer в Evaluation не использует реальные данные
+## Synergy Analyzer в Evaluation не использует реальные данные — решено
 
-Асимметрия: Battle Engine уже использует реальный co-pick винрейт (`hero-meta.json.synergy`, через `hero-meta.service.ts` → `battle-resolution.ts`'s `synergyBonus`). `server/src/evaluation/analyzers/synergy.analyzer.ts` в Evaluation Engine — всё ещё чисто tag-based, реальные данные не трогает вообще. Индивидуальный винрейт героя (`hero-meta.json.winRate`) не используется вообще нигде.
+Была асимметрия: Battle Engine уже использовал реальный co-pick винрейт (`hero-meta.json.synergy`), а `server/src/evaluation/analyzers/synergy.analyzer.ts` в Evaluation Engine оставался чисто tag-based.
 
-Дизайн уже согласован (сессия, в которой обсуждали Tempo/Map Control) — реальный co-pick винрейт как равноправный сигнал наравне с архетипными тегами (не fallback-only), с порогом: если фактический совместный винрейт пары падает на 4.5 п.п.+ относительно ожидаемого (среднее индивидуальных `winRate`), архетипный сигнал для этой пары идёт с вдвое меньшим коэффициентом. Точный порог не откалиброван (см. Research ниже). Спроектировано, не реализовано — приоритет вернуться к этому в ближайшую сессию, не откладывать в общий Research.
+Стало: `synergy.analyzer.ts` переписан в фабрику `createSynergyAnalyzer(lookup: SynergyLookup)`, `HeroMetaService` расширен методом `getWinRate()`. Реальный co-pick винрейт теперь равноправный сигнал наравне с архетипными тегами — если фактический винрейт пары падает на 4.5 п.п.+ относительно ожидаемого (среднее индивидуальных `winRate`), совпавшее архетипное правило идёт с вдвое меньшим весом; независимо от тегов, лучшая по данным пара в драфте получает бонус (до +3) при превышении ожидания на 3 п.п.+. Подтверждено живыми драфтами через API (например, Nature's Prophet + Snapfire, Jakiro + Alchemist). Полное описание — `05-evaluation-engine.md`, Synergy Analyzer.
+
+Открыто: оба порога (-4.5 п.п. / +3 п.п.) не откалиброваны — см. Research ниже.
 
 ---
 

@@ -9,6 +9,7 @@ const MIN_GAMES = 10;
 
 interface HeroMetaEntry {
   heroId: number;
+  winRate: number | null;
   synergy: { allyHeroId: number; games: number; wins: number }[];
   matchups: { opponentHeroId: number; games: number; wins: number }[];
 }
@@ -41,5 +42,9 @@ export class HeroMetaService {
     const entry = this.byHeroId.get(heroId)?.synergy.find((s) => s.allyHeroId === allyHeroId);
     if (!entry || entry.games < MIN_GAMES) return null;
     return entry.wins / entry.games;
+  }
+
+  getWinRate(heroId: number): number | null {
+    return this.byHeroId.get(heroId)?.winRate ?? null;
   }
 }

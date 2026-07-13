@@ -1,7 +1,8 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { DraftService } from '../draft/draft.service';
 import { ProMatchService } from '../pro-match/pro-match.service';
-import { synergyAnalyzer } from './analyzers/synergy.analyzer';
+import { HeroMetaService } from '../hero-meta/hero-meta.service';
+import { createSynergyAnalyzer } from './analyzers/synergy.analyzer';
 import { counterAnalyzer } from './analyzers/counter.analyzer';
 import { createAxisAnalyzer } from './analyzers/axis.analyzer';
 import { createProSimilarityAnalyzer } from './analyzers/pro-similarity.analyzer';
@@ -23,10 +24,10 @@ const SUMMARY_KEYS = [
 ];
 
 // Order matches Blueprint/05-evaluation-engine.md's Output breakdown list.
-// Pro Similarity is built per-evaluate() call since it depends on imported
-// match data (see evaluate()) — everything else is static.
+// Synergy and Pro Similarity are built per-evaluate() call since both
+// depend on data fetched at request time (see evaluate()) — everything
+// else is static.
 const BASE_ANALYZERS: Analyzer[] = [
-  synergyAnalyzer,
   counterAnalyzer,
   createAxisAnalyzer('teamfight', 'Teamfight'),
   createAxisAnalyzer('tempo', 'Tempo'),
@@ -57,6 +58,7 @@ export class EvaluationService {
   constructor(
     private readonly draftService: DraftService,
     private readonly proMatchService: ProMatchService,
+    private readonly heroMetaService: HeroMetaService,
   ) {}
 
   async evaluate(draftId: string): Promise<EvaluationResult> {
@@ -68,7 +70,11 @@ export class EvaluationService {
 
     const heroes = draft.heroes.map((dh) => dh.hero);
     const compositions = await this.proMatchService.getWinningCompositions();
-    const analyzers: Analyzer[] = [...BASE_ANALYZERS, createProSimilarityAnalyzer(compositions)];
+    const analyzers: Analyzer[] = [
+      createSynergyAnalyzer(this.heroMetaService),
+      ...BASE_ANALYZERS,
+      createProSimilarityAnalyzer(compositions),
+    ];
     const breakdown: AnalyzerResult[] = analyzers.map((analyzer) => {
       const result = analyzer.analyze(heroes);
       return {
