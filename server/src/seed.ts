@@ -15,12 +15,28 @@ interface RawHero {
   evaluation_values: Record<string, number>;
 }
 
+interface HeroMetaEntry {
+  heroId: number;
+  positions: { position: string; share: number }[];
+}
+
+function loadPositionsByHeroId(): Map<number, HeroMetaEntry['positions']> {
+  const metaPath = path.join(__dirname, '..', 'data', 'hero-meta.json');
+  if (!fs.existsSync(metaPath)) return new Map();
+
+  const meta = JSON.parse(fs.readFileSync(metaPath, 'utf-8')) as { heroes: HeroMetaEntry[] };
+  return new Map(meta.heroes.map((h) => [h.heroId, h.positions]));
+}
+
 async function seed() {
   const prisma = new PrismaClient();
   const filePath = path.join(__dirname, '..', 'data', 'heroes.json');
   const raw: RawHero[] = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+  const positionsByHeroId = loadPositionsByHeroId();
 
   for (const hero of raw) {
+    const presumedPositions = JSON.stringify(positionsByHeroId.get(hero.id) ?? []);
+
     await prisma.hero.upsert({
       where: { id: hero.id },
       update: {
@@ -32,6 +48,7 @@ async function seed() {
         synergyTags: JSON.stringify(hero.synergy_tags),
         counterTags: JSON.stringify(hero.counter_tags),
         evaluationValues: JSON.stringify(hero.evaluation_values),
+        presumedPositions,
       },
       create: {
         id: hero.id,
@@ -43,6 +60,7 @@ async function seed() {
         synergyTags: JSON.stringify(hero.synergy_tags),
         counterTags: JSON.stringify(hero.counter_tags),
         evaluationValues: JSON.stringify(hero.evaluation_values),
+        presumedPositions,
       },
     });
   }

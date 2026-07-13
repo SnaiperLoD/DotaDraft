@@ -10,6 +10,13 @@ export interface HeroEvaluationValues {
   vision: number;
 }
 
+export type PresumedPosition = 'Carry' | 'Mid' | 'Offlane' | 'Support';
+
+export interface HeroPositionShare {
+  position: PresumedPosition;
+  share: number;
+}
+
 export interface Hero {
   id: number;
   name: string;
@@ -20,4 +27,5 @@ export interface Hero {
   synergy_tags: string[];
   counter_tags: string[];
   evaluation_values: HeroEvaluationValues;
+  presumed_positions: HeroPositionShare[];
 }

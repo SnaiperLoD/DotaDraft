@@ -17,6 +17,7 @@ model Hero {
   synergyTags       String
   counterTags       String
   evaluationValues  String
+  presumedPositions String   @default("[]")
 }
 
 model Draft {
