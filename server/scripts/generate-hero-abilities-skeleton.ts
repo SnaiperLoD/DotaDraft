@@ -48,7 +48,9 @@ const SKIP_KEYS = new Set(['generic_hidden']);
 
 async function main() {
   const heroes: RawHero[] = JSON.parse(fs.readFileSync(HEROES_PATH, 'utf-8'));
-  const constantsRaw: Record<string, HeroConstant> = JSON.parse(fs.readFileSync(HERO_CONSTANTS_PATH, 'utf-8'));
+  const constantsRaw: Record<string, HeroConstant> = JSON.parse(
+    fs.readFileSync(HERO_CONSTANTS_PATH, 'utf-8'),
+  );
   const internalNameByHeroId = new Map(Object.values(constantsRaw).map((c) => [c.id, c.name]));
 
   console.log('Fetching hero_abilities and abilities constants...');
@@ -98,7 +100,8 @@ async function main() {
 
   fs.writeFileSync(OUTPUT_PATH, JSON.stringify(result, null, 2) + '\n');
   console.log(`Wrote skeleton for ${result.length} heroes to ${OUTPUT_PATH}.`);
-  if (missingHeroes > 0) console.warn(`  ${missingHeroes} heroes had no hero_abilities entry (left with empty abilities[]).`);
+  if (missingHeroes > 0)
+    console.warn(`  ${missingHeroes} heroes had no hero_abilities entry (left with empty abilities[]).`);
 }
 
 main().catch((err) => {

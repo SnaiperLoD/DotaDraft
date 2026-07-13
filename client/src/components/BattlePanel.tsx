@@ -9,15 +9,7 @@ import type { DraftHeroView } from '../api/types';
 const PORTRAIT_WIDTH = 130;
 const PORTRAIT_HEIGHT = 81;
 
-function PortraitCard({
-  heroId,
-  name,
-  caption,
-}: {
-  heroId: number;
-  name: string;
-  caption?: string | null;
-}) {
+function PortraitCard({ heroId, name, caption }: { heroId: number; name: string; caption?: string | null }) {
   return (
     <div style={{ width: PORTRAIT_WIDTH, textAlign: 'center', flexShrink: 0 }}>
       <img
@@ -44,7 +36,13 @@ function PortraitCard({
 // lines up in the same column. No score/evaluation here on either side —
 // Battle Mode is a separate system from the Evaluation Engine (Core Rules
 // Separation) and this view is purely who's facing whom.
-function FaceOff({ myHeroes, opponentHeroes }: { myHeroes: DraftHeroView[]; opponentHeroes: BattleOpponentHero[] }) {
+function FaceOff({
+  myHeroes,
+  opponentHeroes,
+}: {
+  myHeroes: DraftHeroView[];
+  opponentHeroes: BattleOpponentHero[];
+}) {
   const roleOrder = ROLES as readonly string[];
   const sortedMine = myHeroes
     .slice()
@@ -97,7 +95,7 @@ export default function BattlePanel({ draftId, heroes }: Props) {
       <h3>Battle Mode</h3>
 
       {!result && (
-        <button onClick={handleFight} disabled={loading}>
+        <button onClick={() => void handleFight()} disabled={loading}>
           {loading ? 'Finding opponent...' : 'Enter Battle'}
         </button>
       )}
@@ -176,7 +174,7 @@ export default function BattlePanel({ draftId, heroes }: Props) {
             Ad banner slot
           </div>
 
-          <button onClick={handleFight} disabled={loading}>
+          <button onClick={() => void handleFight()} disabled={loading}>
             {loading ? 'Finding opponent...' : 'Fight again'}
           </button>
           <p style={{ fontSize: 12, opacity: 0.7, marginTop: 4 }}>Battles this visit: {battleCount}</p>

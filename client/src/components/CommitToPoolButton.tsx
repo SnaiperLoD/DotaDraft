@@ -32,7 +32,7 @@ export default function CommitToPoolButton({ draftId }: Props) {
 
   return (
     <div style={{ marginTop: 16 }}>
-      <button onClick={handleCommit} disabled={status === 'loading'}>
+      <button onClick={() => void handleCommit()} disabled={status === 'loading'}>
         {status === 'loading' ? 'Committing...' : 'Commit to Pool'}
       </button>
       {status === 'error' && <p style={{ color: 'red' }}>{error}</p>}

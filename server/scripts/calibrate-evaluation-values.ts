@@ -25,7 +25,12 @@ const HEROES_PATH = path.join(__dirname, '..', 'data', 'heroes.json');
 const HERO_META_PATH = path.join(__dirname, '..', 'data', 'hero-meta.json');
 const TEMPO_TREND_PATH = path.join(__dirname, '..', 'data', 'research-tempo-v3-output.json');
 const EARLY_KILLS_PATH = path.join(__dirname, '..', 'data', 'research-tempo-mobility-output.json');
-const CONTROL_DURABILITY_VISION_PATH = path.join(__dirname, '..', 'data', 'control-durability-vision-data.json');
+const CONTROL_DURABILITY_VISION_PATH = path.join(
+  __dirname,
+  '..',
+  'data',
+  'control-durability-vision-data.json',
+);
 const HERO_CONSTANTS_PATH = path.join(__dirname, '..', 'data', 'hero-constants.json');
 const WEIGHTS_PATH = path.join(__dirname, '..', 'data', 'map-control-weights.json');
 
@@ -90,25 +95,37 @@ function main() {
   const cdvByHeroId = byHeroId<ControlDurabilityVisionEntry>(CONTROL_DURABILITY_VISION_PATH);
   const weights: MapControlWeights = JSON.parse(fs.readFileSync(WEIGHTS_PATH, 'utf-8'));
 
-  const constantsRaw: Record<string, HeroConstant> = JSON.parse(fs.readFileSync(HERO_CONSTANTS_PATH, 'utf-8'));
+  const constantsRaw: Record<string, HeroConstant> = JSON.parse(
+    fs.readFileSync(HERO_CONSTANTS_PATH, 'utf-8'),
+  );
   const constantsByHeroId = new Map(Object.values(constantsRaw).map((c) => [c.id, c]));
 
   // --- teamfight / burst / objectives: unchanged from the first calibration pass ---
-  const heroDamage = heroes.map((h) => medianBenchmarkValue(metaByHeroId.get(h.id)?.benchmarks?.hero_damage_per_min));
-  const killsPerMin = heroes.map((h) => medianBenchmarkValue(metaByHeroId.get(h.id)?.benchmarks?.kills_per_min));
-  const goldPerMin = heroes.map((h) => medianBenchmarkValue(metaByHeroId.get(h.id)?.benchmarks?.gold_per_min));
+  const heroDamage = heroes.map((h) =>
+    medianBenchmarkValue(metaByHeroId.get(h.id)?.benchmarks?.hero_damage_per_min),
+  );
+  const killsPerMin = heroes.map((h) =>
+    medianBenchmarkValue(metaByHeroId.get(h.id)?.benchmarks?.kills_per_min),
+  );
+  const goldPerMin = heroes.map((h) =>
+    medianBenchmarkValue(metaByHeroId.get(h.id)?.benchmarks?.gold_per_min),
+  );
   const xpPerMin = heroes.map((h) => medianBenchmarkValue(metaByHeroId.get(h.id)?.benchmarks?.xp_per_min));
-  const towerDamage = heroes.map((h) => medianBenchmarkValue(metaByHeroId.get(h.id)?.benchmarks?.tower_damage));
+  const towerDamage = heroes.map((h) =>
+    medianBenchmarkValue(metaByHeroId.get(h.id)?.benchmarks?.tower_damage),
+  );
 
   const teamfightScores = percentileRankScale(heroDamage);
   const burstScores = percentileRankScale(killsPerMin);
   const goldScores = percentileRankScale(goldPerMin);
   const xpScores = percentileRankScale(xpPerMin);
   const objectivesScores = percentileRankScale(towerDamage);
-  const gpmXpmScaling = heroes.map((_, i) => weightedBlend([
-    { value: goldScores[i], weight: 1 },
-    { value: xpScores[i], weight: 1 },
-  ]));
+  const gpmXpmScaling = heroes.map((_, i) =>
+    weightedBlend([
+      { value: goldScores[i], weight: 1 },
+      { value: xpScores[i], weight: 1 },
+    ]),
+  );
 
   // --- tempo / scaling trend components ---
   const gapSecondsRaw = heroes.map((h) => tempoTrendByHeroId.get(h.id)?.gapSeconds ?? null);
@@ -143,10 +160,15 @@ function main() {
   const innateVisionScores = percentileRankScale(innateVisionRaw);
 
   const moveSpeedRaw = heroes.map((h) => constantsByHeroId.get(h.id)?.move_speed ?? null);
-  const moveSpeedScores = zScoreExtremityScale(moveSpeedRaw, weights.mobilityScore.moveSpeedExtremityExponent);
+  const moveSpeedScores = zScoreExtremityScale(
+    moveSpeedRaw,
+    weights.mobilityScore.moveSpeedExtremityExponent,
+  );
 
   // --- saving: real healing data + hand-tagged protects_allies ---
-  const healingRaw = heroes.map((h) => medianBenchmarkValue(metaByHeroId.get(h.id)?.benchmarks?.hero_healing_per_min));
+  const healingRaw = heroes.map((h) =>
+    medianBenchmarkValue(metaByHeroId.get(h.id)?.benchmarks?.hero_healing_per_min),
+  );
   const healingScores = percentileRankScale(healingRaw);
 
   const counts = {

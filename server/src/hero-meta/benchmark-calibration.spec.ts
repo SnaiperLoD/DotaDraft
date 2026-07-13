@@ -1,4 +1,9 @@
-import { percentileRankScale, medianBenchmarkValue, zScoreExtremityScale, weightedBlend } from './benchmark-calibration';
+import {
+  percentileRankScale,
+  medianBenchmarkValue,
+  zScoreExtremityScale,
+  weightedBlend,
+} from './benchmark-calibration';
 
 describe('percentileRankScale', () => {
   it('maps the lowest value to 0 and the highest to 10', () => {
@@ -8,7 +13,7 @@ describe('percentileRankScale', () => {
     expect(result[2]).toBe(5); // 20 is the middle of 3 evenly spaced values
   });
 
-  it('passes through null for heroes with no benchmark data, without affecting others\' ranks', () => {
+  it("passes through null for heroes with no benchmark data, without affecting others' ranks", () => {
     const result = percentileRankScale([10, null, 30, 20]);
     expect(result[1]).toBeNull();
     expect(result[0]).toBe(0);

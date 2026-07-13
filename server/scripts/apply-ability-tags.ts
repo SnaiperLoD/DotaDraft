@@ -11,7 +11,15 @@ import * as path from 'path';
 const HEROES_PATH = path.join(__dirname, '..', 'data', 'heroes.json');
 
 // Direct reveal / true sight / dedicated scouting.
-const VISION_TIER_10 = ['Zeus', 'Spectre', 'Bounty Hunter', 'Clockwerk', 'Bloodseeker', 'Slark', "Nature's Prophet"];
+const VISION_TIER_10 = [
+  'Zeus',
+  'Spectre',
+  'Bounty Hunter',
+  'Clockwerk',
+  'Bloodseeker',
+  'Slark',
+  "Nature's Prophet",
+];
 const VISION_TIER_6 = ['Beastmaster'];
 // Mobile summon-based heroes — map presence via patrolling units.
 const VISION_TIER_5 = [
@@ -103,8 +111,12 @@ function main() {
 
   fs.writeFileSync(HEROES_PATH, JSON.stringify(heroes, null, 2) + '\n');
   console.log(`Applied ability tags to ${heroes.length} heroes.`);
-  console.log(`  vision_ability_tier: ${heroes.filter((h) => h.vision_ability_tier! > 0).length} heroes tagged`);
-  console.log(`  mobility_ability_tier: ${heroes.filter((h) => h.mobility_ability_tier! > 0).length} heroes tagged`);
+  console.log(
+    `  vision_ability_tier: ${heroes.filter((h) => h.vision_ability_tier! > 0).length} heroes tagged`,
+  );
+  console.log(
+    `  mobility_ability_tier: ${heroes.filter((h) => h.mobility_ability_tier! > 0).length} heroes tagged`,
+  );
 }
 
 main();

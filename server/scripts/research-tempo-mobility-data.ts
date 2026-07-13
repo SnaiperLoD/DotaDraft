@@ -100,7 +100,9 @@ async function main() {
     await sleep(500);
   }
 
-  console.log(`\n\nComputed for ${results.length}/${heroes.length} heroes (min ${MIN_GAMES} games in window).\n`);
+  console.log(
+    `\n\nComputed for ${results.length}/${heroes.length} heroes (min ${MIN_GAMES} games in window).\n`,
+  );
 
   fs.writeFileSync(
     path.join(__dirname, '..', 'data', 'research-tempo-mobility-output.json'),
@@ -109,7 +111,9 @@ async function main() {
 
   const byEarlyKills = [...results].sort((a, b) => b.earlyKillsPerGame - a.earlyKillsPerGame);
   console.log('=== TOP 15 EARLY KILLS PER GAME (<25min) ===');
-  byEarlyKills.slice(0, 15).forEach((r) => console.log(`${r.name.padEnd(20)} ${r.earlyKillsPerGame}/game, n=${r.games}`));
+  byEarlyKills
+    .slice(0, 15)
+    .forEach((r) => console.log(`${r.name.padEnd(20)} ${r.earlyKillsPerGame}/game, n=${r.games}`));
   console.log('\n=== BOTTOM 15 EARLY KILLS PER GAME ===');
   byEarlyKills
     .slice(-15)
@@ -118,11 +122,15 @@ async function main() {
 
   const byBlink = [...results].sort((a, b) => b.blinkRate - a.blinkRate);
   console.log('\n=== TOP 20 BLINK DAGGER PURCHASE RATE ===');
-  byBlink.slice(0, 20).forEach((r) => console.log(`${r.name.padEnd(20)} ${(r.blinkRate * 100).toFixed(1)}%, n=${r.games}`));
+  byBlink
+    .slice(0, 20)
+    .forEach((r) => console.log(`${r.name.padEnd(20)} ${(r.blinkRate * 100).toFixed(1)}%, n=${r.games}`));
 
   const byBot = [...results].sort((a, b) => b.botRate - a.botRate);
   console.log('\n=== TOP 20 BOOTS OF TRAVEL PURCHASE RATE ===');
-  byBot.slice(0, 20).forEach((r) => console.log(`${r.name.padEnd(20)} ${(r.botRate * 100).toFixed(1)}%, n=${r.games}`));
+  byBot
+    .slice(0, 20)
+    .forEach((r) => console.log(`${r.name.padEnd(20)} ${(r.botRate * 100).toFixed(1)}%, n=${r.games}`));
 }
 
 main().catch((err) => {

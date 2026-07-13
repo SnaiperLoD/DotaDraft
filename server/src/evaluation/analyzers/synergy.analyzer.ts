@@ -34,13 +34,15 @@ const TAG_PAIR_RULES: TagPairRule[] = [
     tagA: 'enables_engage',
     tagB: 'amplifies_magic_damage',
     weight: 1.5,
-    describe: (a, b) => `${a.name} (enables engage) sets up ${b.name} (amplifies magic damage) for burst follow-up.`,
+    describe: (a, b) =>
+      `${a.name} (enables engage) sets up ${b.name} (amplifies magic damage) for burst follow-up.`,
   },
   {
     tagA: 'enables_engage',
     tagB: 'amplifies_physical_damage',
     weight: 1.5,
-    describe: (a, b) => `${a.name} (enables engage) sets up ${b.name} (amplifies physical damage) for follow-up.`,
+    describe: (a, b) =>
+      `${a.name} (enables engage) sets up ${b.name} (amplifies physical damage) for follow-up.`,
   },
   {
     tagA: 'wave_clear_support',
@@ -87,9 +89,7 @@ export const synergyAnalyzer: Analyzer = {
     const teamfightHeroes = heroes.filter((h) => h.tags.includes('teamfight'));
     if (teamfightHeroes.length >= 3) {
       score += 1;
-      explanation.push(
-        `Strong teamfight-oriented core (${teamfightHeroes.map((h) => h.name).join(', ')}).`,
-      );
+      explanation.push(`Strong teamfight-oriented core (${teamfightHeroes.map((h) => h.name).join(', ')}).`);
     }
 
     if (explanation.length === 0) {

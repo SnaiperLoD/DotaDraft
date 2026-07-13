@@ -90,27 +90,44 @@ async function main() {
         heroId: hero.id,
         name: hero.name,
         games,
-        stunsPerMin: totalStuns !== null && totalMinutes > 0 ? Math.round((totalStuns / totalMinutes) * 1000) / 1000 : null,
-        wardsPerMin: totalWards !== null && totalMinutes > 0 ? Math.round((totalWards / totalMinutes) * 1000) / 1000 : null,
-        durability: totalDamageTaken !== null && totalDeaths && totalDeaths > 0 ? Math.round(totalDamageTaken / totalDeaths) : null,
+        stunsPerMin:
+          totalStuns !== null && totalMinutes > 0
+            ? Math.round((totalStuns / totalMinutes) * 1000) / 1000
+            : null,
+        wardsPerMin:
+          totalWards !== null && totalMinutes > 0
+            ? Math.round((totalWards / totalMinutes) * 1000) / 1000
+            : null,
+        durability:
+          totalDamageTaken !== null && totalDeaths && totalDeaths > 0
+            ? Math.round(totalDamageTaken / totalDeaths)
+            : null,
       });
     }
 
     await sleep(500);
   }
 
-  console.log(`\n\nComputed for ${results.length}/${heroes.length} heroes (min ${MIN_GAMES} games in window).\n`);
+  console.log(
+    `\n\nComputed for ${results.length}/${heroes.length} heroes (min ${MIN_GAMES} games in window).\n`,
+  );
   fs.writeFileSync(OUTPUT_PATH, JSON.stringify(results, null, 2));
 
-  const byStuns = [...results].filter((r) => r.stunsPerMin !== null).sort((a, b) => (b.stunsPerMin as number) - (a.stunsPerMin as number));
+  const byStuns = [...results]
+    .filter((r) => r.stunsPerMin !== null)
+    .sort((a, b) => (b.stunsPerMin as number) - (a.stunsPerMin as number));
   console.log('=== TOP 10 STUNS/MIN (Control) ===');
   byStuns.slice(0, 10).forEach((r) => console.log(`${r.name.padEnd(20)} ${r.stunsPerMin}/min`));
 
-  const byWards = [...results].filter((r) => r.wardsPerMin !== null).sort((a, b) => (b.wardsPerMin as number) - (a.wardsPerMin as number));
+  const byWards = [...results]
+    .filter((r) => r.wardsPerMin !== null)
+    .sort((a, b) => (b.wardsPerMin as number) - (a.wardsPerMin as number));
   console.log('\n=== TOP 10 WARDS/MIN ===');
   byWards.slice(0, 10).forEach((r) => console.log(`${r.name.padEnd(20)} ${r.wardsPerMin}/min`));
 
-  const byDurability = [...results].filter((r) => r.durability !== null).sort((a, b) => (b.durability as number) - (a.durability as number));
+  const byDurability = [...results]
+    .filter((r) => r.durability !== null)
+    .sort((a, b) => (b.durability as number) - (a.durability as number));
   console.log('\n=== TOP 10 DURABILITY (damage taken per death) ===');
   byDurability.slice(0, 10).forEach((r) => console.log(`${r.name.padEnd(20)} ${r.durability}`));
 }

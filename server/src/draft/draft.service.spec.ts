@@ -15,7 +15,13 @@ function makeFakeHeroService() {
 
 function makeFakePrisma() {
   let draftRow: { id: string; status: string; seed: number; pool: string; createdAt: Date } | null = null;
-  let heroRows: { id: number; draftId: string; heroId: number; assignedRole: string | null; pickOrder: number }[] = [];
+  const heroRows: {
+    id: number;
+    draftId: string;
+    heroId: number;
+    assignedRole: string | null;
+    pickOrder: number;
+  }[] = [];
   let nextRowId = 1;
 
   const withHeroes = () => ({ ...draftRow!, heroes: heroRows.filter((h) => h.draftId === draftRow!.id) });
@@ -23,7 +29,13 @@ function makeFakePrisma() {
   return {
     draft: {
       create: jest.fn(async ({ data }: any) => {
-        draftRow = { id: 'draft-1', status: data.status, seed: data.seed, pool: data.pool, createdAt: new Date() };
+        draftRow = {
+          id: 'draft-1',
+          status: data.status,
+          seed: data.seed,
+          pool: data.pool,
+          createdAt: new Date(),
+        };
         return withHeroes();
       }),
       findUnique: jest.fn(async ({ where }: any) => {
@@ -37,7 +49,13 @@ function makeFakePrisma() {
     },
     draftHero: {
       create: jest.fn(async ({ data }: any) => {
-        const row = { id: nextRowId++, draftId: data.draftId, heroId: data.heroId, assignedRole: null, pickOrder: data.pickOrder };
+        const row = {
+          id: nextRowId++,
+          draftId: data.draftId,
+          heroId: data.heroId,
+          assignedRole: null,
+          pickOrder: data.pickOrder,
+        };
         heroRows.push(row);
         return row;
       }),
@@ -130,7 +148,9 @@ describe('DraftService', () => {
     it('rejects assigning roles before all 5 heroes are picked', async () => {
       const { service } = makeService();
       const draft = await service.start();
-      await expect(service.assignRoles(draft.id, [])).rejects.toThrow('Draft is not in role assignment phase');
+      await expect(service.assignRoles(draft.id, [])).rejects.toThrow(
+        'Draft is not in role assignment phase',
+      );
     });
 
     it('rejects a role assignment count other than 5', async () => {

@@ -42,7 +42,9 @@ function loadPositionsByHeroId(): Map<number, HeroMetaEntry['positions']> {
 async function seedProMatches(prisma: PrismaClient) {
   const matchesPath = path.join(__dirname, '..', 'data', 'pro-matches.json');
   if (!fs.existsSync(matchesPath)) {
-    console.log('No pro-matches.json found, skipping pro match seed (run `npm run fetch-pro-matches` first).');
+    console.log(
+      'No pro-matches.json found, skipping pro match seed (run `npm run fetch-pro-matches` first).',
+    );
     return;
   }
 
@@ -121,7 +123,6 @@ async function seed() {
     });
   }
 
-  // eslint-disable-next-line no-console
   console.log(`Seeded ${raw.length} heroes.`);
 
   await seedProMatches(prisma);
@@ -130,7 +131,6 @@ async function seed() {
 }
 
 seed().catch((err) => {
-  // eslint-disable-next-line no-console
   console.error(err);
   process.exit(1);
 });

@@ -20,9 +20,7 @@ export default function HistoryPage() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       {entries.map((entry) => (
         <div key={entry.id} style={{ border: '1px solid #333', padding: 12 }}>
-          <div style={{ opacity: 0.7, fontSize: 12 }}>
-            {new Date(entry.createdAt).toLocaleString()}
-          </div>
+          <div style={{ opacity: 0.7, fontSize: 12 }}>{new Date(entry.createdAt).toLocaleString()}</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginTop: 8 }}>
             {entry.heroes
               .slice()

@@ -125,7 +125,7 @@ const AXIS_LABEL: Record<keyof HeroEvaluationValues, string> = {
 };
 
 function describeAxis(axis: keyof HeroEvaluationValues, favorsA: boolean): string {
-  return `${favorsA ? "an edge in" : "a deficit in"} ${AXIS_LABEL[axis]}`;
+  return `${favorsA ? 'an edge in' : 'a deficit in'} ${AXIS_LABEL[axis]}`;
 }
 
 interface ExplanationContext {
@@ -158,7 +158,7 @@ function buildExplanation(ctx: ExplanationContext): string[] {
   const underdogTeam = favoredIsA ? teamB : teamA;
   const favoredTeam = favoredIsA ? teamA : teamB;
 
-  const axisFavorsFavoredSide = favoredIsA === (topAxisDelta.delta > 0);
+  const axisFavorsFavoredSide = favoredIsA === topAxisDelta.delta > 0;
   const baseLine = `${favoredLabel} leaned ahead overall (${confidenceTier} confidence), with ${describeAxis(topAxisDelta.axis, axisFavorsFavoredSide)} standing out.`;
 
   if (!isUpset) {
@@ -168,7 +168,7 @@ function buildExplanation(ctx: ExplanationContext): string[] {
         : 'That advantage should have held up — this loss runs against the grain.'
       : userWon
         ? "The opponent's edge should have held up — this win runs against the grain."
-        : "That edge held up here.";
+        : 'That edge held up here.';
     return [baseLine, closingLine];
   }
 
@@ -208,9 +208,13 @@ export function resolveBattle(
   // strong counter matchup can still swing an otherwise-even matchup,
   // instead of only ever scaling an existing advantage.
   const powerA =
-    overallPower(teamA) * clamp(1 + synergyBonus(teamA, lookup) * 2, 0.3, 1.7) * clamp(1 + edgeA * 3, 0.3, 1.7);
+    overallPower(teamA) *
+    clamp(1 + synergyBonus(teamA, lookup) * 2, 0.3, 1.7) *
+    clamp(1 + edgeA * 3, 0.3, 1.7);
   const powerB =
-    overallPower(teamB) * clamp(1 + synergyBonus(teamB, lookup) * 2, 0.3, 1.7) * clamp(1 - edgeA * 3, 0.3, 1.7);
+    overallPower(teamB) *
+    clamp(1 + synergyBonus(teamB, lookup) * 2, 0.3, 1.7) *
+    clamp(1 - edgeA * 3, 0.3, 1.7);
 
   const diff = powerA - powerB;
 
@@ -222,9 +226,10 @@ export function resolveBattle(
   const pWinA = advantageDirection === 'A' ? favorWeight : advantageDirection === 'B' ? 1 - favorWeight : 0.5;
   const resolvedOutcome: ResolvedOutcome = random() < pWinA ? 'Win' : 'Lose';
 
-  const axisDeltas = AXES.map((axis) => ({ axis, delta: axisAverage(teamA, axis) - axisAverage(teamB, axis) })).sort(
-    (x, y) => Math.abs(y.delta) - Math.abs(x.delta),
-  );
+  const axisDeltas = AXES.map((axis) => ({
+    axis,
+    delta: axisAverage(teamA, axis) - axisAverage(teamB, axis),
+  })).sort((x, y) => Math.abs(y.delta) - Math.abs(x.delta));
   const advantages = axisDeltas
     .filter((d) => d.delta > 0.3)
     .slice(0, 2)

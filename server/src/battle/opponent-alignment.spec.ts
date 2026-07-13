@@ -20,7 +20,12 @@ describe('alignOpponentToRoles', () => {
     // fill the two Support slots, but which specific one lands on Soft vs
     // Hard Support is unspecified — we have no data to tell them apart.
     expect(aligned.slice(0, 3).map((h) => h.id)).toEqual([1, 2, 3]);
-    expect(aligned.slice(3).map((h) => h.id).sort()).toEqual([4, 5]);
+    expect(
+      aligned
+        .slice(3)
+        .map((h) => h.id)
+        .sort(),
+    ).toEqual([4, 5]);
   });
 
   it('fills a missing position category from leftovers instead of dropping a hero', () => {

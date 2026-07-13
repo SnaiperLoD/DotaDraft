@@ -50,7 +50,8 @@ export default function HeroPool({ pool, onPick, disabled }: Props) {
               bottom: 0,
               padding: '20px 10px 8px',
               textAlign: 'left',
-              background: 'linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.55) 55%, transparent 100%)',
+              background:
+                'linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.55) 55%, transparent 100%)',
             }}
           >
             <div style={{ fontWeight: 'bold', color: '#fff', textShadow: '0 1px 2px rgba(0,0,0,0.8)' }}>

@@ -35,7 +35,7 @@ export class DraftService {
     createdAt: Date;
     heroes: { heroId: number; assignedRole: string | null; pickOrder: number }[];
   }): Promise<DraftStateView> {
-    const poolIds = JSON.parse(draft.pool as unknown as string) as number[];
+    const poolIds = JSON.parse(draft.pool as string) as number[];
     const pickedIds = draft.heroes.map((h) => h.heroId);
     const [poolHeroes, pickedHeroes] = await Promise.all([
       this.heroService.findByIds(poolIds),
@@ -107,9 +107,7 @@ export class DraftService {
 
     const nextPool = isComplete
       ? []
-      : (await this.heroService.randomPool(pickedIds, POOL_SIZE, draft.seed + pickOrder)).map(
-          (h) => h.id,
-        );
+      : (await this.heroService.randomPool(pickedIds, POOL_SIZE, draft.seed + pickOrder)).map((h) => h.id);
 
     const updated = await this.prisma.draft.update({
       where: { id: draftId },

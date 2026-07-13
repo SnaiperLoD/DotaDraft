@@ -106,7 +106,9 @@ async function main() {
     await sleep(450);
   }
 
-  console.log(`\n\nComputed for ${results.length}/${heroes.length} heroes (min ${MIN_GAMES} games in window).\n`);
+  console.log(
+    `\n\nComputed for ${results.length}/${heroes.length} heroes (min ${MIN_GAMES} games in window).\n`,
+  );
 
   fs.writeFileSync(
     path.join(__dirname, '..', 'data', 'research-tempo-v3-output.json'),
@@ -116,11 +118,13 @@ async function main() {
   const withGap = results.filter((r) => r.gapSeconds !== null);
   const byGap = [...withGap].sort((a, b) => (b.gapSeconds as number) - (a.gapSeconds as number));
   console.log('=== TOP 10 by WIN/LOSS DURATION GAP ===');
-  byGap.slice(0, 10).forEach((r) =>
-    console.log(
-      `${r.name.padEnd(20)} gap ${(r.gapSeconds! / 60).toFixed(1)}min (win ${(r.winDuration! / 60).toFixed(1)} / loss ${(r.lossDuration! / 60).toFixed(1)}), n=${r.games}`,
-    ),
-  );
+  byGap
+    .slice(0, 10)
+    .forEach((r) =>
+      console.log(
+        `${r.name.padEnd(20)} gap ${(r.gapSeconds! / 60).toFixed(1)}min (win ${(r.winDuration! / 60).toFixed(1)} / loss ${(r.lossDuration! / 60).toFixed(1)}), n=${r.games}`,
+      ),
+    );
   console.log('\n=== BOTTOM 10 by WIN/LOSS DURATION GAP ===');
   byGap
     .slice(-10)
@@ -132,16 +136,18 @@ async function main() {
     );
 
   const withTrend = results.filter((r) => r.wrShort !== null && r.wrLong !== null);
-  const byTrend = [...withTrend].sort((a, b) => (a.wrLong! - a.wrShort!) - (b.wrLong! - b.wrShort!));
+  const byTrend = [...withTrend].sort((a, b) => a.wrLong! - a.wrShort! - (b.wrLong! - b.wrShort!));
   console.log('\n=== TOP 10 TEMPO by WIN-RATE TREND (win rate falls hardest as games run long) ===');
-  byTrend.slice(0, 10).forEach((r) =>
-    console.log(
-      `${r.name.padEnd(20)} <25m: ${(r.wrShort! * 100).toFixed(0)}%  25-40m: ${r.wrMid !== null ? (r.wrMid * 100).toFixed(0) + '%' : 'n/a'}  40m+: ${(r.wrLong! * 100).toFixed(0)}%`,
-    ),
-  );
+  byTrend
+    .slice(0, 10)
+    .forEach((r) =>
+      console.log(
+        `${r.name.padEnd(20)} <25m: ${(r.wrShort! * 100).toFixed(0)}%  25-40m: ${r.wrMid !== null ? (r.wrMid * 100).toFixed(0) + '%' : 'n/a'}  40m+: ${(r.wrLong! * 100).toFixed(0)}%`,
+      ),
+    );
   console.log('\n=== TOP 10 SCALING by WIN-RATE TREND (win rate rises hardest as games run long) ===');
   [...withTrend]
-    .sort((a, b) => (b.wrLong! - b.wrShort!) - (a.wrLong! - a.wrShort!))
+    .sort((a, b) => b.wrLong! - b.wrShort! - (a.wrLong! - a.wrShort!))
     .slice(0, 10)
     .forEach((r) =>
       console.log(

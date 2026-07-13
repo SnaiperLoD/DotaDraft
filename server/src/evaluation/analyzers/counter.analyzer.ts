@@ -31,14 +31,11 @@ export const counterAnalyzer: Analyzer = {
       heroes: heroes.filter((h) => h.counter_tags.includes(tag)),
     })).filter((c) => c.heroes.length > 0);
 
-    const score =
-      Math.round(Math.min(10, (coverage.length / FULL_COVERAGE_THRESHOLD) * 10) * 10) / 10;
+    const score = Math.round(Math.min(10, (coverage.length / FULL_COVERAGE_THRESHOLD) * 10) * 10) / 10;
 
     const explanation =
       coverage.length > 0
-        ? coverage.map(
-            (c) => `Counters ${humanize(c.tag)}: ${c.heroes.map((h) => h.name).join(', ')}.`,
-          )
+        ? coverage.map((c) => `Counters ${humanize(c.tag)}: ${c.heroes.map((h) => h.name).join(', ')}.`)
         : [
             'This draft has no specialized counters against common threat types (illusions, summons, invisibility, etc.).',
           ];

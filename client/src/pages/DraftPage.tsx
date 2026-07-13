@@ -52,7 +52,10 @@ export default function DraftPage() {
   const handleRestart = () => {
     setDraft(null);
     setError(null);
-    api.startDraft().then(setDraft).catch((err) => setError(err.message));
+    api
+      .startDraft()
+      .then(setDraft)
+      .catch((err) => setError(err.message));
   };
 
   if (error) {
@@ -71,11 +74,15 @@ export default function DraftPage() {
       <h2>Draft — round {draft.heroes.length + (draft.status === 'PICKING' ? 1 : 0)} / 5</h2>
 
       {draft.status === 'PICKING' && (
-        <HeroPool pool={draft.pool} onPick={handlePick} disabled={loading} />
+        <HeroPool pool={draft.pool} onPick={(heroId) => void handlePick(heroId)} disabled={loading} />
       )}
 
       {draft.status === 'ASSIGNING_ROLES' && (
-        <RoleAssignment heroes={draft.heroes} onSubmit={handleAssignRoles} submitting={loading} />
+        <RoleAssignment
+          heroes={draft.heroes}
+          onSubmit={(assignments) => void handleAssignRoles(assignments)}
+          submitting={loading}
+        />
       )}
 
       {draft.status === 'COMPLETED' && (
@@ -90,9 +97,7 @@ export default function DraftPage() {
         </>
       )}
 
-      {draft.status !== 'COMPLETED' && (
-        <PickedHeroesStrip heroes={draft.heroes} totalSlots={5} />
-      )}
+      {draft.status !== 'COMPLETED' && <PickedHeroesStrip heroes={draft.heroes} totalSlots={5} />}
     </div>
   );
 }

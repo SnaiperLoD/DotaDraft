@@ -49,7 +49,7 @@ describe('resolveBattle', () => {
     expect(text).toMatch(/upset|edge of its own|advantages of its own/i);
   });
 
-  it('cites the underdog\'s real matchup/synergy edges in the upset explanation when data exists', () => {
+  it("cites the underdog's real matchup/synergy edges in the upset explanation when data exists", () => {
     const strongTeam = team(5, { teamfight: 9, scaling: 9, burst: 9 });
     const weakTeam = team(5, {}, 6);
     const lookup: MatchupLookup = {

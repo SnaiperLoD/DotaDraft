@@ -46,11 +46,15 @@ describe('OpponentPoolService.commit', () => {
     const pool = makeMockPool();
     const draftService = makeMockDraftService({ status: 'COMPLETED', heroes: [] });
     pool.pooledDraft.create.mockRejectedValue(
-      new Error('Error validating datasource `db`: environment variable `POOL_DATABASE_URL` resolved to an empty string'),
+      new Error(
+        'Error validating datasource `db`: environment variable `POOL_DATABASE_URL` resolved to an empty string',
+      ),
     );
     const service = new OpponentPoolService(pool as any, draftService as any);
 
-    await expect(service.commit('draft-1', 'token')).rejects.toThrow('POOL_DATABASE_URL may not be configured');
+    await expect(service.commit('draft-1', 'token')).rejects.toThrow(
+      'POOL_DATABASE_URL may not be configured',
+    );
   });
 });
 
@@ -111,7 +115,12 @@ const hasPoolDb = !!process.env.POOL_DATABASE_URL;
 
   beforeAll(async () => {
     await pool.pooledDraft.create({
-      data: { id: testIds[0], source: 'player', submitterToken: 'test-regression-token', heroIds: [1, 2, 3, 4, 5] },
+      data: {
+        id: testIds[0],
+        source: 'player',
+        submitterToken: 'test-regression-token',
+        heroIds: [1, 2, 3, 4, 5],
+      },
     });
     await pool.pooledDraft.create({
       data: { id: testIds[1], source: 'pro', submitterToken: null, heroIds: [6, 7, 8, 9, 10] },
@@ -142,7 +151,9 @@ const hasPoolDb = !!process.env.POOL_DATABASE_URL;
   // against the OR-null filter the service actually uses.
   it('a bare NOT filter silently drops null-submitterToken rows that the OR-null filter correctly keeps', async () => {
     const buggyNaiveFilter = { NOT: { submitterToken: 'test-regression-token' } };
-    const correctFilter = { OR: [{ submitterToken: null }, { NOT: { submitterToken: 'test-regression-token' } }] };
+    const correctFilter = {
+      OR: [{ submitterToken: null }, { NOT: { submitterToken: 'test-regression-token' } }],
+    };
 
     const buggyCount = await pool.pooledDraft.count({ where: buggyNaiveFilter });
     const correctCount = await pool.pooledDraft.count({ where: correctFilter });

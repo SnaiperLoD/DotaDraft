@@ -167,7 +167,7 @@ async function main() {
         if (!res.ok) throw new Error(`benchmarks HTTP ${res.status}`);
         return res.json();
       });
-      const benchmarks = (benchmarksRes as any)?.result ?? null;
+      const benchmarks = benchmarksRes?.result ?? null;
 
       const stat = heroStatsById.get(hero.id);
       let winRate: number | null = null;
@@ -180,7 +180,14 @@ async function main() {
       results.push({ heroId: hero.id, positions, winRate, synergy, matchups, benchmarks });
     } catch (err) {
       console.warn(`  unexpected failure for ${hero.name}, skipping: ${(err as Error).message}`);
-      results.push({ heroId: hero.id, positions: [], winRate: null, synergy: [], matchups: [], benchmarks: null });
+      results.push({
+        heroId: hero.id,
+        positions: [],
+        winRate: null,
+        synergy: [],
+        matchups: [],
+        benchmarks: null,
+      });
     }
 
     await sleep(200);

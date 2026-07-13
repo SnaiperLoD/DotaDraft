@@ -60,9 +60,7 @@ export default function RoleAssignment({ heroes, onSubmit, submitting }: Props) 
                     'linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.55) 55%, transparent 100%)',
                 }}
               >
-                <div
-                  style={{ fontWeight: 'bold', color: '#fff', textShadow: '0 1px 2px rgba(0,0,0,0.8)' }}
-                >
+                <div style={{ fontWeight: 'bold', color: '#fff', textShadow: '0 1px 2px rgba(0,0,0,0.8)' }}>
                   {h.hero.name}
                 </div>
               </div>

@@ -27,7 +27,7 @@ export default function EvaluationPanel({ draftId }: Props) {
   if (!result) {
     return (
       <div style={{ marginTop: 16 }}>
-        <button onClick={handleEvaluate} disabled={loading}>
+        <button onClick={() => void handleEvaluate()} disabled={loading}>
           {loading ? 'Evaluating...' : 'Evaluate draft'}
         </button>
         {error && <p style={{ color: 'red' }}>{error}</p>}

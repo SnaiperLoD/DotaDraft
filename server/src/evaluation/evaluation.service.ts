@@ -96,10 +96,7 @@ export class EvaluationService {
     };
 
     const strengths = ranked.slice(0, 2).map(describe);
-    const weaknesses = ranked
-      .slice(-2)
-      .reverse()
-      .map(describe);
+    const weaknesses = ranked.slice(-2).reverse().map(describe);
 
     return { strengths, weaknesses };
   }

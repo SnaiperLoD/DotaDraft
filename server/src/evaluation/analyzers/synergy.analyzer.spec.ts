@@ -3,10 +3,7 @@ import { makeHero, DEFAULT_EVALUATION_VALUES } from '../../test-utils/hero-facto
 
 describe('synergyAnalyzer', () => {
   it('reports no synergy when nothing matches', () => {
-    const heroes = [
-      makeHero({ id: 1, name: 'A' }),
-      makeHero({ id: 2, name: 'B' }),
-    ];
+    const heroes = [makeHero({ id: 1, name: 'A' }), makeHero({ id: 2, name: 'B' })];
     const result = synergyAnalyzer.analyze(heroes);
     expect(result.score).toBe(0);
     expect(result.explanation[0]).toMatch(/no strong hero-to-hero synergies/i);

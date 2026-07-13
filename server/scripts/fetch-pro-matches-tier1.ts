@@ -131,7 +131,9 @@ async function main() {
   const results: StoredProMatch[] = [];
 
   for (const [index, match] of selected.entries()) {
-    console.log(`[${index + 1}/${selected.length}] match ${match.matchId} (${match.radiantName} vs ${match.direName})`);
+    console.log(
+      `[${index + 1}/${selected.length}] match ${match.matchId} (${match.radiantName} vs ${match.direName})`,
+    );
 
     const detail = await withRetry(async () => {
       const res = await fetch(`https://api.opendota.com/api/matches/${match.matchId}`);

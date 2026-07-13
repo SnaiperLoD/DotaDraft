@@ -19,9 +19,7 @@ export function createProSimilarityAnalyzer(compositions: ProComposition[]): Ana
       if (compositions.length === 0) {
         return {
           score: null,
-          explanation: [
-            'No professional match data has been imported yet (planned for Milestone 3).',
-          ],
+          explanation: ['No professional match data has been imported yet (planned for Milestone 3).'],
         };
       }
 
