@@ -26,7 +26,7 @@ Breakdown:
 - Tempo
 - Scaling
 - Mobility
-- Vision
+- Map Control
 - Objectives
 - Pro Similarity
 
@@ -38,7 +38,7 @@ Breakdown:
 - Scaling: 10%
 - Objectives: 10%
 - Mobility: 5%
-- Vision: 5%
+- Map Control: 5%
 - Pro Similarity: 5%
 
 ## Analyzer System

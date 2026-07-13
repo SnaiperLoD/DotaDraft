@@ -51,7 +51,7 @@ Battle Engine may consider:
 
 - Hero matchups: `/api/heroes/{id}/matchups` — direct hero-vs-hero win rate, returned by OpenDota already aggregated. No custom querying needed.
 - Strategic conflicts / synergy fit: OpenDota Explorer SQL over `player_matches` (self-joined on `match_id` + team side) for ally win-rate-together data. No built-in endpoint exists for this — queries must be anchored on a specific `hero_id` to stay fast (~1-2s); unfiltered scans over `player_matches`/`public_matches` time out on the shared Explorer.
-- Role matchups / power spikes / scaling / objectives: derived from Hero Knowledge Base `evaluation_values`, pending recalibration against `/api/benchmarks?hero_id=X` (see `07-development-plan.md`, Milestone 3).
+- Role matchups / power spikes / scaling / objectives: derived from Hero Knowledge Base `evaluation_values` — 8 of 9 axes are now calibrated against real OpenDota data (benchmarks + Explorer composite queries), not the original role-formula; see `09-hero-knowledge-base.md` for the full methodology.
 - No reliable Immortal/6000+ MMR-only data exists in OpenDota's public sample — `public_matches.avg_rank_tier >= 80` returned effectively zero rows in testing, most likely because high-MMR players commonly keep match history private. Practical proxy: average `heroStats` brackets 6+7 (Ancient + Divine) rather than Divine alone, for a larger and still high-skill sample.
 
 ## Non-Linearity Rule

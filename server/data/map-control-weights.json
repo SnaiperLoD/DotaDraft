@@ -1,0 +1,16 @@
+{
+  "topLevel": {
+    "visionScore": 0.35,
+    "mobilityScore": 0.35,
+    "abilityVisionBonus": 0.3
+  },
+  "visionScore": {
+    "wardScore": 0.7,
+    "innateVisionRange": 0.3
+  },
+  "mobilityScore": {
+    "baseMoveSpeed": 0.3,
+    "moveSpeedExtremityExponent": 1.6,
+    "abilityMobilityBonus": 0.7
+  }
+}

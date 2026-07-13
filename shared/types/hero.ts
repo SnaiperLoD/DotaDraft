@@ -7,7 +7,7 @@ export interface HeroEvaluationValues {
   control: number;
   durability: number;
   burst: number;
-  vision: number;
+  map_control: number;
 }
 
 export type PresumedPosition = 'Carry' | 'Mid' | 'Offlane' | 'Support';

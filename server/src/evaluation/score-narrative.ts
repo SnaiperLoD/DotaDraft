@@ -29,10 +29,10 @@ export const AXIS_NARRATIVE: Record<string, NarrativeSet> = {
     mid: "This team has some mobility tools but isn't especially map-mobile.",
     low: 'Low mobility makes this team vulnerable to being caught out and slow to rotate.',
   },
-  vision: {
-    high: 'Strong vision control should let this team see ganks coming and set up their own.',
-    mid: 'Vision coverage is average — standard warding discipline will be needed.',
-    low: 'Weak vision makes this team vulnerable to ganks and enemy rotations.',
+  map_control: {
+    high: 'Strong map control — wards, roaming presence, and vision-granting tools should let this team see ganks coming and set up their own.',
+    mid: 'Map control is average — standard warding discipline and positioning will be needed.',
+    low: 'Weak map control makes this team vulnerable to ganks and enemy rotations.',
   },
   objectives: {
     high: 'This team pushes lanes and takes structures well, and should look to close games through map control.',
