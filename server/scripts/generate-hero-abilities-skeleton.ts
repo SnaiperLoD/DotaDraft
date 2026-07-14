@@ -3,10 +3,18 @@ import * as path from 'path';
 
 // One-time scaffold for the future manual ability-tagging system (see
 // Blueprint/10-tech-debt-backlog.md, "Будущая ось Initiating" / "Оценить
-// наличие данных по силе способностей..."). Generates the empty structure
-// only — categoryScores is filled in by hand later, e.g.
-// { "mobility": 8 } for Anti-Mage's Blink. Safe to re-run: preserves any
-// categoryScores already filled in for abilities that still exist.
+// наличие данных по силе способностей..."). Generates the data structure —
+// categoryScores is filled in by hand later, e.g. { "mobility": 8 } for
+// Anti-Mage's Blink; behavior/cooldown/manaCost/attributes/iconUrl are
+// populated from OpenDota on every run (source data, not manual input).
+// Safe to re-run: preserves any categoryScores already filled in for
+// abilities that still exist, but refreshes everything else in case Dota
+// balance patches change numbers.
+//
+// attrib field names are NOT standardized across abilities (a heal might be
+// "heal_amplify", "heal", or "tether_heal_amp" depending on the ability) —
+// see Blueprint/10-tech-debt-backlog.md research notes. Stored raw for
+// human reference during manual tagging, not meant to be parsed generically.
 const HEROES_PATH = path.join(__dirname, '..', 'data', 'heroes.json');
 const HERO_CONSTANTS_PATH = path.join(__dirname, '..', 'data', 'hero-constants.json');
 const OUTPUT_PATH = path.join(__dirname, '..', 'data', 'hero-abilities.json');
@@ -25,15 +33,31 @@ interface HeroAbilitiesEntry {
   abilities: string[];
 }
 
+interface AbilityAttribute {
+  key: string;
+  header: string;
+  value: string | string[];
+}
+
 interface AbilityConstant {
   dname?: string;
   desc?: string;
+  behavior?: string | string[];
+  cd?: string[];
+  mc?: string[];
+  attrib?: AbilityAttribute[];
+  img?: string;
 }
 
 interface AbilityRecord {
   abilityKey: string;
   abilityName: string;
   description: string;
+  behavior: string | string[] | null;
+  cooldown: string[] | null;
+  manaCost: string[] | null;
+  attributes: AbilityAttribute[];
+  iconUrl: string | null;
   categoryScores: Record<string, number>;
 }
 
@@ -91,6 +115,11 @@ async function main() {
           abilityKey: key,
           abilityName: constant?.dname ?? key,
           description: constant?.desc ?? '',
+          behavior: constant?.behavior ?? null,
+          cooldown: constant?.cd ?? null,
+          manaCost: constant?.mc ?? null,
+          attributes: constant?.attrib ?? [],
+          iconUrl: constant?.img ? `/ability-icons/${key}.png` : null,
           categoryScores: existingScoresByKey.get(`${hero.id}:${key}`) ?? {},
         };
       });

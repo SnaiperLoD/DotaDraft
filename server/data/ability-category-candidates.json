@@ -1,0 +1,1105 @@
+{
+  "mobility": [
+    {
+      "heroName": "Anti-Mage",
+      "abilityKey": "antimage_blink",
+      "abilityName": "Blink",
+      "matchedKeyword": "Blink",
+      "description": "Short distance teleportation that allows Anti-Mage to move in and out of combat."
+    },
+    {
+      "heroName": "Drow Ranger",
+      "abilityKey": "drow_ranger_glacier",
+      "abilityName": "Glacier",
+      "matchedKeyword": "flying",
+      "description": "Drow creates a hill of ice beneath her, knocking away nearby enemies. Units on the hill gain flying vision and Drow and her ranged allies gain bonus attack range. Drow gains additional damage while on the Glacier and attacking targets below her.\n\nThe front of the hill obscures vision and cannot be moved through except by Drow. Does not interrupt Multishot when cast."
+    },
+    {
+      "heroName": "Earthshaker",
+      "abilityKey": "earthshaker_slugger",
+      "abilityName": "Slugger",
+      "matchedKeyword": "flying",
+      "description": "Enemies killed with Enchant Totem or Earthshaker's other abilities are sent flying, dealing damage to enemies they hit."
+    },
+    {
+      "heroName": "Mirana",
+      "abilityKey": "mirana_leap",
+      "abilityName": "Leap",
+      "matchedKeyword": "Leap",
+      "description": "Mirana leaps forward into battle, empowering herself with a ferocious roar that grants bonus attack and movement speed. Speed bonus lasts 5 seconds."
+    },
+    {
+      "heroName": "Mirana",
+      "abilityKey": "mirana_celestial_quiver",
+      "abilityName": "Celestial Quiver",
+      "matchedKeyword": "charge",
+      "description": "When a charge is available, Mirana's next attack will deal bonus magic damage.\n\nGains a charge every 7 hero levels."
+    },
+    {
+      "heroName": "Puck",
+      "abilityKey": "puck_illusory_orb",
+      "abilityName": "Illusory Orb",
+      "matchedKeyword": "teleport",
+      "description": "Vector Targeted. Puck launches a magic orb that travels along the path, damaging enemy units along the way. The orb deals an additional 3% of its impact damage every 0.5s in its area of effect, but if it exceeds the max cast range it will be destroyed.\n\n At any point, Puck may teleport to the orb's location using Ethereal Jaunt.\n\n Can be put on alt-cast to launch the Orb straight ahead."
+    },
+    {
+      "heroName": "Puck",
+      "abilityKey": "puck_phase_shift",
+      "abilityName": "Phase Shift",
+      "matchedKeyword": "Phase Shift",
+      "description": "CHANNELED - Puck briefly shifts into another dimension where it is immune from harm."
+    },
+    {
+      "heroName": "Puck",
+      "abilityKey": "puck_ethereal_jaunt",
+      "abilityName": "Ethereal Jaunt",
+      "matchedKeyword": "flying",
+      "description": "Teleports Puck to a flying Illusory Orb."
+    },
+    {
+      "heroName": "Storm Spirit",
+      "abilityKey": "storm_spirit_overload",
+      "abilityName": "Overload",
+      "matchedKeyword": "charge",
+      "description": "Casting a spell creates an electrical charge, which is released in a burst on Storm's next attack, dealing damage and slowing nearby enemies."
+    },
+    {
+      "heroName": "Storm Spirit",
+      "abilityKey": "storm_spirit_galvanized",
+      "abilityName": "Galvanized",
+      "matchedKeyword": "charge",
+      "description": "Storm Spirit gains a charge of 0.2 mana regeneration per kill. Loses 2 charges per death. Additionally every time he gains a charge he also gains 0.1 Mana Regen permanently."
+    },
+    {
+      "heroName": "Vengeful Spirit",
+      "abilityKey": "vengefulspirit_nether_swap",
+      "abilityName": "Nether Swap",
+      "matchedKeyword": "Swap",
+      "description": "Instantaneously swaps positions with a target Hero, friend or enemy. Nether Swap interrupts channeling abilities on the target. Enemy Swapped units take damage. Vengeful Spirit and allied swapped units gain a barrier equal to the damage dealt."
+    },
+    {
+      "heroName": "Zeus",
+      "abilityKey": "zuus_heavenly_jump",
+      "abilityName": "Heavenly Jump",
+      "matchedKeyword": "Jump",
+      "description": "Zeus performs a Heavenly Jump, leaping forward and shocking the closest visible nearby enemy (prioritizing heroes), dealing damage as well as reducing their movement and attack speed. Zeus gets 900 unobstructed vision around him for 3 seconds."
+    },
+    {
+      "heroName": "Riki",
+      "abilityKey": "riki_blink_strike",
+      "abilityName": "Blink Strike",
+      "matchedKeyword": "Blink",
+      "description": "Teleports behind the target unit, momentarily slowing them by 100% and attacking them with bonus damage if it is an enemy."
+    },
+    {
+      "heroName": "Tinker",
+      "abilityKey": "tinker_warp_grenade",
+      "abilityName": "Warp Flare",
+      "matchedKeyword": "Warp",
+      "description": "Throws a flare towards an enemy, dealing damage, teleporting them away, rooting them and reducing their Cast and Attack Range for 2 seconds.\n\nThe target is teleported further the closer they are to Tinker."
+    },
+    {
+      "heroName": "Tinker",
+      "abilityKey": "tinker_keen_teleport",
+      "abilityName": "Keen Conveyance",
+      "matchedKeyword": "Teleport",
+      "description": "CHANNELED - Teleport to a target friendly structure. Level 2 allows teleporting to friendly units and Level 3 to friendly heroes."
+    },
+    {
+      "heroName": "Sniper",
+      "abilityKey": "sniper_shrapnel",
+      "abilityName": "Shrapnel",
+      "matchedKeyword": "charge",
+      "description": "Consumes a charge to launch a ball of shrapnel that showers the target area in explosive pellets. Enemies are subject to damage and slowed movement. Reveals the targeted area. Shrapnel charges restore every 35 seconds."
+    },
+    {
+      "heroName": "Beastmaster",
+      "abilityKey": "beastmaster_wild_axes",
+      "abilityName": "Wild Axes",
+      "matchedKeyword": "flying",
+      "description": "Beastmaster sends his axes flying and calls them home again, slicing through enemy units and trees along their path. Each axe can hit an enemy once, and amplifies subsequent damage from Beastmaster and his units."
+    },
+    {
+      "heroName": "Queen of Pain",
+      "abilityKey": "queenofpain_blink",
+      "abilityName": "Blink",
+      "matchedKeyword": "Blink",
+      "description": "Short distance teleportation that allows Queen of Pain to move in and out of combat."
+    },
+    {
+      "heroName": "Wraith King",
+      "abilityKey": "skeleton_king_bone_guard",
+      "abilityName": "Bone Guard",
+      "matchedKeyword": "Charge",
+      "description": "Gains a Charge for every 2 creeps killed and 2 charges per hero killed. Activate to spend all charges, summoning skeletons that respawn once when killed. Skeletons benefit from Vampiric Spirit's lifesteal."
+    },
+    {
+      "heroName": "Templar Assassin",
+      "abilityKey": "templar_assassin_trap_teleport",
+      "abilityName": "Psionic Projection",
+      "matchedKeyword": "teleport",
+      "description": "CHANNELED - Allows Templar Assassin to teleport to any Psionic Trap after channeling for 2 seconds, detonating it upon arrival as if it was fully charged and instantly dealing 400 bonus damage. Channeling Psionic Projection does not break Meld."
+    },
+    {
+      "heroName": "Clockwerk",
+      "abilityKey": "rattletrap_jetpack",
+      "abilityName": "Jetpack",
+      "matchedKeyword": "flying",
+      "description": "Clockwerk activates a jetpack, gaining flying movement, flying vision, and bonus movement speed. Clockwerk has a severely-limited turn rate during this time and cannot attack. Jetpack can be toggled on and off for the duration of the buff."
+    },
+    {
+      "heroName": "Spectre",
+      "abilityKey": "spectre_shadow_step",
+      "abilityName": "Shadow Step",
+      "matchedKeyword": "teleport",
+      "description": "Sends an uncontrollable illusion at a target that follows and attacks the target.\n\nThe Reality sub-ability may be used to teleport to the illusion, destroying it."
+    },
+    {
+      "heroName": "Spectre",
+      "abilityKey": "spectre_haunt",
+      "abilityName": "Haunt",
+      "matchedKeyword": "teleport",
+      "description": "Creates a spectral nemesis to haunt all enemy Heroes.\n\nHaunt illusions are uncontrollable, take extra damage, and deal less damage than Spectre herself. They ignore terrain.\n\nThe Reality sub-ability may be used to teleport to the illusion, destroying it."
+    },
+    {
+      "heroName": "Spirit Breaker",
+      "abilityKey": "spirit_breaker_charge_of_darkness",
+      "abilityName": "Charge of Darkness",
+      "matchedKeyword": "Charge",
+      "description": "Spirit Breaker fixes his sight on an enemy unit and starts charging through all objects, starting at 25% of the bonus speed and reaching his max speed after 1.5s.\n\nAll enemy units passed through and the targeted unit will be hit by a Greater Bash. If the targeted unit dies, Spirit Breaker will change his target to the nearest enemy unit to that location."
+    },
+    {
+      "heroName": "Spirit Breaker",
+      "abilityKey": "spirit_breaker_bull_rush",
+      "abilityName": "Empowering Haste",
+      "matchedKeyword": "Charge",
+      "description": "Spirit Breaker gains bonus Movement Speed for a duration whenever he stuns an enemy. Effects from multiple stuns stack and have independent durations. Duration pauses during Charge of Darkness."
+    },
+    {
+      "heroName": "Invoker",
+      "abilityKey": "invoker_emp",
+      "abilityName": "E.M.P.",
+      "matchedKeyword": "charge",
+      "description": "Invoker builds up a charge of electromagnetic energy at a targeted location which automatically detonates after 2.9 seconds. The detonation covers an area, draining mana based on the level of Wex. Deals damage for each point of mana drained. If EMP drains mana from an enemy hero, Invoker gains 25% of the mana drained."
+    },
+    {
+      "heroName": "Meepo",
+      "abilityKey": "meepo_poof",
+      "abilityName": "Poof",
+      "matchedKeyword": "teleport",
+      "description": "Drawing mystical energies from the earth, a Meepo can teleport to another Meepo or itself after channeling for 1.5 seconds, damaging the enemy in both the departure and arrival locations. \n\nIf the ability is in alt-cast state, all Meepos will also cast Poof to the target. When cast on the ground, all Meepos except the selected one will Poof to the closest location."
+    },
+    {
+      "heroName": "Rubick",
+      "abilityKey": "rubick_fade_bolt",
+      "abilityName": "Fade Bolt",
+      "matchedKeyword": "jump",
+      "description": "Rubick creates a powerful stream of arcane energy that travels between enemy units, dealing damage and reducing their attack and spell damage. Each jump deals less damage."
+    },
+    {
+      "heroName": "Nyx Assassin",
+      "abilityKey": "nyx_assassin_burrow",
+      "abilityName": "Burrow",
+      "matchedKeyword": "Burrow",
+      "description": "Nyx Assassin buries himself beneath the battlefield over a short duration. Once burrowed, Spiked Carapace instantly stuns nearby enemies when cast, the range of Mind Flare and Impale is increased, and Impale's cooldown is decreased. While burrowed, Nyx Assassin is stationary, unable to attack, and invisible. Nyx Assassin gains damage reduction from all damage sources."
+    },
+    {
+      "heroName": "Nyx Assassin",
+      "abilityKey": "nyx_assassin_unburrow",
+      "abilityName": "Unburrow",
+      "matchedKeyword": "burrow",
+      "description": "Emerge from the burrow."
+    },
+    {
+      "heroName": "Io",
+      "abilityKey": "wisp_relocate",
+      "abilityName": "Relocate",
+      "matchedKeyword": "teleport",
+      "description": "Teleports Io and a tethered ally to any location. After the spell expires, Io and the tethered ally will return to their original location. Double-click to teleport to your team's base fountain."
+    },
+    {
+      "heroName": "Visage",
+      "abilityKey": "visage_soul_assumption",
+      "abilityName": "Soul Assumption",
+      "matchedKeyword": "charge",
+      "description": "Visage gathers charges of soul essence each time nearby heroes take more than 100 damage. When the essence is released, it deals base damage as well as damage for each gathered soul charge."
+    },
+    {
+      "heroName": "Visage",
+      "abilityKey": "visage_silent_as_the_grave",
+      "abilityName": "Silent as the Grave",
+      "matchedKeyword": "flying",
+      "description": "Visage gains flying movement and bonus movement speed. Upon attacking or casting, the speed and flying movement are lost and Visage and his familiars deal additional attack damage for 2s."
+    },
+    {
+      "heroName": "Medusa",
+      "abilityKey": "medusa_mystic_snake",
+      "abilityName": "Mystic Snake",
+      "matchedKeyword": "jump",
+      "description": "A mystic snake made of energy jumps from target to target dealing damage. Damage and speed increases with each jump. After it reaches its last target, it returns to Medusa to replenish her with mana. The snake returns a percentage of the targets' total mana."
+    },
+    {
+      "heroName": "Troll Warlord",
+      "abilityKey": "troll_warlord_switch_stance",
+      "abilityName": "Battle Stance",
+      "matchedKeyword": "swaps",
+      "description": "Troll Warlord swaps from using ranged to melee attacks. While melee, Troll Warlord's base attack time is improved to 1.4.\n\nTroll Warlord gains 1 armor per 30 bonus attack speed."
+    },
+    {
+      "heroName": "Centaur Warrunner",
+      "abilityKey": "centaur_stampede",
+      "abilityName": "Stampede",
+      "matchedKeyword": "charge",
+      "description": "Centaur leads all allies into a vicious charge causing them to move through units at max speed and slow any enemy units they trample. Trampled enemies take damage based on Centaur Warrunner's strength. Each enemy can be trampled once."
+    },
+    {
+      "heroName": "Techies",
+      "abilityKey": "techies_reactive_tazer",
+      "abilityName": "Reactive Tazer",
+      "matchedKeyword": "charge",
+      "description": "Techies trigger an electric charge on the target ally, giving them bonus movement speed for a short period of time. Enemies attacking the target take damage and are temporarily disarmed and get a Basic Dispel.\n\nAt the end of the effect or if detonated early with the sub-ability, the charge explodes, disarming all enemies within the radius and dealing damage."
+    },
+    {
+      "heroName": "Ember Spirit",
+      "abilityKey": "ember_spirit_fire_remnant",
+      "abilityName": "Fire Remnant",
+      "matchedKeyword": "dash",
+      "description": "Sends a Fire Remnant that runs to the target location at 250% Ember Spirit's speed. Using Activate Fire Remnant, Ember Spirit will dash out to all active Fire Remnants, destroying them and dealing damage in an area and then moving to the nearest Remnant. Ember Spirit will end at the Remnant closest to the targeted location."
+    },
+    {
+      "heroName": "Earth Spirit",
+      "abilityKey": "earth_spirit_stone_caller",
+      "abilityName": "Stone Remnant",
+      "matchedKeyword": "charge",
+      "description": "Call a Stone Remnant to the target location. Stone Remnants have no vision and are invulnerable, and can be used with Earth Spirit's abilities. Calling a Stone Remnant consumes a charge, which recharge over time. Stone Remnant has 7 charges.\n\nEarth Spirit passively gains 2.5% bonus damage per unused Stone Remnant charge, and gains an additional 7.5% bonus damage for 10s when a Stone Remnant is targeted with an ability (does not stack)."
+    },
+    {
+      "heroName": "Underlord",
+      "abilityKey": "abyssal_underlord_dark_portal",
+      "abilityName": "Fiend's Gate",
+      "matchedKeyword": "teleport",
+      "description": "Opens 2 portals, one next to Underlord and one in the target location. Heroes can channel a portal for 3.5 seconds to teleport to the other side. Portals have to be at least 1500 away from each other."
+    },
+    {
+      "heroName": "Monkey King",
+      "abilityKey": "monkey_king_tree_dance",
+      "abilityName": "Tree Dance",
+      "matchedKeyword": "leap",
+      "description": "Monkey King jumps to a tree and perches atop it. While perched, he gains the Primal Spring ability-a channeled leap attack. If Monkey King's tree is destroyed, he falls and is stunned for 3s. Taking damage while on the ground puts Tree Dance on cooldown."
+    },
+    {
+      "heroName": "Dawnbreaker",
+      "abilityKey": "dawnbreaker_celestial_hammer",
+      "abilityName": "Celestial Hammer",
+      "matchedKeyword": "flying",
+      "description": "Dawnbreaker hurls her weapon at a target, damaging enemies struck along the way. The hammer pauses for 2 seconds at the destination before flying back to her, leaving a trail of fire that slows enemies. Dawnbreaker can recall the hammer at any time, pulling her towards it so they meet in the middle."
+    },
+    {
+      "heroName": "Dawnbreaker",
+      "abilityKey": "dawnbreaker_solar_guardian",
+      "abilityName": "Solar Guardian",
+      "matchedKeyword": "flies",
+      "description": "CHANNELED - Dawnbreaker creates a pulsing effect at a location within 350 units of an allied hero anywhere on the map and creates daylight for 6s. Each pulse damages enemies and heals allies.\n\nAfter a short duration, she flies to the target location and deals additional damage and stuns enemies upon landing.\n\nOnce channeled, Dawnbreaker cannot stop the ability."
+    },
+    {
+      "heroName": "Primal Beast",
+      "abilityKey": "primal_beast_onslaught",
+      "abilityName": "Onslaught",
+      "matchedKeyword": "charge",
+      "description": "Primal Beast charges up and then runs in the chosen direction, knocking back enemies and allies alike. Enemy units are damaged and stunned on impact. The longer the charge duration, the farther Primal Beast's momentum will carry him. \n\n Can be cancelled at any time with the Stop command."
+    }
+  ],
+  "saving": [
+    {
+      "heroName": "Bane",
+      "abilityKey": "bane_brain_sap",
+      "abilityName": "Brain Sap",
+      "matchedKeyword": "healing",
+      "description": "Feasts on the vital energies of an enemy unit, healing Bane and dealing damage."
+    },
+    {
+      "heroName": "Bloodseeker",
+      "abilityKey": "bloodseeker_bloodrage",
+      "abilityName": "Bloodrage",
+      "matchedKeyword": "health",
+      "description": "Drives Bloodseeker into a bloodthirsty rage which causes him to attack faster and deal more spell damage at the cost of a percentage of his health per second."
+    },
+    {
+      "heroName": "Bloodseeker",
+      "abilityKey": "bloodseeker_thirst",
+      "abilityName": "Thirst",
+      "matchedKeyword": "health",
+      "description": "Bloodseeker is invigorated by the wounds of his enemies, gaining bonus movement speed when an enemy hero's health falls below 100%, with the bonuses increasing as their health falls further. If an enemy hero's health falls below 25%, he will also gain vision and True Sight of that hero. Bonuses stack per hero. Unlocks max movement speed for Bloodseeker."
+    },
+    {
+      "heroName": "Bloodseeker",
+      "abilityKey": "bloodseeker_sanguivore",
+      "abilityName": "Sanguivore",
+      "matchedKeyword": "restores",
+      "description": "Bloodseeker restores some life when he kills a unit, equal to 30 health plus a percentage of the units max health.\n\nRestores for half values if an ally kills a nearby enemy hero."
+    },
+    {
+      "heroName": "Bloodseeker",
+      "abilityKey": "bloodseeker_rupture",
+      "abilityName": "Rupture",
+      "matchedKeyword": "health",
+      "description": "Causes an enemy unit's skin to rupture, dealing initial damage based on its current health. If the unit moves, it takes damage based on the distance moved."
+    },
+    {
+      "heroName": "Crystal Maiden",
+      "abilityKey": "crystal_maiden_brilliance_aura",
+      "abilityName": "Arcane Aura",
+      "matchedKeyword": "regeneration",
+      "description": "Gives mana regeneration to all friendly units on the map. Allies within a 1200 radius of Crystal Maiden receive more mana regeneration.\n\nCrystal Maiden passively gains mana regen amplification."
+    },
+    {
+      "heroName": "Juggernaut",
+      "abilityKey": "juggernaut_healing_ward",
+      "abilityName": "Healing Ward",
+      "matchedKeyword": "Healing",
+      "description": "Summons a Healing Ward which heals all nearby allied units, based on their max health. The Healing Ward moves at 325 movement speed after being summoned. Lasts 18 seconds."
+    },
+    {
+      "heroName": "Juggernaut",
+      "abilityKey": "juggernaut_omni_slash",
+      "abilityName": "Omnislash",
+      "matchedKeyword": "invulnerable",
+      "description": "Juggernaut leaps towards the target enemy units, and then slashes the target and other nearby enemy units at an increased attack rate. Juggernaut is invulnerable for the duration.\n\nDISPEL TYPE: Basic Dispel"
+    },
+    {
+      "heroName": "Mirana",
+      "abilityKey": "mirana_invis",
+      "abilityName": "Moonlight Shadow",
+      "matchedKeyword": "restore",
+      "description": "Turns Mirana and all allied heroes invisible and grants bonus movement speed. Mirana gains bonus outgoing damage during the duration. If a hero is revealed, invisibility will restore after the fade delay as long as Moonlight Shadow's duration has not expired."
+    },
+    {
+      "heroName": "Morphling",
+      "abilityKey": "morphling_waveform",
+      "abilityName": "Waveform",
+      "matchedKeyword": "invulnerable",
+      "description": "Morphling dissolves into liquid and surges forward, damaging enemy units in his path. Morphling is invulnerable during Waveform."
+    },
+    {
+      "heroName": "Puck",
+      "abilityKey": "puck_puckish",
+      "abilityName": "Puckish",
+      "matchedKeyword": "restores",
+      "description": "Whenever Puck disjoints an attack, it restores 3% of its max health and mana. Dodging a targeted spell projectile restores 3x that amount. Does not apply to attacks by Towers."
+    },
+    {
+      "heroName": "Razor",
+      "abilityKey": "razor_eye_of_the_storm",
+      "abilityName": "Eye of the Storm",
+      "matchedKeyword": "health",
+      "description": "A powerful lightning storm strikes out at the enemy unit with the lowest health, dealing damage and reducing armor."
+    },
+    {
+      "heroName": "Sand King",
+      "abilityKey": "sandking_caustic_finale",
+      "abilityName": "Caustic Finale",
+      "matchedKeyword": "health",
+      "description": "Sand King's attacks inject a venom that causes enemy units to violently explode when they die that does a flat amount of damage and an additional amount based on the dying units max health."
+    },
+    {
+      "heroName": "Storm Spirit",
+      "abilityKey": "storm_spirit_galvanized",
+      "abilityName": "Galvanized",
+      "matchedKeyword": "regeneration",
+      "description": "Storm Spirit gains a charge of 0.2 mana regeneration per kill. Loses 2 charges per death. Additionally every time he gains a charge he also gains 0.1 Mana Regen permanently."
+    },
+    {
+      "heroName": "Zeus",
+      "abilityKey": "zuus_static_field",
+      "abilityName": "Static Field",
+      "matchedKeyword": "health",
+      "description": "Zeus shocks any enemy that he attacks or is hit by his abilities, causing damage equal to a percentage of their current health."
+    },
+    {
+      "heroName": "Lion",
+      "abilityKey": "lion_to_hell_and_back",
+      "abilityName": "To Hell and Back",
+      "matchedKeyword": "resurrecting",
+      "description": "Lion gains 20% debuff duration after killing or assisting in a Hero kill while that Hero is dead.\n\nLion gains 20% spell amplification for 90s after respawning or resurrecting or until he gets a kill or assist."
+    },
+    {
+      "heroName": "Shadow Shaman",
+      "abilityKey": "shadow_shaman_urnaconda",
+      "abilityName": "Urnaconda",
+      "matchedKeyword": "health",
+      "description": "Throw a snake jar at the target location, damaging all enemies in the AoE and creating a Massive Serpent Ward that has 4x the base Serpent Ward damage and health there that lasts 15s."
+    },
+    {
+      "heroName": "Slardar",
+      "abilityKey": "slardar_seaborn_sentinel",
+      "abilityName": "Seaborn Sentinel",
+      "matchedKeyword": "health",
+      "description": "Slardar gains bonus movement speed, health regeneration, attack damage, and armor while in a puddle, trail, or river."
+    },
+    {
+      "heroName": "Witch Doctor",
+      "abilityKey": "witch_doctor_voodoo_restoration",
+      "abilityName": "Voodoo Restoration",
+      "matchedKeyword": "Restoration",
+      "description": "Witch Doctor focuses his magic to heal nearby allied units, costing Witch Doctor mana every second Voodoo Restoration is active."
+    },
+    {
+      "heroName": "Witch Doctor",
+      "abilityKey": "witch_doctor_maledict",
+      "abilityName": "Maledict",
+      "matchedKeyword": "health",
+      "description": "Curses all enemy Heroes and player-controlled units in a small area, causing them to take a set amount of damage each second, as well as bursts of damage every 4 seconds based on how much health they have lost since the curse began."
+    },
+    {
+      "heroName": "Lich",
+      "abilityKey": "lich_ice_spire",
+      "abilityName": "Ice Spire",
+      "matchedKeyword": "heal",
+      "description": "Creates an Ice Spire at the target spot, slowing enemies around it. Can take 4 hero hits or 8 creep hits and when destroyed it will create a Frost Blast around it.\n\nChain Frost can be cast on the Spire and can bounce to the Spire and damage the spire by 1 hero attack if there are no other enemies in range.\n\nLich can cast Frost Shield on the Spire. Each Frost Shield tick will heal the spire by 1 hero attack."
+    },
+    {
+      "heroName": "Lich",
+      "abilityKey": "lich_death_charge",
+      "abilityName": "Sacrifice",
+      "matchedKeyword": "health",
+      "description": "Sacrifice an allied creep to convert its current health into mana for Lich and give Lich its experience bounty.\n\nBegins the game on cooldown and with no charges."
+    },
+    {
+      "heroName": "Enigma",
+      "abilityKey": "enigma_demonic_conversion",
+      "abilityName": "Demonic Summoning",
+      "matchedKeyword": "health",
+      "description": "Summons three fragments of Enigma himself at the cost of health. The eidolons health is increased by 3% of Enigma's current health. These eidolons are all under Enigma's control, and repeated successful attacks cause them to multiply. When this happens, the eidolons have their health restored."
+    },
+    {
+      "heroName": "Sniper",
+      "abilityKey": "sniper_shrapnel",
+      "abilityName": "Shrapnel",
+      "matchedKeyword": "restore",
+      "description": "Consumes a charge to launch a ball of shrapnel that showers the target area in explosive pellets. Enemies are subject to damage and slowed movement. Reveals the targeted area. Shrapnel charges restore every 35 seconds."
+    },
+    {
+      "heroName": "Necrophos",
+      "abilityKey": "necrolyte_death_pulse",
+      "abilityName": "Death Pulse",
+      "matchedKeyword": "healing",
+      "description": "Necrophos releases a wave of death around him, dealing damage to enemy units and healing allied units."
+    },
+    {
+      "heroName": "Necrophos",
+      "abilityKey": "necrolyte_heartstopper_aura",
+      "abilityName": "Heartstopper Aura",
+      "matchedKeyword": "health",
+      "description": "Necrophos stills the hearts of his opponents, causing nearby enemy units to lose a percentage of their max health over time."
+    },
+    {
+      "heroName": "Necrophos",
+      "abilityKey": "necrolyte_reapers_scythe",
+      "abilityName": "Reaper's Scythe",
+      "matchedKeyword": "Health",
+      "description": "Stuns the target enemy hero, then deals damage based on how much life it is missing. If Necrophos kills an enemy this way, he'll permanently gain Health and Mana Regen. Any kill under this effect is credited to Necrophos."
+    },
+    {
+      "heroName": "Warlock",
+      "abilityKey": "warlock_shadow_word",
+      "abilityName": "Shadow Word",
+      "matchedKeyword": "heal",
+      "description": "Warlock whispers an incantation, casting a spell on a unit that makes it deal damage to nearby enemy units and heal nearby ally units. Target Unit will also heal or be damaged depending on whether they are ally or enemy."
+    },
+    {
+      "heroName": "Beastmaster",
+      "abilityKey": "beastmaster_drums_of_slom",
+      "abilityName": "Drums of Slom",
+      "matchedKeyword": "healing",
+      "description": "Attacks from Beastmaster or a nearby unit he controls will cause him bang his drum, dealing damage to nearby units and healing Beastmaster and units under his control for a portion of the damage dealt. Every attack decreases the interval between drum hits down to a minimum of 0.5s between hits after 20 attacks. If no attacks are made, the intervals gradually increase.\n\nUsing Primal Roar counts as 10 attacks."
+    },
+    {
+      "heroName": "Venomancer",
+      "abilityKey": "venomancer_noxious_plague",
+      "abilityName": "Noxious Plague",
+      "matchedKeyword": "health",
+      "description": "Infects an enemy with a plague that does damage on application then slows the target and deals damage over time based on their maximum health. When the debuff ends for any reason, all debuffs from Venomancer on the initial target and the plague are spread to nearby targets. Additional spreads beyond the first do not deal impact damage."
+    },
+    {
+      "heroName": "Faceless Void",
+      "abilityKey": "faceless_void_time_walk_reverse",
+      "abilityName": "Reverse Time Walk",
+      "matchedKeyword": "health",
+      "description": "Available for 1.5 seconds after landing Time Walk. If used in this period, you will reverse your time walk back to your previous cast location. Does not affect health or proc scepter hits."
+    },
+    {
+      "heroName": "Wraith King",
+      "abilityKey": "skeleton_king_reincarnation",
+      "abilityName": "Reincarnation",
+      "matchedKeyword": "resurrect",
+      "description": "Wraith King's form regroups after death, allowing him to resurrect when killed in battle. Upon death, enemy units in a 600 radius are slowed. Skeletons spawn and attack each nearby enemy hero. Can be self-cast to kill Wraith King instantly."
+    },
+    {
+      "heroName": "Death Prophet",
+      "abilityKey": "death_prophet_spirit_siphon",
+      "abilityName": "Spirit Siphon",
+      "matchedKeyword": "health",
+      "description": "Creates a spirit link between Death Prophet and an enemy unit, draining health from the enemy."
+    },
+    {
+      "heroName": "Phantom Assassin",
+      "abilityKey": "phantom_assassin_fan_of_knives",
+      "abilityName": "Fan of Knives",
+      "matchedKeyword": "health",
+      "description": "Phantom Assassin releases sharp blades around her, dealing a percentage of each victim's max health on impact and applying Break."
+    },
+    {
+      "heroName": "Pugna",
+      "abilityKey": "pugna_decrepify",
+      "abilityName": "Decrepify",
+      "matchedKeyword": "Healing",
+      "description": "A powerful banishing spell that slows a unit and renders it unable to attack or be attacked. Healing on affected allies is increased, while afflicted enemies take extra magic damage instead."
+    },
+    {
+      "heroName": "Pugna",
+      "abilityKey": "pugna_life_drain",
+      "abilityName": "Life Drain",
+      "matchedKeyword": "health",
+      "description": "CHANNELED - When cast on an enemy, Pugna drains health from the target enemy unit to heal himself and granting vision over the target.\n\nWhen cast on an ally, Pugna will drain his own health into his ally."
+    },
+    {
+      "heroName": "Templar Assassin",
+      "abilityKey": "templar_assassin_inner_peace",
+      "abilityName": "Inner Peace",
+      "matchedKeyword": "health",
+      "description": "When remaining stationary and not taking damage for 0.25s, Templar Assassin begins meditating, gaining health and mana regeneration, reaching the maximum bonus after 2.05s of meditating."
+    },
+    {
+      "heroName": "Dragon Knight",
+      "abilityKey": "dragon_knight_dragon_blood",
+      "abilityName": "Dragon Blood",
+      "matchedKeyword": "health",
+      "description": "The life blood of the Dragon improves Dragon Knight's health regeneration and armor. \n\nRegen and armor are increased by 50% during Elder Dragon Form."
+    },
+    {
+      "heroName": "Dazzle",
+      "abilityKey": "dazzle_shallow_grave",
+      "abilityName": "Shallow Grave",
+      "matchedKeyword": "Healing",
+      "description": "An ally blessed with Shallow Grave, no matter how close to death, cannot die while under its protection. Healing on that ally is also amplified for the duration based on the hero's HP."
+    },
+    {
+      "heroName": "Dazzle",
+      "abilityKey": "dazzle_shadow_wave",
+      "abilityName": "Shadow Wave",
+      "matchedKeyword": "healing",
+      "description": "Sends out a bolt of power that arcs between allies, healing them while damaging any enemy units standing nearby. Dazzle is always healed by Shadow Wave."
+    },
+    {
+      "heroName": "Dazzle",
+      "abilityKey": "dazzle_nothl_projection",
+      "abilityName": "Nothl Projection",
+      "matchedKeyword": "invulnerable",
+      "description": "Dazzle departs his body, traveling through the Nothl Realm as an invulnerable spirit that can cast spells, attack, and use items, leaving his body behind in the world with a visible tether. While active, Dazzle's basic abilities are empowered: Poison Touch hexes enemies, Shallow Grave heals upon expiration, and Shadow Wave has a shorter cooldown. The effect can be ended early, and Dazzle returns to the body at the end."
+    },
+    {
+      "heroName": "Clockwerk",
+      "abilityKey": "rattletrap_power_cogs",
+      "abilityName": "Power Cogs",
+      "matchedKeyword": "health",
+      "description": "Forms a ring of energized cogs around Clockwerk, trapping any units that are near. Enemies outside the trap that touch a cog are knocked back, losing health and mana. Once a cog has delivered a shock, it will power down. Damage is increased by 50% of the mana burned.\n\n Cogs can be destroyed by enemy attacks, but Clockwerk can push them up to 1000 distance away with one hit. Clockwerk can move through the cogs freely, disabling them as he passes over."
+    },
+    {
+      "heroName": "Lifestealer",
+      "abilityKey": "life_stealer_open_wounds",
+      "abilityName": "Open Wounds",
+      "matchedKeyword": "health",
+      "description": "Lifestealer rends an enemy unit, slowing the victim's movement speed and allowing all allies to regain health for a percentage of the damage they deal to that unit. The victim recovers movement speed over the duration."
+    },
+    {
+      "heroName": "Lifestealer",
+      "abilityKey": "life_stealer_feast",
+      "abilityName": "Feast",
+      "matchedKeyword": "heal",
+      "description": "Lifestealer's attacks deal damage and provide heal for a percentage of his target's max health. He gains permanent max HP whenever he kills a unit."
+    },
+    {
+      "heroName": "Lifestealer",
+      "abilityKey": "life_stealer_infest",
+      "abilityName": "Infest",
+      "matchedKeyword": "healing",
+      "description": "Lifestealer infests the body of a target unit, becoming undetectable, and healing for a portion of his max hitpoints every second while inside. He can then explode from the host body, dealing damage to nearby enemies. If the infested unit is an enemy creep or a neutral creep, he can take control of the unit's ability to move and attack, and the creep loses a portion of their max hitpoints over time. Does not work on enemy heroes.\n\nDISPEL TYPE: Basic Dispel"
+    },
+    {
+      "heroName": "Dark Seer",
+      "abilityKey": "dark_seer_aggrandize",
+      "abilityName": "Quick Wit",
+      "matchedKeyword": "restores",
+      "description": "Dark Seer gains 1 Attack Speed from each point of Intelligence.\n\nWhen Dark Seer levels up, he restores a percentage of his max health and mana."
+    },
+    {
+      "heroName": "Clinkz",
+      "abilityKey": "clinkz_death_pact",
+      "abilityName": "Death Pact",
+      "matchedKeyword": "healing",
+      "description": "Clinkz consumes the target enemy creep or friendly Skeleton Archer, healing and gaining max health. Does not take Clinkz out of Skeleton Walk."
+    },
+    {
+      "heroName": "Huskar",
+      "abilityKey": "huskar_burning_spear",
+      "abilityName": "Burning Spear",
+      "matchedKeyword": "health",
+      "description": "Huskar sets his spears aflame, dealing damage over time with his regular attack. Multiple attacks will stack additional damage. Each attack drains some of Huskar's health."
+    },
+    {
+      "heroName": "Huskar",
+      "abilityKey": "huskar_berserkers_blood",
+      "abilityName": "Berserker's Blood",
+      "matchedKeyword": "health",
+      "description": "Huskar's injuries feed his power, giving increased attack speed, magic resistance and health regen based on missing health. Health regen is a percentage of your strength."
+    },
+    {
+      "heroName": "Huskar",
+      "abilityKey": "huskar_blood_magic",
+      "abilityName": "Blood Magic",
+      "matchedKeyword": "health",
+      "description": "Huskar does not have mana. Mana costs of items are converted into health costs.Huskar's Health Costs are Magical Damage and can be reduced by Magic Resist."
+    },
+    {
+      "heroName": "Huskar",
+      "abilityKey": "huskar_life_break",
+      "abilityName": "Life Break",
+      "matchedKeyword": "health",
+      "description": "Huskar draws upon his health to break an enemy's life, leaping at a target to shatter a percentage of that hero's current health and slow both their movement and attack speed. While leaping, Huskar is Debuff Immune with 60% magic resistance.\n\nDISPEL TYPE: Basic Dispel"
+    },
+    {
+      "heroName": "Broodmother",
+      "abilityKey": "broodmother_spiders_milk",
+      "abilityName": "Spider's Milk",
+      "matchedKeyword": "health",
+      "description": "Whenever Broodmother kills a unit, she and all units under her control in a 600 radius receive a buff for 3s that heals them for a percentage of the victim's health every 0.5 seconds. Healing from creeps is reduced by 40%."
+    },
+    {
+      "heroName": "Chen",
+      "abilityKey": "chen_holy_persuasion",
+      "abilityName": "Holy Persuasion",
+      "matchedKeyword": "health",
+      "description": "Chen takes control of an enemy or neutral creep and receives a percentage of its bounty. Its maximum health is set to 400. Converted creeps will have increased movement speed and bonus damage. Chen may globally target his own creep if it has not taken damage in the last 3 seconds to unsummon it."
+    },
+    {
+      "heroName": "Chen",
+      "abilityKey": "chen_divine_favor",
+      "abilityName": "Divine Favor",
+      "matchedKeyword": "health",
+      "description": "Passively provides an aura that grants increased health regeneration. Can be cast on allies to provide them with bonus armor and increasing the healing and health regeneration they receive.\n\nIf cast on Chen, all units controlled by Chen receive the buff."
+    },
+    {
+      "heroName": "Chen",
+      "abilityKey": "chen_hand_of_god",
+      "abilityName": "Hand of God",
+      "matchedKeyword": "heal",
+      "description": "Heals all allied heroes on the map as well as all units under Chen's control. A large heal is applied at first and a slow heal over time is applied for 10 seconds afterwards."
+    },
+    {
+      "heroName": "Ancient Apparition",
+      "abilityKey": "ancient_apparition_ice_blast",
+      "abilityName": "Ice Blast",
+      "matchedKeyword": "regenerating",
+      "description": "Launches a tracer toward any location on the battlefield, which must be triggered again to mark the area to be blasted by a damaging explosion of hail. The further the tracer travels, the larger the explosion will be. Enemies caught in the explosion, or who touch the icy ball of hail as it travels, are Frostbitten, taking damage over time and prevented from regenerating or healing. If a Frostbitten unit's health drops below a certain percentage, they will instantly shatter."
+    },
+    {
+      "heroName": "Doom",
+      "abilityKey": "doom_bringer_scorched_earth",
+      "abilityName": "Scorched Earth",
+      "matchedKeyword": "health",
+      "description": "Carpets the nearby earth in flames which damage enemies, while also granting Doom increased movement speed and health regeneration."
+    },
+    {
+      "heroName": "Doom",
+      "abilityKey": "doom_bringer_doom",
+      "abilityName": "Doom",
+      "matchedKeyword": "healing",
+      "description": "Inflicts a curse that dispels an enemy and prevents them from casting spells or healing in any way, while taking damage over time.\n\nDISPEL TYPE: Basic Dispel"
+    },
+    {
+      "heroName": "Alchemist",
+      "abilityKey": "alchemist_chemical_rage",
+      "abilityName": "Chemical Rage",
+      "matchedKeyword": "health",
+      "description": "Alchemist causes his Ogre to enter a chemically induced rage, reducing base attack cooldown and increasing movement speed and health regeneration.\n\nDISPEL TYPE: Basic Dispel"
+    },
+    {
+      "heroName": "Invoker",
+      "abilityKey": "invoker_quas",
+      "abilityName": "Quas",
+      "matchedKeyword": "regeneration",
+      "description": "Allows manipulation of ice elements. Active Quas instances imbue Invoker with bonus hp regeneration. Passively grants bonus strength per level of Quas."
+    },
+    {
+      "heroName": "Invoker",
+      "abilityKey": "invoker_ghost_walk",
+      "abilityName": "Ghost Walk",
+      "matchedKeyword": "health",
+      "description": "Invoker manipulates the ice and electrical energies around him, rendering his body invisible and gaining health and mana regen. The elemental imbalance created as a consequence slows nearby enemies based on the level of Quas, and slows Invoker as well based on the level of Wex."
+    },
+    {
+      "heroName": "Invoker",
+      "abilityKey": "invoker_forge_spirit",
+      "abilityName": "Forge Spirit",
+      "matchedKeyword": "health",
+      "description": "Invoker forges a spirit embodying the strength of fire and fortitude of ice. Damage and armor are based on the level of Exort while attack range, health, and duration are based on the level of Quas. The elemental's scorching attack is capable of melting the armor of enemy heroes. The number of spirits spawned is determined by the lower level of Quas and Exort."
+    },
+    {
+      "heroName": "Outworld Destroyer",
+      "abilityKey": "obsidian_destroyer_astral_imprisonment",
+      "abilityName": "Astral Imprisonment",
+      "matchedKeyword": "invulnerable",
+      "description": "Steals a percentage of the target's max mana and places them into an astral prison. The hidden unit is invulnerable and disabled. When the astral prison implodes, it deals damage to the target."
+    },
+    {
+      "heroName": "Outworld Destroyer",
+      "abilityKey": "obsidian_destroyer_equilibrium",
+      "abilityName": "Essence Flux",
+      "matchedKeyword": "restore",
+      "description": "Passively grants a chance to restore a percentage of your max mana each time you cast an ability. Restores less mana from spells that modify attacks."
+    },
+    {
+      "heroName": "Lycan",
+      "abilityKey": "lycan_feral_impulse",
+      "abilityName": "Feral Impulse",
+      "matchedKeyword": "regeneration",
+      "description": "Increases the HP regeneration and damage of Lycan and all units under his control."
+    },
+    {
+      "heroName": "Lycan",
+      "abilityKey": "lycan_wolf_bite",
+      "abilityName": "Wolf Bite",
+      "matchedKeyword": "healing",
+      "description": "Lycan bites an allied hero or creep-hero, granting them Shapeshift properties. Lycan and the bitten target gain 40% Lifesteal and share the healing effect of Lifesteal with each other as long as they are within 1200 range of each other."
+    },
+    {
+      "heroName": "Brewmaster",
+      "abilityKey": "brewmaster_liquid_courage",
+      "abilityName": "Liquid Courage",
+      "matchedKeyword": "Health",
+      "description": "When Brewmaster drops below 50% Health he gains a Status Resistance buff and his movement speed alternates every 1s between being faster and being slower. The effect becomes stronger at lower health, scaling from 0 up to max values at 20% Health."
+    },
+    {
+      "heroName": "Lone Druid",
+      "abilityKey": "lone_druid_spirit_bear",
+      "abilityName": "Summon Spirit Bear",
+      "matchedKeyword": "health",
+      "description": "Summons a powerful Spirit Bear companion that can equip items.\n\nIf the bear moves 1100 distance away from the Lone Druid, it cannot attack. Lone Druid suffers 20% of his max health as backlash damage if the Spirit Bear dies.\nSpirit Bear has Demolish, Return, Entangling Claws, Savage Roar, and Spirit Link abilities."
+    },
+    {
+      "heroName": "Lone Druid",
+      "abilityKey": "lone_druid_true_form",
+      "abilityName": "True Form",
+      "matchedKeyword": "health",
+      "description": "Lone Druid morphs himself into a raging bear, losing his ranged advantage, but gaining bonus armor, bonus health, and bonus attack damage."
+    },
+    {
+      "heroName": "Meepo",
+      "abilityKey": "meepo_ransack",
+      "abilityName": "Ransack",
+      "matchedKeyword": "health",
+      "description": "Steals health from the enemy with each strike and heals all other Meepos for that amount.\n\nReduced to 60% against creeps."
+    },
+    {
+      "heroName": "Meepo",
+      "abilityKey": "meepo_petrify",
+      "abilityName": "Dig",
+      "matchedKeyword": "invulnerable",
+      "description": "Digs into the ground for a short duration, dispelling Meepo and causing him to become invulnerable and untargetable for 3s. Restores 25% of his max health over that duration.\n\nDISPEL TYPE: Basic Dispel"
+    },
+    {
+      "heroName": "Meepo",
+      "abilityKey": "meepo_divided_we_stand",
+      "abilityName": "Divided We Stand",
+      "matchedKeyword": "health",
+      "description": "Meepo summons another Meepo, which levels up and shares items with the main Meepo. Ability cooldowns are independent, but items share cooldowns between Meepos. Damage, attack speed, health / mana regeneration, mana burn, and proc chance bonuses from items are distributed equally among the amount of Meepos.\n\nIf any Meepo dies, they all die."
+    },
+    {
+      "heroName": "Treant Protector",
+      "abilityKey": "treant_leech_seed",
+      "abilityName": "Leech Seed",
+      "matchedKeyword": "healing",
+      "description": "Treant's attack plants a life-sapping seed in an enemy unit. That unit takes additional magic damage, is rooted and disarmed for a short duration, and emits 2 healing pulses to up to 5 nearby allies of Treant Protector based on the damage dealt by the attack."
+    },
+    {
+      "heroName": "Undying",
+      "abilityKey": "undying_soul_rip",
+      "abilityName": "Soul Rip",
+      "matchedKeyword": "health",
+      "description": "Undying rips health away from all nearby units and uses it to heal an ally, or damage an enemy. Soul Rip can also be used to heal Tombstone."
+    },
+    {
+      "heroName": "Undying",
+      "abilityKey": "undying_tombstone",
+      "abilityName": "Tombstone",
+      "matchedKeyword": "health",
+      "description": "Summons a tombstone at the target point. Zombies will frequently spawn next to every enemy unit in the area around the Tombstone, and attack them. Zombies have the Deathlust ability, which causes their attacks to slow the target, and if the target reaches below a certain amount of health, increases the attack and movement speed of the zombie."
+    },
+    {
+      "heroName": "Keeper of the Light",
+      "abilityKey": "keeper_of_the_light_chakra_magic",
+      "abilityName": "Chakra Magic",
+      "matchedKeyword": "Restores",
+      "description": "Restores mana to the target unit and reduces cooldowns of all basic abilities currently on cooldown by a fixed amount. Is 30% more effective when used on himself."
+    },
+    {
+      "heroName": "Keeper of the Light",
+      "abilityKey": "keeper_of_the_light_spirit_form",
+      "abilityName": "Spirit Form",
+      "matchedKeyword": "heal",
+      "description": "Ezalor temporarily turns his body luminescent, gaining cast range, increasing the speed bonus from Bright Speed, and allows Illuminate to be channeled by a separate spirit and heal allies."
+    },
+    {
+      "heroName": "Io",
+      "abilityKey": "wisp_tether",
+      "abilityName": "Tether",
+      "matchedKeyword": "restores",
+      "description": "Tethers Io to an allied unit, granting bonus movement speed to both. When Io restores health or mana, the tethered unit gains a portion of that amount. The tether breaks when the allied unit moves too far away, or Io cancels the tether. Tether slows enemies touching it."
+    },
+    {
+      "heroName": "Io",
+      "abilityKey": "wisp_overcharge",
+      "abilityName": "Overcharge",
+      "matchedKeyword": "health",
+      "description": "Io gains attack speed, spell amplification, and health regeneration based on max health. If Io is Tethered to an ally, that unit also gains any bonuses granted by Overcharge."
+    },
+    {
+      "heroName": "Io",
+      "abilityKey": "wisp_equilibrium",
+      "abilityName": "Equilibrium",
+      "matchedKeyword": "health",
+      "description": "Io gains outgoing damage amplification the closer it is to full health, and Health Restoration and Healing Amplification the closer it is to zero health."
+    },
+    {
+      "heroName": "Visage",
+      "abilityKey": "visage_stone_form_self_cast",
+      "abilityName": "Stone Form",
+      "matchedKeyword": "invulnerable",
+      "description": "Orders the Familiar closest to Visage to cast Stone Form in its current location, turning into stone and smashing into the ground, stunning and damaging all targets in the area. The Familiar becomes invulnerable, and will regain its health very rapidly. After 6 seconds, the Familiar will automatically leave Stone Form.\n\n Can be alt-cast to order the closest Familiar to the target location to move there and cast Stone Form."
+    },
+    {
+      "heroName": "Visage",
+      "abilityKey": "visage_summon_familiars",
+      "abilityName": "Summon Familiars",
+      "matchedKeyword": "invulnerable",
+      "description": "Conjures 2 blind Familiars to fight for Visage. Familiars possess the Stone Form ability, that allows them to turn into stone, stunning enemies upon landing. While in Stone Form, Familiars are invulnerable, and rapidly regenerate their health. Familiars grant high bounty when killed.\n\nThe ability can be cast in the alt-cast state to recall Visages familiars after 4s, during which they cannot attack or act."
+    },
+    {
+      "heroName": "Visage",
+      "abilityKey": "visage_summon_familiars_stone_form",
+      "abilityName": "Stone Form",
+      "matchedKeyword": "invulnerable",
+      "description": "After a short delay, the Familiar turns into stone and smashes into the ground, stunning and damaging all targets in the area. The Familiar becomes invulnerable, and will regain its health very rapidly. After 6 seconds, the Familiar will automatically leave Stone Form. \n\n Can be alt-cast to order the Familiar to move to the target location and cast Stone Form."
+    },
+    {
+      "heroName": "Slark",
+      "abilityKey": "slark_saltwater_shiv",
+      "abilityName": "Saltwater Shiv",
+      "matchedKeyword": "Health",
+      "description": "Slark slices the target with his salty shiv, stealing a portion of the target's movement speed, Health Regen and Health Restoration.\n\nThese effects stack independently."
+    },
+    {
+      "heroName": "Slark",
+      "abilityKey": "slark_shadow_dance",
+      "abilityName": "Shadow Dance",
+      "matchedKeyword": "health",
+      "description": "When not visible to the enemy team, Slark passively gains bonus movement speed and health regeneration. If Slark is damaged by a neutral unit, the passive movement and health regeneration bonuses are lost for 2 seconds.\n\nWhen activated, Slark hides himself in a cloud of shadows, becoming immune to detection. Attacking, casting spells, and using items will not reveal Slark, but enemies can see the cloud itself."
+    },
+    {
+      "heroName": "Centaur Warrunner",
+      "abilityKey": "centaur_mount",
+      "abilityName": "Hitch A Ride",
+      "matchedKeyword": "invulnerable",
+      "description": "Centaur tosses an ally into a cart hitched behind him. While in the cart, the ally is invulnerable and can still cast and attack normally, but cannot move independently or be targeted by opponents. Increases the attack range of melee heroes by 200."
+    },
+    {
+      "heroName": "Timbersaw",
+      "abilityKey": "shredder_reactive_armor",
+      "abilityName": "Reactive Armor",
+      "matchedKeyword": "health",
+      "description": "Each time Timbersaw is attacked, he gains increased health regen and armor. Hero attacks are counted as 4x the amount."
+    },
+    {
+      "heroName": "Timbersaw",
+      "abilityKey": "shredder_chakram",
+      "abilityName": "Chakram",
+      "matchedKeyword": "health",
+      "description": "Fires Timbersaw's main saw blade at the target location where it will spin in place, dealing damage in an area around it. Enemies caught in the saw blade will move more slowly for every 5% of health missing. The blade deals damage and cuts down trees in its path when fired and retracted. While active the ability costs mana, and Timbersaw loses the ability to attack."
+    },
+    {
+      "heroName": "Abaddon",
+      "abilityKey": "abaddon_death_coil",
+      "abilityName": "Mist Coil",
+      "matchedKeyword": "heal",
+      "description": "Abaddon releases a coil of deathly mist that can damage an enemy unit or heal a friendly unit at the cost of some of Abaddon's health."
+    },
+    {
+      "heroName": "Abaddon",
+      "abilityKey": "abaddon_withering_mist",
+      "abilityName": "Withering Mist",
+      "matchedKeyword": "Health",
+      "description": "Damaging enemies applies the Withering Mist debuff for 5s. Affected enemies have their Health Restoration reduced by 24.5% if they are below 40% HP."
+    },
+    {
+      "heroName": "Abaddon",
+      "abilityKey": "abaddon_borrowed_time",
+      "abilityName": "Borrowed Time",
+      "matchedKeyword": "heal",
+      "description": "When activated, dispels you and all damage dealt to you will heal instead of harm. If the ability is not on cooldown, it will automatically activate if your health falls below 400.\n\nDISPEL TYPE: Strong Dispel"
+    },
+    {
+      "heroName": "Legion Commander",
+      "abilityKey": "legion_commander_press_the_attack",
+      "abilityName": "Press The Attack",
+      "matchedKeyword": "health",
+      "description": "Removes debuffs and disables from the target friendly unit, and grants bonus movement speed and health regen for a short time.\n\nDISPEL TYPE: Strong Dispel"
+    },
+    {
+      "heroName": "Techies",
+      "abilityKey": "techies_suicide",
+      "abilityName": "Blast Off!",
+      "matchedKeyword": "health",
+      "description": "Techies hurtle themselves into the enemy's midst, detonating charges upon impact which deal massive area of effect damage and stun enemies. Upon landing, the assault deals Techies non-lethal damage equal to a percentage of their current health."
+    },
+    {
+      "heroName": "Techies",
+      "abilityKey": "techies_mutually_assured_destruction",
+      "abilityName": "M.A.D.",
+      "matchedKeyword": "regeneration",
+      "description": "Techies gain a percentage of their mana pool as bonus mana regeneration.\n\nWhen Techies die, they leave behind a barrel that explodes after 1.5s, damaging enemies in an area around it. Damage is based on Techies' max mana."
+    },
+    {
+      "heroName": "Techies",
+      "abilityKey": "techies_minefield_sign",
+      "abilityName": "Minefield Sign",
+      "matchedKeyword": "invulnerable",
+      "description": "Plant a warning sign, causing Proximity Mines within its radius to be invulnerable and deal 15% more damage. Only one sign can exist at a time. Lasts 240 seconds.\n\nWhen an enemy Hero walks within 200 units of a minefield sign, the 1000 units area around the sign will become a minefield for 10 seconds, dealing damage to enemy Heroes any time they move within its area. Minefield Sign is destroyed after this effect ends."
+    },
+    {
+      "heroName": "Earth Spirit",
+      "abilityKey": "earth_spirit_stone_caller",
+      "abilityName": "Stone Remnant",
+      "matchedKeyword": "invulnerable",
+      "description": "Call a Stone Remnant to the target location. Stone Remnants have no vision and are invulnerable, and can be used with Earth Spirit's abilities. Calling a Stone Remnant consumes a charge, which recharge over time. Stone Remnant has 7 charges.\n\nEarth Spirit passively gains 2.5% bonus damage per unused Stone Remnant charge, and gains an additional 7.5% bonus damage for 10s when a Stone Remnant is targeted with an ability (does not stack)."
+    },
+    {
+      "heroName": "Terrorblade",
+      "abilityKey": "terrorblade_reflection",
+      "abilityName": "Reflection",
+      "matchedKeyword": "invulnerable",
+      "description": "Terrorblade brings forth an invulnerable dark reflection of all enemy heroes in a target area. Affected enemy heroes have movement and attack speeds slowed and attacked by their reflection."
+    },
+    {
+      "heroName": "Terrorblade",
+      "abilityKey": "terrorblade_sunder",
+      "abilityName": "Sunder",
+      "matchedKeyword": "health",
+      "description": "Severs the life from both Terrorblade and a target hero, exchanging a percentage of both units' current health. Some health points must remain."
+    },
+    {
+      "heroName": "Phoenix",
+      "abilityKey": "phoenix_sun_ray",
+      "abilityName": "Sun Ray",
+      "matchedKeyword": "health",
+      "description": "Phoenix expels a beam of light at the cost of its own health. The beam damages enemies and heals allies for a base amount plus a percentage of their health. The percentage increases as the beam continues to fire."
+    },
+    {
+      "heroName": "Phoenix",
+      "abilityKey": "phoenix_dying_light",
+      "abilityName": "Dying Light",
+      "matchedKeyword": "health",
+      "description": "Phoenix deals 4% of its missing health as magic damage to all enemies in a 400 radius every second."
+    },
+    {
+      "heroName": "Phoenix",
+      "abilityKey": "phoenix_supernova",
+      "abilityName": "Supernova",
+      "matchedKeyword": "health",
+      "description": "The Phoenix willingly ends its current life for the chance to be reborn. Transforms into a burning sun that scorches enemies in a huge area. The sun can be destroyed by attacks from enemy Heroes. After 6 seconds the sun explodes, stunning all nearby enemies while restoring Phoenix to full health and mana with refreshed abilities.\n\nDISPEL TYPE: Strong Dispel"
+    },
+    {
+      "heroName": "Oracle",
+      "abilityKey": "oracle_purifying_flames",
+      "abilityName": "Purifying Flames",
+      "matchedKeyword": "regenerate",
+      "description": "Burns away impurities, dealing heavy magic damage to the target before causing them to regenerate health over time. The amount of health regenerated over its duration exceeds the amount of initial damage. Can be cast on enemies and allies."
+    },
+    {
+      "heroName": "Oracle",
+      "abilityKey": "oracle_rain_of_destiny",
+      "abilityName": "Rain of Destiny",
+      "matchedKeyword": "Heal",
+      "description": "Brings forth rain to the target area. Enemies standing in the area receive damage and have reduced Heal Amplification. Allies in the area heal and have increased incoming Heal Amplification."
+    },
+    {
+      "heroName": "Oracle",
+      "abilityKey": "oracle_false_promise",
+      "abilityName": "False Promise",
+      "matchedKeyword": "healing",
+      "description": "Temporarily alters an ally's destiny, delaying any healing or damage taken until False Promise ends. Any healing that is delayed by False Promise is amplified. Removes most negative status effects and disables on initial cast.\n\nDISPEL TYPE: Strong Dispel"
+    },
+    {
+      "heroName": "Winter Wyvern",
+      "abilityKey": "winter_wyvern_arctic_burn",
+      "abilityName": "Arctic Burn",
+      "matchedKeyword": "health",
+      "description": "Winter Wyvern soars upon an arctic wind, granting her unobstructed movement and allowing her to exhale a blistering chill into each attack. While soaring, her attacks travel further and faster, and slow enemies with a magical freeze that strips them of 4% of their current health each second."
+    },
+    {
+      "heroName": "Winter Wyvern",
+      "abilityKey": "winter_wyvern_cold_embrace",
+      "abilityName": "Cold Embrace",
+      "matchedKeyword": "healing",
+      "description": "Encases an ally in an icy cocoon, freezing them solid while healing a base amount as well as a percentage of their maximum health each second. The cocoon blocks all physical damage."
+    },
+    {
+      "heroName": "Dark Willow",
+      "abilityKey": "dark_willow_pixie_dust",
+      "abilityName": "Pixie Dust",
+      "matchedKeyword": "Health",
+      "description": "Dark Willow gains 20% bonus Health and Mana Regeneration, increased to 100% while she is untargetable or invulnerable."
+    },
+    {
+      "heroName": "Ringmaster",
+      "abilityKey": "ringmaster_impalement",
+      "abilityName": "Impalement Arts",
+      "matchedKeyword": "health",
+      "description": "Ringmaster throws one of his daggers to a precise point of his choosing. If he strikes an enemy, the dagger deals impact damage, briefly slows the unit hit, and causes them to bleed. The bleeding deals a percentage of the victim's maximum health in damage every second to heroes and flat damage per second to creeps."
+    },
+    {
+      "heroName": "Ringmaster",
+      "abilityKey": "ringmaster_spotlight",
+      "abilityName": "Spotlight",
+      "matchedKeyword": "health",
+      "description": "Ringmaster shines 3 spotlights that sweep over an area. Enemies in the light have a chance to miss their attacks and are revealed if invisible. Illusions hit by the beam fade away, losing a percentage of their maximum health each second. These effects linger for 0.3 seconds after leaving the light."
+    },
+    {
+      "heroName": "Marci",
+      "abilityKey": "marci_bodyguard",
+      "abilityName": "Bodyguard",
+      "matchedKeyword": "restores",
+      "description": "Passively grants Marci lifesteal and bonus attack damage.\n\nWhen cast on an ally, she provides them with 75% of her passive lifesteal and attack damage bonus. Additionally Marci creates a shared all damage barrier for herself and her partner. As Marci attacks heroes, 30% of the damage dealt restores the barrier."
+    },
+    {
+      "heroName": "Marci",
+      "abilityKey": "marci_special_delivery",
+      "abilityName": "Special Delivery",
+      "matchedKeyword": "health",
+      "description": "Marci whistles to instantly summon her courier to her. If the courier started in the fountain, it will take items from Marci's stash. After teleporting it will transfer these items to Marci and head back to the fountain.\n\nPassively grants all allied couriers 3 bonus levels and 1 bonus health."
+    },
+    {
+      "heroName": "Kez",
+      "abilityKey": "kez_raptor_dance",
+      "abilityName": "Raptor Dance",
+      "matchedKeyword": "invulnerable",
+      "description": "Kez enters into an uncontrollable state for 1 second, becoming invulnerable for 0.2s and receiving a basic dispel.\n\nIf the cast completes successfully, Kez performs a series of deadly radial slashes around him that deal damage based on the max health of the target and heal Kez for a percentage of all damage dealt."
+    },
+    {
+      "heroName": "Largo",
+      "abilityKey": "largo_catchy_lick",
+      "abilityName": "Catchy Lick",
+      "matchedKeyword": "health",
+      "description": "Largo licks the targeted unit with his tongue, pulling it back a short distance, applying a basic dispel, and dealing damage if it's an enemy.\n\nKilling or dispelling an effect from a target grants Largo temporary health regeneration.\n\nDISPEL TYPE: Basic Dispel"
+    }
+  ]
+}
