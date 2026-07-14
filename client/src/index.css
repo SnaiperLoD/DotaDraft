@@ -1,0 +1,9 @@
+/* Explicit background/text colors so the browser's forced-dark-mode
+   heuristic (which can ignore the <meta name="color-scheme"> declaration)
+   doesn't repaint an unstyled page into a low-contrast dark theme.
+   Not a real theme — see Blueprint/10-tech-debt-backlog.md UI cleanup items. */
+html,
+body {
+  background-color: #ffffff;
+  color: #111111;
+}

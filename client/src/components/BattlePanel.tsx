@@ -149,7 +149,7 @@ export default function BattlePanel({ draftId, heroes }: Props) {
             <div style={{ fontWeight: 'bold' }}>Explanation</div>
             <ul style={{ margin: '4px 0 0', paddingLeft: 20 }}>
               {result.explanation.map((line, i) => (
-                <li key={i} style={{ fontSize: 13, opacity: 0.85 }}>
+                <li key={i} style={{ fontSize: 13 }}>
                   {line}
                 </li>
               ))}

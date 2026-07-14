@@ -143,10 +143,10 @@ function buildExplanation(ctx: ExplanationContext): string[] {
 
   if (advantageDirection === 'Even') {
     return [
-      `This is a close matchup with no clear favorite (${confidenceTier} confidence) — ${describeAxis(topAxisDelta.axis, topAxisDelta.delta > 0)} for this draft was the closest thing to an edge.`,
+      `This is a close matchup with no clear favorite (${confidenceTier} confidence) — ${describeAxis(topAxisDelta.axis, topAxisDelta.delta > 0)} for your draft was the closest thing to an edge.`,
       resolvedOutcome === 'Win'
-        ? 'This draft came out on top in what was essentially a coin flip.'
-        : 'This draft came up just short in what was essentially a coin flip.',
+        ? 'Your draft came out on top in what was essentially a coin flip.'
+        : 'Your draft came up just short in what was essentially a coin flip.',
     ];
   }
 
@@ -154,7 +154,7 @@ function buildExplanation(ctx: ExplanationContext): string[] {
   const userWon = resolvedOutcome === 'Win';
   const isUpset = favoredIsA ? !userWon : userWon;
 
-  const favoredLabel = favoredIsA ? 'This draft' : "The opponent's draft";
+  const favoredLabel = favoredIsA ? 'Your draft' : "Opponent's draft";
   const underdogTeam = favoredIsA ? teamB : teamA;
   const favoredTeam = favoredIsA ? teamA : teamB;
 
@@ -184,7 +184,7 @@ function buildExplanation(ctx: ExplanationContext): string[] {
     reasons.push(`the ${synergy.heroA} + ${synergy.heroB} combination`);
   }
 
-  const underdogLabel = favoredIsA ? "the opponent's draft" : 'this draft';
+  const underdogLabel = favoredIsA ? "opponent's draft" : 'your draft';
   const upsetLine =
     reasons.length > 0
       ? `But ${underdogLabel} had real advantages of its own — ${reasons.join(' and ')} — that made this upset plausible.`
@@ -233,11 +233,11 @@ export function resolveBattle(
   const advantages = axisDeltas
     .filter((d) => d.delta > 0.3)
     .slice(0, 2)
-    .map((d) => `This draft has ${describeAxis(d.axis, true)}.`);
+    .map((d) => `Your draft has ${describeAxis(d.axis, true)}.`);
   const disadvantages = axisDeltas
     .filter((d) => d.delta < -0.3)
     .slice(0, 2)
-    .map((d) => `This draft has ${describeAxis(d.axis, false)}.`);
+    .map((d) => `Your draft has ${describeAxis(d.axis, false)}.`);
 
   const explanation = buildExplanation({
     advantageDirection,
