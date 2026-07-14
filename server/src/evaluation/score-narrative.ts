@@ -44,6 +44,21 @@ export const AXIS_NARRATIVE: Record<string, NarrativeSet> = {
     mid: "Some saving tools are available, but this team can't bail out every bad engagement.",
     low: 'Little in the way of healing or defensive cooldowns — a bad engagement is likely to end in a death.',
   },
+  burst: {
+    high: 'This team can burst down key targets quickly — a good pick-off window is often lethal.',
+    mid: "This team has some burst potential but can't reliably one-shot priority targets.",
+    low: 'Low burst damage means this team relies on sustained fighting rather than quick kills.',
+  },
+  control: {
+    high: 'Heavy disable — this team can lock down key targets and dictate when fights happen.',
+    mid: 'This team has some disable but not enough to fully control a fight on its own.',
+    low: 'Light on disables — this team will struggle to lock down mobile or tanky targets.',
+  },
+  durability: {
+    high: 'This team is tanky and hard to burst down, and can afford to front-line in fights.',
+    mid: 'This team has moderate durability but can still be burst down by focused damage.',
+    low: 'This team is fragile and vulnerable to burst damage — bad positioning is likely to be punished.',
+  },
 };
 
 export const SYNERGY_NARRATIVE: NarrativeSet = {

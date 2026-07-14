@@ -6,7 +6,7 @@ import { createSynergyAnalyzer } from './analyzers/synergy.analyzer';
 import { counterAnalyzer } from './analyzers/counter.analyzer';
 import { createAxisAnalyzer } from './analyzers/axis.analyzer';
 import { createProSimilarityAnalyzer } from './analyzers/pro-similarity.analyzer';
-import type { Analyzer } from './analyzer.interface';
+import type { Analyzer, DraftPick } from './analyzer.interface';
 import type { EvaluationResult, EvaluationSummary, AnalyzerResult } from 'shared';
 
 // Categories eligible for the strengths/weaknesses summary.
@@ -16,6 +16,9 @@ const SUMMARY_KEYS = [
   'teamfight',
   'tempo',
   'scaling',
+  'burst',
+  'control',
+  'durability',
   'mobility',
   'map_control',
   'saving',
@@ -26,12 +29,19 @@ const SUMMARY_KEYS = [
 // Order matches Blueprint/05-evaluation-engine.md's Output breakdown list.
 // Synergy and Pro Similarity are built per-evaluate() call since both
 // depend on data fetched at request time (see evaluate()) — everything
-// else is static.
+// else is static. Burst/Control/Durability were added alongside the
+// Role-fit modifier (10-tech-debt-backlog.md) — they were already
+// calibrated in evaluation_values but not previously surfaced as their own
+// breakdown rows, which meant role-fit had nothing to boost for
+// Carry/Mid/Offlane.
 const BASE_ANALYZERS: Analyzer[] = [
   counterAnalyzer,
   createAxisAnalyzer('teamfight', 'Teamfight'),
   createAxisAnalyzer('tempo', 'Tempo'),
   createAxisAnalyzer('scaling', 'Scaling'),
+  createAxisAnalyzer('burst', 'Burst'),
+  createAxisAnalyzer('control', 'Control'),
+  createAxisAnalyzer('durability', 'Durability'),
   createAxisAnalyzer('mobility', 'Mobility'),
   createAxisAnalyzer('map_control', 'Map Control'),
   createAxisAnalyzer('saving', 'Saving'),
@@ -47,6 +57,9 @@ const WEIGHTS: Record<string, number> = {
   tempo: 0.15,
   scaling: 0.1,
   objectives: 0.1,
+  burst: 0.05,
+  control: 0.05,
+  durability: 0.05,
   mobility: 0.05,
   map_control: 0.05,
   saving: 0.05,
@@ -68,7 +81,7 @@ export class EvaluationService {
       throw new BadRequestException('Draft must have all 5 heroes picked before evaluation');
     }
 
-    const heroes = draft.heroes.map((dh) => dh.hero);
+    const picks: DraftPick[] = draft.heroes.map((dh) => ({ hero: dh.hero, assignedRole: dh.assignedRole }));
     const compositions = await this.proMatchService.getWinningCompositions();
     const analyzers: Analyzer[] = [
       createSynergyAnalyzer(this.heroMetaService),
@@ -76,7 +89,7 @@ export class EvaluationService {
       createProSimilarityAnalyzer(compositions),
     ];
     const breakdown: AnalyzerResult[] = analyzers.map((analyzer) => {
-      const result = analyzer.analyze(heroes);
+      const result = analyzer.analyze(picks);
       return {
         key: analyzer.key,
         label: analyzer.label,

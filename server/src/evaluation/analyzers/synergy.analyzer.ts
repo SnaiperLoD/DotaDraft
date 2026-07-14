@@ -118,7 +118,8 @@ export function createSynergyAnalyzer(lookup: SynergyLookup): Analyzer {
   return {
     key: 'synergy',
     label: 'Synergy',
-    analyze(heroes: Hero[]) {
+    analyze(picks) {
+      const heroes = picks.map((p) => p.hero);
       let score = 0;
       const explanation: string[] = [];
 

@@ -15,7 +15,8 @@ export function createProSimilarityAnalyzer(compositions: ProComposition[]): Ana
   return {
     key: 'proSimilarity',
     label: 'Pro Similarity',
-    analyze(heroes) {
+    analyze(picks) {
+      const heroes = picks.map((p) => p.hero);
       if (compositions.length === 0) {
         return {
           score: null,

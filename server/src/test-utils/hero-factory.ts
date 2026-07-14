@@ -1,4 +1,5 @@
 import type { Hero, HeroEvaluationValues } from 'shared';
+import type { DraftPick } from '../evaluation/analyzer.interface';
 
 export const DEFAULT_EVALUATION_VALUES: HeroEvaluationValues = {
   teamfight: 3,
@@ -28,4 +29,10 @@ export function makeHero(overrides: Partial<Hero> & { id: number; name: string }
     presumed_positions: [],
     ...overrides,
   };
+}
+
+// Wraps heroes into DraftPick[] for Analyzer.analyze() — most analyzer
+// tests don't care about role, so assignedRole defaults to null.
+export function picks(heroes: Hero[], assignedRole: string | null = null): DraftPick[] {
+  return heroes.map((hero) => ({ hero, assignedRole }));
 }

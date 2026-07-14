@@ -1,5 +1,5 @@
 import { createSynergyAnalyzer, type SynergyLookup } from './synergy.analyzer';
-import { makeHero, DEFAULT_EVALUATION_VALUES } from '../../test-utils/hero-factory';
+import { makeHero, DEFAULT_EVALUATION_VALUES, picks } from '../../test-utils/hero-factory';
 
 const noRealData: SynergyLookup = {
   getSynergyWinRate: () => null,
@@ -11,7 +11,7 @@ describe('createSynergyAnalyzer (tag rules, no real data)', () => {
 
   it('reports no synergy when nothing matches', () => {
     const heroes = [makeHero({ id: 1, name: 'A' }), makeHero({ id: 2, name: 'B' })];
-    const result = synergyAnalyzer.analyze(heroes);
+    const result = synergyAnalyzer.analyze(picks(heroes));
     expect(result.score).toBe(0);
     expect(result.explanation[0]).toMatch(/no strong hero-to-hero synergies/i);
   });
@@ -19,7 +19,7 @@ describe('createSynergyAnalyzer (tag rules, no real data)', () => {
   it('scores a needs_setup + enables_engage pair and names both heroes', () => {
     const setup = makeHero({ id: 1, name: 'Lion', synergy_tags: ['needs_setup'] });
     const enabler = makeHero({ id: 2, name: 'Mirana', synergy_tags: ['enables_engage'] });
-    const result = synergyAnalyzer.analyze([setup, enabler]);
+    const result = synergyAnalyzer.analyze(picks([setup, enabler]));
     expect(result.score).toBe(2.5);
     expect(result.explanation[0]).toContain('Lion');
     expect(result.explanation[0]).toContain('Mirana');
@@ -32,28 +32,28 @@ describe('createSynergyAnalyzer (tag rules, no real data)', () => {
       makeHero({ id: 3, name: 'C', synergy_tags: ['needs_space'] }),
       makeHero({ id: 4, name: 'D', synergy_tags: ['creates_space'] }),
     ];
-    const result = synergyAnalyzer.analyze(heroes);
+    const result = synergyAnalyzer.analyze(picks(heroes));
     // needs_setup+enables_engage (2.5) + needs_space+creates_space (2) = 4.5
     expect(result.score).toBe(4.5);
   });
 
   it('does not pair a hero with itself', () => {
     const soloHero = makeHero({ id: 1, name: 'Solo', synergy_tags: ['needs_setup', 'enables_engage'] });
-    const result = synergyAnalyzer.analyze([soloHero]);
+    const result = synergyAnalyzer.analyze(picks([soloHero]));
     expect(result.score).toBe(0);
   });
 
   it('adds a bonus for 2+ high-mobility heroes', () => {
     const mobile = (id: number, name: string) =>
       makeHero({ id, name, evaluation_values: { ...DEFAULT_EVALUATION_VALUES, mobility: 6 } });
-    const result = synergyAnalyzer.analyze([mobile(1, 'A'), mobile(2, 'B')]);
+    const result = synergyAnalyzer.analyze(picks([mobile(1, 'A'), mobile(2, 'B')]));
     expect(result.score).toBe(1);
     expect(result.explanation.some((line) => line.includes('high-mobility'))).toBe(true);
   });
 
   it('adds a bonus for 3+ teamfight-tagged heroes', () => {
     const teamfighter = (id: number, name: string) => makeHero({ id, name, tags: ['teamfight'] });
-    const result = synergyAnalyzer.analyze([teamfighter(1, 'A'), teamfighter(2, 'B'), teamfighter(3, 'C')]);
+    const result = synergyAnalyzer.analyze(picks([teamfighter(1, 'A'), teamfighter(2, 'B'), teamfighter(3, 'C')]));
     expect(result.score).toBe(1);
     expect(result.explanation.some((line) => line.includes('teamfight-oriented core'))).toBe(true);
   });
@@ -82,7 +82,7 @@ describe('createSynergyAnalyzer (tag rules, no real data)', () => {
         tags: ['teamfight'],
       }),
     ];
-    const result = synergyAnalyzer.analyze(heroes);
+    const result = synergyAnalyzer.analyze(picks(heroes));
     expect(result.score).toBeLessThanOrEqual(10);
   });
 });
@@ -98,7 +98,7 @@ describe('createSynergyAnalyzer (real win-rate data blending)', () => {
       getSynergyWinRate: (a, b) => ([a, b].sort().join() === '1,2' ? 0.45 : null),
     };
 
-    const result = createSynergyAnalyzer(underperforming).analyze([setup, enabler]);
+    const result = createSynergyAnalyzer(underperforming).analyze(picks([setup, enabler]));
     expect(result.score).toBe(1.3); // 2.5 * 0.5 = 1.25, rounded to 1 decimal
     expect(result.explanation[0]).toMatch(/underperforms expectations/i);
   });
@@ -113,7 +113,7 @@ describe('createSynergyAnalyzer (real win-rate data blending)', () => {
       getSynergyWinRate: (a, b) => ([a, b].sort().join() === '1,2' ? 0.48 : null),
     };
 
-    const result = createSynergyAnalyzer(mildUnderperformance).analyze([setup, enabler]);
+    const result = createSynergyAnalyzer(mildUnderperformance).analyze(picks([setup, enabler]));
     expect(result.score).toBe(2.5);
     expect(result.explanation[0]).not.toMatch(/underperforms expectations/i);
   });
@@ -128,7 +128,7 @@ describe('createSynergyAnalyzer (real win-rate data blending)', () => {
       getSynergyWinRate: (a, b) => ([a, b].sort().join() === '1,2' ? 0.6 : null),
     };
 
-    const result = createSynergyAnalyzer(strongRealSynergy).analyze([heroA, heroB]);
+    const result = createSynergyAnalyzer(strongRealSynergy).analyze(picks([heroA, heroB]));
     expect(result.score).toBeGreaterThan(0);
     expect(result.explanation[0]).toContain('Axe');
     expect(result.explanation[0]).toContain('Sven');
@@ -145,7 +145,7 @@ describe('createSynergyAnalyzer (real win-rate data blending)', () => {
       getSynergyWinRate: (a, b) => ([a, b].sort().join() === '1,2' ? 0.51 : null),
     };
 
-    const result = createSynergyAnalyzer(weakSignal).analyze([heroA, heroB]);
+    const result = createSynergyAnalyzer(weakSignal).analyze(picks([heroA, heroB]));
     expect(result.score).toBe(0);
   });
 });

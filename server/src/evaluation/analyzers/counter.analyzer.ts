@@ -1,4 +1,3 @@
-import type { Hero } from 'shared';
 import type { Analyzer } from '../analyzer.interface';
 import { COUNTER_NARRATIVE, scoreBracket } from '../score-narrative';
 
@@ -25,7 +24,8 @@ function humanize(tag: string): string {
 export const counterAnalyzer: Analyzer = {
   key: 'counter',
   label: 'Counter',
-  analyze(heroes: Hero[]) {
+  analyze(picks) {
+    const heroes = picks.map((p) => p.hero);
     const coverage = THREAT_CATEGORIES.map((tag) => ({
       tag,
       heroes: heroes.filter((h) => h.counter_tags.includes(tag)),

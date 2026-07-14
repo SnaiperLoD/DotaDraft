@@ -1,10 +1,10 @@
 import { counterAnalyzer } from './counter.analyzer';
-import { makeHero } from '../../test-utils/hero-factory';
+import { makeHero, picks } from '../../test-utils/hero-factory';
 
 describe('counterAnalyzer', () => {
   it('scores 0 and explains the gap when no counter_tags are present', () => {
     const heroes = [makeHero({ id: 1, name: 'A' }), makeHero({ id: 2, name: 'B' })];
-    const result = counterAnalyzer.analyze(heroes);
+    const result = counterAnalyzer.analyze(picks(heroes));
     expect(result.score).toBe(0);
     expect(result.explanation[0]).toMatch(/no specialized counters/i);
   });
@@ -14,7 +14,7 @@ describe('counterAnalyzer', () => {
       makeHero({ id: 1, name: 'A', counter_tags: ['counters_illusions'] }),
       makeHero({ id: 2, name: 'B', counter_tags: ['counters_illusions'] }),
     ];
-    const result = counterAnalyzer.analyze(heroes);
+    const result = counterAnalyzer.analyze(picks(heroes));
     // 1 of 6 categories covered -> (1/6)*10 = 1.7 (rounded)
     expect(result.score).toBe(1.7);
     expect(result.explanation[0]).toContain('A');
@@ -36,7 +36,7 @@ describe('counterAnalyzer', () => {
         ],
       }),
     ];
-    const result = counterAnalyzer.analyze(heroes);
+    const result = counterAnalyzer.analyze(picks(heroes));
     expect(result.score).toBe(10);
   });
 
@@ -53,13 +53,13 @@ describe('counterAnalyzer', () => {
       'counters_tanky_durable',
     ];
     const heroes = [makeHero({ id: 1, name: 'A', counter_tags: allTags })];
-    const result = counterAnalyzer.analyze(heroes);
+    const result = counterAnalyzer.analyze(picks(heroes));
     expect(result.score).toBe(10);
   });
 
   it('humanizes the tag name in the explanation (underscores to spaces, prefix stripped)', () => {
     const heroes = [makeHero({ id: 1, name: 'A', counter_tags: ['counters_squishy_backline'] })];
-    const result = counterAnalyzer.analyze(heroes);
+    const result = counterAnalyzer.analyze(picks(heroes));
     expect(result.explanation[0]).toContain('Counters squishy backline: A.');
   });
 });
