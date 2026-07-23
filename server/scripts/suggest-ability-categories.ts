@@ -38,9 +38,27 @@ interface Candidate {
 
 // Word-boundary matches only — a naive substring match on e.g. "fly" also
 // hits "briefly", which produced false positives during validation.
+//
+// initiating deliberately overlaps mobility on gap-closing verbs (blink,
+// leap, charge...) — the same ability can score high on both (Legion
+// Commander's Duel-adjacent Overwhelming Odds isn't a gap-closer, but her
+// kit's Charge-of-Darkness style abilities elsewhere in the roster are both
+// "mobility" for escape/reposition AND "initiating" for closing onto an
+// enemy). The candidate list just narrows what to look at; the two scores
+// are judged independently by hand. Added forced-displacement verbs
+// (hook/pull/drag/toss) that mobility doesn't need since those target the
+// enemy, not the caster.
+//
+// control_strength intentionally casts wider than the old mobility/saving
+// filters — it's meant to catch both the hard disables `stuns` already
+// counts (stun/hex/root) and the soft ones it misses (silence/slow/fear),
+// so recall matters more here than usual.
 const CATEGORY_KEYWORDS: Record<string, RegExp> = {
   mobility: /\b(blink|teleport|dash|leap|jump|charge|burrow|flies|flying|fly|warp|phase shift|swaps?)\b/i,
   saving: /\b(heal|healing|health|restor(e|ation|es)|regenerat\w*|reviv\w*|resurrect\w*|invulnerab\w*)\b/i,
+  initiating: /\b(blink|teleport|dash|leap|jump|charge|pounces?|hooks?|pulls?|drags?|tosses?|impales?|chains?|nets?)\b/i,
+  control_strength:
+    /\b(stuns?|stunned|hex(es)?|root(s|ed)?|silenc(e|es|ed|ing)|fear(s|ed)?|sleep(s)?|taunt(s|ed)?|slow(s|ed)?|disarm(s|ed)?|mute(s|d)?|polymorph)\b/i,
 };
 
 function main() {

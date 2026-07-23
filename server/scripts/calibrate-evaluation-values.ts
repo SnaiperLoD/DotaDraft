@@ -14,11 +14,22 @@ import {
 //   scaling    <- 60% avg(gold_per_min, xp_per_min) + 40% win-rate-rises-with-duration trend
 //   objectives <- tower_damage (benchmarks)
 //   tempo      <- 37.5% win/loss duration gap + 37.5% win-rate-falls-with-duration trend + 25% early kills/game
-//   control    <- stuns per minute
+//   control    <- 50% stuns per minute + 50% hand-tagged control_strength (see server/data/ability-tag-weights.json)
 //   durability <- damage_taken / deaths (summed across matches, not averaged per-match)
-//   mobility   <- move-speed extremity + mobility_ability_tier + Blink/BoT purchase rank, rank-rescaled (see server/data/map-control-weights.json)
+//   mobility   <- move-speed extremity (20%) + hand-tagged mobility (70%, per-ability, summed per hero) + Blink/BoT purchase rank (10%) (see server/data/map-control-weights.json)
 //   map_control <- see server/data/map-control-weights.json (vision + mobility + ability tags), rank-rescaled
-//   saving     <- 40% hero_healing_per_min (benchmarks) + 60% protects_allies tag (binary, from synergy_tags)
+//   saving     <- 40% hero_healing_per_min (benchmarks, skipped for heroes with zero hand-tagged saving abilities — see below) + 60% hand-tagged saving (per-ability, summed per hero, see server/data/ability-tag-weights.json)
+//   initiating <- 85% hand-tagged initiating (per-ability, summed per hero) + 15% Blink Dagger purchase rank — stored on
+//                 evaluation_values for reference, NOT yet wired into Battle Engine/role-fit/UI (separate scope)
+//
+// The hand-tagged mobility/saving/control_strength inputs come from
+// server/data/ability-tagging.csv (manual, per-ability, 0-10) via
+// aggregate-ability-tags.ts: summed per hero per category (an untagged
+// ability contributes 0, not missing data — see Blueprint discussion),
+// then zScoreExtremityScale'd here exactly like every other raw input, so a
+// hero with one standout ability isn't diluted by an average over mostly-
+// irrelevant abilities, and the large all-zero majority doesn't get spread
+// across the full range the way percentileRankScale would.
 // A hero missing a given input keeps its existing formula/prior value for
 // that specific axis rather than being scored as an artificial 0 —
 // weightedBlend() redistributes weight across whatever inputs are present.
@@ -34,6 +45,8 @@ const CONTROL_DURABILITY_VISION_PATH = path.join(
 );
 const HERO_CONSTANTS_PATH = path.join(__dirname, '..', 'data', 'hero-constants.json');
 const WEIGHTS_PATH = path.join(__dirname, '..', 'data', 'map-control-weights.json');
+const ABILITY_TAG_AGGREGATES_PATH = path.join(__dirname, '..', 'data', 'ability-tag-aggregates.json');
+const ABILITY_TAG_WEIGHTS_PATH = path.join(__dirname, '..', 'data', 'ability-tag-weights.json');
 
 interface RawHero {
   id: number;
@@ -91,6 +104,23 @@ interface MapControlWeights {
   finalMobilityExtremityExponent: number;
 }
 
+interface AbilityTagAggregate {
+  heroId: number;
+  mobility: number;
+  saving: number;
+  initiating: number;
+  control_strength: number;
+}
+
+interface AbilityTagWeights {
+  extremityExponents: { mobility: number; saving: number; initiating: number; control_strength: number };
+  blend: {
+    saving: { healingWeight: number; abilityTagWeight: number };
+    control: { stunsWeight: number; abilityTagWeight: number };
+    initiating: { abilityTagWeight: number; blinkWeight: number };
+  };
+}
+
 function byHeroId<T extends { heroId: number }>(filePath: string): Map<number, T> {
   const rows: T[] = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
   return new Map(rows.map((r) => [r.heroId, r]));
@@ -104,6 +134,8 @@ function main() {
   const earlyKillsByHeroId = byHeroId<EarlyKillsEntry>(EARLY_KILLS_PATH);
   const cdvByHeroId = byHeroId<ControlDurabilityVisionEntry>(CONTROL_DURABILITY_VISION_PATH);
   const weights: MapControlWeights = JSON.parse(fs.readFileSync(WEIGHTS_PATH, 'utf-8'));
+  const abilityTagByHeroId = byHeroId<AbilityTagAggregate>(ABILITY_TAG_AGGREGATES_PATH);
+  const tagWeights: AbilityTagWeights = JSON.parse(fs.readFileSync(ABILITY_TAG_WEIGHTS_PATH, 'utf-8'));
 
   const constantsRaw: Record<string, HeroConstant> = JSON.parse(
     fs.readFileSync(HERO_CONSTANTS_PATH, 'utf-8'),
@@ -154,7 +186,29 @@ function main() {
 
   // --- control / durability ---
   const stunsRaw = heroes.map((h) => cdvByHeroId.get(h.id)?.stunsPerMin ?? null);
-  const controlScores = percentileRankScale(stunsRaw);
+  const stunsScores = percentileRankScale(stunsRaw);
+
+  // control_strength (hand-tagged, per-ability, summed per hero) supplements
+  // stuns: OpenDota's `stuns` stat only counts hard disables (stun/hex/root)
+  // — silences and slows don't set that flag, so control-heavy heroes built
+  // around them (Silencer, Doom, Death Prophet) were undercounted by stuns
+  // alone. Weighted below real stuns data per the same "manual counts less"
+  // principle as everywhere else (see server/data/ability-tag-weights.json)
+  // — deliberately not tuned further yet; the thing worth checking after a
+  // run is whether Silencer/Doom/Death Prophet actually climb, not just
+  // whether already-top stun heroes climb further (they were never the
+  // heroes this was meant to fix).
+  const controlStrengthTagRaw = heroes.map((h) => abilityTagByHeroId.get(h.id)?.control_strength ?? 0);
+  const controlStrengthTagScores = zScoreExtremityScale(
+    controlStrengthTagRaw,
+    tagWeights.extremityExponents.control_strength,
+  );
+  const controlScores = heroes.map((_, i) =>
+    weightedBlend([
+      { value: stunsScores[i], weight: tagWeights.blend.control.stunsWeight },
+      { value: controlStrengthTagScores[i], weight: tagWeights.blend.control.abilityTagWeight },
+    ]),
+  );
 
   const durabilityRaw = heroes.map((h) => cdvByHeroId.get(h.id)?.durability ?? null);
   const durabilityScores = percentileRankScale(durabilityRaw);
@@ -198,24 +252,40 @@ function main() {
     return Math.round(Math.max(blinkComponent, botComponent) * 10) / 10;
   });
 
+  // initiating (preview axis, see header comment): pure ability-tag sum
+  // undercounted the classic "Blink Dagger + one ultimate" initiators
+  // (Tidehunter, Mars, Sven, Dragon Knight...) relative to multi-spell kit
+  // heroes (Invoker, Tusk, Earth Spirit), since they only ever have 1-2
+  // tagged abilities to sum. Blink Dagger rate alone (not BoT — BoT isn't an
+  // initiation tool) is blended in, weighted higher than mobility's combined
+  // item signal (0.15 vs mobility's 0.1) precisely because for this axis
+  // itemization *is* a primary signal for a whole class of initiators, not
+  // a minor supplement.
+  const initiatingTagRaw = heroes.map((h) => abilityTagByHeroId.get(h.id)?.initiating ?? 0);
+  const initiatingTagScores = zScoreExtremityScale(initiatingTagRaw, tagWeights.extremityExponents.initiating);
+  const initiatingScores = heroes.map((_, i) =>
+    weightedBlend([
+      { value: initiatingTagScores[i], weight: tagWeights.blend.initiating.abilityTagWeight },
+      { value: blinkScores[i], weight: tagWeights.blend.initiating.blinkWeight },
+    ]),
+  );
+
   // mobility: real move-speed extremity + hand-tagged mobility abilities +
-  // item-purchase signal above. mobility_ability_tier is 0 for 90% of
-  // heroes (no tagged mobility ability) — that flat majority needs a
-  // FINAL pass that does NOT spread them across the full 0-10 range.
-  // percentileRankScale was tried first and rejected: it measures relative
-  // rank, so even within a 90%-flat cluster someone always ranks "above
-  // 70% of the league," which pushed clearly non-mobile heroes (Legion
-  // Commander, Sven, Chaos Knight — zero ability tier, average move speed)
-  // up to 7-9/10. zScoreExtremityScale instead keeps values near the
-  // population mean close to 5 and only pushes genuine outliers (ability
-  // tier 10 heroes) toward 10 — the right shape for a bimodal population
-  // (small genuinely-mobile cluster + large non-mobile majority) rather
-  // than a smooth continuum. This replaces the old hardcoded 3/6
-  // role-based stub (see Blueprint/10-tech-debt-backlog.md).
+  // item-purchase signal above. The hand-tagged input used to be a single
+  // coarse per-hero tier (apply-ability-tags.ts, 0/3/6/10 buckets); it's now
+  // the per-ability CSV tags summed per hero and zScoreExtremityScale'd —
+  // same reasoning as before still applies (percentileRankScale was tried
+  // and rejected: even within the large all-zero cluster someone always
+  // ranks "above 70% of the league," which pushed clearly non-mobile heroes
+  // like Legion Commander/Sven/Chaos Knight up to 7-9/10 — zScoreExtremityScale
+  // keeps the flat majority near 5 and only pushes real outliers toward 10),
+  // it's just fed by a richer input now.
+  const mobilityTagRaw = heroes.map((h) => abilityTagByHeroId.get(h.id)?.mobility ?? 0);
+  const mobilityTagScores = zScoreExtremityScale(mobilityTagRaw, tagWeights.extremityExponents.mobility);
   const mobilityRaw = heroes.map((h, i) =>
     weightedBlend([
       { value: moveSpeedScores[i], weight: weights.mobilityScore.baseMoveSpeed },
-      { value: h.mobility_ability_tier ?? 0, weight: weights.mobilityScore.abilityMobilityBonus },
+      { value: mobilityTagScores[i] ?? 0, weight: weights.mobilityScore.abilityMobilityBonus },
       { value: mobilityItemsRaw[i], weight: weights.mobilityScore.itemsPurchaseBonus },
     ]),
   );
@@ -237,11 +307,34 @@ function main() {
   });
   const mapControlScores = percentileRankScale(mapControlRaw);
 
-  // --- saving: real healing data + hand-tagged protects_allies ---
+  // --- saving: real healing data + hand-tagged saving abilities ---
   const healingRaw = heroes.map((h) =>
     medianBenchmarkValue(metaByHeroId.get(h.id)?.benchmarks?.hero_healing_per_min),
   );
   const healingScores = percentileRankScale(healingRaw);
+
+  // Replaces the old binary protects_allies tag (had it or didn't, 10/0)
+  // with the per-ability CSV saving scores summed per hero — same
+  // "standout ability keeps its weight" reasoning as mobility/control_strength
+  // above, and strictly more information than a single yes/no flag.
+  const savingTagRaw = heroes.map((h) => abilityTagByHeroId.get(h.id)?.saving ?? 0);
+  const savingTagScores = zScoreExtremityScale(savingTagRaw, tagWeights.extremityExponents.saving);
+
+  // hero_healing_per_min (OpenDota benchmark) is blind in both directions —
+  // counts self-sustain/lifesteal, not just ally-directed healing
+  // (Necrophos/Lifestealer/Morphling score highly despite no ally-heal
+  // ability), and misses saves that don't restore HP at all (Bane's
+  // Nightmare, Pudge's Meat Hook, Mirana's Moonlight Shadow all have real,
+  // nonzero hand tags but healingRaw=0 — the stat structurally can't see
+  // non-HP protection, same blind spot as `stuns` missing silences for
+  // Control). Per the user: a missing/zero real value is NOT excluded from
+  // the blend (which would renormalize the tag up to 100% weight) — it's a
+  // literal 0 at its normal weight, and the tag's weight stays fixed at
+  // abilityTagWeight regardless. This still doesn't fully fix
+  // Necrophos-style contamination (his tag is small but nonzero, e.g.
+  // Death Pulse, so his inflated healingRaw still contributes) — that
+  // needs the tag itself corrected, not this rule.
+  const savingHealingInput = heroes.map((_, i) => (healingRaw[i] ? healingScores[i] : 0));
 
   const counts = {
     teamfight: 0,
@@ -254,6 +347,7 @@ function main() {
     mobility: 0,
     mapControl: 0,
     saving: 0,
+    initiating: 0,
     fallback: 0,
   };
 
@@ -297,17 +391,16 @@ function main() {
     setOrFallback('map_control', mapControlScores[i], 'mapControl');
     delete hero.evaluation_values.vision;
 
-    // protects_allies is a binary tag (has it or doesn't) — like the ability
-    // tiers above, absence is a real "no bonus" data point, not missing data.
-    const protectsAlliesForBlend = hero.synergy_tags.includes('protects_allies') ? 10 : 0;
     setOrFallback(
       'saving',
       weightedBlend([
-        { value: healingScores[i], weight: 0.4 },
-        { value: protectsAlliesForBlend, weight: 0.6 },
+        { value: savingHealingInput[i], weight: tagWeights.blend.saving.healingWeight },
+        { value: savingTagScores[i] ?? 0, weight: tagWeights.blend.saving.abilityTagWeight },
       ]),
       'saving',
     );
+
+    setOrFallback('initiating', initiatingScores[i], 'initiating');
   });
 
   fs.writeFileSync(HEROES_PATH, JSON.stringify(heroes, null, 2) + '\n');

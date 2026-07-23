@@ -10,8 +10,16 @@ const CANDIDATES_PATH = path.join(__dirname, '..', 'data', 'ability-category-can
 const OUTPUT_PATH = path.join(__dirname, '..', 'data', 'ability-tagging.csv');
 
 // Categories currently tracked. Extend this list (and the matching column
-// pair below) when Initiating is ready to be tagged too.
-const CATEGORIES = ['mobility', 'saving'] as const;
+// pair below) when a new category is ready to be tagged.
+//
+// initiating: gap-closing/forced-displacement onto an enemy or AoE control
+// that sets up a fight (Blueprint/10-tech-debt-backlog.md, "Будущая ось
+// Initiating") — currently has zero data path, this is the first one.
+// control_strength: supplements the real `stuns` OpenDota stat, which only
+// counts hard disables (stun/hex/root) — silences and slows don't set that
+// flag, so control-heavy heroes built around them (Silencer, Doom, Death
+// Prophet) are undercounted by the `control` axis today.
+const CATEGORIES = ['mobility', 'saving', 'initiating', 'control_strength'] as const;
 
 interface AbilityRecord {
   abilityKey: string;

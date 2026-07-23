@@ -1108,5 +1108,1745 @@
       "matchedKeyword": "health",
       "description": "Largo licks the targeted unit with his tongue, pulling it back a short distance, applying a basic dispel, and dealing damage if it's an enemy.\n\nKilling or dispelling an effect from a target grants Largo temporary health regeneration.\n\nDISPEL TYPE: Basic Dispel"
     }
+  ],
+  "initiating": [
+    {
+      "heroName": "Anti-Mage",
+      "abilityKey": "antimage_blink",
+      "abilityName": "Blink",
+      "matchedKeyword": "Blink",
+      "description": "Short distance teleportation that allows Anti-Mage to move in and out of combat."
+    },
+    {
+      "heroName": "Mirana",
+      "abilityKey": "mirana_leap",
+      "abilityName": "Leap",
+      "matchedKeyword": "Leap",
+      "description": "Mirana leaps forward into battle, empowering herself with a ferocious roar that grants bonus attack and movement speed. Speed bonus lasts 5 seconds."
+    },
+    {
+      "heroName": "Mirana",
+      "abilityKey": "mirana_celestial_quiver",
+      "abilityName": "Celestial Quiver",
+      "matchedKeyword": "charge",
+      "description": "When a charge is available, Mirana's next attack will deal bonus magic damage.\n\nGains a charge every 7 hero levels."
+    },
+    {
+      "heroName": "Puck",
+      "abilityKey": "puck_illusory_orb",
+      "abilityName": "Illusory Orb",
+      "matchedKeyword": "teleport",
+      "description": "Vector Targeted. Puck launches a magic orb that travels along the path, damaging enemy units along the way. The orb deals an additional 3% of its impact damage every 0.5s in its area of effect, but if it exceeds the max cast range it will be destroyed.\n\n At any point, Puck may teleport to the orb's location using Ethereal Jaunt.\n\n Can be put on alt-cast to launch the Orb straight ahead."
+    },
+    {
+      "heroName": "Pudge",
+      "abilityKey": "pudge_meat_hook",
+      "abilityName": "Meat Hook",
+      "matchedKeyword": "Hook",
+      "description": "Launches a bloody hook toward a unit or location. The hook will snag the first unit it encounters, dragging the unit back to Pudge, killing it if it's a non-ancient creep and dealing damage if it is an enemy otherwise."
+    },
+    {
+      "heroName": "Pudge",
+      "abilityKey": "pudge_dismember",
+      "abilityName": "Dismember",
+      "matchedKeyword": "pulls",
+      "description": "CHANNELED - Pudge chows down on an enemy unit, disabling it and dealing damage over time. Damage is increased by Pudge's Strength and heals him for the total amount. Pudge pulls the unit at a rate of 75 units, up to a minimum of 125 range."
+    },
+    {
+      "heroName": "Storm Spirit",
+      "abilityKey": "storm_spirit_electric_vortex",
+      "abilityName": "Electric Vortex",
+      "matchedKeyword": "pulls",
+      "description": "A vortex that pulls an enemy unit to Storm Spirit's location."
+    },
+    {
+      "heroName": "Storm Spirit",
+      "abilityKey": "storm_spirit_overload",
+      "abilityName": "Overload",
+      "matchedKeyword": "charge",
+      "description": "Casting a spell creates an electrical charge, which is released in a burst on Storm's next attack, dealing damage and slowing nearby enemies."
+    },
+    {
+      "heroName": "Storm Spirit",
+      "abilityKey": "storm_spirit_galvanized",
+      "abilityName": "Galvanized",
+      "matchedKeyword": "charge",
+      "description": "Storm Spirit gains a charge of 0.2 mana regeneration per kill. Loses 2 charges per death. Additionally every time he gains a charge he also gains 0.1 Mana Regen permanently."
+    },
+    {
+      "heroName": "Zeus",
+      "abilityKey": "zuus_heavenly_jump",
+      "abilityName": "Heavenly Jump",
+      "matchedKeyword": "Jump",
+      "description": "Zeus performs a Heavenly Jump, leaping forward and shocking the closest visible nearby enemy (prioritizing heroes), dealing damage as well as reducing their movement and attack speed. Zeus gets 900 unobstructed vision around him for 3 seconds."
+    },
+    {
+      "heroName": "Kunkka",
+      "abilityKey": "kunkka_tidal_wave",
+      "abilityName": "Tidal Wave",
+      "matchedKeyword": "drags",
+      "description": "Releases a Tidal Wave that spawns behind Kunkka. Deals damage and drags enemies along it. Enemies cannot attack while being dragged."
+    },
+    {
+      "heroName": "Lich",
+      "abilityKey": "lich_ice_spire",
+      "abilityName": "Ice Spire",
+      "matchedKeyword": "Chain",
+      "description": "Creates an Ice Spire at the target spot, slowing enemies around it. Can take 4 hero hits or 8 creep hits and when destroyed it will create a Frost Blast around it.\n\nChain Frost can be cast on the Spire and can bounce to the Spire and damage the spire by 1 hero attack if there are no other enemies in range.\n\nLich can cast Frost Shield on the Spire. Each Frost Shield tick will heal the spire by 1 hero attack."
+    },
+    {
+      "heroName": "Lich",
+      "abilityKey": "lich_chain_frost",
+      "abilityName": "Chain Frost",
+      "matchedKeyword": "Chain",
+      "description": "Releases an orb of frost that bounces between nearby enemy units up to 10 times, slowing and damaging each time it hits. Each bounce increases the damage for the subsequent bounces. Chain Frost lingers on its last target if it fails to bounce and can bounce again if new targets become available."
+    },
+    {
+      "heroName": "Riki",
+      "abilityKey": "riki_blink_strike",
+      "abilityName": "Blink Strike",
+      "matchedKeyword": "Blink",
+      "description": "Teleports behind the target unit, momentarily slowing them by 100% and attacking them with bonus damage if it is an enemy."
+    },
+    {
+      "heroName": "Tinker",
+      "abilityKey": "tinker_keen_teleport",
+      "abilityName": "Keen Conveyance",
+      "matchedKeyword": "Teleport",
+      "description": "CHANNELED - Teleport to a target friendly structure. Level 2 allows teleporting to friendly units and Level 3 to friendly heroes."
+    },
+    {
+      "heroName": "Sniper",
+      "abilityKey": "sniper_shrapnel",
+      "abilityName": "Shrapnel",
+      "matchedKeyword": "charge",
+      "description": "Consumes a charge to launch a ball of shrapnel that showers the target area in explosive pellets. Enemies are subject to damage and slowed movement. Reveals the targeted area. Shrapnel charges restore every 35 seconds."
+    },
+    {
+      "heroName": "Queen of Pain",
+      "abilityKey": "queenofpain_blink",
+      "abilityName": "Blink",
+      "matchedKeyword": "Blink",
+      "description": "Short distance teleportation that allows Queen of Pain to move in and out of combat."
+    },
+    {
+      "heroName": "Wraith King",
+      "abilityKey": "skeleton_king_bone_guard",
+      "abilityName": "Bone Guard",
+      "matchedKeyword": "Charge",
+      "description": "Gains a Charge for every 2 creeps killed and 2 charges per hero killed. Activate to spend all charges, summoning skeletons that respawn once when killed. Skeletons benefit from Vampiric Spirit's lifesteal."
+    },
+    {
+      "heroName": "Templar Assassin",
+      "abilityKey": "templar_assassin_trap_teleport",
+      "abilityName": "Psionic Projection",
+      "matchedKeyword": "teleport",
+      "description": "CHANNELED - Allows Templar Assassin to teleport to any Psionic Trap after channeling for 2 seconds, detonating it upon arrival as if it was fully charged and instantly dealing 400 bonus damage. Channeling Psionic Projection does not break Meld."
+    },
+    {
+      "heroName": "Clockwerk",
+      "abilityKey": "rattletrap_hookshot",
+      "abilityName": "Hookshot",
+      "matchedKeyword": "hook",
+      "description": "Fires a grappling device rapidly at the target location. If the hook hits a unit, Clockwerk launches himself into the target, stunning and dealing damage to everyone in a 175 radius around the hit target. Any enemies Clockwerk collides with along the way are damaged and stunned."
+    },
+    {
+      "heroName": "Bounty Hunter",
+      "abilityKey": "bounty_hunter_big_game_hunter",
+      "abilityName": "Big Game Hunter",
+      "matchedKeyword": "net",
+      "description": "Bounty Hunter receives 15% more kill and assist gold if the dying enemy hero is Big Game. An enemy hero is considered Big Game if they are one of the top 3 net worth heroes on the enemy team."
+    },
+    {
+      "heroName": "Batrider",
+      "abilityKey": "batrider_flaming_lasso",
+      "abilityName": "Flaming Lasso",
+      "matchedKeyword": "drags",
+      "description": "Lassoes an enemy and drags them in Batrider's wake. Dragged units cannot move, attack, or use abilities. Teleporting or blinking will break the lasso."
+    },
+    {
+      "heroName": "Spectre",
+      "abilityKey": "spectre_shadow_step",
+      "abilityName": "Shadow Step",
+      "matchedKeyword": "teleport",
+      "description": "Sends an uncontrollable illusion at a target that follows and attacks the target.\n\nThe Reality sub-ability may be used to teleport to the illusion, destroying it."
+    },
+    {
+      "heroName": "Spectre",
+      "abilityKey": "spectre_haunt",
+      "abilityName": "Haunt",
+      "matchedKeyword": "teleport",
+      "description": "Creates a spectral nemesis to haunt all enemy Heroes.\n\nHaunt illusions are uncontrollable, take extra damage, and deal less damage than Spectre herself. They ignore terrain.\n\nThe Reality sub-ability may be used to teleport to the illusion, destroying it."
+    },
+    {
+      "heroName": "Spirit Breaker",
+      "abilityKey": "spirit_breaker_charge_of_darkness",
+      "abilityName": "Charge of Darkness",
+      "matchedKeyword": "Charge",
+      "description": "Spirit Breaker fixes his sight on an enemy unit and starts charging through all objects, starting at 25% of the bonus speed and reaching his max speed after 1.5s.\n\nAll enemy units passed through and the targeted unit will be hit by a Greater Bash. If the targeted unit dies, Spirit Breaker will change his target to the nearest enemy unit to that location."
+    },
+    {
+      "heroName": "Spirit Breaker",
+      "abilityKey": "spirit_breaker_bull_rush",
+      "abilityName": "Empowering Haste",
+      "matchedKeyword": "Charge",
+      "description": "Spirit Breaker gains bonus Movement Speed for a duration whenever he stuns an enemy. Effects from multiple stuns stack and have independent durations. Duration pauses during Charge of Darkness."
+    },
+    {
+      "heroName": "Invoker",
+      "abilityKey": "invoker_emp",
+      "abilityName": "E.M.P.",
+      "matchedKeyword": "charge",
+      "description": "Invoker builds up a charge of electromagnetic energy at a targeted location which automatically detonates after 2.9 seconds. The detonation covers an area, draining mana based on the level of Wex. Deals damage for each point of mana drained. If EMP drains mana from an enemy hero, Invoker gains 25% of the mana drained."
+    },
+    {
+      "heroName": "Invoker",
+      "abilityKey": "invoker_chaos_meteor",
+      "abilityName": "Chaos Meteor",
+      "matchedKeyword": "pulls",
+      "description": "Invoker pulls a flaming meteor from space onto the targeted location. Upon landing, the meteor rolls forward, constantly dealing damage based on the level of Exort, and rolling further based on the level of Wex. Units hit by the meteor will also be set on fire for a short time, receiving additional damage based on the level of Exort."
+    },
+    {
+      "heroName": "Meepo",
+      "abilityKey": "meepo_earthbind",
+      "abilityName": "Earthbind",
+      "matchedKeyword": "Tosses",
+      "description": "Tosses a net at the target point, rooting down all enemy units in an area around it."
+    },
+    {
+      "heroName": "Meepo",
+      "abilityKey": "meepo_poof",
+      "abilityName": "Poof",
+      "matchedKeyword": "teleport",
+      "description": "Drawing mystical energies from the earth, a Meepo can teleport to another Meepo or itself after channeling for 1.5 seconds, damaging the enemy in both the departure and arrival locations. \n\nIf the ability is in alt-cast state, all Meepos will also cast Poof to the target. When cast on the ground, all Meepos except the selected one will Poof to the closest location."
+    },
+    {
+      "heroName": "Meepo",
+      "abilityKey": "meepo_megameepo",
+      "abilityName": "MegaMeepo",
+      "matchedKeyword": "nets",
+      "description": "Primary Meepo mounts all other Meepos in a 600 radius around him on top of his shoulders. While in this form, he gains 40% of the other Meepo stats and can Fling them at enemies, dealing damage and slowing them.\n\n When cast, Earthbind generates additional nets and Poof deals 50% more damage for each Meepo on top."
+    },
+    {
+      "heroName": "Rubick",
+      "abilityKey": "rubick_fade_bolt",
+      "abilityName": "Fade Bolt",
+      "matchedKeyword": "jump",
+      "description": "Rubick creates a powerful stream of arcane energy that travels between enemy units, dealing damage and reducing their attack and spell damage. Each jump deals less damage."
+    },
+    {
+      "heroName": "Nyx Assassin",
+      "abilityKey": "nyx_assassin_impale",
+      "abilityName": "Impale",
+      "matchedKeyword": "Impale",
+      "description": "Rock spikes burst from the earth along a straight path. Enemy units take damage, then are hurled into the air and stunned."
+    },
+    {
+      "heroName": "Nyx Assassin",
+      "abilityKey": "nyx_assassin_burrow",
+      "abilityName": "Burrow",
+      "matchedKeyword": "Impale",
+      "description": "Nyx Assassin buries himself beneath the battlefield over a short duration. Once burrowed, Spiked Carapace instantly stuns nearby enemies when cast, the range of Mind Flare and Impale is increased, and Impale's cooldown is decreased. While burrowed, Nyx Assassin is stationary, unable to attack, and invisible. Nyx Assassin gains damage reduction from all damage sources."
+    },
+    {
+      "heroName": "Io",
+      "abilityKey": "wisp_relocate",
+      "abilityName": "Relocate",
+      "matchedKeyword": "teleport",
+      "description": "Teleports Io and a tethered ally to any location. After the spell expires, Io and the tethered ally will return to their original location. Double-click to teleport to your team's base fountain."
+    },
+    {
+      "heroName": "Visage",
+      "abilityKey": "visage_soul_assumption",
+      "abilityName": "Soul Assumption",
+      "matchedKeyword": "charge",
+      "description": "Visage gathers charges of soul essence each time nearby heroes take more than 100 damage. When the essence is released, it deals base damage as well as damage for each gathered soul charge."
+    },
+    {
+      "heroName": "Slark",
+      "abilityKey": "slark_pounce",
+      "abilityName": "Pounce",
+      "matchedKeyword": "Pounce",
+      "description": "Slark leaps forward, leashing and applying Essence Shift stacks to the first hero he connects. That unit can only move a limited distance away from Slark's landing position."
+    },
+    {
+      "heroName": "Medusa",
+      "abilityKey": "medusa_mystic_snake",
+      "abilityName": "Mystic Snake",
+      "matchedKeyword": "jump",
+      "description": "A mystic snake made of energy jumps from target to target dealing damage. Damage and speed increases with each jump. After it reaches its last target, it returns to Medusa to replenish her with mana. The snake returns a percentage of the targets' total mana."
+    },
+    {
+      "heroName": "Centaur Warrunner",
+      "abilityKey": "centaur_mount",
+      "abilityName": "Hitch A Ride",
+      "matchedKeyword": "tosses",
+      "description": "Centaur tosses an ally into a cart hitched behind him. While in the cart, the ally is invulnerable and can still cast and attack normally, but cannot move independently or be targeted by opponents. Increases the attack range of melee heroes by 200."
+    },
+    {
+      "heroName": "Centaur Warrunner",
+      "abilityKey": "centaur_stampede",
+      "abilityName": "Stampede",
+      "matchedKeyword": "charge",
+      "description": "Centaur leads all allies into a vicious charge causing them to move through units at max speed and slow any enemy units they trample. Trampled enemies take damage based on Centaur Warrunner's strength. Each enemy can be trampled once."
+    },
+    {
+      "heroName": "Magnus",
+      "abilityKey": "magnataur_horn_toss",
+      "abilityName": "Horn Toss",
+      "matchedKeyword": "tosses",
+      "description": "Magnus tosses any enemies in front of him, launching them to his rear. Enemies take damage, spend 0.6 seconds in the air, and are stunned while in the air and an additional amount of time after landing."
+    },
+    {
+      "heroName": "Timbersaw",
+      "abilityKey": "shredder_timber_chain",
+      "abilityName": "Timber Chain",
+      "matchedKeyword": "Chain",
+      "description": "Timbersaw fires a chain that embeds itself in the first tree it hits, pulling him towards it. Any enemy in the path takes damage."
+    },
+    {
+      "heroName": "Tusk",
+      "abilityKey": "tusk_drinking_buddies",
+      "abilityName": "Drinking Buddies",
+      "matchedKeyword": "pull",
+      "description": "Tusk reaches out to tag an allied unit, pulling them closer. Once tagged, both Tusk and his tagged ally gain movement speed and armor. Can be put on alt-cast to only pull Tusk towards his ally with 50% reduced cast range."
+    },
+    {
+      "heroName": "Techies",
+      "abilityKey": "techies_reactive_tazer",
+      "abilityName": "Reactive Tazer",
+      "matchedKeyword": "charge",
+      "description": "Techies trigger an electric charge on the target ally, giving them bonus movement speed for a short period of time. Enemies attacking the target take damage and are temporarily disarmed and get a Basic Dispel.\n\nAt the end of the effect or if detonated early with the sub-ability, the charge explodes, disarming all enemies within the radius and dealing damage."
+    },
+    {
+      "heroName": "Ember Spirit",
+      "abilityKey": "ember_spirit_searing_chains",
+      "abilityName": "Searing Chains",
+      "matchedKeyword": "Chains",
+      "description": "Ember Spirit unleashes fiery bolas that wrap around nearby enemies, anchoring them in place and dealing damage each second."
+    },
+    {
+      "heroName": "Ember Spirit",
+      "abilityKey": "ember_spirit_fire_remnant",
+      "abilityName": "Fire Remnant",
+      "matchedKeyword": "dash",
+      "description": "Sends a Fire Remnant that runs to the target location at 250% Ember Spirit's speed. Using Activate Fire Remnant, Ember Spirit will dash out to all active Fire Remnants, destroying them and dealing damage in an area and then moving to the nearest Remnant. Ember Spirit will end at the Remnant closest to the targeted location."
+    },
+    {
+      "heroName": "Earth Spirit",
+      "abilityKey": "earth_spirit_geomagnetic_grip",
+      "abilityName": "Geomagnetic Grip",
+      "matchedKeyword": "pulls",
+      "description": "Earth Spirit pulls the target Stone Remnant or Allied Unit. Enemies struck by the gripped target will be silenced.\n\nPulled Remnants also deal damage to struck enemies.\n\nCast range is reduced when targeting an ally."
+    },
+    {
+      "heroName": "Earth Spirit",
+      "abilityKey": "earth_spirit_stone_caller",
+      "abilityName": "Stone Remnant",
+      "matchedKeyword": "charge",
+      "description": "Call a Stone Remnant to the target location. Stone Remnants have no vision and are invulnerable, and can be used with Earth Spirit's abilities. Calling a Stone Remnant consumes a charge, which recharge over time. Stone Remnant has 7 charges.\n\nEarth Spirit passively gains 2.5% bonus damage per unused Stone Remnant charge, and gains an additional 7.5% bonus damage for 10s when a Stone Remnant is targeted with an ability (does not stack)."
+    },
+    {
+      "heroName": "Underlord",
+      "abilityKey": "abyssal_underlord_dark_portal",
+      "abilityName": "Fiend's Gate",
+      "matchedKeyword": "teleport",
+      "description": "Opens 2 portals, one next to Underlord and one in the target location. Heroes can channel a portal for 3.5 seconds to teleport to the other side. Portals have to be at least 1500 away from each other."
+    },
+    {
+      "heroName": "Arc Warden",
+      "abilityKey": "arc_warden_magnetic_field",
+      "abilityName": "Magnetic Field",
+      "matchedKeyword": "pulls",
+      "description": "Arc Warden generates a circular distortion field of magnetic energy. The Magnetic Field grants bonus attack speed and protects allied units within it by evading attacks coming from outside the field. The Magnetic Field pulls runes, and runes inside Magnetic Field automatically activate."
+    },
+    {
+      "heroName": "Monkey King",
+      "abilityKey": "monkey_king_tree_dance",
+      "abilityName": "Tree Dance",
+      "matchedKeyword": "leap",
+      "description": "Monkey King jumps to a tree and perches atop it. While perched, he gains the Primal Spring ability-a channeled leap attack. If Monkey King's tree is destroyed, he falls and is stunned for 3s. Taking damage while on the ground puts Tree Dance on cooldown."
+    },
+    {
+      "heroName": "Hoodwink",
+      "abilityKey": "hoodwink_bushwhack",
+      "abilityName": "Bushwhack",
+      "matchedKeyword": "Tosses",
+      "description": "Tosses a net trap that stuns enemies if they are near a tree in the area. Affected enemies take damage over time and are pulled towards the tree nearest to them within the target area, and have their vision reduced to 0 for the duration of the stun."
+    },
+    {
+      "heroName": "Hoodwink",
+      "abilityKey": "hoodwink_hunters_boomerang",
+      "abilityName": "Hunter's Boomerang",
+      "matchedKeyword": "Tosses",
+      "description": "Tosses a boomerang in an arc. Upon contact, it returns to Hoodwink. The boomerang will deal damage as it passes through or hits enemies, and apply a debuff that causes affected enemies to be slowed and be more vulnerable to spell damage."
+    },
+    {
+      "heroName": "Void Spirit",
+      "abilityKey": "void_spirit_aether_remnant",
+      "abilityName": "Aether Remnant",
+      "matchedKeyword": "pulls",
+      "description": "Void Spirit dispatches a remnant to the target location. The remnant stands watch over the region, facing the direction of his vector. When a unit crosses its gaze, the remnant pulls it in and damages it."
+    },
+    {
+      "heroName": "Primal Beast",
+      "abilityKey": "primal_beast_onslaught",
+      "abilityName": "Onslaught",
+      "matchedKeyword": "charge",
+      "description": "Primal Beast charges up and then runs in the chosen direction, knocking back enemies and allies alike. Enemy units are damaged and stunned on impact. The longer the charge duration, the farther Primal Beast's momentum will carry him. \n\n Can be cancelled at any time with the Stop command."
+    },
+    {
+      "heroName": "Kez",
+      "abilityKey": "kez_grappling_claw",
+      "abilityName": "Grappling Claw",
+      "matchedKeyword": "hook",
+      "description": "Kez swings on a grappling hook towards the target unit or tree. When the grappling hook collides with the target, that unit has slowed movement speed. Upon reaching the enemy target, Kez lands an attack on them."
+    },
+    {
+      "heroName": "Kez",
+      "abilityKey": "kez_kazurai_katana",
+      "abilityName": "Kazurai Katana",
+      "matchedKeyword": "impale",
+      "description": "Katana attacks and abilities apply a stacking damage over time to enemies that deals a percentage of the original attack's damage as additional damage over time. \n\nKez may activate the ability to impale the target with his attack, preventing them from moving or turning. The target's Katana debuff bursts, causing some of the stacks to deal damage instantly."
+    },
+    {
+      "heroName": "Largo",
+      "abilityKey": "largo_frogstomp",
+      "abilityName": "Frogstomp",
+      "matchedKeyword": "tosses",
+      "description": "Largo tosses froglings to an area. They stomp the ground every 1 second, dealing damage and ministuns, and enemies in the area have reduced movement speed."
+    }
+  ],
+  "control_strength": [
+    {
+      "heroName": "Anti-Mage",
+      "abilityKey": "antimage_persectur",
+      "abilityName": "Persecutor",
+      "matchedKeyword": "slow",
+      "description": "Attacks slow enemies based on how much mana they are missing. Min slow at 50% mana, up to max slow at 0% mana. No effect if enemy is above 50% mana."
+    },
+    {
+      "heroName": "Anti-Mage",
+      "abilityKey": "antimage_mana_void",
+      "abilityName": "Mana Void",
+      "matchedKeyword": "stunned",
+      "description": "For each point of mana missing by the target unit, damage is dealt to it and surrounding enemies. The main target is also mini-stunned."
+    },
+    {
+      "heroName": "Axe",
+      "abilityKey": "axe_berserkers_call",
+      "abilityName": "Berserker's Call",
+      "matchedKeyword": "taunts",
+      "description": "Axe taunts nearby enemy units, forcing them to attack him while he gains bonus armor during the duration."
+    },
+    {
+      "heroName": "Axe",
+      "abilityKey": "axe_battle_hunger",
+      "abilityName": "Battle Hunger",
+      "matchedKeyword": "slowed",
+      "description": "Enrages an enemy unit, causing it to take damage over time until it kills another unit or the duration ends. The enemy is slowed as long as they are facing away from Axe."
+    },
+    {
+      "heroName": "Bane",
+      "abilityKey": "bane_nightmare",
+      "abilityName": "Nightmare",
+      "matchedKeyword": "sleep",
+      "description": "Puts the target enemy or friendly Hero to sleep. Sleeping units walk in Bane's chosen direction and are awakened when damaged. If the target was directly attacked, the Nightmare passes to the attacking unit. Bane can attack and damage Nightmared targets freely.\n\n Can be put on alt-cast to have the target stand still."
+    },
+    {
+      "heroName": "Bloodseeker",
+      "abilityKey": "bloodseeker_blood_bath",
+      "abilityName": "Blood Rite",
+      "matchedKeyword": "silenced",
+      "description": "Bloodseeker baptizes an area in sacred blood. After 2.9 seconds the ritual completes, causing any enemies caught in the area to take damage and become silenced."
+    },
+    {
+      "heroName": "Crystal Maiden",
+      "abilityKey": "crystal_maiden_crystal_nova",
+      "abilityName": "Crystal Nova",
+      "matchedKeyword": "slows",
+      "description": "A burst of damaging frost slows enemy movement in the targeted area."
+    },
+    {
+      "heroName": "Crystal Maiden",
+      "abilityKey": "crystal_maiden_freezing_field",
+      "abilityName": "Freezing Field",
+      "matchedKeyword": "slow",
+      "description": "CHANNELED - Surrounds Crystal Maiden with 100 random icy explosions that slow enemies and deal massive damage. Lasts 10 seconds."
+    },
+    {
+      "heroName": "Drow Ranger",
+      "abilityKey": "drow_ranger_frost_arrows",
+      "abilityName": "Frost Arrows",
+      "matchedKeyword": "Slow",
+      "description": "Adds a freezing effect to Drow's attacks, slowing enemy movement and dealing bonus damage. Slow lasts 1.5 seconds."
+    },
+    {
+      "heroName": "Drow Ranger",
+      "abilityKey": "drow_ranger_wave_of_silence",
+      "abilityName": "Gust",
+      "matchedKeyword": "silences",
+      "description": "Releases a wave that silences and knocks back and reveals invisible enemy units. Knockback distance is relative to how close they are to Drow."
+    },
+    {
+      "heroName": "Earthshaker",
+      "abilityKey": "earthshaker_aftershock",
+      "abilityName": "Aftershock",
+      "matchedKeyword": "stuns",
+      "description": "Causes the earth to shake underfoot, adding additional damage and stuns to nearby enemy units when Earthshaker casts his abilities."
+    },
+    {
+      "heroName": "Mirana",
+      "abilityKey": "mirana_arrow",
+      "abilityName": "Sacred Arrow",
+      "matchedKeyword": "stuns",
+      "description": "Fires a long-range arrow with deadly precision, which stuns and damages the first enemy unit it strikes. The stun duration ranges from 0.01 to 2.6 seconds, with bonus damage up to 180 added, based on the distance the arrow travels to its target. Instantly kills the first non-ancient creep it hits."
+    },
+    {
+      "heroName": "Morphling",
+      "abilityKey": "morphling_adaptive_strike_agi",
+      "abilityName": "Adaptive Strike",
+      "matchedKeyword": "stun",
+      "description": "Launches a surge of water toward an enemy unit, stunning them, knocking them back, and dealing base damage plus additional damage based on Morphling's agility times a multiplier. If Morphling's agility is 50% higher than strength, the maximum agility multiplier is used.\n\nKnockback distance and stun duration are based on Morphling's strength. If his strength is 50% higher than his agility, the maximum knockback distance and stun duration is used."
+    },
+    {
+      "heroName": "Morphling",
+      "abilityKey": "morphling_ebb_and_flow",
+      "abilityName": "Ebb and Flow",
+      "matchedKeyword": "slow",
+      "description": "Morphling receives bonus cast range and slow resistance based on his current Strength, and attack range and movement speed based on his current Agility. These bonuses persist if he is morphed into another hero."
+    },
+    {
+      "heroName": "Shadow Fiend",
+      "abilityKey": "nevermore_requiem",
+      "abilityName": "Requiem of Souls",
+      "matchedKeyword": "feared",
+      "description": "Shadow Fiend gathers up to 20 of his captured souls to release them as lines of demonic energy. Units near Shadow Fiend when the souls are released can be damaged by several lines of energy. Any unit damaged by Requiem of Souls will be feared and have its movement speed and magic resistance reduced for 0.6 seconds for each line hit up to a maximum of 2.15. Lines of energy are created for every soul captured through Necromastery. \n\n Requiem of Souls is automatically cast whenever Shadow Fiend dies, regardless of its cooldown."
+    },
+    {
+      "heroName": "Phantom Lancer",
+      "abilityKey": "phantom_lancer_spirit_lance",
+      "abilityName": "Spirit Lance",
+      "matchedKeyword": "slows",
+      "description": "Sends a magical spirit lance to a target enemy unit that damages and slows, while summoning an illusory phantom to attack the unit."
+    },
+    {
+      "heroName": "Puck",
+      "abilityKey": "puck_waning_rift",
+      "abilityName": "Waning Rift",
+      "matchedKeyword": "silences",
+      "description": "Puck teleports to the target location and releases a burst of faerie dust that deals damage and silences enemy units nearby."
+    },
+    {
+      "heroName": "Pudge",
+      "abilityKey": "pudge_rot",
+      "abilityName": "Rot",
+      "matchedKeyword": "slows",
+      "description": "A toxic cloud that deals intense damage and slows movement--harming not only enemy units but Pudge himself."
+    },
+    {
+      "heroName": "Razor",
+      "abilityKey": "razor_plasma_field",
+      "abilityName": "Plasma Field",
+      "matchedKeyword": "slow",
+      "description": "Releases a wave of energetic plasma that grows in power as it expands, but also zaps on contraction, slowing and dealing damage to enemy units caught in its path. Damage and slow increases with distance from Razor. The Plasma Field hits each unit twice, once each direction."
+    },
+    {
+      "heroName": "Sand King",
+      "abilityKey": "sandking_scorpion_strike",
+      "abilityName": "Stinger",
+      "matchedKeyword": "slow",
+      "description": "Sand King strikes an area, performing an attack on all enemies in the area of effect, dealing extra damage to each. Enemies within an innermost radius of 125 take 40% extra damage. Applies Caustic Finale and a slow to all enemies hit."
+    },
+    {
+      "heroName": "Sand King",
+      "abilityKey": "sandking_epicenter",
+      "abilityName": "Epicenter",
+      "matchedKeyword": "slowed",
+      "description": "After a cast point of 2 seconds, Sand King sends a disturbance into the earth, causing it to shudder violently. All enemies caught within range will take damage and become slowed. Each subsequent pulse increases the radius of damage dealt."
+    },
+    {
+      "heroName": "Sven",
+      "abilityKey": "sven_storm_bolt",
+      "abilityName": "Storm Hammer",
+      "matchedKeyword": "stuns",
+      "description": "Sven unleashes his magical gauntlet that deals damage and stuns enemy units in a small area around the target."
+    },
+    {
+      "heroName": "Sven",
+      "abilityKey": "sven_gods_strength",
+      "abilityName": "God's Strength",
+      "matchedKeyword": "slow",
+      "description": "Sven channels his rogue strength, granting bonus damage and slow resistance for 30 seconds."
+    },
+    {
+      "heroName": "Tiny",
+      "abilityKey": "tiny_avalanche",
+      "abilityName": "Avalanche",
+      "matchedKeyword": "stun",
+      "description": "Bombards an area with rocks, continously doing small intervals of damage and stun to enemy units."
+    },
+    {
+      "heroName": "Tiny",
+      "abilityKey": "tiny_insurmountable",
+      "abilityName": "Insurmountable",
+      "matchedKeyword": "Slow",
+      "description": "Tiny gains Status and Slow Resistance from Strength. Slow Resistance also reduces the impact of Attack Speed slows."
+    },
+    {
+      "heroName": "Windranger",
+      "abilityKey": "windrunner_shackleshot",
+      "abilityName": "Shackleshot",
+      "matchedKeyword": "stun",
+      "description": "Shackles the target to an enemy unit or tree in a line directly behind it. If no unit or tree is present, the stun duration is reduced to 0.6."
+    },
+    {
+      "heroName": "Windranger",
+      "abilityKey": "windrunner_powershot",
+      "abilityName": "Powershot",
+      "matchedKeyword": "slows",
+      "description": "CHANNELED - Windranger charges her bow for up to 1 second for a single powerful shot, which deals more damage the longer it is charged. The arrow damages and slows enemies' movement speed along its path. For each enemy that Powershot hits, its damage and slow is reduced."
+    },
+    {
+      "heroName": "Zeus",
+      "abilityKey": "zuus_lightning_bolt",
+      "abilityName": "Lightning Bolt",
+      "matchedKeyword": "stun",
+      "description": "Calls down a bolt of lightning to strike an enemy unit, causing damage and a mini-stun. When cast, Lightning Bolt briefly provides unobstructed vision and True Sight around the target in a 600 radius. Can be cast on the ground, affecting the closest enemy hero in 325 range."
+    },
+    {
+      "heroName": "Lina",
+      "abilityKey": "lina_light_strike_array",
+      "abilityName": "Light Strike Array",
+      "matchedKeyword": "stuns",
+      "description": "Summons a column of flames that damages and stuns enemies."
+    },
+    {
+      "heroName": "Lina",
+      "abilityKey": "lina_slow_burn",
+      "abilityName": "Slow Burn",
+      "matchedKeyword": "Slow",
+      "description": "Lina's abilities deal an additional 64% damage as burn damage over 4s."
+    },
+    {
+      "heroName": "Lion",
+      "abilityKey": "lion_impale",
+      "abilityName": "Earth Spike",
+      "matchedKeyword": "stunned",
+      "description": "Rock spikes burst from the earth along a straight path. Enemy units are hurled into the air, then are stunned and take damage when they fall."
+    },
+    {
+      "heroName": "Lion",
+      "abilityKey": "lion_voodoo",
+      "abilityName": "Hex",
+      "matchedKeyword": "Hex",
+      "description": "Transforms an enemy unit into a harmless beast, with all special abilities disabled."
+    },
+    {
+      "heroName": "Lion",
+      "abilityKey": "lion_mana_drain",
+      "abilityName": "Mana Drain",
+      "matchedKeyword": "slow",
+      "description": "CHANNELED - Channels magical energy, taking mana and slowing enemies over time. If the enemy has no mana remaining, the slow is increased by 15%. \n\n Can target allies to give them mana and movement speed at a 50% rate."
+    },
+    {
+      "heroName": "Shadow Shaman",
+      "abilityKey": "shadow_shaman_voodoo",
+      "abilityName": "Hex",
+      "matchedKeyword": "Hex",
+      "description": "Transforms an enemy unit into a harmless creature, disabling their attacks and abilities."
+    },
+    {
+      "heroName": "Slardar",
+      "abilityKey": "slardar_sprint",
+      "abilityName": "Guardian Sprint",
+      "matchedKeyword": "slow",
+      "description": "Slardar slithers ahead, moving significantly faster and passing through units. Slardar has 100% slow resistance for the first 2.5s. The slow resistance gradually fades over the remaining sprint duration."
+    },
+    {
+      "heroName": "Slardar",
+      "abilityKey": "slardar_slithereen_crush",
+      "abilityName": "Slithereen Crush",
+      "matchedKeyword": "stun",
+      "description": "Slams the ground, leaving a puddle of water, and stunning and damaging nearby enemy units. After the stun, the affected units are slowed."
+    },
+    {
+      "heroName": "Riki",
+      "abilityKey": "riki_smoke_screen",
+      "abilityName": "Smoke Screen",
+      "matchedKeyword": "silencing",
+      "description": "Throws down a smoke bomb, silencing enemies and causing them to miss attacks."
+    },
+    {
+      "heroName": "Enigma",
+      "abilityKey": "enigma_malefice",
+      "abilityName": "Malefice",
+      "matchedKeyword": "stunned",
+      "description": "Focuses Enigma's power on a target, causing it to take damage and become repeatedly stunned for multiple instances. An instance strikes every 2 seconds."
+    },
+    {
+      "heroName": "Sniper",
+      "abilityKey": "sniper_shrapnel",
+      "abilityName": "Shrapnel",
+      "matchedKeyword": "slowed",
+      "description": "Consumes a charge to launch a ball of shrapnel that showers the target area in explosive pellets. Enemies are subject to damage and slowed movement. Reveals the targeted area. Shrapnel charges restore every 35 seconds."
+    },
+    {
+      "heroName": "Sniper",
+      "abilityKey": "sniper_headshot",
+      "abilityName": "Headshot",
+      "matchedKeyword": "slow",
+      "description": "Sniper increases his accuracy, giving him a chance to deal 20 extra damage and knock back his enemies. Knockback distance increases based on how close the enemy is to Sniper. Headshots briefly slow enemy movement and attack speed by -100%."
+    },
+    {
+      "heroName": "Sniper",
+      "abilityKey": "sniper_take_aim",
+      "abilityName": "Take Aim",
+      "matchedKeyword": "Slows",
+      "description": "Passively increases Sniper's attack range by 160.\n\nOn cast, Sniper gains increased vision, Headshot chance, and attack range. Slows you by 65% for the duration and restricts your vision to a frontal cone."
+    },
+    {
+      "heroName": "Sniper",
+      "abilityKey": "sniper_concussive_grenade",
+      "abilityName": "Concussive Grenade",
+      "matchedKeyword": "disarmed",
+      "description": "Launches a grenade at the target area, dealing damage to enemies and knocking them and Sniper back. Enemies affected are disarmed and have their movement slowed after the knockback."
+    },
+    {
+      "heroName": "Sniper",
+      "abilityKey": "sniper_assassinate",
+      "abilityName": "Assassinate",
+      "matchedKeyword": "stuns",
+      "description": "Sniper locks onto a target enemy unit and, after a short aiming duration, fires a devastating shot that deals Sniper's attack damage plus bonus damage at long range and mini-stuns the target. Whenever Sniper kills an enemy hero, Assassinate is refreshed."
+    },
+    {
+      "heroName": "Necrophos",
+      "abilityKey": "necrolyte_ghost_shroud",
+      "abilityName": "Ghost Shroud",
+      "matchedKeyword": "slows",
+      "description": "Necrophos slips into the realm that separates the living from the dead. Unable to attack or be attacked, he emits an aura that slows enemies around him. He takes additional magic damage in this form, but his restorative powers are amplified."
+    },
+    {
+      "heroName": "Necrophos",
+      "abilityKey": "necrolyte_reapers_scythe",
+      "abilityName": "Reaper's Scythe",
+      "matchedKeyword": "Stuns",
+      "description": "Stuns the target enemy hero, then deals damage based on how much life it is missing. If Necrophos kills an enemy this way, he'll permanently gain Health and Mana Regen. Any kill under this effect is credited to Necrophos."
+    },
+    {
+      "heroName": "Warlock",
+      "abilityKey": "warlock_upheaval",
+      "abilityName": "Upheaval",
+      "matchedKeyword": "slowed",
+      "description": "CHANNELED - A powerful slowing and damaging current that grows stronger as it's channeled. Lasts up to 10 seconds. Enemies are slowed for 1 second after leaving the area or the spell ends."
+    },
+    {
+      "heroName": "Warlock",
+      "abilityKey": "warlock_rain_of_chaos",
+      "abilityName": "Chaotic Offering",
+      "matchedKeyword": "Slow",
+      "description": "Summons a Golem from the depths, stunning enemies for 0.8 seconds. The Golem lives 60 seconds, takes reduced damage from spells, has increased Slow Resistance, has Permanent Immolation and Flaming Fists on attack."
+    },
+    {
+      "heroName": "Beastmaster",
+      "abilityKey": "beastmaster_summon_razorback",
+      "abilityName": "Summon Razorback",
+      "matchedKeyword": "slows",
+      "description": "Beastmaster calls forth a Boar to aid in the battlefield. The Boar has a passive poison attack that slows attack and movement speeds."
+    },
+    {
+      "heroName": "Beastmaster",
+      "abilityKey": "beastmaster_primal_roar",
+      "abilityName": "Primal Roar",
+      "matchedKeyword": "stuns",
+      "description": "Beastmaster lets loose a deafening roar that stuns, and shoves open a path to its target. All units in the path of the roar are damaged, while units shoved aside by the roar have their movement and attack speed slowed. Additionally, Beastmaster and his units gain 40% movement speed for 2 seconds."
+    },
+    {
+      "heroName": "Queen of Pain",
+      "abilityKey": "queenofpain_shadow_strike",
+      "abilityName": "Shadow Strike",
+      "matchedKeyword": "slowed",
+      "description": "Hurls a poisoned dagger which deals large initial damage, and then deals damage over time. The poisoned unit has its movement speed slowed for 16 seconds. An instance of damage is dealt every 3 seconds."
+    },
+    {
+      "heroName": "Venomancer",
+      "abilityKey": "venomancer_venomous_gale",
+      "abilityName": "Venomous Gale",
+      "matchedKeyword": "slowed",
+      "description": "Launches a ball of venom in a line, poisoning enemy units so that they take both initial damage and damage over time, as well as suffering slowed movement. Venomous Gale deals damage every 3 seconds over its duration."
+    },
+    {
+      "heroName": "Venomancer",
+      "abilityKey": "venomancer_poison_sting",
+      "abilityName": "Poison Sting",
+      "matchedKeyword": "slow",
+      "description": "Venomancer's attacks slow enemies and deal damage over time."
+    },
+    {
+      "heroName": "Venomancer",
+      "abilityKey": "venomancer_noxious_plague",
+      "abilityName": "Noxious Plague",
+      "matchedKeyword": "slows",
+      "description": "Infects an enemy with a plague that does damage on application then slows the target and deals damage over time based on their maximum health. When the debuff ends for any reason, all debuffs from Venomancer on the initial target and the plague are spread to nearby targets. Additional spreads beyond the first do not deal impact damage."
+    },
+    {
+      "heroName": "Faceless Void",
+      "abilityKey": "faceless_void_time_dilation",
+      "abilityName": "Time Dilation",
+      "matchedKeyword": "slow",
+      "description": "Faceless Void envelops nearby enemies with time dilating fields to slow cooldown progression of their abilities. Each enveloped enemy gains one Time Dilation stack when applied, and one stack per ability they have on cooldown. Each stack deals damage per second and slows movement and attack speed. The duration is paused while affected by Chronosphere."
+    },
+    {
+      "heroName": "Faceless Void",
+      "abilityKey": "faceless_void_distortion_field",
+      "abilityName": "Distortion Field",
+      "matchedKeyword": "slowed",
+      "description": "Enemy Attack Projectiles targetting Faceless Void or allied heroes within a 1200 radius of him get slowed by 40%, when they get within 500 distance of their target."
+    },
+    {
+      "heroName": "Wraith King",
+      "abilityKey": "skeleton_king_reincarnation",
+      "abilityName": "Reincarnation",
+      "matchedKeyword": "slowed",
+      "description": "Wraith King's form regroups after death, allowing him to resurrect when killed in battle. Upon death, enemy units in a 600 radius are slowed. Skeletons spawn and attack each nearby enemy hero. Can be self-cast to kill Wraith King instantly."
+    },
+    {
+      "heroName": "Death Prophet",
+      "abilityKey": "death_prophet_silence",
+      "abilityName": "Silence",
+      "matchedKeyword": "Silence",
+      "description": "Fires a projectile that prevents enemy units in a target area from casting spells."
+    },
+    {
+      "heroName": "Pugna",
+      "abilityKey": "pugna_decrepify",
+      "abilityName": "Decrepify",
+      "matchedKeyword": "slows",
+      "description": "A powerful banishing spell that slows a unit and renders it unable to attack or be attacked. Healing on affected allies is increased, while afflicted enemies take extra magic damage instead."
+    },
+    {
+      "heroName": "Templar Assassin",
+      "abilityKey": "templar_assassin_psionic_trap",
+      "abilityName": "Psionic Trap",
+      "matchedKeyword": "slow",
+      "description": "Templar Assassin places mystical traps that invisibly monitor enemy movement. When sprung at her command, they exert a slowing influence of 20% in a 400 radius. Trap movement slow charges up to 50% after 3.5 seconds. Deals damage after 3.5s."
+    },
+    {
+      "heroName": "Viper",
+      "abilityKey": "viper_poison_attack",
+      "abilityName": "Poison Attack",
+      "matchedKeyword": "slow",
+      "description": "Intensifies Viper's venom, adding an effect to his normal attack that applies a stacking movement speed slow and magic resistance deduction while dealing damage over time. Stacks up to 6 times."
+    },
+    {
+      "heroName": "Viper",
+      "abilityKey": "viper_nethertoxin",
+      "abilityName": "Nethertoxin",
+      "matchedKeyword": "slowed",
+      "description": "Viper releases a Nethertoxin at the targeted area. Units in that area take an increasing damage over time based on how long they remain in it. Units in it have their attack speed slowed."
+    },
+    {
+      "heroName": "Viper",
+      "abilityKey": "viper_corrosive_skin",
+      "abilityName": "Corrosive Skin",
+      "matchedKeyword": "slows",
+      "description": "Viper exudes an infectious toxin that damages and slows the attack speed of any enemy that damages it in a 1200 radius. The acid exudate also increases Viper's resistance to magic."
+    },
+    {
+      "heroName": "Viper",
+      "abilityKey": "viper_viper_strike",
+      "abilityName": "Viper Strike",
+      "matchedKeyword": "slows",
+      "description": "Viper slows the targeted enemy unit's movement and attack speed while also disabling their passives and dealing poison damage over time. The slowing effect reduces over the duration of the poison."
+    },
+    {
+      "heroName": "Luna",
+      "abilityKey": "luna_eclipse",
+      "abilityName": "Eclipse",
+      "matchedKeyword": "stun",
+      "description": "Showers random nearby enemies with strikes from Luna's current level of Lucent Beam. These beams do not stun their targets, and there is a maximum number of times that a single target can be struck. Also turns day into night for a short time."
+    },
+    {
+      "heroName": "Dragon Knight",
+      "abilityKey": "dragon_knight_elder_dragon_form",
+      "abilityName": "Elder Dragon Form",
+      "matchedKeyword": "slow",
+      "description": "Dragon Knight assumes the form of the Elder Dragon, increasing the range of his abilities, gaining bonus movement speed, and a ranged attack with various properties. The Dragon evolves per level. The bonuses are cumulative. \n\nLevel 1 Green: Grants a corrosive damage over time that can also damage buildings.\n\nLevel 2 Red: Grants splash damage to the dragon's attacks.\n\nLevel 3 Blue: Grants a debuff immunity piercing movement and attack frost slow on attack."
+    },
+    {
+      "heroName": "Dazzle",
+      "abilityKey": "dazzle_poison_touch",
+      "abilityName": "Poison Touch",
+      "matchedKeyword": "slows",
+      "description": "Releases a cone of poison that strikes multiple enemy units. Deals damage over time and slows the targets. Anytime the targets get attacked by Dazzle, the debuff duration is refreshed and slow is increased."
+    },
+    {
+      "heroName": "Dazzle",
+      "abilityKey": "dazzle_nothl_projection",
+      "abilityName": "Nothl Projection",
+      "matchedKeyword": "hexes",
+      "description": "Dazzle departs his body, traveling through the Nothl Realm as an invulnerable spirit that can cast spells, attack, and use items, leaving his body behind in the world with a visible tether. While active, Dazzle's basic abilities are empowered: Poison Touch hexes enemies, Shallow Grave heals upon expiration, and Shadow Wave has a shorter cooldown. The effect can be ended early, and Dazzle returns to the body at the end."
+    },
+    {
+      "heroName": "Clockwerk",
+      "abilityKey": "rattletrap_rocket_flare",
+      "abilityName": "Rocket Flare",
+      "matchedKeyword": "slowed",
+      "description": "Fires a global range flare that explodes over a given area. Upon impact, enemies in the area take damage and are briefly slowed. Rocket flare provides vision over the impact area for 6 seconds."
+    },
+    {
+      "heroName": "Clockwerk",
+      "abilityKey": "rattletrap_overclocking",
+      "abilityName": "Overclocking",
+      "matchedKeyword": "slow",
+      "description": "Supercharges Clockwerks abilities:\n\nBattery Assault: Increased radius and affects all enemies in its range.\nPower Cogs: Radius increased, and Clockwerk's armor while near Power Cogs is increased.\nRocket Flares: Increased damage, vision and slow duration, and fire additional rockets to either side of the target.\nHookshot: Stun radius and duration increased.\nJetpack Moves faster.\n\nClockwerk's movement and attack speed becomes slowed to a crawl after the duration runs out."
+    },
+    {
+      "heroName": "Clockwerk",
+      "abilityKey": "rattletrap_hookshot",
+      "abilityName": "Hookshot",
+      "matchedKeyword": "stunned",
+      "description": "Fires a grappling device rapidly at the target location. If the hook hits a unit, Clockwerk launches himself into the target, stunning and dealing damage to everyone in a 175 radius around the hit target. Any enemies Clockwerk collides with along the way are damaged and stunned."
+    },
+    {
+      "heroName": "Leshrac",
+      "abilityKey": "leshrac_split_earth",
+      "abilityName": "Split Earth",
+      "matchedKeyword": "stuns",
+      "description": "Splits the earth under enemies. Deals damage and stuns for a short duration."
+    },
+    {
+      "heroName": "Leshrac",
+      "abilityKey": "leshrac_lightning_storm",
+      "abilityName": "Lightning Storm",
+      "matchedKeyword": "slowed",
+      "description": "Summons a lightning storm that blasts the target enemy unit, then strikes any nearby enemy units. Struck enemies have their move speed slowed."
+    },
+    {
+      "heroName": "Dark Seer",
+      "abilityKey": "dark_seer_surge",
+      "abilityName": "Surge",
+      "matchedKeyword": "slowed",
+      "description": "Charges a target friendly unit with power, giving it a brief burst of phased movement speed. Allows the unit to reach maximum movement speed and cannot be slowed."
+    },
+    {
+      "heroName": "Dark Seer",
+      "abilityKey": "dark_seer_wall_of_replica",
+      "abilityName": "Wall of Replica",
+      "matchedKeyword": "slows",
+      "description": "Raises a wall of warping light that slows, damages, and creates replicas of any enemy hero who crosses it. Enemy replicas serve at the Dark Seer's will. Replicas last until they are destroyed, or until the wall's duration ends."
+    },
+    {
+      "heroName": "Omniknight",
+      "abilityKey": "omniknight_hammer_of_purity",
+      "abilityName": "Hammer of Purity",
+      "matchedKeyword": "slow",
+      "description": "Omniknight imbues his hammer with holy power, causing his attack to have increased range, deal pure damage based on a percentage of his base damage and slow his target for a short duration.\n\n Omniknight heals for 30% of the damage dealt over 5s."
+    },
+    {
+      "heroName": "Enchantress",
+      "abilityKey": "enchantress_enchant",
+      "abilityName": "Enchant",
+      "matchedKeyword": "slowed",
+      "description": "Enchantress charms an enemy. If the enemy is a hero, they are dispelled and slowed for 3.5s, and Enchantress and her units gain bonus attack range against the target.\n\n If the enemy is a creep, she brings it under her control and receives 40% of their experience bounty. Enchantress can control creeps for up to 30s. \n\nDISPEL TYPE: Basic Dispel"
+    },
+    {
+      "heroName": "Enchantress",
+      "abilityKey": "enchantress_little_friends",
+      "abilityName": "Little Friends",
+      "matchedKeyword": "roots",
+      "description": "Enchantress roots an enemy unit. All creeps, ally, enemy and neutral within a radius will gain bonus movement and attack speed and attack the chosen target for 6 seconds."
+    },
+    {
+      "heroName": "Huskar",
+      "abilityKey": "huskar_inner_fire",
+      "abilityName": "Inner Fire",
+      "matchedKeyword": "silencing",
+      "description": "In a fiery rage, knocks all nearby enemies away from you to a fixed distance, dealing damage and silencing them."
+    },
+    {
+      "heroName": "Huskar",
+      "abilityKey": "huskar_life_break",
+      "abilityName": "Life Break",
+      "matchedKeyword": "slow",
+      "description": "Huskar draws upon his health to break an enemy's life, leaping at a target to shatter a percentage of that hero's current health and slow both their movement and attack speed. While leaping, Huskar is Debuff Immune with 60% magic resistance.\n\nDISPEL TYPE: Basic Dispel"
+    },
+    {
+      "heroName": "Night Stalker",
+      "abilityKey": "night_stalker_void",
+      "abilityName": "Void",
+      "matchedKeyword": "slows",
+      "description": "Creates a damaging void that slows an enemy unit and deals damage. At night, Void also mini-stuns, interrupting channeling abilities, and its effects lasts longer."
+    },
+    {
+      "heroName": "Night Stalker",
+      "abilityKey": "night_stalker_crippling_fear",
+      "abilityName": "Crippling Fear",
+      "matchedKeyword": "Fear",
+      "description": "Night Stalker horrifies all nearby enemies, causing them to become silenced and take damage over time while near him. The effect lasts longer at night."
+    },
+    {
+      "heroName": "Broodmother",
+      "abilityKey": "broodmother_incapacitating_bite",
+      "abilityName": "Incapacitating Bite",
+      "matchedKeyword": "slow",
+      "description": "Broodmother's venom cripples enemy units, causing her attacks to slow and giving the affected unit a chance to miss its attacks and extra damage from attacks."
+    },
+    {
+      "heroName": "Bounty Hunter",
+      "abilityKey": "bounty_hunter_wind_walk",
+      "abilityName": "Shadow Walk",
+      "matchedKeyword": "stun",
+      "description": "Bounty Hunter becomes invisible and gains bonus movement speed and the ability to move through other units until he attacks or casts a spell. If he breaks the invisibility with an attack, that attack will stun the target for a short duration."
+    },
+    {
+      "heroName": "Weaver",
+      "abilityKey": "weaver_threads_of_fate",
+      "abilityName": "Threads of Fate",
+      "matchedKeyword": "slows",
+      "description": "Whenever Weaver deals damage to an enemy hero with an attack or ability, if he remains within 700 range of them for 1.5s, he establishes a Thread of Fate that briefly slows the enemy and ties Weaver and the enemy together. Each established thread of fate grants bonus damage to Weaver."
+    },
+    {
+      "heroName": "Jakiro",
+      "abilityKey": "jakiro_dual_breath",
+      "abilityName": "Dual Breath",
+      "matchedKeyword": "slows",
+      "description": "An icy blast followed by a wave of fire launches out in a path in front of Jakiro. The ice slows enemies, while the fire delivers damage over time."
+    },
+    {
+      "heroName": "Jakiro",
+      "abilityKey": "jakiro_ice_path",
+      "abilityName": "Ice Path",
+      "matchedKeyword": "stuns",
+      "description": "Creates a path of ice that stuns and damages enemies that touch it."
+    },
+    {
+      "heroName": "Chen",
+      "abilityKey": "chen_hand_of_god",
+      "abilityName": "Hand of God",
+      "matchedKeyword": "slow",
+      "description": "Heals all allied heroes on the map as well as all units under Chen's control. A large heal is applied at first and a slow heal over time is applied for 10 seconds afterwards."
+    },
+    {
+      "heroName": "Ancient Apparition",
+      "abilityKey": "ancient_apparition_cold_feet",
+      "abilityName": "Cold Feet",
+      "matchedKeyword": "stunned",
+      "description": "Places a curse on an enemy, dealing damage over time. If the enemy unit doesn't move outside of the given range from the initial location, it will be stunned and frozen in place after 4 seconds."
+    },
+    {
+      "heroName": "Ancient Apparition",
+      "abilityKey": "ancient_apparition_ice_vortex",
+      "abilityName": "Ice Vortex",
+      "matchedKeyword": "slows",
+      "description": "Creates a vortex of icy energy that slows, deals damage, and increases magic damage done to enemies in its range."
+    },
+    {
+      "heroName": "Ancient Apparition",
+      "abilityKey": "ancient_apparition_chilling_touch",
+      "abilityName": "Chilling Touch",
+      "matchedKeyword": "slow",
+      "description": "Enhances Ancient Apparition's attack with increased range and a burst of magical damage and slow."
+    },
+    {
+      "heroName": "Ancient Apparition",
+      "abilityKey": "ancient_apparition_bone_chill",
+      "abilityName": "Bone Chill",
+      "matchedKeyword": "slowed",
+      "description": "When Ancient Apparition deals Magic damage to an enemy with his abilities, it is slowed for a short duration. If the target is a Hero, its Strength is also reduced. Multiple instances of this effect stack and have independent durations."
+    },
+    {
+      "heroName": "Ancient Apparition",
+      "abilityKey": "ancient_apparition_ice_blast_release",
+      "abilityName": "Release",
+      "matchedKeyword": "silenced",
+      "description": "Releases the ice blast to explode at the tracer's current location. Can be cast while silenced."
+    },
+    {
+      "heroName": "Doom",
+      "abilityKey": "doom_bringer_infernal_blade",
+      "abilityName": "Infernal Blade",
+      "matchedKeyword": "Stuns",
+      "description": "Doom swings his burning sword, igniting the enemy. Stuns for 0.66 seconds and applies a 4 second burn that deals a base damage plus a percentage of the target's Max HP as damage per second."
+    },
+    {
+      "heroName": "Ursa",
+      "abilityKey": "ursa_earthshock",
+      "abilityName": "Earthshock",
+      "matchedKeyword": "slow",
+      "description": "Ursa leaps forward 250 units and slams the earth, causing a powerful shock to damage and slow all enemy units in a nearby area for 4 seconds."
+    },
+    {
+      "heroName": "Ursa",
+      "abilityKey": "ursa_overpower",
+      "abilityName": "Overpower",
+      "matchedKeyword": "slow",
+      "description": "Using his skill in combat, Ursa gains increased attack speed and slow resistance for a number of subsequent attacks."
+    },
+    {
+      "heroName": "Spirit Breaker",
+      "abilityKey": "spirit_breaker_greater_bash",
+      "abilityName": "Greater Bash",
+      "matchedKeyword": "stun",
+      "description": "Gives a chance to stun and knockback an enemy unit on an attack. Deals a percentage of movement speed as damage."
+    },
+    {
+      "heroName": "Spirit Breaker",
+      "abilityKey": "spirit_breaker_bull_rush",
+      "abilityName": "Empowering Haste",
+      "matchedKeyword": "stuns",
+      "description": "Spirit Breaker gains bonus Movement Speed for a duration whenever he stuns an enemy. Effects from multiple stuns stack and have independent durations. Duration pauses during Charge of Darkness."
+    },
+    {
+      "heroName": "Gyrocopter",
+      "abilityKey": "gyrocopter_call_down",
+      "abilityName": "Call Down",
+      "matchedKeyword": "slow",
+      "description": "Call down 3 aerial missile strikes that slow and damage enemy units in a target area. Each strike is 500 distance from the previous one."
+    },
+    {
+      "heroName": "Alchemist",
+      "abilityKey": "alchemist_unstable_concoction",
+      "abilityName": "Unstable Concoction",
+      "matchedKeyword": "stun",
+      "description": "Alchemist brews up an unstable concoction that he can throw at an enemy hero, to stun and deal damage in an area around the explosion. The longer the concoction brews, the more damage it deals and the longer the stun. Alchemist is faster while charging the concoction. After 5 seconds, the brew reaches its maximum damage and stun time. However, after 5.5 seconds, the concoction will explode on Alchemist himself if not thrown."
+    },
+    {
+      "heroName": "Alchemist",
+      "abilityKey": "alchemist_corrosive_weaponry",
+      "abilityName": "Corrosive Weaponry",
+      "matchedKeyword": "slow",
+      "description": "Alchemist coats his weapons and empowers his spells with an acid that applies a stacking slow and base attack damage reduction to enemies hit.\n\nAttacks apply 2 stacks. Unstable Concoction applies 1 stack per second of brew time."
+    },
+    {
+      "heroName": "Invoker",
+      "abilityKey": "invoker_ghost_walk",
+      "abilityName": "Ghost Walk",
+      "matchedKeyword": "slows",
+      "description": "Invoker manipulates the ice and electrical energies around him, rendering his body invisible and gaining health and mana regen. The elemental imbalance created as a consequence slows nearby enemies based on the level of Quas, and slows Invoker as well based on the level of Wex."
+    },
+    {
+      "heroName": "Invoker",
+      "abilityKey": "invoker_ice_wall",
+      "abilityName": "Ice Wall",
+      "matchedKeyword": "slows",
+      "description": "Generates a wall of solid ice directly in front of Invoker for a duration based on the level of Quas. The bitter cold emanating from it greatly slows nearby enemies based on the level of Quas and deals damage each second based on the level of Exort."
+    },
+    {
+      "heroName": "Invoker",
+      "abilityKey": "invoker_deafening_blast",
+      "abilityName": "Deafening Blast",
+      "matchedKeyword": "disarm",
+      "description": "Invoker unleashes a mighty sonic wave in front of him, dealing damage to any enemy unit it collides with based on the level of Exort. The sheer impact from the blast is enough to knock those enemy units back for a duration based on the level of Quas, then disarm their attacks for a duration based on the level of Wex."
+    },
+    {
+      "heroName": "Silencer",
+      "abilityKey": "silencer_curse_of_the_silent",
+      "abilityName": "Arcane Curse",
+      "matchedKeyword": "silenced",
+      "description": "Curses the target area, dealing damage and causing enemies to take damage over time and slowing their movement speed.\n\nAnytime affected enemies cast a spell, the duration is increased. The duration is paused as long as the target is silenced."
+    },
+    {
+      "heroName": "Silencer",
+      "abilityKey": "silencer_last_word",
+      "abilityName": "Last Word",
+      "matchedKeyword": "silenced",
+      "description": "Enchants a target, providing vision of them and causing them to be damaged and silenced if they cast a spell or if the enchantment timer expires. Deals extra damage based on the difference in intelligence between Silencer and the target."
+    },
+    {
+      "heroName": "Silencer",
+      "abilityKey": "silencer_brain_drain",
+      "abilityName": "Suffer In Silence",
+      "matchedKeyword": "Silence",
+      "description": "Silencer takes less damage from and deals more damage to silenced targets.\n\nIf an enemy Hero dies within 925 range of Silencer or was debuffed by Silencer at the time of death, Silencer permanently steals 1 Intelligence from them. If the victim was silenced, steal an extra 1 Intelligence."
+    },
+    {
+      "heroName": "Silencer",
+      "abilityKey": "silencer_global_silence",
+      "abilityName": "Global Silence",
+      "matchedKeyword": "Silence",
+      "description": "Silencer stops all sound, preventing enemy heroes and units on the map from casting spells."
+    },
+    {
+      "heroName": "Silencer",
+      "abilityKey": "silencer_oppressive_silence",
+      "abilityName": "Suffer In Silence",
+      "matchedKeyword": "Silence",
+      "description": "Silencer takes less damage from and deals more damage to silenced targets."
+    },
+    {
+      "heroName": "Lycan",
+      "abilityKey": "lycan_howl",
+      "abilityName": "Howl",
+      "matchedKeyword": "fear",
+      "description": "Strikes fear into enemies, reducing armor and attack damage of all enemies within 2000 range of Lycan and his wolves. At night, Howl's armor and attack damage reductions are global."
+    },
+    {
+      "heroName": "Lycan",
+      "abilityKey": "lycan_shapeshift",
+      "abilityName": "Shapeshift",
+      "matchedKeyword": "slowed",
+      "description": "Lycan assumes his lupine form, granting him critical strikes and added vision at night. During Shapeshift, Lycan moves at increased speed and cannot be slowed. Movement and critical strike bonuses are also applied to all units under Lycan's control."
+    },
+    {
+      "heroName": "Brewmaster",
+      "abilityKey": "brewmaster_cinder_brew",
+      "abilityName": "Cinder Brew",
+      "matchedKeyword": "slowed",
+      "description": "Rolls a barrel of ale at enemies that damages enemies along its path and spills out at the target location.\n\nAny enemy in the path or the spill area is drenched in cinder brew, becoming slowed. If the enemy receives Magic or Pure damage, they will be ignited, extending the duration by 3s and causing them to take damage over time."
+    },
+    {
+      "heroName": "Lone Druid",
+      "abilityKey": "lone_druid_entangle",
+      "abilityName": "Entangle",
+      "matchedKeyword": "rooted",
+      "description": "Allows Lone Druid to Entangle enemies once they gain 5 stacks. Entangled enemies are rooted and take damage over time.\n\nWhen cast, applies 2 stacks to each enemy hero in the area and 5 stacks to enemy creeps. Also empowers Lone Druid for 10s, making him apply 1 stack with each attack on enemy heroes. Enemies cannot gain stacks while Entangled.\n\nLeveling this ability also levels Spirit Bear's Entangling Claws ability."
+    },
+    {
+      "heroName": "Chaos Knight",
+      "abilityKey": "chaos_knight_chaos_bolt",
+      "abilityName": "Chaos Bolt",
+      "matchedKeyword": "stuns",
+      "description": "Throws a mysterious bolt of energy at the target unit. It stuns for a random duration and deals random damage."
+    },
+    {
+      "heroName": "Meepo",
+      "abilityKey": "meepo_geomancy",
+      "abilityName": "Geomancy",
+      "matchedKeyword": "slow",
+      "description": "Meepo grants stacking bonuses to himself and his clones based on their terrain. Each Meepo grants his bonus to the other Meepos.\n\nIf there is a tree within 250 range, he receives 1 HP regen.\n\nIf he is standing on dirt, he receives 2% bonus movement speed.\n\nIf he is in the water, his attacks slow the target by 2% for 2 seconds."
+    },
+    {
+      "heroName": "Treant Protector",
+      "abilityKey": "treant_natures_grasp",
+      "abilityName": "Nature's Grasp",
+      "matchedKeyword": "slow",
+      "description": "Creates vines towards the target location. Vines slow down and deal damage to enemies that walk through. Does 35% less damage to creeps."
+    },
+    {
+      "heroName": "Treant Protector",
+      "abilityKey": "treant_leech_seed",
+      "abilityName": "Leech Seed",
+      "matchedKeyword": "rooted",
+      "description": "Treant's attack plants a life-sapping seed in an enemy unit. That unit takes additional magic damage, is rooted and disarmed for a short duration, and emits 2 healing pulses to up to 5 nearby allies of Treant Protector based on the damage dealt by the attack."
+    },
+    {
+      "heroName": "Undying",
+      "abilityKey": "undying_tombstone",
+      "abilityName": "Tombstone",
+      "matchedKeyword": "slow",
+      "description": "Summons a tombstone at the target point. Zombies will frequently spawn next to every enemy unit in the area around the Tombstone, and attack them. Zombies have the Deathlust ability, which causes their attacks to slow the target, and if the target reaches below a certain amount of health, increases the attack and movement speed of the zombie."
+    },
+    {
+      "heroName": "Undying",
+      "abilityKey": "undying_flesh_golem",
+      "abilityName": "Flesh Golem",
+      "matchedKeyword": "slow",
+      "description": "Undying transforms into a horrifying flesh golem. While in this state, he gains a percentage increase to strength, bonus movement speed, and causes attacks to slow, apply damage amplification, and spawn Tombstone zombies."
+    },
+    {
+      "heroName": "Rubick",
+      "abilityKey": "rubick_telekinesis",
+      "abilityName": "Telekinesis",
+      "matchedKeyword": "stuns",
+      "description": "Rubick uses his telekinetic powers to lift the enemy into the air briefly and then hurls them back at the ground. The unit lands on the ground with such force that it stuns nearby enemies."
+    },
+    {
+      "heroName": "Disruptor",
+      "abilityKey": "disruptor_thunder_strike",
+      "abilityName": "Thunder Strike",
+      "matchedKeyword": "slows",
+      "description": "Repeatedly strikes the targeted unit with lightning. Each strike damages nearby enemy units in a small radius and slows enemy movement and attack speed by 100% for x1.75 seconds. Provides vision of its target."
+    },
+    {
+      "heroName": "Disruptor",
+      "abilityKey": "disruptor_static_storm",
+      "abilityName": "Static Storm",
+      "matchedKeyword": "silences",
+      "description": "Creates a damaging static storm that also silences all enemy units in the area for the duration. The damage starts off weak, but increases in power over the duration."
+    },
+    {
+      "heroName": "Nyx Assassin",
+      "abilityKey": "nyx_assassin_impale",
+      "abilityName": "Impale",
+      "matchedKeyword": "stunned",
+      "description": "Rock spikes burst from the earth along a straight path. Enemy units take damage, then are hurled into the air and stunned."
+    },
+    {
+      "heroName": "Nyx Assassin",
+      "abilityKey": "nyx_assassin_spiked_carapace",
+      "abilityName": "Spiked Carapace",
+      "matchedKeyword": "stuns",
+      "description": "When activated while above ground, Spiked Carapace reflects and negates damage dealt to Nyx Assassin (max once from each source), as well as stunning the source of the damage. Activating Spiked Carapace will not break Vendetta invisibility.\n\nWhile Burrowed, Spiked Carapace instantly stuns nearby enemies when cast."
+    },
+    {
+      "heroName": "Nyx Assassin",
+      "abilityKey": "nyx_assassin_burrow",
+      "abilityName": "Burrow",
+      "matchedKeyword": "stuns",
+      "description": "Nyx Assassin buries himself beneath the battlefield over a short duration. Once burrowed, Spiked Carapace instantly stuns nearby enemies when cast, the range of Mind Flare and Impale is increased, and Impale's cooldown is decreased. While burrowed, Nyx Assassin is stationary, unable to attack, and invisible. Nyx Assassin gains damage reduction from all damage sources."
+    },
+    {
+      "heroName": "Keeper of the Light",
+      "abilityKey": "keeper_of_the_light_radiant_bind",
+      "abilityName": "Solar Bind",
+      "matchedKeyword": "slow",
+      "description": "Weakens an enemy's magical resistance, and applies a slow that increases in strength the more the target moves."
+    },
+    {
+      "heroName": "Io",
+      "abilityKey": "wisp_tether",
+      "abilityName": "Tether",
+      "matchedKeyword": "slows",
+      "description": "Tethers Io to an allied unit, granting bonus movement speed to both. When Io restores health or mana, the tethered unit gains a portion of that amount. The tether breaks when the allied unit moves too far away, or Io cancels the tether. Tether slows enemies touching it."
+    },
+    {
+      "heroName": "Medusa",
+      "abilityKey": "medusa_gorgon_grasp",
+      "abilityName": "Gorgon's Grasp",
+      "matchedKeyword": "rooted",
+      "description": "Medusa fires arrows in a line that land in 3 groups, with each grouping larger than the previous. Enemies struck by a volley of arrows take an initial burst of damage and then are rooted, cannot turn, are revealed to the enemy, and take damage per second."
+    },
+    {
+      "heroName": "Medusa",
+      "abilityKey": "medusa_stone_gaze",
+      "abilityName": "Stone Gaze",
+      "matchedKeyword": "slowed",
+      "description": "Any enemy units looking at Medusa will have their movement and attack speed slowed. If 2 seconds of total time is accumulated looking at Medusa while Stone Gaze is active, that unit will turn to stone. Petrified units are stunned, and take bonus physical attack damage."
+    },
+    {
+      "heroName": "Centaur Warrunner",
+      "abilityKey": "centaur_hoof_stomp",
+      "abilityName": "Hoof Stomp",
+      "matchedKeyword": "disarmed",
+      "description": "After a brief windup, Centaur Warrunner slams the ground, stunning and damaging nearby enemy units. During the delay, he is disarmed but can move."
+    },
+    {
+      "heroName": "Centaur Warrunner",
+      "abilityKey": "centaur_stampede",
+      "abilityName": "Stampede",
+      "matchedKeyword": "slow",
+      "description": "Centaur leads all allies into a vicious charge causing them to move through units at max speed and slow any enemy units they trample. Trampled enemies take damage based on Centaur Warrunner's strength. Each enemy can be trampled once."
+    },
+    {
+      "heroName": "Magnus",
+      "abilityKey": "magnataur_skewer",
+      "abilityName": "Skewer",
+      "matchedKeyword": "slowed",
+      "description": "Magnus rushes forward, goring enemy units on his massive tusk. Heroes hit on the way will be dragged to the destination, then damaged and affected by slowed movement speed. The damage is increased based on distance traveled."
+    },
+    {
+      "heroName": "Magnus",
+      "abilityKey": "magnataur_horn_toss",
+      "abilityName": "Horn Toss",
+      "matchedKeyword": "stunned",
+      "description": "Magnus tosses any enemies in front of him, launching them to his rear. Enemies take damage, spend 0.6 seconds in the air, and are stunned while in the air and an additional amount of time after landing."
+    },
+    {
+      "heroName": "Magnus",
+      "abilityKey": "magnataur_solid_core",
+      "abilityName": "Solid Core",
+      "matchedKeyword": "slow",
+      "description": "Magnus has increased slow resistance and suffers less knockback from enemy's abilities and items."
+    },
+    {
+      "heroName": "Timbersaw",
+      "abilityKey": "shredder_flamethrower",
+      "abilityName": "Flamethrower",
+      "matchedKeyword": "slows",
+      "description": "Releases a flame in the direction Timbersaw is facing. Applies a debuff that deals damage per second and slows enemy movement speed. Affects buildings for reduced damage."
+    },
+    {
+      "heroName": "Tusk",
+      "abilityKey": "tusk_snowball",
+      "abilityName": "Snowball",
+      "matchedKeyword": "stunned",
+      "description": "Tusk begins rolling into a snowball. Allies within a 325 radius can also be added to the snowball by right-clicking on them, even while the snowball is moving. Once launched, any enemies caught in the snowball's path will be stunned and take damage. Each allied Hero in the snowball will add to its damage and stun duration."
+    },
+    {
+      "heroName": "Tusk",
+      "abilityKey": "tusk_bitter_chill",
+      "abilityName": "Bitter Chill",
+      "matchedKeyword": "slows",
+      "description": "Passively slows the attack speed of all enemy heroes within a 350 unit radius."
+    },
+    {
+      "heroName": "Skywrath Mage",
+      "abilityKey": "skywrath_mage_arcane_bolt",
+      "abilityName": "Arcane Bolt",
+      "matchedKeyword": "slow",
+      "description": "Skywrath Mage launches a slow-moving bolt of arcane magic, dealing damage to an enemy unit based on Skywrath Mage's intelligence."
+    },
+    {
+      "heroName": "Skywrath Mage",
+      "abilityKey": "skywrath_mage_concussive_shot",
+      "abilityName": "Concussive Shot",
+      "matchedKeyword": "slows",
+      "description": "Skywrath Mage sets off a long range shot that hits the closest hero within a long range. Upon impact, it deals damage and slows in an area of effect."
+    },
+    {
+      "heroName": "Skywrath Mage",
+      "abilityKey": "skywrath_mage_ancient_seal",
+      "abilityName": "Ancient Seal",
+      "matchedKeyword": "silencing",
+      "description": "Skywrath Mage seals the targeted unit with an ancient rune, silencing it and causing it to take additional damage from spells."
+    },
+    {
+      "heroName": "Legion Commander",
+      "abilityKey": "legion_commander_overwhelming_odds",
+      "abilityName": "Overwhelming Odds",
+      "matchedKeyword": "slow",
+      "description": "Turns the foes' numbers against them, dealing a 100% impact slow for 0.3s and damage to all enemies in the area. Damage increases with each enemy unit or hero in the area, and grants Legion Commander bonus attack speed."
+    },
+    {
+      "heroName": "Techies",
+      "abilityKey": "techies_sticky_bomb",
+      "abilityName": "Sticky Bomb",
+      "matchedKeyword": "slow",
+      "description": "Lobs a Sticky Bomb towards the target area. If it lands next to an enemy hero, the bomb will stick to it, slowing its movement speed. After a few seconds the bomb will explode, dealing damage in an area around the detonation and applying a secondary slow for 3 seconds."
+    },
+    {
+      "heroName": "Techies",
+      "abilityKey": "techies_reactive_tazer",
+      "abilityName": "Reactive Tazer",
+      "matchedKeyword": "disarmed",
+      "description": "Techies trigger an electric charge on the target ally, giving them bonus movement speed for a short period of time. Enemies attacking the target take damage and are temporarily disarmed and get a Basic Dispel.\n\nAt the end of the effect or if detonated early with the sub-ability, the charge explodes, disarming all enemies within the radius and dealing damage."
+    },
+    {
+      "heroName": "Techies",
+      "abilityKey": "techies_suicide",
+      "abilityName": "Blast Off!",
+      "matchedKeyword": "stun",
+      "description": "Techies hurtle themselves into the enemy's midst, detonating charges upon impact which deal massive area of effect damage and stun enemies. Upon landing, the assault deals Techies non-lethal damage equal to a percentage of their current health."
+    },
+    {
+      "heroName": "Earth Spirit",
+      "abilityKey": "earth_spirit_boulder_smash",
+      "abilityName": "Boulder Smash",
+      "matchedKeyword": "slowed",
+      "description": "Earth Spirit smashes the target enemy or ally, sending them in the direction he is facing. If Earth Spirit targets an area, he will smash the nearest unit in a 200 radius, prioritizing Stone Remnants. The travelling unit or Remnant damages all enemy units it hits. If an enemy is hit by a Stone Remnant, they are also slowed. Stone Remnants travel further than other units."
+    },
+    {
+      "heroName": "Earth Spirit",
+      "abilityKey": "earth_spirit_rolling_boulder",
+      "abilityName": "Rolling Boulder",
+      "matchedKeyword": "stunned",
+      "description": "Earth Spirit gathers himself into a boulder and, after a 0.6s delay, rolls toward the target location, dealing 60 + 100% STR damage and stunning enemy units. He will stop if he collides with an enemy hero or is stunned. If he rolls over a Stone Remnant, he will travel further and faster, and stun enemies for longer."
+    },
+    {
+      "heroName": "Earth Spirit",
+      "abilityKey": "earth_spirit_geomagnetic_grip",
+      "abilityName": "Geomagnetic Grip",
+      "matchedKeyword": "silenced",
+      "description": "Earth Spirit pulls the target Stone Remnant or Allied Unit. Enemies struck by the gripped target will be silenced.\n\nPulled Remnants also deal damage to struck enemies.\n\nCast range is reduced when targeting an ally."
+    },
+    {
+      "heroName": "Underlord",
+      "abilityKey": "abyssal_underlord_pit_of_malice",
+      "abilityName": "Pit of Malice",
+      "matchedKeyword": "rooted",
+      "description": "A deadly pit is conjured at the target location; any unit that enters will be damaged and rooted. Each enemy unit within the pit are affected by the root only every 3.6 seconds."
+    },
+    {
+      "heroName": "Terrorblade",
+      "abilityKey": "terrorblade_reflection",
+      "abilityName": "Reflection",
+      "matchedKeyword": "slowed",
+      "description": "Terrorblade brings forth an invulnerable dark reflection of all enemy heroes in a target area. Affected enemy heroes have movement and attack speeds slowed and attacked by their reflection."
+    },
+    {
+      "heroName": "Terrorblade",
+      "abilityKey": "terrorblade_terror_wave",
+      "abilityName": "Terror Wave",
+      "matchedKeyword": "Feared",
+      "description": "Causes a wave to travel outwards in all directions forcing enemy heroes to become Feared upon impact and dealing damage, and grants Terrorblade Metamorphosis for a short time."
+    },
+    {
+      "heroName": "Phoenix",
+      "abilityKey": "phoenix_sun_ray_toggle_move",
+      "abilityName": "Toggle Movement",
+      "matchedKeyword": "slow",
+      "description": "Toggles slow forward movement during Sun Ray firing."
+    },
+    {
+      "heroName": "Oracle",
+      "abilityKey": "oracle_fortunes_end",
+      "abilityName": "Fortune's End",
+      "matchedKeyword": "roots",
+      "description": "CHANNELED - Gathers Oracle's power into a bolt of scouring energy that, when released, damages, roots, and dispels enemies of buffs in an area around the target. If target is an ally it will only dispel debuffs. The root duration increases with channeling time.\n\nDISPEL TYPE: Basic Dispel"
+    },
+    {
+      "heroName": "Winter Wyvern",
+      "abilityKey": "winter_wyvern_arctic_burn",
+      "abilityName": "Arctic Burn",
+      "matchedKeyword": "slow",
+      "description": "Winter Wyvern soars upon an arctic wind, granting her unobstructed movement and allowing her to exhale a blistering chill into each attack. While soaring, her attacks travel further and faster, and slow enemies with a magical freeze that strips them of 4% of their current health each second."
+    },
+    {
+      "heroName": "Winter Wyvern",
+      "abilityKey": "winter_wyvern_splinter_blast",
+      "abilityName": "Splinter Blast",
+      "matchedKeyword": "slowed",
+      "description": "Launches a ball of brittle ice toward a unit. The ice shatters on impact, leaving the primary target completely unaffected, while hurling damaging splinters into nearby enemies in a 500 base radius. Enemies struck by these splinters are slowed by 28%."
+    },
+    {
+      "heroName": "Monkey King",
+      "abilityKey": "monkey_king_tree_dance",
+      "abilityName": "Tree Dance",
+      "matchedKeyword": "stunned",
+      "description": "Monkey King jumps to a tree and perches atop it. While perched, he gains the Primal Spring ability-a channeled leap attack. If Monkey King's tree is destroyed, he falls and is stunned for 3s. Taking damage while on the ground puts Tree Dance on cooldown."
+    },
+    {
+      "heroName": "Monkey King",
+      "abilityKey": "monkey_king_primal_spring",
+      "abilityName": "Primal Spring",
+      "matchedKeyword": "slow",
+      "description": "CHANNELED - Monkey King springs out from his tree perch, damaging and slowing enemies in the area where he lands. Damage and slow amounts are in proportion to channel duration."
+    },
+    {
+      "heroName": "Dark Willow",
+      "abilityKey": "dark_willow_bramble_maze",
+      "abilityName": "Bramble Maze",
+      "matchedKeyword": "rooted",
+      "description": "Dark Willow creates a 500 AoE maze of 8 brambles that grow in the target area after 0.3 seconds. Enemies that walk into a bramble are rooted and take damage over time. Lasts 12 seconds."
+    },
+    {
+      "heroName": "Dark Willow",
+      "abilityKey": "dark_willow_cursed_crown",
+      "abilityName": "Cursed Crown",
+      "matchedKeyword": "stunned",
+      "description": "Dark Willow casts an ancient fae curse on the target. After a delay, the target and nearby enemies are stunned."
+    },
+    {
+      "heroName": "Pangolier",
+      "abilityKey": "pangolier_swashbuckle",
+      "abilityName": "Swashbuckle",
+      "matchedKeyword": "slows",
+      "description": "Pangolier dashes along the target line, then slashes and briefly slows all enemies in the drawn direction with several quick swipes.\n\nLucky Shot has a chance to activate from this damage."
+    },
+    {
+      "heroName": "Pangolier",
+      "abilityKey": "pangolier_lucky_shot",
+      "abilityName": "Lucky Shot",
+      "matchedKeyword": "slow",
+      "description": "Pangolier rolls the dice and lets fate decide the outcome for his enemies. Grants a chance to drastically slow their attack speed and reduce armor on any damage dealt by Pangolier's attacks or abilities."
+    },
+    {
+      "heroName": "Pangolier",
+      "abilityKey": "pangolier_rollup",
+      "abilityName": "Roll Up",
+      "matchedKeyword": "stun",
+      "description": "Pangolier curls into an immobile protective ball, gaining debuff immunity, 80% magic resistance, and allowing him to turn. Can be cast during Rolling Thunder to temporarily hit the brakes. Can cast Rolling Thunder and Shield Crash during Roll Up. If enemies attack Pangolier during this, he will roll away from the attacker, applying Rolling Thunder damage/stun if there are enemies in the way."
+    },
+    {
+      "heroName": "Grimstroke",
+      "abilityKey": "grimstroke_ink_creature",
+      "abilityName": "Phantom's Embrace",
+      "matchedKeyword": "silences",
+      "description": "Summons a phantom that moves quickly towards the target, latching to it when she arrives. Once latched, the phantom damages and silences. If she survives the full latch duration she rends her victim for heavy damage and refreshes Phantom's Embrace's cooldown.\n\nHero attacks against the phantom count as 3 attacks each."
+    },
+    {
+      "heroName": "Grimstroke",
+      "abilityKey": "grimstroke_spirit_walk",
+      "abilityName": "Ink Swell",
+      "matchedKeyword": "stun",
+      "description": "Grimstroke shrouds an allied unit in ink, increasing its movement speed. Enemies in range of the allied unit are damaged with inky tendrils over time. After 3 seconds it applies damage and stun in an area around the unit in proportion to how long ink tendril was near any hero."
+    },
+    {
+      "heroName": "Hoodwink",
+      "abilityKey": "hoodwink_bushwhack",
+      "abilityName": "Bushwhack",
+      "matchedKeyword": "stuns",
+      "description": "Tosses a net trap that stuns enemies if they are near a tree in the area. Affected enemies take damage over time and are pulled towards the tree nearest to them within the target area, and have their vision reduced to 0 for the duration of the stun."
+    },
+    {
+      "heroName": "Hoodwink",
+      "abilityKey": "hoodwink_hunters_boomerang",
+      "abilityName": "Hunter's Boomerang",
+      "matchedKeyword": "slowed",
+      "description": "Tosses a boomerang in an arc. Upon contact, it returns to Hoodwink. The boomerang will deal damage as it passes through or hits enemies, and apply a debuff that causes affected enemies to be slowed and be more vulnerable to spell damage."
+    },
+    {
+      "heroName": "Hoodwink",
+      "abilityKey": "hoodwink_sharpshooter",
+      "abilityName": "Sharpshooter",
+      "matchedKeyword": "slow",
+      "description": "Hoodwink charges up and fires a deadly bolt from her crossbow, dealing heavy damage, break and slow to an enemy Hero. The damage and debuff duration scale up to max after x0.75 seconds, and the bolt is fired automatically after x0.75 seconds.\nHoodwink is knocked backwards for a distance of 350 from the force of the shot. Creeps hit by the bolt are damaged for half the values."
+    },
+    {
+      "heroName": "Void Spirit",
+      "abilityKey": "void_spirit_astral_step",
+      "abilityName": "Astral Step",
+      "matchedKeyword": "slows",
+      "description": "Void Spirit tears a rift through the astral plane to appear at the target location, attacking all enemies along the path. This attack inflicts a void mark that slows for 1.25 seconds and then detonates."
+    },
+    {
+      "heroName": "Snapfire",
+      "abilityKey": "snapfire_scatterblast",
+      "abilityName": "Scatterblast",
+      "matchedKeyword": "slows",
+      "description": "Snapfire unloads with a wide blast that damages and slows enemies in a cone. Damage is increased by 30% and Movement Slow, Attack Slow and Slow Duration are increased by 50% for enemies caught at point-blank range."
+    },
+    {
+      "heroName": "Snapfire",
+      "abilityKey": "snapfire_firesnap_cookie",
+      "abilityName": "Firesnap Cookie",
+      "matchedKeyword": "stuns",
+      "description": "Snapfire feeds a potent cookie to Mortimer or an ally, causing them to hop a short distance. The hopping unit stuns and damages enemies in the landing zone."
+    },
+    {
+      "heroName": "Snapfire",
+      "abilityKey": "snapfire_spit_creep",
+      "abilityName": "Spit Out",
+      "matchedKeyword": "stun",
+      "description": "Mortimer spits out the unit that's in his mouth, causing impact damage and stun in a large area. The glob leaves a pool of firespit based on the current level of Mortimer Kisses, that slows and applies damage over time. Spit Out has a no minimum launch range."
+    },
+    {
+      "heroName": "Snapfire",
+      "abilityKey": "snapfire_mortimer_kisses",
+      "abilityName": "Mortimer Kisses",
+      "matchedKeyword": "slow",
+      "description": "Snapfire's friend launches a barrage of firespit globs over 5.5 seconds. Globs cause impact damage and create pools of firespit, which slow and apply damage over time. Snapfire has a reduced turn rate for the duration and a minimum launch range of 600. Each glob can be targeted with a right click."
+    },
+    {
+      "heroName": "Mars",
+      "abilityKey": "mars_spear",
+      "abilityName": "Spear of Mars",
+      "matchedKeyword": "stunned",
+      "description": "Mars throws his legendary Spear with deadly precision, damaging each enemy unit it strikes. The first enemy hero it hits is skewered on the spear, pushing it back. If a skewered hero hits a tree, building, or cliff, they will be impaled to it and stunned."
+    },
+    {
+      "heroName": "Ringmaster",
+      "abilityKey": "ringmaster_tame_the_beasts",
+      "abilityName": "Tame the Beasts",
+      "matchedKeyword": "fear",
+      "description": "CHANNELED - Ringmaster twirls his whip for up to 1 second then cracks it. Whipped enemies are damaged and flee in fear from Ringmaster. Channel time exponentially increases damage and extends the fear duration, but reduces the radius."
+    },
+    {
+      "heroName": "Ringmaster",
+      "abilityKey": "ringmaster_the_box",
+      "abilityName": "Escape Act",
+      "matchedKeyword": "slow",
+      "description": "Ringmaster packs himself or an allied hero into a mobile, extradimensional box. Boxed units gain phased movement, slow resistance, bonus magic resistance, and bonus movement speed. They are also untargetable, muted, silenced, and disarmed. The box will pop open after the effect expires or it moves out of the initial area."
+    },
+    {
+      "heroName": "Ringmaster",
+      "abilityKey": "ringmaster_impalement",
+      "abilityName": "Impalement Arts",
+      "matchedKeyword": "slows",
+      "description": "Ringmaster throws one of his daggers to a precise point of his choosing. If he strikes an enemy, the dagger deals impact damage, briefly slows the unit hit, and causes them to bleed. The bleeding deals a percentage of the victim's maximum health in damage every second to heroes and flat damage per second to creeps."
+    },
+    {
+      "heroName": "Ringmaster",
+      "abilityKey": "ringmaster_wheel",
+      "abilityName": "Wheel of Wonder",
+      "matchedKeyword": "slowed",
+      "description": "Ringmaster rolls the Wheel of Wonder to the targeted location, knocking aside enemies along the way. After it reaches its target, enemies in range of the wheel take damage over time and are slowed by -50%.\n\nEnemy heroes who face the wheel for more than 0.5 seconds are mesmerized and drawn towards it. The first enemy to be mesmerized triggers a timer for the wheel to explode. If the timer is not triggered, it will automatically explode after 4 seconds."
+    },
+    {
+      "heroName": "Dawnbreaker",
+      "abilityKey": "dawnbreaker_celestial_hammer",
+      "abilityName": "Celestial Hammer",
+      "matchedKeyword": "slows",
+      "description": "Dawnbreaker hurls her weapon at a target, damaging enemies struck along the way. The hammer pauses for 2 seconds at the destination before flying back to her, leaving a trail of fire that slows enemies. Dawnbreaker can recall the hammer at any time, pulling her towards it so they meet in the middle."
+    },
+    {
+      "heroName": "Dawnbreaker",
+      "abilityKey": "dawnbreaker_solar_guardian",
+      "abilityName": "Solar Guardian",
+      "matchedKeyword": "stuns",
+      "description": "CHANNELED - Dawnbreaker creates a pulsing effect at a location within 350 units of an allied hero anywhere on the map and creates daylight for 6s. Each pulse damages enemies and heals allies.\n\nAfter a short duration, she flies to the target location and deals additional damage and stuns enemies upon landing.\n\nOnce channeled, Dawnbreaker cannot stop the ability."
+    },
+    {
+      "heroName": "Marci",
+      "abilityKey": "marci_grapple",
+      "abilityName": "Dispose",
+      "matchedKeyword": "slowed",
+      "description": "Marci grabs an allied or enemy target and throws it effortlessly behind her, damaging and slowing the unit if it's an enemy. Any enemy units in the landing area will also be damaged and slowed."
+    },
+    {
+      "heroName": "Marci",
+      "abilityKey": "marci_unleash",
+      "abilityName": "Unleash",
+      "matchedKeyword": "slow",
+      "description": "Marci taps a hidden power, gaining Fury charges that allow her to deliver a rapid sequence of strikes that slow movement and attack speed of the target for 2s. The last strike in every Fury combo creates a damaging pulse around the target. In between Fury combos, Marci is unable to attack for 1.5s.\n\nMarci gains 15% movement speed when Unleash is cast."
+    },
+    {
+      "heroName": "Primal Beast",
+      "abilityKey": "primal_beast_onslaught",
+      "abilityName": "Onslaught",
+      "matchedKeyword": "stunned",
+      "description": "Primal Beast charges up and then runs in the chosen direction, knocking back enemies and allies alike. Enemy units are damaged and stunned on impact. The longer the charge duration, the farther Primal Beast's momentum will carry him. \n\n Can be cancelled at any time with the Stop command."
+    },
+    {
+      "heroName": "Primal Beast",
+      "abilityKey": "primal_beast_trample",
+      "abilityName": "Trample",
+      "matchedKeyword": "disarmed",
+      "description": "Primal Beast stomps over everything. For every 140 units traveled, all enemies around the Beast receive damage. Deals base damage plus a multiplier of Primal Beast's attack damage. Primal Beast is disarmed for the duration of the ability."
+    },
+    {
+      "heroName": "Primal Beast",
+      "abilityKey": "primal_beast_uproar",
+      "abilityName": "Uproar",
+      "matchedKeyword": "slows",
+      "description": "The Beast's temper causes every instance of 50 hero damage or more to grant a stack of Uproar. \n\n When activated, Primal Beast releases a roar that slows surrounding enemies and grants the Beast additional attack damage and armor for 7 seconds based on his current stacks of Uproar."
+    },
+    {
+      "heroName": "Primal Beast",
+      "abilityKey": "primal_beast_rock_throw",
+      "abilityName": "Rock Throw",
+      "matchedKeyword": "stuns",
+      "description": "Primal Beast throws a rock at the target location that stuns and damages enemies. The rock cannot be thrown within a minimum range of Primal Beast. After landing, the rock splits into 3 additional fragments that land behind the initial target location.\n\n Rock Throw increases stacks of Uproar for each hero hit."
+    },
+    {
+      "heroName": "Kez",
+      "abilityKey": "kez_echo_slash",
+      "abilityName": "Echo Slash",
+      "matchedKeyword": "slow",
+      "description": "Kez slashes forward in a 800 distance line with his Katana, attacking enemies in an area and applying a brief 100s impact slow. After a short delay, the area is attacked again. Heroes take bonus damage."
+    },
+    {
+      "heroName": "Kez",
+      "abilityKey": "kez_grappling_claw",
+      "abilityName": "Grappling Claw",
+      "matchedKeyword": "slowed",
+      "description": "Kez swings on a grappling hook towards the target unit or tree. When the grappling hook collides with the target, that unit has slowed movement speed. Upon reaching the enemy target, Kez lands an attack on them."
+    },
+    {
+      "heroName": "Kez",
+      "abilityKey": "kez_falcon_rush",
+      "abilityName": "Falcon Rush",
+      "matchedKeyword": "slow",
+      "description": "Kez gains the ability to rush towards enemy targets to deliver echoing secondary attacks. While in this state, Kez has phased collision and slow resistance."
+    },
+    {
+      "heroName": "Kez",
+      "abilityKey": "kez_talon_toss",
+      "abilityName": "Talon Toss",
+      "matchedKeyword": "silence",
+      "description": "Kez throws a Sai at the target unit, applying a fixed damage attack and silence."
+    },
+    {
+      "heroName": "Kez",
+      "abilityKey": "kez_shodo_sai",
+      "abilityName": "Shodo Sai",
+      "matchedKeyword": "disarm",
+      "description": "Kez has a chance to critically strike the target when attacking with Sais.\n\nKez may activate the ability to disarm himself, lock his facing, and parry attacks and attack effects from the targeted direction for 2 seconds. If an attack is parried from an enemy Hero in this way, that Hero is stunned for 0.4s and gains a Mark. When a Marked target is attacked by Kez, it will guarantee a critical strike and stun the target.\n\nThe sub-ability may be used to cancel the blocking early."
+    },
+    {
+      "heroName": "Largo",
+      "abilityKey": "largo_amphibian_rhapsody",
+      "abilityName": "Amphibian Rhapsody",
+      "matchedKeyword": "disarmed",
+      "description": "Largo gets ready to groove. He is disarmed and his ability bar switches to 3 song abilities, each with different effects. Songs are only effective if strummed on the beat.\n\nEvery time he strums successfully, he gains a stack of Groovin'. Each stack gives him bonus armor and reduces the mana cost of every song, but he loses a stack if he misses a beat. Stacks linger for a short duration when Largo's song ends."
+    },
+    {
+      "heroName": "Largo",
+      "abilityKey": "largo_song_double_time",
+      "abilityName": "Hotfeet Hustle",
+      "matchedKeyword": "slow",
+      "description": "Largo plays a song that increases nearby friendly units' movement speed and grants a brief slow resistance."
+    }
   ]
 }

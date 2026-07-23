@@ -56,7 +56,9 @@
           }
         ],
         "iconUrl": "/ability-icons/antimage_mana_break.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "antimage_blink",
@@ -118,7 +120,9 @@
           }
         ],
         "iconUrl": "/ability-icons/antimage_blink.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2
+        }
       },
       {
         "abilityKey": "antimage_counterspell",
@@ -334,7 +338,9 @@
           }
         ],
         "iconUrl": "/ability-icons/antimage_mana_void.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       }
     ]
   },
@@ -398,7 +404,10 @@
           }
         ],
         "iconUrl": "/ability-icons/axe_berserkers_call.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 6,
+          "control_strength": 8
+        }
       },
       {
         "abilityKey": "axe_battle_hunger",
@@ -468,7 +477,9 @@
           }
         ],
         "iconUrl": "/ability-icons/axe_battle_hunger.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "axe_counter_helix",
@@ -721,7 +732,9 @@
           }
         ],
         "iconUrl": "/ability-icons/bane_enfeeble.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "bane_brain_sap",
@@ -849,7 +862,11 @@
           }
         ],
         "iconUrl": "/ability-icons/bane_nightmare.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 5,
+          "initiating": 3,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "bane_fiends_grip",
@@ -913,7 +930,10 @@
           }
         ],
         "iconUrl": "/ability-icons/bane_fiends_grip.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 7
+        }
       },
       {
         "abilityKey": "bane_nightmare_end",
@@ -1121,7 +1141,9 @@
           }
         ],
         "iconUrl": "/ability-icons/bloodseeker_blood_bath.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "bloodseeker_thirst",
@@ -1199,7 +1221,9 @@
           }
         ],
         "iconUrl": "/ability-icons/bloodseeker_thirst.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 6
+        }
       },
       {
         "abilityKey": "bloodseeker_sanguivore",
@@ -1339,7 +1363,10 @@
           }
         ],
         "iconUrl": "/ability-icons/bloodseeker_rupture.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 1
+        }
       }
     ]
   },
@@ -1443,7 +1470,9 @@
           }
         ],
         "iconUrl": "/ability-icons/crystal_maiden_crystal_nova.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "crystal_maiden_frostbite",
@@ -1504,7 +1533,10 @@
           }
         ],
         "iconUrl": "/ability-icons/crystal_maiden_frostbite.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 6
+        }
       },
       {
         "abilityKey": "crystal_maiden_brilliance_aura",
@@ -1613,7 +1645,10 @@
           }
         ],
         "iconUrl": "/ability-icons/crystal_maiden_crystal_clone.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "crystal_maiden_glacial_guard",
@@ -1753,7 +1788,9 @@
           }
         ],
         "iconUrl": "/ability-icons/crystal_maiden_freezing_field.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "crystal_maiden_freezing_field_stop",
@@ -1833,7 +1870,9 @@
           }
         ],
         "iconUrl": "/ability-icons/drow_ranger_frost_arrows.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "drow_ranger_wave_of_silence",
@@ -1934,7 +1973,9 @@
           }
         ],
         "iconUrl": "/ability-icons/drow_ranger_wave_of_silence.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "drow_ranger_multishot",
@@ -2147,7 +2188,9 @@
           }
         ],
         "iconUrl": "/ability-icons/drow_ranger_glacier.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1
+        }
       },
       {
         "abilityKey": "drow_ranger_trueshot",
@@ -2314,7 +2357,11 @@
           }
         ],
         "iconUrl": "/ability-icons/earthshaker_fissure.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2,
+          "initiating": 6,
+          "control_strength": 8
+        }
       },
       {
         "abilityKey": "earthshaker_enchant_totem",
@@ -2394,7 +2441,10 @@
           }
         ],
         "iconUrl": "/ability-icons/earthshaker_enchant_totem.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 4,
+          "initiating": 5
+        }
       },
       {
         "abilityKey": "earthshaker_aftershock",
@@ -2431,7 +2481,10 @@
           }
         ],
         "iconUrl": "/ability-icons/earthshaker_aftershock.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 6
+        }
       },
       {
         "abilityKey": "earthshaker_echo_slam",
@@ -2492,7 +2545,10 @@
           }
         ],
         "iconUrl": "/ability-icons/earthshaker_echo_slam.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "earthshaker_slugger",
@@ -2731,7 +2787,9 @@
           }
         ],
         "iconUrl": "/ability-icons/juggernaut_healing_ward.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 4
+        }
       },
       {
         "abilityKey": "juggernaut_blade_dance",
@@ -2793,7 +2851,9 @@
           }
         ],
         "iconUrl": "/ability-icons/juggernaut_swift_slash.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2
+        }
       },
       {
         "abilityKey": "juggernaut_bladeform",
@@ -2898,7 +2958,9 @@
           }
         ],
         "iconUrl": "/ability-icons/juggernaut_omni_slash.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3
+        }
       }
     ]
   },
@@ -3053,7 +3115,10 @@
           }
         ],
         "iconUrl": "/ability-icons/mirana_arrow.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "mirana_leap",
@@ -3131,7 +3196,9 @@
           }
         ],
         "iconUrl": "/ability-icons/mirana_leap.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 8
+        }
       },
       {
         "abilityKey": "mirana_celestial_quiver",
@@ -3243,7 +3310,10 @@
           }
         ],
         "iconUrl": "/ability-icons/mirana_invis.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 6,
+          "initiating": 2
+        }
       }
     ]
   },
@@ -3307,7 +3377,10 @@
           }
         ],
         "iconUrl": "/ability-icons/morphling_waveform.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 6,
+          "initiating": 2
+        }
       },
       {
         "abilityKey": "morphling_adaptive_strike_agi",
@@ -3414,7 +3487,10 @@
           }
         ],
         "iconUrl": "/ability-icons/morphling_adaptive_strike_agi.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "morphling_ebb_and_flow",
@@ -3614,7 +3690,11 @@
           }
         ],
         "iconUrl": "/ability-icons/morphling_replicate.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 0,
+          "initiating": 3,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "morphling_morph_replicate",
@@ -3724,7 +3804,9 @@
           }
         ],
         "iconUrl": "/ability-icons/nevermore_shadowraze1.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "nevermore_shadowraze2",
@@ -4004,7 +4086,9 @@
           }
         ],
         "iconUrl": "/ability-icons/nevermore_frenzy.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1
+        }
       },
       {
         "abilityKey": "nevermore_dark_lord",
@@ -4142,7 +4226,11 @@
           }
         ],
         "iconUrl": "/ability-icons/nevermore_requiem.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 2,
+          "control_strength": 5
+        }
       },
       {
         "abilityKey": "nevermore_necromastery",
@@ -4312,7 +4400,9 @@
           }
         ],
         "iconUrl": "/ability-icons/phantom_lancer_spirit_lance.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "phantom_lancer_doppelwalk",
@@ -4405,7 +4495,9 @@
           }
         ],
         "iconUrl": "/ability-icons/phantom_lancer_doppelwalk.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 4
+        }
       },
       {
         "abilityKey": "phantom_lancer_phantom_edge",
@@ -4466,7 +4558,9 @@
           }
         ],
         "iconUrl": "/ability-icons/phantom_lancer_phantom_edge.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 3
+        }
       },
       {
         "abilityKey": "phantom_lancer_illusory_armaments",
@@ -4709,7 +4803,10 @@
           }
         ],
         "iconUrl": "/ability-icons/puck_illusory_orb.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 7,
+          "initiating": 4
+        }
       },
       {
         "abilityKey": "puck_waning_rift",
@@ -4960,7 +5057,10 @@
           }
         ],
         "iconUrl": "/ability-icons/puck_dream_coil.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 8
+        }
       }
     ]
   },
@@ -5047,7 +5147,11 @@
           }
         ],
         "iconUrl": "/ability-icons/pudge_meat_hook.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 5,
+          "initiating": 7,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "pudge_rot",
@@ -5260,7 +5364,11 @@
           }
         ],
         "iconUrl": "/ability-icons/pudge_dismember.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 4,
+          "initiating": 2,
+          "control_strength": 7
+        }
       }
     ]
   },
@@ -5361,7 +5469,10 @@
           }
         ],
         "iconUrl": "/ability-icons/razor_plasma_field.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "razor_static_link",
@@ -5463,7 +5574,9 @@
           }
         ],
         "iconUrl": "/ability-icons/razor_static_link.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1
+        }
       },
       {
         "abilityKey": "razor_storm_surge",
@@ -5538,7 +5651,9 @@
           }
         ],
         "iconUrl": "/ability-icons/razor_storm_surge.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "razor_unstable_current",
@@ -5684,7 +5799,11 @@
           }
         ],
         "iconUrl": "/ability-icons/sandking_burrowstrike.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 8,
+          "initiating": 8,
+          "control_strength": 6
+        }
       },
       {
         "abilityKey": "sandking_sand_storm",
@@ -5756,7 +5875,10 @@
           }
         ],
         "iconUrl": "/ability-icons/sandking_sand_storm.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "sandking_scorpion_strike",
@@ -5991,7 +6113,10 @@
           }
         ],
         "iconUrl": "/ability-icons/sandking_epicenter.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 1
+        }
       }
     ]
   },
@@ -6160,7 +6285,9 @@
           }
         ],
         "iconUrl": "/ability-icons/storm_spirit_electric_vortex.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "storm_spirit_overload",
@@ -6208,7 +6335,9 @@
           }
         ],
         "iconUrl": "/ability-icons/storm_spirit_overload.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "storm_spirit_ball_lightning",
@@ -6281,7 +6410,10 @@
           }
         ],
         "iconUrl": "/ability-icons/storm_spirit_ball_lightning.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 10,
+          "initiating": 10
+        }
       },
       {
         "abilityKey": "storm_spirit_galvanized",
@@ -6403,7 +6535,11 @@
           }
         ],
         "iconUrl": "/ability-icons/sven_storm_bolt.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2,
+          "initiating": 3,
+          "control_strength": 5
+        }
       },
       {
         "abilityKey": "sven_great_cleave",
@@ -6525,7 +6661,10 @@
           }
         ],
         "iconUrl": "/ability-icons/sven_warcry.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 4,
+          "saving": 3
+        }
       },
       {
         "abilityKey": "sven_gods_strength",
@@ -6683,7 +6822,10 @@
           }
         ],
         "iconUrl": "/ability-icons/tiny_avalanche.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 7
+        }
       },
       {
         "abilityKey": "tiny_toss",
@@ -6758,7 +6900,10 @@
           }
         ],
         "iconUrl": "/ability-icons/tiny_toss.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 8,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "tiny_tree_grab",
@@ -7142,7 +7287,10 @@
           }
         ],
         "iconUrl": "/ability-icons/vengefulspirit_magic_missile.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "vengefulspirit_wave_of_terror",
@@ -7235,7 +7383,9 @@
           }
         ],
         "iconUrl": "/ability-icons/vengefulspirit_wave_of_terror.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2
+        }
       },
       {
         "abilityKey": "vengefulspirit_command_aura",
@@ -7358,7 +7508,12 @@
           }
         ],
         "iconUrl": "/ability-icons/vengefulspirit_nether_swap.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "saving": 10,
+          "initiating": 7,
+          "control_strength": 1
+        }
       }
     ]
   },
@@ -7438,7 +7593,10 @@
           }
         ],
         "iconUrl": "/ability-icons/windrunner_shackleshot.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 6
+        }
       },
       {
         "abilityKey": "windrunner_powershot",
@@ -7558,7 +7716,9 @@
           }
         ],
         "iconUrl": "/ability-icons/windrunner_powershot.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "windrunner_windrun",
@@ -7621,7 +7781,10 @@
           }
         ],
         "iconUrl": "/ability-icons/windrunner_windrun.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 7,
+          "saving": 1
+        }
       },
       {
         "abilityKey": "windrunner_gale_force",
@@ -7663,7 +7826,10 @@
           }
         ],
         "iconUrl": "/ability-icons/windrunner_gale_force.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "windrunner_focusfire_cancel",
@@ -7957,7 +8123,10 @@
           }
         ],
         "iconUrl": "/ability-icons/zuus_lightning_bolt.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "zuus_heavenly_jump",
@@ -8072,7 +8241,11 @@
           }
         ],
         "iconUrl": "/ability-icons/zuus_heavenly_jump.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 3,
+          "initiating": 2,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "zuus_cloud",
@@ -8131,7 +8304,11 @@
           }
         ],
         "iconUrl": "/ability-icons/zuus_cloud.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2,
+          "initiating": 7,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "zuus_lightning_hands",
@@ -8212,7 +8389,10 @@
           }
         ],
         "iconUrl": "/ability-icons/zuus_thundergods_wrath.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "zuus_static_field",
@@ -8322,7 +8502,10 @@
           }
         ],
         "iconUrl": "/ability-icons/kunkka_torrent.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 5
+        }
       },
       {
         "abilityKey": "kunkka_tidebringer",
@@ -8522,7 +8705,12 @@
           }
         ],
         "iconUrl": "/ability-icons/kunkka_x_marks_the_spot.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "saving": 2,
+          "initiating": 8,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "kunkka_admirals_rum",
@@ -8615,7 +8803,11 @@
           }
         ],
         "iconUrl": "/ability-icons/kunkka_tidal_wave.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 3,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "kunkka_ghostship",
@@ -8709,7 +8901,11 @@
           }
         ],
         "iconUrl": "/ability-icons/kunkka_ghostship.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 4,
+          "initiating": 4,
+          "control_strength": 7
+        }
       },
       {
         "abilityKey": "kunkka_return",
@@ -8873,7 +9069,10 @@
           }
         ],
         "iconUrl": "/ability-icons/lina_light_strike_array.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 6
+        }
       },
       {
         "abilityKey": "lina_fiery_soul",
@@ -8921,7 +9120,9 @@
           }
         ],
         "iconUrl": "/ability-icons/lina_fiery_soul.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 5
+        }
       },
       {
         "abilityKey": "lina_flame_cloak",
@@ -8969,7 +9170,9 @@
           }
         ],
         "iconUrl": "/ability-icons/lina_flame_cloak.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 4
+        }
       },
       {
         "abilityKey": "lina_slow_burn",
@@ -9179,7 +9382,10 @@
           }
         ],
         "iconUrl": "/ability-icons/lion_impale.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 6,
+          "control_strength": 7
+        }
       },
       {
         "abilityKey": "lion_voodoo",
@@ -9240,7 +9446,10 @@
           }
         ],
         "iconUrl": "/ability-icons/lion_voodoo.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 6
+        }
       },
       {
         "abilityKey": "lion_mana_drain",
@@ -9332,7 +9541,10 @@
           }
         ],
         "iconUrl": "/ability-icons/lion_mana_drain.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "lion_to_hell_and_back",
@@ -9608,7 +9820,10 @@
           }
         ],
         "iconUrl": "/ability-icons/shadow_shaman_voodoo.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 6
+        }
       },
       {
         "abilityKey": "shadow_shaman_shackles",
@@ -9712,7 +9927,10 @@
           }
         ],
         "iconUrl": "/ability-icons/shadow_shaman_shackles.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2,
+          "control_strength": 7
+        }
       },
       {
         "abilityKey": "shadow_shaman_fowl_play",
@@ -9930,7 +10148,10 @@
           }
         ],
         "iconUrl": "/ability-icons/shadow_shaman_mass_serpent_ward.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 1
+        }
       }
     ]
   },
@@ -9995,7 +10216,10 @@
           }
         ],
         "iconUrl": "/ability-icons/slardar_sprint.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 7,
+          "initiating": 4
+        }
       },
       {
         "abilityKey": "slardar_slithereen_crush",
@@ -10079,7 +10303,10 @@
           }
         ],
         "iconUrl": "/ability-icons/slardar_slithereen_crush.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 6
+        }
       },
       {
         "abilityKey": "slardar_bash",
@@ -10112,7 +10339,10 @@
           }
         ],
         "iconUrl": "/ability-icons/slardar_bash.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "slardar_seaborn_sentinel",
@@ -10156,7 +10386,10 @@
           }
         ],
         "iconUrl": "/ability-icons/slardar_seaborn_sentinel.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "slardar_amplify_damage",
@@ -10222,7 +10455,10 @@
           }
         ],
         "iconUrl": "/ability-icons/slardar_amplify_damage.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2,
+          "control_strength": 1
+        }
       }
     ]
   },
@@ -10288,7 +10524,10 @@
           }
         ],
         "iconUrl": "/ability-icons/tidehunter_gush.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "tidehunter_kraken_shell",
@@ -10433,7 +10672,10 @@
           }
         ],
         "iconUrl": "/ability-icons/tidehunter_anchor_smash.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "tidehunter_dead_in_the_water",
@@ -10483,7 +10725,10 @@
           }
         ],
         "iconUrl": "/ability-icons/tidehunter_dead_in_the_water.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "tidehunter_ravage",
@@ -10535,7 +10780,10 @@
           }
         ],
         "iconUrl": "/ability-icons/tidehunter_ravage.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 8,
+          "control_strength": 10
+        }
       },
       {
         "abilityKey": "tidehunter_krill_eater",
@@ -10719,7 +10967,10 @@
           }
         ],
         "iconUrl": "/ability-icons/witch_doctor_paralyzing_cask.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 5
+        }
       },
       {
         "abilityKey": "witch_doctor_voodoo_restoration",
@@ -10784,7 +11035,9 @@
           }
         ],
         "iconUrl": "/ability-icons/witch_doctor_voodoo_restoration.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 7
+        }
       },
       {
         "abilityKey": "witch_doctor_maledict",
@@ -10859,7 +11112,9 @@
           }
         ],
         "iconUrl": "/ability-icons/witch_doctor_maledict.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "witch_doctor_voodoo_switcheroo",
@@ -10890,7 +11145,9 @@
           }
         ],
         "iconUrl": "/ability-icons/witch_doctor_voodoo_switcheroo.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1
+        }
       },
       {
         "abilityKey": "witch_doctor_gris_gris",
@@ -10991,7 +11248,10 @@
           }
         ],
         "iconUrl": "/ability-icons/witch_doctor_death_ward.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 1
+        }
       }
     ]
   },
@@ -11080,7 +11340,10 @@
           }
         ],
         "iconUrl": "/ability-icons/lich_frost_nova.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "lich_frost_shield",
@@ -11198,7 +11461,10 @@
           }
         ],
         "iconUrl": "/ability-icons/lich_frost_shield.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 6,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "lich_sinister_gaze",
@@ -11277,7 +11543,10 @@
           }
         ],
         "iconUrl": "/ability-icons/lich_sinister_gaze.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 5
+        }
       },
       {
         "abilityKey": "lich_ice_spire",
@@ -11338,7 +11607,10 @@
           }
         ],
         "iconUrl": "/ability-icons/lich_ice_spire.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "lich_death_charge",
@@ -11499,7 +11771,10 @@
           }
         ],
         "iconUrl": "/ability-icons/lich_chain_frost.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 2
+        }
       }
     ]
   },
@@ -11570,7 +11845,11 @@
           }
         ],
         "iconUrl": "/ability-icons/riki_smoke_screen.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2,
+          "initiating": 4,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "riki_blink_strike",
@@ -11630,7 +11909,9 @@
           }
         ],
         "iconUrl": "/ability-icons/riki_blink_strike.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 6
+        }
       },
       {
         "abilityKey": "riki_tricks_of_the_trade",
@@ -11723,7 +12004,9 @@
           }
         ],
         "iconUrl": "/ability-icons/riki_tricks_of_the_trade.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 3
+        }
       },
       {
         "abilityKey": "riki_innate_backstab",
@@ -11805,7 +12088,9 @@
           }
         ],
         "iconUrl": "/ability-icons/riki_backstab.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 3
+        }
       }
     ]
   },
@@ -11893,7 +12178,10 @@
           }
         ],
         "iconUrl": "/ability-icons/enigma_malefice.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "enigma_demonic_conversion",
@@ -12089,7 +12377,9 @@
           }
         ],
         "iconUrl": "/ability-icons/enigma_demonic_conversion.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2
+        }
       },
       {
         "abilityKey": "enigma_midnight_pulse",
@@ -12200,7 +12490,10 @@
           }
         ],
         "iconUrl": "/ability-icons/enigma_event_horizon.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "enigma_black_hole",
@@ -12291,7 +12584,10 @@
           }
         ],
         "iconUrl": "/ability-icons/enigma_black_hole.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 6,
+          "control_strength": 10
+        }
       }
     ]
   },
@@ -12373,7 +12669,10 @@
           }
         ],
         "iconUrl": "/ability-icons/tinker_laser.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 3,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "tinker_march_of_the_machines",
@@ -12460,7 +12759,9 @@
           }
         ],
         "iconUrl": "/ability-icons/tinker_march_of_the_machines.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "tinker_deploy_turrets",
@@ -12649,7 +12950,9 @@
           }
         ],
         "iconUrl": "/ability-icons/tinker_deploy_turrets.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2
+        }
       },
       {
         "abilityKey": "tinker_warp_grenade",
@@ -12710,7 +13013,10 @@
           }
         ],
         "iconUrl": "/ability-icons/tinker_warp_grenade.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "tinker_keen_teleport",
@@ -12796,7 +13102,9 @@
           }
         ],
         "iconUrl": "/ability-icons/tinker_keen_teleport.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 10
+        }
       },
       {
         "abilityKey": "tinker_rearm",
@@ -12973,7 +13281,11 @@
           }
         ],
         "iconUrl": "/ability-icons/sniper_shrapnel.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 5,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "sniper_headshot",
@@ -13021,7 +13333,9 @@
           }
         ],
         "iconUrl": "/ability-icons/sniper_headshot.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "sniper_take_aim",
@@ -13126,7 +13440,9 @@
           }
         ],
         "iconUrl": "/ability-icons/sniper_take_aim.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1
+        }
       },
       {
         "abilityKey": "sniper_concussive_grenade",
@@ -13196,7 +13512,11 @@
           }
         ],
         "iconUrl": "/ability-icons/sniper_concussive_grenade.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2,
+          "initiating": 1,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "sniper_keen_scope",
@@ -13283,7 +13603,10 @@
           }
         ],
         "iconUrl": "/ability-icons/sniper_assassinate.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 1
+        }
       }
     ]
   },
@@ -13344,7 +13667,9 @@
           }
         ],
         "iconUrl": "/ability-icons/necrolyte_death_pulse.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2
+        }
       },
       {
         "abilityKey": "necrolyte_ghost_shroud",
@@ -13422,7 +13747,11 @@
           }
         ],
         "iconUrl": "/ability-icons/necrolyte_ghost_shroud.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 2,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "necrolyte_heartstopper_aura",
@@ -13506,7 +13835,12 @@
           }
         ],
         "iconUrl": "/ability-icons/necrolyte_death_seeker.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 3,
+          "saving": 1,
+          "initiating": 3,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "necrolyte_sadist",
@@ -13607,7 +13941,10 @@
           }
         ],
         "iconUrl": "/ability-icons/necrolyte_reapers_scythe.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 4
+        }
       }
     ]
   },
@@ -13672,7 +14009,9 @@
           }
         ],
         "iconUrl": "/ability-icons/warlock_fatal_bonds.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2
+        }
       },
       {
         "abilityKey": "warlock_shadow_word",
@@ -13737,7 +14076,9 @@
           }
         ],
         "iconUrl": "/ability-icons/warlock_shadow_word.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 7
+        }
       },
       {
         "abilityKey": "warlock_upheaval",
@@ -13849,7 +14190,11 @@
           }
         ],
         "iconUrl": "/ability-icons/warlock_upheaval.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 3,
+          "control_strength": 5
+        }
       },
       {
         "abilityKey": "warlock_eldritch_summoning",
@@ -14023,7 +14368,11 @@
           }
         ],
         "iconUrl": "/ability-icons/warlock_rain_of_chaos.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2,
+          "initiating": 9,
+          "control_strength": 6
+        }
       }
     ]
   },
@@ -14112,7 +14461,9 @@
           }
         ],
         "iconUrl": "/ability-icons/beastmaster_wild_axes.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2
+        }
       },
       {
         "abilityKey": "beastmaster_summon_razorback",
@@ -14209,7 +14560,11 @@
           }
         ],
         "iconUrl": "/ability-icons/beastmaster_summon_razorback.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 4,
+          "initiating": 1,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "beastmaster_summon_raptor",
@@ -14359,7 +14714,11 @@
           }
         ],
         "iconUrl": "/ability-icons/beastmaster_summon_raptor.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 3,
+          "initiating": 2,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "beastmaster_inner_beast",
@@ -14580,7 +14939,11 @@
           }
         ],
         "iconUrl": "/ability-icons/beastmaster_primal_roar.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 9,
+          "control_strength": 7
+        }
       }
     ]
   },
@@ -14690,7 +15053,10 @@
           }
         ],
         "iconUrl": "/ability-icons/queenofpain_shadow_strike.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "queenofpain_blink",
@@ -14730,7 +15096,10 @@
           }
         ],
         "iconUrl": "/ability-icons/queenofpain_blink.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 9,
+          "initiating": 7
+        }
       },
       {
         "abilityKey": "queenofpain_scream_of_pain",
@@ -14907,7 +15276,11 @@
           }
         ],
         "iconUrl": "/ability-icons/queenofpain_sonic_wave.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2,
+          "initiating": 6,
+          "control_strength": 3
+        }
       }
     ]
   },
@@ -15032,7 +15405,11 @@
           }
         ],
         "iconUrl": "/ability-icons/venomancer_venomous_gale.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 4,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "venomancer_snakebite",
@@ -15103,7 +15480,9 @@
           }
         ],
         "iconUrl": "/ability-icons/venomancer_snakebite.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "venomancer_plague_ward",
@@ -15187,7 +15566,11 @@
           }
         ],
         "iconUrl": "/ability-icons/venomancer_plague_ward.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 4,
+          "initiating": 2,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "venomancer_poison_sting",
@@ -15229,7 +15612,9 @@
           }
         ],
         "iconUrl": "/ability-icons/venomancer_poison_sting.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "venomancer_noxious_plague",
@@ -15322,7 +15707,10 @@
           }
         ],
         "iconUrl": "/ability-icons/venomancer_noxious_plague.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 2
+        }
       }
     ]
   },
@@ -15390,7 +15778,10 @@
           }
         ],
         "iconUrl": "/ability-icons/faceless_void_time_walk.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 7,
+          "initiating": 4
+        }
       },
       {
         "abilityKey": "faceless_void_time_dilation",
@@ -15484,7 +15875,11 @@
           }
         ],
         "iconUrl": "/ability-icons/faceless_void_time_dilation.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 1,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "faceless_void_time_lock",
@@ -15533,7 +15928,10 @@
           }
         ],
         "iconUrl": "/ability-icons/faceless_void_time_lock.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "faceless_void_time_walk_reverse",
@@ -15663,7 +16061,10 @@
           }
         ],
         "iconUrl": "/ability-icons/faceless_void_chronosphere.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 9,
+          "control_strength": 10
+        }
       }
     ]
   },
@@ -15749,7 +16150,10 @@
           }
         ],
         "iconUrl": "/ability-icons/skeleton_king_hellfire_blast.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "skeleton_king_bone_guard",
@@ -15854,7 +16258,9 @@
           }
         ],
         "iconUrl": "/ability-icons/skeleton_king_bone_guard.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2
+        }
       },
       {
         "abilityKey": "skeleton_king_mortal_strike",
@@ -15919,7 +16325,11 @@
           }
         ],
         "iconUrl": "/ability-icons/skeleton_king_vampiric_spirit.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 3,
+          "initiating": 1,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "skeleton_king_reincarnation",
@@ -15980,7 +16390,10 @@
           }
         ],
         "iconUrl": "/ability-icons/skeleton_king_reincarnation.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 8,
+          "control_strength": 4
+        }
       }
     ]
   },
@@ -16143,7 +16556,11 @@
           }
         ],
         "iconUrl": "/ability-icons/death_prophet_silence.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2,
+          "initiating": 3,
+          "control_strength": 5
+        }
       },
       {
         "abilityKey": "death_prophet_spirit_siphon",
@@ -16211,7 +16628,10 @@
           }
         ],
         "iconUrl": "/ability-icons/death_prophet_spirit_siphon.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "death_prophet_witchcraft",
@@ -16331,7 +16751,9 @@
           }
         ],
         "iconUrl": "/ability-icons/death_prophet_exorcism.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3
+        }
       }
     ]
   },
@@ -16418,7 +16840,10 @@
           }
         ],
         "iconUrl": "/ability-icons/phantom_assassin_stifling_dagger.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "phantom_assassin_phantom_strike",
@@ -16490,7 +16915,10 @@
           }
         ],
         "iconUrl": "/ability-icons/phantom_assassin_phantom_strike.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 5,
+          "initiating": 6
+        }
       },
       {
         "abilityKey": "phantom_assassin_blur",
@@ -16555,7 +16983,10 @@
           }
         ],
         "iconUrl": "/ability-icons/phantom_assassin_blur.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 4,
+          "initiating": 2
+        }
       },
       {
         "abilityKey": "phantom_assassin_fan_of_knives",
@@ -16816,7 +17247,11 @@
           }
         ],
         "iconUrl": "/ability-icons/pugna_decrepify.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 6,
+          "initiating": 3,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "pugna_nether_ward",
@@ -16919,7 +17354,10 @@
           }
         ],
         "iconUrl": "/ability-icons/pugna_nether_ward.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "pugna_oblivion_savant",
@@ -17015,7 +17453,9 @@
           }
         ],
         "iconUrl": "/ability-icons/pugna_life_drain.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 6
+        }
       }
     ]
   },
@@ -17072,7 +17512,9 @@
           }
         ],
         "iconUrl": "/ability-icons/templar_assassin_refraction.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "templar_assassin_meld",
@@ -17137,7 +17579,10 @@
           }
         ],
         "iconUrl": "/ability-icons/templar_assassin_meld.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "initiating": 3
+        }
       },
       {
         "abilityKey": "templar_assassin_psi_blades",
@@ -17211,7 +17656,11 @@
         "manaCost": "0",
         "attributes": [],
         "iconUrl": "/ability-icons/templar_assassin_trap.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 3,
+          "initiating": 5,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "templar_assassin_trap_teleport",
@@ -17245,7 +17694,10 @@
           }
         ],
         "iconUrl": "/ability-icons/templar_assassin_trap_teleport.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 5,
+          "initiating": 3
+        }
       },
       {
         "abilityKey": "templar_assassin_psionic_trap",
@@ -17473,7 +17925,11 @@
           }
         ],
         "iconUrl": "/ability-icons/viper_poison_attack.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 2,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "viper_nethertoxin",
@@ -17568,7 +18024,10 @@
           }
         ],
         "iconUrl": "/ability-icons/viper_nethertoxin.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "viper_corrosive_skin",
@@ -17620,7 +18079,9 @@
           }
         ],
         "iconUrl": "/ability-icons/viper_corrosive_skin.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "viper_nose_dive",
@@ -17681,7 +18142,11 @@
           }
         ],
         "iconUrl": "/ability-icons/viper_nose_dive.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2,
+          "initiating": 5,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "viper_predator",
@@ -17787,7 +18252,10 @@
           }
         ],
         "iconUrl": "/ability-icons/viper_viper_strike.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 4
+        }
       }
     ]
   },
@@ -17864,7 +18332,11 @@
           }
         ],
         "iconUrl": "/ability-icons/luna_lucent_beam.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 4,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "luna_lunar_orbit",
@@ -18096,7 +18568,10 @@
           }
         ],
         "iconUrl": "/ability-icons/luna_eclipse.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 1
+        }
       }
     ]
   },
@@ -18192,7 +18667,10 @@
           }
         ],
         "iconUrl": "/ability-icons/dragon_knight_breathe_fire.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "dragon_knight_dragon_tail",
@@ -18269,7 +18747,11 @@
           }
         ],
         "iconUrl": "/ability-icons/dragon_knight_dragon_tail.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2,
+          "initiating": 7,
+          "control_strength": 6
+        }
       },
       {
         "abilityKey": "dragon_knight_wyrms_wrath",
@@ -18355,7 +18837,10 @@
           }
         ],
         "iconUrl": "/ability-icons/dragon_knight_fireball.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "dragon_knight_dragon_blood",
@@ -18532,7 +19017,10 @@
           }
         ],
         "iconUrl": "/ability-icons/dragon_knight_elder_dragon_form.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 3
+        }
       }
     ]
   },
@@ -18685,7 +19173,10 @@
           }
         ],
         "iconUrl": "/ability-icons/dazzle_poison_touch.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "dazzle_shallow_grave",
@@ -18750,7 +19241,9 @@
           }
         ],
         "iconUrl": "/ability-icons/dazzle_shallow_grave.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 9
+        }
       },
       {
         "abilityKey": "dazzle_shadow_wave",
@@ -18832,7 +19325,10 @@
           }
         ],
         "iconUrl": "/ability-icons/dazzle_shadow_wave.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 6,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "dazzle_innate_weave",
@@ -18893,7 +19389,11 @@
           }
         ],
         "iconUrl": "/ability-icons/dazzle_innate_weave.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 4,
+          "initiating": 2,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "dazzle_nothl_projection",
@@ -18998,7 +19498,10 @@
           }
         ],
         "iconUrl": "/ability-icons/dazzle_nothl_projection.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "dazzle_nothl_projection_end",
@@ -19080,7 +19583,11 @@
           }
         ],
         "iconUrl": "/ability-icons/rattletrap_battery_assault.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2,
+          "initiating": 3,
+          "control_strength": 5
+        }
       },
       {
         "abilityKey": "rattletrap_power_cogs",
@@ -19226,7 +19733,11 @@
           }
         ],
         "iconUrl": "/ability-icons/rattletrap_power_cogs.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 5,
+          "initiating": 4,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "rattletrap_rocket_flare",
@@ -19335,7 +19846,10 @@
           }
         ],
         "iconUrl": "/ability-icons/rattletrap_rocket_flare.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2,
+          "initiating": 5
+        }
       },
       {
         "abilityKey": "rattletrap_overclocking",
@@ -19478,7 +19992,10 @@
           }
         ],
         "iconUrl": "/ability-icons/rattletrap_jetpack.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2,
+          "initiating": 3
+        }
       },
       {
         "abilityKey": "rattletrap_hookshot",
@@ -19575,7 +20092,12 @@
           }
         ],
         "iconUrl": "/ability-icons/rattletrap_hookshot.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 4,
+          "saving": 2,
+          "initiating": 10,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "rattletrap_armor_power",
@@ -19698,7 +20220,10 @@
           }
         ],
         "iconUrl": "/ability-icons/leshrac_split_earth.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 6
+        }
       },
       {
         "abilityKey": "leshrac_diabolic_edict",
@@ -19856,7 +20381,11 @@
           }
         ],
         "iconUrl": "/ability-icons/leshrac_lightning_storm.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 3,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "leshrac_greater_lightning_storm",
@@ -19888,7 +20417,10 @@
           }
         ],
         "iconUrl": "/ability-icons/leshrac_greater_lightning_storm.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "leshrac_defilement",
@@ -20037,7 +20569,11 @@
           }
         ],
         "iconUrl": "/ability-icons/furion_sprout.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2,
+          "initiating": 6,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "furion_teleportation",
@@ -20089,7 +20625,10 @@
           }
         ],
         "iconUrl": "/ability-icons/furion_teleportation.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 10,
+          "initiating": 6
+        }
       },
       {
         "abilityKey": "furion_force_of_nature",
@@ -20216,7 +20755,9 @@
           }
         ],
         "iconUrl": "/ability-icons/furion_force_of_nature.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 6
+        }
       },
       {
         "abilityKey": "furion_curse_of_the_forest",
@@ -20261,7 +20802,11 @@
           }
         ],
         "iconUrl": "/ability-icons/furion_curse_of_the_forest.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 4,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "furion_spirit_of_the_forest",
@@ -20366,7 +20911,10 @@
           }
         ],
         "iconUrl": "/ability-icons/furion_wrath_of_nature.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 3,
+          "initiating": 2
+        }
       }
     ]
   },
@@ -20452,7 +21000,10 @@
           }
         ],
         "iconUrl": "/ability-icons/life_stealer_rage.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2,
+          "initiating": 5
+        }
       },
       {
         "abilityKey": "life_stealer_open_wounds",
@@ -20551,7 +21102,11 @@
           }
         ],
         "iconUrl": "/ability-icons/life_stealer_open_wounds.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2,
+          "initiating": 4,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "life_stealer_feast",
@@ -20745,7 +21300,10 @@
           }
         ],
         "iconUrl": "/ability-icons/life_stealer_infest.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 4,
+          "initiating": 8
+        }
       },
       {
         "abilityKey": "life_stealer_consume",
@@ -20845,7 +21403,11 @@
           }
         ],
         "iconUrl": "/ability-icons/dark_seer_vacuum.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2,
+          "initiating": 8,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "dark_seer_ion_shell",
@@ -20968,7 +21530,11 @@
           }
         ],
         "iconUrl": "/ability-icons/dark_seer_surge.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 7,
+          "saving": 4,
+          "initiating": 5
+        }
       },
       {
         "abilityKey": "dark_seer_normal_punch",
@@ -21021,7 +21587,10 @@
           }
         ],
         "iconUrl": "/ability-icons/dark_seer_normal_punch.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "dark_seer_aggrandize",
@@ -21138,7 +21707,10 @@
           }
         ],
         "iconUrl": "/ability-icons/dark_seer_wall_of_replica.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 7
+        }
       }
     ]
   },
@@ -21439,7 +22011,10 @@
           }
         ],
         "iconUrl": "/ability-icons/clinkz_burning_army.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "clinkz_wind_walk",
@@ -21549,7 +22124,10 @@
           }
         ],
         "iconUrl": "/ability-icons/clinkz_wind_walk.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 8,
+          "initiating": 7
+        }
       },
       {
         "abilityKey": "clinkz_infernal_shred",
@@ -21655,7 +22233,9 @@
           }
         ],
         "iconUrl": "/ability-icons/omniknight_purification.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 7
+        }
       },
       {
         "abilityKey": "omniknight_martyr",
@@ -21709,7 +22289,9 @@
           }
         ],
         "iconUrl": "/ability-icons/omniknight_martyr.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 8
+        }
       },
       {
         "abilityKey": "omniknight_hammer_of_purity",
@@ -21795,7 +22377,10 @@
           }
         ],
         "iconUrl": "/ability-icons/omniknight_hammer_of_purity.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "omniknight_degen_aura",
@@ -21843,7 +22428,10 @@
           }
         ],
         "iconUrl": "/ability-icons/omniknight_degen_aura.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "omniknight_guardian_angel",
@@ -21912,7 +22500,10 @@
           }
         ],
         "iconUrl": "/ability-icons/omniknight_guardian_angel.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 10,
+          "initiating": 1
+        }
       }
     ]
   },
@@ -22125,7 +22716,12 @@
           }
         ],
         "iconUrl": "/ability-icons/enchantress_enchant.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 4,
+          "saving": 3,
+          "initiating": 5,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "enchantress_natures_attendants",
@@ -22215,7 +22811,10 @@
           }
         ],
         "iconUrl": "/ability-icons/enchantress_natures_attendants.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 6,
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "enchantress_bunny_hop",
@@ -22258,7 +22857,10 @@
           }
         ],
         "iconUrl": "/ability-icons/enchantress_bunny_hop.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 3,
+          "initiating": 2
+        }
       },
       {
         "abilityKey": "enchantress_little_friends",
@@ -22316,7 +22918,10 @@
           }
         ],
         "iconUrl": "/ability-icons/enchantress_little_friends.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "enchantress_untouchable",
@@ -22343,7 +22948,10 @@
           }
         ],
         "iconUrl": "/ability-icons/enchantress_untouchable.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "enchantress_rabblerouser",
@@ -22465,7 +23073,11 @@
           }
         ],
         "iconUrl": "/ability-icons/huskar_inner_fire.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2,
+          "initiating": 3,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "huskar_burning_spear",
@@ -22518,7 +23130,9 @@
           }
         ],
         "iconUrl": "/ability-icons/huskar_burning_spear.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "huskar_berserkers_blood",
@@ -22609,7 +23223,9 @@
           }
         ],
         "iconUrl": "/ability-icons/huskar_berserkers_blood.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4
+        }
       },
       {
         "abilityKey": "huskar_blood_magic",
@@ -22757,7 +23373,10 @@
           }
         ],
         "iconUrl": "/ability-icons/huskar_life_break.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 8,
+          "control_strength": 4
+        }
       }
     ]
   },
@@ -22860,7 +23479,10 @@
           }
         ],
         "iconUrl": "/ability-icons/night_stalker_void.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "night_stalker_crippling_fear",
@@ -22945,7 +23567,11 @@
           }
         ],
         "iconUrl": "/ability-icons/night_stalker_crippling_fear.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2,
+          "initiating": 6,
+          "control_strength": 5
+        }
       },
       {
         "abilityKey": "night_stalker_midnight_feast",
@@ -23020,7 +23646,9 @@
           }
         ],
         "iconUrl": "/ability-icons/night_stalker_hunter_in_the_night.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 7
+        }
       },
       {
         "abilityKey": "night_stalker_darkness",
@@ -23060,7 +23688,10 @@
           }
         ],
         "iconUrl": "/ability-icons/night_stalker_darkness.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 4,
+          "initiating": 5
+        }
       }
     ]
   },
@@ -23136,7 +23767,9 @@
           }
         ],
         "iconUrl": "/ability-icons/broodmother_insatiable_hunger.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2
+        }
       },
       {
         "abilityKey": "broodmother_spin_web",
@@ -23228,7 +23861,10 @@
           }
         ],
         "iconUrl": "/ability-icons/broodmother_spin_web.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 8,
+          "initiating": 5
+        }
       },
       {
         "abilityKey": "broodmother_incapacitating_bite",
@@ -23275,7 +23911,10 @@
           }
         ],
         "iconUrl": "/ability-icons/broodmother_incapacitating_bite.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "broodmother_sticky_snare",
@@ -23460,7 +24099,11 @@
           }
         ],
         "iconUrl": "/ability-icons/broodmother_spawn_spiderlings.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 4,
+          "initiating": 2,
+          "control_strength": 1
+        }
       }
     ]
   },
@@ -23555,7 +24198,10 @@
           }
         ],
         "iconUrl": "/ability-icons/bounty_hunter_shuriken_toss.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "bounty_hunter_jinada",
@@ -23608,7 +24254,10 @@
           }
         ],
         "iconUrl": "/ability-icons/bounty_hunter_jinada.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "bounty_hunter_wind_walk",
@@ -23680,7 +24329,10 @@
           }
         ],
         "iconUrl": "/ability-icons/bounty_hunter_wind_walk.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 7,
+          "initiating": 7
+        }
       },
       {
         "abilityKey": "bounty_hunter_wind_walk_ally",
@@ -23713,7 +24365,10 @@
           }
         ],
         "iconUrl": "/ability-icons/bounty_hunter_wind_walk_ally.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 4,
+          "initiating": 3
+        }
       },
       {
         "abilityKey": "bounty_hunter_big_game_hunter",
@@ -23807,7 +24462,10 @@
           }
         ],
         "iconUrl": "/ability-icons/bounty_hunter_track.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 2
+        }
       }
     ]
   },
@@ -23905,7 +24563,10 @@
           }
         ],
         "iconUrl": "/ability-icons/weaver_the_swarm.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "weaver_shukuchi",
@@ -23990,7 +24651,10 @@
           }
         ],
         "iconUrl": "/ability-icons/weaver_shukuchi.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 9,
+          "initiating": 6
+        }
       },
       {
         "abilityKey": "weaver_geminate_attack",
@@ -24077,7 +24741,10 @@
           }
         ],
         "iconUrl": "/ability-icons/weaver_time_lapse.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 5,
+          "initiating": 2
+        }
       },
       {
         "abilityKey": "weaver_threads_of_fate",
@@ -24242,7 +24909,10 @@
           }
         ],
         "iconUrl": "/ability-icons/jakiro_dual_breath.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "jakiro_ice_path",
@@ -24322,7 +24992,11 @@
           }
         ],
         "iconUrl": "/ability-icons/jakiro_ice_path.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 7,
+          "control_strength": 8
+        }
       },
       {
         "abilityKey": "jakiro_liquid_fire",
@@ -24408,7 +25082,11 @@
           }
         ],
         "iconUrl": "/ability-icons/jakiro_liquid_fire.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 1,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "jakiro_liquid_ice",
@@ -24500,7 +25178,11 @@
           }
         ],
         "iconUrl": "/ability-icons/jakiro_liquid_ice.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 2,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "jakiro_double_trouble",
@@ -24622,7 +25304,9 @@
           }
         ],
         "iconUrl": "/ability-icons/jakiro_macropyre.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2
+        }
       }
     ]
   },
@@ -24745,7 +25429,10 @@
           }
         ],
         "iconUrl": "/ability-icons/batrider_sticky_napalm.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "batrider_flamebreak",
@@ -24863,7 +25550,11 @@
           }
         ],
         "iconUrl": "/ability-icons/batrider_flamebreak.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2,
+          "initiating": 5,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "batrider_firefly",
@@ -24931,7 +25622,10 @@
           }
         ],
         "iconUrl": "/ability-icons/batrider_firefly.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 6,
+          "initiating": 6
+        }
       },
       {
         "abilityKey": "batrider_sticky_napalm_application_damage",
@@ -25040,7 +25734,11 @@
           }
         ],
         "iconUrl": "/ability-icons/batrider_flaming_lasso.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 10,
+          "control_strength": 8
+        }
       }
     ]
   },
@@ -25132,7 +25830,10 @@
           }
         ],
         "iconUrl": "/ability-icons/chen_penitence.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "chen_holy_persuasion",
@@ -25240,7 +25941,11 @@
           }
         ],
         "iconUrl": "/ability-icons/chen_holy_persuasion.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 4,
+          "initiating": 5,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "chen_divine_favor",
@@ -25323,7 +26028,9 @@
           }
         ],
         "iconUrl": "/ability-icons/chen_divine_favor.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 5
+        }
       },
       {
         "abilityKey": "chen_zealot",
@@ -25409,7 +26116,9 @@
           }
         ],
         "iconUrl": "/ability-icons/chen_hand_of_god.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 8
+        }
       }
     ]
   },
@@ -25525,7 +26234,10 @@
           }
         ],
         "iconUrl": "/ability-icons/spectre_spectral_dagger.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "spectre_shadow_step",
@@ -25620,7 +26332,10 @@
           }
         ],
         "iconUrl": "/ability-icons/spectre_shadow_step.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 3,
+          "initiating": 6
+        }
       },
       {
         "abilityKey": "spectre_dispersion",
@@ -25841,7 +26556,11 @@
           }
         ],
         "iconUrl": "/ability-icons/spectre_haunt.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 7,
+          "initiating": 8,
+          "control_strength": 1
+        }
       }
     ]
   },
@@ -25928,7 +26647,10 @@
           }
         ],
         "iconUrl": "/ability-icons/ancient_apparition_cold_feet.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "ancient_apparition_ice_vortex",
@@ -26038,7 +26760,11 @@
           }
         ],
         "iconUrl": "/ability-icons/ancient_apparition_ice_vortex.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 5,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "ancient_apparition_chilling_touch",
@@ -26100,7 +26826,9 @@
           }
         ],
         "iconUrl": "/ability-icons/ancient_apparition_chilling_touch.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "ancient_apparition_bone_chill",
@@ -26136,7 +26864,9 @@
           }
         ],
         "iconUrl": "/ability-icons/ancient_apparition_bone_chill.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "ancient_apparition_ice_blast",
@@ -26235,7 +26965,10 @@
           }
         ],
         "iconUrl": "/ability-icons/ancient_apparition_ice_blast.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "ancient_apparition_ice_blast_release",
@@ -26346,7 +27079,11 @@
           }
         ],
         "iconUrl": "/ability-icons/doom_bringer_devour.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 3,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "doom_bringer_scorched_earth",
@@ -26431,7 +27168,10 @@
           }
         ],
         "iconUrl": "/ability-icons/doom_bringer_scorched_earth.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 3,
+          "initiating": 4
+        }
       },
       {
         "abilityKey": "doom_bringer_infernal_blade",
@@ -26494,7 +27234,10 @@
           }
         ],
         "iconUrl": "/ability-icons/doom_bringer_infernal_blade.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "doom_bringer_empty1",
@@ -26602,7 +27345,10 @@
           }
         ],
         "iconUrl": "/ability-icons/doom_bringer_doom.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 7,
+          "control_strength": 7
+        }
       },
       {
         "abilityKey": "doom_bringer_lvl_pain",
@@ -26735,7 +27481,11 @@
           }
         ],
         "iconUrl": "/ability-icons/ursa_earthshock.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2,
+          "initiating": 6,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "ursa_overpower",
@@ -26920,7 +27670,9 @@
           }
         ],
         "iconUrl": "/ability-icons/ursa_enrage.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5
+        }
       }
     ]
   },
@@ -27043,7 +27795,11 @@
           }
         ],
         "iconUrl": "/ability-icons/spirit_breaker_charge_of_darkness.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 8,
+          "initiating": 10,
+          "control_strength": 5
+        }
       },
       {
         "abilityKey": "spirit_breaker_bulldoze",
@@ -27099,7 +27855,10 @@
           }
         ],
         "iconUrl": "/ability-icons/spirit_breaker_bulldoze.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 5,
+          "initiating": 5
+        }
       },
       {
         "abilityKey": "spirit_breaker_greater_bash",
@@ -27235,7 +27994,10 @@
           }
         ],
         "iconUrl": "/ability-icons/spirit_breaker_greater_bash.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "spirit_breaker_planar_pocket",
@@ -27284,7 +28046,10 @@
           }
         ],
         "iconUrl": "/ability-icons/spirit_breaker_planar_pocket.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 3,
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "spirit_breaker_bull_rush",
@@ -27319,7 +28084,10 @@
           }
         ],
         "iconUrl": "/ability-icons/spirit_breaker_bull_rush.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2,
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "spirit_breaker_nether_strike",
@@ -27366,7 +28134,11 @@
           }
         ],
         "iconUrl": "/ability-icons/spirit_breaker_nether_strike.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "initiating": 7,
+          "control_strength": 4
+        }
       }
     ]
   },
@@ -27436,7 +28208,9 @@
           }
         ],
         "iconUrl": "/ability-icons/gyrocopter_rocket_barrage.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "gyrocopter_homing_missile",
@@ -27542,7 +28316,10 @@
           }
         ],
         "iconUrl": "/ability-icons/gyrocopter_homing_missile.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "gyrocopter_flak_cannon",
@@ -27635,7 +28412,9 @@
           }
         ],
         "iconUrl": "/ability-icons/gyrocopter_afterburner.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2
+        }
       },
       {
         "abilityKey": "gyrocopter_side_gunner_spawn_ability",
@@ -27758,7 +28537,10 @@
           }
         ],
         "iconUrl": "/ability-icons/gyrocopter_call_down.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 6,
+          "control_strength": 4
+        }
       }
     ]
   },
@@ -27843,7 +28625,9 @@
           }
         ],
         "iconUrl": "/ability-icons/alchemist_acid_spray.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "alchemist_unstable_concoction",
@@ -27935,7 +28719,11 @@
           }
         ],
         "iconUrl": "/ability-icons/alchemist_unstable_concoction.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 6,
+          "control_strength": 6
+        }
       },
       {
         "abilityKey": "alchemist_corrosive_weaponry",
@@ -27994,7 +28782,9 @@
           }
         ],
         "iconUrl": "/ability-icons/alchemist_corrosive_weaponry.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "alchemist_berserk_potion",
@@ -28053,7 +28843,9 @@
           }
         ],
         "iconUrl": "/ability-icons/alchemist_berserk_potion.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 3
+        }
       },
       {
         "abilityKey": "alchemist_goblins_greed",
@@ -28201,7 +28993,9 @@
           }
         ],
         "iconUrl": "/ability-icons/alchemist_chemical_rage.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2
+        }
       },
       {
         "abilityKey": "alchemist_unstable_concoction_throw",
@@ -28427,7 +29221,10 @@
           }
         ],
         "iconUrl": "/ability-icons/invoker_wex.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 5,
+          "initiating": 2
+        }
       },
       {
         "abilityKey": "invoker_exort",
@@ -28629,7 +29426,10 @@
           }
         ],
         "iconUrl": "/ability-icons/invoker_cold_snap.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "invoker_ghost_walk",
@@ -28741,7 +29541,10 @@
           }
         ],
         "iconUrl": "/ability-icons/invoker_ghost_walk.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 6,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "invoker_tornado",
@@ -28881,7 +29684,10 @@
           }
         ],
         "iconUrl": "/ability-icons/invoker_tornado.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 7,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "invoker_emp",
@@ -28958,7 +29764,10 @@
           }
         ],
         "iconUrl": "/ability-icons/invoker_emp.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "invoker_alacrity",
@@ -29029,7 +29838,9 @@
           }
         ],
         "iconUrl": "/ability-icons/invoker_alacrity.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1
+        }
       },
       {
         "abilityKey": "invoker_chaos_meteor",
@@ -29156,7 +29967,10 @@
           }
         ],
         "iconUrl": "/ability-icons/invoker_chaos_meteor.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "invoker_sun_strike",
@@ -29259,7 +30073,10 @@
           }
         ],
         "iconUrl": "/ability-icons/invoker_sun_strike.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 3,
+          "initiating": 2
+        }
       },
       {
         "abilityKey": "invoker_forge_spirit",
@@ -29434,7 +30251,10 @@
           }
         ],
         "iconUrl": "/ability-icons/invoker_forge_spirit.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 4,
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "invoker_ice_wall",
@@ -29566,7 +30386,11 @@
           }
         ],
         "iconUrl": "/ability-icons/invoker_ice_wall.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2,
+          "initiating": 1,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "invoker_deafening_blast",
@@ -29679,7 +30503,11 @@
           }
         ],
         "iconUrl": "/ability-icons/invoker_deafening_blast.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2,
+          "initiating": 4,
+          "control_strength": 4
+        }
       }
     ]
   },
@@ -29785,7 +30613,10 @@
           }
         ],
         "iconUrl": "/ability-icons/silencer_curse_of_the_silent.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "silencer_glaives_of_wisdom",
@@ -29877,7 +30708,9 @@
           }
         ],
         "iconUrl": "/ability-icons/silencer_glaives_of_wisdom.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "silencer_last_word",
@@ -29951,7 +30784,10 @@
           }
         ],
         "iconUrl": "/ability-icons/silencer_last_word.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "silencer_brain_drain",
@@ -30017,7 +30853,11 @@
           }
         ],
         "iconUrl": "/ability-icons/silencer_global_silence.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 7,
+          "initiating": 6,
+          "control_strength": 8
+        }
       },
       {
         "abilityKey": "silencer_oppressive_silence",
@@ -30163,7 +31003,11 @@
           }
         ],
         "iconUrl": "/ability-icons/obsidian_destroyer_astral_imprisonment.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 6,
+          "initiating": 6,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "obsidian_destroyer_objurgation",
@@ -30337,7 +31181,10 @@
           }
         ],
         "iconUrl": "/ability-icons/obsidian_destroyer_sanity_eclipse.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 2
+        }
       }
     ]
   },
@@ -30459,7 +31306,10 @@
           }
         ],
         "iconUrl": "/ability-icons/lycan_summon_wolves.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 6,
+          "initiating": 4
+        }
       },
       {
         "abilityKey": "lycan_howl",
@@ -30531,7 +31381,10 @@
           }
         ],
         "iconUrl": "/ability-icons/lycan_howl.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "lycan_feral_impulse",
@@ -30618,7 +31471,10 @@
           }
         ],
         "iconUrl": "/ability-icons/lycan_wolf_bite.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 3,
+          "initiating": 3
+        }
       },
       {
         "abilityKey": "lycan_apex_predator",
@@ -30706,7 +31562,11 @@
           }
         ],
         "iconUrl": "/ability-icons/lycan_shapeshift.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 7,
+          "initiating": 7,
+          "control_strength": 2
+        }
       }
     ]
   },
@@ -30775,7 +31635,10 @@
           }
         ],
         "iconUrl": "/ability-icons/brewmaster_thunder_clap.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "brewmaster_cinder_brew",
@@ -30887,7 +31750,11 @@
           }
         ],
         "iconUrl": "/ability-icons/brewmaster_cinder_brew.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 3,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "brewmaster_drunken_brawler",
@@ -30991,7 +31858,9 @@
           }
         ],
         "iconUrl": "/ability-icons/brewmaster_drunken_brawler.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 3
+        }
       },
       {
         "abilityKey": "brewmaster_liquid_courage",
@@ -31069,7 +31938,9 @@
           }
         ],
         "iconUrl": "/ability-icons/brewmaster_liquid_courage.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1
+        }
       },
       {
         "abilityKey": "brewmaster_primal_split",
@@ -31232,7 +32103,12 @@
           }
         ],
         "iconUrl": "/ability-icons/brewmaster_primal_split.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 4,
+          "saving": 1,
+          "initiating": 8,
+          "control_strength": 4
+        }
       }
     ]
   },
@@ -31359,7 +32235,11 @@
           }
         ],
         "iconUrl": "/ability-icons/shadow_demon_disruption.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 9,
+          "initiating": 7,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "shadow_demon_disseminate",
@@ -31503,7 +32383,10 @@
           }
         ],
         "iconUrl": "/ability-icons/shadow_demon_shadow_poison.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "shadow_demon_shadow_poison_release",
@@ -31548,7 +32431,10 @@
           }
         ],
         "iconUrl": "/ability-icons/shadow_demon_demonic_cleanse.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 6,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "shadow_demon_demonic_purge",
@@ -31612,7 +32498,10 @@
           }
         ],
         "iconUrl": "/ability-icons/shadow_demon_demonic_purge.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 5
+        }
       },
       {
         "abilityKey": "shadow_demon_menace",
@@ -31737,7 +32626,10 @@
           }
         ],
         "iconUrl": "/ability-icons/lone_druid_entangle.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "lone_druid_spirit_link",
@@ -31797,7 +32689,9 @@
           }
         ],
         "iconUrl": "/ability-icons/lone_druid_spirit_link.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2
+        }
       },
       {
         "abilityKey": "lone_druid_savage_roar",
@@ -31846,7 +32740,11 @@
           }
         ],
         "iconUrl": "/ability-icons/lone_druid_savage_roar.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2,
+          "initiating": 5,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "lone_druid_spirit_bear",
@@ -31946,7 +32844,11 @@
           }
         ],
         "iconUrl": "/ability-icons/lone_druid_spirit_bear.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 7,
+          "initiating": 6,
+          "control_strength": 5
+        }
       },
       {
         "abilityKey": "lone_druid_true_form",
@@ -32017,7 +32919,10 @@
           }
         ],
         "iconUrl": "/ability-icons/lone_druid_true_form.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 1
+        }
       }
     ]
   },
@@ -32120,7 +33025,10 @@
           }
         ],
         "iconUrl": "/ability-icons/chaos_knight_chaos_bolt.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "chaos_knight_reality_rift",
@@ -32198,7 +33106,11 @@
           }
         ],
         "iconUrl": "/ability-icons/chaos_knight_reality_rift.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 1,
+          "mobility": 1
+        }
       },
       {
         "abilityKey": "chaos_knight_chaos_strike",
@@ -32345,7 +33257,10 @@
           }
         ],
         "iconUrl": "/ability-icons/chaos_knight_phantasm.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "initiating": 2
+        }
       }
     ]
   },
@@ -32415,7 +33330,11 @@
           }
         ],
         "iconUrl": "/ability-icons/meepo_earthbind.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 4,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "meepo_poof",
@@ -32465,7 +33384,9 @@
           }
         ],
         "iconUrl": "/ability-icons/meepo_poof.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 8
+        }
       },
       {
         "abilityKey": "meepo_ransack",
@@ -32592,7 +33513,9 @@
           }
         ],
         "iconUrl": "/ability-icons/meepo_megameepo.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "meepo_divided_we_stand",
@@ -32643,7 +33566,11 @@
           }
         ],
         "iconUrl": "/ability-icons/meepo_divided_we_stand.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 8,
+          "initiating": 4,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "meepo_geomancy",
@@ -32688,7 +33615,9 @@
           }
         ],
         "iconUrl": "/ability-icons/meepo_geomancy.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1
+        }
       },
       {
         "abilityKey": "meepo_megameepo_fling",
@@ -32731,7 +33660,9 @@
           }
         ],
         "iconUrl": "/ability-icons/meepo_megameepo_fling.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2
+        }
       }
     ]
   },
@@ -32832,7 +33763,10 @@
           }
         ],
         "iconUrl": "/ability-icons/treant_natures_grasp.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "treant_leech_seed",
@@ -32929,7 +33863,11 @@
           }
         ],
         "iconUrl": "/ability-icons/treant_leech_seed.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 3,
+          "initiating": 2,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "treant_living_armor",
@@ -32996,7 +33934,9 @@
           }
         ],
         "iconUrl": "/ability-icons/treant_living_armor.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 7
+        }
       },
       {
         "abilityKey": "treant_eyes_in_the_forest",
@@ -33059,7 +33999,10 @@
           }
         ],
         "iconUrl": "/ability-icons/treant_eyes_in_the_forest.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 7,
+          "initiating": 5
+        }
       },
       {
         "abilityKey": "treant_natures_guise",
@@ -33121,7 +34064,10 @@
           }
         ],
         "iconUrl": "/ability-icons/treant_natures_guise.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 7,
+          "initiating": 7
+        }
       },
       {
         "abilityKey": "treant_overgrowth",
@@ -33172,7 +34118,10 @@
           }
         ],
         "iconUrl": "/ability-icons/treant_overgrowth.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 6,
+          "control_strength": 9
+        }
       }
     ]
   },
@@ -33239,7 +34188,10 @@
           }
         ],
         "iconUrl": "/ability-icons/ogre_magi_fireblast.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "ogre_magi_ignite",
@@ -33319,7 +34271,10 @@
           }
         ],
         "iconUrl": "/ability-icons/ogre_magi_ignite.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "ogre_magi_bloodlust",
@@ -33403,7 +34358,10 @@
           }
         ],
         "iconUrl": "/ability-icons/ogre_magi_bloodlust.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2,
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "ogre_magi_unrefined_fireblast",
@@ -33459,7 +34417,10 @@
           }
         ],
         "iconUrl": "/ability-icons/ogre_magi_unrefined_fireblast.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "ogre_magi_smash",
@@ -33519,7 +34480,9 @@
           }
         ],
         "iconUrl": "/ability-icons/ogre_magi_smash.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 3
+        }
       },
       {
         "abilityKey": "ogre_magi_dumb_luck",
@@ -33603,7 +34566,11 @@
           }
         ],
         "iconUrl": "/ability-icons/ogre_magi_multicast.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 2,
+          "control_strength": 4
+        }
       }
     ]
   },
@@ -33695,7 +34662,9 @@
           }
         ],
         "iconUrl": "/ability-icons/undying_decay.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "undying_soul_rip",
@@ -33775,7 +34744,9 @@
           }
         ],
         "iconUrl": "/ability-icons/undying_soul_rip.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 5
+        }
       },
       {
         "abilityKey": "undying_tombstone",
@@ -33898,7 +34869,11 @@
           }
         ],
         "iconUrl": "/ability-icons/undying_tombstone.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 5,
+          "initiating": 6,
+          "control_strength": 6
+        }
       },
       {
         "abilityKey": "undying_ceaseless_dirge",
@@ -33995,7 +34970,10 @@
           }
         ],
         "iconUrl": "/ability-icons/undying_flesh_golem.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 2
+        }
       }
     ]
   },
@@ -34076,7 +35054,11 @@
           }
         ],
         "iconUrl": "/ability-icons/rubick_telekinesis.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 5,
+          "initiating": 7,
+          "control_strength": 5
+        }
       },
       {
         "abilityKey": "rubick_fade_bolt",
@@ -34158,7 +35140,11 @@
           }
         ],
         "iconUrl": "/ability-icons/rubick_fade_bolt.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 2,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "rubick_arcane_supremacy",
@@ -34190,7 +35176,11 @@
           }
         ],
         "iconUrl": "/ability-icons/rubick_arcane_supremacy.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 1,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "rubick_empty1",
@@ -34280,7 +35270,11 @@
           }
         ],
         "iconUrl": "/ability-icons/rubick_spell_steal.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 3,
+          "initiating": 8,
+          "control_strength": 8
+        }
       },
       {
         "abilityKey": "rubick_telekinesis_land",
@@ -34405,7 +35399,9 @@
           }
         ],
         "iconUrl": "/ability-icons/rubick_curiosity.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "rubick_telekinesis_land_self",
@@ -34528,7 +35524,10 @@
           }
         ],
         "iconUrl": "/ability-icons/disruptor_thunder_strike.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "disruptor_glimpse",
@@ -34621,7 +35620,10 @@
           }
         ],
         "iconUrl": "/ability-icons/disruptor_glimpse.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 8,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "disruptor_kinetic_field",
@@ -34703,7 +35705,11 @@
           }
         ],
         "iconUrl": "/ability-icons/disruptor_kinetic_field.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 4,
+          "control_strength": 5
+        }
       },
       {
         "abilityKey": "disruptor_kinetic_fence",
@@ -34829,7 +35835,9 @@
           }
         ],
         "iconUrl": "/ability-icons/disruptor_electromagnetic_repulsion.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "disruptor_static_storm",
@@ -34888,7 +35896,10 @@
           }
         ],
         "iconUrl": "/ability-icons/disruptor_static_storm.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 7
+        }
       }
     ]
   },
@@ -34966,7 +35977,11 @@
           }
         ],
         "iconUrl": "/ability-icons/nyx_assassin_impale.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 6,
+          "control_strength": 7
+        }
       },
       {
         "abilityKey": "nyx_assassin_jolt",
@@ -35040,7 +36055,9 @@
           }
         ],
         "iconUrl": "/ability-icons/nyx_assassin_jolt.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "nyx_assassin_spiked_carapace",
@@ -35086,7 +36103,10 @@
           }
         ],
         "iconUrl": "/ability-icons/nyx_assassin_spiked_carapace.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "nyx_assassin_burrow",
@@ -35137,7 +36157,9 @@
           }
         ],
         "iconUrl": "/ability-icons/nyx_assassin_burrow.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "nyx_assassin_neuro_sting",
@@ -35250,7 +36272,11 @@
           }
         ],
         "iconUrl": "/ability-icons/nyx_assassin_vendetta.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 8,
+          "initiating": 8,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "nyx_assassin_unburrow",
@@ -35346,7 +36372,10 @@
           }
         ],
         "iconUrl": "/ability-icons/naga_siren_mirror_image.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 5,
+          "initiating": 3
+        }
       },
       {
         "abilityKey": "naga_siren_ensnare",
@@ -35419,7 +36448,10 @@
           }
         ],
         "iconUrl": "/ability-icons/naga_siren_ensnare.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "naga_siren_rip_tide",
@@ -35532,7 +36564,9 @@
           }
         ],
         "iconUrl": "/ability-icons/naga_siren_reel_in.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "naga_siren_eelskin",
@@ -35620,7 +36654,11 @@
           }
         ],
         "iconUrl": "/ability-icons/naga_siren_song_of_the_siren.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 6,
+          "initiating": 8,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "naga_siren_song_of_the_siren_cancel",
@@ -35750,7 +36788,10 @@
           }
         ],
         "iconUrl": "/ability-icons/keeper_of_the_light_illuminate.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "keeper_of_the_light_blinding_light",
@@ -35834,7 +36875,11 @@
           }
         ],
         "iconUrl": "/ability-icons/keeper_of_the_light_blinding_light.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 4,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "keeper_of_the_light_chakra_magic",
@@ -35906,7 +36951,10 @@
           }
         ],
         "iconUrl": "/ability-icons/keeper_of_the_light_chakra_magic.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 6,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "keeper_of_the_light_radiant_bind",
@@ -35970,7 +37018,10 @@
           }
         ],
         "iconUrl": "/ability-icons/keeper_of_the_light_radiant_bind.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "keeper_of_the_light_will_o_wisp",
@@ -36049,7 +37100,11 @@
           }
         ],
         "iconUrl": "/ability-icons/keeper_of_the_light_will_o_wisp.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 5,
+          "control_strength": 7
+        }
       },
       {
         "abilityKey": "keeper_of_the_light_spirit_form",
@@ -36097,7 +37152,10 @@
           }
         ],
         "iconUrl": "/ability-icons/keeper_of_the_light_spirit_form.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 6,
+          "saving": 5
+        }
       },
       {
         "abilityKey": "keeper_of_the_light_illuminate_end",
@@ -36147,7 +37205,9 @@
           }
         ],
         "iconUrl": "/ability-icons/keeper_of_the_light_bright_speed.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2
+        }
       }
     ]
   },
@@ -36270,7 +37330,11 @@
           }
         ],
         "iconUrl": "/ability-icons/wisp_tether.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 3,
+          "saving": 7,
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "wisp_spirits",
@@ -36389,7 +37453,11 @@
           }
         ],
         "iconUrl": "/ability-icons/wisp_spirits.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "initiating": 2,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "wisp_overcharge",
@@ -36477,7 +37545,10 @@
           }
         ],
         "iconUrl": "/ability-icons/wisp_overcharge.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "wisp_spirits_in",
@@ -36541,7 +37612,11 @@
           }
         ],
         "iconUrl": "/ability-icons/wisp_relocate.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 9,
+          "saving": 7,
+          "initiating": 8
+        }
       },
       {
         "abilityKey": "wisp_tether_break",
@@ -36656,7 +37731,11 @@
           }
         ],
         "iconUrl": "/ability-icons/visage_grave_chill.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2,
+          "initiating": 2,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "visage_soul_assumption",
@@ -36890,7 +37969,10 @@
           }
         ],
         "iconUrl": "/ability-icons/visage_stone_form_self_cast.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 6,
+          "control_strength": 6
+        }
       },
       {
         "abilityKey": "visage_silent_as_the_grave",
@@ -36943,7 +38025,10 @@
           }
         ],
         "iconUrl": "/ability-icons/visage_silent_as_the_grave.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 4,
+          "initiating": 4
+        }
       },
       {
         "abilityKey": "visage_summon_familiars",
@@ -37094,7 +38179,11 @@
           }
         ],
         "iconUrl": "/ability-icons/visage_summon_familiars.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 5,
+          "initiating": 6,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "visage_summon_familiars_stone_form",
@@ -37240,7 +38329,9 @@
           }
         ],
         "iconUrl": "/ability-icons/slark_dark_pact.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4
+        }
       },
       {
         "abilityKey": "slark_pounce",
@@ -37311,7 +38402,11 @@
           }
         ],
         "iconUrl": "/ability-icons/slark_pounce.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 3,
+          "initiating": 6,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "slark_saltwater_shiv",
@@ -37401,7 +38496,10 @@
           }
         ],
         "iconUrl": "/ability-icons/slark_saltwater_shiv.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "slark_depth_shroud",
@@ -37439,7 +38537,10 @@
           }
         ],
         "iconUrl": "/ability-icons/slark_depth_shroud.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 6,
+          "initiating": 3
+        }
       },
       {
         "abilityKey": "slark_essence_shift",
@@ -37482,7 +38583,9 @@
           }
         ],
         "iconUrl": "/ability-icons/slark_essence_shift.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "slark_shadow_dance",
@@ -37546,7 +38649,10 @@
           }
         ],
         "iconUrl": "/ability-icons/slark_shadow_dance.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 8,
+          "initiating": 8
+        }
       }
     ]
   },
@@ -37716,7 +38822,10 @@
           }
         ],
         "iconUrl": "/ability-icons/medusa_mystic_snake.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "medusa_gorgon_grasp",
@@ -37817,7 +38926,11 @@
           }
         ],
         "iconUrl": "/ability-icons/medusa_gorgon_grasp.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 3,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "medusa_cold_blooded",
@@ -37844,7 +38957,10 @@
           }
         ],
         "iconUrl": "/ability-icons/medusa_cold_blooded.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "medusa_mana_shield",
@@ -38002,7 +39118,12 @@
           }
         ],
         "iconUrl": "/ability-icons/medusa_stone_gaze.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "saving": 2,
+          "initiating": 4,
+          "control_strength": 5
+        }
       }
     ]
   },
@@ -38053,7 +39174,10 @@
           }
         ],
         "iconUrl": "/ability-icons/troll_warlord_switch_stance.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "troll_warlord_whirling_axes_ranged",
@@ -38135,7 +39259,11 @@
           }
         ],
         "iconUrl": "/ability-icons/troll_warlord_whirling_axes_ranged.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "initiating": 3,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "troll_warlord_whirling_axes_melee",
@@ -38337,7 +39465,9 @@
           }
         ],
         "iconUrl": "/ability-icons/troll_warlord_berserkers_rage.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "troll_warlord_battle_trance",
@@ -38487,7 +39617,11 @@
           }
         ],
         "iconUrl": "/ability-icons/centaur_hoof_stomp.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 7,
+          "control_strength": 7
+        }
       },
       {
         "abilityKey": "centaur_double_edge",
@@ -38540,7 +39674,9 @@
           }
         ],
         "iconUrl": "/ability-icons/centaur_double_edge.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "centaur_return",
@@ -38669,7 +39805,10 @@
           }
         ],
         "iconUrl": "/ability-icons/centaur_mount.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 5,
+          "initiating": 3
+        }
       },
       {
         "abilityKey": "centaur_stampede",
@@ -38744,7 +39883,11 @@
           }
         ],
         "iconUrl": "/ability-icons/centaur_stampede.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 6,
+          "initiating": 9,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "centaur_horsepower",
@@ -38768,7 +39911,9 @@
           }
         ],
         "iconUrl": "/ability-icons/centaur_horsepower.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2
+        }
       }
     ]
   },
@@ -38890,7 +40035,10 @@
           }
         ],
         "iconUrl": "/ability-icons/magnataur_shockwave.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "magnataur_empower",
@@ -39120,7 +40268,10 @@
           }
         ],
         "iconUrl": "/ability-icons/magnataur_skewer.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 9,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "magnataur_horn_toss",
@@ -39198,7 +40349,10 @@
           }
         ],
         "iconUrl": "/ability-icons/magnataur_horn_toss.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 6,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "magnataur_solid_core",
@@ -39298,7 +40452,10 @@
           }
         ],
         "iconUrl": "/ability-icons/magnataur_reverse_polarity.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 8,
+          "control_strength": 10
+        }
       }
     ]
   },
@@ -39381,7 +40538,9 @@
           }
         ],
         "iconUrl": "/ability-icons/shredder_whirling_death.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "shredder_timber_chain",
@@ -39446,7 +40605,10 @@
           }
         ],
         "iconUrl": "/ability-icons/shredder_timber_chain.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 5,
+          "initiating": 5
+        }
       },
       {
         "abilityKey": "shredder_reactive_armor",
@@ -39504,7 +40666,9 @@
           }
         ],
         "iconUrl": "/ability-icons/shredder_reactive_armor.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2
+        }
       },
       {
         "abilityKey": "shredder_flamethrower",
@@ -39561,7 +40725,9 @@
           }
         ],
         "iconUrl": "/ability-icons/shredder_flamethrower.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "shredder_chakram",
@@ -39665,7 +40831,10 @@
           }
         ],
         "iconUrl": "/ability-icons/shredder_chakram.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "shredder_return_chakram",
@@ -39790,7 +40959,10 @@
           }
         ],
         "iconUrl": "/ability-icons/bristleback_viscous_nasal_goo.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "bristleback_quill_spray",
@@ -39848,7 +41020,9 @@
           }
         ],
         "iconUrl": "/ability-icons/bristleback_quill_spray.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "bristleback_bristleback",
@@ -39991,7 +41165,9 @@
           }
         ],
         "iconUrl": "/ability-icons/bristleback_bristleback.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5
+        }
       },
       {
         "abilityKey": "bristleback_hairball",
@@ -40040,7 +41216,10 @@
           }
         ],
         "iconUrl": "/ability-icons/bristleback_hairball.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "bristleback_warpath",
@@ -40094,7 +41273,10 @@
           }
         ],
         "iconUrl": "/ability-icons/bristleback_warpath.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 6,
+          "initiating": 3
+        }
       },
       {
         "abilityKey": "bristleback_prickly",
@@ -40212,7 +41394,12 @@
           }
         ],
         "iconUrl": "/ability-icons/tusk_ice_shards.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "saving": 3,
+          "initiating": 5,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "tusk_snowball",
@@ -40326,7 +41513,12 @@
           }
         ],
         "iconUrl": "/ability-icons/tusk_snowball.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2,
+          "saving": 6,
+          "initiating": 8,
+          "control_strength": 5
+        }
       },
       {
         "abilityKey": "tusk_tag_team",
@@ -40382,7 +41574,10 @@
           }
         ],
         "iconUrl": "/ability-icons/tusk_tag_team.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "tusk_drinking_buddies",
@@ -40445,7 +41640,10 @@
           }
         ],
         "iconUrl": "/ability-icons/tusk_drinking_buddies.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2,
+          "initiating": 2
+        }
       },
       {
         "abilityKey": "tusk_walrus_kick",
@@ -40510,7 +41708,10 @@
           }
         ],
         "iconUrl": "/ability-icons/tusk_walrus_kick.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 7,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "tusk_walrus_punch",
@@ -40571,7 +41772,10 @@
           }
         ],
         "iconUrl": "/ability-icons/tusk_walrus_punch.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 5
+        }
       },
       {
         "abilityKey": "tusk_launch_snowball",
@@ -40612,7 +41816,9 @@
           }
         ],
         "iconUrl": "/ability-icons/tusk_bitter_chill.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1
+        }
       }
     ]
   },
@@ -40692,7 +41898,9 @@
           }
         ],
         "iconUrl": "/ability-icons/skywrath_mage_arcane_bolt.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1
+        }
       },
       {
         "abilityKey": "skywrath_mage_concussive_shot",
@@ -40774,7 +41982,11 @@
           }
         ],
         "iconUrl": "/ability-icons/skywrath_mage_concussive_shot.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "initiating": 4,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "skywrath_mage_ancient_seal",
@@ -40828,7 +42040,10 @@
           }
         ],
         "iconUrl": "/ability-icons/skywrath_mage_ancient_seal.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "skywrath_mage_shield_of_the_scion",
@@ -40925,7 +42140,9 @@
           }
         ],
         "iconUrl": "/ability-icons/skywrath_mage_mystic_flare.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2
+        }
       }
     ]
   },
@@ -41010,7 +42227,10 @@
           }
         ],
         "iconUrl": "/ability-icons/abaddon_death_coil.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 4,
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "abaddon_aphotic_shield",
@@ -41081,7 +42301,10 @@
           }
         ],
         "iconUrl": "/ability-icons/abaddon_aphotic_shield.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 7,
+          "initiating": 3
+        }
       },
       {
         "abilityKey": "abaddon_frostmourne",
@@ -41152,7 +42375,9 @@
           }
         ],
         "iconUrl": "/ability-icons/abaddon_frostmourne.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "abaddon_withering_mist",
@@ -41196,7 +42421,9 @@
           }
         ],
         "iconUrl": "/ability-icons/abaddon_withering_mist.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "abaddon_borrowed_time",
@@ -41235,7 +42462,10 @@
           }
         ],
         "iconUrl": "/ability-icons/abaddon_borrowed_time.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 5,
+          "initiating": 8
+        }
       }
     ]
   },
@@ -41337,7 +42567,10 @@
           }
         ],
         "iconUrl": "/ability-icons/elder_titan_echo_stomp.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 6,
+          "control_strength": 6
+        }
       },
       {
         "abilityKey": "elder_titan_ancestral_spirit",
@@ -41465,7 +42698,11 @@
           }
         ],
         "iconUrl": "/ability-icons/elder_titan_ancestral_spirit.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2,
+          "initiating": 7,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "elder_titan_natural_order",
@@ -41534,7 +42771,9 @@
           }
         ],
         "iconUrl": "/ability-icons/elder_titan_momentum.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1
+        }
       },
       {
         "abilityKey": "elder_titan_earth_splitter",
@@ -41644,7 +42883,10 @@
           }
         ],
         "iconUrl": "/ability-icons/elder_titan_earth_splitter.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 5
+        }
       },
       {
         "abilityKey": "elder_titan_return_spirit",
@@ -41775,7 +43017,11 @@
           }
         ],
         "iconUrl": "/ability-icons/legion_commander_overwhelming_odds.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "initiating": 4,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "legion_commander_press_the_attack",
@@ -41835,7 +43081,11 @@
           }
         ],
         "iconUrl": "/ability-icons/legion_commander_press_the_attack.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "saving": 6,
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "legion_commander_moment_of_courage",
@@ -41917,7 +43167,9 @@
           }
         ],
         "iconUrl": "/ability-icons/legion_commander_outfight_them.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 3
+        }
       },
       {
         "abilityKey": "legion_commander_duel",
@@ -41999,7 +43251,10 @@
           }
         ],
         "iconUrl": "/ability-icons/legion_commander_duel.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 8,
+          "control_strength": 7
+        }
       }
     ]
   },
@@ -42123,7 +43378,10 @@
           }
         ],
         "iconUrl": "/ability-icons/techies_sticky_bomb.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "techies_reactive_tazer",
@@ -42192,7 +43450,11 @@
           }
         ],
         "iconUrl": "/ability-icons/techies_reactive_tazer.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 3,
+          "initiating": 1,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "techies_suicide",
@@ -42270,7 +43532,11 @@
           }
         ],
         "iconUrl": "/ability-icons/techies_suicide.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2,
+          "initiating": 7,
+          "control_strength": 5
+        }
       },
       {
         "abilityKey": "techies_mutually_assured_destruction",
@@ -42494,7 +43760,11 @@
           }
         ],
         "iconUrl": "/ability-icons/techies_land_mines.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 3,
+          "initiating": 5,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "techies_reactive_tazer_stop",
@@ -42615,7 +43885,10 @@
           }
         ],
         "iconUrl": "/ability-icons/ember_spirit_searing_chains.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 6
+        }
       },
       {
         "abilityKey": "ember_spirit_sleight_of_fist",
@@ -42712,7 +43985,10 @@
           }
         ],
         "iconUrl": "/ability-icons/ember_spirit_sleight_of_fist.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2,
+          "initiating": 5
+        }
       },
       {
         "abilityKey": "ember_spirit_flame_guard",
@@ -42799,7 +44075,9 @@
           }
         ],
         "iconUrl": "/ability-icons/ember_spirit_flame_guard.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "ember_spirit_activate_fire_remnant",
@@ -42967,7 +44245,11 @@
           }
         ],
         "iconUrl": "/ability-icons/ember_spirit_fire_remnant.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 10,
+          "initiating": 8,
+          "control_strength": 1
+        }
       }
     ]
   },
@@ -43079,7 +44361,12 @@
           }
         ],
         "iconUrl": "/ability-icons/earth_spirit_boulder_smash.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2,
+          "saving": 2,
+          "initiating": 5,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "earth_spirit_rolling_boulder",
@@ -43188,7 +44475,12 @@
           }
         ],
         "iconUrl": "/ability-icons/earth_spirit_rolling_boulder.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 8,
+          "saving": 1,
+          "initiating": 9,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "earth_spirit_geomagnetic_grip",
@@ -43278,7 +44570,12 @@
           }
         ],
         "iconUrl": "/ability-icons/earth_spirit_geomagnetic_grip.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "saving": 3,
+          "initiating": 4,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "earth_spirit_stone_caller",
@@ -43408,7 +44705,11 @@
           }
         ],
         "iconUrl": "/ability-icons/earth_spirit_petrify.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 4,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "earth_spirit_magnetize",
@@ -43514,7 +44815,10 @@
           }
         ],
         "iconUrl": "/ability-icons/earth_spirit_magnetize.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 6,
+          "control_strength": 2
+        }
       }
     ]
   },
@@ -43609,7 +44913,9 @@
           }
         ],
         "iconUrl": "/ability-icons/abyssal_underlord_firestorm.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "abyssal_underlord_pit_of_malice",
@@ -43687,7 +44993,10 @@
           }
         ],
         "iconUrl": "/ability-icons/abyssal_underlord_pit_of_malice.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 6
+        }
       },
       {
         "abilityKey": "abyssal_underlord_atrophy_aura",
@@ -43777,7 +45086,9 @@
           }
         ],
         "iconUrl": "/ability-icons/abyssal_underlord_atrophy_aura.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2
+        }
       },
       {
         "abilityKey": "abyssal_underlord_raid_boss",
@@ -43813,7 +45124,10 @@
           }
         ],
         "iconUrl": "/ability-icons/abyssal_underlord_raid_boss.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "saving": 1
+        }
       },
       {
         "abilityKey": "abyssal_underlord_dark_portal",
@@ -43902,7 +45216,11 @@
           }
         ],
         "iconUrl": "/ability-icons/abyssal_underlord_dark_portal.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 7,
+          "initiating": 8,
+          "control_strength": 2
+        }
       }
     ]
   },
@@ -44008,7 +45326,11 @@
           }
         ],
         "iconUrl": "/ability-icons/terrorblade_reflection.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 2,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "terrorblade_conjure_image",
@@ -44086,7 +45408,10 @@
           }
         ],
         "iconUrl": "/ability-icons/terrorblade_conjure_image.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 4,
+          "initiating": 4
+        }
       },
       {
         "abilityKey": "terrorblade_metamorphosis",
@@ -44174,7 +45499,9 @@
           }
         ],
         "iconUrl": "/ability-icons/terrorblade_metamorphosis.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2
+        }
       },
       {
         "abilityKey": "terrorblade_demon_zeal",
@@ -44279,7 +45606,10 @@
           }
         ],
         "iconUrl": "/ability-icons/terrorblade_terror_wave.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 5
+        }
       },
       {
         "abilityKey": "terrorblade_sunder",
@@ -44332,7 +45662,9 @@
           }
         ],
         "iconUrl": "/ability-icons/terrorblade_sunder.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 6
+        }
       },
       {
         "abilityKey": "terrorblade_dark_unity",
@@ -44453,7 +45785,11 @@
           }
         ],
         "iconUrl": "/ability-icons/phoenix_icarus_dive.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 5,
+          "initiating": 6,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "phoenix_fire_spirits",
@@ -44537,7 +45873,10 @@
           }
         ],
         "iconUrl": "/ability-icons/phoenix_fire_spirits.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "phoenix_sun_ray",
@@ -44663,7 +46002,11 @@
           }
         ],
         "iconUrl": "/ability-icons/phoenix_sun_ray.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 6,
+          "initiating": 4,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "phoenix_sun_ray_toggle_move",
@@ -44781,7 +46124,11 @@
           }
         ],
         "iconUrl": "/ability-icons/phoenix_supernova.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 8,
+          "saving": 1
+        }
       },
       {
         "abilityKey": "phoenix_launch_fire_spirit",
@@ -44978,7 +46325,11 @@
           }
         ],
         "iconUrl": "/ability-icons/oracle_fortunes_end.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 3,
+          "initiating": 4,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "oracle_fates_edict",
@@ -45023,7 +46374,10 @@
           }
         ],
         "iconUrl": "/ability-icons/oracle_fates_edict.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 5,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "oracle_purifying_flames",
@@ -45094,7 +46448,9 @@
           }
         ],
         "iconUrl": "/ability-icons/oracle_purifying_flames.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 7
+        }
       },
       {
         "abilityKey": "oracle_rain_of_destiny",
@@ -45147,7 +46503,11 @@
           }
         ],
         "iconUrl": "/ability-icons/oracle_rain_of_destiny.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 6,
+          "initiating": 1,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "oracle_diviners_deck",
@@ -45263,7 +46623,10 @@
           }
         ],
         "iconUrl": "/ability-icons/oracle_false_promise.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 10,
+          "initiating": 2
+        }
       },
       {
         "abilityKey": "oracle_prognosticate",
@@ -45381,7 +46744,11 @@
           }
         ],
         "iconUrl": "/ability-icons/winter_wyvern_arctic_burn.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 4,
+          "initiating": 5,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "winter_wyvern_splinter_blast",
@@ -45478,7 +46845,10 @@
           }
         ],
         "iconUrl": "/ability-icons/winter_wyvern_splinter_blast.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "winter_wyvern_cold_embrace",
@@ -45554,7 +46924,9 @@
           }
         ],
         "iconUrl": "/ability-icons/winter_wyvern_cold_embrace.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 8
+        }
       },
       {
         "abilityKey": "winter_wyvern_eldwurms_edda",
@@ -45667,7 +47039,11 @@
           }
         ],
         "iconUrl": "/ability-icons/winter_wyvern_winters_curse.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 8,
+          "control_strength": 9
+        }
       }
     ]
   },
@@ -45744,7 +47120,10 @@
           }
         ],
         "iconUrl": "/ability-icons/arc_warden_flux.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "arc_warden_magnetic_field",
@@ -45856,7 +47235,9 @@
           }
         ],
         "iconUrl": "/ability-icons/arc_warden_magnetic_field.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 4
+        }
       },
       {
         "abilityKey": "arc_warden_spark_wraith",
@@ -45970,7 +47351,11 @@
           }
         ],
         "iconUrl": "/ability-icons/arc_warden_spark_wraith.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2,
+          "initiating": 3,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "arc_warden_runic_infusion",
@@ -46113,7 +47498,11 @@
           }
         ],
         "iconUrl": "/ability-icons/arc_warden_tempest_double.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 8,
+          "initiating": 8,
+          "control_strength": 7
+        }
       }
     ]
   },
@@ -46236,7 +47625,10 @@
           }
         ],
         "iconUrl": "/ability-icons/monkey_king_boundless_strike.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 7,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "monkey_king_tree_dance",
@@ -46363,7 +47755,10 @@
           }
         ],
         "iconUrl": "/ability-icons/monkey_king_tree_dance.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 9,
+          "initiating": 6
+        }
       },
       {
         "abilityKey": "monkey_king_primal_spring",
@@ -46433,7 +47828,11 @@
           }
         ],
         "iconUrl": "/ability-icons/monkey_king_primal_spring.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 4,
+          "initiating": 4,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "monkey_king_jingu_mastery",
@@ -46532,7 +47931,9 @@
           }
         ],
         "iconUrl": "/ability-icons/monkey_king_mischief.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "monkey_king_wukongs_command",
@@ -46642,7 +48043,10 @@
           }
         ],
         "iconUrl": "/ability-icons/monkey_king_wukongs_command.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "monkey_king_primal_spring_early",
@@ -46704,7 +48108,10 @@
           }
         ],
         "iconUrl": "/ability-icons/monkey_king_transfiguration.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "initiating": 1
+        }
       }
     ]
   },
@@ -46820,7 +48227,11 @@
           }
         ],
         "iconUrl": "/ability-icons/dark_willow_bramble_maze.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 6,
+          "control_strength": 7
+        }
       },
       {
         "abilityKey": "dark_willow_shadow_realm",
@@ -46902,7 +48313,10 @@
           }
         ],
         "iconUrl": "/ability-icons/dark_willow_shadow_realm.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "initiating": 2
+        }
       },
       {
         "abilityKey": "dark_willow_cursed_crown",
@@ -46973,7 +48387,10 @@
           }
         ],
         "iconUrl": "/ability-icons/dark_willow_cursed_crown.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "dark_willow_bedlam",
@@ -47064,7 +48481,9 @@
           }
         ],
         "iconUrl": "/ability-icons/dark_willow_bedlam.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2
+        }
       },
       {
         "abilityKey": "dark_willow_pixie_dust",
@@ -47173,7 +48592,11 @@
           }
         ],
         "iconUrl": "/ability-icons/dark_willow_terrorize.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 7,
+          "control_strength": 8
+        }
       }
     ]
   },
@@ -47299,7 +48722,11 @@
           }
         ],
         "iconUrl": "/ability-icons/pangolier_swashbuckle.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 5,
+          "initiating": 6,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "pangolier_shield_crash",
@@ -47424,7 +48851,11 @@
           }
         ],
         "iconUrl": "/ability-icons/pangolier_shield_crash.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 3,
+          "initiating": 4,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "pangolier_lucky_shot",
@@ -47471,7 +48902,9 @@
           }
         ],
         "iconUrl": "/ability-icons/pangolier_lucky_shot.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "pangolier_rollup",
@@ -47584,7 +49017,10 @@
           }
         ],
         "iconUrl": "/ability-icons/pangolier_rollup.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "pangolier_gyroshell",
@@ -47703,7 +49139,11 @@
           }
         ],
         "iconUrl": "/ability-icons/pangolier_gyroshell.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 6,
+          "initiating": 9,
+          "control_strength": 8
+        }
       },
       {
         "abilityKey": "pangolier_gyroshell_stop",
@@ -47927,7 +49367,10 @@
           }
         ],
         "iconUrl": "/ability-icons/grimstroke_dark_artistry.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "grimstroke_ink_creature",
@@ -48050,7 +49493,10 @@
           }
         ],
         "iconUrl": "/ability-icons/grimstroke_ink_creature.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "grimstroke_spirit_walk",
@@ -48162,7 +49608,11 @@
           }
         ],
         "iconUrl": "/ability-icons/grimstroke_spirit_walk.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 4,
+          "initiating": 6,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "grimstroke_dark_portrait",
@@ -48215,7 +49665,10 @@
           }
         ],
         "iconUrl": "/ability-icons/grimstroke_dark_portrait.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "grimstroke_soul_chain",
@@ -48298,7 +49751,10 @@
           }
         ],
         "iconUrl": "/ability-icons/grimstroke_soul_chain.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 7,
+          "control_strength": 6
+        }
       },
       {
         "abilityKey": "grimstroke_ink_trail",
@@ -48324,7 +49780,10 @@
           }
         ],
         "iconUrl": "/ability-icons/grimstroke_ink_trail.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "control_strength": 1
+        }
       }
     ]
   },
@@ -48443,7 +49902,10 @@
           }
         ],
         "iconUrl": "/ability-icons/hoodwink_acorn_shot.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "hoodwink_bushwhack",
@@ -48523,7 +49985,10 @@
           }
         ],
         "iconUrl": "/ability-icons/hoodwink_bushwhack.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 7,
+          "control_strength": 7
+        }
       },
       {
         "abilityKey": "hoodwink_scurry",
@@ -48605,7 +50070,10 @@
           }
         ],
         "iconUrl": "/ability-icons/hoodwink_scurry.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 3,
+          "initiating": 2
+        }
       },
       {
         "abilityKey": "hoodwink_decoy",
@@ -48676,7 +50144,11 @@
           }
         ],
         "iconUrl": "/ability-icons/hoodwink_decoy.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2,
+          "initiating": 4,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "hoodwink_hunters_boomerang",
@@ -48759,7 +50231,9 @@
           }
         ],
         "iconUrl": "/ability-icons/hoodwink_hunters_boomerang.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "hoodwink_sharpshooter",
@@ -48898,7 +50372,11 @@
           }
         ],
         "iconUrl": "/ability-icons/hoodwink_sharpshooter.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "initiating": 5,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "hoodwink_sharpshooter_release",
@@ -49105,7 +50583,10 @@
           }
         ],
         "iconUrl": "/ability-icons/void_spirit_aether_remnant.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 7,
+          "control_strength": 5
+        }
       },
       {
         "abilityKey": "void_spirit_dissimilate",
@@ -49191,7 +50672,10 @@
           }
         ],
         "iconUrl": "/ability-icons/void_spirit_dissimilate.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 3,
+          "initiating": 5
+        }
       },
       {
         "abilityKey": "void_spirit_resonant_pulse",
@@ -49278,7 +50762,10 @@
           }
         ],
         "iconUrl": "/ability-icons/void_spirit_resonant_pulse.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 5
+        }
       },
       {
         "abilityKey": "void_spirit_intrinsic_edge",
@@ -49393,7 +50880,11 @@
           }
         ],
         "iconUrl": "/ability-icons/void_spirit_astral_step.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 8,
+          "initiating": 9,
+          "control_strength": 2
+        }
       }
     ]
   },
@@ -49499,7 +50990,10 @@
           }
         ],
         "iconUrl": "/ability-icons/snapfire_scatterblast.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "snapfire_firesnap_cookie",
@@ -49628,7 +51122,11 @@
           }
         ],
         "iconUrl": "/ability-icons/snapfire_firesnap_cookie.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 4,
+          "initiating": 7,
+          "control_strength": 5
+        }
       },
       {
         "abilityKey": "snapfire_lil_shredder",
@@ -49754,7 +51252,11 @@
           }
         ],
         "iconUrl": "/ability-icons/snapfire_gobble_up.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 5,
+          "initiating": 8,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "snapfire_spit_creep",
@@ -50030,7 +51532,10 @@
           }
         ],
         "iconUrl": "/ability-icons/snapfire_mortimer_kisses.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "snapfire_boomstick",
@@ -50168,7 +51673,11 @@
           }
         ],
         "iconUrl": "/ability-icons/mars_spear.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 8,
+          "control_strength": 7
+        }
       },
       {
         "abilityKey": "mars_gods_rebuke",
@@ -50250,7 +51759,10 @@
           }
         ],
         "iconUrl": "/ability-icons/mars_gods_rebuke.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "mars_bulwark",
@@ -50331,7 +51843,9 @@
           }
         ],
         "iconUrl": "/ability-icons/mars_bulwark.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2
+        }
       },
       {
         "abilityKey": "mars_dauntless",
@@ -50497,7 +52011,10 @@
           }
         ],
         "iconUrl": "/ability-icons/mars_arena_of_blood.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 9,
+          "control_strength": 8
+        }
       }
     ]
   },
@@ -50633,7 +52150,11 @@
           }
         ],
         "iconUrl": "/ability-icons/ringmaster_tame_the_beasts.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 3,
+          "control_strength": 6
+        }
       },
       {
         "abilityKey": "ringmaster_the_box",
@@ -50756,7 +52277,10 @@
           }
         ],
         "iconUrl": "/ability-icons/ringmaster_the_box.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 8,
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "ringmaster_impalement",
@@ -50872,7 +52396,10 @@
           }
         ],
         "iconUrl": "/ability-icons/ringmaster_impalement.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "ringmaster_empty_souvenir",
@@ -50883,7 +52410,9 @@
         "manaCost": null,
         "attributes": [],
         "iconUrl": "/ability-icons/ringmaster_empty_souvenir.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1
+        }
       },
       {
         "abilityKey": "ringmaster_spotlight",
@@ -50979,7 +52508,10 @@
           }
         ],
         "iconUrl": "/ability-icons/ringmaster_spotlight.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "ringmaster_wheel",
@@ -51129,7 +52661,10 @@
           }
         ],
         "iconUrl": "/ability-icons/ringmaster_wheel.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 6,
+          "control_strength": 7
+        }
       },
       {
         "abilityKey": "ringmaster_tame_the_beasts_crack",
@@ -51304,7 +52839,11 @@
           }
         ],
         "iconUrl": "/ability-icons/dawnbreaker_fire_wreath.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1,
+          "initiating": 4,
+          "control_strength": 6
+        }
       },
       {
         "abilityKey": "dawnbreaker_celestial_hammer",
@@ -51447,7 +52986,11 @@
           }
         ],
         "iconUrl": "/ability-icons/dawnbreaker_celestial_hammer.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 3,
+          "initiating": 5,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "dawnbreaker_luminosity",
@@ -51572,7 +53115,9 @@
           }
         ],
         "iconUrl": "/ability-icons/dawnbreaker_break_of_dawn.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1
+        }
       },
       {
         "abilityKey": "dawnbreaker_solar_guardian",
@@ -51683,7 +53228,12 @@
           }
         ],
         "iconUrl": "/ability-icons/dawnbreaker_solar_guardian.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 7,
+          "saving": 9,
+          "initiating": 7,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "dawnbreaker_land",
@@ -51793,7 +53343,11 @@
           }
         ],
         "iconUrl": "/ability-icons/marci_grapple.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 4,
+          "initiating": 8,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "marci_companion_run",
@@ -51987,7 +53541,12 @@
           }
         ],
         "iconUrl": "/ability-icons/marci_companion_run.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 5,
+          "saving": 3,
+          "initiating": 7,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "marci_bodyguard",
@@ -52093,7 +53652,10 @@
           }
         ],
         "iconUrl": "/ability-icons/marci_bodyguard.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 3,
+          "initiating": 1
+        }
       },
       {
         "abilityKey": "marci_special_delivery",
@@ -52135,7 +53697,9 @@
           }
         ],
         "iconUrl": "/ability-icons/marci_special_delivery.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1
+        }
       },
       {
         "abilityKey": "marci_unleash",
@@ -52244,7 +53808,10 @@
           }
         ],
         "iconUrl": "/ability-icons/marci_unleash.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2,
+          "control_strength": 2
+        }
       }
     ]
   },
@@ -52350,7 +53917,11 @@
           }
         ],
         "iconUrl": "/ability-icons/primal_beast_onslaught.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 6,
+          "initiating": 8,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "primal_beast_trample",
@@ -52419,7 +53990,9 @@
           }
         ],
         "iconUrl": "/ability-icons/primal_beast_trample.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4
+        }
       },
       {
         "abilityKey": "primal_beast_uproar",
@@ -52521,7 +54094,11 @@
           }
         ],
         "iconUrl": "/ability-icons/primal_beast_uproar.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 3,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "primal_beast_rock_throw",
@@ -52595,7 +54172,10 @@
           }
         ],
         "iconUrl": "/ability-icons/primal_beast_rock_throw.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "primal_beast_onslaught_release",
@@ -52699,7 +54279,10 @@
           }
         ],
         "iconUrl": "/ability-icons/primal_beast_pulverize.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 7,
+          "control_strength": 8
+        }
       },
       {
         "abilityKey": "primal_beast_colossal",
@@ -52857,7 +54440,11 @@
           }
         ],
         "iconUrl": "/ability-icons/muerta_dead_shot.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 1,
+          "initiating": 5,
+          "control_strength": 4
+        }
       },
       {
         "abilityKey": "muerta_the_calling",
@@ -52988,7 +54575,10 @@
           }
         ],
         "iconUrl": "/ability-icons/muerta_the_calling.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 4,
+          "control_strength": 6
+        }
       },
       {
         "abilityKey": "muerta_gunslinger",
@@ -53086,7 +54676,11 @@
           }
         ],
         "iconUrl": "/ability-icons/muerta_spectral_slug.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2,
+          "initiating": 4,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "muerta_pierce_the_veil",
@@ -53130,7 +54724,9 @@
           }
         ],
         "iconUrl": "/ability-icons/muerta_pierce_the_veil.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3
+        }
       },
       {
         "abilityKey": "muerta_supernatural",
@@ -53250,7 +54846,11 @@
           }
         ],
         "iconUrl": "/ability-icons/kez_echo_slash.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2,
+          "initiating": 4,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "kez_grappling_claw",
@@ -53334,7 +54934,10 @@
           }
         ],
         "iconUrl": "/ability-icons/kez_grappling_claw.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 4,
+          "initiating": 4
+        }
       },
       {
         "abilityKey": "kez_kazurai_katana",
@@ -53414,7 +55017,9 @@
           }
         ],
         "iconUrl": "/ability-icons/kez_kazurai_katana.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "kez_switch_weapons",
@@ -53491,7 +55096,9 @@
           }
         ],
         "iconUrl": "/ability-icons/kez_switch_weapons.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 1
+        }
       },
       {
         "abilityKey": "kez_raptor_dance",
@@ -53592,7 +55199,10 @@
           }
         ],
         "iconUrl": "/ability-icons/kez_raptor_dance.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "kez_falcon_rush",
@@ -53675,7 +55285,9 @@
           }
         ],
         "iconUrl": "/ability-icons/kez_falcon_rush.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "mobility": 2
+        }
       },
       {
         "abilityKey": "kez_talon_toss",
@@ -53755,7 +55367,10 @@
           }
         ],
         "iconUrl": "/ability-icons/kez_talon_toss.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "kez_shodo_sai",
@@ -53942,7 +55557,10 @@
           }
         ],
         "iconUrl": "/ability-icons/kez_ravens_veil.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 3,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "kez_shodo_sai_parry_cancel",
@@ -54055,7 +55673,11 @@
           }
         ],
         "iconUrl": "/ability-icons/largo_catchy_lick.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2,
+          "initiating": 5,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "largo_frogstomp",
@@ -54145,7 +55767,10 @@
           }
         ],
         "iconUrl": "/ability-icons/largo_frogstomp.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 2,
+          "control_strength": 2
+        }
       },
       {
         "abilityKey": "largo_croak_of_genius",
@@ -54252,7 +55877,9 @@
           }
         ],
         "iconUrl": "/ability-icons/largo_croak_of_genius.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 5
+        }
       },
       {
         "abilityKey": "largo_encore",
@@ -54278,7 +55905,9 @@
           }
         ],
         "iconUrl": "/ability-icons/largo_encore.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 3
+        }
       },
       {
         "abilityKey": "largo_amphibian_rhapsody",
@@ -54361,7 +55990,11 @@
           }
         ],
         "iconUrl": "/ability-icons/largo_amphibian_rhapsody.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 3,
+          "initiating": 3,
+          "control_strength": 3
+        }
       },
       {
         "abilityKey": "largo_song_fight_song",
@@ -54446,7 +56079,10 @@
           }
         ],
         "iconUrl": "/ability-icons/largo_song_fight_song.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 1,
+          "control_strength": 1
+        }
       },
       {
         "abilityKey": "largo_song_double_time",
@@ -54522,7 +56158,10 @@
           }
         ],
         "iconUrl": "/ability-icons/largo_song_double_time.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 2,
+          "initiating": 2
+        }
       },
       {
         "abilityKey": "largo_song_good_vibrations",
@@ -54579,7 +56218,9 @@
           }
         ],
         "iconUrl": "/ability-icons/largo_song_good_vibrations.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "saving": 3
+        }
       }
     ]
   }

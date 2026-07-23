@@ -8,7 +8,7 @@ import * as path from 'path';
 const HERO_ABILITIES_PATH = path.join(__dirname, '..', 'data', 'hero-abilities.json');
 const INPUT_PATH = path.join(__dirname, '..', 'data', 'ability-tagging.csv');
 
-const CATEGORIES = ['mobility', 'saving'] as const;
+const CATEGORIES = ['mobility', 'saving', 'initiating', 'control_strength'] as const;
 
 interface AbilityRecord {
   abilityKey: string;

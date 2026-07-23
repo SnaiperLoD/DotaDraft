@@ -1,0 +1,1018 @@
+[
+  {
+    "heroId": 1,
+    "heroName": "Anti-Mage",
+    "mobility": 0,
+    "saving": 0,
+    "initiating": 2,
+    "control_strength": 2
+  },
+  {
+    "heroId": 2,
+    "heroName": "Axe",
+    "mobility": 0,
+    "saving": 0,
+    "initiating": 6,
+    "control_strength": 9
+  },
+  {
+    "heroId": 3,
+    "heroName": "Bane",
+    "mobility": 0,
+    "saving": 5,
+    "initiating": 7,
+    "control_strength": 13
+  },
+  {
+    "heroId": 4,
+    "heroName": "Bloodseeker",
+    "mobility": 6,
+    "saving": 0,
+    "initiating": 3,
+    "control_strength": 4
+  },
+  {
+    "heroId": 5,
+    "heroName": "Crystal Maiden",
+    "mobility": 1,
+    "saving": 0,
+    "initiating": 1,
+    "control_strength": 11
+  },
+  {
+    "heroId": 6,
+    "heroName": "Drow Ranger",
+    "mobility": 1,
+    "saving": 0,
+    "initiating": 0,
+    "control_strength": 6
+  },
+  {
+    "heroId": 7,
+    "heroName": "Earthshaker",
+    "mobility": 4,
+    "saving": 2,
+    "initiating": 18,
+    "control_strength": 18
+  },
+  {
+    "heroId": 8,
+    "heroName": "Juggernaut",
+    "mobility": 0,
+    "saving": 4,
+    "initiating": 5,
+    "control_strength": 0
+  },
+  {
+    "heroId": 9,
+    "heroName": "Mirana",
+    "mobility": 8,
+    "saving": 6,
+    "initiating": 7,
+    "control_strength": 3
+  },
+  {
+    "heroId": 10,
+    "heroName": "Morphling",
+    "mobility": 6,
+    "saving": 0,
+    "initiating": 6,
+    "control_strength": 5
+  },
+  {
+    "heroId": 11,
+    "heroName": "Shadow Fiend",
+    "mobility": 1,
+    "saving": 1,
+    "initiating": 2,
+    "control_strength": 6
+  },
+  {
+    "heroId": 12,
+    "heroName": "Phantom Lancer",
+    "mobility": 7,
+    "saving": 0,
+    "initiating": 0,
+    "control_strength": 1
+  },
+  {
+    "heroId": 13,
+    "heroName": "Puck",
+    "mobility": 7,
+    "saving": 0,
+    "initiating": 8,
+    "control_strength": 8
+  },
+  {
+    "heroId": 14,
+    "heroName": "Pudge",
+    "mobility": 0,
+    "saving": 9,
+    "initiating": 9,
+    "control_strength": 9
+  },
+  {
+    "heroId": 15,
+    "heroName": "Razor",
+    "mobility": 0,
+    "saving": 1,
+    "initiating": 2,
+    "control_strength": 2
+  },
+  {
+    "heroId": 16,
+    "heroName": "Sand King",
+    "mobility": 10,
+    "saving": 0,
+    "initiating": 12,
+    "control_strength": 8
+  },
+  {
+    "heroId": 17,
+    "heroName": "Storm Spirit",
+    "mobility": 10,
+    "saving": 0,
+    "initiating": 10,
+    "control_strength": 5
+  },
+  {
+    "heroId": 18,
+    "heroName": "Sven",
+    "mobility": 6,
+    "saving": 3,
+    "initiating": 3,
+    "control_strength": 5
+  },
+  {
+    "heroId": 19,
+    "heroName": "Tiny",
+    "mobility": 0,
+    "saving": 0,
+    "initiating": 12,
+    "control_strength": 10
+  },
+  {
+    "heroId": 20,
+    "heroName": "Vengeful Spirit",
+    "mobility": 1,
+    "saving": 10,
+    "initiating": 12,
+    "control_strength": 5
+  },
+  {
+    "heroId": 21,
+    "heroName": "Windranger",
+    "mobility": 7,
+    "saving": 1,
+    "initiating": 10,
+    "control_strength": 9
+  },
+  {
+    "heroId": 22,
+    "heroName": "Zeus",
+    "mobility": 5,
+    "saving": 0,
+    "initiating": 15,
+    "control_strength": 6
+  },
+  {
+    "heroId": 23,
+    "heroName": "Kunkka",
+    "mobility": 1,
+    "saving": 7,
+    "initiating": 20,
+    "control_strength": 17
+  },
+  {
+    "heroId": 25,
+    "heroName": "Lina",
+    "mobility": 9,
+    "saving": 0,
+    "initiating": 3,
+    "control_strength": 6
+  },
+  {
+    "heroId": 26,
+    "heroName": "Lion",
+    "mobility": 0,
+    "saving": 1,
+    "initiating": 9,
+    "control_strength": 14
+  },
+  {
+    "heroId": 27,
+    "heroName": "Shadow Shaman",
+    "mobility": 0,
+    "saving": 0,
+    "initiating": 6,
+    "control_strength": 14
+  },
+  {
+    "heroId": 28,
+    "heroName": "Slardar",
+    "mobility": 8,
+    "saving": 0,
+    "initiating": 13,
+    "control_strength": 11
+  },
+  {
+    "heroId": 29,
+    "heroName": "Tidehunter",
+    "mobility": 0,
+    "saving": 2,
+    "initiating": 12,
+    "control_strength": 17
+  },
+  {
+    "heroId": 30,
+    "heroName": "Witch Doctor",
+    "mobility": 0,
+    "saving": 8,
+    "initiating": 5,
+    "control_strength": 6
+  },
+  {
+    "heroId": 31,
+    "heroName": "Lich",
+    "mobility": 0,
+    "saving": 6,
+    "initiating": 8,
+    "control_strength": 13
+  },
+  {
+    "heroId": 32,
+    "heroName": "Riki",
+    "mobility": 12,
+    "saving": 2,
+    "initiating": 4,
+    "control_strength": 4
+  },
+  {
+    "heroId": 33,
+    "heroName": "Enigma",
+    "mobility": 2,
+    "saving": 0,
+    "initiating": 8,
+    "control_strength": 15
+  },
+  {
+    "heroId": 34,
+    "heroName": "Tinker",
+    "mobility": 10,
+    "saving": 3,
+    "initiating": 6,
+    "control_strength": 6
+  },
+  {
+    "heroId": 35,
+    "heroName": "Sniper",
+    "mobility": 3,
+    "saving": 1,
+    "initiating": 9,
+    "control_strength": 8
+  },
+  {
+    "heroId": 36,
+    "heroName": "Necrophos",
+    "mobility": 3,
+    "saving": 4,
+    "initiating": 6,
+    "control_strength": 7
+  },
+  {
+    "heroId": 37,
+    "heroName": "Warlock",
+    "mobility": 0,
+    "saving": 10,
+    "initiating": 14,
+    "control_strength": 11
+  },
+  {
+    "heroId": 38,
+    "heroName": "Beastmaster",
+    "mobility": 7,
+    "saving": 1,
+    "initiating": 14,
+    "control_strength": 9
+  },
+  {
+    "heroId": 39,
+    "heroName": "Queen of Pain",
+    "mobility": 9,
+    "saving": 2,
+    "initiating": 16,
+    "control_strength": 4
+  },
+  {
+    "heroId": 40,
+    "heroName": "Venomancer",
+    "mobility": 4,
+    "saving": 1,
+    "initiating": 7,
+    "control_strength": 9
+  },
+  {
+    "heroId": 41,
+    "heroName": "Faceless Void",
+    "mobility": 7,
+    "saving": 1,
+    "initiating": 16,
+    "control_strength": 15
+  },
+  {
+    "heroId": 42,
+    "heroName": "Wraith King",
+    "mobility": 2,
+    "saving": 3,
+    "initiating": 12,
+    "control_strength": 9
+  },
+  {
+    "heroId": 43,
+    "heroName": "Death Prophet",
+    "mobility": 0,
+    "saving": 2,
+    "initiating": 8,
+    "control_strength": 6
+  },
+  {
+    "heroId": 44,
+    "heroName": "Phantom Assassin",
+    "mobility": 9,
+    "saving": 0,
+    "initiating": 9,
+    "control_strength": 1
+  },
+  {
+    "heroId": 45,
+    "heroName": "Pugna",
+    "mobility": 0,
+    "saving": 12,
+    "initiating": 4,
+    "control_strength": 5
+  },
+  {
+    "heroId": 46,
+    "heroName": "Templar Assassin",
+    "mobility": 9,
+    "saving": 0,
+    "initiating": 12,
+    "control_strength": 4
+  },
+  {
+    "heroId": 47,
+    "heroName": "Viper",
+    "mobility": 2,
+    "saving": 1,
+    "initiating": 11,
+    "control_strength": 11
+  },
+  {
+    "heroId": 48,
+    "heroName": "Luna",
+    "mobility": 0,
+    "saving": 1,
+    "initiating": 8,
+    "control_strength": 4
+  },
+  {
+    "heroId": 49,
+    "heroName": "Dragon Knight",
+    "mobility": 0,
+    "saving": 2,
+    "initiating": 13,
+    "control_strength": 11
+  },
+  {
+    "heroId": 50,
+    "heroName": "Dazzle",
+    "mobility": 0,
+    "saving": 19,
+    "initiating": 11,
+    "control_strength": 8
+  },
+  {
+    "heroId": 51,
+    "heroName": "Clockwerk",
+    "mobility": 8,
+    "saving": 9,
+    "initiating": 25,
+    "control_strength": 12
+  },
+  {
+    "heroId": 52,
+    "heroName": "Leshrac",
+    "mobility": 0,
+    "saving": 1,
+    "initiating": 12,
+    "control_strength": 14
+  },
+  {
+    "heroId": 53,
+    "heroName": "Nature's Prophet",
+    "mobility": 19,
+    "saving": 3,
+    "initiating": 18,
+    "control_strength": 7
+  },
+  {
+    "heroId": 54,
+    "heroName": "Lifestealer",
+    "mobility": 2,
+    "saving": 6,
+    "initiating": 17,
+    "control_strength": 3
+  },
+  {
+    "heroId": 55,
+    "heroName": "Dark Seer",
+    "mobility": 7,
+    "saving": 6,
+    "initiating": 20,
+    "control_strength": 13
+  },
+  {
+    "heroId": 56,
+    "heroName": "Clinkz",
+    "mobility": 8,
+    "saving": 0,
+    "initiating": 9,
+    "control_strength": 1
+  },
+  {
+    "heroId": 57,
+    "heroName": "Omniknight",
+    "mobility": 1,
+    "saving": 25,
+    "initiating": 2,
+    "control_strength": 2
+  },
+  {
+    "heroId": 58,
+    "heroName": "Enchantress",
+    "mobility": 7,
+    "saving": 9,
+    "initiating": 15,
+    "control_strength": 7
+  },
+  {
+    "heroId": 59,
+    "heroName": "Huskar",
+    "mobility": 0,
+    "saving": 2,
+    "initiating": 15,
+    "control_strength": 8
+  },
+  {
+    "heroId": 60,
+    "heroName": "Night Stalker",
+    "mobility": 11,
+    "saving": 2,
+    "initiating": 16,
+    "control_strength": 8
+  },
+  {
+    "heroId": 61,
+    "heroName": "Broodmother",
+    "mobility": 12,
+    "saving": 0,
+    "initiating": 10,
+    "control_strength": 2
+  },
+  {
+    "heroId": 62,
+    "heroName": "Bounty Hunter",
+    "mobility": 7,
+    "saving": 4,
+    "initiating": 20,
+    "control_strength": 6
+  },
+  {
+    "heroId": 63,
+    "heroName": "Weaver",
+    "mobility": 9,
+    "saving": 5,
+    "initiating": 13,
+    "control_strength": 2
+  },
+  {
+    "heroId": 64,
+    "heroName": "Jakiro",
+    "mobility": 0,
+    "saving": 3,
+    "initiating": 16,
+    "control_strength": 14
+  },
+  {
+    "heroId": 65,
+    "heroName": "Batrider",
+    "mobility": 6,
+    "saving": 3,
+    "initiating": 24,
+    "control_strength": 14
+  },
+  {
+    "heroId": 66,
+    "heroName": "Chen",
+    "mobility": 4,
+    "saving": 13,
+    "initiating": 6,
+    "control_strength": 5
+  },
+  {
+    "heroId": 67,
+    "heroName": "Spectre",
+    "mobility": 10,
+    "saving": 0,
+    "initiating": 17,
+    "control_strength": 2
+  },
+  {
+    "heroId": 68,
+    "heroName": "Ancient Apparition",
+    "mobility": 0,
+    "saving": 1,
+    "initiating": 10,
+    "control_strength": 12
+  },
+  {
+    "heroId": 69,
+    "heroName": "Doom",
+    "mobility": 3,
+    "saving": 1,
+    "initiating": 16,
+    "control_strength": 13
+  },
+  {
+    "heroId": 70,
+    "heroName": "Ursa",
+    "mobility": 2,
+    "saving": 0,
+    "initiating": 11,
+    "control_strength": 2
+  },
+  {
+    "heroId": 71,
+    "heroName": "Spirit Breaker",
+    "mobility": 16,
+    "saving": 3,
+    "initiating": 25,
+    "control_strength": 12
+  },
+  {
+    "heroId": 72,
+    "heroName": "Gyrocopter",
+    "mobility": 2,
+    "saving": 0,
+    "initiating": 11,
+    "control_strength": 6
+  },
+  {
+    "heroId": 73,
+    "heroName": "Alchemist",
+    "mobility": 0,
+    "saving": 4,
+    "initiating": 8,
+    "control_strength": 8
+  },
+  {
+    "heroId": 74,
+    "heroName": "Invoker",
+    "mobility": 12,
+    "saving": 5,
+    "initiating": 32,
+    "control_strength": 18
+  },
+  {
+    "heroId": 75,
+    "heroName": "Silencer",
+    "mobility": 0,
+    "saving": 7,
+    "initiating": 11,
+    "control_strength": 13
+  },
+  {
+    "heroId": 76,
+    "heroName": "Outworld Destroyer",
+    "mobility": 0,
+    "saving": 6,
+    "initiating": 9,
+    "control_strength": 6
+  },
+  {
+    "heroId": 77,
+    "heroName": "Lycan",
+    "mobility": 13,
+    "saving": 5,
+    "initiating": 14,
+    "control_strength": 5
+  },
+  {
+    "heroId": 78,
+    "heroName": "Brewmaster",
+    "mobility": 8,
+    "saving": 2,
+    "initiating": 16,
+    "control_strength": 9
+  },
+  {
+    "heroId": 79,
+    "heroName": "Shadow Demon",
+    "mobility": 0,
+    "saving": 15,
+    "initiating": 16,
+    "control_strength": 10
+  },
+  {
+    "heroId": 80,
+    "heroName": "Lone Druid",
+    "mobility": 9,
+    "saving": 2,
+    "initiating": 16,
+    "control_strength": 14
+  },
+  {
+    "heroId": 81,
+    "heroName": "Chaos Knight",
+    "mobility": 2,
+    "saving": 0,
+    "initiating": 9,
+    "control_strength": 4
+  },
+  {
+    "heroId": 82,
+    "heroName": "Meepo",
+    "mobility": 9,
+    "saving": 1,
+    "initiating": 19,
+    "control_strength": 6
+  },
+  {
+    "heroId": 83,
+    "heroName": "Treant Protector",
+    "mobility": 14,
+    "saving": 10,
+    "initiating": 25,
+    "control_strength": 13
+  },
+  {
+    "heroId": 84,
+    "heroName": "Ogre Magi",
+    "mobility": 0,
+    "saving": 6,
+    "initiating": 11,
+    "control_strength": 13
+  },
+  {
+    "heroId": 85,
+    "heroName": "Undying",
+    "mobility": 0,
+    "saving": 10,
+    "initiating": 10,
+    "control_strength": 8
+  },
+  {
+    "heroId": 86,
+    "heroName": "Rubick",
+    "mobility": 0,
+    "saving": 10,
+    "initiating": 18,
+    "control_strength": 18
+  },
+  {
+    "heroId": 87,
+    "heroName": "Disruptor",
+    "mobility": 0,
+    "saving": 1,
+    "initiating": 18,
+    "control_strength": 18
+  },
+  {
+    "heroId": 88,
+    "heroName": "Nyx Assassin",
+    "mobility": 8,
+    "saving": 1,
+    "initiating": 19,
+    "control_strength": 14
+  },
+  {
+    "heroId": 89,
+    "heroName": "Naga Siren",
+    "mobility": 5,
+    "saving": 6,
+    "initiating": 15,
+    "control_strength": 10
+  },
+  {
+    "heroId": 90,
+    "heroName": "Keeper of the Light",
+    "mobility": 9,
+    "saving": 13,
+    "initiating": 12,
+    "control_strength": 11
+  },
+  {
+    "heroId": 91,
+    "heroName": "Io",
+    "mobility": 13,
+    "saving": 15,
+    "initiating": 12,
+    "control_strength": 1
+  },
+  {
+    "heroId": 92,
+    "heroName": "Visage",
+    "mobility": 11,
+    "saving": 0,
+    "initiating": 18,
+    "control_strength": 9
+  },
+  {
+    "heroId": 93,
+    "heroName": "Slark",
+    "mobility": 12,
+    "saving": 6,
+    "initiating": 21,
+    "control_strength": 6
+  },
+  {
+    "heroId": 94,
+    "heroName": "Medusa",
+    "mobility": 1,
+    "saving": 3,
+    "initiating": 12,
+    "control_strength": 15
+  },
+  {
+    "heroId": 95,
+    "heroName": "Troll Warlord",
+    "mobility": 3,
+    "saving": 0,
+    "initiating": 3,
+    "control_strength": 8
+  },
+  {
+    "heroId": 96,
+    "heroName": "Centaur Warrunner",
+    "mobility": 2,
+    "saving": 12,
+    "initiating": 20,
+    "control_strength": 10
+  },
+  {
+    "heroId": 97,
+    "heroName": "Magnus",
+    "mobility": 0,
+    "saving": 0,
+    "initiating": 26,
+    "control_strength": 20
+  },
+  {
+    "heroId": 98,
+    "heroName": "Timbersaw",
+    "mobility": 5,
+    "saving": 0,
+    "initiating": 14,
+    "control_strength": 4
+  },
+  {
+    "heroId": 99,
+    "heroName": "Bristleback",
+    "mobility": 6,
+    "saving": 0,
+    "initiating": 16,
+    "control_strength": 4
+  },
+  {
+    "heroId": 100,
+    "heroName": "Tusk",
+    "mobility": 3,
+    "saving": 12,
+    "initiating": 29,
+    "control_strength": 17
+  },
+  {
+    "heroId": 101,
+    "heroName": "Skywrath Mage",
+    "mobility": 2,
+    "saving": 1,
+    "initiating": 6,
+    "control_strength": 8
+  },
+  {
+    "heroId": 102,
+    "heroName": "Abaddon",
+    "mobility": 0,
+    "saving": 16,
+    "initiating": 12,
+    "control_strength": 3
+  },
+  {
+    "heroId": 103,
+    "heroName": "Elder Titan",
+    "mobility": 3,
+    "saving": 0,
+    "initiating": 18,
+    "control_strength": 12
+  },
+  {
+    "heroId": 104,
+    "heroName": "Legion Commander",
+    "mobility": 2,
+    "saving": 9,
+    "initiating": 13,
+    "control_strength": 8
+  },
+  {
+    "heroId": 105,
+    "heroName": "Techies",
+    "mobility": 5,
+    "saving": 3,
+    "initiating": 16,
+    "control_strength": 12
+  },
+  {
+    "heroId": 106,
+    "heroName": "Ember Spirit",
+    "mobility": 12,
+    "saving": 0,
+    "initiating": 19,
+    "control_strength": 7
+  },
+  {
+    "heroId": 107,
+    "heroName": "Earth Spirit",
+    "mobility": 11,
+    "saving": 7,
+    "initiating": 28,
+    "control_strength": 14
+  },
+  {
+    "heroId": 108,
+    "heroName": "Underlord",
+    "mobility": 8,
+    "saving": 3,
+    "initiating": 14,
+    "control_strength": 8
+  },
+  {
+    "heroId": 109,
+    "heroName": "Terrorblade",
+    "mobility": 4,
+    "saving": 7,
+    "initiating": 13,
+    "control_strength": 6
+  },
+  {
+    "heroId": 110,
+    "heroName": "Phoenix",
+    "mobility": 5,
+    "saving": 7,
+    "initiating": 16,
+    "control_strength": 15
+  },
+  {
+    "heroId": 111,
+    "heroName": "Oracle",
+    "mobility": 0,
+    "saving": 31,
+    "initiating": 7,
+    "control_strength": 8
+  },
+  {
+    "heroId": 112,
+    "heroName": "Winter Wyvern",
+    "mobility": 4,
+    "saving": 9,
+    "initiating": 16,
+    "control_strength": 13
+  },
+  {
+    "heroId": 113,
+    "heroName": "Arc Warden",
+    "mobility": 10,
+    "saving": 4,
+    "initiating": 13,
+    "control_strength": 10
+  },
+  {
+    "heroId": 114,
+    "heroName": "Monkey King",
+    "mobility": 14,
+    "saving": 0,
+    "initiating": 23,
+    "control_strength": 10
+  },
+  {
+    "heroId": 119,
+    "heroName": "Dark Willow",
+    "mobility": 1,
+    "saving": 2,
+    "initiating": 20,
+    "control_strength": 19
+  },
+  {
+    "heroId": 120,
+    "heroName": "Pangolier",
+    "mobility": 14,
+    "saving": 0,
+    "initiating": 22,
+    "control_strength": 15
+  },
+  {
+    "heroId": 121,
+    "heroName": "Grimstroke",
+    "mobility": 1,
+    "saving": 4,
+    "initiating": 23,
+    "control_strength": 17
+  },
+  {
+    "heroId": 123,
+    "heroName": "Hoodwink",
+    "mobility": 6,
+    "saving": 0,
+    "initiating": 24,
+    "control_strength": 12
+  },
+  {
+    "heroId": 126,
+    "heroName": "Void Spirit",
+    "mobility": 11,
+    "saving": 0,
+    "initiating": 22,
+    "control_strength": 12
+  },
+  {
+    "heroId": 128,
+    "heroName": "Snapfire",
+    "mobility": 0,
+    "saving": 9,
+    "initiating": 21,
+    "control_strength": 11
+  },
+  {
+    "heroId": 129,
+    "heroName": "Mars",
+    "mobility": 0,
+    "saving": 1,
+    "initiating": 20,
+    "control_strength": 16
+  },
+  {
+    "heroId": 131,
+    "heroName": "Ringmaster",
+    "mobility": 1,
+    "saving": 9,
+    "initiating": 17,
+    "control_strength": 16
+  },
+  {
+    "heroId": 135,
+    "heroName": "Dawnbreaker",
+    "mobility": 12,
+    "saving": 9,
+    "initiating": 16,
+    "control_strength": 11
+  },
+  {
+    "heroId": 136,
+    "heroName": "Marci",
+    "mobility": 6,
+    "saving": 10,
+    "initiating": 18,
+    "control_strength": 5
+  },
+  {
+    "heroId": 137,
+    "heroName": "Primal Beast",
+    "mobility": 6,
+    "saving": 1,
+    "initiating": 27,
+    "control_strength": 14
+  },
+  {
+    "heroId": 138,
+    "heroName": "Muerta",
+    "mobility": 0,
+    "saving": 3,
+    "initiating": 16,
+    "control_strength": 12
+  },
+  {
+    "heroId": 145,
+    "heroName": "Kez",
+    "mobility": 9,
+    "saving": 0,
+    "initiating": 19,
+    "control_strength": 8
+  },
+  {
+    "heroId": 155,
+    "heroName": "Largo",
+    "mobility": 0,
+    "saving": 18,
+    "initiating": 13,
+    "control_strength": 9
+  }
+]

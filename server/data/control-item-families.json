@@ -1,0 +1,59 @@
+{
+  "hex": { "weight": 10, "tiers": [{ "key": "sheepstick", "label": "Scythe of Vyse" }] },
+  "atos": {
+    "weight": null,
+    "tiers": [
+      { "key": "gleipnir", "label": "Gleipnir", "weight": 9 },
+      { "key": "rod_of_atos", "label": "Rod of Atos", "weight": 2.5 }
+    ]
+  },
+  "nullifier": { "weight": 8, "tiers": [{ "key": "nullifier", "label": "Nullifier" }] },
+  "basher": {
+    "weight": null,
+    "tiers": [
+      { "key": "abyssal_blade", "label": "Abyssal Blade", "weight": 8 },
+      { "key": "basher", "label": "Skull Basher", "weight": 3.5 }
+    ]
+  },
+  "eul": {
+    "weight": null,
+    "tiers": [
+      { "key": "wind_waker", "label": "Wind Waker", "weight": 7 },
+      { "key": "cyclone", "label": "Eul's Scepter of Divinity", "weight": 6.5 }
+    ]
+  },
+  "orchid": {
+    "weight": null,
+    "tiers": [
+      { "key": "bloodthorn", "label": "Bloodthorn", "weight": 6 },
+      { "key": "orchid", "label": "Orchid Malevolence", "weight": 5.5 }
+    ]
+  },
+  "shivas": { "weight": 4, "tiers": [{ "key": "shivas_guard", "label": "Shiva's Guard" }] },
+  "halberd": { "weight": 3.5, "tiers": [{ "key": "heavens_halberd", "label": "Heaven's Halberd" }] },
+  "diffusal": {
+    "weight": null,
+    "tiers": [
+      { "key": "disperser", "label": "Disperser", "weight": 2 },
+      { "key": "diffusal_blade", "label": "Diffusal Blade", "weight": 2 }
+    ]
+  },
+  "meteor_hammer": { "weight": 2, "tiers": [{ "key": "meteor_hammer", "label": "Meteor Hammer" }] },
+  "helm": {
+    "weight": null,
+    "tiers": [
+      { "key": "helm_of_the_overlord", "label": "Helm of the Overlord", "weight": 1.5 },
+      { "key": "helm_of_the_dominator", "label": "Helm of the Dominator", "weight": 1.5 }
+    ]
+  },
+  "ethereal_blade": { "weight": 1.5, "tiers": [{ "key": "ethereal_blade", "label": "Ethereal Blade" }] },
+  "silver_edge": { "weight": 1, "tiers": [{ "key": "silver_edge", "label": "Silver Edge" }] },
+  "force": {
+    "weight": null,
+    "comment": "Hurricane Pike is built from Force Staff — tiers ordered by actual upgrade hierarchy (checked first), NOT by weight. A hero who upgrades to Pike no longer just 'has a Force Staff', so Pike is what gets counted for that match even though the user ranked it lower in control-relevance than the base item.",
+    "tiers": [
+      { "key": "hurricane_pike", "label": "Hurricane Pike", "weight": 0.5 },
+      { "key": "force_staff", "label": "Force Staff", "weight": 1 }
+    ]
+  }
+}

@@ -9,9 +9,9 @@
     "innateVisionRange": 0.3
   },
   "mobilityScore": {
-    "baseMoveSpeed": 0.4,
+    "baseMoveSpeed": 0.2,
     "moveSpeedExtremityExponent": 1.6,
-    "abilityMobilityBonus": 0.5,
+    "abilityMobilityBonus": 0.7,
     "itemsPurchaseBonus": 0.1
   },
   "finalMobilityExtremityExponent": 1.6
