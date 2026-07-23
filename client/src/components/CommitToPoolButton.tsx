@@ -24,18 +24,18 @@ export default function CommitToPoolButton({ draftId }: Props) {
 
   if (status === 'done') {
     return (
-      <p style={{ marginTop: 16 }}>
+      <p className="loading-text">
         Committed to the Opponent Pool — other players may now face this draft in Battle Mode.
       </p>
     );
   }
 
   return (
-    <div style={{ marginTop: 16 }}>
-      <button onClick={() => void handleCommit()} disabled={status === 'loading'}>
-        {status === 'loading' ? 'Committing...' : 'Commit to Pool'}
+    <div>
+      <button className="btn btn-secondary" onClick={() => void handleCommit()} disabled={status === 'loading'}>
+        {status === 'loading' ? 'Committing…' : 'Commit to Pool'}
       </button>
-      {status === 'error' && <p style={{ color: 'red' }}>{error}</p>}
+      {status === 'error' && <p className="error-text">{error}</p>}
     </div>
   );
 }

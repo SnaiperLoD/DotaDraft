@@ -1,0 +1,121 @@
+.battle-panel {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 2px solid var(--bronze);
+}
+
+.battle-panel h3 {
+  font-size: 18px;
+}
+
+.battle-result {
+  margin-top: 8px;
+}
+
+.battle-outcome {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold);
+  margin: 0 0 4px;
+}
+
+.battle-vs {
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 16px;
+}
+
+.faceoff {
+  margin: 16px 0;
+}
+
+.faceoff-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.faceoff-divider {
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--blood-bright);
+  letter-spacing: 0.1em;
+  margin: 10px 0;
+}
+
+.portrait-card {
+  width: 130px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.portrait-card img {
+  width: 130px;
+  height: 81px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--bronze-dim);
+  display: block;
+}
+
+.portrait-card .name {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  margin-top: 4px;
+  color: var(--ink);
+}
+
+.portrait-card .caption {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.battle-list-block {
+  margin-top: 14px;
+}
+
+.battle-list-heading {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  margin-bottom: 6px;
+}
+
+.battle-list-block ul {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.battle-list-block li {
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+
+.battle-ad {
+  margin: 18px 0;
+}
+
+.battle-count {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: 8px;
+}

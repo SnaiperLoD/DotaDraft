@@ -5,28 +5,15 @@ import { api } from '../api/client';
 import { getSubmitterToken } from '../utils/submitterToken';
 import { heroPortraitUrl } from '../utils/heroIcon';
 import type { DraftHeroView } from '../api/types';
-
-const PORTRAIT_WIDTH = 130;
-const PORTRAIT_HEIGHT = 81;
+import AdSlot from './AdSlot';
+import './BattlePanel.css';
 
 function PortraitCard({ heroId, name, caption }: { heroId: number; name: string; caption?: string | null }) {
   return (
-    <div style={{ width: PORTRAIT_WIDTH, textAlign: 'center', flexShrink: 0 }}>
-      <img
-        src={heroPortraitUrl(heroId)}
-        alt={name}
-        width={PORTRAIT_WIDTH}
-        height={PORTRAIT_HEIGHT}
-        style={{
-          width: PORTRAIT_WIDTH,
-          height: PORTRAIT_HEIGHT,
-          objectFit: 'cover',
-          borderRadius: 6,
-          display: 'block',
-        }}
-      />
-      <div style={{ fontSize: 12, marginTop: 4, fontWeight: 'bold' }}>{name}</div>
-      {caption && <div style={{ fontSize: 10, opacity: 0.6 }}>{caption}</div>}
+    <div className="portrait-card">
+      <img src={heroPortraitUrl(heroId)} alt={name} width={130} height={81} />
+      <div className="name">{name}</div>
+      {caption && <div className="caption">{caption}</div>}
     </div>
   );
 }
@@ -49,14 +36,14 @@ function FaceOff({
     .sort((a, b) => roleOrder.indexOf(a.assignedRole ?? '') - roleOrder.indexOf(b.assignedRole ?? ''));
 
   return (
-    <div style={{ marginTop: 12 }}>
-      <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
+    <div className="faceoff">
+      <div className="faceoff-row">
         {sortedMine.map((h) => (
           <PortraitCard key={h.heroId} heroId={h.heroId} name={h.hero.name} caption={h.assignedRole} />
         ))}
       </div>
-      <div style={{ textAlign: 'center', fontWeight: 'bold', opacity: 0.6, margin: '6px 0' }}>VS</div>
-      <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
+      <div className="faceoff-divider">VS</div>
+      <div className="faceoff-row">
         {opponentHeroes.map((h) => (
           <PortraitCard key={h.heroId} heroId={h.heroId} name={h.heroName} />
         ))}
@@ -91,24 +78,24 @@ export default function BattlePanel({ draftId, heroes }: Props) {
   };
 
   return (
-    <div style={{ marginTop: 24, borderTop: '1px solid #333', paddingTop: 16 }}>
+    <div className="battle-panel">
       <h3>Battle Mode</h3>
 
       {!result && (
-        <button onClick={() => void handleFight()} disabled={loading}>
-          {loading ? 'Finding opponent...' : 'Enter Battle'}
+        <button className="btn btn-primary" onClick={() => void handleFight()} disabled={loading}>
+          {loading ? 'Finding Opponent…' : 'Enter Battle'}
         </button>
       )}
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="error-text">{error}</p>}
 
       {result && (
-        <div>
-          <p style={{ fontSize: 20, fontWeight: 'bold' }}>
-            {result.resolvedOutcome === 'Win' ? 'Victory' : 'Defeat'} — {result.confidenceTier} confidence
+        <div className="battle-result">
+          <p className="battle-outcome">
+            {result.resolvedOutcome === 'Win' ? 'Victory' : 'Defeat'} — {result.confidenceTier} Confidence
           </p>
 
-          <p style={{ textAlign: 'center', fontSize: 13, opacity: 0.7 }}>
+          <p className="battle-vs">
             vs.{' '}
             {result.opponent.teamName
               ? `${result.opponent.teamName}${result.opponent.leagueName ? ` (${result.opponent.leagueName})` : ''}`
@@ -120,64 +107,44 @@ export default function BattlePanel({ draftId, heroes }: Props) {
           <FaceOff myHeroes={heroes} opponentHeroes={result.opponent.heroes} />
 
           {result.advantages.length > 0 && (
-            <div style={{ marginTop: 8 }}>
-              <div style={{ fontWeight: 'bold' }}>Advantages</div>
-              <ul style={{ margin: '4px 0 0', paddingLeft: 20 }}>
+            <div className="battle-list-block">
+              <div className="battle-list-heading">Advantages</div>
+              <ul>
                 {result.advantages.map((a, i) => (
-                  <li key={i} style={{ fontSize: 13 }}>
-                    {a}
-                  </li>
+                  <li key={i}>{a}</li>
                 ))}
               </ul>
             </div>
           )}
 
           {result.disadvantages.length > 0 && (
-            <div style={{ marginTop: 8 }}>
-              <div style={{ fontWeight: 'bold' }}>Disadvantages</div>
-              <ul style={{ margin: '4px 0 0', paddingLeft: 20 }}>
+            <div className="battle-list-block">
+              <div className="battle-list-heading">Disadvantages</div>
+              <ul>
                 {result.disadvantages.map((d, i) => (
-                  <li key={i} style={{ fontSize: 13 }}>
-                    {d}
-                  </li>
+                  <li key={i}>{d}</li>
                 ))}
               </ul>
             </div>
           )}
 
-          <div style={{ marginTop: 8 }}>
-            <div style={{ fontWeight: 'bold' }}>Explanation</div>
-            <ul style={{ margin: '4px 0 0', paddingLeft: 20 }}>
+          <div className="battle-list-block">
+            <div className="battle-list-heading">Explanation</div>
+            <ul>
               {result.explanation.map((line, i) => (
-                <li key={i} style={{ fontSize: 13 }}>
-                  {line}
-                </li>
+                <li key={i}>{line}</li>
               ))}
             </ul>
           </div>
 
-          {/* Reserved static banner ad slot between battles — see
-              Blueprint/00-project-overview.md Monetization: banners only,
-              no interstitial/rewarded triggers on the series-of-battles loop. */}
-          <div
-            style={{
-              margin: '16px 0',
-              minHeight: 90,
-              border: '1px dashed #555',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#777',
-              fontSize: 12,
-            }}
-          >
-            Ad banner slot
+          <div className="battle-ad">
+            <AdSlot size="leaderboard" />
           </div>
 
-          <button onClick={() => void handleFight()} disabled={loading}>
-            {loading ? 'Finding opponent...' : 'Fight again'}
+          <button className="btn btn-primary" onClick={() => void handleFight()} disabled={loading}>
+            {loading ? 'Finding Opponent…' : 'Fight Again'}
           </button>
-          <p style={{ fontSize: 12, opacity: 0.7, marginTop: 4 }}>Battles this visit: {battleCount}</p>
+          <p className="battle-count">Battles this visit: {battleCount}</p>
         </div>
       )}
     </div>

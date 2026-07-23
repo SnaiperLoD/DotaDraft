@@ -1,0 +1,53 @@
+.command-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 22px 20px 18px;
+  border-bottom: 2px solid var(--bronze);
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 0.05em;
+  color: var(--gold);
+  text-shadow: 0 1px 0 var(--shadow-deep);
+  margin: 0;
+  text-decoration: none;
+}
+
+.command-nav {
+  display: flex;
+  gap: 28px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.command-nav a {
+  color: var(--ink-muted);
+  text-decoration: none;
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.command-nav a:hover {
+  color: var(--gold-bright);
+}
+
+.command-nav a.active {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+.app-main {
+  padding-top: 24px;
+}

@@ -1,15 +1,25 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
 import DraftPage from './pages/DraftPage';
 import HistoryPage from './pages/HistoryPage';
+import './App.css';
 
 export default function App() {
   return (
     <BrowserRouter>
-      <nav style={{ display: 'flex', gap: 16, padding: 16, borderBottom: '1px solid #333' }}>
-        <Link to="/">Draft</Link>
-        <Link to="/history">History</Link>
-      </nav>
-      <main style={{ padding: 16 }}>
+      <header className="command-bar">
+        <NavLink to="/" className="wordmark" end>
+          DotaDraft
+        </NavLink>
+        <nav className="command-nav">
+          <NavLink to="/" end className={({ isActive }) => (isActive ? 'active' : undefined)}>
+            Draft
+          </NavLink>
+          <NavLink to="/history" className={({ isActive }) => (isActive ? 'active' : undefined)}>
+            History
+          </NavLink>
+        </nav>
+      </header>
+      <main className="app-main">
         <Routes>
           <Route path="/" element={<DraftPage />} />
           <Route path="/history" element={<HistoryPage />} />

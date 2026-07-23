@@ -3,6 +3,7 @@ import { ROLES } from 'shared';
 import type { DraftHeroView } from '../api/types';
 import { heroPortraitUrl } from '../utils/heroIcon';
 import { roleTintGradient } from '../utils/heroRoleColor';
+import './RoleAssignment.css';
 
 interface Props {
   heroes: DraftHeroView[];
@@ -21,54 +22,22 @@ export default function RoleAssignment({ heroes, onSubmit, submitting }: Props) 
 
   return (
     <div>
-      <h3>Assign roles</h3>
-      <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+      <h3>Assign Roles</h3>
+      <div className="role-assignment-grid">
         {heroes.map((h) => (
-          <div key={h.heroId} style={{ width: 220 }}>
-            <div
-              style={{
-                position: 'relative',
-                width: 220,
-                height: 137,
-                borderRadius: 6,
-                overflow: 'hidden',
-              }}
-            >
-              <img
-                src={heroPortraitUrl(h.heroId)}
-                alt={h.hero.name}
-                width={220}
-                height={137}
-                style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover' }}
-              />
-              <div
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: roleTintGradient(h.hero),
-                  pointerEvents: 'none',
-                }}
-              />
-              <div
-                style={{
-                  position: 'absolute',
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  padding: '20px 10px 8px',
-                  background:
-                    'linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.55) 55%, transparent 100%)',
-                }}
-              >
-                <div style={{ fontWeight: 'bold', color: '#fff', textShadow: '0 1px 2px rgba(0,0,0,0.8)' }}>
-                  {h.hero.name}
-                </div>
+          <div key={h.heroId} className="role-assignment-card">
+            <div className="portrait">
+              <img src={heroPortraitUrl(h.heroId)} alt={h.hero.name} width={220} height={137} />
+              <div className="role-tint" style={{ background: roleTintGradient(h.hero) }} />
+              <div className="portrait-shade">
+                <div className="hero-name">{h.hero.name}</div>
               </div>
             </div>
             <select
+              className="role-select"
               value={roleByHero[h.heroId] ?? ''}
               onChange={(e) => setRoleByHero((prev) => ({ ...prev, [h.heroId]: e.target.value }))}
-              style={{ width: '100%', marginTop: 6 }}
+              required
             >
               <option value="" disabled>
                 Select role
@@ -82,8 +51,8 @@ export default function RoleAssignment({ heroes, onSubmit, submitting }: Props) 
           </div>
         ))}
       </div>
-      <button onClick={handleSubmit} disabled={!allAssigned || submitting} style={{ marginTop: 16 }}>
-        Confirm roles
+      <button className="btn btn-primary" onClick={handleSubmit} disabled={!allAssigned || submitting}>
+        Confirm Roles
       </button>
     </div>
   );

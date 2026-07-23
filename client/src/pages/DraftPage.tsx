@@ -3,11 +3,12 @@ import { api } from '../api/client';
 import type { DraftStateView } from '../api/types';
 import HeroPool from '../components/HeroPool';
 import RoleAssignment from '../components/RoleAssignment';
-import DraftSummary from '../components/DraftSummary';
+import DraftLedger from '../components/DraftLedger';
 import EvaluationPanel from '../components/EvaluationPanel';
-import PickedHeroesStrip from '../components/PickedHeroesStrip';
 import CommitToPoolButton from '../components/CommitToPoolButton';
 import BattlePanel from '../components/BattlePanel';
+import AdSlot from '../components/AdSlot';
+import './DraftPage.css';
 
 export default function DraftPage() {
   const [draft, setDraft] = useState<DraftStateView | null>(null);
@@ -60,44 +61,79 @@ export default function DraftPage() {
 
   if (error) {
     return (
-      <div>
-        <p style={{ color: 'red' }}>{error}</p>
-        <button onClick={handleRestart}>Restart</button>
+      <div className="page">
+        <div className="draft-error">
+          <p className="error-text">{error}</p>
+          <button className="btn btn-secondary" onClick={handleRestart}>
+            Restart
+          </button>
+        </div>
       </div>
     );
   }
 
-  if (!draft) return <p>Loading...</p>;
+  if (!draft) {
+    return (
+      <div className="page">
+        <p className="draft-loading loading-text">Loading…</p>
+      </div>
+    );
+  }
+
+  const round = draft.heroes.length + (draft.status === 'PICKING' ? 1 : 0);
 
   return (
-    <div style={{ paddingBottom: draft.status !== 'COMPLETED' ? 64 : 0 }}>
-      <h2>Draft — round {draft.heroes.length + (draft.status === 'PICKING' ? 1 : 0)} / 5</h2>
-
-      {draft.status === 'PICKING' && (
-        <HeroPool pool={draft.pool} onPick={(heroId) => void handlePick(heroId)} disabled={loading} />
-      )}
-
-      {draft.status === 'ASSIGNING_ROLES' && (
-        <RoleAssignment
-          heroes={draft.heroes}
-          onSubmit={(assignments) => void handleAssignRoles(assignments)}
-          submitting={loading}
-        />
-      )}
-
-      {draft.status === 'COMPLETED' && (
+    <div className="page">
+      {draft.status !== 'COMPLETED' && (
         <>
-          <DraftSummary heroes={draft.heroes} />
-          <EvaluationPanel draftId={draft.id} />
-          <CommitToPoolButton draftId={draft.id} />
-          <BattlePanel draftId={draft.id} heroes={draft.heroes} />
-          <button onClick={handleRestart} style={{ marginTop: 16 }}>
-            Start new draft
-          </button>
+          <div className="round-banner">
+            <h1>
+              <em>Round {round}</em> of 5
+            </h1>
+            <div className="rule" />
+          </div>
+
+          <AdSlot size="leaderboard" />
+
+          <div className="draft-layout" style={{ marginTop: 24 }}>
+            <main>
+              {draft.status === 'PICKING' && (
+                <>
+                  <p className="pool-hint">Choose one hero to fill your next slot</p>
+                  <HeroPool pool={draft.pool} onPick={(heroId) => void handlePick(heroId)} disabled={loading} />
+                </>
+              )}
+
+              {draft.status === 'ASSIGNING_ROLES' && (
+                <RoleAssignment
+                  heroes={draft.heroes}
+                  onSubmit={(assignments) => void handleAssignRoles(assignments)}
+                  submitting={loading}
+                />
+              )}
+            </main>
+
+            <aside className="draft-sidebar">
+              <DraftLedger heroes={draft.heroes} totalSlots={5} />
+              <AdSlot size="rectangle" />
+            </aside>
+          </div>
         </>
       )}
 
-      {draft.status !== 'COMPLETED' && <PickedHeroesStrip heroes={draft.heroes} totalSlots={5} />}
+      {draft.status === 'COMPLETED' && (
+        <div className="completed-section">
+          <DraftLedger heroes={draft.heroes} totalSlots={5} title="Your Team" />
+          <EvaluationPanel draftId={draft.id} />
+          <CommitToPoolButton draftId={draft.id} />
+          <BattlePanel draftId={draft.id} heroes={draft.heroes} />
+          <div className="completed-actions">
+            <button className="btn btn-secondary" onClick={handleRestart}>
+              Start New Draft
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

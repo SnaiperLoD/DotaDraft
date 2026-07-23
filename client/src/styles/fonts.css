@@ -1,0 +1,42 @@
+/* Self-hosted (public/fonts/) — Cinzel for display, Crimson Pro for body,
+   Oswald for UI chrome/labels. See tokens.css for how they're assigned. */
+
+@font-face {
+  font-family: 'Cinzel';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/cinzel-700.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Crimson Pro';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/crimson-pro-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Crimson Pro';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/crimson-pro-600.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Oswald';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/oswald-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Oswald';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/oswald-600.woff2') format('woff2');
+}

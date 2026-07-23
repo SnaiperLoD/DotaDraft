@@ -10,6 +10,17 @@ export default defineConfig({
     // it the same CJS->ESM interop other node_modules deps get for free.
     include: ['shared'],
   },
+  build: {
+    commonjsOptions: {
+      // Same symlink issue as optimizeDeps above, but for the production
+      // Rollup build specifically — commonjsOptions.include defaults to
+      // /node_modules/, which doesn't match 'shared' once Rollup resolves
+      // the symlink to its real path outside node_modules. Without this,
+      // named imports from 'shared' (e.g. `import { ROLES }`) fail to
+      // build with "is not exported by shared", even though dev mode works.
+      include: [/shared/, /node_modules/],
+    },
+  },
   server: {
     port: 5173,
     proxy: {

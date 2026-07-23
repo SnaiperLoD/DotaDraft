@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { api } from '../api/client';
 import type { EvaluationResult } from 'shared';
+import './EvaluationPanel.css';
 
 interface Props {
   draftId: string;
@@ -26,53 +27,50 @@ export default function EvaluationPanel({ draftId }: Props) {
 
   if (!result) {
     return (
-      <div style={{ marginTop: 16 }}>
-        <button onClick={() => void handleEvaluate()} disabled={loading}>
-          {loading ? 'Evaluating...' : 'Evaluate draft'}
+      <div className="evaluation-panel">
+        <button className="btn btn-primary" onClick={() => void handleEvaluate()} disabled={loading}>
+          {loading ? 'Evaluating…' : 'Evaluate Draft'}
         </button>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {error && <p className="error-text">{error}</p>}
       </div>
     );
   }
 
   return (
-    <div style={{ marginTop: 16 }}>
-      <h3>Evaluation — Total Score: {result.totalScore}/10</h3>
+    <div className="evaluation-panel">
+      <h3 className="evaluation-title">
+        Evaluation — Total Score: <em>{result.totalScore}/10</em>
+      </h3>
 
-      <div style={{ display: 'flex', gap: 16, marginBottom: 16, flexWrap: 'wrap' }}>
-        <div style={{ flex: 1, minWidth: 240 }}>
-          <div style={{ fontWeight: 'bold' }}>Strengths</div>
-          <ul style={{ margin: '4px 0 0', paddingLeft: 20 }}>
+      <div className="evaluation-summary">
+        <div className="evaluation-summary-col">
+          <div className="evaluation-summary-heading">Strengths</div>
+          <ul>
             {result.summary.strengths.map((line, i) => (
-              <li key={i} style={{ fontSize: 13 }}>
-                {line}
-              </li>
+              <li key={i}>{line}</li>
             ))}
           </ul>
         </div>
-        <div style={{ flex: 1, minWidth: 240 }}>
-          <div style={{ fontWeight: 'bold' }}>Weaknesses</div>
-          <ul style={{ margin: '4px 0 0', paddingLeft: 20 }}>
+        <div className="evaluation-summary-col">
+          <div className="evaluation-summary-heading">Weaknesses</div>
+          <ul>
             {result.summary.weaknesses.map((line, i) => (
-              <li key={i} style={{ fontSize: 13 }}>
-                {line}
-              </li>
+              <li key={i}>{line}</li>
             ))}
           </ul>
         </div>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      <div className="evaluation-breakdown">
         {result.breakdown.map((item) => (
-          <div key={item.key} style={{ border: '1px solid #333', padding: 8 }}>
-            <div style={{ fontWeight: 'bold' }}>
-              {item.label}: {item.score === null ? 'N/A' : `${item.score}/10`}
+          <div key={item.key} className="panel evaluation-item">
+            <div className="evaluation-item-header">
+              <span>{item.label}</span>
+              <span className="score">{item.score === null ? 'N/A' : `${item.score}/10`}</span>
             </div>
-            <ul style={{ margin: '4px 0 0', paddingLeft: 20 }}>
+            <ul>
               {item.explanation.map((line, i) => (
-                <li key={i} style={{ fontSize: 13 }}>
-                  {line}
-                </li>
+                <li key={i}>{line}</li>
               ))}
             </ul>
           </div>

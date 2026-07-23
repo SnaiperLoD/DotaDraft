@@ -1,0 +1,93 @@
+/* Design tokens — "ancient forge" palette (bronze/gold/blood on dark
+   ground), grounded in Dota's own visual vocabulary without literally
+   copying its UI. Both themes are real palettes, not one inverted into
+   the other. Role-tint colors (Carry/Offlane/Mid/Support/Universal) are a
+   separate semantic system (see heroRoleColor.ts) — they encode real
+   position data and are not the page accent. */
+
+:root {
+  /* ground */
+  --ground: #15100c;
+  --ground-2: #1b1510;
+  --panel: #211a14;
+  --panel-raised: #2c2219;
+
+  /* metal */
+  --bronze: #6b4f2a;
+  --bronze-dim: #4a3820;
+  --gold: #c9a227;
+  --gold-bright: #edcb6e;
+
+  /* accent */
+  --blood: #7a1f2a;
+  --blood-bright: #a3313f;
+
+  /* text */
+  --ink: #ece2c9;
+  --ink-muted: #a99878;
+  --ink-faint: #7a6d55;
+
+  /* utility */
+  --ad-slot-bg: #33302c;
+  --ad-slot-border: #5a5348;
+  --ad-slot-text: #948a78;
+  --shadow-deep: rgba(0, 0, 0, 0.55);
+  --danger: #c85a4a;
+
+  /* type */
+  --font-display: 'Cinzel', Georgia, serif;
+  --font-body: 'Crimson Pro', Georgia, serif;
+  --font-ui: 'Oswald', 'Arial Narrow', sans-serif;
+}
+
+:root[data-theme='light'] {
+  --ground: #e9dfc6;
+  --ground-2: #f1e8d2;
+  --panel: #fbf5e6;
+  --panel-raised: #ffffff;
+
+  --bronze: #b08d4f;
+  --bronze-dim: #cbb27f;
+  --gold: #8a6a16;
+  --gold-bright: #b8901f;
+
+  --blood: #8a2430;
+  --blood-bright: #a3313f;
+
+  --ink: #241d13;
+  --ink-muted: #5b4e35;
+  --ink-faint: #8c7c5c;
+
+  --ad-slot-bg: #e3dabf;
+  --ad-slot-border: #b9ab84;
+  --ad-slot-text: #6b5f47;
+  --shadow-deep: rgba(60, 45, 20, 0.2);
+  --danger: #a33e2f;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) {
+    --ground: #e9dfc6;
+    --ground-2: #f1e8d2;
+    --panel: #fbf5e6;
+    --panel-raised: #ffffff;
+
+    --bronze: #b08d4f;
+    --bronze-dim: #cbb27f;
+    --gold: #8a6a16;
+    --gold-bright: #b8901f;
+
+    --blood: #8a2430;
+    --blood-bright: #a3313f;
+
+    --ink: #241d13;
+    --ink-muted: #5b4e35;
+    --ink-faint: #8c7c5c;
+
+    --ad-slot-bg: #e3dabf;
+    --ad-slot-border: #b9ab84;
+    --ad-slot-text: #6b5f47;
+    --shadow-deep: rgba(60, 45, 20, 0.2);
+    --danger: #a33e2f;
+  }
+}
