@@ -30,7 +30,10 @@ interface HeroConstant {
 }
 
 interface HeroAbilitiesEntry {
-  abilities: string[];
+  // OpenDota's own type is looser than "string[]" — a toggle-pair ability
+  // slot (e.g. Monkey King's untransform/transfiguration) comes back as a
+  // nested array, not a plain key. Flattened in main() before use.
+  abilities: (string | string[])[];
 }
 
 interface AbilityAttribute {
@@ -108,6 +111,7 @@ async function main() {
     }
 
     const abilities: AbilityRecord[] = entry.abilities
+      .flat()
       .filter((key) => !SKIP_KEYS.has(key))
       .map((key) => {
         const constant = abilityConstants[key];

@@ -19,7 +19,9 @@
     "calibrate-evaluation-values": "ts-node scripts/calibrate-evaluation-values.ts",
     "generate-hero-abilities-skeleton": "ts-node scripts/generate-hero-abilities-skeleton.ts",
     "fetch-ability-icons": "ts-node scripts/fetch-ability-icons.ts",
-    "suggest-ability-categories": "ts-node scripts/suggest-ability-categories.ts"
+    "suggest-ability-categories": "ts-node scripts/suggest-ability-categories.ts",
+    "export-ability-tagging": "ts-node scripts/export-ability-tagging.ts",
+    "import-ability-tagging": "ts-node scripts/import-ability-tagging.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.0",

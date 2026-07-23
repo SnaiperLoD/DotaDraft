@@ -46660,20 +46660,50 @@
         "categoryScores": {}
       },
       {
-        "abilityKey": [
-          "monkey_king_untransform",
-          "monkey_king_transfiguration"
+        "abilityKey": "monkey_king_untransform",
+        "abilityName": "Revert Form",
+        "description": "Reverts Monkey King's shape to his original form.",
+        "behavior": [
+          "No Target",
+          "Hidden"
         ],
-        "abilityName": [
-          "monkey_king_untransform",
-          "monkey_king_transfiguration"
-        ],
-        "description": "",
-        "behavior": null,
-        "cooldown": null,
-        "manaCost": null,
+        "cooldown": "1",
+        "manaCost": "0",
         "attributes": [],
-        "iconUrl": null,
+        "iconUrl": "/ability-icons/monkey_king_untransform.png",
+        "categoryScores": {}
+      },
+      {
+        "abilityKey": "monkey_king_transfiguration",
+        "abilityName": "Changing of the Guard",
+        "description": "Monkey King can transform into any one of his soldiers during Wukong's command, taking its place for a 1.5s, becoming indistinguishable from other soldiers, and leaving another soldier in his stead. While transformed, Monkey King is invulnerable, but cannot attack or cast spells",
+        "behavior": [
+          "Hidden",
+          "Point Target"
+        ],
+        "cooldown": "3",
+        "manaCost": "0",
+        "attributes": [
+          {
+            "key": "transfiguration_duration",
+            "header": "TRANSFIGURATION DURATION:",
+            "value": "1.5",
+            "generated": true
+          },
+          {
+            "key": "initial_cooldown",
+            "header": "INITIAL COOLDOWN:",
+            "value": "1",
+            "generated": true
+          },
+          {
+            "key": "abilitycastpoint",
+            "header": "CAST TIME:",
+            "value": "0.3",
+            "generated": true
+          }
+        ],
+        "iconUrl": "/ability-icons/monkey_king_transfiguration.png",
         "categoryScores": {}
       }
     ]

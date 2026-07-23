@@ -1053,6 +1053,13 @@
       "description": "Encases an ally in an icy cocoon, freezing them solid while healing a base amount as well as a percentage of their maximum health each second. The cocoon blocks all physical damage."
     },
     {
+      "heroName": "Monkey King",
+      "abilityKey": "monkey_king_transfiguration",
+      "abilityName": "Changing of the Guard",
+      "matchedKeyword": "invulnerable",
+      "description": "Monkey King can transform into any one of his soldiers during Wukong's command, taking its place for a 1.5s, becoming indistinguishable from other soldiers, and leaving another soldier in his stead. While transformed, Monkey King is invulnerable, but cannot attack or cast spells"
+    },
+    {
       "heroName": "Dark Willow",
       "abilityKey": "dark_willow_pixie_dust",
       "abilityName": "Pixie Dust",
