@@ -237,11 +237,16 @@ TypeScript strict включён везде, но ESLint/Prettier не наст�
 
 Фикс источника (постоянный): `fetch-hero-meta.ts`'s `classifyPositions()` переписана на тот же GPM-rank метод — position-запрос заменён с `lane_role`/`is_roaming` группировки на per-match GPM-ранг внутри команды (`RANK() OVER (PARTITION BY match_id, team ORDER BY gold_per_min DESC)`, тот же паттерн, что в `research-role-fit-gpm-rank.ts`, включая сужение scan подзапросом только на матчи целевого героя — держит запрос быстрым, ~0.5с/герой, проверено вживую на Chen). Следующий полный `npm run fetch-hero-meta` больше не откатит `positions` на старый баг. Сам полный ре-фетч не запускался (дорого — 4 API-вызова на каждого из 127 героев, а данные уже корректны через патч выше) — только логика проверена точечно.
 
-### Будущая ось Initiating
+### Будущая ось Initiating — частично реализовано (посчитана, не подключена)
 
-Пока не реализована и нигде не учитывается (не в `evaluation_values`, не в Battle Engine, не в role-fit). Идея (архитектурно нетривиальная — сама завязана на другую существующую ось): Initiating = сумма (a) способностей на разрыв дистанции/диспозицию соперника, (b) АоЕ контроля, (c) `mobility`. Пункт (c) создаёт направленную зависимость Mobility → Initiating — не циклическая (это DAG, как уже есть в Map Control: wards+vision+mobility-tag+ability-tag → один композит), но нужно следить, чтобы Mobility не задваивался, если в будущем какая-то роль будет бустить и Mobility, и Initiating одновременно.
+Реализована проще, чем первоначально задумывалось. Исходная идея ниже предполагала зависимость от `mobility` (пункт c) — по факту от неё отказались: `initiating` = 85% сумма ручных тегов категории `initiating` (per-ability, `ability-tagging.csv`) + 15% частота покупки Blink Dagger, без прямой зависимости от оси `mobility`. Формула и её эволюция — `09-hero-knowledge-base.md`, раздел `initiating`. Изначальный DAG-риск (Mobility → Initiating задваивание) снят самим этим решением — там просто нет такой связи.
 
-Реализация (a) и (b) требует двух новых категорий в системе тегов способностей — см. пункт про `hero-abilities.json` ниже, это должно решаться той же разметкой, а не отдельным механизмом.
+Записывается в `evaluation_values.initiating` при каждом `calibrate-evaluation-values.ts`, но:
+- **Battle Engine** (`AXES` в `battle-resolution.ts`) не учитывает — оси там до сих пор 10, `overallPower`/`axisAverage` initiating не видят.
+- **role-fit** (`ROLE_AXES` в `common/role-fit.ts`) не сопоставляет `initiating` ни одной роли.
+- **Клиентский UI** (радар/breakdown осей) не отображает `initiating` нигде.
+
+Открытый вопрос при подключении: нужна ли `initiating` роль-привязка (кандидат — Offlane, как самый "инициаторский" слот сейчас) в `ROLE_AXES`, и как расширение с 10 до 11 осей повлияет на веса `overallPower` в Battle Engine (сейчас усреднение по `AXES.length` — добавление 11-й оси меняет относительный вклад всех остальных 10, не только добавляет новую).
 
 ### Оценить наличие данных по силе способностей в открытых источниках — исследовано, короткого пути нет
 
@@ -251,21 +256,23 @@ TypeScript strict включён везде, но ESLint/Prettier не наст�
 
 **Вывод: короткого пути нет, ручная разметка `hero-abilities.json` обязательна.**
 
-### `hero-abilities.json` — обогащён атрибутами и иконками, есть keyword-фильтр кандидатов
+### `hero-abilities.json` — разметка выполнена и вплетена в калибровку (mobility/saving/initiating/control_strength)
 
-`server/data/hero-abilities.json` (`npm run generate-hero-abilities-skeleton` → `server/scripts/generate-hero-abilities-skeleton.ts`) — 788 способностей на 127 героев. Помимо `abilityKey`/`abilityName`/`description`/`categoryScores` (последний по-прежнему пустой у всех, ждёт ручной разметки), теперь также хранит:
-- `behavior` (Point Target / Unit Target / Passive / AOE и т.д. — контролируемый словарь от OpenDota);
-- `cooldown`/`manaCost` (массивы по уровням способности);
-- `attributes` — сырой `attrib` массив от OpenDota (cast range, урон, длительность и т.д., имена полей не унифицированы между способностями — см. пункт выше, хранится для справки при ручной разметке, не для программного парсинга);
-- `iconUrl` — относительный путь к локально скачанной иконке (`/ability-icons/{abilityKey}.png`).
+`server/data/hero-abilities.json` (`npm run generate-hero-abilities-skeleton` → `server/scripts/generate-hero-abilities-skeleton.ts`) — 789 способностей на 127 героев, с `behavior`/`cooldown`/`manaCost`/`attributes`/`iconUrl` (как раньше) плюс теперь заполненный `categoryScores` по 4 категориям: `mobility`, `saving`, `initiating`, `control_strength` (последние две добавлены в эту сессию). Разметка сделана пользователем вручную через CSV round-trip (`export-ability-tagging.ts` → `server/data/ability-tagging.csv` → правки в таблице → `import-ability-tagging.ts`), несколько раундов точечных исправлений после ревью калибровки на конкретных "странных" героях (методология и итоговые веса — `09-hero-knowledge-base.md`).
 
-Скрипт идемпотентен — повторный запуск обновляет всё, кроме `categoryScores` (сохраняются для способностей, которые всё ещё существуют).
+Скрипт-генератор идемпотентен — повторный запуск обновляет всё, кроме `categoryScores` (сохраняются для способностей, которые всё ещё существуют).
 
 **Иконки способностей** — `server/scripts/fetch-ability-icons.ts`, скачивает в `client/public/ability-icons/{abilityKey}.png` (тот же паттерн, что `fetch-icons.ts` для портретов героев — офлайн-хранение по Data Rule). 725 из 787 скачаны успешно, 55 вернули 404 (похоже на innate/talent-способности без иконки на CDN — не критично, не исследовано отдельно). URL-хелпер — `client/src/utils/abilityIcon.ts::abilityIconUrl()`, для будущего использования в Draft/Battle UI.
 
-**Keyword-фильтр кандидатов** — `server/scripts/suggest-ability-categories.ts`, выводит `server/data/ability-category-candidates.json`. НЕ автоматический классификатор — проверен на уже размеченном `mobility_ability_tier` как ground truth и показал реальные проблемы точности (Dota-терминология перегружена: "charge" означает и рывок, и заряд способности; "jump" — и перемещение героя, и прыгающий между целями снаряд; способности без явного глагола движения типа Weaver's Shukuchi/Morphling's Waveform вообще не матчатся). Сейчас покрывает 2 категории: `mobility` (44 кандидата, 6% от 753 способностей с описанием) и `saving` (113 кандидатов, 15%) — сокращает объём для ручного просмотра, не заменяет его. Полезная побочная находка уже при первом прогоне: несколько реальных blink/teleport-способностей отсутствуют в текущем `mobility_ability_tier` (Riki's Blink Strike, Spectre's Shadow Step/Haunt, Meepo's Poof, Nyx Assassin's Burrow/Unburrow, Io's Relocate, Underlord's Fiend's Gate, Templar Assassin's Psionic Projection) — стоит свериться при следующей ревизии тега.
+**Keyword-фильтр кандидатов** — `server/scripts/suggest-ability-categories.ts`, выводит `server/data/ability-category-candidates.json`. НЕ автоматический классификатор, только сужает объём для ручного просмотра — Dota-терминология перегружена ("charge" и рывок, и заряд способности; "jump" и перемещение героя, и снаряд), способности без явного глагола движения вообще не матчатся. Покрывает все 4 категории (изначально было 2 — `mobility`/`saving`, `initiating`/`control_strength` добавлены в эту сессию с более широким recall-ориентированным набором ключевых слов для `control_strength` специально).
 
-`map_control` уже прогнан через тот же строгий метод, что нашёл баг в `mobility`, и оказался чист (см. "evaluation_values — mobility и map_control откалиброваны" выше) — но входные ручные теги (`vision_ability_tier`/`mobility_ability_tier`) сами не проверены, поэтому после завершения разметки `hero-abilities.json` стоит хотя бы прогнать `check-axis-distribution.ts` ещё раз на предмет регрессии, если разметка изменит эти теги существенно.
+`map_control` и агрегация ручных тегов в `mobility`/`saving`/`control` уже прогнаны и проверены на конкретных выбросах (см. `09-hero-knowledge-base.md`, "Известные артефакты данных") — но сама разметка `ability-tagging.csv` продолжает уточняться пользователем по мере обнаружения новых "странных" героев, это не закрытая задача.
+
+### Данные по контроль-предметам собраны, не вплетены в вес `control`
+
+`server/scripts/research-control-items.ts` → `server/data/research-control-items-output.json` — частота покупки по 127 героям для 14 "семей" контроль-предметов (`server/data/control-item-families.json`, ранжированы и провалидированы пользователем от Scythe of Vyse до Hurricane Pike), сгруппированных по цепочкам апгрейда (Basher→Abyssal Blade, Rod of Atos→Gleipnir, Eul's→Wind Waker и т.д.) с де-дупом внутри одной игры — если куплен апгрейд, базовый компонент в этой же игре не засчитывается отдельно. Результаты правдоподобны (Ursa — 80.6% игр с Basher/Abyssal, Riki — 94% с Diffusal/Disperser, Lycan — 97% с Helm).
+
+Осознанно не подключено к формуле `control` — пользователь попросил сначала собрать и оценить данные, решение о весе/способе интеграции отложено. Следующий шаг, если решат подключать: скорее всего ещё один компонент в блендинге `control` (сейчас 50% stuns / 50% control_strength), с собственным небольшим весом — по аналогии с тем, как `mobility_items_tier` весит всего 0.1 в `mobility`.
 
 ---
 
