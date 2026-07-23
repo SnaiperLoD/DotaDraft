@@ -1,4 +1,4 @@
-import { resolveBattle, type MatchupLookup } from './battle-resolution';
+import { resolveBattle, type MatchupLookup, type BattlePick } from './battle-resolution';
 import type { Hero, HeroEvaluationValues } from 'shared';
 import { makeHero, DEFAULT_EVALUATION_VALUES } from '../test-utils/hero-factory';
 
@@ -11,8 +11,14 @@ const noData: MatchupLookup = {
   getSynergyWinRate: () => null,
 };
 
-function team(count: number, axisBoost: Partial<HeroEvaluationValues> = {}, startId = 1): Hero[] {
-  return Array.from({ length: count }, (_, i) => hero(startId + i, `Hero${startId + i}`, axisBoost));
+// assignedRole: null throughout — these tests cover matchup/synergy/power
+// mechanics, not role-fit specifically (see the dedicated describe block
+// below for that).
+function team(count: number, axisBoost: Partial<HeroEvaluationValues> = {}, startId = 1): BattlePick[] {
+  return Array.from({ length: count }, (_, i) => ({
+    hero: hero(startId + i, `Hero${startId + i}`, axisBoost),
+    assignedRole: null,
+  }));
 }
 
 describe('resolveBattle', () => {
@@ -86,5 +92,57 @@ describe('resolveBattle', () => {
     expect(noEdge.advantageDirection).toBe('Even');
     expect(withEdge.advantageDirection).toBe('A');
     expect(withEdge.confidenceTier).not.toBe('Low');
+  });
+
+  describe('role-fit', () => {
+    // Role-fit alone (BOOST_WEIGHT=0.15) is deliberately subtle: averaged
+    // over a 5-hero team and then over 10 axes, its maximum possible
+    // contribution to overallPower is well under the 0.15 advantageDirection
+    // threshold — it can't flip a matchup by itself, only tip an
+    // already-close one (same "amplifies rather than adds" shape as the
+    // matchup-edge test above). This scenario combines a small non-role
+    // edge (hero1's teamfight) with a role-appropriate assignment (hero2 as
+    // Carry) so together — not individually — they cross the threshold.
+    it('tips an already-close matchup, combined with another small edge, toward the role-appropriate side', () => {
+      // hero1's teamfight gives team A a real edge (contributes ~0.13 to
+      // the overallPower diff) that alone stays just under the 0.15
+      // advantageDirection threshold. hero2 is otherwise matched with its
+      // opposite number (9.3 scaling/burst both sides) — no difference
+      // until role-fit enters.
+      const teamAUnassigned: BattlePick[] = [
+        { hero: hero(1, 'A1', { teamfight: 9.5 }), assignedRole: null },
+        { hero: hero(2, 'A2', { scaling: 9.3, burst: 9.3 }), assignedRole: null },
+        ...team(3, {}, 3),
+      ];
+      const teamB: BattlePick[] = [
+        { hero: hero(6, 'B1'), assignedRole: null },
+        { hero: hero(7, 'B2', { scaling: 9.3, burst: 9.3 }), assignedRole: null },
+        ...team(3, {}, 8),
+      ];
+      const closeButEven = resolveBattle(teamAUnassigned, teamB, noData, () => 0.4);
+      expect(closeButEven.advantageDirection).toBe('Even');
+
+      // Assigning hero2 Carry (scaling/burst are Carry's role-fit axes)
+      // adds ~0.026 more — not enough on its own (see the test above), but
+      // enough to push this already-close matchup over 0.15 combined.
+      const teamAWithRole: BattlePick[] = [
+        teamAUnassigned[0],
+        { ...teamAUnassigned[1], assignedRole: 'Carry' },
+        ...teamAUnassigned.slice(2),
+      ];
+      const tippedOver = resolveBattle(teamAWithRole, teamB, noData, () => 0.4);
+      expect(tippedOver.advantageDirection).toBe('A');
+    });
+
+    it('does not boost when the hero is already below the role-fit baseline', () => {
+      const belowBaseline: BattlePick[] = [
+        { hero: hero(1, 'A', { scaling: 3 }), assignedRole: 'Carry' },
+        ...team(4, {}, 2),
+      ];
+      const sameNoRole: BattlePick[] = [{ hero: hero(6, 'B', { scaling: 3 }), assignedRole: null }, ...team(4, {}, 7)];
+
+      const result = resolveBattle(belowBaseline, sameNoRole, noData, () => 0.4);
+      expect(result.advantageDirection).toBe('Even');
+    });
   });
 });

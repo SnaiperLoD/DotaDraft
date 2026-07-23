@@ -58,6 +58,11 @@ interface CandidateMatch {
   direName: string;
 }
 
+interface PooledHeroRole {
+  heroId: number;
+  role: string;
+}
+
 interface StoredProMatch {
   matchId: string;
   radiantName: string | null;
@@ -66,7 +71,26 @@ interface StoredProMatch {
   radiantWin: boolean;
   radiantHeroIds: number[];
   direHeroIds: number[];
+  radiantHeroRoles: PooledHeroRole[];
+  direHeroRoles: PooledHeroRole[];
   startTime: string;
+}
+
+// Same GPM-rank convention as research-role-fit-gpm-rank.ts and
+// fetch-hero-meta.ts's classifyPositions: rank by gold_per_min within each
+// side of the same match, 1=highest ... 5=lowest.
+const RANK_TO_ROLE: Record<number, string> = {
+  1: 'Carry',
+  2: 'Mid',
+  3: 'Offlane',
+  4: 'Soft Support',
+  5: 'Hard Support',
+};
+
+function rolesForSide(players: { hero_id: number; gold_per_min: number }[]): PooledHeroRole[] {
+  return [...players]
+    .sort((a, b) => b.gold_per_min - a.gold_per_min)
+    .map((p, i) => ({ heroId: p.hero_id, role: RANK_TO_ROLE[i + 1] }));
 }
 
 function sleep(ms: number): Promise<void> {
@@ -138,7 +162,9 @@ async function main() {
     const detail = await withRetry(async () => {
       const res = await fetch(`https://api.opendota.com/api/matches/${match.matchId}`);
       if (!res.ok) throw new Error(`matches HTTP ${res.status}`);
-      return (await res.json()) as { players: { hero_id: number; player_slot: number }[] };
+      return (await res.json()) as {
+        players: { hero_id: number; player_slot: number; gold_per_min: number }[];
+      };
     });
 
     if (!detail || !Array.isArray(detail.players) || detail.players.length !== 10) {
@@ -147,10 +173,10 @@ async function main() {
       continue;
     }
 
-    const radiantHeroIds = detail.players.filter((p) => p.player_slot < 128).map((p) => p.hero_id);
-    const direHeroIds = detail.players.filter((p) => p.player_slot >= 128).map((p) => p.hero_id);
+    const radiantPlayers = detail.players.filter((p) => p.player_slot < 128);
+    const direPlayers = detail.players.filter((p) => p.player_slot >= 128);
 
-    if (radiantHeroIds.length !== 5 || direHeroIds.length !== 5) {
+    if (radiantPlayers.length !== 5 || direPlayers.length !== 5) {
       console.warn('  unexpected team sizes, skipping');
       await sleep(300);
       continue;
@@ -162,8 +188,10 @@ async function main() {
       direName: match.direName,
       leagueName: match.leagueName,
       radiantWin: match.radiantWin,
-      radiantHeroIds,
-      direHeroIds,
+      radiantHeroIds: radiantPlayers.map((p) => p.hero_id),
+      direHeroIds: direPlayers.map((p) => p.hero_id),
+      radiantHeroRoles: rolesForSide(radiantPlayers),
+      direHeroRoles: rolesForSide(direPlayers),
       startTime: new Date(match.startTime * 1000).toISOString(),
     });
 

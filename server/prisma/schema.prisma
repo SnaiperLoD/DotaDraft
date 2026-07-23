@@ -41,13 +41,19 @@ model DraftHero {
 }
 
 model ProMatch {
-  id             String   @id
-  radiantName    String?
-  direName       String?
-  leagueName     String?
-  radiantWin     Boolean
-  radiantHeroIds String
-  direHeroIds    String
-  startTime      DateTime
-  createdAt      DateTime @default(now())
+  id               String   @id
+  radiantName      String?
+  direName         String?
+  leagueName       String?
+  radiantWin       Boolean
+  radiantHeroIds   String
+  direHeroIds      String
+  // JSON-stringified PooledHeroRole[] (shared/types/opponent-pool.ts),
+  // GPM-rank-derived — null for rows seeded before role-fit reached pro
+  // matches (see Blueprint/10-tech-debt-backlog.md, "Role-fit in Battle
+  // Engine").
+  radiantHeroRoles String?
+  direHeroRoles    String?
+  startTime        DateTime
+  createdAt        DateTime @default(now())
 }

@@ -1,8 +1,19 @@
 import type { Hero, HeroEvaluationValues } from 'shared';
+import { roleFitValue } from '../common/role-fit';
 
 export interface MatchupLookup {
   getMatchupWinRate(heroId: number, opponentHeroId: number): number | null;
   getSynergyWinRate(heroId: number, allyHeroId: number): number | null;
+}
+
+// A team member plus the role they were assigned — assignedRole is null
+// when no role data is available (legacy Opponent Pool rows committed
+// before roles were stored there; see Blueprint/10-tech-debt-backlog.md).
+// roleFitValue() already treats null as "no boost", so this degrades
+// gracefully rather than erroring.
+export interface BattlePick {
+  hero: Hero;
+  assignedRole: string | null;
 }
 
 export type ConfidenceTier = 'Low' | 'Moderate' | 'High';
@@ -46,11 +57,18 @@ function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value));
 }
 
-function axisAverage(team: Hero[], axis: keyof HeroEvaluationValues): number {
-  return team.reduce((sum, h) => sum + h.evaluation_values[axis], 0) / team.length;
+// Role-fit-adjusted: a pick's contribution to the axis average is boosted
+// per common/role-fit.ts if their assigned role cares about this axis and
+// they're already strong on it. assignedRole is null for opponent sides
+// without stored role data (see BattlePick) — roleFitValue no-ops on null.
+function axisAverage(team: BattlePick[], axis: keyof HeroEvaluationValues): number {
+  return (
+    team.reduce((sum, p) => sum + roleFitValue(axis, p.assignedRole, p.hero.evaluation_values[axis]), 0) /
+    team.length
+  );
 }
 
-function overallPower(team: Hero[]): number {
+function overallPower(team: BattlePick[]): number {
   return AXES.reduce((sum, axis) => sum + axisAverage(team, axis), 0) / AXES.length;
 }
 
@@ -194,12 +212,14 @@ function buildExplanation(ctx: ExplanationContext): string[] {
 }
 
 export function resolveBattle(
-  teamA: Hero[],
-  teamB: Hero[],
+  teamA: BattlePick[],
+  teamB: BattlePick[],
   lookup: MatchupLookup,
   random: () => number = Math.random,
 ): BattleResult {
-  const edgeA = matchupEdge(teamA, teamB, lookup);
+  const heroesA = teamA.map((p) => p.hero);
+  const heroesB = teamB.map((p) => p.hero);
+  const edgeA = matchupEdge(heroesA, heroesB, lookup);
 
   // Non-Linearity Rule: synergy and matchup edge each modify their team's
   // *own* effective power multiplicatively (amplify/dampen), rather than
@@ -209,11 +229,11 @@ export function resolveBattle(
   // instead of only ever scaling an existing advantage.
   const powerA =
     overallPower(teamA) *
-    clamp(1 + synergyBonus(teamA, lookup) * 2, 0.3, 1.7) *
+    clamp(1 + synergyBonus(heroesA, lookup) * 2, 0.3, 1.7) *
     clamp(1 + edgeA * 3, 0.3, 1.7);
   const powerB =
     overallPower(teamB) *
-    clamp(1 + synergyBonus(teamB, lookup) * 2, 0.3, 1.7) *
+    clamp(1 + synergyBonus(heroesB, lookup) * 2, 0.3, 1.7) *
     clamp(1 - edgeA * 3, 0.3, 1.7);
 
   const diff = powerA - powerB;
@@ -243,8 +263,8 @@ export function resolveBattle(
     advantageDirection,
     confidenceTier,
     resolvedOutcome,
-    teamA,
-    teamB,
+    teamA: heroesA,
+    teamB: heroesB,
     lookup,
     topAxisDelta: axisDeltas[0],
   });

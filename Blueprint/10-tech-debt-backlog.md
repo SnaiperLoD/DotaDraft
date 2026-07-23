@@ -199,7 +199,7 @@ TypeScript strict включён везде, но ESLint/Prettier не наст�
 - `map_control` — тот же исходный фикс (`percentileRankScale`) применён, но не переисследован тем более строгим методом, что выявил баг в mobility (сравнение с заведомо немобильными героями). Не считать решённым — см. новый пункт в разделе "evaluation_values" выше.
 - `saving` — сильно правоскошенное распределение случайных драфтов (skew 1.38, excess kurtosis 3.03) — большинство драфтов около 0, поскольку ось управляется в основном бинарным тегом `protects_allies`. Ожидаемо для "специалистской" оси (не у каждого героя есть сейв), но топ-20 всё же доходит до ~9/10 — формула не сломана, просто редко активируется. Стоит учитывать при калибровке Role-fit: линейная регрессия на сильно скошенном входе может потребовать трансформации.
 
-### Оценка героя не учитывает назначенную роль — решено (Evaluation Engine), Battle Engine вне скоупа
+### Оценка героя не учитывает назначенную роль — решено (Evaluation Engine и Battle Engine)
 
 Было: не важно, на какую позицию назначен герой в `RoleAssignment` — Evaluation учитывала только общую силу героя (`evaluation_values`), не зависящую от роли. `Analyzer.analyze(heroes: Hero[])` не получал `assignedRole` на вход, хотя Core Rules (`01-core-rules.md`, Analyzer Rule) уже описывали вход как "Draft".
 
@@ -219,7 +219,15 @@ TypeScript strict включён везде, но ESLint/Prettier не наст�
 - Hard Support → `saving`, `map_control`
 - Soft Support → `saving`, `control`
 
-Открыто: Battle Engine (`battle-resolution.ts`) role-fit не учитывает вообще — вне скоупа этого захода, отдельная задача на будущее. `research-role-fit-data.ts` (v1, lane_role-based) оставлен в репозитории нетронутым для истории, но не используется — `research-role-fit-gpm-rank.ts` (v2) единственный релевантный источник.
+`research-role-fit-data.ts` (v1, lane_role-based) оставлен в репозитории нетронутым для истории, но не используется — `research-role-fit-gpm-rank.ts` (v2) единственный релевантный источник.
+
+**Battle Engine (закрыто).** `roleFitValue()` переехал из `evaluation/role-fit.ts` в `common/role-fit.ts` — общий модуль для Evaluation (`axis.analyzer.ts`) и Battle (`battle-resolution.ts`), они остаются независимыми друг от друга (Core Rules Separation), оба зависят от нейтрального модуля вместо одного от другого. `battle-resolution.ts` принимает `BattlePick[]` (`{ hero, assignedRole }[]`, тот же паттерн, что `DraftPick[]` в Evaluation) — `axisAverage()` применяет `roleFitValue()` на каждый пик перед усреднением по команде.
+
+Асимметрия входных данных, которая была причиной "вне скоупа": `PooledDraft` (Postgres-схема Opponent Pool) не хранил роли вообще, только `heroIds` — значит role-fit мог применяться только к собственному драфту игрока, никогда к оппоненту. Решено добавлением `heroRoles Json?` (nullable, аддитивная миграция, не ломает уже закоммиченные в пул драфты — у них `heroRoles: null`, роль-буст просто не применяется, как для любого пика с `assignedRole: null`) в `prisma-pool/schema.prisma`. `PooledHeroRole { heroId, role }` — новый тип в `shared/types/opponent-pool.ts`. `OpponentPoolService.commit()` теперь пишет `heroRoles` из `assignedRole` завершённого драфта; `pullRandom()` их возвращает. `BattleService.fight()` строит `BattlePick[]` для обеих сторон: `teamA` — реальные `assignedRole` из драфта игрока, `teamB` — из `opponent.heroRoles` (null-safe для легаси-строк).
+
+Про-матчи (`pro-matches.json`, локальная `ProMatch`-модель) тоже теперь несут роли — тем же per-match GPM-rank методом, что `research-role-fit-gpm-rank.ts` и (для `presumed_positions`) `fetch-hero-meta.ts`: ранжирование по `gold_per_min` внутри каждой стороны одного матча, 1=Carry...5=Hard Support. `fetch-pro-matches-tier1.ts` считает роли на каждый будущий ре-фетч; уже импортированные 100 матчей задним числом обработаны `server/scripts/backfill-pro-match-roles.ts` (точечный скрипт — дёргает только `/api/matches/{id}` за `gold_per_min`, не трогает уже отобранный набор матчей через team-discovery заново). `seed-opponent-pool.ts` прокидывает `heroRoles` победившей стороны в `'pro'`-строки пула.
+
+Математическая находка, важная для понимания формулы: максимальный возможный вклад role-fit в разницу `overallPower` между командами (усреднение по 5 игрокам, затем по 10 осям, `BOOST_WEIGHT=0.15`) — около 0.129 даже в максимально выигрышном сценарии (все 5 героев на разных ролях, все бустятся). Это ниже порога 0.15, при котором `advantageDirection` вообще перестаёт быть `'Even'` — то есть **role-fit сам по себе никогда не может перевернуть исход Battle Mode**, только подтолкнуть уже близкий матч при наличии другого небольшого преимущества (matchup/synergy/разница в базовой силе). Заложено в тесты `battle-resolution.spec.ts` через комбинированный сценарий (роль + отдельный небольшой edge вместе пересекают порог, по отдельности — нет), а не через попытку сдвинуть исход одним только role-fit.
 
 ### `presumed_positions` — тот же lane_role/is_roaming баг, исправлено (данные и источник)
 

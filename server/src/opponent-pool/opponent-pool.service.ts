@@ -5,8 +5,9 @@ import {
   ServiceUnavailableException,
 } from '@nestjs/common';
 import { PoolPrismaService } from './pool-prisma.service';
+import type { Prisma } from '../../generated/pool-client';
 import { DraftService } from '../draft/draft.service';
-import type { CommitDraftResponse, PooledDraftSummary, PooledDraftSource } from 'shared';
+import type { CommitDraftResponse, PooledDraftSummary, PooledDraftSource, PooledHeroRole } from 'shared';
 
 @Injectable()
 export class OpponentPoolService {
@@ -22,10 +23,16 @@ export class OpponentPoolService {
     }
 
     const heroIds = draft.heroes.map((h) => h.heroId);
+    // assignedRole is guaranteed non-null here — status === 'COMPLETED'
+    // means ASSIGNING_ROLES already ran (see draft.service.ts).
+    const heroRoles: PooledHeroRole[] = draft.heroes.map((h) => ({
+      heroId: h.heroId,
+      role: h.assignedRole!,
+    }));
 
     const created = await this.runPoolQuery(() =>
       this.pool.pooledDraft.create({
-        data: { source: 'player', submitterToken, heroIds },
+        data: { source: 'player', submitterToken, heroIds, heroRoles: heroRoles as unknown as Prisma.InputJsonValue },
       }),
     );
 
@@ -64,6 +71,7 @@ export class OpponentPoolService {
         id: row.id,
         source: row.source as PooledDraftSource,
         heroIds: row.heroIds as number[],
+        heroRoles: (row.heroRoles as PooledHeroRole[] | null) ?? null,
         teamName: row.teamName,
         leagueName: row.leagueName,
       };

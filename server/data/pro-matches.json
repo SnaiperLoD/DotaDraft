@@ -21,7 +21,51 @@
         39,
         6
       ],
-      "startTime": "2026-07-12T13:02:00.000Z"
+      "startTime": "2026-07-12T13:02:00.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 12,
+          "role": "Carry"
+        },
+        {
+          "heroId": 96,
+          "role": "Mid"
+        },
+        {
+          "heroId": 7,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 9,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 112,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 6,
+          "role": "Carry"
+        },
+        {
+          "heroId": 39,
+          "role": "Mid"
+        },
+        {
+          "heroId": 2,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 119,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8893070561",
@@ -43,7 +87,51 @@
         85,
         123
       ],
-      "startTime": "2026-07-12T11:58:01.000Z"
+      "startTime": "2026-07-12T11:58:01.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 80,
+          "role": "Carry"
+        },
+        {
+          "heroId": 155,
+          "role": "Mid"
+        },
+        {
+          "heroId": 107,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 31,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 119,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 25,
+          "role": "Carry"
+        },
+        {
+          "heroId": 96,
+          "role": "Mid"
+        },
+        {
+          "heroId": 28,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 85,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 123,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8892914077",
@@ -65,7 +153,51 @@
         119,
         112
       ],
-      "startTime": "2026-07-12T10:15:00.000Z"
+      "startTime": "2026-07-12T10:15:00.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 89,
+          "role": "Carry"
+        },
+        {
+          "heroId": 13,
+          "role": "Mid"
+        },
+        {
+          "heroId": 2,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 110,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 86,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 145,
+          "role": "Carry"
+        },
+        {
+          "heroId": 120,
+          "role": "Mid"
+        },
+        {
+          "heroId": 28,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 119,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 112,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8892923329",
@@ -87,7 +219,51 @@
         114,
         131
       ],
-      "startTime": "2026-07-12T10:13:00.000Z"
+      "startTime": "2026-07-12T10:13:00.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 17,
+          "role": "Carry"
+        },
+        {
+          "heroId": 21,
+          "role": "Mid"
+        },
+        {
+          "heroId": 38,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 90,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 123,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 114,
+          "role": "Carry"
+        },
+        {
+          "heroId": 106,
+          "role": "Mid"
+        },
+        {
+          "heroId": 65,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 131,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 14,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8892836635",
@@ -109,7 +285,51 @@
         119,
         29
       ],
-      "startTime": "2026-07-12T09:07:03.000Z"
+      "startTime": "2026-07-12T09:07:03.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 155,
+          "role": "Carry"
+        },
+        {
+          "heroId": 145,
+          "role": "Mid"
+        },
+        {
+          "heroId": 60,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 91,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 121,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 10,
+          "role": "Carry"
+        },
+        {
+          "heroId": 74,
+          "role": "Mid"
+        },
+        {
+          "heroId": 29,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 119,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 3,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8892829232",
@@ -131,7 +351,51 @@
         51,
         123
       ],
-      "startTime": "2026-07-12T09:00:00.000Z"
+      "startTime": "2026-07-12T09:00:00.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 74,
+          "role": "Carry"
+        },
+        {
+          "heroId": 12,
+          "role": "Mid"
+        },
+        {
+          "heroId": 65,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 14,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 85,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 25,
+          "role": "Carry"
+        },
+        {
+          "heroId": 41,
+          "role": "Mid"
+        },
+        {
+          "heroId": 38,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 51,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 123,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8891497910",
@@ -153,7 +417,51 @@
         123,
         64
       ],
-      "startTime": "2026-07-11T13:37:09.000Z"
+      "startTime": "2026-07-11T13:37:09.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 19,
+          "role": "Carry"
+        },
+        {
+          "heroId": 96,
+          "role": "Mid"
+        },
+        {
+          "heroId": 106,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 9,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 107,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 98,
+          "role": "Carry"
+        },
+        {
+          "heroId": 21,
+          "role": "Mid"
+        },
+        {
+          "heroId": 13,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 123,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 64,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8891371442",
@@ -175,7 +483,51 @@
         21,
         46
       ],
-      "startTime": "2026-07-11T12:25:00.000Z"
+      "startTime": "2026-07-11T12:25:00.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 12,
+          "role": "Carry"
+        },
+        {
+          "heroId": 25,
+          "role": "Mid"
+        },
+        {
+          "heroId": 85,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 123,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 64,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 46,
+          "role": "Carry"
+        },
+        {
+          "heroId": 107,
+          "role": "Mid"
+        },
+        {
+          "heroId": 2,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 21,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 30,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8891240327",
@@ -197,7 +549,51 @@
         86,
         3
       ],
-      "startTime": "2026-07-11T10:45:00.000Z"
+      "startTime": "2026-07-11T10:45:00.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 69,
+          "role": "Carry"
+        },
+        {
+          "heroId": 106,
+          "role": "Mid"
+        },
+        {
+          "heroId": 21,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 51,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 85,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 109,
+          "role": "Carry"
+        },
+        {
+          "heroId": 2,
+          "role": "Mid"
+        },
+        {
+          "heroId": 128,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 86,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 3,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8891145641",
@@ -219,7 +615,51 @@
         36,
         51
       ],
-      "startTime": "2026-07-11T09:26:04.000Z"
+      "startTime": "2026-07-11T09:26:04.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 48,
+          "role": "Carry"
+        },
+        {
+          "heroId": 128,
+          "role": "Mid"
+        },
+        {
+          "heroId": 96,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 110,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 123,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 36,
+          "role": "Carry"
+        },
+        {
+          "heroId": 21,
+          "role": "Mid"
+        },
+        {
+          "heroId": 106,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 131,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8890270555",
@@ -241,7 +681,51 @@
         69,
         6
       ],
-      "startTime": "2026-07-10T18:21:12.000Z"
+      "startTime": "2026-07-10T18:21:12.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 128,
+          "role": "Carry"
+        },
+        {
+          "heroId": 67,
+          "role": "Mid"
+        },
+        {
+          "heroId": 55,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 90,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 131,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 6,
+          "role": "Carry"
+        },
+        {
+          "heroId": 52,
+          "role": "Mid"
+        },
+        {
+          "heroId": 69,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 86,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 3,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8890162325",
@@ -263,7 +747,51 @@
         25,
         6
       ],
-      "startTime": "2026-07-10T17:08:03.000Z"
+      "startTime": "2026-07-10T17:08:03.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 19,
+          "role": "Carry"
+        },
+        {
+          "heroId": 22,
+          "role": "Mid"
+        },
+        {
+          "heroId": 85,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 105,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 9,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 6,
+          "role": "Carry"
+        },
+        {
+          "heroId": 25,
+          "role": "Mid"
+        },
+        {
+          "heroId": 2,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 21,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 100,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8890074597",
@@ -285,7 +813,51 @@
         128,
         5
       ],
-      "startTime": "2026-07-10T16:12:56.000Z"
+      "startTime": "2026-07-10T16:12:56.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 55,
+          "role": "Carry"
+        },
+        {
+          "heroId": 145,
+          "role": "Mid"
+        },
+        {
+          "heroId": 74,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 123,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 3,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 11,
+          "role": "Carry"
+        },
+        {
+          "heroId": 128,
+          "role": "Mid"
+        },
+        {
+          "heroId": 77,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 65,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 5,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8890036748",
@@ -307,7 +879,51 @@
         90,
         84
       ],
-      "startTime": "2026-07-10T15:59:01.000Z"
+      "startTime": "2026-07-10T15:59:01.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 55,
+          "role": "Carry"
+        },
+        {
+          "heroId": 73,
+          "role": "Mid"
+        },
+        {
+          "heroId": 74,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 51,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 3,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 6,
+          "role": "Carry"
+        },
+        {
+          "heroId": 38,
+          "role": "Mid"
+        },
+        {
+          "heroId": 120,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 90,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 84,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8889944251",
@@ -329,7 +945,51 @@
         86,
         69
       ],
-      "startTime": "2026-07-10T14:58:27.000Z"
+      "startTime": "2026-07-10T14:58:27.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 48,
+          "role": "Carry"
+        },
+        {
+          "heroId": 13,
+          "role": "Mid"
+        },
+        {
+          "heroId": 137,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 105,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 58,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 6,
+          "role": "Carry"
+        },
+        {
+          "heroId": 107,
+          "role": "Mid"
+        },
+        {
+          "heroId": 69,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 86,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 31,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8889914618",
@@ -351,7 +1011,51 @@
         83,
         58
       ],
-      "startTime": "2026-07-10T14:42:37.000Z"
+      "startTime": "2026-07-10T14:42:37.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 6,
+          "role": "Carry"
+        },
+        {
+          "heroId": 106,
+          "role": "Mid"
+        },
+        {
+          "heroId": 155,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 90,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 105,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 13,
+          "role": "Carry"
+        },
+        {
+          "heroId": 55,
+          "role": "Mid"
+        },
+        {
+          "heroId": 49,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 58,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 83,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8888592426",
@@ -373,7 +1077,51 @@
         131,
         2
       ],
-      "startTime": "2026-07-09T16:43:01.000Z"
+      "startTime": "2026-07-09T16:43:01.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 36,
+          "role": "Carry"
+        },
+        {
+          "heroId": 96,
+          "role": "Mid"
+        },
+        {
+          "heroId": 120,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 21,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 3,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 109,
+          "role": "Carry"
+        },
+        {
+          "heroId": 2,
+          "role": "Mid"
+        },
+        {
+          "heroId": 128,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 131,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8888554919",
@@ -395,7 +1143,51 @@
         96,
         121
       ],
-      "startTime": "2026-07-09T16:09:12.000Z"
+      "startTime": "2026-07-09T16:09:12.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 18,
+          "role": "Carry"
+        },
+        {
+          "heroId": 107,
+          "role": "Mid"
+        },
+        {
+          "heroId": 108,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 90,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 31,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 80,
+          "role": "Carry"
+        },
+        {
+          "heroId": 96,
+          "role": "Mid"
+        },
+        {
+          "heroId": 17,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 86,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 121,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8888489297",
@@ -417,7 +1209,51 @@
         119,
         155
       ],
-      "startTime": "2026-07-09T15:26:18.000Z"
+      "startTime": "2026-07-09T15:26:18.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 109,
+          "role": "Carry"
+        },
+        {
+          "heroId": 17,
+          "role": "Mid"
+        },
+        {
+          "heroId": 96,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 101,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 83,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 54,
+          "role": "Carry"
+        },
+        {
+          "heroId": 106,
+          "role": "Mid"
+        },
+        {
+          "heroId": 155,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 119,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8888425887",
@@ -439,7 +1275,51 @@
         119,
         112
       ],
-      "startTime": "2026-07-09T14:46:15.000Z"
+      "startTime": "2026-07-09T14:46:15.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 19,
+          "role": "Carry"
+        },
+        {
+          "heroId": 38,
+          "role": "Mid"
+        },
+        {
+          "heroId": 137,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 105,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 58,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 6,
+          "role": "Carry"
+        },
+        {
+          "heroId": 107,
+          "role": "Mid"
+        },
+        {
+          "heroId": 135,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 119,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 112,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8888083694",
@@ -461,7 +1341,51 @@
         60,
         85
       ],
-      "startTime": "2026-07-09T10:55:01.000Z"
+      "startTime": "2026-07-09T10:55:01.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 36,
+          "role": "Carry"
+        },
+        {
+          "heroId": 107,
+          "role": "Mid"
+        },
+        {
+          "heroId": 19,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 58,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 11,
+          "role": "Carry"
+        },
+        {
+          "heroId": 74,
+          "role": "Mid"
+        },
+        {
+          "heroId": 60,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 85,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 119,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8887988797",
@@ -483,7 +1407,51 @@
         135,
         51
       ],
-      "startTime": "2026-07-09T09:05:35.000Z"
+      "startTime": "2026-07-09T09:05:35.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 47,
+          "role": "Carry"
+        },
+        {
+          "heroId": 6,
+          "role": "Mid"
+        },
+        {
+          "heroId": 2,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 75,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 119,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 128,
+          "role": "Carry"
+        },
+        {
+          "heroId": 21,
+          "role": "Mid"
+        },
+        {
+          "heroId": 135,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 83,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8887197358",
@@ -505,7 +1473,51 @@
         107,
         75
       ],
-      "startTime": "2026-07-08T17:09:25.000Z"
+      "startTime": "2026-07-08T17:09:25.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 70,
+          "role": "Carry"
+        },
+        {
+          "heroId": 17,
+          "role": "Mid"
+        },
+        {
+          "heroId": 155,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 21,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 131,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 54,
+          "role": "Carry"
+        },
+        {
+          "heroId": 55,
+          "role": "Mid"
+        },
+        {
+          "heroId": 106,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 107,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 75,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8887100676",
@@ -527,7 +1539,51 @@
         107,
         112
       ],
-      "startTime": "2026-07-08T15:50:43.000Z"
+      "startTime": "2026-07-08T15:50:43.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 11,
+          "role": "Carry"
+        },
+        {
+          "heroId": 52,
+          "role": "Mid"
+        },
+        {
+          "heroId": 65,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 51,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 111,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 18,
+          "role": "Carry"
+        },
+        {
+          "heroId": 55,
+          "role": "Mid"
+        },
+        {
+          "heroId": 120,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 107,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 112,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8887075626",
@@ -549,7 +1605,51 @@
         131,
         83
       ],
-      "startTime": "2026-07-08T15:34:52.000Z"
+      "startTime": "2026-07-08T15:34:52.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 114,
+          "role": "Carry"
+        },
+        {
+          "heroId": 17,
+          "role": "Mid"
+        },
+        {
+          "heroId": 55,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 123,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 138,
+          "role": "Carry"
+        },
+        {
+          "heroId": 33,
+          "role": "Mid"
+        },
+        {
+          "heroId": 120,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 131,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 83,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8886971456",
@@ -571,7 +1671,51 @@
         100,
         33
       ],
-      "startTime": "2026-07-08T14:22:47.000Z"
+      "startTime": "2026-07-08T14:22:47.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 74,
+          "role": "Carry"
+        },
+        {
+          "heroId": 99,
+          "role": "Mid"
+        },
+        {
+          "heroId": 65,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 3,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 72,
+          "role": "Carry"
+        },
+        {
+          "heroId": 47,
+          "role": "Mid"
+        },
+        {
+          "heroId": 17,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 33,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 100,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8886641793",
@@ -593,7 +1737,51 @@
         86,
         31
       ],
-      "startTime": "2026-07-08T10:28:00.000Z"
+      "startTime": "2026-07-08T10:28:00.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 36,
+          "role": "Carry"
+        },
+        {
+          "heroId": 23,
+          "role": "Mid"
+        },
+        {
+          "heroId": 108,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 112,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 119,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 53,
+          "role": "Carry"
+        },
+        {
+          "heroId": 80,
+          "role": "Mid"
+        },
+        {
+          "heroId": 128,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 31,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 86,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8886572854",
@@ -615,7 +1803,51 @@
         71,
         31
       ],
-      "startTime": "2026-07-08T09:08:23.000Z"
+      "startTime": "2026-07-08T09:08:23.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 155,
+          "role": "Carry"
+        },
+        {
+          "heroId": 11,
+          "role": "Mid"
+        },
+        {
+          "heroId": 33,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 119,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 112,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 80,
+          "role": "Carry"
+        },
+        {
+          "heroId": 25,
+          "role": "Mid"
+        },
+        {
+          "heroId": 55,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 71,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 31,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8886005043",
@@ -637,7 +1869,51 @@
         96,
         6
       ],
-      "startTime": "2026-07-07T19:48:00.000Z"
+      "startTime": "2026-07-07T19:48:00.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 109,
+          "role": "Carry"
+        },
+        {
+          "heroId": 38,
+          "role": "Mid"
+        },
+        {
+          "heroId": 106,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 90,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 6,
+          "role": "Carry"
+        },
+        {
+          "heroId": 107,
+          "role": "Mid"
+        },
+        {
+          "heroId": 96,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 9,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 119,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8885928262",
@@ -659,7 +1935,51 @@
         112,
         53
       ],
-      "startTime": "2026-07-07T18:47:42.000Z"
+      "startTime": "2026-07-07T18:47:42.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 73,
+          "role": "Carry"
+        },
+        {
+          "heroId": 107,
+          "role": "Mid"
+        },
+        {
+          "heroId": 38,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 9,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 71,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 145,
+          "role": "Carry"
+        },
+        {
+          "heroId": 96,
+          "role": "Mid"
+        },
+        {
+          "heroId": 106,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 53,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 112,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8885784652",
@@ -681,7 +2001,51 @@
         121,
         83
       ],
-      "startTime": "2026-07-07T16:59:00.000Z"
+      "startTime": "2026-07-07T16:59:00.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 96,
+          "role": "Carry"
+        },
+        {
+          "heroId": 22,
+          "role": "Mid"
+        },
+        {
+          "heroId": 21,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 105,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 58,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 15,
+          "role": "Carry"
+        },
+        {
+          "heroId": 13,
+          "role": "Mid"
+        },
+        {
+          "heroId": 29,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 83,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 121,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8885723512",
@@ -703,7 +2067,51 @@
         21,
         5
       ],
-      "startTime": "2026-07-07T16:05:00.000Z"
+      "startTime": "2026-07-07T16:05:00.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 11,
+          "role": "Carry"
+        },
+        {
+          "heroId": 17,
+          "role": "Mid"
+        },
+        {
+          "heroId": 155,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 123,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 85,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 6,
+          "role": "Carry"
+        },
+        {
+          "heroId": 120,
+          "role": "Mid"
+        },
+        {
+          "heroId": 2,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 5,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 21,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8885633666",
@@ -725,7 +2133,51 @@
         86,
         69
       ],
-      "startTime": "2026-07-07T15:06:38.000Z"
+      "startTime": "2026-07-07T15:06:38.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 114,
+          "role": "Carry"
+        },
+        {
+          "heroId": 47,
+          "role": "Mid"
+        },
+        {
+          "heroId": 107,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 100,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 3,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 13,
+          "role": "Carry"
+        },
+        {
+          "heroId": 56,
+          "role": "Mid"
+        },
+        {
+          "heroId": 69,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 86,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8885614030",
@@ -747,7 +2199,51 @@
         9,
         3
       ],
-      "startTime": "2026-07-07T14:52:01.000Z"
+      "startTime": "2026-07-07T14:52:01.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 72,
+          "role": "Carry"
+        },
+        {
+          "heroId": 69,
+          "role": "Mid"
+        },
+        {
+          "heroId": 17,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 22,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 123,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 11,
+          "role": "Carry"
+        },
+        {
+          "heroId": 128,
+          "role": "Mid"
+        },
+        {
+          "heroId": 85,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 9,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 3,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8867153677",
@@ -769,7 +2265,51 @@
         90,
         155
       ],
-      "startTime": "2026-06-26T11:42:10.000Z"
+      "startTime": "2026-06-26T11:42:10.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 46,
+          "role": "Carry"
+        },
+        {
+          "heroId": 74,
+          "role": "Mid"
+        },
+        {
+          "heroId": 2,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 51,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 123,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 11,
+          "role": "Carry"
+        },
+        {
+          "heroId": 33,
+          "role": "Mid"
+        },
+        {
+          "heroId": 19,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 90,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 155,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8867047967",
@@ -791,7 +2331,51 @@
         51,
         3
       ],
-      "startTime": "2026-06-26T10:20:12.000Z"
+      "startTime": "2026-06-26T10:20:12.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 21,
+          "role": "Carry"
+        },
+        {
+          "heroId": 74,
+          "role": "Mid"
+        },
+        {
+          "heroId": 65,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 105,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 83,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 34,
+          "role": "Carry"
+        },
+        {
+          "heroId": 36,
+          "role": "Mid"
+        },
+        {
+          "heroId": 69,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 3,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8861905178",
@@ -813,7 +2397,51 @@
         72,
         87
       ],
-      "startTime": "2026-06-22T12:15:13.000Z"
+      "startTime": "2026-06-22T12:15:13.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 145,
+          "role": "Carry"
+        },
+        {
+          "heroId": 47,
+          "role": "Mid"
+        },
+        {
+          "heroId": 126,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 123,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 31,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 21,
+          "role": "Carry"
+        },
+        {
+          "heroId": 77,
+          "role": "Mid"
+        },
+        {
+          "heroId": 13,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 72,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 87,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8861804868",
@@ -835,7 +2463,51 @@
         21,
         49
       ],
-      "startTime": "2026-06-22T10:37:12.000Z"
+      "startTime": "2026-06-22T10:37:12.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 72,
+          "role": "Carry"
+        },
+        {
+          "heroId": 137,
+          "role": "Mid"
+        },
+        {
+          "heroId": 126,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 123,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 87,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 53,
+          "role": "Carry"
+        },
+        {
+          "heroId": 13,
+          "role": "Mid"
+        },
+        {
+          "heroId": 49,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 85,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 21,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8861740474",
@@ -857,7 +2529,51 @@
         91,
         72
       ],
-      "startTime": "2026-06-22T09:20:27.000Z"
+      "startTime": "2026-06-22T09:20:27.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 19,
+          "role": "Carry"
+        },
+        {
+          "heroId": 22,
+          "role": "Mid"
+        },
+        {
+          "heroId": 23,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 58,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 26,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 72,
+          "role": "Carry"
+        },
+        {
+          "heroId": 13,
+          "role": "Mid"
+        },
+        {
+          "heroId": 53,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 2,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 91,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8861735465",
@@ -879,7 +2595,51 @@
         77,
         131
       ],
-      "startTime": "2026-06-22T09:13:31.000Z"
+      "startTime": "2026-06-22T09:13:31.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 53,
+          "role": "Carry"
+        },
+        {
+          "heroId": 55,
+          "role": "Mid"
+        },
+        {
+          "heroId": 6,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 30,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 71,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 77,
+          "role": "Carry"
+        },
+        {
+          "heroId": 19,
+          "role": "Mid"
+        },
+        {
+          "heroId": 74,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 65,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 131,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8861682683",
@@ -901,7 +2661,51 @@
         123,
         51
       ],
-      "startTime": "2026-06-22T08:01:03.000Z"
+      "startTime": "2026-06-22T08:01:03.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 56,
+          "role": "Carry"
+        },
+        {
+          "heroId": 155,
+          "role": "Mid"
+        },
+        {
+          "heroId": 65,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 31,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 19,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 11,
+          "role": "Carry"
+        },
+        {
+          "heroId": 74,
+          "role": "Mid"
+        },
+        {
+          "heroId": 85,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 123,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8839717574",
@@ -923,7 +2727,51 @@
         129,
         51
       ],
-      "startTime": "2026-06-05T17:03:43.000Z"
+      "startTime": "2026-06-05T17:03:43.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 21,
+          "role": "Carry"
+        },
+        {
+          "heroId": 17,
+          "role": "Mid"
+        },
+        {
+          "heroId": 120,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 68,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 123,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 54,
+          "role": "Carry"
+        },
+        {
+          "heroId": 90,
+          "role": "Mid"
+        },
+        {
+          "heroId": 129,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 66,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8839625815",
@@ -945,7 +2793,51 @@
         26,
         3
       ],
-      "startTime": "2026-06-05T15:56:10.000Z"
+      "startTime": "2026-06-05T15:56:10.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 106,
+          "role": "Carry"
+        },
+        {
+          "heroId": 15,
+          "role": "Mid"
+        },
+        {
+          "heroId": 81,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 75,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 123,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 21,
+          "role": "Carry"
+        },
+        {
+          "heroId": 69,
+          "role": "Mid"
+        },
+        {
+          "heroId": 47,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 26,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 3,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8839494962",
@@ -967,7 +2859,51 @@
         99,
         51
       ],
-      "startTime": "2026-06-05T14:34:10.000Z"
+      "startTime": "2026-06-05T14:34:10.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 21,
+          "role": "Carry"
+        },
+        {
+          "heroId": 17,
+          "role": "Mid"
+        },
+        {
+          "heroId": 135,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 37,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 26,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 99,
+          "role": "Carry"
+        },
+        {
+          "heroId": 90,
+          "role": "Mid"
+        },
+        {
+          "heroId": 19,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 3,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8838170936",
@@ -989,7 +2925,51 @@
         100,
         19
       ],
-      "startTime": "2026-06-04T13:49:59.000Z"
+      "startTime": "2026-06-04T13:49:59.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 6,
+          "role": "Carry"
+        },
+        {
+          "heroId": 108,
+          "role": "Mid"
+        },
+        {
+          "heroId": 106,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 110,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 26,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 74,
+          "role": "Carry"
+        },
+        {
+          "heroId": 19,
+          "role": "Mid"
+        },
+        {
+          "heroId": 135,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 123,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 100,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8838056564",
@@ -1011,7 +2991,51 @@
         14,
         19
       ],
-      "startTime": "2026-06-04T12:24:12.000Z"
+      "startTime": "2026-06-04T12:24:12.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 73,
+          "role": "Carry"
+        },
+        {
+          "heroId": 36,
+          "role": "Mid"
+        },
+        {
+          "heroId": 106,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 110,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 26,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 13,
+          "role": "Carry"
+        },
+        {
+          "heroId": 128,
+          "role": "Mid"
+        },
+        {
+          "heroId": 19,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 53,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 14,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8837957019",
@@ -1033,7 +3057,51 @@
         26,
         58
       ],
-      "startTime": "2026-06-04T10:46:59.000Z"
+      "startTime": "2026-06-04T10:46:59.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 74,
+          "role": "Carry"
+        },
+        {
+          "heroId": 19,
+          "role": "Mid"
+        },
+        {
+          "heroId": 98,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 128,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 112,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 70,
+          "role": "Carry"
+        },
+        {
+          "heroId": 39,
+          "role": "Mid"
+        },
+        {
+          "heroId": 2,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 58,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 26,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8837869969",
@@ -1055,7 +3123,51 @@
         51,
         128
       ],
-      "startTime": "2026-06-04T08:59:52.000Z"
+      "startTime": "2026-06-04T08:59:52.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 109,
+          "role": "Carry"
+        },
+        {
+          "heroId": 39,
+          "role": "Mid"
+        },
+        {
+          "heroId": 2,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 58,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 123,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 46,
+          "role": "Carry"
+        },
+        {
+          "heroId": 106,
+          "role": "Mid"
+        },
+        {
+          "heroId": 28,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 128,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8831927547",
@@ -1077,7 +3189,51 @@
         105,
         6
       ],
-      "startTime": "2026-05-30T17:19:00.000Z"
+      "startTime": "2026-05-30T17:19:00.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 12,
+          "role": "Carry"
+        },
+        {
+          "heroId": 2,
+          "role": "Mid"
+        },
+        {
+          "heroId": 21,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 26,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 112,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 6,
+          "role": "Carry"
+        },
+        {
+          "heroId": 126,
+          "role": "Mid"
+        },
+        {
+          "heroId": 28,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 105,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 83,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8831817474",
@@ -1099,7 +3255,51 @@
         123,
         110
       ],
-      "startTime": "2026-05-30T15:57:03.000Z"
+      "startTime": "2026-05-30T15:57:03.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 54,
+          "role": "Carry"
+        },
+        {
+          "heroId": 120,
+          "role": "Mid"
+        },
+        {
+          "heroId": 135,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 75,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 26,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 21,
+          "role": "Carry"
+        },
+        {
+          "heroId": 13,
+          "role": "Mid"
+        },
+        {
+          "heroId": 2,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 110,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 123,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8831810450",
@@ -1121,7 +3321,51 @@
         105,
         120
       ],
-      "startTime": "2026-05-30T15:40:02.000Z"
+      "startTime": "2026-05-30T15:40:02.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 80,
+          "role": "Carry"
+        },
+        {
+          "heroId": 53,
+          "role": "Mid"
+        },
+        {
+          "heroId": 2,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 86,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 3,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 73,
+          "role": "Carry"
+        },
+        {
+          "heroId": 120,
+          "role": "Mid"
+        },
+        {
+          "heroId": 47,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 105,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 123,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8831663527",
@@ -1143,7 +3387,51 @@
         51,
         86
       ],
-      "startTime": "2026-05-30T14:15:01.000Z"
+      "startTime": "2026-05-30T14:15:01.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 11,
+          "role": "Carry"
+        },
+        {
+          "heroId": 155,
+          "role": "Mid"
+        },
+        {
+          "heroId": 106,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 100,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 26,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 46,
+          "role": "Carry"
+        },
+        {
+          "heroId": 74,
+          "role": "Mid"
+        },
+        {
+          "heroId": 108,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 86,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8831571711",
@@ -1165,7 +3453,51 @@
         131,
         29
       ],
-      "startTime": "2026-05-30T13:08:54.000Z"
+      "startTime": "2026-05-30T13:08:54.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 145,
+          "role": "Carry"
+        },
+        {
+          "heroId": 98,
+          "role": "Mid"
+        },
+        {
+          "heroId": 77,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 100,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 3,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 6,
+          "role": "Carry"
+        },
+        {
+          "heroId": 29,
+          "role": "Mid"
+        },
+        {
+          "heroId": 106,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 131,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 83,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8831470213",
@@ -1187,7 +3519,51 @@
         83,
         21
       ],
-      "startTime": "2026-05-30T11:56:06.000Z"
+      "startTime": "2026-05-30T11:56:06.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 19,
+          "role": "Carry"
+        },
+        {
+          "heroId": 155,
+          "role": "Mid"
+        },
+        {
+          "heroId": 39,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 51,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 123,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 69,
+          "role": "Carry"
+        },
+        {
+          "heroId": 21,
+          "role": "Mid"
+        },
+        {
+          "heroId": 17,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 86,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 83,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8830529631",
@@ -1209,7 +3585,51 @@
         66,
         12
       ],
-      "startTime": "2026-05-29T17:35:49.000Z"
+      "startTime": "2026-05-29T17:35:49.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 36,
+          "role": "Carry"
+        },
+        {
+          "heroId": 6,
+          "role": "Mid"
+        },
+        {
+          "heroId": 28,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 3,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 123,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 12,
+          "role": "Carry"
+        },
+        {
+          "heroId": 98,
+          "role": "Mid"
+        },
+        {
+          "heroId": 120,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 66,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 26,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8830280454",
@@ -1231,7 +3651,51 @@
         129,
         51
       ],
-      "startTime": "2026-05-29T14:40:38.000Z"
+      "startTime": "2026-05-29T14:40:38.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 11,
+          "role": "Carry"
+        },
+        {
+          "heroId": 17,
+          "role": "Mid"
+        },
+        {
+          "heroId": 2,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 101,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 30,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 129,
+          "role": "Carry"
+        },
+        {
+          "heroId": 128,
+          "role": "Mid"
+        },
+        {
+          "heroId": 20,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 110,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8830175194",
@@ -1253,7 +3717,51 @@
         51,
         123
       ],
-      "startTime": "2026-05-29T13:30:26.000Z"
+      "startTime": "2026-05-29T13:30:26.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 19,
+          "role": "Carry"
+        },
+        {
+          "heroId": 135,
+          "role": "Mid"
+        },
+        {
+          "heroId": 17,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 90,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 110,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 53,
+          "role": "Carry"
+        },
+        {
+          "heroId": 106,
+          "role": "Mid"
+        },
+        {
+          "heroId": 2,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 123,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8830092075",
@@ -1275,7 +3783,51 @@
         112,
         20
       ],
-      "startTime": "2026-05-29T12:28:35.000Z"
+      "startTime": "2026-05-29T12:28:35.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 36,
+          "role": "Carry"
+        },
+        {
+          "heroId": 69,
+          "role": "Mid"
+        },
+        {
+          "heroId": 120,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 100,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 26,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 20,
+          "role": "Carry"
+        },
+        {
+          "heroId": 2,
+          "role": "Mid"
+        },
+        {
+          "heroId": 13,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 112,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 119,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8830022703",
@@ -1297,7 +3849,51 @@
         91,
         6
       ],
-      "startTime": "2026-05-29T11:27:03.000Z"
+      "startTime": "2026-05-29T11:27:03.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 145,
+          "role": "Carry"
+        },
+        {
+          "heroId": 47,
+          "role": "Mid"
+        },
+        {
+          "heroId": 38,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 90,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 31,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 6,
+          "role": "Carry"
+        },
+        {
+          "heroId": 69,
+          "role": "Mid"
+        },
+        {
+          "heroId": 17,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 83,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 91,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8829947329",
@@ -1319,7 +3915,51 @@
         6,
         26
       ],
-      "startTime": "2026-05-29T10:08:55.000Z"
+      "startTime": "2026-05-29T10:08:55.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 12,
+          "role": "Carry"
+        },
+        {
+          "heroId": 17,
+          "role": "Mid"
+        },
+        {
+          "heroId": 2,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 110,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 6,
+          "role": "Carry"
+        },
+        {
+          "heroId": 69,
+          "role": "Mid"
+        },
+        {
+          "heroId": 120,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 83,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 26,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8829882210",
@@ -1341,7 +3981,51 @@
         26,
         65
       ],
-      "startTime": "2026-05-29T08:51:03.000Z"
+      "startTime": "2026-05-29T08:51:03.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 11,
+          "role": "Carry"
+        },
+        {
+          "heroId": 17,
+          "role": "Mid"
+        },
+        {
+          "heroId": 2,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 101,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 83,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 6,
+          "role": "Carry"
+        },
+        {
+          "heroId": 65,
+          "role": "Mid"
+        },
+        {
+          "heroId": 137,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 26,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8829839467",
@@ -1363,7 +4047,51 @@
         91,
         6
       ],
-      "startTime": "2026-05-29T07:56:11.000Z"
+      "startTime": "2026-05-29T07:56:11.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 19,
+          "role": "Carry"
+        },
+        {
+          "heroId": 120,
+          "role": "Mid"
+        },
+        {
+          "heroId": 114,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 31,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 26,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 6,
+          "role": "Carry"
+        },
+        {
+          "heroId": 135,
+          "role": "Mid"
+        },
+        {
+          "heroId": 28,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 91,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8829095250",
@@ -1385,7 +4113,51 @@
         105,
         11
       ],
-      "startTime": "2026-05-28T15:52:26.000Z"
+      "startTime": "2026-05-28T15:52:26.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 6,
+          "role": "Carry"
+        },
+        {
+          "heroId": 65,
+          "role": "Mid"
+        },
+        {
+          "heroId": 137,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 100,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 21,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 13,
+          "role": "Carry"
+        },
+        {
+          "heroId": 11,
+          "role": "Mid"
+        },
+        {
+          "heroId": 2,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 105,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 57,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8829074990",
@@ -1407,7 +4179,51 @@
         51,
         40
       ],
-      "startTime": "2026-05-28T15:37:36.000Z"
+      "startTime": "2026-05-28T15:37:36.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 11,
+          "role": "Carry"
+        },
+        {
+          "heroId": 126,
+          "role": "Mid"
+        },
+        {
+          "heroId": 2,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 53,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 3,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 39,
+          "role": "Carry"
+        },
+        {
+          "heroId": 19,
+          "role": "Mid"
+        },
+        {
+          "heroId": 135,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 51,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 40,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8828847743",
@@ -1429,7 +4245,51 @@
         51,
         110
       ],
-      "startTime": "2026-05-28T12:58:43.000Z"
+      "startTime": "2026-05-28T12:58:43.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 48,
+          "role": "Carry"
+        },
+        {
+          "heroId": 33,
+          "role": "Mid"
+        },
+        {
+          "heroId": 60,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 128,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 88,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 72,
+          "role": "Carry"
+        },
+        {
+          "heroId": 13,
+          "role": "Mid"
+        },
+        {
+          "heroId": 2,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 110,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8828810013",
@@ -1451,7 +4311,51 @@
         120,
         28
       ],
-      "startTime": "2026-05-28T12:28:43.000Z"
+      "startTime": "2026-05-28T12:28:43.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 145,
+          "role": "Carry"
+        },
+        {
+          "heroId": 38,
+          "role": "Mid"
+        },
+        {
+          "heroId": 114,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 31,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 105,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 19,
+          "role": "Carry"
+        },
+        {
+          "heroId": 120,
+          "role": "Mid"
+        },
+        {
+          "heroId": 28,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 86,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 121,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8828662524",
@@ -1473,7 +4377,51 @@
         123,
         49
       ],
-      "startTime": "2026-05-28T10:07:41.000Z"
+      "startTime": "2026-05-28T10:07:41.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 135,
+          "role": "Carry"
+        },
+        {
+          "heroId": 19,
+          "role": "Mid"
+        },
+        {
+          "heroId": 13,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 37,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 26,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 49,
+          "role": "Carry"
+        },
+        {
+          "heroId": 106,
+          "role": "Mid"
+        },
+        {
+          "heroId": 108,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 123,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 86,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8828602222",
@@ -1495,7 +4443,51 @@
         123,
         43
       ],
-      "startTime": "2026-05-28T08:54:48.000Z"
+      "startTime": "2026-05-28T08:54:48.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 73,
+          "role": "Carry"
+        },
+        {
+          "heroId": 137,
+          "role": "Mid"
+        },
+        {
+          "heroId": 15,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 110,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 21,
+          "role": "Carry"
+        },
+        {
+          "heroId": 120,
+          "role": "Mid"
+        },
+        {
+          "heroId": 43,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 123,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 100,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8827784459",
@@ -1517,7 +4509,51 @@
         104,
         51
       ],
-      "startTime": "2026-05-27T15:22:46.000Z"
+      "startTime": "2026-05-27T15:22:46.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 22,
+          "role": "Carry"
+        },
+        {
+          "heroId": 145,
+          "role": "Mid"
+        },
+        {
+          "heroId": 120,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 21,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 31,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 128,
+          "role": "Carry"
+        },
+        {
+          "heroId": 19,
+          "role": "Mid"
+        },
+        {
+          "heroId": 104,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 110,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8827769920",
@@ -1539,7 +4575,51 @@
         123,
         57
       ],
-      "startTime": "2026-05-27T15:12:22.000Z"
+      "startTime": "2026-05-27T15:12:22.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 19,
+          "role": "Carry"
+        },
+        {
+          "heroId": 39,
+          "role": "Mid"
+        },
+        {
+          "heroId": 155,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 26,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 68,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 145,
+          "role": "Carry"
+        },
+        {
+          "heroId": 59,
+          "role": "Mid"
+        },
+        {
+          "heroId": 57,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 123,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 83,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8827492535",
@@ -1561,7 +4641,51 @@
         31,
         123
       ],
-      "startTime": "2026-05-27T11:49:02.000Z"
+      "startTime": "2026-05-27T11:49:02.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 145,
+          "role": "Carry"
+        },
+        {
+          "heroId": 34,
+          "role": "Mid"
+        },
+        {
+          "heroId": 97,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 110,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 26,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 21,
+          "role": "Carry"
+        },
+        {
+          "heroId": 74,
+          "role": "Mid"
+        },
+        {
+          "heroId": 28,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 123,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 31,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8827464470",
@@ -1583,7 +4707,51 @@
         123,
         3
       ],
-      "startTime": "2026-05-27T11:23:22.000Z"
+      "startTime": "2026-05-27T11:23:22.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 7,
+          "role": "Carry"
+        },
+        {
+          "heroId": 15,
+          "role": "Mid"
+        },
+        {
+          "heroId": 20,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 58,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 69,
+          "role": "Carry"
+        },
+        {
+          "heroId": 21,
+          "role": "Mid"
+        },
+        {
+          "heroId": 126,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 123,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 3,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8827351366",
@@ -1605,7 +4773,51 @@
         105,
         86
       ],
-      "startTime": "2026-05-27T09:22:17.000Z"
+      "startTime": "2026-05-27T09:22:17.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 19,
+          "role": "Carry"
+        },
+        {
+          "heroId": 69,
+          "role": "Mid"
+        },
+        {
+          "heroId": 13,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 31,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 100,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 145,
+          "role": "Carry"
+        },
+        {
+          "heroId": 120,
+          "role": "Mid"
+        },
+        {
+          "heroId": 60,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 105,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 86,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8827282767",
@@ -1627,7 +4839,51 @@
         120,
         26
       ],
-      "startTime": "2026-05-27T07:56:58.000Z"
+      "startTime": "2026-05-27T07:56:58.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 16,
+          "role": "Carry"
+        },
+        {
+          "heroId": 145,
+          "role": "Mid"
+        },
+        {
+          "heroId": 60,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 123,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 73,
+          "role": "Carry"
+        },
+        {
+          "heroId": 120,
+          "role": "Mid"
+        },
+        {
+          "heroId": 137,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 58,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 26,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8826591758",
@@ -1649,7 +4905,51 @@
         31,
         86
       ],
-      "startTime": "2026-05-26T16:38:04.000Z"
+      "startTime": "2026-05-26T16:38:04.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 36,
+          "role": "Carry"
+        },
+        {
+          "heroId": 98,
+          "role": "Mid"
+        },
+        {
+          "heroId": 17,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 90,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 80,
+          "role": "Carry"
+        },
+        {
+          "heroId": 110,
+          "role": "Mid"
+        },
+        {
+          "heroId": 28,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 86,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 31,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8826437838",
@@ -1671,7 +4971,51 @@
         123,
         48
       ],
-      "startTime": "2026-05-26T14:46:36.000Z"
+      "startTime": "2026-05-26T14:46:36.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 19,
+          "role": "Carry"
+        },
+        {
+          "heroId": 38,
+          "role": "Mid"
+        },
+        {
+          "heroId": 128,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 90,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 3,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 48,
+          "role": "Carry"
+        },
+        {
+          "heroId": 120,
+          "role": "Mid"
+        },
+        {
+          "heroId": 135,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 58,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 123,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8826347921",
@@ -1693,7 +5037,51 @@
         105,
         21
       ],
-      "startTime": "2026-05-26T13:47:11.000Z"
+      "startTime": "2026-05-26T13:47:11.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 11,
+          "role": "Carry"
+        },
+        {
+          "heroId": 38,
+          "role": "Mid"
+        },
+        {
+          "heroId": 106,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 90,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 3,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 13,
+          "role": "Carry"
+        },
+        {
+          "heroId": 21,
+          "role": "Mid"
+        },
+        {
+          "heroId": 69,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 105,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 31,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8826258112",
@@ -1715,7 +5103,51 @@
         90,
         103
       ],
-      "startTime": "2026-05-26T12:43:35.000Z"
+      "startTime": "2026-05-26T12:43:35.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 8,
+          "role": "Carry"
+        },
+        {
+          "heroId": 47,
+          "role": "Mid"
+        },
+        {
+          "heroId": 28,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 91,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 83,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 129,
+          "role": "Carry"
+        },
+        {
+          "heroId": 138,
+          "role": "Mid"
+        },
+        {
+          "heroId": 128,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 90,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 103,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8826168772",
@@ -1737,7 +5169,51 @@
         3,
         138
       ],
-      "startTime": "2026-05-26T11:28:24.000Z"
+      "startTime": "2026-05-26T11:28:24.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 35,
+          "role": "Carry"
+        },
+        {
+          "heroId": 36,
+          "role": "Mid"
+        },
+        {
+          "heroId": 120,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 66,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 26,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 138,
+          "role": "Carry"
+        },
+        {
+          "heroId": 98,
+          "role": "Mid"
+        },
+        {
+          "heroId": 114,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 90,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 3,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8826110206",
@@ -1759,7 +5235,51 @@
         21,
         2
       ],
-      "startTime": "2026-05-26T10:27:20.000Z"
+      "startTime": "2026-05-26T10:27:20.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 11,
+          "role": "Carry"
+        },
+        {
+          "heroId": 33,
+          "role": "Mid"
+        },
+        {
+          "heroId": 60,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 83,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 123,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 80,
+          "role": "Carry"
+        },
+        {
+          "heroId": 13,
+          "role": "Mid"
+        },
+        {
+          "heroId": 2,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 110,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 21,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8826052816",
@@ -1781,7 +5301,51 @@
         90,
         19
       ],
-      "startTime": "2026-05-26T09:16:44.000Z"
+      "startTime": "2026-05-26T09:16:44.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 41,
+          "role": "Carry"
+        },
+        {
+          "heroId": 128,
+          "role": "Mid"
+        },
+        {
+          "heroId": 108,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 58,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 26,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 19,
+          "role": "Carry"
+        },
+        {
+          "heroId": 17,
+          "role": "Mid"
+        },
+        {
+          "heroId": 60,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 90,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 30,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8825996999",
@@ -1803,7 +5367,51 @@
         58,
         21
       ],
-      "startTime": "2026-05-26T08:01:27.000Z"
+      "startTime": "2026-05-26T08:01:27.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 109,
+          "role": "Carry"
+        },
+        {
+          "heroId": 38,
+          "role": "Mid"
+        },
+        {
+          "heroId": 120,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 86,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 111,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 21,
+          "role": "Carry"
+        },
+        {
+          "heroId": 128,
+          "role": "Mid"
+        },
+        {
+          "heroId": 110,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 58,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8823581121",
@@ -1825,7 +5433,51 @@
         26,
         58
       ],
-      "startTime": "2026-05-24T11:56:08.000Z"
+      "startTime": "2026-05-24T11:56:08.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 41,
+          "role": "Carry"
+        },
+        {
+          "heroId": 74,
+          "role": "Mid"
+        },
+        {
+          "heroId": 86,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 104,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 136,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 89,
+          "role": "Carry"
+        },
+        {
+          "heroId": 98,
+          "role": "Mid"
+        },
+        {
+          "heroId": 126,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 58,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 26,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8823502263",
@@ -1847,7 +5499,51 @@
         105,
         137
       ],
-      "startTime": "2026-05-24T10:55:03.000Z"
+      "startTime": "2026-05-24T10:55:03.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 39,
+          "role": "Carry"
+        },
+        {
+          "heroId": 41,
+          "role": "Mid"
+        },
+        {
+          "heroId": 69,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 37,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 26,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 73,
+          "role": "Carry"
+        },
+        {
+          "heroId": 126,
+          "role": "Mid"
+        },
+        {
+          "heroId": 137,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 110,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 105,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8822593932",
@@ -1869,7 +5565,51 @@
         3,
         110
       ],
-      "startTime": "2026-05-23T17:58:00.000Z"
+      "startTime": "2026-05-23T17:58:00.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 54,
+          "role": "Carry"
+        },
+        {
+          "heroId": 29,
+          "role": "Mid"
+        },
+        {
+          "heroId": 43,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 31,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 70,
+          "role": "Carry"
+        },
+        {
+          "heroId": 128,
+          "role": "Mid"
+        },
+        {
+          "heroId": 2,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 110,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 3,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8822520406",
@@ -1891,7 +5631,51 @@
         98,
         19
       ],
-      "startTime": "2026-05-23T17:01:01.000Z"
+      "startTime": "2026-05-23T17:01:01.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 80,
+          "role": "Carry"
+        },
+        {
+          "heroId": 28,
+          "role": "Mid"
+        },
+        {
+          "heroId": 114,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 110,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 3,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 21,
+          "role": "Carry"
+        },
+        {
+          "heroId": 98,
+          "role": "Mid"
+        },
+        {
+          "heroId": 120,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 19,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 31,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8822088303",
@@ -1913,7 +5697,51 @@
         29,
         128
       ],
-      "startTime": "2026-05-23T12:00:12.000Z"
+      "startTime": "2026-05-23T12:00:12.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 106,
+          "role": "Carry"
+        },
+        {
+          "heroId": 47,
+          "role": "Mid"
+        },
+        {
+          "heroId": 11,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 85,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 155,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 13,
+          "role": "Carry"
+        },
+        {
+          "heroId": 19,
+          "role": "Mid"
+        },
+        {
+          "heroId": 29,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 128,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 31,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8821954344",
@@ -1935,7 +5763,51 @@
         69,
         86
       ],
-      "startTime": "2026-05-23T09:55:22.000Z"
+      "startTime": "2026-05-23T09:55:22.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 11,
+          "role": "Carry"
+        },
+        {
+          "heroId": 28,
+          "role": "Mid"
+        },
+        {
+          "heroId": 155,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 123,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 54,
+          "role": "Carry"
+        },
+        {
+          "heroId": 120,
+          "role": "Mid"
+        },
+        {
+          "heroId": 69,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 31,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 86,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8820090629",
@@ -1957,7 +5829,51 @@
         51,
         110
       ],
-      "startTime": "2026-05-21T19:46:06.000Z"
+      "startTime": "2026-05-21T19:46:06.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 73,
+          "role": "Carry"
+        },
+        {
+          "heroId": 74,
+          "role": "Mid"
+        },
+        {
+          "heroId": 137,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 123,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 131,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 21,
+          "role": "Carry"
+        },
+        {
+          "heroId": 17,
+          "role": "Mid"
+        },
+        {
+          "heroId": 135,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 110,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 51,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8820011939",
@@ -1979,7 +5895,51 @@
         26,
         110
       ],
-      "startTime": "2026-05-21T18:32:01.000Z"
+      "startTime": "2026-05-21T18:32:01.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 53,
+          "role": "Carry"
+        },
+        {
+          "heroId": 129,
+          "role": "Mid"
+        },
+        {
+          "heroId": 17,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 83,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 123,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 69,
+          "role": "Carry"
+        },
+        {
+          "heroId": 2,
+          "role": "Mid"
+        },
+        {
+          "heroId": 106,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 110,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 26,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8819933287",
@@ -2001,7 +5961,51 @@
         86,
         128
       ],
-      "startTime": "2026-05-21T17:23:02.000Z"
+      "startTime": "2026-05-21T17:23:02.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 54,
+          "role": "Carry"
+        },
+        {
+          "heroId": 69,
+          "role": "Mid"
+        },
+        {
+          "heroId": 21,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 105,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 31,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 11,
+          "role": "Carry"
+        },
+        {
+          "heroId": 128,
+          "role": "Mid"
+        },
+        {
+          "heroId": 23,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 86,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 83,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8819559937",
@@ -2023,7 +6027,51 @@
         145,
         40
       ],
-      "startTime": "2026-05-21T12:31:04.000Z"
+      "startTime": "2026-05-21T12:31:04.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 11,
+          "role": "Carry"
+        },
+        {
+          "heroId": 120,
+          "role": "Mid"
+        },
+        {
+          "heroId": 33,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 105,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 123,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 108,
+          "role": "Carry"
+        },
+        {
+          "heroId": 145,
+          "role": "Mid"
+        },
+        {
+          "heroId": 21,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 40,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 79,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8819488294",
@@ -2045,7 +6093,51 @@
         109,
         79
       ],
-      "startTime": "2026-05-21T11:22:07.000Z"
+      "startTime": "2026-05-21T11:22:07.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 55,
+          "role": "Carry"
+        },
+        {
+          "heroId": 11,
+          "role": "Mid"
+        },
+        {
+          "heroId": 28,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 123,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 85,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 109,
+          "role": "Carry"
+        },
+        {
+          "heroId": 108,
+          "role": "Mid"
+        },
+        {
+          "heroId": 145,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 86,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 79,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8819416362",
@@ -2067,7 +6159,51 @@
         100,
         155
       ],
-      "startTime": "2026-05-21T09:55:59.000Z"
+      "startTime": "2026-05-21T09:55:59.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 74,
+          "role": "Carry"
+        },
+        {
+          "heroId": 138,
+          "role": "Mid"
+        },
+        {
+          "heroId": 2,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 40,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 86,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 36,
+          "role": "Carry"
+        },
+        {
+          "heroId": 155,
+          "role": "Mid"
+        },
+        {
+          "heroId": 120,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 123,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 100,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8818947976",
@@ -2089,7 +6225,51 @@
         105,
         21
       ],
-      "startTime": "2026-05-20T20:15:12.000Z"
+      "startTime": "2026-05-20T20:15:12.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 6,
+          "role": "Carry"
+        },
+        {
+          "heroId": 52,
+          "role": "Mid"
+        },
+        {
+          "heroId": 96,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 31,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 88,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 13,
+          "role": "Carry"
+        },
+        {
+          "heroId": 21,
+          "role": "Mid"
+        },
+        {
+          "heroId": 69,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 105,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 103,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8818882603",
@@ -2111,7 +6291,51 @@
         90,
         19
       ],
-      "startTime": "2026-05-20T19:10:02.000Z"
+      "startTime": "2026-05-20T19:10:02.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 38,
+          "role": "Carry"
+        },
+        {
+          "heroId": 135,
+          "role": "Mid"
+        },
+        {
+          "heroId": 41,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 86,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 58,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 19,
+          "role": "Carry"
+        },
+        {
+          "heroId": 29,
+          "role": "Mid"
+        },
+        {
+          "heroId": 120,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 90,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 110,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8818801707",
@@ -2133,7 +6357,51 @@
         86,
         110
       ],
-      "startTime": "2026-05-20T17:57:05.000Z"
+      "startTime": "2026-05-20T17:57:05.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 19,
+          "role": "Carry"
+        },
+        {
+          "heroId": 106,
+          "role": "Mid"
+        },
+        {
+          "heroId": 28,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 31,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 123,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 6,
+          "role": "Carry"
+        },
+        {
+          "heroId": 38,
+          "role": "Mid"
+        },
+        {
+          "heroId": 135,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 110,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 86,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8817760291",
@@ -2155,7 +6423,51 @@
         26,
         98
       ],
-      "startTime": "2026-05-19T20:14:00.000Z"
+      "startTime": "2026-05-19T20:14:00.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 19,
+          "role": "Carry"
+        },
+        {
+          "heroId": 135,
+          "role": "Mid"
+        },
+        {
+          "heroId": 17,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 40,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 123,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 98,
+          "role": "Carry"
+        },
+        {
+          "heroId": 114,
+          "role": "Mid"
+        },
+        {
+          "heroId": 120,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 110,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 26,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8817670980",
@@ -2177,7 +6489,51 @@
         128,
         26
       ],
-      "startTime": "2026-05-19T18:48:00.000Z"
+      "startTime": "2026-05-19T18:48:00.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 70,
+          "role": "Carry"
+        },
+        {
+          "heroId": 135,
+          "role": "Mid"
+        },
+        {
+          "heroId": 13,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 110,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 123,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 41,
+          "role": "Carry"
+        },
+        {
+          "heroId": 126,
+          "role": "Mid"
+        },
+        {
+          "heroId": 97,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 128,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 26,
+          "role": "Hard Support"
+        }
+      ]
     },
     {
       "matchId": "8817588541",
@@ -2199,7 +6555,51 @@
         26,
         37
       ],
-      "startTime": "2026-05-19T17:35:29.000Z"
+      "startTime": "2026-05-19T17:35:29.000Z",
+      "radiantHeroRoles": [
+        {
+          "heroId": 46,
+          "role": "Carry"
+        },
+        {
+          "heroId": 60,
+          "role": "Mid"
+        },
+        {
+          "heroId": 2,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 128,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 75,
+          "role": "Hard Support"
+        }
+      ],
+      "direHeroRoles": [
+        {
+          "heroId": 70,
+          "role": "Carry"
+        },
+        {
+          "heroId": 13,
+          "role": "Mid"
+        },
+        {
+          "heroId": 110,
+          "role": "Offlane"
+        },
+        {
+          "heroId": 37,
+          "role": "Soft Support"
+        },
+        {
+          "heroId": 26,
+          "role": "Hard Support"
+        }
+      ]
     }
   ]
 }

@@ -17,6 +17,12 @@ model PooledDraft {
   source         String   @default("player") // "player" | "pro"
   submitterToken String?
   heroIds        Json
+  // {heroId: number, role: string}[], same order as heroIds. Nullable —
+  // rows committed before role-fit reached Battle Engine have no role
+  // data; resolveBattle treats a null/missing role as "no boost" rather
+  // than erroring (see Blueprint/10-tech-debt-backlog.md, "Role-fit in
+  // Battle Engine").
+  heroRoles      Json?
   teamName       String?
   leagueName     String?
   createdAt      DateTime @default(now())

@@ -1,5 +1,5 @@
 import { PrismaClient as LocalPrismaClient } from '@prisma/client';
-import { PrismaClient as PoolPrismaClient } from '../generated/pool-client';
+import { PrismaClient as PoolPrismaClient, type Prisma } from '../generated/pool-client';
 
 // Seeds the Opponent Pool's "pro" tier from the matches imported in
 // Milestone 3 (winning side only — the known-strong compositions), per
@@ -29,10 +29,15 @@ async function main() {
   for (const match of matches) {
     const heroIds = JSON.parse(match.radiantWin ? match.radiantHeroIds : match.direHeroIds) as number[];
     const teamName = match.radiantWin ? match.radiantName : match.direName;
+    const heroRolesRaw = match.radiantWin ? match.radiantHeroRoles : match.direHeroRoles;
+    // null for matches imported before role-fit reached the pro tier (see
+    // Blueprint/10-tech-debt-backlog.md) — re-run fetch-pro-matches-tier1 +
+    // seed to backfill.
+    const heroRoles = (heroRolesRaw ? JSON.parse(heroRolesRaw) : null) as Prisma.InputJsonValue;
 
     await pool.pooledDraft.upsert({
       where: { id: `pro-${match.id}` },
-      update: { heroIds, teamName, leagueName: match.leagueName },
+      update: { heroIds, teamName, leagueName: match.leagueName, heroRoles },
       create: {
         id: `pro-${match.id}`,
         source: 'pro',
@@ -40,6 +45,7 @@ async function main() {
         heroIds,
         teamName,
         leagueName: match.leagueName,
+        heroRoles,
       },
     });
   }

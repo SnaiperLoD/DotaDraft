@@ -3,6 +3,11 @@
 // role cares about get a boost IF the hero is already strong on them — this
 // rewards good fits, it doesn't rescue a bad one.
 //
+// Lives in common/, not evaluation/, because both Evaluation Engine
+// (axis.analyzer.ts) and Battle Engine (battle-resolution.ts) use it —
+// they stay independent of each other (Core Rules Separation) by both
+// depending on this neutral module instead of one depending on the other.
+//
 // The role -> axes map and BOOST_WEIGHT below are a manual heuristic, not a
 // statistically fitted result. Two rounds of real data were tried
 // (Blueprint/10-tech-debt-backlog.md has the full account): lane_role/

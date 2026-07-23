@@ -1,7 +1,7 @@
 import type { HeroEvaluationValues } from 'shared';
 import type { Analyzer, DraftPick } from '../analyzer.interface';
 import { AXIS_NARRATIVE, scoreBracket } from '../score-narrative';
-import { roleFitValue } from '../role-fit';
+import { roleFitValue } from '../../common/role-fit';
 
 type AxisKey = keyof HeroEvaluationValues;
 

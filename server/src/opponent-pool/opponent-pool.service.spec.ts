@@ -11,7 +11,7 @@ function makeMockPool() {
   };
 }
 
-function makeMockDraftService(draft: { status: string; heroes: { heroId: number }[] }) {
+function makeMockDraftService(draft: { status: string; heroes: { heroId: number; assignedRole?: string }[] }) {
   return { getById: jest.fn().mockResolvedValue(draft) };
 }
 
@@ -27,9 +27,15 @@ describe('OpponentPoolService.commit', () => {
     expect(pool.pooledDraft.create).not.toHaveBeenCalled();
   });
 
-  it('commits the heroIds from a completed draft under source "player"', async () => {
+  it('commits the heroIds and assigned roles from a completed draft under source "player"', async () => {
     const pool = makeMockPool();
-    const heroes = [{ heroId: 1 }, { heroId: 2 }, { heroId: 3 }, { heroId: 4 }, { heroId: 5 }];
+    const heroes = [
+      { heroId: 1, assignedRole: 'Carry' },
+      { heroId: 2, assignedRole: 'Mid' },
+      { heroId: 3, assignedRole: 'Offlane' },
+      { heroId: 4, assignedRole: 'Soft Support' },
+      { heroId: 5, assignedRole: 'Hard Support' },
+    ];
     const draftService = makeMockDraftService({ status: 'COMPLETED', heroes });
     pool.pooledDraft.create.mockResolvedValue({ id: 'pool-1', createdAt: new Date('2026-01-01T00:00:00Z') });
     const service = new OpponentPoolService(pool as any, draftService as any);
@@ -37,7 +43,18 @@ describe('OpponentPoolService.commit', () => {
     const result = await service.commit('draft-1', 'my-token');
 
     expect(pool.pooledDraft.create).toHaveBeenCalledWith({
-      data: { source: 'player', submitterToken: 'my-token', heroIds: [1, 2, 3, 4, 5] },
+      data: {
+        source: 'player',
+        submitterToken: 'my-token',
+        heroIds: [1, 2, 3, 4, 5],
+        heroRoles: [
+          { heroId: 1, role: 'Carry' },
+          { heroId: 2, role: 'Mid' },
+          { heroId: 3, role: 'Offlane' },
+          { heroId: 4, role: 'Soft Support' },
+          { heroId: 5, role: 'Hard Support' },
+        ],
+      },
     });
     expect(result).toEqual({ id: 'pool-1', committedAt: '2026-01-01T00:00:00.000Z' });
   });

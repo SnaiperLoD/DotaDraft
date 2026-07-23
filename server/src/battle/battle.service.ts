@@ -3,7 +3,7 @@ import { DraftService } from '../draft/draft.service';
 import { HeroService } from '../hero/hero.service';
 import { HeroMetaService } from '../hero-meta/hero-meta.service';
 import { OpponentPoolService } from '../opponent-pool/opponent-pool.service';
-import { resolveBattle } from './battle-resolution';
+import { resolveBattle, type BattlePick } from './battle-resolution';
 import { alignOpponentToRoles } from './opponent-alignment';
 import type { BattleResultResponse } from 'shared';
 
@@ -23,16 +23,25 @@ export class BattleService {
       throw new BadRequestException('Draft must be completed before entering Battle Mode');
     }
 
-    const teamA = draft.heroes.map((h) => h.hero);
+    const teamA: BattlePick[] = draft.heroes.map((h) => ({ hero: h.hero, assignedRole: h.assignedRole }));
+
     const opponent = await this.opponentPoolService.pullRandom(submitterToken);
-    const teamB = await this.heroService.findByIds(opponent.heroIds);
+    const opponentHeroes = await this.heroService.findByIds(opponent.heroIds);
+    // heroRoles is null for pool rows committed before role-fit reached
+    // Battle Engine (see opponent-pool schema) — those heroes just get no
+    // boost, same as any hero with assignedRole: null.
+    const roleByHeroId = new Map((opponent.heroRoles ?? []).map((r) => [r.heroId, r.role]));
+    const teamB: BattlePick[] = opponentHeroes.map((hero) => ({
+      hero,
+      assignedRole: roleByHeroId.get(hero.id) ?? null,
+    }));
 
     const result = resolveBattle(teamA, teamB, this.heroMetaService);
 
     // Aligned purely for display (so the Battle screen can show opponent
     // heroes facing the user's role slots) — doesn't feed back into
     // resolveBattle, which treats both teams as unordered sets.
-    const teamBAligned = alignOpponentToRoles(teamB);
+    const teamBAligned = alignOpponentToRoles(opponentHeroes);
 
     return {
       resolvedOutcome: result.resolvedOutcome,

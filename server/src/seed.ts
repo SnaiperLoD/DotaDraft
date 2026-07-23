@@ -20,6 +20,11 @@ interface HeroMetaEntry {
   positions: { position: string; share: number }[];
 }
 
+interface PooledHeroRole {
+  heroId: number;
+  role: string;
+}
+
 interface StoredProMatch {
   matchId: string;
   radiantName: string | null;
@@ -28,6 +33,8 @@ interface StoredProMatch {
   radiantWin: boolean;
   radiantHeroIds: number[];
   direHeroIds: number[];
+  radiantHeroRoles?: PooledHeroRole[];
+  direHeroRoles?: PooledHeroRole[];
   startTime: string;
 }
 
@@ -68,6 +75,8 @@ async function seedProMatches(prisma: PrismaClient) {
         radiantWin: match.radiantWin,
         radiantHeroIds: JSON.stringify(match.radiantHeroIds),
         direHeroIds: JSON.stringify(match.direHeroIds),
+        radiantHeroRoles: match.radiantHeroRoles ? JSON.stringify(match.radiantHeroRoles) : null,
+        direHeroRoles: match.direHeroRoles ? JSON.stringify(match.direHeroRoles) : null,
         startTime: new Date(match.startTime),
       },
       create: {
@@ -78,6 +87,8 @@ async function seedProMatches(prisma: PrismaClient) {
         radiantWin: match.radiantWin,
         radiantHeroIds: JSON.stringify(match.radiantHeroIds),
         direHeroIds: JSON.stringify(match.direHeroIds),
+        radiantHeroRoles: match.radiantHeroRoles ? JSON.stringify(match.radiantHeroRoles) : null,
+        direHeroRoles: match.direHeroRoles ? JSON.stringify(match.direHeroRoles) : null,
         startTime: new Date(match.startTime),
       },
     });
