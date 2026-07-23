@@ -62,29 +62,35 @@ async function withRetry<T>(fn: () => Promise<T>, retries = 1): Promise<T | null
   return null;
 }
 
-// A hero row's bucket is decided by lane + roaming flag. Roaming heroes are
-// treated as Support regardless of lane, since OpenDota's is_roaming flag is
-// specifically a support-style-play detector. This does NOT distinguish a
-// hard support laning in the safe lane (not roaming) from the carry in that
-// same lane — both land in "Carry" here. See Blueprint/10-tech-debt-backlog.md.
-function classifyPositions(
-  rows: { lane_role: number | null; is_roaming: boolean | null; cnt: number }[],
-): HeroPosition[] {
+// Position bucket from per-match GPM rank within the hero's own team (1 =
+// highest GPM ... 5 = lowest), the standard Dota position convention —
+// rank 1-3 map straight to Carry/Mid/Offlane, ranks 4-5 (Soft/Hard Support)
+// merge into the single Support bucket this 4-position system expects.
+//
+// Replaces the original lane_role/is_roaming classification, which
+// couldn't tell a hard support standing static in the safe lane from the
+// actual carry in that lane — is_roaming only catches heroes that
+// *actively* roam, so support heroes who mostly stay put (Chen, Jakiro,
+// Crystal Maiden, Lich, ...) came back "mostly Carry". Confirmed and fixed
+// once already this way via research-role-fit-gpm-rank.ts + a one-off
+// patch script (recompute-presumed-positions.ts) — ported into the
+// standard fetch here so a future full re-fetch doesn't regress back to
+// the old bug. See Blueprint/10-tech-debt-backlog.md.
+const GPM_RANK_TO_POSITION: Record<number, Position> = {
+  1: 'Carry',
+  2: 'Mid',
+  3: 'Offlane',
+  4: 'Support',
+  5: 'Support',
+};
+
+function classifyPositions(rows: { gpm_rank: number; cnt: number }[]): HeroPosition[] {
   const buckets: Record<Position, number> = { Carry: 0, Mid: 0, Offlane: 0, Support: 0 };
   let total = 0;
 
   for (const row of rows) {
-    if (row.lane_role == null) continue;
-    const bucket: Position | null = row.is_roaming
-      ? 'Support'
-      : row.lane_role === 2
-        ? 'Mid'
-        : row.lane_role === 1
-          ? 'Carry'
-          : row.lane_role === 3
-            ? 'Offlane'
-            : null;
-    if (!bucket) continue;
+    const bucket = GPM_RANK_TO_POSITION[row.gpm_rank];
+    if (!bucket) continue; // ranks >5 can't happen (5 players/team) but guard anyway
     buckets[bucket] += row.cnt;
     total += row.cnt;
   }
@@ -117,19 +123,25 @@ async function main() {
     console.log(`[${index + 1}/${heroes.length}] ${hero.name} (id ${hero.id})`);
 
     try {
+      // Scoped to only this hero's own matches (subquery) rather than
+      // scanning the full player_matches table before ranking — keeps the
+      // window-function query fast (~0.5s/hero, verified in
+      // research-role-fit-gpm-rank.ts) regardless of table size.
       const posRows = await withRetry(() =>
         explorerQuery(
-          `SELECT lane_role, is_roaming, COUNT(*) as cnt FROM player_matches WHERE hero_id = ${hero.id} AND match_id > ${threshold} GROUP BY lane_role, is_roaming`,
+          `SELECT gpm_rank, COUNT(*) as cnt ` +
+            `FROM ( ` +
+            `  SELECT pm.match_id, pm.hero_id, ` +
+            `    RANK() OVER (PARTITION BY pm.match_id, (pm.player_slot < 128) ORDER BY pm.gold_per_min DESC) as gpm_rank ` +
+            `  FROM player_matches pm ` +
+            `  WHERE pm.match_id IN (SELECT match_id FROM player_matches WHERE hero_id = ${hero.id} AND match_id > ${threshold}) ` +
+            `) sub ` +
+            `WHERE hero_id = ${hero.id} ` +
+            `GROUP BY gpm_rank`,
         ),
       );
       const positions = posRows
-        ? classifyPositions(
-            posRows.map((r) => ({
-              lane_role: r.lane_role === null ? null : Number(r.lane_role),
-              is_roaming: r.is_roaming,
-              cnt: Number(r.cnt),
-            })),
-          )
+        ? classifyPositions(posRows.map((r) => ({ gpm_rank: Number(r.gpm_rank), cnt: Number(r.cnt) })))
         : [];
 
       await sleep(300);
