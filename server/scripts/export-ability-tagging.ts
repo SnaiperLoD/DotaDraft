@@ -33,7 +33,7 @@ interface CandidateEntry {
   abilityKey: string;
 }
 
-function csvField(value: unknown): string {
+function csvField(value: string | number | null | undefined): string {
   const str = value === null || value === undefined ? '' : String(value);
   if (/[",\n]/.test(str)) {
     return `"${str.replace(/"/g, '""')}"`;
