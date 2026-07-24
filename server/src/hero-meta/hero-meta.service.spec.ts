@@ -26,21 +26,41 @@ describe('HeroMetaService', () => {
     expect(service.getWinRate(999)).toBeNull();
   });
 
-  it('requires at least MIN_GAMES samples before trusting a synergy/matchup win rate', () => {
+  it('returns null only when there is no entry at all (games=0 sentinel included)', () => {
+    mockHeroMeta([
+      {
+        heroId: 1,
+        winRate: 0.5,
+        synergy: [{ allyHeroId: 2, games: 0, wins: 0 }],
+        matchups: [],
+      },
+    ]);
+    const service = new HeroMetaService();
+    expect(service.getSynergyWinRate(1, 2)).toBeNull();
+    expect(service.getSynergyWinRate(1, 999)).toBeNull();
+    expect(service.getMatchupWinRate(1, 999)).toBeNull();
+  });
+
+  it('shrinks the raw win rate toward 0.5 proportional to sample size (SHRINKAGE_K=20), instead of a hard cutoff', () => {
     mockHeroMeta([
       {
         heroId: 1,
         winRate: 0.5,
         synergy: [
-          { allyHeroId: 2, games: 9, wins: 8 }, // below threshold
-          { allyHeroId: 3, games: 10, wins: 6 }, // at threshold
+          { allyHeroId: 2, games: 9, wins: 8 }, // thin sample, raw wr=0.889
+          { allyHeroId: 3, games: 10, wins: 6 }, // raw wr=0.6
         ],
-        matchups: [{ opponentHeroId: 4, games: 5, wins: 4 }],
+        matchups: [{ opponentHeroId: 4, games: 5, wins: 4 }], // raw wr=0.8
       },
     ]);
     const service = new HeroMetaService();
-    expect(service.getSynergyWinRate(1, 2)).toBeNull();
-    expect(service.getSynergyWinRate(1, 3)).toBe(0.6);
-    expect(service.getMatchupWinRate(1, 4)).toBeNull();
+    // weight = games/(games+20); shrunk = weight*rawWr + (1-weight)*0.5
+    expect(service.getSynergyWinRate(1, 2)).toBeCloseTo((9 / 29) * (8 / 9) + (20 / 29) * 0.5, 5); // ~0.621
+    expect(service.getSynergyWinRate(1, 3)).toBeCloseTo((10 / 30) * 0.6 + (20 / 30) * 0.5, 5); // ~0.533
+    expect(service.getMatchupWinRate(1, 4)).toBeCloseTo((5 / 25) * 0.8 + (20 / 25) * 0.5, 5); // ~0.56
+    // thinner sample (9 games) shrinks harder toward 0.5 than a thicker one (10 games) with a more extreme raw rate
+    expect(Math.abs(service.getSynergyWinRate(1, 2)! - 0.5)).toBeGreaterThan(
+      Math.abs(service.getSynergyWinRate(1, 3)! - 0.5),
+    );
   });
 });

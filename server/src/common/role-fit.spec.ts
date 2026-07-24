@@ -15,8 +15,8 @@ describe('roleFitValue', () => {
   });
 
   it('boosts a relevant axis proportionally to how far above baseline it already is', () => {
-    // 8 is 3 above baseline (5); boost = 0.15 * 3 = 0.45 -> 8.45 rounded to 8.5
-    expect(roleFitValue('scaling', 'Carry', 8)).toBe(8.5);
+    // 8 is 3 above baseline (5); boost = 0.3 * 3 = 0.9 -> 8.9
+    expect(roleFitValue('scaling', 'Carry', 8)).toBe(8.9);
   });
 
   it('caps the boosted value at 10', () => {
@@ -26,6 +26,11 @@ describe('roleFitValue', () => {
   it('applies to both axes mapped for a role', () => {
     expect(roleFitValue('scaling', 'Carry', 9)).toBeGreaterThan(9);
     expect(roleFitValue('burst', 'Carry', 9)).toBeGreaterThan(9);
+  });
+
+  it('boosts initiating for Offlane alongside durability/control', () => {
+    expect(roleFitValue('initiating', 'Offlane', 8)).toBeGreaterThan(8);
+    expect(roleFitValue('initiating', 'Carry', 8)).toBe(8);
   });
 
   it('applies distinct axes for Hard Support vs Soft Support', () => {

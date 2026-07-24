@@ -23,6 +23,7 @@ const SUMMARY_KEYS = [
   'map_control',
   'saving',
   'objectives',
+  'initiating',
   'proSimilarity',
 ];
 
@@ -33,7 +34,8 @@ const SUMMARY_KEYS = [
 // Role-fit modifier (10-tech-debt-backlog.md) — they were already
 // calibrated in evaluation_values but not previously surfaced as their own
 // breakdown rows, which meant role-fit had nothing to boost for
-// Carry/Mid/Offlane.
+// Carry/Mid/Offlane. Initiating (same backlog doc) was calibrated even
+// earlier than that but stayed unsurfaced until now for the same reason.
 const BASE_ANALYZERS: Analyzer[] = [
   counterAnalyzer,
   createAxisAnalyzer('teamfight', 'Teamfight'),
@@ -42,15 +44,22 @@ const BASE_ANALYZERS: Analyzer[] = [
   createAxisAnalyzer('burst', 'Burst'),
   createAxisAnalyzer('control', 'Control'),
   createAxisAnalyzer('durability', 'Durability'),
+  createAxisAnalyzer('initiating', 'Initiating'),
   createAxisAnalyzer('mobility', 'Mobility'),
   createAxisAnalyzer('map_control', 'Map Control'),
   createAxisAnalyzer('saving', 'Saving'),
   createAxisAnalyzer('objectives', 'Objectives'),
 ];
 
-// Initial Weights from Blueprint/05-evaluation-engine.md. `counter` is deliberately
-// absent: the blueprint's weight list omits it, so it's shown as an informational
-// breakdown item only and doesn't affect Total Score.
+// Initial Weights from Blueprint/05-evaluation-engine.md, plus `initiating`
+// at the same 0.05 given to the other minor axes (mobility/map_control/
+// saving/proSimilarity) — the blueprint's original weight list predates
+// this axis. weightedTotal() normalizes by the sum of available weights
+// rather than assuming they sum to 1, so this doesn't need to displace any
+// existing weight; it just makes every other axis's effective share
+// slightly smaller. `counter` is deliberately absent: the blueprint's
+// weight list omits it, so it's shown as an informational breakdown item
+// only and doesn't affect Total Score.
 const WEIGHTS: Record<string, number> = {
   synergy: 0.3,
   teamfight: 0.2,
@@ -61,8 +70,14 @@ const WEIGHTS: Record<string, number> = {
   control: 0.05,
   durability: 0.05,
   mobility: 0.05,
-  map_control: 0.05,
+  // Disabled entirely (Blueprint/10-tech-debt-backlog.md) — same as Battle
+  // Engine's AXIS_WEIGHT.map_control: vision_ability_tier (a map_control
+  // input) is still the old coarse per-hero tag, not yet reviewed/migrated.
+  // Still shown as an informational breakdown row (createAxisAnalyzer
+  // reports the true, undiscounted score) — just doesn't affect Total Score.
+  map_control: 0,
   saving: 0.05,
+  initiating: 0.05,
   proSimilarity: 0.05,
 };
 

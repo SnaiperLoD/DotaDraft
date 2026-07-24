@@ -5,6 +5,15 @@ function heroWithAxis(id: number, name: string, axis: string, value: number) {
   return makeHero({ id, name, evaluation_values: { ...DEFAULT_EVALUATION_VALUES, [axis]: value } });
 }
 
+function hardCarryHero(id: number, name: string, axis: string, value: number) {
+  return makeHero({
+    id,
+    name,
+    evaluation_values: { ...DEFAULT_EVALUATION_VALUES, [axis]: value },
+    presumed_positions: [{ position: 'Carry', share: 0.8 }],
+  });
+}
+
 describe('createAxisAnalyzer', () => {
   it('returns null with no heroes', () => {
     const analyzer = createAxisAnalyzer('teamfight', 'Teamfight');
@@ -66,5 +75,32 @@ describe('createAxisAnalyzer', () => {
 
     const result = analyzer.analyze(picks([support], 'Hard Support'));
     expect(result.explanation.some((line) => line.includes('role-fit'))).toBe(false);
+  });
+
+  it('applies the hard-carry stacking penalty and mentions it, matching Battle Engine', () => {
+    const analyzer = createAxisAnalyzer('teamfight', 'Teamfight');
+    const noStack = [
+      hardCarryHero(1, 'HC1', 'teamfight', 6),
+      heroWithAxis(2, 'Sup1', 'teamfight', 6),
+      heroWithAxis(3, 'Sup2', 'teamfight', 6),
+      heroWithAxis(4, 'Sup3', 'teamfight', 6),
+      heroWithAxis(5, 'Sup4', 'teamfight', 6),
+    ];
+    const twoStacked = [
+      hardCarryHero(1, 'HC1', 'teamfight', 6),
+      hardCarryHero(2, 'HC2', 'teamfight', 6),
+      heroWithAxis(3, 'Sup2', 'teamfight', 6),
+      heroWithAxis(4, 'Sup3', 'teamfight', 6),
+      heroWithAxis(5, 'Sup4', 'teamfight', 6),
+    ];
+
+    const withoutPenalty = analyzer.analyze(picks(noStack));
+    const withPenalty = analyzer.analyze(picks(twoStacked));
+
+    expect(withoutPenalty.score).toBe(6);
+    // 2 hard-carries = -5% (server/data/axis-weights.json hardCarryStackPenalty)
+    expect(withPenalty.score).toBeCloseTo(6 * 0.95, 5);
+    expect(withPenalty.explanation.some((line) => line.includes('hard-carry'))).toBe(true);
+    expect(withoutPenalty.explanation.some((line) => line.includes('hard-carry'))).toBe(false);
   });
 });

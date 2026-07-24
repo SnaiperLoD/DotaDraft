@@ -28,13 +28,14 @@ Breakdown:
 - Burst
 - Control
 - Durability
+- Initiating
 - Mobility
 - Map Control
 - Saving
 - Objectives
 - Pro Similarity
 
-Burst/Control/Durability добавлены вместе с Role-fit модификатором (см. ниже) — были откалиброваны в `evaluation_values` с самого начала (`server/scripts/calibrate-evaluation-values.ts`), но не выведены как отдельные строки breakdown до того, как Role-fit понадобилось их бустить для Carry/Mid/Offlane.
+Burst/Control/Durability добавлены вместе с Role-fit модификатором (см. ниже) — были откалиброваны в `evaluation_values` с самого начала (`server/scripts/calibrate-evaluation-values.ts`), но не выведены как отдельные строки breakdown до того, как Role-fit понадобилось их бустить для Carry/Mid/Offlane. Initiating добавлена тем же путём позже — см. `09-hero-knowledge-base.md` и `10-tech-debt-backlog.md`.
 
 ## Initial Weights
 
@@ -49,6 +50,7 @@ Burst/Control/Durability добавлены вместе с Role-fit модиф�
 - Mobility: 5%
 - Map Control: 5%
 - Saving: 5%
+- Initiating: 5%
 - Pro Similarity: 5%
 
 ## Analyzer System
@@ -66,12 +68,12 @@ Output:
 
 ## Role-fit Modifier
 
-Реализовано (`server/src/evaluation/role-fit.ts`, применяется внутри `createAxisAnalyzer`): при назначении роли герою бустятся значения существующих осей, релевантных этой роли, но только если герой уже выше базовой линии (5/10) на этой оси — модификатор усиливает уже сильную сторону, не спасает плохую подгонку. Буст пропорционален превышению над базовой линией (вес 0.15): `effectiveValue = min(10, rawValue + 0.15 × (rawValue − 5))`.
+Реализовано (`server/src/common/role-fit.ts`, общий модуль для Evaluation и Battle Engine — см. Core Rules Separation в `01-core-rules.md`, применяется внутри `createAxisAnalyzer`): при назначении роли герою бустятся значения существующих осей, релевантных этой роли, но только если герой уже выше базовой линии (5/10) на этой оси — модификатор усиливает уже сильную сторону, не спасает плохую подгонку. Буст пропорционален превышению над базовой линией (вес 0.15): `effectiveValue = min(10, rawValue + 0.15 × (rawValue − 5))`.
 
 Карта осей по ролям:
 - Carry → `scaling`, `burst`
 - Mid → `tempo`, `burst`
-- Offlane → `durability`, `control`
+- Offlane → `durability`, `control`, `initiating`
 - Hard Support → `saving`, `map_control`
 - Soft Support → `saving`, `control`
 

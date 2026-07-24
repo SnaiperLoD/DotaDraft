@@ -146,13 +146,13 @@ saving = 0.3×healingScore(hero_healing_per_min, benchmarks, ноль если �
 
 Текущее правило: если реальных данных о лечении нет (в т.ч. честный ноль), эта часть формулы даёт буквально `0`, а не выкидывается из блендинга — вес ручного тега остаётся фиксированным на 70%, не перенормируется до 100%. Полностью проблему (1) это не решает: у героя может быть небольшой ненулевой ручной тег (Necrophos's Death Pulse) — тогда контаминированные реальные данные всё равно попадают в бленд. Это осознанно принятое ограничение, не баг — нужен собственный фикс тега, не формулы.
 
-### `initiating` — новая ось, посчитана, но не подключена дальше
+### `initiating` — подключена (Battle Engine, role-fit, Evaluation Engine breakdown)
 
 ```
 initiating = weightedBlend(0.85×initiatingTagScore(zScoreExtremityScale от суммы ручных тегов initiating), 0.15×blinkPurchaseRateScore(percentileRankScale))
 ```
 
-Единственная ось без реальных объективных данных (кроме частоты покупки Blink Dagger) — OpenDota не измеряет "кто первый начал файт". Записывается в `evaluation_values.initiating`, но **Battle Engine** (`AXES` в `battle-resolution.ts`), **role-fit** (`ROLE_AXES` в `common/role-fit.ts`) и **клиентский UI** её пока не читают — отдельный, ещё не начатый кусок работы, см. `10-tech-debt-backlog.md`.
+Единственная ось без реальных объективных данных (кроме частоты покупки Blink Dagger) — OpenDota не измеряет "кто первый начал файт". Записывается в `evaluation_values.initiating` и теперь читается везде: **Battle Engine** (`AXES` в `battle-resolution.ts`, 10→11 осей), **role-fit** (`ROLE_AXES` в `common/role-fit.ts` — добавлена Offlane, кандидат из `10-tech-debt-backlog.md`) и **Evaluation Engine** (`createAxisAnalyzer('initiating', 'Initiating')` в `evaluation.service.ts`, вес 0.05, как у прочих второстепенных осей). Клиентский UI ничего не потребовал отдельно — и `EvaluationPanel.tsx`, и `BattlePanel.tsx` рендерят breakdown/advantages/disadvantages полностью динамически (по данным с сервера), без захардкоженного списка осей. Перед подключением прогнан `check-axis-distribution.ts` — распределение здоровое (RANDOM mean≈4.87/sd≈0.61, MAXED потолок≈7.13/sd≈0.39), без вырождения в духе старого бага `mobility`. Полная история решения — `10-tech-debt-backlog.md`.
 
 Blink Dagger добавлен с большим весом, чем в `mobility` (0.15 против объединённых 0.1 на Blink+BoT там), потому что для целого класса "даггер + одна ультимативная способность" инициаторов (Tidehunter, Mars, Sven, Dragon Knight) итемизация — не второстепенный сигнал, а основной: у них обычно только 1-2 тегованных способности, и чистая сумма тегов недооценивает их относительно героев с богатым кастующимся китом (Invoker, Tusk, Earth Spirit).
 

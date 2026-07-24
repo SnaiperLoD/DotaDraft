@@ -66,3 +66,10 @@
 .role-select:invalid {
   color: var(--ink-faint);
 }
+
+.role-assignment-error {
+  color: var(--danger);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  margin: -8px 0 16px;
+}

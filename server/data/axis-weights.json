@@ -1,0 +1,18 @@
+{
+  "axisWeights": {
+    "map_control": 0,
+    "tempo": 1.2,
+    "durability": 0.8,
+    "objectives": 0.8,
+    "saving": 1.2,
+    "burst": 0.8
+  },
+  "realWinRateWeight": 2,
+  "hardCarryShareThreshold": 0.5,
+  "hardCarryStackPenalty": {
+    "2": 0.05,
+    "3": 0.15,
+    "4": 0.3,
+    "5": 0.45
+  }
+}

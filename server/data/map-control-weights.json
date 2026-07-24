@@ -10,9 +10,9 @@
   },
   "mobilityScore": {
     "baseMoveSpeed": 0.2,
-    "moveSpeedExtremityExponent": 1.6,
+    "moveSpeedExtremityExponent": 1.2,
     "abilityMobilityBonus": 0.7,
     "itemsPurchaseBonus": 0.1
   },
-  "finalMobilityExtremityExponent": 1.6
+  "finalMobilityExtremityExponent": 1.2
 }

@@ -62,6 +62,14 @@ Synergy and counter factors must modify (amplify or dampen) the base comparison,
 
 Example: a strong counter matchup should reduce the countered team's effective strength, not just subtract a flat number from the total score.
 
+## Real WinRate Cap
+
+Real per-hero OpenDota `winRate` (`hero-meta.json`) is blended into `overallPower` as a multiplicative modifier, same shape as the synergy/matchup multipliers (`battle-resolution.ts`'s `realWinRateEdge()`) — but capped at `REAL_WIN_RATE_CAP = 0.3`: it can never account for more than 30% of a team's power, in either direction, independent of how high `realWinRateWeight` (`server/data/axis-weights.json`) is tuned. This is a fixed code-level constant, not a config value — retuning the weight can never accidentally let real winRate dominate or replace the axis-based assessment.
+
+Why a hard ceiling instead of just trusting the weight: real winRate is the single most literal ground-truth signal available (it's literally the hero's win/loss record, not a derived stat), which makes it tempting to lean on heavily to fix calibration gaps — but doing so risks turning Battle/Evaluation Engine into "look up hero winrate" rather than an actual draft analysis (evaluation_values, synergy, matchups). The 30% ceiling keeps it a correction on top of the axis-based assessment, never a replacement for it.
+
+Current status: `realWinRateWeight: 0` (`10-tech-debt-backlog.md`) — explicitly disabled, not deleted. Flagged as a hard-to-calibrate parameter (deep analysis needed before retuning; real risk of overtuning to one session's sample) rather than something to iterate on blindly.
+
 ## Accuracy Ceiling
 
 Draft-only comparison has a low accuracy ceiling by nature — outcome is also decided by execution, which Battle Engine does not observe.

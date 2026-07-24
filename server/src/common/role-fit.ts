@@ -21,16 +21,30 @@
 // positive, Mid/Offlane/Soft Support slightly negative but not
 // significant) — treated as "not contradicted strongly enough to abandon",
 // same honesty category as the hand-authored hero tags.
+// `initiating` (Blueprint/09-hero-knowledge-base.md) was calibrated but
+// left unmapped here until this session — Offlane is the candidate the
+// backlog itself flagged (10-tech-debt-backlog.md, "Будущая ось
+// Initiating") as the most "initiator" slot of the five, so it's added
+// there rather than split across roles without any data to justify a
+// different split. Re-derives the theoretical max-contribution finding
+// below (still ~0.13, unchanged) since adding one more touched axis
+// alongside one more total axis (10→11) keeps the same ratio.
 const ROLE_AXES: Record<string, string[]> = {
   Carry: ['scaling', 'burst'],
   Mid: ['tempo', 'burst'],
-  Offlane: ['durability', 'control'],
+  Offlane: ['durability', 'control', 'initiating'],
   'Hard Support': ['saving', 'map_control'],
   'Soft Support': ['saving', 'control'],
 };
 
 const BASELINE = 5;
-const BOOST_WEIGHT = 0.15;
+// 0.15 -> 0.3 (Blueprint/10-tech-debt-backlog.md): raised so a hero playing
+// their real position — especially Support, whose axes (saving/control/
+// map_control) tend to score lower than Carry/Mid's on average — gets a
+// meaningfully bigger reward for fit, not a token one. Still proportional
+// to how far above baseline the hero already is, so it can't rescue a bad
+// fit, only amplify a real one.
+const BOOST_WEIGHT = 0.3;
 
 // Boosts a hero's own axis value when assignedRole is relevant to axisKey
 // AND the hero already scores above the population baseline (5) on it.

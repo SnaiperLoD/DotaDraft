@@ -59,6 +59,11 @@ export const AXIS_NARRATIVE: Record<string, NarrativeSet> = {
     mid: 'This team has moderate durability but can still be burst down by focused damage.',
     low: 'This team is fragile and vulnerable to burst damage — bad positioning is likely to be punished.',
   },
+  initiating: {
+    high: 'Strong initiation tools let this team pick when and where fights start, catching opponents out of position.',
+    mid: 'This team can start some fights on its own terms, but lacks a dedicated initiation threat.',
+    low: 'Weak initiation means this team will usually be reacting to fights rather than starting them.',
+  },
 };
 
 export const SYNERGY_NARRATIVE: NarrativeSet = {

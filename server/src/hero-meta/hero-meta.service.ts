@@ -2,10 +2,23 @@ import { Injectable } from '@nestjs/common';
 import * as fs from 'fs';
 import * as path from 'path';
 
-// Minimum sample size before a matchup/synergy win rate is trusted — small
-// samples (a handful of games) swing wildly and would make Battle Engine
-// output noisy rather than meaningfully better than a coin flip.
-const MIN_GAMES = 10;
+// Confidence-weighted shrinkage instead of a hard sample-size cutoff
+// (Blueprint/10-tech-debt-backlog.md, "Battle Engine Confidence Tier не
+// откалиброван" — the old MIN_GAMES=10 hard cutoff treated an 11-game
+// sample exactly as confidently as a 500-game one). Shrinks the raw win
+// rate toward the neutral 0.5 prior, weighted by `games / (games +
+// SHRINKAGE_K)`: a pair with `games` well below SHRINKAGE_K contributes
+// little to synergyBonus/matchupEdge in battle-resolution.ts (which just
+// average `winRate - 0.5` unweighted — shrinkage does the confidence
+// weighting instead of a separate weighted-average step), while `games`
+// well above it is barely shrunk at all. K=20 is a starting point, not
+// calibrated against real outcomes yet.
+const SHRINKAGE_K = 20;
+
+function shrinkTowardNeutral(winRate: number, games: number): number {
+  const weight = games / (games + SHRINKAGE_K);
+  return weight * winRate + (1 - weight) * 0.5;
+}
 
 interface HeroMetaEntry {
   heroId: number;
@@ -34,14 +47,14 @@ export class HeroMetaService {
 
   getMatchupWinRate(heroId: number, opponentHeroId: number): number | null {
     const entry = this.byHeroId.get(heroId)?.matchups.find((m) => m.opponentHeroId === opponentHeroId);
-    if (!entry || entry.games < MIN_GAMES) return null;
-    return entry.wins / entry.games;
+    if (!entry || entry.games === 0) return null;
+    return shrinkTowardNeutral(entry.wins / entry.games, entry.games);
   }
 
   getSynergyWinRate(heroId: number, allyHeroId: number): number | null {
     const entry = this.byHeroId.get(heroId)?.synergy.find((s) => s.allyHeroId === allyHeroId);
-    if (!entry || entry.games < MIN_GAMES) return null;
-    return entry.wins / entry.games;
+    if (!entry || entry.games === 0) return null;
+    return shrinkTowardNeutral(entry.wins / entry.games, entry.games);
   }
 
   getWinRate(heroId: number): number | null {

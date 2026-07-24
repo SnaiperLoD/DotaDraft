@@ -580,8 +580,8 @@
     "heroName": "Invoker",
     "mobility": 12,
     "saving": 5,
-    "initiating": 32,
-    "control_strength": 18
+    "initiating": 26,
+    "control_strength": 17
   },
   {
     "heroId": 75,

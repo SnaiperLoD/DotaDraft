@@ -64,6 +64,12 @@ Additionally, Vite doesn't auto-prebundle `shared` the way it does real `node_mo
 
 ---
 
+## A new `evaluation_values` axis fails silently (NaN -> JSON `null`) until the DB is reseeded
+
+Adding a new axis to `HeroEvaluationValues` and wiring it into an Analyzer/Battle Engine is not enough by itself — `hero.service.ts` reads `evaluation_values` from SQLite (`JSON.parse(row.evaluationValues)`), not from `heroes.json` directly. If the DB was last seeded before the new field existed in `heroes.json`, every hero's evaluation_values from the DB is missing that key. Nothing throws: `undefined` axis values silently produce `NaN` averages in `axis.analyzer.ts`/`battle-resolution.ts`, and `JSON.stringify(NaN)` serializes to `null` over the wire — so the breakdown row/total score/battle result just show up as `null`/"N/A" with no error anywhere in the stack, which reads like a logic bug rather than stale data. Fix: `npm run seed` after any change that adds a new field to `evaluation_values`, same as after any `calibrate-evaluation-values.ts` run per `Blueprint/09-hero-knowledge-base.md`'s pipeline restart sequence.
+
+---
+
 ## Prisma + SQLite has no native `Json` field type
 
 The SQLite connector rejects `Json` as a Prisma field type (`"can't be of type Json. The current connector does not support the Json type"`). Store arrays/objects as `String` columns and `JSON.stringify`/`JSON.parse` manually at the application boundary (see `hero.service.ts`, `draft.service.ts`).

@@ -201,18 +201,13 @@ describe('DraftService', () => {
       expect(roles).toEqual(['Carry', 'Hard Support', 'Mid', 'Offlane', 'Soft Support']);
     });
 
-    // Characterizes a known gap (Blueprint/10-tech-debt-backlog.md, "Нет
-    // защиты от назначения одной роли двум героям"): the same *role* can be
-    // assigned to two different heroes as long as heroIds themselves are
-    // unique. This documents current behavior, not desired behavior — flip
-    // this test when that backlog item is fixed.
-    it('currently allows the same role on two different heroes (documented tech debt)', async () => {
+    it('rejects assigning the same role to two different heroes', async () => {
       const { service } = makeService();
       const draft = await playToRoleAssignment(service);
       const assignments = draft.heroes.map((h) => ({ heroId: h.heroId, role: 'Carry' }));
-      const result = await service.assignRoles(draft.id, assignments);
-      expect(result.status).toBe('COMPLETED');
-      expect(result.heroes.every((h) => h.assignedRole === 'Carry')).toBe(true);
+      await expect(service.assignRoles(draft.id, assignments)).rejects.toThrow(
+        'Each role must be assigned to exactly one hero',
+      );
     });
   });
 });

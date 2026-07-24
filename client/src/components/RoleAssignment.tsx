@@ -15,6 +15,9 @@ export default function RoleAssignment({ heroes, onSubmit, submitting }: Props) 
   const [roleByHero, setRoleByHero] = useState<Record<number, string>>({});
 
   const allAssigned = heroes.every((h) => roleByHero[h.heroId]);
+  const assignedRoles = Object.values(roleByHero);
+  const rolesAreUnique = new Set(assignedRoles).size === assignedRoles.length;
+  const canSubmit = allAssigned && rolesAreUnique;
 
   const handleSubmit = () => {
     onSubmit(heroes.map((h) => ({ heroId: h.heroId, role: roleByHero[h.heroId] })));
@@ -42,16 +45,23 @@ export default function RoleAssignment({ heroes, onSubmit, submitting }: Props) 
               <option value="" disabled>
                 Select role
               </option>
-              {ROLES.map((role) => (
-                <option key={role} value={role}>
-                  {role}
-                </option>
-              ))}
+              {ROLES.map((role) => {
+                const takenByOther = assignedRoles.includes(role) && roleByHero[h.heroId] !== role;
+                return (
+                  <option key={role} value={role} disabled={takenByOther}>
+                    {role}
+                    {takenByOther ? ' (taken)' : ''}
+                  </option>
+                );
+              })}
             </select>
           </div>
         ))}
       </div>
-      <button className="btn btn-primary" onClick={handleSubmit} disabled={!allAssigned || submitting}>
+      {allAssigned && !rolesAreUnique && (
+        <p className="role-assignment-error">Each role must be assigned to a different hero.</p>
+      )}
+      <button className="btn btn-primary" onClick={handleSubmit} disabled={!canSubmit || submitting}>
         Confirm Roles
       </button>
     </div>

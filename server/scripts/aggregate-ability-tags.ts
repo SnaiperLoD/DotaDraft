@@ -7,17 +7,26 @@ import * as path from 'path';
 // zScoreExtremityScale and blends into evaluation_values, same two-stage
 // pattern every other raw research-*.json input already follows here.
 //
-// Aggregation is a straight sum across a hero's abilities, not an average:
-// an ability that was never scored contributes 0 rather than diluting a
+// Aggregation is a sum across a hero's abilities, not an average: an
+// ability that was never scored contributes 0 rather than diluting a
 // hero's total the way an average over all-abilities-including-irrelevant-
 // ones would. This is deliberate (see the conversation that led here) — a
 // hero with one standout ability shouldn't lose to population noise, and a
 // hero with several good ones in the same category should be credited for
 // kit depth rather than capped at their single best ability.
+//
+// Capped at the hero's top MAX_ABILITIES_PER_CATEGORY scores per category
+// (Blueprint/10-tech-debt-backlog.md) — an unbounded sum overcredits heroes
+// whose kit is unusually large but not simultaneously usable (Invoker: 16
+// abilities, 10 tagged for `initiating` alone, but Invoke only holds ~2
+// orbs ready at once). MAX_ABILITIES_PER_CATEGORY=6 matches the population
+// average ability count (6.2, generate-hero-abilities-skeleton.ts), so a
+// typical hero's sum is unaffected — this only clips genuine outliers.
 const HERO_ABILITIES_PATH = path.join(__dirname, '..', 'data', 'hero-abilities.json');
 const OUTPUT_PATH = path.join(__dirname, '..', 'data', 'ability-tag-aggregates.json');
 
 const CATEGORIES = ['mobility', 'saving', 'initiating', 'control_strength'] as const;
+const MAX_ABILITIES_PER_CATEGORY = 6;
 
 interface AbilityRecord {
   abilityKey: string;
@@ -47,10 +56,12 @@ function main() {
       (typeof CATEGORIES)[number],
       number
     >;
-    for (const ability of hero.abilities) {
-      for (const cat of CATEGORIES) {
-        sums[cat] += ability.categoryScores[cat] ?? 0;
-      }
+    for (const cat of CATEGORIES) {
+      const scores = hero.abilities
+        .map((a) => a.categoryScores[cat] ?? 0)
+        .filter((v) => v > 0)
+        .sort((a, b) => b - a);
+      sums[cat] = scores.slice(0, MAX_ABILITIES_PER_CATEGORY).reduce((s, v) => s + v, 0);
     }
     return {
       heroId: hero.heroId,

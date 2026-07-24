@@ -150,6 +150,10 @@ export class DraftService {
     if (assignedHeroIds.size !== ROUNDS) {
       throw new BadRequestException('Each hero must receive exactly one role');
     }
+    const assignedRoles = new Set(assignments.map((a) => a.role));
+    if (assignedRoles.size !== ROUNDS) {
+      throw new BadRequestException('Each role must be assigned to exactly one hero');
+    }
 
     await this.prisma.$transaction(
       assignments.map((a) =>

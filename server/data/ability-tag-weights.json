@@ -1,8 +1,8 @@
 {
   "extremityExponents": {
-    "mobility": 1.6,
+    "mobility": 1.2,
     "saving": 1.6,
-    "initiating": 1.6,
+    "initiating": 1.2,
     "control_strength": 1.6
   },
   "blend": {

@@ -30,6 +30,7 @@ const AXES = [
   'burst',
   'map_control',
   'saving',
+  'initiating',
 ] as const;
 
 const SAMPLE_SIZE = 100;
