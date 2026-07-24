@@ -156,6 +156,21 @@ initiating = weightedBlend(0.85×initiatingTagScore(zScoreExtremityScale от с
 
 Blink Dagger добавлен с большим весом, чем в `mobility` (0.15 против объединённых 0.1 на Blink+BoT там), потому что для целого класса "даггер + одна ультимативная способность" инициаторов (Tidehunter, Mars, Sven, Dragon Knight) итемизация — не второстепенный сигнал, а основной: у них обычно только 1-2 тегованных способности, и чистая сумма тегов недооценивает их относительно героев с богатым кастующимся китом (Invoker, Tusk, Earth Spirit).
 
+### `aggression` и `farm_priority` — новые оси, первые откалиброванные через регрессию против реального winRate
+
+```
+aggression = weightedBlend(0.5×deathsPerMinScore(percentileRankScale), 0.5×invertedLastHitsPerMinScore(percentileRankScale от -last_hits_per_min))
+farm_priority = percentileRankScale(campsStackedPerMin)
+```
+
+Первые две оси в истории проекта, добавленные **после**, а не до проверки на реальных данных — обычный порядок (`09`→калибровка→потом сверка с реальностью) был перевёрнут: сессия регрессии (`Blueprint/10-tech-debt-backlog.md`, "Поворотный момент" и последующие находки) сначала нашла статистически значимую простую корреляцию с реальным `winRate` (`deaths_per_min` r=+0.178, `camps_stacked_per_min` r=-0.197, `last_hits_per_min` r=-0.177 — все три по отдельности, не только внутри многофакторной регрессии, которая в этой же сессии дважды дала ложные срабатывания на `burst` и `movement`), и только потом эти метрики оформлены в calibrate-evaluation-values.ts как полноценные оси.
+
+`deaths_per_min` и `last_hits_per_min` объединены в `aggression`, а не оставлены раздельно — они почти зеркальны (r=-0.726: герой, часто размениваривающийся в файтах, естественно фармит менее эффективно, и наоборот). `camps_stacked_per_min` осталась отдельной осью (`farm_priority`) — слабо коррелирует с парой deaths/last-hits (|r|<0.17), то есть измеряет что-то самостоятельное (персональная фарм-оптимизация), а не то же самое другими словами.
+
+Источники: `deaths_per_min`/`camps_stacked_per_min` — новый Explorer-фетч (`server/scripts/fetch-deaths-camps-data.ts`, тот же паттерн, что `fetch-control-durability-vision-data.ts`, `server/data/deaths-camps-data.json`); `last_hits_per_min` — уже лежал неиспользуемым в `hero-meta.json`'s `benchmarks` (тот же `/api/benchmarks` фетч, что уже даёт teamfight/burst/scaling/objectives) — новых данных для него собирать не пришлось.
+
+Подключены сразу везде, тем же путём, что `initiating`: **Battle Engine** (`AXES`, 11→13 осей), **Evaluation Engine** (`createAxisAnalyzer`, вес по умолчанию 0.05 — намеренно НЕ повышен только потому, что ось валидирована реальными данными, это отдельное решение по тюнингу весов, не бандл с добавлением оси), **role-fit не тронут** — ни одна роль пока не сопоставлена этим осям, нет данных, какая роль должна получать буст. Клиентский UI снова не потребовал правок (полностью динамический рендеринг breakdown).
+
 ### Известные артефакты данных
 
 Meepo: `control` 9/10 и `durability` 10/10 выглядят завышенными — вероятно, артефакт того, что OpenDota агрегирует `stuns`/`damage_taken` в одну строку игрока, а у Meepo фактически несколько юнитов-клонов на поле одновременно. Не исправлено, честно зафиксировано здесь.

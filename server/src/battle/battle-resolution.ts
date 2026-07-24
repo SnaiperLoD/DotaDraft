@@ -45,6 +45,8 @@ export const AXES: (keyof HeroEvaluationValues)[] = [
   'map_control',
   'saving',
   'initiating',
+  'aggression',
+  'farm_priority',
 ];
 
 // Win-weight bands per Blueprint/06-battle-engine.md Resolution — the
@@ -202,6 +204,8 @@ export const AXIS_LABEL: Record<keyof HeroEvaluationValues, string> = {
   map_control: 'map control',
   saving: 'ally saving power',
   initiating: 'initiation potential',
+  aggression: 'aggression',
+  farm_priority: 'farm priority',
 };
 
 function describeAxis(axis: keyof HeroEvaluationValues, favorsA: boolean): string {

@@ -31,6 +31,8 @@ const AXES = [
   'map_control',
   'saving',
   'initiating',
+  'aggression',
+  'farm_priority',
 ] as const;
 
 const SAMPLE_SIZE = 100;

@@ -21,6 +21,13 @@ import {
 //   saving     <- 40% hero_healing_per_min (benchmarks, skipped for heroes with zero hand-tagged saving abilities — see below) + 60% hand-tagged saving (per-ability, summed per hero, see server/data/ability-tag-weights.json)
 //   initiating <- 85% hand-tagged initiating (per-ability, summed per hero) + 15% Blink Dagger purchase rank — stored on
 //                 evaluation_values for reference, NOT yet wired into Battle Engine/role-fit/UI (separate scope)
+//   aggression <- 50% deaths_per_min (higher = dies more often) + 50% inverted last_hits_per_min (lower CS/min = higher
+//                 score) — Blueprint/10-tech-debt-backlog.md: both validated on real-data simple correlation with real
+//                 winRate on their own (not just inside a multi-predictor regression), and nearly mirror each other
+//                 (r=-0.726) — a hero who trades/fights a lot naturally farms less efficiently, and vice versa
+//   farm_priority <- camps_stacked_per_min, rank-scaled — kept as its own axis rather than folded into aggression:
+//                 weakly correlated with the deaths/last-hits pair (|r|<0.17), so it captures something distinct
+//                 (personal farm optimization) rather than being redundant with it
 //
 // The hand-tagged mobility/saving/control_strength inputs come from
 // server/data/ability-tagging.csv (manual, per-ability, 0-10) via
@@ -47,6 +54,7 @@ const HERO_CONSTANTS_PATH = path.join(__dirname, '..', 'data', 'hero-constants.j
 const WEIGHTS_PATH = path.join(__dirname, '..', 'data', 'map-control-weights.json');
 const ABILITY_TAG_AGGREGATES_PATH = path.join(__dirname, '..', 'data', 'ability-tag-aggregates.json');
 const ABILITY_TAG_WEIGHTS_PATH = path.join(__dirname, '..', 'data', 'ability-tag-weights.json');
+const DEATHS_CAMPS_PATH = path.join(__dirname, '..', 'data', 'deaths-camps-data.json');
 
 interface RawHero {
   id: number;
@@ -112,6 +120,12 @@ interface AbilityTagAggregate {
   control_strength: number;
 }
 
+interface DeathsCampsEntry {
+  heroId: number;
+  deathsPerMin: number | null;
+  campsStackedPerMin: number | null;
+}
+
 interface AbilityTagWeights {
   extremityExponents: { mobility: number; saving: number; initiating: number; control_strength: number };
   blend: {
@@ -136,6 +150,7 @@ function main() {
   const weights: MapControlWeights = JSON.parse(fs.readFileSync(WEIGHTS_PATH, 'utf-8'));
   const abilityTagByHeroId = byHeroId<AbilityTagAggregate>(ABILITY_TAG_AGGREGATES_PATH);
   const tagWeights: AbilityTagWeights = JSON.parse(fs.readFileSync(ABILITY_TAG_WEIGHTS_PATH, 'utf-8'));
+  const deathsCampsByHeroId = byHeroId<DeathsCampsEntry>(DEATHS_CAMPS_PATH);
 
   const constantsRaw: Record<string, HeroConstant> = JSON.parse(
     fs.readFileSync(HERO_CONSTANTS_PATH, 'utf-8'),
@@ -270,6 +285,36 @@ function main() {
     ]),
   );
 
+  // --- aggression / farm_priority: new axes (Blueprint/10-tech-debt-backlog.md,
+  // "regress-composite-clusters-v2" findings) — deaths_per_min and
+  // camps_stacked_per_min (server/scripts/fetch-deaths-camps-data.ts) plus
+  // last_hits_per_min (already fetched into hero-meta.json's benchmarks,
+  // previously unused). Simple correlation with real winRate validated each
+  // one individually before wiring them in (see commit history/Blueprint) —
+  // not just inside a multi-predictor regression, which this session
+  // already caught giving false positives (burst, movement).
+  const deathsPerMinRaw = heroes.map((h) => deathsCampsByHeroId.get(h.id)?.deathsPerMin ?? null);
+  const deathsScores = percentileRankScale(deathsPerMinRaw);
+
+  const lastHitsPerMinRaw = heroes.map((h) =>
+    medianBenchmarkValue(metaByHeroId.get(h.id)?.benchmarks?.last_hits_per_min),
+  );
+  // Inverted before rank-scaling (same idiom as trendScoresForTempo above):
+  // aggression should score high for a hero who farms *less* efficiently,
+  // not more.
+  const invertedLastHitsScores = percentileRankScale(
+    lastHitsPerMinRaw.map((v) => (v === null ? null : -v)),
+  );
+  const aggressionScores = heroes.map((_, i) =>
+    weightedBlend([
+      { value: deathsScores[i], weight: 1 },
+      { value: invertedLastHitsScores[i], weight: 1 },
+    ]),
+  );
+
+  const campsStackedRaw = heroes.map((h) => deathsCampsByHeroId.get(h.id)?.campsStackedPerMin ?? null);
+  const farmPriorityScores = percentileRankScale(campsStackedRaw);
+
   // mobility: real move-speed extremity + hand-tagged mobility abilities +
   // item-purchase signal above. The hand-tagged input used to be a single
   // coarse per-hero tier (apply-ability-tags.ts, 0/3/6/10 buckets); it's now
@@ -348,6 +393,8 @@ function main() {
     mapControl: 0,
     saving: 0,
     initiating: 0,
+    aggression: 0,
+    farmPriority: 0,
     fallback: 0,
   };
 
@@ -401,6 +448,8 @@ function main() {
     );
 
     setOrFallback('initiating', initiatingScores[i], 'initiating');
+    setOrFallback('aggression', aggressionScores[i], 'aggression');
+    setOrFallback('farm_priority', farmPriorityScores[i], 'farmPriority');
   });
 
   fs.writeFileSync(HEROES_PATH, JSON.stringify(heroes, null, 2) + '\n');

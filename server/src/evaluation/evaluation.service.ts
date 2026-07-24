@@ -24,6 +24,8 @@ const SUMMARY_KEYS = [
   'saving',
   'objectives',
   'initiating',
+  'aggression',
+  'farm_priority',
   'proSimilarity',
 ];
 
@@ -36,6 +38,10 @@ const SUMMARY_KEYS = [
 // breakdown rows, which meant role-fit had nothing to boost for
 // Carry/Mid/Offlane. Initiating (same backlog doc) was calibrated even
 // earlier than that but stayed unsurfaced until now for the same reason.
+// Aggression/Farm Priority are new (regress-composite-clusters-v2.ts
+// findings) — the first two axes in this project's history validated
+// directly against real OpenDota winRate via simple correlation before
+// being wired in, rather than hand-authored and calibrated after the fact.
 const BASE_ANALYZERS: Analyzer[] = [
   counterAnalyzer,
   createAxisAnalyzer('teamfight', 'Teamfight'),
@@ -45,6 +51,8 @@ const BASE_ANALYZERS: Analyzer[] = [
   createAxisAnalyzer('control', 'Control'),
   createAxisAnalyzer('durability', 'Durability'),
   createAxisAnalyzer('initiating', 'Initiating'),
+  createAxisAnalyzer('aggression', 'Aggression'),
+  createAxisAnalyzer('farm_priority', 'Farm Priority'),
   createAxisAnalyzer('mobility', 'Mobility'),
   createAxisAnalyzer('map_control', 'Map Control'),
   createAxisAnalyzer('saving', 'Saving'),
@@ -78,6 +86,12 @@ const WEIGHTS: Record<string, number> = {
   map_control: 0,
   saving: 0.05,
   initiating: 0.05,
+  // Default weight, same as every other axis when first introduced
+  // (initiating included) — deliberately NOT elevated just because they're
+  // real-data-validated; that's a separate tuning decision for later, not
+  // bundled into "add the axis" (Blueprint/10-tech-debt-backlog.md).
+  aggression: 0.05,
+  farm_priority: 0.05,
   proSimilarity: 0.05,
 };
 

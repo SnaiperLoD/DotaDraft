@@ -13,6 +13,8 @@ export const DEFAULT_EVALUATION_VALUES: HeroEvaluationValues = {
   map_control: 3,
   saving: 3,
   initiating: 3,
+  aggression: 3,
+  farm_priority: 3,
 };
 
 // Shared Hero builder for tests — every field defaults to an inert value

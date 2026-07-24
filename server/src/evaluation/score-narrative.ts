@@ -64,6 +64,16 @@ export const AXIS_NARRATIVE: Record<string, NarrativeSet> = {
     mid: 'This team can start some fights on its own terms, but lacks a dedicated initiation threat.',
     low: 'Weak initiation means this team will usually be reacting to fights rather than starting them.',
   },
+  aggression: {
+    high: 'This team leans into risk — trading and dying for value rather than playing it safe, which real match data links to a better actual win rate than a pure stat sheet would suggest.',
+    mid: 'This team has a moderate risk appetite — not purely passive, but not built around constant fighting either.',
+    low: 'This team plays it safe, prioritizing efficient farm over trades — real data suggests that safety can come at the cost of actually winning.',
+  },
+  farm_priority: {
+    high: 'This team leans heavily on personal farm optimization (stacking camps, maximizing CS) — good on the stat sheet, but real data links heavy farm focus to a lower actual win rate.',
+    mid: 'This team balances farm efficiency with the rest of its game plan.',
+    low: "This team doesn't prioritize personal farm optimization — its value comes from elsewhere.",
+  },
 };
 
 export const SYNERGY_NARRATIVE: NarrativeSet = {

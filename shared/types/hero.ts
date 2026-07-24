@@ -10,6 +10,8 @@ export interface HeroEvaluationValues {
   map_control: number;
   saving: number;
   initiating: number;
+  aggression: number;
+  farm_priority: number;
 }
 
 export type PresumedPosition = 'Carry' | 'Mid' | 'Offlane' | 'Support';
