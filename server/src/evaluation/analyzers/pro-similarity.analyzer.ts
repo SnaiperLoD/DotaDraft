@@ -20,6 +20,7 @@ export function createProSimilarityAnalyzer(compositions: ProComposition[]): Ana
       if (compositions.length === 0) {
         return {
           score: null,
+          percentile: null,
           explanation: ['No professional match data has been imported yet (planned for Milestone 3).'],
         };
       }
@@ -38,6 +39,7 @@ export function createProSimilarityAnalyzer(compositions: ProComposition[]): Ana
       if (overlapCount < MIN_OVERLAP_FOR_SIMILARITY) {
         return {
           score: null,
+          percentile: null,
           explanation: [
             `No imported professional draft shares ${MIN_OVERLAP_FOR_SIMILARITY} or more heroes with this composition (closest match: ${overlapCount} of 5) — not enough overlap to call it pro-similar.`,
           ],
@@ -52,7 +54,9 @@ export function createProSimilarityAnalyzer(compositions: ProComposition[]): Ana
           '.',
       ];
 
-      return { score, explanation };
+      // Not axis-based (no evaluation_values score) — no percentile
+      // distribution to rank against, see analyzer.interface.ts.
+      return { score, percentile: null, explanation };
     },
   };
 }

@@ -2,6 +2,11 @@ import type { Hero } from 'shared';
 
 export interface AnalyzerOutput {
   score: number | null;
+  // Where this score ranks (0-100) against 10000 random 5-hero teams
+  // scored the same way (server/data/axis-percentile-distributions.json,
+  // src/evaluation/axis-percentiles.ts) — null for analyzers that aren't
+  // axis-based (Synergy, Counter, Pro Similarity have no such population).
+  percentile: number | null;
   explanation: string[];
 }
 

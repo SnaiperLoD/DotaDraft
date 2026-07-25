@@ -1,0 +1,42 @@
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 20px;
+}
+
+.badge-square {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: linear-gradient(160deg, var(--panel-raised), var(--panel));
+  border: 1px solid var(--gold);
+  box-shadow:
+    0 4px 10px var(--shadow-deep),
+    0 0 10px rgba(201, 162, 39, 0.25);
+  color: var(--gold-bright);
+  cursor: default;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.badge-square:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 14px var(--shadow-deep),
+    0 0 16px rgba(201, 162, 39, 0.45);
+}
+
+.badge-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.badge-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}

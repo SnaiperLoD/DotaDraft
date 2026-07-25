@@ -36,7 +36,7 @@ const HEROES_PATH = path.join(__dirname, '..', 'data', 'heroes.json');
 const HERO_META_PATH = path.join(__dirname, '..', 'data', 'hero-meta.json');
 const OUTPUT_PATH = path.join(__dirname, '..', 'data', 'self-play-simulation-output.json');
 
-const N_MATCHES = 10000;
+const N_MATCHES = 100000;
 const TEAM_SIZE = 5;
 // Arbitrary, not calibrated — MIN_GAMES=10 (hero-meta.service.ts) is the
 // floor for a pair to be used *at all*; this just splits "used" pairs into
@@ -57,6 +57,14 @@ interface RawHeroMetaEntry {
 
 function mean(xs: number[]): number {
   return xs.reduce((a, b) => a + b, 0) / xs.length;
+}
+// Loop-based, not Math.min/max(...xs) — spreading 200k+ elements as call
+// arguments blows the V8 call-stack limit (hit at N_MATCHES=100000).
+function arrMin(xs: number[]): number {
+  return xs.reduce((a, b) => (b < a ? b : a), xs[0]);
+}
+function arrMax(xs: number[]): number {
+  return xs.reduce((a, b) => (b > a ? b : a), xs[0]);
 }
 function stdev(xs: number[], m: number): number {
   return Math.sqrt(mean(xs.map((x) => (x - m) ** 2)));
@@ -89,6 +97,60 @@ function shuffle<T>(arr: readonly T[]): T[] {
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
+}
+
+// Weighted role assignment (self-play outlier investigation,
+// Blueprint/10-tech-debt-backlog.md "control-support cluster") — replaces
+// uniform shuffle(ROLES) for team role draws below. Uniform assignment gave
+// every hero a 1-in-5 chance at the role their role-fit axes actually
+// reward (common/role-fit.ts) regardless of how they're really played,
+// understating role-fit's effect for heroes with a strongly skewed real
+// position (e.g. Phantom Lancer 57.9% Carry, most Support-role casters
+// ~100% Support) — they'd only get their role-fit boost 20% of the time in
+// this measurement, not the ~60-100% real drafts would assign them.
+// hero-meta.json's `positions` only has 4 buckets (no Hard/Soft Support
+// split) — Support share is split evenly between them. Leftover
+// probability mass (shares rarely sum to 1) is spread uniformly across all
+// 5 roles as smoothing; heroes with no positions data get pure uniform
+// weights (identical to the old shuffle(ROLES) behavior for them).
+function roleWeights(positions: { position: string; share: number }[]): Record<string, number> {
+  const w: Record<string, number> = { Carry: 0, Mid: 0, Offlane: 0, 'Soft Support': 0, 'Hard Support': 0 };
+  let allocated = 0;
+  for (const p of positions) {
+    if (p.position === 'Carry') { w.Carry += p.share; allocated += p.share; }
+    else if (p.position === 'Mid') { w.Mid += p.share; allocated += p.share; }
+    else if (p.position === 'Offlane') { w.Offlane += p.share; allocated += p.share; }
+    else if (p.position === 'Support') { w['Soft Support'] += p.share / 2; w['Hard Support'] += p.share / 2; allocated += p.share; }
+  }
+  const leftover = Math.max(0, 1 - allocated);
+  for (const role of ROLES) w[role] += leftover / ROLES.length;
+  return w;
+}
+
+// Assigns 5 distinct roles to 5 heroes, biased by each hero's roleWeights:
+// shuffle hero order, then each hero in turn picks a role via weighted
+// random choice restricted to roles not yet taken (renormalized) — a
+// weighted-without-replacement draw, not an exact optimal assignment, but
+// close enough for a measurement tool and keeps the "5 distinct roles per
+// team" invariant real drafts have.
+function assignWeightedRoles(heroes: Hero[], weightsById: Map<number, Record<string, number>>): string[] {
+  const order = shuffle(heroes.map((_, i) => i));
+  const rolesLeft = [...ROLES] as string[];
+  const assigned: string[] = new Array(heroes.length);
+  for (const idx of order) {
+    const w = weightsById.get(heroes[idx].id) ?? Object.fromEntries(ROLES.map((r) => [r, 1]));
+    const weights = rolesLeft.map((r) => Math.max(0.001, w[r] ?? 0.001));
+    const total = weights.reduce((a, b) => a + b, 0);
+    let roll = Math.random() * total;
+    let pick = rolesLeft.length - 1;
+    for (let i = 0; i < weights.length; i++) {
+      roll -= weights[i];
+      if (roll <= 0) { pick = i; break; }
+    }
+    assigned[idx] = rolesLeft[pick];
+    rolesLeft.splice(pick, 1);
+  }
+  return assigned;
 }
 
 function heroContribution(hero: Hero, role: string | null): number {
@@ -191,6 +253,7 @@ function main() {
   // treating every hero as having none.
   const positionsById = new Map(rawMetaEntries.map((e) => [e.heroId, e.positions]));
   for (const h of heroes) h.presumed_positions = (positionsById.get(h.id) ?? []) as Hero['presumed_positions'];
+  const roleWeightsById = new Map(heroes.map((h) => [h.id, roleWeights(positionsById.get(h.id) ?? [])]));
 
   const heroMeta = new HeroMetaService();
   const { synergyGames, matchupGames } = buildGamesLookup(rawMetaEntries);
@@ -232,8 +295,8 @@ function main() {
     const heroesA = drawn.slice(0, TEAM_SIZE);
     const heroesB = drawn.slice(TEAM_SIZE);
 
-    const rolesA = shuffle(ROLES);
-    const rolesB = shuffle(ROLES);
+    const rolesA = assignWeightedRoles(heroesA, roleWeightsById);
+    const rolesB = assignWeightedRoles(heroesB, roleWeightsById);
     const teamA: BattlePick[] = heroesA.map((h, idx) => ({ hero: h, assignedRole: rolesA[idx] }));
     const teamB: BattlePick[] = heroesB.map((h, idx) => ({ hero: h, assignedRole: rolesB[idx] }));
     const teamANoRole: BattlePick[] = heroesA.map((h) => ({ hero: h, assignedRole: null }));
@@ -344,7 +407,7 @@ function main() {
     const m = mean(xs);
     const sd = stdev(xs, m);
     console.log(
-      `  ${AXIS_LABEL[axis as keyof typeof AXIS_LABEL].padEnd(16)}${m.toFixed(2).padStart(5)} ${sd.toFixed(2).padStart(5)} ${Math.min(...xs).toFixed(2).padStart(5)} ${Math.max(...xs).toFixed(2).padStart(5)}`,
+      `  ${AXIS_LABEL[axis as keyof typeof AXIS_LABEL].padEnd(16)}${m.toFixed(2).padStart(5)} ${sd.toFixed(2).padStart(5)} ${arrMin(xs).toFixed(2).padStart(5)} ${arrMax(xs).toFixed(2).padStart(5)}`,
     );
   }
 

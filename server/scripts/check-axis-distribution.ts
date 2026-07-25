@@ -31,8 +31,8 @@ const AXES = [
   'map_control',
   'saving',
   'initiating',
-  'aggression',
-  'farm_priority',
+  'skirmish_rate',
+  'camp_stacking',
 ] as const;
 
 const SAMPLE_SIZE = 100;

@@ -1,46 +1,46 @@
 heroId,name,direction,divergence_pp,favoredRate_pct,realWinRate_pct,axisSum_of_11,topAxis,topAxisValue
-106,Ember Spirit,overperforms,27.2,78.0,50.9,74.9,teamfight,9.8
-77,Lycan,overperforms,23.0,75.2,52.2,66.9,objective pressure,9.6
-114,Monkey King,overperforms,21.3,66.8,45.5,65.5,mobility,7.8
-83,Treant Protector,overperforms,20.5,73.3,52.7,50.1,map control,9.5
-59,Huskar,overperforms,20.5,66.5,46.1,64.5,durability,9.9
-110,Phoenix,overperforms,20.4,71.1,50.7,60.7,teamfight,8.3
-38,Beastmaster,overperforms,20.1,64.7,44.6,69.3,tempo,8.6
-128,Snapfire,overperforms,17.6,70.7,53.0,62.1,burst damage,7.5
-90,Keeper of the Light,overperforms,17.5,70.0,52.5,56.7,tempo,8.2
-56,Clinkz,overperforms,17.1,67.8,50.7,62.6,burst damage,9.7
-80,Lone Druid,overperforms,15.7,64.8,49.1,66.6,objective pressure,9.5
-23,Kunkka,overperforms,15.1,64.6,49.5,57.8,durability,8.0
-74,Invoker,overperforms,15.0,67.3,52.3,72.7,map control,9.3
-42,Wraith King,overperforms,14.7,67.8,53.1,66.8,durability,9.4
-92,Visage,overperforms,14.6,68.6,54.0,67.9,objective pressure,9.4
-107,Earth Spirit,overperforms,13.7,65.7,52.0,61.3,initiation potential,9.0
-135,Dawnbreaker,overperforms,13.4,65.0,51.7,66.0,durability,8.3
-145,Kez,overperforms,12.6,57.3,44.7,71.3,burst damage,9.2
-93,Slark,overperforms,12.4,62.2,49.7,68.9,map control,9.8
-104,Legion Commander,overperforms,12.1,64.1,51.9,62.0,burst damage,7.1
-65,Batrider,overperforms,11.4,54.6,43.2,52.6,initiation potential,8.3
-28,Slardar,overperforms,10.5,59.8,49.2,55.0,durability,7.7
-120,Pangolier,overperforms,10.5,56.7,46.2,65.6,mobility,8.2
-52,Leshrac,overperforms,10.5,60.6,50.1,62.7,teamfight,9.1
-136,Marci,overperforms,10.2,60.5,50.3,58.9,map control,8.2
-18,Sven,underperforms,-11.0,39.6,50.6,64.0,objective pressure,8.6
-72,Gyrocopter,underperforms,-12.3,30.3,42.6,50.8,teamfight,7.1
-111,Oracle,underperforms,-12.5,38.6,51.1,40.9,ally saving power,10.0
-57,Omniknight,underperforms,-12.7,38.5,51.2,37.5,ally saving power,8.5
-34,Tinker,underperforms,-13.1,35.8,48.9,59.3,late-game scaling,9.6
-121,Grimstroke,underperforms,-13.5,38.2,51.7,42.4,initiation potential,7.8
-10,Morphling,underperforms,-13.9,33.4,47.3,53.2,objective pressure,8.8
-64,Jakiro,underperforms,-15.7,30.1,45.7,40.0,control,6.8
-5,Crystal Maiden,underperforms,-16.7,33.3,50.0,30.9,control,7.2
-27,Shadow Shaman,underperforms,-17.1,34.7,51.8,39.2,control,8.0
-101,Skywrath Mage,underperforms,-17.3,31.7,49.0,43.8,map control,7.1
-12,Phantom Lancer,underperforms,-18.4,34.3,52.7,51.7,late-game scaling,9.2
-68,Ancient Apparition,underperforms,-19.1,30.8,49.9,32.4,map control,6.1
-131,Ringmaster,underperforms,-19.3,29.3,48.6,39.9,map control,9.6
-119,Dark Willow,underperforms,-19.5,29.4,48.9,43.7,control,9.6
-94,Medusa,underperforms,-21.1,27.7,48.8,47.2,late-game scaling,9.7
-103,Elder Titan,underperforms,-21.2,32.3,53.5,46.9,tempo,7.3
-31,Lich,underperforms,-23.5,28.1,51.6,34.3,map control,5.6
-75,Silencer,underperforms,-24.4,25.4,49.7,38.0,map control,6.8
-87,Disruptor,underperforms,-25.7,24.7,50.4,32.1,map control,6.9
+110,Phoenix,overperforms,24.8,75.5,50.7,76.0,camp stacking,8.4
+106,Ember Spirit,overperforms,20.6,71.4,50.9,78.0,tempo,9.3
+128,Snapfire,overperforms,19.1,72.1,53.0,73.3,burst damage,7.5
+114,Monkey King,overperforms,18.2,63.6,45.5,70.5,mobility,7.8
+52,Leshrac,overperforms,18.0,68.1,50.1,74.9,teamfight,9.1
+38,Beastmaster,overperforms,16.9,61.4,44.6,78.1,tempo,8.6
+56,Clinkz,overperforms,16.8,67.5,50.7,70.5,burst damage,9.7
+36,Necrophos,overperforms,16.8,67.7,50.8,74.0,burst damage,9.6
+80,Lone Druid,overperforms,16.6,65.7,49.1,74.6,objective pressure,9.5
+90,Keeper of the Light,overperforms,16.4,68.9,52.5,67.6,camp stacking,9.9
+83,Treant Protector,overperforms,16.1,68.8,52.7,59.3,map control,9.5
+42,Wraith King,overperforms,15.3,68.4,53.1,71.1,durability,9.4
+74,Invoker,overperforms,14.0,66.3,52.3,78.8,initiation potential,8.3
+8,Juggernaut,overperforms,13.0,65.0,52.1,63.7,late-game scaling,8.9
+89,Naga Siren,overperforms,11.1,59.9,48.8,62.8,durability,8.3
+13,Puck,overperforms,10.8,59.8,49.0,64.7,teamfight,8.6
+23,Kunkka,overperforms,10.8,60.2,49.5,62.6,control,7.8
+93,Slark,overperforms,10.4,60.2,49.7,73.7,map control,9.8
+104,Legion Commander,overperforms,10.4,62.3,51.9,69.3,burst damage,7.1
+65,Batrider,overperforms,10.3,53.5,43.2,68.5,camp stacking,9.8
+113,Arc Warden,overperforms,10.3,62.2,51.9,76.6,burst damage,9.3
+129,Mars,underperforms,-10.0,36.5,46.6,56.4,control,8.3
+10,Morphling,underperforms,-10.7,36.6,47.3,57.6,objective pressure,8.8
+26,Lion,underperforms,-11.2,37.5,48.7,54.0,skirmish rate,9.5
+121,Grimstroke,underperforms,-11.2,40.5,51.7,60.3,camp stacking,9.4
+29,Tidehunter,underperforms,-11.4,38.1,49.5,53.3,control,7.4
+84,Ogre Magi,underperforms,-11.4,38.4,49.9,50.9,skirmish rate,8.1
+112,Winter Wyvern,underperforms,-11.5,39.6,51.2,60.4,map control,8.8
+37,Warlock,underperforms,-12.0,35.4,47.4,62.6,map control,9.1
+111,Oracle,underperforms,-12.5,38.6,51.1,56.8,ally saving power,10.0
+108,Underlord,underperforms,-13.1,35.6,48.7,61.0,durability,7.6
+57,Omniknight,underperforms,-13.1,38.1,51.2,45.8,ally saving power,9.5
+27,Shadow Shaman,underperforms,-13.4,38.3,51.8,55.3,skirmish rate,9.0
+12,Phantom Lancer,underperforms,-13.8,38.9,52.7,52.5,late-game scaling,9.2
+63,Weaver,underperforms,-14.1,33.1,47.1,60.5,objective pressure,7.1
+5,Crystal Maiden,underperforms,-16.4,33.6,50.0,48.0,skirmish rate,9.2
+94,Medusa,underperforms,-17.0,31.8,48.8,57.0,late-game scaling,9.7
+68,Ancient Apparition,underperforms,-17.6,32.3,49.9,50.6,camp stacking,9.3
+131,Ringmaster,underperforms,-17.7,30.9,48.6,57.9,map control,9.6
+64,Jakiro,underperforms,-17.8,28.0,45.7,55.4,skirmish rate,8.9
+101,Skywrath Mage,underperforms,-18.7,30.4,49.0,61.3,skirmish rate,8.7
+119,Dark Willow,underperforms,-21.2,27.7,48.9,58.6,control,9.6
+75,Silencer,underperforms,-24.7,25.0,49.7,54.4,skirmish rate,8.4
+87,Disruptor,underperforms,-25.0,25.4,50.4,51.8,skirmish rate,9.6
+31,Lich,underperforms,-25.3,26.3,51.6,49.6,skirmish rate,9.2

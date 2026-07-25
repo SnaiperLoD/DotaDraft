@@ -36,6 +36,23 @@ function soloGradient(role: PresumedRole): string {
   return `linear-gradient(135deg, rgba(${rgb}, ${HIGH_ALPHA}) 0%, rgba(${rgb}, ${LOW_ALPHA}) 45%, rgba(${rgb}, 0) 75%)`;
 }
 
+// For a hero with exactly one standout real position: color comes in from
+// BOTH left and right edges (mirrored), fading to transparent at the
+// center — a stronger, more symmetric statement than soloGradient's single
+// corner-to-corner fade, without going as far as a full flat wash (which
+// read as covering the art rather than framing it).
+function twoSidedGradient(role: PresumedRole): string {
+  const rgb = ROLE_TINT_RGB[role];
+  return [
+    'linear-gradient(90deg,',
+    `rgba(${rgb}, ${HIGH_ALPHA}) 0%,`,
+    `rgba(${rgb}, ${LOW_ALPHA}) 30%,`,
+    `rgba(${rgb}, 0) 50%,`,
+    `rgba(${rgb}, ${LOW_ALPHA}) 70%,`,
+    `rgba(${rgb}, ${HIGH_ALPHA}) 100%)`,
+  ].join(' ');
+}
+
 function splitGradient(roleA: PresumedRole, roleB: PresumedRole): string {
   const rgbA = ROLE_TINT_RGB[roleA];
   const rgbB = ROLE_TINT_RGB[roleB];
@@ -49,9 +66,10 @@ function splitGradient(roleA: PresumedRole, roleB: PresumedRole): string {
   ].join(' ');
 }
 
-// 1 significant position -> solid tint. 2 -> split diagonal (A top-left,
-// B bottom-right, blending to transparent at the center). 3+ -> Universal.
-// No data at all -> fall back to the tag-based guess.
+// 1 significant position -> two-sided tint (mirrored, both edges). 2 ->
+// split diagonal (A top-left, B bottom-right, blending to transparent at
+// the center). 3+ -> Universal. No data at all -> fall back to the
+// tag-based guess.
 export function roleTintGradient(hero: Hero): string {
   const positions = hero.presumed_positions;
 
@@ -59,7 +77,7 @@ export function roleTintGradient(hero: Hero): string {
     return soloGradient(classifyPresumedRoleFallback(hero));
   }
   if (positions.length === 1) {
-    return soloGradient(positions[0].position);
+    return twoSidedGradient(positions[0].position);
   }
   if (positions.length === 2) {
     return splitGradient(positions[0].position, positions[1].position);

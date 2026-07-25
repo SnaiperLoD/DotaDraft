@@ -33,9 +33,11 @@ Breakdown:
 - Map Control
 - Saving
 - Objectives
+- Skirmish Rate
+- Camp Stacking
 - Pro Similarity
 
-Burst/Control/Durability добавлены вместе с Role-fit модификатором (см. ниже) — были откалиброваны в `evaluation_values` с самого начала (`server/scripts/calibrate-evaluation-values.ts`), но не выведены как отдельные строки breakdown до того, как Role-fit понадобилось их бустить для Carry/Mid/Offlane. Initiating добавлена тем же путём позже — см. `09-hero-knowledge-base.md` и `10-tech-debt-backlog.md`.
+Burst/Control/Durability добавлены вместе с Role-fit модификатором (см. ниже) — были откалиброваны в `evaluation_values` с самого начала (`server/scripts/calibrate-evaluation-values.ts`), но не выведены как отдельные строки breakdown до того, как Role-fit понадобилось их бустить для Carry/Mid/Offlane. Initiating добавлена тем же путём позже. Skirmish Rate/Camp Stacking — переименованы из aggression/farm_priority (`10-tech-debt-backlog.md`, self-play outlier investigation) после уточнения, что они реально измеряют (deaths_per_min+инвертированный last_hits_per_min и camps_stacked_per_min соответственно) — см. `09-hero-knowledge-base.md`.
 
 ## Initial Weights
 
@@ -48,9 +50,11 @@ Burst/Control/Durability добавлены вместе с Role-fit модиф�
 - Control: 5%
 - Durability: 5%
 - Mobility: 5%
-- Map Control: 5%
+- Map Control: 5% (текущий эффективный вес — 0%, ось отключена до ревью `vision_ability_tier`, см. `10-tech-debt-backlog.md` — строка breakdown по-прежнему показывается)
 - Saving: 5%
 - Initiating: 5%
+- Skirmish Rate: 5%
+- Camp Stacking: 5%
 - Pro Similarity: 5%
 
 ## Analyzer System
@@ -79,7 +83,20 @@ Output:
 
 **Веса и карта осей — ручная эвристика, не откалиброванный факт.** Два захода на калибровку через реальные данные (полное описание — `10-tech-debt-backlog.md`): позиционные бакеты по `lane_role`/`is_roaming` не смогли представить Support как natural role вообще (саппорты, стоящие в лейне без роуминга, попадают в Carry/Offlane bucket); бакеты по per-match GPM-рангу внутри команды (`server/scripts/research-role-fit-gpm-rank.ts`) дали все 5 ролей, но корреляция между кандидатными осями роли и реальной win-rate delta оказалась статистически неотличима от нуля при доступном n (17-37 героев на роль, |r|<0.2 везде). Карта выше сохраняет то же направление, что эти слабые корреляции указывали (Carry/Hard Support положительно, Mid/Offlane/Soft Support слабо отрицательно, но не значимо) — не опровергнута данными достаточно сильно, чтобы отказаться, но и не подтверждена.
 
-Область применения: только Evaluation Engine. Battle Engine (`battle-resolution.ts`) роль не учитывает — вне скоупа этого захода.
+Область применения: `common/role-fit.ts` — общий модуль, тот же `roleFitValue()` используется и Battle Engine (`battle-resolution.ts`'s `axisAverage()`), не только Evaluation.
+
+## Hard-Carry Stacking Penalty
+
+Общий с Battle Engine механизм (`server/src/common/hard-carry.ts`, полное описание — `06-battle-engine.md`) — герой считается "hard-carry" по реальной GPM-rank доле Carry/Mid (>50%). В отличие от Battle Engine (где штраф применяется один раз к `overallPower`), Evaluation не имеет единой "суммы осей" — штраф применяется **по-осевому**, внутри `createAxisAnalyzer`, к среднему скору команды на каждой из 13 осей отдельно (Synergy/Counter/Pro Similarity не затронуты — не axis-based). Порог 3+ (0-2 hard-carries — без штрафа), `scaling` исключена из штрафа и вместо этого получает +10% буст. Explanation-строка появляется в breakdown только когда штраф ненулевой.
+
+## Summary (Strengths / Weaknesses / Gameplan)
+
+`EvaluationService.buildSummary()` формирует три поля (`EvaluationSummary`: `strengths`, `weaknesses`, `gameplan`):
+
+- **Strengths/Weaknesses** — топ-3/боттом-3 акси-анализатора по percentile (population-relative ранг против 10000 случайных драфтов, `axis-percentiles.ts`, не сырой score — иначе ось вроде `saving`, которая по природе кластеризуется низко у всей популяции, выглядела бы более слабой стороной, чем реально просевшая ось). Каждый пункт — это ровно нарративное предложение анализатора (`AXIS_NARRATIVE`, `score-narrative.ts`), без числового префикса вида "Label (n/10):" — убран сознательно, как и баг, из-за которого иногда бралась не нарративная строка, а последняя техническая (role-fit/hard-carry) реплика explanation-массива (исправлено переносом нарратива на гарантированно последнюю позицию в `axis.analyzer.ts`).
+- **Gameplan** — отдельный синтезирующий абзац поверх списка, не просто ещё один пункт: комбинирует `tempo`+`scaling` (единственные две оси, которые напрямую определяют предполагаемую длину игры и её win condition — быстрая игра / патиентная / гибкая / без чёткого форсинга) с явной привязкой к главному плюсу и главному минусу драфта ("Lean on this... Cover for this..."). Пересобирает уже откалиброванные нарративы этих осей, не вводит новый сигнал.
+
+Мотивация — пользовательский фидбек: слишком много формальных/циферных формулировок, недостаточно нарратива о том, как реально прошла бы игра с таким составом.
 
 ## Counter Analyzer
 

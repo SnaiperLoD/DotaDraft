@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import type { Hero } from 'shared';
+import type { Hero, HeroEvaluationValues } from 'shared';
 
 // Hard-carry stacking penalty (Blueprint/10-tech-debt-backlog.md). Lives in
 // common/, not battle/ or evaluation/, because both Battle Engine
@@ -37,13 +37,53 @@ export function isHardCarry(hero: Hero): boolean {
   return carryShare > config.hardCarryShareThreshold || midShare > config.hardCarryShareThreshold;
 }
 
-// A normal draft has exactly one real Carry and one real Mid, so 0-1
-// hard-carry heroes is the healthy baseline (no penalty); 2 is that
-// baseline itself (small penalty acknowledging even the standard pair
-// competes for priority/farm) and 3+ escalates sharply, modeling a draft
-// that can't actually function with that many heroes needing the same
-// resources.
+// A normal draft has exactly one real Carry and one real Mid, so 0-2
+// hard-carry heroes is the healthy baseline (no penalty — a standard pair
+// plus one flex/Universal pick is still fine); 3 is where it starts
+// costing real priority/farm competition, escalating sharply from there,
+// modeling a draft that can't actually function with that many heroes
+// needing the same resources.
 export function hardCarryPenalty(team: Hero[]): number {
   const count = team.filter(isHardCarry).length;
   return config.hardCarryStackPenalty[String(count)] ?? 0;
+}
+
+// scaling is deliberately exempt from the stacking penalty above — and
+// gets a flat boost instead — because a team that stacks hard-carries is,
+// if anything, MORE built around winning a long game than a normal draft,
+// not less. Every other axis still takes the fractional penalty.
+const SCALING_BOOST = 0.1;
+
+// Every axis except scaling; keeps this file the single owner of "what the
+// stacking penalty actually multiplies," rather than exporting the raw
+// fraction and making every caller remember to special-case scaling
+// itself. Duplicates battle-resolution.ts's AXES list (13 names) rather
+// than importing it, to avoid a circular import — same trade-off already
+// made in custom-tags.ts.
+const NON_SCALING_AXES: (keyof HeroEvaluationValues)[] = [
+  'teamfight',
+  'tempo',
+  'mobility',
+  'objectives',
+  'control',
+  'durability',
+  'burst',
+  'map_control',
+  'saving',
+  'initiating',
+  'skirmish_rate',
+  'camp_stacking',
+];
+
+// Per-axis multipliers for the stacking penalty/scaling-boost — feeds
+// directly into axisAverage()'s tagEffects.axisMultiplier (battle-
+// resolution.ts) and the equivalent per-axis calc in axis.analyzer.ts.
+// Empty when there's no penalty (0-2 hard-carries), so callers can treat
+// "no entries" as "nothing to apply" without a separate branch.
+export function hardCarryAxisMultipliers(team: Hero[]): Partial<Record<keyof HeroEvaluationValues, number>> {
+  const penalty = hardCarryPenalty(team);
+  if (penalty === 0) return {};
+  const multipliers: Partial<Record<keyof HeroEvaluationValues, number>> = { scaling: 1 + SCALING_BOOST };
+  for (const axis of NON_SCALING_AXES) multipliers[axis] = 1 - penalty;
+  return multipliers;
 }

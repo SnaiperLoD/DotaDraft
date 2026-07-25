@@ -170,7 +170,9 @@ export function createSynergyAnalyzer(lookup: SynergyLookup): Analyzer {
       const finalScore = Math.min(10, Math.round(score * 10) / 10);
       explanation.push(SYNERGY_NARRATIVE[scoreBracket(finalScore)]);
 
-      return { score: finalScore, explanation };
+      // Not axis-based (no evaluation_values score) — no percentile
+      // distribution to rank against, see analyzer.interface.ts.
+      return { score: finalScore, percentile: null, explanation };
     },
   };
 }

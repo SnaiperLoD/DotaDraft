@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ScreenFlash from './ScreenFlash';
 import { ROLES } from 'shared';
 import type { BattleResultResponse, BattleOpponentHero } from 'shared';
 import { api } from '../api/client';
@@ -91,6 +92,7 @@ export default function BattlePanel({ draftId, heroes }: Props) {
 
       {result && (
         <div className="battle-result">
+          <ScreenFlash outcome={result.resolvedOutcome} flashKey={battleCount} />
           <p className="battle-outcome">
             {result.resolvedOutcome === 'Win' ? 'Victory' : 'Defeat'} — {result.confidenceTier} Confidence
           </p>

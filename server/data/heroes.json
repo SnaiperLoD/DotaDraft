@@ -32,8 +32,8 @@
       "map_control": 0,
       "saving": 3.3,
       "initiating": 1.5,
-      "aggression": 0.5,
-      "farm_priority": 1.8
+      "skirmish_rate": 0.5,
+      "camp_stacking": 1.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10,
@@ -73,8 +73,8 @@
       "map_control": 1.3,
       "saving": 3.3,
       "initiating": 4.1,
-      "aggression": 5.7,
-      "farm_priority": 5.9
+      "skirmish_rate": 5.7,
+      "camp_stacking": 5.9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -114,8 +114,8 @@
       "map_control": 8.7,
       "saving": 3.5,
       "initiating": 3.8,
-      "aggression": 9,
-      "farm_priority": 5.2
+      "skirmish_rate": 9,
+      "camp_stacking": 5.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -155,8 +155,8 @@
       "map_control": 7.9,
       "saving": 3.3,
       "initiating": 2.3,
-      "aggression": 3.9,
-      "farm_priority": 5.8
+      "skirmish_rate": 3.9,
+      "camp_stacking": 5.8
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0,
@@ -195,8 +195,8 @@
       "map_control": 4,
       "saving": 3.3,
       "initiating": 2,
-      "aggression": 9.2,
-      "farm_priority": 7.9
+      "skirmish_rate": 9.2,
+      "camp_stacking": 7.9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -234,8 +234,8 @@
       "map_control": 0.4,
       "saving": 3.3,
       "initiating": 1.3,
-      "aggression": 1.5,
-      "farm_priority": 7.2
+      "skirmish_rate": 1.5,
+      "camp_stacking": 7.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -275,8 +275,8 @@
       "map_control": 3.5,
       "saving": 3.4,
       "initiating": 6.7,
-      "aggression": 6,
-      "farm_priority": 3.5
+      "skirmish_rate": 6,
+      "camp_stacking": 3.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -307,15 +307,15 @@
       "tempo": 4.6,
       "scaling": 8.9,
       "mobility": 3.8,
-      "objectives": 9.9,
+      "objectives": 8.9,
       "control": 0.9,
       "durability": 6.9,
       "burst": 8.5,
       "map_control": 0.1,
       "saving": 6.3,
       "initiating": 3.2,
-      "aggression": 1.2,
-      "farm_priority": 3.3
+      "skirmish_rate": 1.2,
+      "camp_stacking": 3.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -356,8 +356,8 @@
       "map_control": 4.4,
       "saving": 3.6,
       "initiating": 3.3,
-      "aggression": 5.7,
-      "farm_priority": 7.3
+      "skirmish_rate": 5.7,
+      "camp_stacking": 7.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -398,8 +398,8 @@
       "map_control": 0.5,
       "saving": 5.8,
       "initiating": 3,
-      "aggression": 1.3,
-      "farm_priority": 3.1
+      "skirmish_rate": 1.3,
+      "camp_stacking": 3.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10,
@@ -431,13 +431,13 @@
       "mobility": 4.2,
       "objectives": 8.4,
       "control": 3.3,
-      "durability": 5.6,
+      "durability": 5.1,
       "burst": 9.4,
       "map_control": 1,
       "saving": 3.4,
       "initiating": 2.3,
-      "aggression": 2.1,
-      "farm_priority": 7
+      "skirmish_rate": 2.1,
+      "camp_stacking": 7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -474,8 +474,8 @@
       "map_control": 0.2,
       "saving": 3.3,
       "initiating": 0.9,
-      "aggression": 0.6,
-      "farm_priority": 0.2
+      "skirmish_rate": 0.6,
+      "camp_stacking": 0.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -510,13 +510,13 @@
       "mobility": 5.2,
       "objectives": 5.3,
       "control": 4.3,
-      "durability": 9.7,
+      "durability": 7.2,
       "burst": 7.3,
       "map_control": 3.1,
       "saving": 3.3,
       "initiating": 4.6,
-      "aggression": 1.7,
-      "farm_priority": 2.7
+      "skirmish_rate": 1.7,
+      "camp_stacking": 2.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 6,
@@ -556,8 +556,8 @@
       "map_control": 2.5,
       "saving": 3.7,
       "initiating": 4.5,
-      "aggression": 8.5,
-      "farm_priority": 0.6
+      "skirmish_rate": 8.5,
+      "camp_stacking": 0.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -597,8 +597,8 @@
       "map_control": 0.2,
       "saving": 3.4,
       "initiating": 2,
-      "aggression": 5.4,
-      "farm_priority": 5.3
+      "skirmish_rate": 5.4,
+      "camp_stacking": 5.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -639,8 +639,8 @@
       "map_control": 3.3,
       "saving": 3.3,
       "initiating": 5.6,
-      "aggression": 4.9,
-      "farm_priority": 4.5
+      "skirmish_rate": 4.9,
+      "camp_stacking": 4.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 6,
@@ -681,8 +681,8 @@
       "map_control": 2.8,
       "saving": 3.3,
       "initiating": 3.7,
-      "aggression": 1.8,
-      "farm_priority": 3.2
+      "skirmish_rate": 1.8,
+      "camp_stacking": 3.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 6,
@@ -723,8 +723,8 @@
       "map_control": 1.4,
       "saving": 3.5,
       "initiating": 3,
-      "aggression": 1.7,
-      "farm_priority": 3.6
+      "skirmish_rate": 1.7,
+      "camp_stacking": 3.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -767,8 +767,8 @@
       "map_control": 0.6,
       "saving": 3.3,
       "initiating": 5.1,
-      "aggression": 2.6,
-      "farm_priority": 3.8
+      "skirmish_rate": 2.6,
+      "camp_stacking": 3.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -809,8 +809,8 @@
       "map_control": 3.3,
       "saving": 3.8,
       "initiating": 4.4,
-      "aggression": 7.7,
-      "farm_priority": 8.8
+      "skirmish_rate": 7.7,
+      "camp_stacking": 8.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -851,8 +851,8 @@
       "map_control": 3.6,
       "saving": 3.4,
       "initiating": 4.5,
-      "aggression": 4.1,
-      "farm_priority": 6.7
+      "skirmish_rate": 4.1,
+      "camp_stacking": 6.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 6,
@@ -890,8 +890,8 @@
       "map_control": 9.7,
       "saving": 3.3,
       "initiating": 4.9,
-      "aggression": 6.4,
-      "farm_priority": 9
+      "skirmish_rate": 6.4,
+      "camp_stacking": 9
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0,
@@ -928,13 +928,13 @@
       "mobility": 4.6,
       "objectives": 4.1,
       "control": 7.8,
-      "durability": 8,
+      "durability": 7.5,
       "burst": 3.7,
       "map_control": 2,
       "saving": 3.6,
       "initiating": 6.4,
-      "aggression": 2.1,
-      "farm_priority": 3.7
+      "skirmish_rate": 2.1,
+      "camp_stacking": 3.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -973,8 +973,8 @@
       "map_control": 4,
       "saving": 3.3,
       "initiating": 2.4,
-      "aggression": 3.1,
-      "farm_priority": 9.7
+      "skirmish_rate": 3.1,
+      "camp_stacking": 9.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1014,8 +1014,8 @@
       "map_control": 3.7,
       "saving": 3.4,
       "initiating": 4.8,
-      "aggression": 9.5,
-      "farm_priority": 9
+      "skirmish_rate": 9.5,
+      "camp_stacking": 9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1056,8 +1056,8 @@
       "map_control": 5.6,
       "saving": 3.3,
       "initiating": 3.9,
-      "aggression": 9,
-      "farm_priority": 7.1
+      "skirmish_rate": 9,
+      "camp_stacking": 7.1
     },
     "vision_ability_tier": 1,
     "mobility_ability_tier": 0,
@@ -1098,8 +1098,8 @@
       "map_control": 4.9,
       "saving": 3.3,
       "initiating": 5.7,
-      "aggression": 4.2,
-      "farm_priority": 1.3
+      "skirmish_rate": 4.2,
+      "camp_stacking": 1.3
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0,
@@ -1139,8 +1139,8 @@
       "map_control": 0.3,
       "saving": 3.4,
       "initiating": 5.3,
-      "aggression": 3.8,
-      "farm_priority": 2.2
+      "skirmish_rate": 3.8,
+      "camp_stacking": 2.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1179,8 +1179,8 @@
       "map_control": 5.2,
       "saving": 6.5,
       "initiating": 3.1,
-      "aggression": 9.9,
-      "farm_priority": 5
+      "skirmish_rate": 9.9,
+      "camp_stacking": 5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1218,8 +1218,8 @@
       "map_control": 5.6,
       "saving": 3.6,
       "initiating": 4.1,
-      "aggression": 9.2,
-      "farm_priority": 6.1
+      "skirmish_rate": 9.2,
+      "camp_stacking": 6.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1257,8 +1257,8 @@
       "map_control": 8.3,
       "saving": 3.4,
       "initiating": 2.2,
-      "aggression": 6.3,
-      "farm_priority": 0
+      "skirmish_rate": 6.3,
+      "camp_stacking": 0
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0,
@@ -1297,8 +1297,8 @@
       "map_control": 6.7,
       "saving": 3.3,
       "initiating": 4.6,
-      "aggression": 4.9,
-      "farm_priority": 4
+      "skirmish_rate": 4.9,
+      "camp_stacking": 4
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
@@ -1337,8 +1337,8 @@
       "map_control": 5,
       "saving": 6.1,
       "initiating": 4.1,
-      "aggression": 2.3,
-      "farm_priority": 6.4
+      "skirmish_rate": 2.3,
+      "camp_stacking": 6.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1364,7 +1364,7 @@
       "counters_tanky_durable"
     ],
     "evaluation_values": {
-      "teamfight": 9.7,
+      "teamfight": 8.7,
       "tempo": 7.4,
       "scaling": 5.6,
       "mobility": 3.9,
@@ -1375,8 +1375,8 @@
       "map_control": 4.1,
       "saving": 3.4,
       "initiating": 3.8,
-      "aggression": 3.8,
-      "farm_priority": 7.9
+      "skirmish_rate": 3.8,
+      "camp_stacking": 7.9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1405,19 +1405,19 @@
       "counters_high_mobility"
     ],
     "evaluation_values": {
-      "teamfight": 9.8,
+      "teamfight": 8.8,
       "tempo": 7.5,
       "scaling": 6.3,
       "mobility": 3.8,
       "objectives": 5.6,
       "control": 4.2,
-      "durability": 9.2,
+      "durability": 8.2,
       "burst": 9.6,
       "map_control": 1.5,
       "saving": 6.3,
       "initiating": 3.1,
-      "aggression": 1.6,
-      "farm_priority": 7.5
+      "skirmish_rate": 1.6,
+      "camp_stacking": 7.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1456,8 +1456,8 @@
       "map_control": 9.1,
       "saving": 6.6,
       "initiating": 4.6,
-      "aggression": 7.8,
-      "farm_priority": 8.3
+      "skirmish_rate": 7.8,
+      "camp_stacking": 8.3
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
@@ -1495,11 +1495,11 @@
       "control": 6.5,
       "durability": 7.1,
       "burst": 6.3,
-      "map_control": 7.9,
+      "map_control": 6.9,
       "saving": 3.4,
       "initiating": 5.6,
-      "aggression": 2.2,
-      "farm_priority": 7.6
+      "skirmish_rate": 2.2,
+      "camp_stacking": 7.6
     },
     "vision_ability_tier": 6,
     "mobility_ability_tier": 0,
@@ -1538,8 +1538,8 @@
       "map_control": 3.7,
       "saving": 3.4,
       "initiating": 4.9,
-      "aggression": 2.4,
-      "farm_priority": 4.8
+      "skirmish_rate": 2.4,
+      "camp_stacking": 4.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10,
@@ -1580,8 +1580,8 @@
       "map_control": 5.7,
       "saving": 5.8,
       "initiating": 3.5,
-      "aggression": 7.9,
-      "farm_priority": 7.5
+      "skirmish_rate": 7.9,
+      "camp_stacking": 7.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1617,13 +1617,13 @@
       "mobility": 5.1,
       "objectives": 8,
       "control": 5.5,
-      "durability": 7.9,
+      "durability": 7.4,
       "burst": 6,
       "map_control": 1.7,
       "saving": 3.4,
       "initiating": 4.9,
-      "aggression": 1.8,
-      "farm_priority": 1.9
+      "skirmish_rate": 1.8,
+      "camp_stacking": 1.9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1661,10 +1661,10 @@
       "durability": 9.4,
       "burst": 6.3,
       "map_control": 0.6,
-      "saving": 3.5,
+      "saving": 2.5,
       "initiating": 5.2,
-      "aggression": 4.2,
-      "farm_priority": 1.1
+      "skirmish_rate": 4.2,
+      "camp_stacking": 1.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1704,8 +1704,8 @@
       "map_control": 2.1,
       "saving": 3.4,
       "initiating": 3.9,
-      "aggression": 4.7,
-      "farm_priority": 4.3
+      "skirmish_rate": 4.7,
+      "camp_stacking": 4.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1742,8 +1742,8 @@
       "map_control": 1.6,
       "saving": 3.3,
       "initiating": 3.4,
-      "aggression": 4,
-      "farm_priority": 0.4
+      "skirmish_rate": 4,
+      "camp_stacking": 0.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1781,8 +1781,8 @@
       "map_control": 6,
       "saving": 6.6,
       "initiating": 2.7,
-      "aggression": 7.9,
-      "farm_priority": 8.9
+      "skirmish_rate": 7.9,
+      "camp_stacking": 8.9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1820,8 +1820,8 @@
       "map_control": 5.8,
       "saving": 3.3,
       "initiating": 5.4,
-      "aggression": 1.5,
-      "farm_priority": 6.3
+      "skirmish_rate": 1.5,
+      "camp_stacking": 6.3
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0,
@@ -1861,8 +1861,8 @@
       "map_control": 1.8,
       "saving": 3.4,
       "initiating": 4.4,
-      "aggression": 4.8,
-      "farm_priority": 5.1
+      "skirmish_rate": 4.8,
+      "camp_stacking": 5.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1900,8 +1900,8 @@
       "map_control": 1,
       "saving": 3.4,
       "initiating": 3.7,
-      "aggression": 1.8,
-      "farm_priority": 6.5
+      "skirmish_rate": 1.8,
+      "camp_stacking": 6.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1942,8 +1942,8 @@
       "map_control": 1.1,
       "saving": 3.4,
       "initiating": 5.5,
-      "aggression": 3.8,
-      "farm_priority": 3.7
+      "skirmish_rate": 3.8,
+      "camp_stacking": 3.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1982,8 +1982,8 @@
       "map_control": 6,
       "saving": 7.8,
       "initiating": 4.6,
-      "aggression": 8.5,
-      "farm_priority": 6.8
+      "skirmish_rate": 8.5,
+      "camp_stacking": 6.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2023,8 +2023,8 @@
       "map_control": 9.8,
       "saving": 3.7,
       "initiating": 8.1,
-      "aggression": 8.3,
-      "farm_priority": 4.6
+      "skirmish_rate": 8.3,
+      "camp_stacking": 4.6
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0,
@@ -2065,8 +2065,8 @@
       "map_control": 4.2,
       "saving": 3.4,
       "initiating": 5.3,
-      "aggression": 5.3,
-      "farm_priority": 6.9
+      "skirmish_rate": 5.3,
+      "camp_stacking": 6.9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2105,8 +2105,8 @@
       "map_control": 9.9,
       "saving": 3.5,
       "initiating": 5.5,
-      "aggression": 4.1,
-      "farm_priority": 5.4
+      "skirmish_rate": 4.1,
+      "camp_stacking": 5.4
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 10,
@@ -2146,8 +2146,8 @@
       "map_control": 0.7,
       "saving": 6.1,
       "initiating": 5.2,
-      "aggression": 0.9,
-      "farm_priority": 4.4
+      "skirmish_rate": 0.9,
+      "camp_stacking": 4.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2186,8 +2186,8 @@
       "map_control": 2.3,
       "saving": 6.1,
       "initiating": 6.9,
-      "aggression": 2.7,
-      "farm_priority": 6.3
+      "skirmish_rate": 2.7,
+      "camp_stacking": 6.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2226,8 +2226,8 @@
       "map_control": 4.5,
       "saving": 3.3,
       "initiating": 3.6,
-      "aggression": 4,
-      "farm_priority": 3.9
+      "skirmish_rate": 4,
+      "camp_stacking": 3.9
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0,
@@ -2263,10 +2263,10 @@
       "durability": 6,
       "burst": 0.7,
       "map_control": 4.6,
-      "saving": 8.5,
+      "saving": 9.5,
       "initiating": 2.3,
-      "aggression": 6.1,
-      "farm_priority": 1.2
+      "skirmish_rate": 6.1,
+      "camp_stacking": 1.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2305,8 +2305,8 @@
       "map_control": 8.3,
       "saving": 6.3,
       "initiating": 4.9,
-      "aggression": 6.9,
-      "farm_priority": 7.4
+      "skirmish_rate": 6.9,
+      "camp_stacking": 7.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2344,8 +2344,8 @@
       "map_control": 3.2,
       "saving": 3.4,
       "initiating": 5.6,
-      "aggression": 6.7,
-      "farm_priority": 4.1
+      "skirmish_rate": 6.7,
+      "camp_stacking": 4.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2386,8 +2386,8 @@
       "map_control": 2.9,
       "saving": 3.4,
       "initiating": 6,
-      "aggression": 4.7,
-      "farm_priority": 0.8
+      "skirmish_rate": 4.7,
+      "camp_stacking": 0.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2426,8 +2426,8 @@
       "map_control": 8.9,
       "saving": 3.3,
       "initiating": 4,
-      "aggression": 2.4,
-      "farm_priority": 0.6
+      "skirmish_rate": 2.4,
+      "camp_stacking": 0.6
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
@@ -2465,8 +2465,8 @@
       "map_control": 10,
       "saving": 3.5,
       "initiating": 5.8,
-      "aggression": 9.5,
-      "farm_priority": 0.1
+      "skirmish_rate": 9.5,
+      "camp_stacking": 0.1
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0,
@@ -2503,8 +2503,8 @@
       "map_control": 3.8,
       "saving": 3.5,
       "initiating": 4.4,
-      "aggression": 3.2,
-      "farm_priority": 0.9
+      "skirmish_rate": 3.2,
+      "camp_stacking": 0.9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10,
@@ -2539,14 +2539,14 @@
       "scaling": 3.7,
       "mobility": 3.3,
       "objectives": 5.5,
-      "control": 6.8,
+      "control": 7.8,
       "durability": 1,
       "burst": 0.8,
       "map_control": 6.3,
       "saving": 3.5,
       "initiating": 5.3,
-      "aggression": 8.9,
-      "farm_priority": 5.5
+      "skirmish_rate": 8.9,
+      "camp_stacking": 5.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2580,13 +2580,13 @@
       "mobility": 6.2,
       "objectives": 1.8,
       "control": 7.2,
-      "durability": 5.4,
+      "durability": 4.9,
       "burst": 2.5,
       "map_control": 6.3,
       "saving": 3.5,
       "initiating": 8.3,
-      "aggression": 6.6,
-      "farm_priority": 9.8
+      "skirmish_rate": 6.6,
+      "camp_stacking": 9.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2624,8 +2624,8 @@
       "map_control": 9.4,
       "saving": 7,
       "initiating": 3,
-      "aggression": 5.9,
-      "farm_priority": 9.6
+      "skirmish_rate": 5.9,
+      "camp_stacking": 9.6
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
@@ -2664,8 +2664,8 @@
       "map_control": 9.4,
       "saving": 3.3,
       "initiating": 5,
-      "aggression": 2.5,
-      "farm_priority": 4.8
+      "skirmish_rate": 2.5,
+      "camp_stacking": 4.8
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0,
@@ -2704,8 +2704,8 @@
       "map_control": 6.1,
       "saving": 3.4,
       "initiating": 4.3,
-      "aggression": 8.9,
-      "farm_priority": 9.3
+      "skirmish_rate": 8.9,
+      "camp_stacking": 9.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2746,8 +2746,8 @@
       "map_control": 1.2,
       "saving": 3.4,
       "initiating": 6,
-      "aggression": 4.4,
-      "farm_priority": 6.2
+      "skirmish_rate": 4.4,
+      "camp_stacking": 6.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2786,8 +2786,8 @@
       "map_control": 0.8,
       "saving": 3.3,
       "initiating": 5.3,
-      "aggression": 2.8,
-      "farm_priority": 1.3
+      "skirmish_rate": 2.8,
+      "camp_stacking": 1.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2828,8 +2828,8 @@
       "map_control": 8.4,
       "saving": 3.5,
       "initiating": 7.3,
-      "aggression": 8.8,
-      "farm_priority": 2.5
+      "skirmish_rate": 8.8,
+      "camp_stacking": 2.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10,
@@ -2868,8 +2868,8 @@
       "map_control": 2.9,
       "saving": 3.3,
       "initiating": 4.3,
-      "aggression": 4.9,
-      "farm_priority": 8.3
+      "skirmish_rate": 4.9,
+      "camp_stacking": 8.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2911,8 +2911,8 @@
       "map_control": 2.1,
       "saving": 3.5,
       "initiating": 4.4,
-      "aggression": 1.7,
-      "farm_priority": 10
+      "skirmish_rate": 1.7,
+      "camp_stacking": 10
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2948,14 +2948,14 @@
       "scaling": 7.3,
       "mobility": 6.3,
       "objectives": 7.4,
-      "control": 8.7,
+      "control": 8.2,
       "durability": 3.9,
       "burst": 7,
-      "map_control": 9.3,
+      "map_control": 7.3,
       "saving": 3.5,
       "initiating": 8.3,
-      "aggression": 4.7,
-      "farm_priority": 4.4
+      "skirmish_rate": 4.7,
+      "camp_stacking": 4.4
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
@@ -2996,8 +2996,8 @@
       "map_control": 6.8,
       "saving": 3.6,
       "initiating": 4.1,
-      "aggression": 8.4,
-      "farm_priority": 8
+      "skirmish_rate": 8.4,
+      "camp_stacking": 8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3036,8 +3036,8 @@
       "map_control": 3.9,
       "saving": 3.6,
       "initiating": 4.4,
-      "aggression": 5.4,
-      "farm_priority": 1.4
+      "skirmish_rate": 5.4,
+      "camp_stacking": 1.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3076,8 +3076,8 @@
       "map_control": 7.7,
       "saving": 3.5,
       "initiating": 5,
-      "aggression": 1.4,
-      "farm_priority": 1.6
+      "skirmish_rate": 1.4,
+      "camp_stacking": 1.6
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
@@ -3118,8 +3118,8 @@
       "map_control": 3.4,
       "saving": 3.4,
       "initiating": 5.9,
-      "aggression": 3,
-      "farm_priority": 1.7
+      "skirmish_rate": 3,
+      "camp_stacking": 1.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3159,8 +3159,8 @@
       "map_control": 8.7,
       "saving": 6.7,
       "initiating": 5.9,
-      "aggression": 8.4,
-      "farm_priority": 9.8
+      "skirmish_rate": 8.4,
+      "camp_stacking": 9.8
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0,
@@ -3193,13 +3193,13 @@
       "mobility": 5.9,
       "objectives": 9.5,
       "control": 7.7,
-      "durability": 9,
+      "durability": 8,
       "burst": 4,
       "map_control": 8.5,
       "saving": 3.4,
       "initiating": 5.3,
-      "aggression": 0.3,
-      "farm_priority": 8.7
+      "skirmish_rate": 0.3,
+      "camp_stacking": 8.7
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
@@ -3239,8 +3239,8 @@
       "map_control": 2.4,
       "saving": 3.3,
       "initiating": 4.5,
-      "aggression": 5.7,
-      "farm_priority": 0.2
+      "skirmish_rate": 5.7,
+      "camp_stacking": 0.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3282,8 +3282,8 @@
       "map_control": 4.7,
       "saving": 3.4,
       "initiating": 6.5,
-      "aggression": 3,
-      "farm_priority": 9.1
+      "skirmish_rate": 3,
+      "camp_stacking": 9.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3323,9 +3323,9 @@
       "burst": 0.2,
       "map_control": 9.5,
       "saving": 6.5,
-      "initiating": 8.4,
-      "aggression": 7.9,
-      "farm_priority": 2.3
+      "initiating": 7.4,
+      "skirmish_rate": 7.9,
+      "camp_stacking": 2.3
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0,
@@ -3365,8 +3365,8 @@
       "map_control": 4.8,
       "saving": 3.6,
       "initiating": 4.4,
-      "aggression": 8.1,
-      "farm_priority": 2.6
+      "skirmish_rate": 8.1,
+      "camp_stacking": 2.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3405,8 +3405,8 @@
       "map_control": 5.3,
       "saving": 6.5,
       "initiating": 4.4,
-      "aggression": 7.8,
-      "farm_priority": 2.9
+      "skirmish_rate": 7.8,
+      "camp_stacking": 2.9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3445,8 +3445,8 @@
       "map_control": 5.4,
       "saving": 6,
       "initiating": 6.4,
-      "aggression": 7.3,
-      "farm_priority": 8.6
+      "skirmish_rate": 7.3,
+      "camp_stacking": 8.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3480,14 +3480,14 @@
       "scaling": 2.5,
       "mobility": 3.6,
       "objectives": 0.1,
-      "control": 4.4,
+      "control": 5.4,
       "durability": 0.2,
       "burst": 0.4,
       "map_control": 6.9,
       "saving": 3.4,
-      "initiating": 6.2,
-      "aggression": 9.6,
-      "farm_priority": 8.1
+      "initiating": 7.2,
+      "skirmish_rate": 9.6,
+      "camp_stacking": 8.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3521,14 +3521,14 @@
       "scaling": 4,
       "mobility": 6,
       "objectives": 0.6,
-      "control": 8.1,
+      "control": 7.1,
       "durability": 1.3,
       "burst": 5.6,
       "map_control": 9.2,
       "saving": 3.4,
       "initiating": 6.4,
-      "aggression": 8.8,
-      "farm_priority": 2.9
+      "skirmish_rate": 8.8,
+      "camp_stacking": 2.9
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0,
@@ -3570,8 +3570,8 @@
       "map_control": 4.3,
       "saving": 3.6,
       "initiating": 5.1,
-      "aggression": 0.2,
-      "farm_priority": 6.6
+      "skirmish_rate": 0.2,
+      "camp_stacking": 6.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3604,14 +3604,14 @@
       "scaling": 3,
       "mobility": 6.6,
       "objectives": 2.3,
-      "control": 3.9,
+      "control": 2.9,
       "durability": 3.7,
       "burst": 3.9,
       "map_control": 7.5,
-      "saving": 7,
+      "saving": 6,
       "initiating": 4.5,
-      "aggression": 3,
-      "farm_priority": 9.9
+      "skirmish_rate": 3,
+      "camp_stacking": 9.9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3648,8 +3648,8 @@
       "map_control": 9,
       "saving": 7.3,
       "initiating": 4.2,
-      "aggression": 8.4,
-      "farm_priority": 9.5
+      "skirmish_rate": 8.4,
+      "camp_stacking": 9.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3689,8 +3689,8 @@
       "map_control": 9,
       "saving": 5.7,
       "initiating": 5.4,
-      "aggression": 5.7,
-      "farm_priority": 0.5
+      "skirmish_rate": 5.7,
+      "camp_stacking": 0.5
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
@@ -3730,8 +3730,8 @@
       "map_control": 9.8,
       "saving": 3.6,
       "initiating": 6.4,
-      "aggression": 4.1,
-      "farm_priority": 0.7
+      "skirmish_rate": 4.1,
+      "camp_stacking": 0.7
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0,
@@ -3769,8 +3769,8 @@
       "map_control": 1.3,
       "saving": 3.5,
       "initiating": 4.6,
-      "aggression": 0.6,
-      "farm_priority": 9.2
+      "skirmish_rate": 0.6,
+      "camp_stacking": 9.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3809,8 +3809,8 @@
       "map_control": 0.9,
       "saving": 3.3,
       "initiating": 2.3,
-      "aggression": 3.7,
-      "farm_priority": 3
+      "skirmish_rate": 3.7,
+      "camp_stacking": 3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3851,8 +3851,8 @@
       "map_control": 1.7,
       "saving": 4,
       "initiating": 7.2,
-      "aggression": 3.4,
-      "farm_priority": 1.7
+      "skirmish_rate": 3.4,
+      "camp_stacking": 1.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3892,8 +3892,8 @@
       "map_control": 4.8,
       "saving": 3.3,
       "initiating": 9,
-      "aggression": 5.9,
-      "farm_priority": 4.9
+      "skirmish_rate": 5.9,
+      "camp_stacking": 4.9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3932,8 +3932,8 @@
       "map_control": 2.5,
       "saving": 3.3,
       "initiating": 5.3,
-      "aggression": 3.2,
-      "farm_priority": 3.3
+      "skirmish_rate": 3.2,
+      "camp_stacking": 3.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3972,8 +3972,8 @@
       "map_control": 1.9,
       "saving": 3.3,
       "initiating": 5,
-      "aggression": 4.3,
-      "farm_priority": 5.6
+      "skirmish_rate": 4.3,
+      "camp_stacking": 5.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4012,8 +4012,8 @@
       "map_control": 8,
       "saving": 4,
       "initiating": 9.9,
-      "aggression": 9.1,
-      "farm_priority": 2.5
+      "skirmish_rate": 9.1,
+      "camp_stacking": 2.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4046,14 +4046,14 @@
       "scaling": 4.3,
       "mobility": 5.2,
       "objectives": 1.4,
-      "control": 3.9,
+      "control": 4.9,
       "durability": 0.5,
       "burst": 5.7,
       "map_control": 7.1,
       "saving": 3.4,
       "initiating": 3.4,
-      "aggression": 8.7,
-      "farm_priority": 7.8
+      "skirmish_rate": 8.7,
+      "camp_stacking": 7.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4091,8 +4091,8 @@
       "map_control": 5.9,
       "saving": 7,
       "initiating": 5,
-      "aggression": 5.2,
-      "farm_priority": 2.8
+      "skirmish_rate": 5.2,
+      "camp_stacking": 2.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4132,8 +4132,8 @@
       "map_control": 7.2,
       "saving": 3.3,
       "initiating": 5.3,
-      "aggression": 8.4,
-      "farm_priority": 7.7
+      "skirmish_rate": 8.4,
+      "camp_stacking": 7.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4174,8 +4174,8 @@
       "map_control": 2.6,
       "saving": 6.2,
       "initiating": 5.7,
-      "aggression": 6.3,
-      "farm_priority": 1
+      "skirmish_rate": 6.3,
+      "camp_stacking": 1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4213,8 +4213,8 @@
       "map_control": 7.8,
       "saving": 3.5,
       "initiating": 5.2,
-      "aggression": 7.8,
-      "farm_priority": 8.4
+      "skirmish_rate": 7.8,
+      "camp_stacking": 8.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4244,7 +4244,7 @@
       "counters_mana_reliant"
     ],
     "evaluation_values": {
-      "teamfight": 9.8,
+      "teamfight": 8.8,
       "tempo": 9.3,
       "scaling": 5.2,
       "mobility": 7,
@@ -4255,8 +4255,8 @@
       "map_control": 6.4,
       "saving": 3.3,
       "initiating": 5.7,
-      "aggression": 2.1,
-      "farm_priority": 2
+      "skirmish_rate": 2.1,
+      "camp_stacking": 2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10,
@@ -4297,8 +4297,8 @@
       "map_control": 7.5,
       "saving": 5.9,
       "initiating": 9,
-      "aggression": 5.3,
-      "farm_priority": 2.4
+      "skirmish_rate": 5.3,
+      "camp_stacking": 2.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 6,
@@ -4336,11 +4336,11 @@
       "control": 7.5,
       "durability": 7.6,
       "burst": 2.1,
-      "map_control": 3,
+      "map_control": 4,
       "saving": 3.5,
       "initiating": 4.6,
-      "aggression": 3.6,
-      "farm_priority": 5.6
+      "skirmish_rate": 3.6,
+      "camp_stacking": 5.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4378,8 +4378,8 @@
       "map_control": 2.7,
       "saving": 3.6,
       "initiating": 4.7,
-      "aggression": 0.5,
-      "farm_priority": 4.2
+      "skirmish_rate": 0.5,
+      "camp_stacking": 4.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4420,8 +4420,8 @@
       "map_control": 7.6,
       "saving": 6.1,
       "initiating": 5.1,
-      "aggression": 6.9,
-      "farm_priority": 9.4
+      "skirmish_rate": 6.9,
+      "camp_stacking": 8.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4461,8 +4461,8 @@
       "map_control": 8.1,
       "saving": 10,
       "initiating": 4,
-      "aggression": 8.8,
-      "farm_priority": 7.1
+      "skirmish_rate": 8.8,
+      "camp_stacking": 7.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4501,8 +4501,8 @@
       "map_control": 8.8,
       "saving": 6.5,
       "initiating": 5.9,
-      "aggression": 8.1,
-      "farm_priority": 5.7
+      "skirmish_rate": 8.1,
+      "camp_stacking": 5.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4529,7 +4529,7 @@
       "counters_low_mobility"
     ],
     "evaluation_values": {
-      "teamfight": 9.6,
+      "teamfight": 8.1,
       "tempo": 2.2,
       "scaling": 9.2,
       "mobility": 6.3,
@@ -4540,8 +4540,8 @@
       "map_control": 7,
       "saving": 3.5,
       "initiating": 4.9,
-      "aggression": 3.9,
-      "farm_priority": 4
+      "skirmish_rate": 3.9,
+      "camp_stacking": 4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4574,14 +4574,14 @@
       "scaling": 4.7,
       "mobility": 7.8,
       "objectives": 5.8,
-      "control": 5.3,
+      "control": 4.3,
       "durability": 5.6,
       "burst": 6.1,
       "map_control": 6.5,
       "saving": 3.3,
       "initiating": 6.8,
-      "aggression": 3.9,
-      "farm_priority": 2.1
+      "skirmish_rate": 3.9,
+      "camp_stacking": 2.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4621,8 +4621,8 @@
       "map_control": 7.1,
       "saving": 3.4,
       "initiating": 6.8,
-      "aggression": 8.9,
-      "farm_priority": 6
+      "skirmish_rate": 8.9,
+      "camp_stacking": 6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4664,8 +4664,8 @@
       "map_control": 7.3,
       "saving": 3.3,
       "initiating": 7.6,
-      "aggression": 2.3,
-      "farm_priority": 2.1
+      "skirmish_rate": 2.3,
+      "camp_stacking": 2.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4704,8 +4704,8 @@
       "map_control": 7.4,
       "saving": 5.8,
       "initiating": 7.8,
-      "aggression": 8.5,
-      "farm_priority": 9.4
+      "skirmish_rate": 8.5,
+      "camp_stacking": 9.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4745,8 +4745,8 @@
       "map_control": 8.6,
       "saving": 3.3,
       "initiating": 7.7,
-      "aggression": 6.5,
-      "farm_priority": 8.5
+      "skirmish_rate": 6.5,
+      "camp_stacking": 8.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4786,8 +4786,8 @@
       "map_control": 6.6,
       "saving": 3.3,
       "initiating": 6.6,
-      "aggression": 3.1,
-      "farm_priority": 0.3
+      "skirmish_rate": 3.1,
+      "camp_stacking": 0.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 6,
@@ -4825,10 +4825,10 @@
       "durability": 3.3,
       "burst": 7.5,
       "map_control": 6.2,
-      "saving": 6.1,
+      "saving": 5.1,
       "initiating": 7.1,
-      "aggression": 6.2,
-      "farm_priority": 6
+      "skirmish_rate": 6.2,
+      "camp_stacking": 6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4869,8 +4869,8 @@
       "map_control": 2.2,
       "saving": 3.4,
       "initiating": 7.1,
-      "aggression": 5.6,
-      "farm_priority": 1.5
+      "skirmish_rate": 5.6,
+      "camp_stacking": 1.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4908,10 +4908,10 @@
       "durability": 1,
       "burst": 1,
       "map_control": 9.6,
-      "saving": 3.7,
+      "saving": 4.7,
       "initiating": 6,
-      "aggression": 8.3,
-      "farm_priority": 8.7
+      "skirmish_rate": 8.3,
+      "camp_stacking": 8.7
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
@@ -4944,13 +4944,13 @@
       "mobility": 7,
       "objectives": 5.7,
       "control": 4.9,
-      "durability": 8.3,
+      "durability": 7.8,
       "burst": 5.3,
       "map_control": 5.5,
       "saving": 6.4,
       "initiating": 5.4,
-      "aggression": 3.9,
-      "farm_priority": 5.2
+      "skirmish_rate": 3.9,
+      "camp_stacking": 5.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4991,8 +4991,8 @@
       "map_control": 8.2,
       "saving": 6.2,
       "initiating": 5.9,
-      "aggression": 7.8,
-      "farm_priority": 1
+      "skirmish_rate": 7.8,
+      "camp_stacking": 1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -5031,8 +5031,8 @@
       "map_control": 4.4,
       "saving": 3.4,
       "initiating": 9.2,
-      "aggression": 4.3,
-      "farm_priority": 3.4
+      "skirmish_rate": 4.3,
+      "camp_stacking": 3.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -5070,8 +5070,8 @@
       "map_control": 6.7,
       "saving": 3.5,
       "initiating": 5.5,
-      "aggression": 1.7,
-      "farm_priority": 8.2
+      "skirmish_rate": 1.7,
+      "camp_stacking": 8.2
     },
     "vision_ability_tier": 2,
     "mobility_ability_tier": 0,
@@ -5104,13 +5104,13 @@
       "mobility": 6.3,
       "objectives": 6.3,
       "control": 4.1,
-      "durability": 8.4,
+      "durability": 7.4,
       "burst": 9.2,
       "map_control": 5.1,
       "saving": 3.3,
       "initiating": 6.4,
-      "aggression": 1.4,
-      "farm_priority": 4.7
+      "skirmish_rate": 1.4,
+      "camp_stacking": 4.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -5149,8 +5149,8 @@
       "map_control": 5.2,
       "saving": 7.6,
       "initiating": 4.6,
-      "aggression": 4.3,
-      "farm_priority": 6.7
+      "skirmish_rate": 4.3,
+      "camp_stacking": 6.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,

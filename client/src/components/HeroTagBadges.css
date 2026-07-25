@@ -1,0 +1,67 @@
+/* Rarity palette — common/rare/epic/legendary -> green/blue/purple/orange,
+   per spec. Distinct from the role-tint system (heroRoleColor.ts) and from
+   the page's bronze/gold accent, so a tag reads as "a different kind of
+   information" at a glance. Same hex pair in both themes (dark ground vs
+   light ground both have enough contrast against these) — only the fill
+   alpha differs. */
+.hero-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.hero-tag-row--overlay {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  right: 6px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* DraftLedger's picked-hero rows: no portrait to overlay, so the tags flow
+   inline after the name/role text and hug the right edge of the row (the
+   row itself doesn't stretch slot-text to fill, leaving room here). */
+.hero-tag-row--inline {
+  margin-left: auto;
+  flex-shrink: 0;
+  max-width: 45%;
+  justify-content: flex-end;
+}
+
+.hero-tag-badge {
+  pointer-events: auto;
+  font-family: var(--font-ui);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.3;
+  padding: 2px 6px;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  color: var(--ink);
+  background: rgba(21, 16, 12, 0.72);
+  backdrop-filter: blur(2px);
+  text-shadow: 0 1px 2px var(--shadow-deep);
+}
+
+.hero-tag-badge.rarity-common {
+  border-color: #4caf6a;
+  box-shadow: 0 0 6px rgba(76, 175, 106, 0.35);
+}
+
+.hero-tag-badge.rarity-rare {
+  border-color: #3f8fd6;
+  box-shadow: 0 0 6px rgba(63, 143, 214, 0.4);
+}
+
+.hero-tag-badge.rarity-epic {
+  border-color: #a866d9;
+  box-shadow: 0 0 6px rgba(168, 102, 217, 0.45);
+}
+
+.hero-tag-badge.rarity-legendary {
+  border-color: #e08a2e;
+  box-shadow: 0 0 8px rgba(224, 138, 46, 0.55);
+}

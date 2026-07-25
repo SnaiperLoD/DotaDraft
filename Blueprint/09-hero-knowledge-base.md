@@ -156,16 +156,18 @@ initiating = weightedBlend(0.85×initiatingTagScore(zScoreExtremityScale от с
 
 Blink Dagger добавлен с большим весом, чем в `mobility` (0.15 против объединённых 0.1 на Blink+BoT там), потому что для целого класса "даггер + одна ультимативная способность" инициаторов (Tidehunter, Mars, Sven, Dragon Knight) итемизация — не второстепенный сигнал, а основной: у них обычно только 1-2 тегованных способности, и чистая сумма тегов недооценивает их относительно героев с богатым кастующимся китом (Invoker, Tusk, Earth Spirit).
 
-### `aggression` и `farm_priority` — новые оси, первые откалиброванные через регрессию против реального winRate
+### `skirmish_rate` и `camp_stacking` (переименованы из `aggression`/`farm_priority` 2026-07-24) — новые оси, первые откалиброванные через регрессию против реального winRate
 
 ```
-aggression = weightedBlend(0.5×deathsPerMinScore(percentileRankScale), 0.5×invertedLastHitsPerMinScore(percentileRankScale от -last_hits_per_min))
-farm_priority = percentileRankScale(campsStackedPerMin)
+skirmish_rate = weightedBlend(0.5×deathsPerMinScore(percentileRankScale), 0.5×invertedLastHitsPerMinScore(percentileRankScale от -last_hits_per_min))
+camp_stacking = percentileRankScale(campsStackedPerMin)
 ```
+
+**Переименование 2026-07-24** (self-play outlier investigation, `10-tech-debt-backlog.md`): старые имена вводили в заблуждение. `aggression` звучало как "боевая агрессивность", `farm_priority` — как "личная потребность в фарме". По факту `camps_stacked_per_min` — это стак крипов **для союзника**, роумерское/сапортское поведение, а не мера того, насколько герою самому нужен фарм. Хардкерри-сплитпушер Phantom Lancer (максимально фарм-зависимый герой в игре) получал `farm_priority≈0.2`, потому что не стакает лагеря — он просто эффективно фармит сам. Поднятие веса этой оси (в рамках калибровки Battle Engine) систематически **ухудшало** оценку именно таких героев, а не улучшало. Ни одна текущая ось не измеряет "нужно ли герою время для скейла" в прямом смысле — см. открытый пункт в `10-tech-debt-backlog.md`.
 
 Первые две оси в истории проекта, добавленные **после**, а не до проверки на реальных данных — обычный порядок (`09`→калибровка→потом сверка с реальностью) был перевёрнут: сессия регрессии (`Blueprint/10-tech-debt-backlog.md`, "Поворотный момент" и последующие находки) сначала нашла статистически значимую простую корреляцию с реальным `winRate` (`deaths_per_min` r=+0.178, `camps_stacked_per_min` r=-0.197, `last_hits_per_min` r=-0.177 — все три по отдельности, не только внутри многофакторной регрессии, которая в этой же сессии дважды дала ложные срабатывания на `burst` и `movement`), и только потом эти метрики оформлены в calibrate-evaluation-values.ts как полноценные оси.
 
-`deaths_per_min` и `last_hits_per_min` объединены в `aggression`, а не оставлены раздельно — они почти зеркальны (r=-0.726: герой, часто размениваривающийся в файтах, естественно фармит менее эффективно, и наоборот). `camps_stacked_per_min` осталась отдельной осью (`farm_priority`) — слабо коррелирует с парой deaths/last-hits (|r|<0.17), то есть измеряет что-то самостоятельное (персональная фарм-оптимизация), а не то же самое другими словами.
+`deaths_per_min` и `last_hits_per_min` объединены в `skirmish_rate`, а не оставлены раздельно — они почти зеркальны (r=-0.726: герой, часто размениваривающийся в файтах, естественно фармит менее эффективно, и наоборот). `camps_stacked_per_min` осталась отдельной осью (`camp_stacking`) — слабо коррелирует с парой deaths/last-hits (|r|<0.17), то есть измеряет что-то самостоятельное (стак лагерей для команды), а не то же самое другими словами.
 
 Источники: `deaths_per_min`/`camps_stacked_per_min` — новый Explorer-фетч (`server/scripts/fetch-deaths-camps-data.ts`, тот же паттерн, что `fetch-control-durability-vision-data.ts`, `server/data/deaths-camps-data.json`); `last_hits_per_min` — уже лежал неиспользуемым в `hero-meta.json`'s `benchmarks` (тот же `/api/benchmarks` фетч, что уже даёт teamfight/burst/scaling/objectives) — новых данных для него собирать не пришлось.
 

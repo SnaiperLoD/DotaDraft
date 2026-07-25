@@ -41,6 +41,8 @@ export const counterAnalyzer: Analyzer = {
           ];
     explanation.push(COUNTER_NARRATIVE[scoreBracket(score)]);
 
-    return { score, explanation };
+    // Not axis-based (no evaluation_values score) — no percentile
+    // distribution to rank against, see analyzer.interface.ts.
+    return { score, percentile: null, explanation };
   },
 };

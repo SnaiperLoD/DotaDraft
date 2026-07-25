@@ -6,6 +6,7 @@ import { createSynergyAnalyzer } from './analyzers/synergy.analyzer';
 import { counterAnalyzer } from './analyzers/counter.analyzer';
 import { createAxisAnalyzer } from './analyzers/axis.analyzer';
 import { createProSimilarityAnalyzer } from './analyzers/pro-similarity.analyzer';
+import { percentileBracket } from './score-narrative';
 import type { Analyzer, DraftPick } from './analyzer.interface';
 import type { EvaluationResult, EvaluationSummary, AnalyzerResult } from 'shared';
 
@@ -24,8 +25,8 @@ const SUMMARY_KEYS = [
   'saving',
   'objectives',
   'initiating',
-  'aggression',
-  'farm_priority',
+  'skirmish_rate',
+  'camp_stacking',
   'proSimilarity',
 ];
 
@@ -38,10 +39,20 @@ const SUMMARY_KEYS = [
 // breakdown rows, which meant role-fit had nothing to boost for
 // Carry/Mid/Offlane. Initiating (same backlog doc) was calibrated even
 // earlier than that but stayed unsurfaced until now for the same reason.
-// Aggression/Farm Priority are new (regress-composite-clusters-v2.ts
+// Skirmish Rate/Camp Stacking are new (regress-composite-clusters-v2.ts
 // findings) — the first two axes in this project's history validated
 // directly against real OpenDota winRate via simple correlation before
 // being wired in, rather than hand-authored and calibrated after the fact.
+// Renamed from aggression/farm_priority (Blueprint/10-tech-debt-backlog.md,
+// self-play outlier investigation) — those names implied "this hero plays
+// aggressively" / "this hero prioritizes personal farm," but the underlying
+// signals are deaths_per_min+inverted_last_hits (skirmish involvement, not
+// combat aggression per se) and camps_stacked_per_min (a support/utility
+// behavior — stacking FOR someone else — not personal farm optimization).
+// The old names actively misled: a hard-carry split-pusher like Phantom
+// Lancer scored near-zero on "farm_priority" despite being maximally
+// farm-dependent, because he doesn't stack camps, he just farms efficiently
+// himself. New names describe the actual measured behavior.
 const BASE_ANALYZERS: Analyzer[] = [
   counterAnalyzer,
   createAxisAnalyzer('teamfight', 'Teamfight'),
@@ -51,8 +62,8 @@ const BASE_ANALYZERS: Analyzer[] = [
   createAxisAnalyzer('control', 'Control'),
   createAxisAnalyzer('durability', 'Durability'),
   createAxisAnalyzer('initiating', 'Initiating'),
-  createAxisAnalyzer('aggression', 'Aggression'),
-  createAxisAnalyzer('farm_priority', 'Farm Priority'),
+  createAxisAnalyzer('skirmish_rate', 'Skirmish Rate'),
+  createAxisAnalyzer('camp_stacking', 'Camp Stacking'),
   createAxisAnalyzer('mobility', 'Mobility'),
   createAxisAnalyzer('map_control', 'Map Control'),
   createAxisAnalyzer('saving', 'Saving'),
@@ -90,8 +101,8 @@ const WEIGHTS: Record<string, number> = {
   // (initiating included) — deliberately NOT elevated just because they're
   // real-data-validated; that's a separate tuning decision for later, not
   // bundled into "add the axis" (Blueprint/10-tech-debt-backlog.md).
-  aggression: 0.05,
-  farm_priority: 0.05,
+  skirmish_rate: 0.05,
+  camp_stacking: 0.05,
   proSimilarity: 0.05,
 };
 
@@ -123,6 +134,7 @@ export class EvaluationService {
         key: analyzer.key,
         label: analyzer.label,
         score: result.score,
+        percentile: result.percentile,
         explanation: result.explanation,
       };
     });
@@ -134,19 +146,64 @@ export class EvaluationService {
   }
 
   private buildSummary(breakdown: AnalyzerResult[]): EvaluationSummary {
+    // Ranked by percentile (population-relative), not raw score — an axis
+    // like saving that clusters low across the whole population (see
+    // axis-percentile-distributions.json) shouldn't look like a bigger
+    // "weakness" than a genuinely below-average axis just because its raw
+    // number is smaller. Synergy/Counter/Pro Similarity have no percentile
+    // (not axis-based) — score*10 puts their 0-10 scale on the same rough
+    // footing as a 0-100 percentile for ranking purposes only.
+    const rankValue = (b: AnalyzerResult) => b.percentile ?? (b.score as number) * 10;
     const ranked = breakdown
       .filter((b) => SUMMARY_KEYS.includes(b.key) && b.score !== null)
-      .sort((a, b) => (b.score as number) - (a.score as number));
+      .sort((a, b) => rankValue(b) - rankValue(a));
 
-    const describe = (item: AnalyzerResult) => {
-      const narrative = item.explanation[item.explanation.length - 1];
-      return `${item.label} (${item.score}/10): ${narrative}`;
-    };
+    // Just the narrative sentence itself (always the last explanation line,
+    // see axis.analyzer.ts) — it already names the axis and cites
+    // contributors via score-narrative.ts's lede(), so a "Label (n/10):"
+    // prefix on top of it was redundant formality, not added information.
+    const describe = (item: AnalyzerResult) => item.explanation[item.explanation.length - 1];
 
-    const strengths = ranked.slice(0, 2).map(describe);
-    const weaknesses = ranked.slice(-2).reverse().map(describe);
+    const strengths = ranked.slice(0, 3).map(describe);
+    const weaknesses = ranked.slice(-3).reverse().map(describe);
+    const gameplan = this.buildGameplan(breakdown, ranked[0], ranked[ranked.length - 1]);
 
-    return { strengths, weaknesses };
+    return { strengths, weaknesses, gameplan };
+  }
+
+  // A short synthesized paragraph on top of the strengths/weaknesses list —
+  // those are independent per-axis fragments, this ties tempo+scaling
+  // (the two axes that actually drive game *length*, per their own
+  // real-data-backed narratives in score-narrative.ts) into a single win
+  // condition, then names the standout strength/weakness to lean on or
+  // cover for. Recombines already-calibrated axis narratives rather than
+  // introducing a new signal.
+  private buildGameplan(breakdown: AnalyzerResult[], topStrength: AnalyzerResult, topWeakness: AnalyzerResult): string {
+    const tempo = breakdown.find((b) => b.key === 'tempo');
+    const scaling = breakdown.find((b) => b.key === 'scaling');
+    const tempoBracket = tempo?.percentile != null ? percentileBracket(tempo.percentile) : 'mid';
+    const scalingBracket = scaling?.percentile != null ? percentileBracket(scaling.percentile) : 'mid';
+
+    const winConditionLine = ((): string => {
+      if (tempoBracket === 'high' && scalingBracket !== 'high') {
+        return 'This is a draft that wants to win fast: force early lane swaps and skirmishes, take fights before 25 minutes, and avoid letting the game drag — it does not get meaningfully stronger with time.';
+      }
+      if (tempoBracket !== 'high' && scalingBracket === 'high') {
+        return 'This is a patient draft: farm safely, avoid unnecessary risk in the laning stage, and let the game run past 35-40 minutes, where its late-game power actually shows up.';
+      }
+      if (tempoBracket === 'high' && scalingBracket === 'high') {
+        return 'This draft has real flexibility in how the game is played — it can force an early lead off a fast start, or fall back on genuine late-game scaling if the opening does not go to plan.';
+      }
+      if (tempoBracket === 'low' && scalingBracket === 'low') {
+        return 'This draft has no strong forcing function in either direction — it does not want to rush the early game or stall for a late-game payoff, so small edges and picks have to be manufactured rather than relied on.';
+      }
+      return 'This draft sits in the middle on both game speed and scaling — the win condition depends more on execution and picks than on a built-in early or late-game plan.';
+    })();
+
+    const strengthLine = `Lean on this: ${topStrength.explanation[topStrength.explanation.length - 1]}`;
+    const weaknessLine = `Cover for this: ${topWeakness.explanation[topWeakness.explanation.length - 1]}`;
+
+    return `${winConditionLine} ${strengthLine} ${weaknessLine}`;
   }
 
   private weightedTotal(breakdown: AnalyzerResult[]): number {

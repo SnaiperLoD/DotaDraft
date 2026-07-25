@@ -21,13 +21,18 @@ import {
 //   saving     <- 40% hero_healing_per_min (benchmarks, skipped for heroes with zero hand-tagged saving abilities — see below) + 60% hand-tagged saving (per-ability, summed per hero, see server/data/ability-tag-weights.json)
 //   initiating <- 85% hand-tagged initiating (per-ability, summed per hero) + 15% Blink Dagger purchase rank — stored on
 //                 evaluation_values for reference, NOT yet wired into Battle Engine/role-fit/UI (separate scope)
-//   aggression <- 50% deaths_per_min (higher = dies more often) + 50% inverted last_hits_per_min (lower CS/min = higher
+//   skirmish_rate <- 50% deaths_per_min (higher = dies more often) + 50% inverted last_hits_per_min (lower CS/min = higher
 //                 score) — Blueprint/10-tech-debt-backlog.md: both validated on real-data simple correlation with real
 //                 winRate on their own (not just inside a multi-predictor regression), and nearly mirror each other
-//                 (r=-0.726) — a hero who trades/fights a lot naturally farms less efficiently, and vice versa
-//   farm_priority <- camps_stacked_per_min, rank-scaled — kept as its own axis rather than folded into aggression:
-//                 weakly correlated with the deaths/last-hits pair (|r|<0.17), so it captures something distinct
-//                 (personal farm optimization) rather than being redundant with it
+//                 (r=-0.726) — a hero who trades/fights a lot naturally farms less efficiently, and vice versa.
+//                 Renamed from "aggression" (self-play outlier investigation) — the old name implied combat
+//                 aggressiveness; what it actually measures is fight/skirmish involvement vs. farm efficiency.
+//   camp_stacking <- camps_stacked_per_min, rank-scaled — kept as its own axis rather than folded into skirmish_rate:
+//                 weakly correlated with the deaths/last-hits pair (|r|<0.17), so it captures something distinct.
+//                 Renamed from "farm_priority" — that name implied "personal farm optimization," but stacking camps
+//                 is a support/utility action done FOR an ally's farm, not a measure of the hero's own farm need.
+//                 A carry who farms efficiently alone (e.g. Phantom Lancer) scores near-zero here despite being
+//                 maximally farm-dependent — this axis does not capture "needs time to scale," nothing currently does.
 //
 // The hand-tagged mobility/saving/control_strength inputs come from
 // server/data/ability-tagging.csv (manual, per-ability, 0-10) via
@@ -285,7 +290,7 @@ function main() {
     ]),
   );
 
-  // --- aggression / farm_priority: new axes (Blueprint/10-tech-debt-backlog.md,
+  // --- skirmish_rate / camp_stacking (formerly aggression / farm_priority): new axes (Blueprint/10-tech-debt-backlog.md,
   // "regress-composite-clusters-v2" findings) — deaths_per_min and
   // camps_stacked_per_min (server/scripts/fetch-deaths-camps-data.ts) plus
   // last_hits_per_min (already fetched into hero-meta.json's benchmarks,
@@ -300,12 +305,12 @@ function main() {
     medianBenchmarkValue(metaByHeroId.get(h.id)?.benchmarks?.last_hits_per_min),
   );
   // Inverted before rank-scaling (same idiom as trendScoresForTempo above):
-  // aggression should score high for a hero who farms *less* efficiently,
+  // skirmish_rate should score high for a hero who farms *less* efficiently,
   // not more.
   const invertedLastHitsScores = percentileRankScale(
     lastHitsPerMinRaw.map((v) => (v === null ? null : -v)),
   );
-  const aggressionScores = heroes.map((_, i) =>
+  const skirmishRateScores = heroes.map((_, i) =>
     weightedBlend([
       { value: deathsScores[i], weight: 1 },
       { value: invertedLastHitsScores[i], weight: 1 },
@@ -313,7 +318,7 @@ function main() {
   );
 
   const campsStackedRaw = heroes.map((h) => deathsCampsByHeroId.get(h.id)?.campsStackedPerMin ?? null);
-  const farmPriorityScores = percentileRankScale(campsStackedRaw);
+  const campStackingScores = percentileRankScale(campsStackedRaw);
 
   // mobility: real move-speed extremity + hand-tagged mobility abilities +
   // item-purchase signal above. The hand-tagged input used to be a single
@@ -393,8 +398,8 @@ function main() {
     mapControl: 0,
     saving: 0,
     initiating: 0,
-    aggression: 0,
-    farmPriority: 0,
+    skirmishRate: 0,
+    campStacking: 0,
     fallback: 0,
   };
 
@@ -448,8 +453,8 @@ function main() {
     );
 
     setOrFallback('initiating', initiatingScores[i], 'initiating');
-    setOrFallback('aggression', aggressionScores[i], 'aggression');
-    setOrFallback('farm_priority', farmPriorityScores[i], 'farmPriority');
+    setOrFallback('skirmish_rate', skirmishRateScores[i], 'skirmishRate');
+    setOrFallback('camp_stacking', campStackingScores[i], 'campStacking');
   });
 
   fs.writeFileSync(HEROES_PATH, JSON.stringify(heroes, null, 2) + '\n');

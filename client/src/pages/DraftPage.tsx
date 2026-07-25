@@ -100,7 +100,12 @@ export default function DraftPage() {
               {draft.status === 'PICKING' && (
                 <>
                   <p className="pool-hint">Choose one hero to fill your next slot</p>
-                  <HeroPool pool={draft.pool} onPick={(heroId) => void handlePick(heroId)} disabled={loading} />
+                  <HeroPool
+                    pool={draft.pool}
+                    onPick={(heroId) => void handlePick(heroId)}
+                    disabled={loading}
+                    pickedHeroNames={draft.heroes.map((h) => h.hero.name)}
+                  />
                 </>
               )}
 
@@ -124,7 +129,7 @@ export default function DraftPage() {
       {draft.status === 'COMPLETED' && (
         <div className="completed-section">
           <DraftLedger heroes={draft.heroes} totalSlots={5} title="Your Team" />
-          <EvaluationPanel draftId={draft.id} />
+          <EvaluationPanel draftId={draft.id} heroes={draft.heroes} />
           <CommitToPoolButton draftId={draft.id} />
           <BattlePanel draftId={draft.id} heroes={draft.heroes} />
           <div className="completed-actions">

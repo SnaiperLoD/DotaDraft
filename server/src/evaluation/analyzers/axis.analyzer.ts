@@ -1,8 +1,9 @@
 import type { HeroEvaluationValues } from 'shared';
 import type { Analyzer, DraftPick } from '../analyzer.interface';
-import { AXIS_NARRATIVE, scoreBracket } from '../score-narrative';
+import { AXIS_NARRATIVE, percentileBracket, type NarrativeContext } from '../score-narrative';
+import { percentileFor } from '../axis-percentiles';
 import { roleFitValue } from '../../common/role-fit';
-import { hardCarryPenalty, isHardCarry } from '../../common/hard-carry';
+import { hardCarryPenalty, hardCarryAxisMultipliers, isHardCarry } from '../../common/hard-carry';
 
 type AxisKey = keyof HeroEvaluationValues;
 
@@ -12,7 +13,7 @@ export function createAxisAnalyzer(key: AxisKey, label: string): Analyzer {
     label,
     analyze(picks: DraftPick[]) {
       if (picks.length === 0) {
-        return { score: null, explanation: ['No heroes to analyze.'] };
+        return { score: null, percentile: null, explanation: ['No heroes to analyze.'] };
       }
 
       const values = picks.map((p) => {
@@ -22,19 +23,36 @@ export function createAxisAnalyzer(key: AxisKey, label: string): Analyzer {
       });
       const average = values.reduce((sum, v) => sum + v.value, 0) / values.length;
 
-      // Same hard-carry stacking penalty as Battle Engine's overallPower
+      // Same hard-carry stacking treatment as Battle Engine's overallPower
       // (common/hard-carry.ts) — applied per-axis here since Evaluation
       // Engine has no single "sum of axes" the way Battle Engine's
       // overallPower is one. Doesn't touch Synergy/Counter/Pro Similarity,
-      // which aren't axis-based.
+      // which aren't axis-based. scaling is exempt from the penalty (and
+      // gets its own boost instead) — hardCarryAxisMultipliers already
+      // encodes that per-axis split, this analyzer just needs to read it
+      // for its own `key` rather than applying the flat penalty to every
+      // axis uniformly.
       const penalty = hardCarryPenalty(picks.map((p) => p.hero));
-      const score = Math.round(average * (1 - penalty) * 10) / 10;
+      const multiplier = hardCarryAxisMultipliers(picks.map((p) => p.hero))[key] ?? 1;
+      const score = Math.round(average * multiplier * 10) / 10;
+
+      // Where this score ranks against 10000 random 5-hero teams scored the
+      // same way (axis-percentiles.ts) — drives both the bracket ("above/
+      // below average") and the narrative sentence itself, replacing the
+      // old fixed 0-10 score cutoff (Blueprint/10-tech-debt-backlog.md,
+      // "Percentile-based Evaluation").
+      const percentile = percentileFor(key, score);
+      const bracket = percentileBracket(percentile ?? 50);
 
       const top = [...values].sort((a, b) => b.value - a.value).slice(0, 2);
+      const ctx: NarrativeContext = {
+        percentile: percentile ?? 50,
+        bracket,
+        top: top.map((v) => ({ name: v.hero.name, value: v.value })),
+      };
       const explanation = [
         `Team average ${label.toLowerCase()}: ${score}/10.`,
         `Strongest contributors: ${top.map((v) => `${v.hero.name} (${v.value})`).join(', ')}.`,
-        AXIS_NARRATIVE[key][scoreBracket(score)],
       ];
 
       const boosted = values.filter((v) => v.boosted);
@@ -48,11 +66,18 @@ export function createAxisAnalyzer(key: AxisKey, label: string): Analyzer {
       if (penalty > 0) {
         const hardCarryCount = picks.filter((p) => isHardCarry(p.hero)).length;
         explanation.push(
-          `This draft stacks ${hardCarryCount} hard-carry (Carry/Mid-dominant) heroes, diluting focus — a ${Math.round(penalty * 100)}% penalty is applied here.`,
+          key === 'scaling'
+            ? `This draft stacks ${hardCarryCount} hard-carry (Carry/Mid-dominant) heroes — built for a long game, so a ${Math.round((multiplier - 1) * 100)}% boost is applied here instead of the usual stacking penalty.`
+            : `This draft stacks ${hardCarryCount} hard-carry (Carry/Mid-dominant) heroes, diluting focus — a ${Math.round(penalty * 100)}% penalty is applied here.`,
         );
       }
 
-      return { score, explanation };
+      // Narrative always comes last — buildSummary() (evaluation.service.ts)
+      // relies on the final explanation line being the human-readable
+      // narrative sentence, not a numeric role-fit/hard-carry aside.
+      explanation.push(AXIS_NARRATIVE[key][bracket](ctx));
+
+      return { score, percentile, explanation };
     },
   };
 }

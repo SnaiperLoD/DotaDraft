@@ -5,14 +5,47 @@
     "durability": 0.8,
     "objectives": 0.8,
     "saving": 1.2,
-    "burst": 0.8
+    "burst": 0.8,
+    "skirmish_rate": 1.3,
+    "camp_stacking": 1.3
+  },
+  "phaseWeights": {
+    "early": {
+      "map_control": 0,
+      "tempo": 1.8,
+      "initiating": 1.75,
+      "skirmish_rate": 1.45,
+      "burst": 1.55,
+      "teamfight": 0.7,
+      "objectives": 0.65,
+      "durability": 0.5,
+      "camp_stacking": 0.7,
+      "scaling": 0.1
+    },
+    "late": {
+      "map_control": 0,
+      "scaling": 2.2,
+      "durability": 1.7,
+      "objectives": 1.55,
+      "saving": 1.35,
+      "teamfight": 1.3,
+      "burst": 0.95,
+      "initiating": 0.4,
+      "skirmish_rate": 0.25,
+      "camp_stacking": 0.25,
+      "tempo": 0.15
+    }
+  },
+  "phaseDistribution": {
+    "early": 0.15,
+    "mid": 0.35,
+    "late": 0.5
   },
   "realWinRateWeight": 2,
   "hardCarryShareThreshold": 0.5,
   "hardCarryStackPenalty": {
-    "2": 0.05,
-    "3": 0.15,
-    "4": 0.3,
-    "5": 0.45
+    "3": 0.05,
+    "4": 0.15,
+    "5": 0.3
   }
 }

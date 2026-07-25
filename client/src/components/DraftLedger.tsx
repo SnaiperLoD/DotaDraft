@@ -1,5 +1,7 @@
 import type { DraftHeroView } from '../api/types';
 import { heroIconUrl } from '../utils/heroIcon';
+import { visibleTagsFor } from '../data/customTags';
+import HeroTagBadges from './HeroTagBadges';
 import './DraftLedger.css';
 
 // Persistent record of the 5 pick slots — replaces the old fixed-bottom
@@ -16,6 +18,7 @@ interface Props {
 export default function DraftLedger({ heroes, totalSlots, title = 'Your Draft' }: Props) {
   const sorted = heroes.slice().sort((a, b) => a.pickOrder - b.pickOrder);
   const slots = Array.from({ length: totalSlots }, (_, i) => sorted[i] ?? null);
+  const pickedHeroNames = sorted.map((h) => h.hero.name);
 
   return (
     <div className="panel ledger">
@@ -40,6 +43,7 @@ export default function DraftLedger({ heroes, totalSlots, title = 'Your Draft' }
                   <span className="slot-name">{h.hero.name}</span>
                   <span className="slot-role">{h.assignedRole ?? 'Role pending'}</span>
                 </span>
+                <HeroTagBadges tags={visibleTagsFor(h.hero.name, pickedHeroNames)} variant="inline" />
               </>
             ) : (
               <>

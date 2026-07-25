@@ -51,8 +51,8 @@ describe('createAxisAnalyzer', () => {
     const weak = [heroWithAxis(1, 'A', 'tempo', 1)];
     const analyzer = createAxisAnalyzer('tempo', 'Tempo');
 
-    expect(analyzer.analyze(picks(strong)).explanation[2]).toMatch(/early, fast-paced/i);
-    expect(analyzer.analyze(picks(weak)).explanation[2]).toMatch(/slow to get going/i);
+    expect(analyzer.analyze(picks(strong)).explanation[2]).toMatch(/fast-start draft/i);
+    expect(analyzer.analyze(picks(weak)).explanation[2]).toMatch(/avoid forcing early confrontations/i);
   });
 
   it('applies a role-fit boost and mentions it when a hero is assigned a role its strong axis matches', () => {
@@ -77,15 +77,8 @@ describe('createAxisAnalyzer', () => {
     expect(result.explanation.some((line) => line.includes('role-fit'))).toBe(false);
   });
 
-  it('applies the hard-carry stacking penalty and mentions it, matching Battle Engine', () => {
+  it('applies the hard-carry stacking penalty (3+ threshold) and mentions it, matching Battle Engine', () => {
     const analyzer = createAxisAnalyzer('teamfight', 'Teamfight');
-    const noStack = [
-      hardCarryHero(1, 'HC1', 'teamfight', 6),
-      heroWithAxis(2, 'Sup1', 'teamfight', 6),
-      heroWithAxis(3, 'Sup2', 'teamfight', 6),
-      heroWithAxis(4, 'Sup3', 'teamfight', 6),
-      heroWithAxis(5, 'Sup4', 'teamfight', 6),
-    ];
     const twoStacked = [
       hardCarryHero(1, 'HC1', 'teamfight', 6),
       hardCarryHero(2, 'HC2', 'teamfight', 6),
@@ -93,14 +86,38 @@ describe('createAxisAnalyzer', () => {
       heroWithAxis(4, 'Sup3', 'teamfight', 6),
       heroWithAxis(5, 'Sup4', 'teamfight', 6),
     ];
+    const threeStacked = [
+      hardCarryHero(1, 'HC1', 'teamfight', 6),
+      hardCarryHero(2, 'HC2', 'teamfight', 6),
+      hardCarryHero(3, 'HC3', 'teamfight', 6),
+      heroWithAxis(4, 'Sup3', 'teamfight', 6),
+      heroWithAxis(5, 'Sup4', 'teamfight', 6),
+    ];
 
-    const withoutPenalty = analyzer.analyze(picks(noStack));
-    const withPenalty = analyzer.analyze(picks(twoStacked));
+    // 2 hard-carries: below the (now 3+) threshold, no penalty yet.
+    const belowThreshold = analyzer.analyze(picks(twoStacked));
+    const withPenalty = analyzer.analyze(picks(threeStacked));
 
-    expect(withoutPenalty.score).toBe(6);
-    // 2 hard-carries = -5% (server/data/axis-weights.json hardCarryStackPenalty)
+    expect(belowThreshold.score).toBe(6);
+    expect(belowThreshold.explanation.some((line) => line.includes('hard-carry'))).toBe(false);
+    // 3 hard-carries = -5% (server/data/axis-weights.json hardCarryStackPenalty)
     expect(withPenalty.score).toBeCloseTo(6 * 0.95, 5);
     expect(withPenalty.explanation.some((line) => line.includes('hard-carry'))).toBe(true);
-    expect(withoutPenalty.explanation.some((line) => line.includes('hard-carry'))).toBe(false);
+  });
+
+  it('exempts scaling from the penalty and boosts it instead, once 3+ hard-carries are drafted', () => {
+    const analyzer = createAxisAnalyzer('scaling', 'Scaling');
+    const threeStacked = [
+      hardCarryHero(1, 'HC1', 'scaling', 6),
+      hardCarryHero(2, 'HC2', 'scaling', 6),
+      hardCarryHero(3, 'HC3', 'scaling', 6),
+      heroWithAxis(4, 'Sup3', 'scaling', 6),
+      heroWithAxis(5, 'Sup4', 'scaling', 6),
+    ];
+
+    const result = analyzer.analyze(picks(threeStacked));
+
+    expect(result.score).toBeCloseTo(6 * 1.1, 5);
+    expect(result.explanation.some((line) => line.includes('boost') && line.includes('hard-carry'))).toBe(true);
   });
 });

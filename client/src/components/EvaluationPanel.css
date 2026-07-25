@@ -11,6 +11,17 @@
   color: var(--gold);
 }
 
+.evaluation-gameplan {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--bronze-dim);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin: 12px 0 20px;
+}
+
 .evaluation-summary {
   display: flex;
   gap: 24px;
@@ -65,8 +76,41 @@
   justify-content: space-between;
 }
 
+.evaluation-item-scores {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .evaluation-item-header .score {
   color: var(--gold-bright);
+}
+
+.percentile-pill {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 2px 7px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+}
+
+.percentile-pill.percentile-high {
+  color: #6fcf87;
+  border-color: rgba(111, 207, 135, 0.5);
+  background: rgba(111, 207, 135, 0.12);
+}
+
+.percentile-pill.percentile-mid {
+  color: var(--ink-muted);
+  border-color: var(--bronze-dim);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.percentile-pill.percentile-low {
+  color: var(--danger);
+  border-color: rgba(200, 90, 74, 0.5);
+  background: rgba(200, 90, 74, 0.12);
 }
 
 .evaluation-item ul {
