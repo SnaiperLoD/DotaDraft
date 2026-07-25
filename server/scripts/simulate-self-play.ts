@@ -407,7 +407,7 @@ function main() {
     const m = mean(xs);
     const sd = stdev(xs, m);
     console.log(
-      `  ${AXIS_LABEL[axis as keyof typeof AXIS_LABEL].padEnd(16)}${m.toFixed(2).padStart(5)} ${sd.toFixed(2).padStart(5)} ${arrMin(xs).toFixed(2).padStart(5)} ${arrMax(xs).toFixed(2).padStart(5)}`,
+      `  ${AXIS_LABEL[axis].padEnd(16)}${m.toFixed(2).padStart(5)} ${sd.toFixed(2).padStart(5)} ${arrMin(xs).toFixed(2).padStart(5)} ${arrMax(xs).toFixed(2).padStart(5)}`,
     );
   }
 
@@ -417,7 +417,7 @@ function main() {
     const avgAbsDelta = axisAbsDeltaSum[axis] / N_MATCHES;
     const topCount = axisTopDriverCount[axis];
     console.log(
-      `  ${AXIS_LABEL[axis as keyof typeof AXIS_LABEL].padEnd(16)}${avgAbsDelta.toFixed(3).padStart(8)}${' '.repeat(20)}${String(topCount).padStart(5)}   ${((topCount / N_MATCHES) * 100).toFixed(1)}%`,
+      `  ${AXIS_LABEL[axis].padEnd(16)}${avgAbsDelta.toFixed(3).padStart(8)}${' '.repeat(20)}${String(topCount).padStart(5)}   ${((topCount / N_MATCHES) * 100).toFixed(1)}%`,
     );
   }
   console.log(

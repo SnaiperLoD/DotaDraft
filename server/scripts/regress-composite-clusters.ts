@@ -104,7 +104,6 @@ function standardizeColumns(X: Matrix): Matrix {
 function ridgeRegress(X: Matrix, y: number[], lambda: number): number[] {
   const Xt = transpose(X);
   const XtX = matMul(Xt, X);
-  const n = XtX.length;
   const penalized = XtX.map((row, i) => row.map((v, j) => (i === j ? v + lambda : v)));
   const XtY: Matrix = matMul(
     Xt,

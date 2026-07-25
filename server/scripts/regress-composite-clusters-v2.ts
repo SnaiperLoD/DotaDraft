@@ -106,7 +106,6 @@ function percentileRankScale(values: number[]): number[] {
 function ridgeRegress(X: Matrix, y: number[], lambda: number): number[] {
   const Xt = transpose(X);
   const XtX = matMul(Xt, X);
-  const n = XtX.length;
   const penalized = XtX.map((row, i) => row.map((v, j) => (i === j ? v + lambda : v)));
   const XtY: Matrix = matMul(
     Xt,
@@ -260,7 +259,7 @@ function main() {
     ['deaths_per_min', deathsScaled],
     ['camps_stacked_per_min', campsScaled],
   ] as const) {
-    const r = pearson(xs as number[], yRaw);
+    const r = pearson(xs, yRaw);
     const tSimple = (r * Math.sqrt(n - 2)) / Math.sqrt(1 - r * r);
     console.log(
       `  ${label.padEnd(22)} r=${r.toFixed(3)}  t=${tSimple.toFixed(2)}${Math.abs(tSimple) > 1.98 ? '  <-- significant' : ''}`,

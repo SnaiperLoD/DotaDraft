@@ -567,7 +567,7 @@ export function resolveBattle(
 ): BattleResult {
   const heroesA = teamA.map((p) => p.hero);
   const heroesB = teamB.map((p) => p.hero);
-  const { diff, confidenceTier, advantageDirection, axisDeltas } = assessBattle(teamA, teamB, lookup);
+  const { confidenceTier, advantageDirection, axisDeltas } = assessBattle(teamA, teamB, lookup);
 
   const favorWeight = WIN_WEIGHT_BY_TIER[confidenceTier];
   const basePWinA = advantageDirection === 'A' ? favorWeight : advantageDirection === 'B' ? 1 - favorWeight : 0.5;
