@@ -21,6 +21,11 @@ export class DraftController {
     return this.draftService.pick(id, body.heroId);
   }
 
+  @Post(':id/reroll')
+  reroll(@Param('id') id: string) {
+    return this.draftService.reroll(id);
+  }
+
   @Post(':id/roles')
   assignRoles(@Param('id') id: string, @Body() body: AssignRolesRequest) {
     return this.draftService.assignRoles(id, body.assignments);

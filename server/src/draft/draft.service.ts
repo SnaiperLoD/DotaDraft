@@ -19,6 +19,7 @@ export interface DraftStateView {
   heroes: DraftHeroView[];
   pool: Hero[];
   createdAt: Date;
+  rerollsRemaining: number;
 }
 
 @Injectable()
@@ -33,6 +34,7 @@ export class DraftService {
     status: string;
     pool: unknown;
     createdAt: Date;
+    rerollsRemaining: number;
     heroes: { heroId: number; assignedRole: string | null; pickOrder: number }[];
   }): Promise<DraftStateView> {
     const poolIds = JSON.parse(draft.pool as string) as number[];
@@ -48,6 +50,7 @@ export class DraftService {
       status: draft.status,
       pool: poolHeroes,
       createdAt: draft.createdAt,
+      rerollsRemaining: draft.rerollsRemaining,
       heroes: draft.heroes
         .sort((a, b) => a.pickOrder - b.pickOrder)
         .map((dh) => ({
@@ -114,6 +117,42 @@ export class DraftService {
       data: {
         pool: JSON.stringify(nextPool),
         status: isComplete ? 'ASSIGNING_ROLES' : 'PICKING',
+      },
+      include: { heroes: true },
+    });
+
+    return this.toView(updated);
+  }
+
+  // One-time reroll of the CURRENT round's offered pool (Blueprint/10-tech-debt-backlog.md,
+  // "Кнопка реролла пула героев") — not a per-round allowance, `rerollsRemaining`
+  // is set once at draft creation and never replenished. Uses a fresh
+  // random seed (unlike pick()'s `draft.seed + pickOrder`, which is part of
+  // the deterministic replay chain for subsequent rounds) since a reroll is
+  // a one-off player action, not something that needs to reproduce from
+  // the original seed.
+  async reroll(draftId: string): Promise<DraftStateView> {
+    const draft = await this.prisma.draft.findUnique({
+      where: { id: draftId },
+      include: { heroes: true },
+    });
+    if (!draft) throw new NotFoundException('Draft not found');
+    if (draft.status !== 'PICKING') {
+      throw new BadRequestException('Draft is not in picking phase');
+    }
+    if (draft.rerollsRemaining <= 0) {
+      throw new BadRequestException('No rerolls remaining');
+    }
+
+    const pickedIds = draft.heroes.map((h) => h.heroId);
+    const newSeed = Math.floor(Math.random() * 2 ** 31);
+    const newPool = (await this.heroService.randomPool(pickedIds, POOL_SIZE, newSeed)).map((h) => h.id);
+
+    const updated = await this.prisma.draft.update({
+      where: { id: draftId },
+      data: {
+        pool: JSON.stringify(newPool),
+        rerollsRemaining: draft.rerollsRemaining - 1,
       },
       include: { heroes: true },
     });

@@ -22,13 +22,27 @@
   background: linear-gradient(90deg, transparent, var(--bronze) 15%, var(--bronze) 85%, transparent);
 }
 
+.pool-hint-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: -8px 0 18px;
+}
+
 .pool-hint {
   font-family: var(--font-ui);
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-faint);
-  margin: -8px 0 18px;
+  margin: 0;
+}
+
+.reroll-btn {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  font-size: 12px;
 }
 
 .draft-layout {

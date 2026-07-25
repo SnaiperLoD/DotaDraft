@@ -1,0 +1,78 @@
+.role-tooltip {
+  position: relative;
+  display: inline-flex;
+}
+
+.role-tooltip-panel {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  transform: translateX(-50%) translateY(4px);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 140px;
+  padding: 8px 10px;
+  background: var(--panel-raised);
+  border: 1px solid var(--bronze-dim);
+  border-radius: 6px;
+  box-shadow: 0 8px 20px var(--shadow-deep);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.12s ease,
+    transform 0.12s ease,
+    visibility 0.12s;
+  white-space: nowrap;
+}
+
+.role-tooltip-panel::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--bronze-dim);
+}
+
+.role-tooltip:hover .role-tooltip-panel,
+.role-tooltip:focus-within .role-tooltip-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.role-tooltip-name {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+}
+
+.role-tooltip-positions {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.role-tooltip-position {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--ink);
+}
+
+.role-tooltip-share {
+  color: var(--ink-muted);
+}
+
+.role-tooltip-empty {
+  font-size: 12px;
+  color: var(--ink-faint);
+  font-style: italic;
+}

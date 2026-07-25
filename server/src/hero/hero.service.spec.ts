@@ -18,8 +18,11 @@ function rawRow(hero: Hero) {
 }
 
 describe('ensureRoleCoverage', () => {
-  const support = (id: number) => makeHero({ id, name: `Support${id}`, roles: ['Support'] });
-  const core = (id: number) => makeHero({ id, name: `Core${id}`, roles: ['Carry'] });
+  const support = (id: number) =>
+    makeHero({ id, name: `Support${id}`, roles: ['Support'], presumed_positions: [{ position: 'Support', share: 0.8 }] });
+  const core = (id: number) =>
+    makeHero({ id, name: `Core${id}`, roles: ['Carry'], presumed_positions: [{ position: 'Carry', share: 0.8 }] });
+  const isSupportReal = (h: ReturnType<typeof support>) => h.presumed_positions.some((p) => p.position === 'Support');
 
   it('leaves the pool unchanged when it already has both a Support and a core hero', () => {
     const pool = [support(1), core(2)];
@@ -31,7 +34,7 @@ describe('ensureRoleCoverage', () => {
     const pool = [core(1), core(2)];
     const rest = [core(3), support(4)];
     const result = ensureRoleCoverage(pool, rest);
-    expect(result.some((h) => h.roles.includes('Support'))).toBe(true);
+    expect(result.some(isSupportReal)).toBe(true);
     // Only the last slot is given up, the rest of the pool is untouched.
     expect(result[0]).toEqual(core(1));
   });
@@ -40,7 +43,7 @@ describe('ensureRoleCoverage', () => {
     const pool = [support(1), support(2)];
     const rest = [support(3), core(4)];
     const result = ensureRoleCoverage(pool, rest);
-    expect(result.some((h) => !h.roles.includes('Support'))).toBe(true);
+    expect(result.some((h) => !isSupportReal(h))).toBe(true);
     expect(result[0]).toEqual(support(1));
   });
 
@@ -48,6 +51,29 @@ describe('ensureRoleCoverage', () => {
     const pool = [core(1), core(2)];
     const rest = [core(3)]; // no Support anywhere
     expect(ensureRoleCoverage(pool, rest)).toEqual(pool);
+  });
+
+  it('trusts real presumed_positions over a stale/wrong roles tag', () => {
+    // Tagged non-Support but real GPM data says otherwise (the Pugna/Nyx
+    // Assassin/Bounty Hunter pattern found in the backlog audit).
+    const secretSupport = makeHero({
+      id: 5,
+      name: 'SecretSupport',
+      roles: ['Carry'],
+      presumed_positions: [{ position: 'Support', share: 0.9 }],
+    });
+    const pool = [core(1), core(2)];
+    const rest = [core(3), secretSupport];
+    const result = ensureRoleCoverage(pool, rest);
+    expect(result).toContainEqual(secretSupport);
+  });
+
+  it('falls back to the roles tag when a hero has no position data at all', () => {
+    const noDataSupport = makeHero({ id: 6, name: 'NoDataSupport', roles: ['Support'], presumed_positions: [] });
+    const pool = [core(1), core(2)];
+    const rest = [core(3), noDataSupport];
+    const result = ensureRoleCoverage(pool, rest);
+    expect(result).toContainEqual(noDataSupport);
   });
 });
 

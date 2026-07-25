@@ -13,4 +13,5 @@ export interface DraftStateView {
   heroes: DraftHeroView[];
   pool: Hero[];
   createdAt: string;
+  rerollsRemaining: number;
 }

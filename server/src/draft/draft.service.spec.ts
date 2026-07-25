@@ -14,7 +14,14 @@ function makeFakeHeroService() {
 }
 
 function makeFakePrisma() {
-  let draftRow: { id: string; status: string; seed: number; pool: string; createdAt: Date } | null = null;
+  let draftRow: {
+    id: string;
+    status: string;
+    seed: number;
+    pool: string;
+    createdAt: Date;
+    rerollsRemaining: number;
+  } | null = null;
   const heroRows: {
     id: number;
     draftId: string;
@@ -35,6 +42,7 @@ function makeFakePrisma() {
           seed: data.seed,
           pool: data.pool,
           createdAt: new Date(),
+          rerollsRemaining: data.rerollsRemaining ?? 1,
         };
         return withHeroes();
       }),
@@ -141,6 +149,46 @@ describe('DraftService', () => {
 
       const excludeArg = heroService.randomPool.mock.calls[1][0];
       expect(excludeArg).toContain(firstPick);
+    });
+  });
+
+  describe('reroll()', () => {
+    it('starts with 1 reroll available', async () => {
+      const { service } = makeService();
+      const draft = await service.start();
+      expect(draft.rerollsRemaining).toBe(1);
+    });
+
+    it('replaces the current pool and decrements rerollsRemaining to 0', async () => {
+      const { service } = makeService();
+      const draft = await service.start();
+      const result = await service.reroll(draft.id);
+      expect(result.rerollsRemaining).toBe(0);
+      expect(result.pool).toHaveLength(5);
+    });
+
+    it('rejects a second reroll once the first is used', async () => {
+      const { service } = makeService();
+      const draft = await service.start();
+      await service.reroll(draft.id);
+      await expect(service.reroll(draft.id)).rejects.toThrow('No rerolls remaining');
+    });
+
+    it('excludes already-picked heroes from the rerolled pool', async () => {
+      const { service, heroService } = makeService();
+      let draft = await service.start();
+      const firstPick = draft.pool[0].id;
+      draft = await service.pick(draft.id, firstPick);
+
+      await service.reroll(draft.id);
+      const excludeArg = heroService.randomPool.mock.calls.at(-1)![0];
+      expect(excludeArg).toContain(firstPick);
+    });
+
+    it('rejects rerolling outside the picking phase', async () => {
+      const { service } = makeService();
+      const draft = await playToRoleAssignment(service);
+      await expect(service.reroll(draft.id)).rejects.toThrow('Draft is not in picking phase');
     });
   });
 

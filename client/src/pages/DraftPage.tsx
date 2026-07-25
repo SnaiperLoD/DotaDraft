@@ -36,6 +36,20 @@ export default function DraftPage() {
     }
   };
 
+  const handleReroll = async () => {
+    if (!draft) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const updated = await api.reroll(draft.id);
+      setDraft(updated);
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleAssignRoles = async (assignments: { heroId: number; role: string }[]) => {
     if (!draft) return;
     setLoading(true);
@@ -99,7 +113,14 @@ export default function DraftPage() {
             <main>
               {draft.status === 'PICKING' && (
                 <>
-                  <p className="pool-hint">Choose one hero to fill your next slot</p>
+                  <div className="pool-hint-row">
+                    <p className="pool-hint">Choose one hero to fill your next slot</p>
+                    {draft.rerollsRemaining > 0 && (
+                      <button className="btn btn-secondary reroll-btn" onClick={() => void handleReroll()} disabled={loading}>
+                        Re-roll ({draft.rerollsRemaining})
+                      </button>
+                    )}
+                  </div>
                   <HeroPool
                     pool={draft.pool}
                     onPick={(heroId) => void handlePick(heroId)}

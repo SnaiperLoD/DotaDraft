@@ -21,12 +21,16 @@ model Hero {
 }
 
 model Draft {
-  id        String       @id @default(uuid())
-  status    String       @default("PICKING")
-  seed      Int
-  pool      String
-  createdAt DateTime     @default(now())
-  heroes    DraftHero[]
+  id               String       @id @default(uuid())
+  status           String       @default("PICKING")
+  seed             Int
+  pool             String
+  // One-time reroll of the current round's pool (Blueprint/10-tech-debt-backlog.md,
+  // "Кнопка реролла пула героев") — decremented to 0 on use, never
+  // replenished mid-draft.
+  rerollsRemaining Int          @default(1)
+  createdAt        DateTime     @default(now())
+  heroes           DraftHero[]
 }
 
 model DraftHero {

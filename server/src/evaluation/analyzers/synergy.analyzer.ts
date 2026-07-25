@@ -11,12 +11,12 @@ export interface SynergyLookup {
 // archetype signal is treated as contradicted by data, not confirmed by it —
 // halved rather than zeroed, since a hand-authored tag can still be
 // pointing at something real even when the numbers are softer than assumed.
-const UNDERPERFORM_THRESHOLD = -0.045;
+const UNDERPERFORM_THRESHOLD = -0.048;
 const DAMPENING_FACTOR = 0.5;
 
 // Minimum edge before real data is treated as its own positive signal,
 // independent of any tag match — small deltas are noise.
-const REAL_SYNERGY_SIGNIFICANCE = 0.03;
+const REAL_SYNERGY_SIGNIFICANCE = 0.035;
 
 interface TagPairRule {
   tagA: string;

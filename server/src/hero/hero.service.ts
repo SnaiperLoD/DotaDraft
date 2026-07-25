@@ -5,15 +5,28 @@ import type { Hero } from 'shared';
 
 // Guarantees at least one Support hero and one non-Support ("core") hero in
 // every offered pool, since >5 rounds a purely random draw of 5 from 127
-// heroes (48 Support / 79 core) is meaningfully likely to skip Support
-// entirely (~9% chance) and occasionally skip core too. Stays deterministic:
-// both `pool` and `rest` come from the same seeded shuffle, so the result
-// only ever depends on the seed, preserving reproducibility. Exported as a
-// standalone function (rather than a private method) so it can be unit
-// tested without fighting the shuffle RNG for a seed that happens to
-// reproduce the edge case.
+// heroes is meaningfully likely to skip Support entirely and occasionally
+// skip core too. Stays deterministic: both `pool` and `rest` come from the
+// same seeded shuffle, so the result only ever depends on the seed,
+// preserving reproducibility. Exported as a standalone function (rather
+// than a private method) so it can be unit tested without fighting the
+// shuffle RNG for a seed that happens to reproduce the edge case.
+//
+// "Support" is read from real GPM-rank data (`presumed_positions`, same
+// source `common/hard-carry.ts::isHardCarry()` already trusts for "is this
+// hero actually X in practice"), not the hand-authored `roles` tag —
+// 23/127 heroes disagree between the two (e.g. Pugna/Nyx Assassin/Bounty
+// Hunter/Tusk/Clockwerk/Spirit Breaker/Techies are tagged non-Support but
+// are real Support in the overwhelming majority of their games), which
+// meant the guarantee this function exists to provide could silently not
+// hold for those heroes. Falls back to the `roles` tag only when a hero has
+// no position data at all (empty `presumed_positions` — not expected for
+// any of the current 127, but the old sole signal stays as a safety net).
 export function ensureRoleCoverage(pool: Hero[], rest: Hero[]): Hero[] {
-  const isSupport = (h: Hero) => h.roles.includes('Support');
+  const isSupport = (h: Hero) =>
+    h.presumed_positions.length > 0
+      ? h.presumed_positions.some((p) => p.position === 'Support')
+      : h.roles.includes('Support');
   const result = [...pool];
 
   if (!result.some(isSupport)) {

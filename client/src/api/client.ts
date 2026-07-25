@@ -36,6 +36,8 @@ export const api = {
       body: JSON.stringify({ heroId } satisfies PickRequest),
     }),
 
+  reroll: (id: string) => request<DraftStateView>(`/draft/${id}/reroll`, { method: 'POST' }),
+
   assignRoles: (id: string, assignments: AssignRolesRequest['assignments']) =>
     request<DraftStateView>(`/draft/${id}/roles`, {
       method: 'POST',

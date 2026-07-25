@@ -2,6 +2,7 @@ import type { DraftHeroView } from '../api/types';
 import { heroIconUrl } from '../utils/heroIcon';
 import { visibleTagsFor } from '../data/customTags';
 import HeroTagBadges from './HeroTagBadges';
+import RoleTooltip from './RoleTooltip';
 import './DraftLedger.css';
 
 // Persistent record of the 5 pick slots — replaces the old fixed-bottom
@@ -32,13 +33,16 @@ export default function DraftLedger({ heroes, totalSlots, title = 'Your Draft' }
             <span className="slot-index">#{i + 1}</span>
             {h ? (
               <>
-                <img
-                  src={heroIconUrl(h.heroId)}
-                  alt={h.hero.name}
-                  width={34}
-                  height={34}
-                  className="slot-portrait"
-                />
+                <RoleTooltip hero={h.hero}>
+                  <img
+                    src={heroIconUrl(h.heroId)}
+                    alt={h.hero.name}
+                    width={34}
+                    height={34}
+                    className="slot-portrait"
+                    tabIndex={0}
+                  />
+                </RoleTooltip>
                 <span className="slot-text">
                   <span className="slot-name">{h.hero.name}</span>
                   <span className="slot-role">{h.assignedRole ?? 'Role pending'}</span>
