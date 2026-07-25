@@ -1,33 +1,46 @@
 # Next Session Priorities
 
-Written at the end of the 2026-07-25 session as a triage/reading guide — not a new source of truth. Full detail on every item here already lives in `10-tech-debt-backlog.md`; this file just says what to look at first and why. Read this before `10-tech-debt-backlog.md`, not instead of it.
+Written at the end of the 2026-07-25 session (a long one — Custom Tags dedup, axis multicollinearity structural fix, battle history redesign, synergy highlight, lore tags, lint cleanup) as a triage/reading guide — not a new source of truth. Full detail on every item here already lives in `10-tech-debt-backlog.md`; this file just says what to look at first and why. Read this before `10-tech-debt-backlog.md`, not instead of it.
 
-**Status check:** no production hosting yet, not preparing for a real release. Priorities below are about codebase health and finishing the core loop properly, not launch-readiness — don't let "is this release-blocking" drive triage right now.
+**Status check:** still no production hosting, still not preparing for a real release. Both items from the *previous* version of this file are now done — Custom Tags dedup (`shared/customTags.ts`, single source) and the axis-multicollinearity structural fix (composite-weighting the correlated "battle spectrum" cluster) both landed and are validated. This file replaces that one; git is clean, everything from this session is committed and pushed (`ee2a5e5`, `d9c22c8`).
 
 ---
 
-## 1. Fix the Custom Tags client/server duplication
+## 1. Phantom Lancer — worst remaining underperformer, mechanism already understood
 
-`server/src/battle/custom-tags.ts` (drives actual battle math) and `client/src/data/customTags.ts` (drives badge display) are two hand-synced copies of the same tag roster — flagged as tech debt when Custom Tags were built, and this session made the surface area bigger (badges wired into `HeroPool`/`DraftLedger`) without fixing the duplication itself. This is the single most likely source of a *silent* future bug: a badge shows on a hero whose battle math doesn't match, or vice versa, and nothing will error — it'll just be quietly wrong.
+Currently −24.5pp (favoredRate 28.2% vs real 52.7%), the single biggest divergence in either direction. This is the well-documented "avoid the clash" categorical mismatch (his win condition is *not* fighting until he's scaled) — Phase-Aware Resolution fixed most of it earlier in the project's history, but this session's axis-composite discount (durability/objectives/burst/teamfight/scaling all cut to ~1/5 weight) partially undid that improvement, since it touched the late-phase weights those heroes lean on. `scaling`'s late-phase weight was already restored to its original 2.2 (see backlog) — PL improved from −28.5 back to −24.5 but is still worse than the −13.1 baseline before this session's fix.
 
-Worth doing before adding anything else to Custom Tags. Shape of the fix: one server-served source (e.g. an API endpoint or a shared JSON the client fetches) instead of two TypeScript files kept in sync by hand.
+Best entry point: the mechanism is understood, the fix direction is known (something in late-phase `durability`/`objectives` discount is still hurting him), it just needs the next iteration of digging rather than starting cold.
 
-## 2. Stop patching individual heroes, revisit the structural fix
+## 2. Residual overperform cluster — Treant Protector / Nyx Assassin / Keeper of the Light / Batrider
 
-The root cause of most calibration divergence was correctly diagnosed this session: `durability`/`burst`/`teamfight`/`objectives`/`scaling` are highly correlated (the "battle/core-impact" spectrum), so `overallPower`'s equal-weighted average effectively counts that one signal 4-5 times. Phase-aware resolution fixed *part* of this (timing-gated win conditions), but the regression/PCA-based reweighting that was proposed to address the collinearity directly (`regress-composite-clusters-v2.ts` and friends, see `10-tech-debt-backlog.md`) was never finished — the response instead became a long chain of manual per-hero `evaluation_values` edits (Kez, then a 21-hero batch, then partial reverts).
+All four still above the 10pp threshold after this session's fixes (camp_stacking sign correction + hand-tuned ability tags for Treant's Eyes in the Forest/Nature's Guise and Batrider's Firefly). Movement was real but modest (~2-3pp each). Treant Protector (+27.3pp) is the extreme case — the *only* hero in the 127-hero pool maxing all 6 "utility" axes (`control`/`initiating`/`mobility`/`saving`/`skirmish_rate`/`map_control`) simultaneously; average real winRate does **not** keep rising with that kind of breadth past ~3 axes, but the additive model has no diminishing-returns mechanism, so it keeps counting each axis at full value.
 
-That manual chain works but doesn't scale and will keep needing another batch every time new anomalies surface (classic whack-a-mole — already observed once this session: fixing the top 25 overperformers left new ones at the top of the list). Before doing another manual batch, it's worth finishing the structural approach: use the already-collected data (axis sums, real winRate, duration splits) to derive `overallPower`/`WEIGHTS` coefficients directly instead of hand-tuning one axis at a time.
+Not yet touched: Treant's `Nature's Grasp`/`Overgrowth` initiating tags, and Nyx Assassin's ability tags entirely (his profile wasn't reviewed this session). Worth a decision before continuing: keep chasing this cluster hero-by-hero (diminishing returns, same pattern as PL), or treat it as accepted residual noise and move on.
 
-## 3. UI polish backlog (lower priority, but genuinely close to done)
+## 3. Unreviewed new anomalies — Phoenix / Monkey King / Snapfire
 
-Still open, all fairly mechanical, no product decisions needed: button redesign, Evaluation panel typography, 5-star rating display for Total Score, `DraftLedger` centering/sizing (the item description is stale — component was renamed from `PickedHeroesStrip`, re-check what's actually still wrong before touching it). Good "finish the last mile" work whenever the two items above are done or paused.
+Not investigated at all this session. Phoenix (+22.4pp, camp stacking topAxis) and Monkey King (+20.6pp, mobility topAxis) and Snapfire (+18.9pp, burst damage topAxis) could be hiding another systemic pattern the way camp_stacking's sign problem was hiding behind the "new" post-fix tail — or they could just be individual cases. Worth a quick profile check (same method as the Treant/Batrider/Nyx investigation: pull `evaluation_values` + `presumed_positions`, look for a shared pattern) before assuming either way.
+
+## 4. Electric custom tag — researched, waiting on a decision
+
+Candidates (Storm Spirit/Leshrac/Zeus/Razor/Dark Seer/Disruptor/Arc Warden) have very high internal dispersion (−25.2pp to +17.5pp real-winRate divergence) — recommendation from the research pass was **not** to make it strongly buffing, something in the common/uncommon-tier magnitude range (~3-10% on one axis), not legendary-tier. Not implemented — needs the user to pick a final roster and sign off on magnitude before it's wired into `shared/customTags.ts`.
+
+## Lower priority / explicitly deferred
+
+- **Lore tags not approved this session**: Nemeton-Touched, Blood Debt, World Tree's Ward — user explicitly declined these three (kept Old Rivals and Reunion, both now live). Don't revisit unless asked.
+- **Contributor-highlight UI feature** — blocked on an analyzer output shape change (contributor names are baked into pre-formatted text, not structured per-hero data) plus a UI placement decision. Not started.
+- **E2E test automation** — still nonexistent, still verified by hand in the Browser pane every session. Sustainable at current size, flagged every session as something that won't stay that way.
+- **Battle Mode pro-match link, contributor highlight, live synergy border** — all previously-blocked candidates from earlier sessions are now either done (pro-match link, synergy border, battle history) or still explicitly blocked (contributor highlight) — see `10-tech-debt-backlog.md` for the up-to-date status of each, don't assume the old blocked-list is still accurate.
 
 ## Roadblocks to expect
 
-- **Accounts/persistence is a deferred fork in the road**, not a task — leaderboard, "series of battles" history, and cross-session progress all sit behind it. Don't half-build one of those without first deciding whether accounts are in scope.
-- **Dual datastore** (local SQLite for Draft/Hero/History, separate Postgres for Opponent Pool) is an intentional MVP exception — fine for now, but keep in mind if Opponent Pool ever needs to grow past "one extra Prisma client."
-- **No e2e test automation** — every UI change this session was verified by hand in the Browser pane. That's sustainable at current size but won't stay that way; if the UI surface keeps growing, this will start costing real time per session.
+- **The "mean improves, tail reshuffles" pattern will keep happening.** It's shown up three times this session now (skirmish_rate fix, camp_stacking weight sweep, axis-composite discount) — every structural fix so far has improved the aggregate correlation while shifting *which* heroes are the worst outliers, not eliminating outliers wholesale. Don't expect a single change to produce a clean win with no new tail; budget time to check what got worse, not just what got better.
+- **The ability-tagging edit cycle is 3 steps, not 2.** `ability-tagging.csv` → `import-ability-tagging.ts` → **`aggregate-ability-tags.ts`** (easy to forget — this session's first attempt at editing Treant/Batrider showed *zero* effect until this step was found and run) → `calibrate-evaluation-values.ts`. `calibrate-evaluation-values.ts` reads from `ability-tag-aggregates.json`, not directly from `hero-abilities.json`.
+- **Manual per-hero overrides (Keeper of the Light's `camp_stacking` −1.5) get silently wiped** by the next full `calibrate-evaluation-values.ts` run, same as the Kez/21-hero batch before it. If revisiting KotL, check whether the override is still in `heroes.json` before assuming it is.
+- **Accounts/persistence is still a deferred fork in the road**, not a task — leaderboard, cross-session progress sit behind it.
+- **Dual datastore** (local SQLite + separate Postgres for Opponent Pool) is still an intentional MVP exception, fine as-is.
 
 ## Where to start
 
-Item 1 (Custom Tags dedup) is the best entry point: small, well-scoped, real risk removed, doesn't require any product decision first. Item 2 is bigger and more valuable long-term but benefits from a fresh, unhurried session rather than being squeezed in. Item 3 whenever there's appetite for pure UI work.
+Item 1 (Phantom Lancer) is the best entry point — same reasoning as last time favored Custom Tags: small, well-scoped, mechanism already diagnosed, no product decision needed first. Item 2 needs a judgment call up front (keep chasing vs. accept residual) before diving in. Item 3 is a quick, cheap diagnostic pass that might turn up nothing or might turn up the next camp_stacking-sized finding. Item 4 needs the user, not more analysis.
