@@ -19,6 +19,39 @@ export function percentileRankScale(values: (number | null)[]): (number | null)[
   return values.map((_, index) => scoreByIndex.get(index) ?? null);
 }
 
+// Same rank-based idea as percentileRankScale, but ranks each hero only
+// against others sharing its group label instead of the whole population.
+// Built for skirmish_rate's inverted last_hits_per_min component
+// (Blueprint/10-tech-debt-backlog.md, "skirmish_rate систематически
+// завышает Support") — a Support's near-zero CS is a structural feature of
+// the role, not a skill signal, so ranking it against the whole population
+// (dominated by Carry/Mid) reads "doesn't farm" as "extreme" for every
+// Support regardless of how that Support actually plays. Ranking within
+// position groups instead means a Support only scores high here by farming
+// more than OTHER Supports typically do, not just by being a Support.
+// null/no-group heroes fall back to a shared bucket (ranked only against
+// each other, not against the whole population either) — rare in practice
+// (heroes with no real position data at all).
+export function percentileRankScaleByGroup(
+  values: (number | null)[],
+  groups: (string | null)[],
+): (number | null)[] {
+  const indicesByGroup = new Map<string, number[]>();
+  values.forEach((_, index) => {
+    const key = groups[index] ?? '__ungrouped__';
+    (indicesByGroup.get(key) ?? indicesByGroup.set(key, []).get(key)!).push(index);
+  });
+
+  const result = new Array<number | null>(values.length).fill(null);
+  for (const indices of indicesByGroup.values()) {
+    const groupScores = percentileRankScale(indices.map((i) => values[i]));
+    indices.forEach((i, j) => {
+      result[i] = groupScores[j];
+    });
+  }
+  return result;
+}
+
 export function medianBenchmarkValue(
   percentiles: { percentile: number; value: number }[] | null | undefined,
 ): number | null {

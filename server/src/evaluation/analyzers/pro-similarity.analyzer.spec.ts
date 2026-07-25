@@ -48,5 +48,12 @@ describe('createProSimilarityAnalyzer', () => {
     expect(result.explanation[0]).toContain('Axe, Zeus, Lion');
     expect(result.explanation[0]).toContain('Team Secret');
     expect(result.explanation[0]).toContain('TI');
+    expect(result.matchUrl).toBe('https://www.opendota.com/matches/2');
+  });
+
+  it('does not set matchUrl when there is no qualifying match', () => {
+    const analyzer = createProSimilarityAnalyzer([]);
+    const result = analyzer.analyze(picks([hero(1, 'A'), hero(2, 'B')]));
+    expect(result.matchUrl).toBeUndefined();
   });
 });

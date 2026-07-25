@@ -290,7 +290,9 @@ export function bestMatchupEdge(
 }
 
 export const AXIS_LABEL: Record<keyof HeroEvaluationValues, string> = {
-  teamfight: 'teamfight',
+  // "damage output", not "teamfight" — see score-narrative.ts's
+  // AXIS_NARRATIVE.teamfight comment (label-only rename, key unchanged).
+  teamfight: 'damage output',
   tempo: 'tempo',
   scaling: 'late-game scaling',
   mobility: 'mobility',

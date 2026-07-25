@@ -506,9 +506,9 @@
   {
     "heroId": 65,
     "heroName": "Batrider",
-    "mobility": 6,
+    "mobility": 5,
     "saving": 3,
-    "initiating": 24,
+    "initiating": 22,
     "control_strength": 14
   },
   {
@@ -650,9 +650,9 @@
   {
     "heroId": 83,
     "heroName": "Treant Protector",
-    "mobility": 14,
+    "mobility": 12,
     "saving": 10,
-    "initiating": 25,
+    "initiating": 21,
     "control_strength": 13
   },
   {

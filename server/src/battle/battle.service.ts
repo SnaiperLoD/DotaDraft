@@ -43,6 +43,21 @@ export class BattleService {
     // resolveBattle, which treats both teams as unordered sets.
     const teamBAligned = alignOpponentToRoles(opponentHeroes);
 
+    // Persisted for History (Blueprint/10-tech-debt-backlog.md, "Сохранять
+    // в истории результаты боёв") — best-effort, same reasoning as
+    // EvaluationService: a storage hiccup shouldn't fail the fight itself.
+    await this.draftService
+      .saveBattleResult(draftId, {
+        resolvedOutcome: result.resolvedOutcome,
+        advantageDirection: result.advantageDirection,
+        confidenceTier: result.confidenceTier,
+        opponentSource: opponent.source,
+        opponentTeamName: opponent.teamName,
+        opponentLeagueName: opponent.leagueName,
+        opponentHeroIds: opponent.heroIds,
+      })
+      .catch(() => undefined);
+
     return {
       resolvedOutcome: result.resolvedOutcome,
       advantageDirection: result.advantageDirection,
@@ -55,6 +70,7 @@ export class BattleService {
         heroes: teamBAligned.map((h) => ({ heroId: h.id, heroName: h.name })),
         teamName: opponent.teamName,
         leagueName: opponent.leagueName,
+        matchId: opponent.matchId,
       },
     };
   }

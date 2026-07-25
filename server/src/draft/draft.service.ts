@@ -85,6 +85,45 @@ export class DraftService {
     return this.toView(draft);
   }
 
+  // Persists the most recent EvaluationResult for History (Blueprint/10-tech-debt-backlog.md,
+  // "Сохранять в истории результаты боёв") — called by EvaluationService
+  // after computing a result, not versioned (overwrites on re-evaluate).
+  async saveEvaluationResult(draftId: string, resultJson: string): Promise<void> {
+    await this.prisma.draft.update({
+      where: { id: draftId },
+      data: { evaluationResult: resultJson },
+    });
+  }
+
+  // One row per Battle Mode fight, for History's expandable battle list
+  // (Blueprint/10-tech-debt-backlog.md, "Сохранять в истории результаты
+  // боёв") — called by BattleService.fight() after resolveBattle().
+  async saveBattleResult(
+    draftId: string,
+    result: {
+      resolvedOutcome: string;
+      advantageDirection: string;
+      confidenceTier: string;
+      opponentSource: string;
+      opponentTeamName: string | null;
+      opponentLeagueName: string | null;
+      opponentHeroIds: number[];
+    },
+  ): Promise<void> {
+    await this.prisma.battleResult.create({
+      data: {
+        draftId,
+        resolvedOutcome: result.resolvedOutcome,
+        advantageDirection: result.advantageDirection,
+        confidenceTier: result.confidenceTier,
+        opponentSource: result.opponentSource,
+        opponentTeamName: result.opponentTeamName,
+        opponentLeagueName: result.opponentLeagueName,
+        opponentHeroIds: JSON.stringify(result.opponentHeroIds),
+      },
+    });
+  }
+
   async pick(draftId: string, heroId: number): Promise<DraftStateView> {
     const draft = await this.prisma.draft.findUnique({
       where: { id: draftId },

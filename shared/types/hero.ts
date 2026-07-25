@@ -33,3 +33,19 @@ export interface Hero {
   evaluation_values: HeroEvaluationValues;
   presumed_positions: HeroPositionShare[];
 }
+
+// Live golden/red-border synergy highlight (Blueprint/10-tech-debt-backlog.md,
+// "Живая подсветка синергичного пика").
+export interface SynergyPreviewRequest {
+  pickedHeroIds: number[];
+  candidateHeroIds: number[];
+}
+
+export interface SynergyPreviewEntry {
+  heroId: number;
+  // Real co-pick winRate minus expected, averaged over already-picked
+  // heroes (same formula as Synergy Analyzer) — null if there's no real
+  // data for this candidate against any picked hero, or no picked heroes
+  // yet. Ranking (top/bottom-of-pool) happens client-side.
+  score: number | null;
+}

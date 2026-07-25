@@ -1,4 +1,5 @@
 import type { Hero, HeroEvaluationValues } from 'shared';
+import { MANA_BOOSTER_BENEFICIARIES, heroNameSetForTag } from 'shared';
 import type { GamePhase } from './battle-resolution';
 import { isHardCarry } from '../common/hard-carry';
 
@@ -10,11 +11,12 @@ import { isHardCarry } from '../common/hard-carry';
 //   blessing — a team's own tags buff itself.
 //   curse    — a team's tags debuff the OPPONENT (Battle Engine checks both
 //              categories for both sides before resolving a battle).
-// Registry here is DEMO data mirroring client/src/data/customTags.ts by
-// hero name — the two aren't fed from one shared source yet (client-side
-// copy is for the draft-time badge display, this one drives actual battle
-// math). Known duplication, not unified into a single API-served source
-// yet; keep tag names/hero lists in sync by hand until that's built.
+// Which heroes carry which tag lives in shared/customTags.ts — the single
+// source also used by client/src/data/customTags.ts for badge display, so
+// the two can no longer drift apart the way they used to (Crystal Maiden
+// used to apply Frosty here without the client ever showing the badge).
+// Numeric effect magnitudes (percentages, thresholds) stay local here —
+// those only matter to battle math, not to what badge renders on a card.
 
 export type TagCategory = 'blessing' | 'curse';
 type Axis = keyof HeroEvaluationValues;
@@ -36,7 +38,12 @@ export interface CustomTagEffects {
 }
 
 export function emptyTagEffects(): CustomTagEffects {
-  return { heroPowerMultiplier: new Map(), axisMultiplier: {}, heroAxisMultiplier: new Map(), phaseHeroPowerMultiplier: new Map() };
+  return {
+    heroPowerMultiplier: new Map(),
+    axisMultiplier: {},
+    heroAxisMultiplier: new Map(),
+    phaseHeroPowerMultiplier: new Map(),
+  };
 }
 
 function mulHeroPower(effects: CustomTagEffects, heroId: number, factor: number): void {
@@ -53,7 +60,12 @@ function mulHeroAxis(effects: CustomTagEffects, heroId: number, axis: Axis, fact
   effects.heroAxisMultiplier.set(heroId, forHero);
 }
 
-function mulPhaseHeroPower(effects: CustomTagEffects, phase: GamePhase, heroId: number, factor: number): void {
+function mulPhaseHeroPower(
+  effects: CustomTagEffects,
+  phase: GamePhase,
+  heroId: number,
+  factor: number,
+): void {
   const forPhase = effects.phaseHeroPowerMultiplier.get(phase) ?? new Map<number, number>();
   forPhase.set(heroId, (forPhase.get(heroId) ?? 1) * factor);
   effects.phaseHeroPowerMultiplier.set(phase, forPhase);
@@ -63,7 +75,8 @@ export function mergeTagEffects(...list: CustomTagEffects[]): CustomTagEffects {
   const merged = emptyTagEffects();
   for (const e of list) {
     for (const [heroId, mult] of e.heroPowerMultiplier) mulHeroPower(merged, heroId, mult);
-    for (const axis of Object.keys(e.axisMultiplier) as Axis[]) mulAxis(merged, axis, e.axisMultiplier[axis]!);
+    for (const axis of Object.keys(e.axisMultiplier) as Axis[])
+      mulAxis(merged, axis, e.axisMultiplier[axis]!);
     for (const [heroId, axisMap] of e.heroAxisMultiplier) {
       for (const axis of Object.keys(axisMap) as Axis[]) mulHeroAxis(merged, heroId, axis, axisMap[axis]!);
     }
@@ -86,20 +99,16 @@ export function isTagDisabled(name: string): boolean {
   return DISABLED_TAGS.has(name);
 }
 
-// ---------- registry (placeholder/demo, see file header) ----------
+// ---------- registry (hero-name sets sourced from shared/customTags.ts) ----------
 
-const MANA_DEPENDED = new Set(['Storm Spirit', 'Invoker', 'Leshrac', 'Skywrath Mage', 'Zeus', 'Outworld Destroyer']);
-const STATSTEALER = new Set(['Silencer', 'Slark', 'Pudge', 'Undying', 'Outworld Destroyer']);
-const FROSTY = new Set(['Tusk', 'Abaddon', 'Drow Ranger', 'Crystal Maiden', 'Jakiro', 'Ancient Apparition', 'Winter Wyvern']);
-const FUNDAMENTALS = new Set(['Io', 'Keeper of the Light', 'Chaos Knight', 'Enigma']);
-const TWO_HEADS_BETTER = new Set(['Ogre Magi', 'Jakiro', 'Alchemist']);
-const THE_BUTTON = new Set([
-  'Mars', 'Tidehunter', 'Magnus', 'Shadow Fiend', 'Faceless Void', 'Puck', 'Enigma', 'Winter Wyvern', 'Disruptor',
-]);
-const GLOBAL = new Set(['Silencer', 'Tinker', 'Io', 'Dawnbreaker', 'Spectre', 'Zeus', "Nature's Prophet"]);
-export const HIGH_SKILL = new Set([
-  'Lone Druid', 'Monkey King', 'Invoker', 'Tinker', 'Huskar', 'Meepo', 'Morphling', 'Brewmaster', 'Arc Warden', 'Chen',
-]);
+const MANA_DEPENDED = new Set(MANA_BOOSTER_BENEFICIARIES);
+const STATSTEALER = heroNameSetForTag('Statstealer');
+const FROSTY = heroNameSetForTag('Frosty');
+const FUNDAMENTALS = heroNameSetForTag('The Fundamentals');
+const TWO_HEADS_BETTER = heroNameSetForTag('Two Heads Better');
+const THE_BUTTON = heroNameSetForTag('The Button');
+const GLOBAL = heroNameSetForTag('Global');
+export const HIGH_SKILL = heroNameSetForTag('High Skill');
 // Multi-unit heroes (summons/illusions/clones) — self-play outlier
 // investigation found this whole archetype systematically overrated on
 // durability+objectives specifically (Blueprint/10-tech-debt-backlog.md):
@@ -107,9 +116,7 @@ export const HIGH_SKILL = new Set([
 // (extra pooled HP, simultaneous multi-body pushing), without the offsetting
 // real weakness — split power is easier to pick apart piece by piece than
 // the raw stat sheet implies.
-const DIVIDED_ATTENTION = new Set([
-  'Lone Druid', 'Lycan', 'Beastmaster', "Nature's Prophet", 'Arc Warden', 'Broodmother', 'Naga Siren', 'Meepo',
-]);
+const DIVIDED_ATTENTION = heroNameSetForTag('Divided Attention');
 const DIVIDED_ATTENTION_PENALTY = 0.9;
 
 // Tempo Monster — hidden, always-active (no reveal state at all, per spec).
@@ -120,10 +127,7 @@ const DIVIDED_ATTENTION_PENALTY = 0.9;
 // Lone Druid/Lycan/Broodmother) — flagged as a real stacking risk before
 // building this (Blueprint/10-tech-debt-backlog.md), implementing as
 // specified to observe the actual measured effect rather than guessing.
-const TEMPO_MONSTER = new Set([
-  "Nature's Prophet", 'Meepo', 'Lone Druid', 'Lycan', 'Broodmother', 'Kez', 'Alchemist', 'Huskar', 'Troll Warlord',
-  'Death Prophet', 'Visage',
-]);
+const TEMPO_MONSTER = heroNameSetForTag('Tempo Monster');
 const TEMPO_MONSTER_THRESHOLD = 8;
 const TEMPO_MONSTER_BUFF = 1.03;
 const TEMPO_MONSTER_PENALTY = 0.75;
@@ -133,6 +137,19 @@ const STATSTEALER_MIN_COUNT = 2;
 export const HIGH_SKILL_DEBUFF_MIN_COUNT = 2;
 export const HIGH_SKILL_UPSET_SHIFT = 0.05;
 const HIGH_SKILL_DEBUFF_PER_HERO = 0.975;
+
+// Old Rivals — Kunkka/Tidehunter. Same team: forced cooperation doesn't
+// erase the grudge, -5% teamfight each personally. Opposite teams: whichever
+// rival is on the OPPONENT's side gets personally debuffed (-5% power) —
+// evaluated from both sides independently by battle-resolution.ts, so the
+// effect ends up mutual without a special two-sided branch here.
+const OLD_RIVALS = heroNameSetForTag('Old Rivals');
+const OLD_RIVALS_TEAMFIGHT_PENALTY = 0.95;
+const OLD_RIVALS_ENEMY_POWER_PENALTY = 0.95;
+
+// Reunion — Mirana/Muerta. Both on the team: +3% personal map control each.
+const REUNION = heroNameSetForTag('Reunion');
+const REUNION_MAP_CONTROL_BUFF = 1.03;
 
 // "Core" for Agility Crusher's -5% (non-agility cores) clause — a hero
 // whose most-played presumed position isn't Support. No data at all
@@ -286,6 +303,24 @@ export function blessingEffectsFor(
     }
   }
 
+  // Old Rivals: both Kunkka and Tidehunter forced onto the same team —
+  // -5% teamfight each, personally. (The opposite-teams branch of this tag
+  // is a curse, see curseEffectsOnOpponent below.)
+  if (!isTagDisabled('Old Rivals')) {
+    const oldRivalsPresent = team.filter((h) => OLD_RIVALS.has(h.name));
+    if (oldRivalsPresent.length === OLD_RIVALS.size) {
+      for (const h of oldRivalsPresent) mulHeroAxis(effects, h.id, 'teamfight', OLD_RIVALS_TEAMFIGHT_PENALTY);
+    }
+  }
+
+  // Reunion: Mirana + Muerta, both on the team -> +3% personal map control each.
+  if (!isTagDisabled('Reunion')) {
+    const reunionPresent = team.filter((h) => REUNION.has(h.name));
+    if (reunionPresent.length === REUNION.size) {
+      for (const h of reunionPresent) mulHeroAxis(effects, h.id, 'map_control', REUNION_MAP_CONTROL_BUFF);
+    }
+  }
+
   return effects;
 }
 
@@ -311,6 +346,19 @@ export function curseEffectsOnOpponent(caster: Hero[], opponent: Hero[]): Custom
     for (const h of opponent) {
       if (h.primary_attribute === 'agi') mulHeroPower(effects, h.id, 0.9);
       else if (isCore(h)) mulHeroPower(effects, h.id, 0.95);
+    }
+  }
+
+  // Old Rivals: if the caster's side has either Kunkka or Tidehunter and the
+  // OPPONENT's side has the other one, that opposing rival gets personally
+  // debuffed (-5% power) — facing each other is as distracting as being
+  // forced to cooperate. Checked from both teams' perspectives independently
+  // by battle-resolution.ts, so this ends up mutual without a special
+  // two-sided branch: each side's own curse call only ever debuffs the rival
+  // on the OTHER side.
+  if (!isTagDisabled('Old Rivals') && caster.some((h) => OLD_RIVALS.has(h.name))) {
+    for (const h of opponent) {
+      if (OLD_RIVALS.has(h.name)) mulHeroPower(effects, h.id, OLD_RIVALS_ENEMY_POWER_PENALTY);
     }
   }
 

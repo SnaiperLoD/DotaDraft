@@ -26,6 +26,25 @@ function percentileClass(percentile: number): string {
   return 'percentile-high';
 }
 
+// 5-star rendering of totalScore (0-10) as a faster-to-read companion to
+// the raw X/10 number, not a replacement (Blueprint/10-tech-debt-backlog.md,
+// "Финальная оценка драфта — 5-звёздочная система"). Supports fractional
+// fill (not just whole/half stars) via a clipped overlay — a gold star row
+// absolutely positioned over a dim one, clipped to score/10 width.
+function StarRating({ score }: { score: number }) {
+  const percent = Math.max(0, Math.min(100, (score / 10) * 100));
+  return (
+    <span className="star-rating" aria-label={`${(score / 2).toFixed(1)} out of 5 stars`}>
+      <span className="star-rating-bg" aria-hidden="true">
+        ★★★★★
+      </span>
+      <span className="star-rating-fg" aria-hidden="true" style={{ width: `${percent}%` }}>
+        ★★★★★
+      </span>
+    </span>
+  );
+}
+
 export default function EvaluationPanel({ draftId, heroes }: Props) {
   const [result, setResult] = useState<EvaluationResult | null>(null);
   const [loading, setLoading] = useState(false);
@@ -63,6 +82,7 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
 
       <h3 className="evaluation-title">
         Evaluation — Total Score: <em>{result.totalScore}/10</em>
+        <StarRating score={result.totalScore} />
       </h3>
 
       <p className="evaluation-gameplan">{result.summary.gameplan}</p>
@@ -105,6 +125,16 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
                 <li key={i}>{line}</li>
               ))}
             </ul>
+            {item.matchUrl && (
+              <a
+                className="evaluation-match-link"
+                href={item.matchUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View match on OpenDota →
+              </a>
+            )}
           </div>
         ))}
       </div>

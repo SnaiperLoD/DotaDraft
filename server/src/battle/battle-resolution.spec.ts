@@ -49,8 +49,14 @@ describe('resolveBattle', () => {
   // Skill — see the "High confidence" describe block below). Used for the
   // generic upset-explanation tests, which want real randomness to be
   // possible without needing a tagged hero.
+  //
+  // control/initiating, not teamfight/scaling (2026-07-25, axis composite
+  // fix, Blueprint/10-tech-debt-backlog.md "Поворотный момент") —
+  // teamfight/scaling/durability/objectives/burst are now weighted at ~0.2
+  // combined-cluster share instead of ~1 each, so maxing them out no longer
+  // produces a meaningful power edge on their own.
   function moderateEdgeTeam(startId = 1): BattlePick[] {
-    return team(5, { teamfight: 7, scaling: 7 }, startId);
+    return team(5, { control: 7, initiating: 7 }, startId);
   }
 
   // A bigger edge than moderateEdgeTeam — still short of dominantTeam, but
@@ -60,7 +66,7 @@ describe('resolveBattle', () => {
   // matchup/synergy-citation test, which needs both real data AND a survived
   // A-favored, non-High tier to exercise the upset-citation branch.
   function strongerEdgeTeam(startId = 1): BattlePick[] {
-    return team(5, { teamfight: 9, scaling: 9, burst: 9 }, startId);
+    return team(5, { control: 9, initiating: 9, mobility: 9 }, startId);
   }
 
   it('favors the objectively stronger team and resolves Win when the random draw favors them', () => {
@@ -158,14 +164,18 @@ describe('resolveBattle', () => {
     // as Offlane, whose 3 role-fit axes — durability/control/initiating)
     // so together — not individually — they cross the threshold.
     it('tips an already-close matchup, combined with another small edge, toward the role-appropriate side', () => {
-      // hero1's teamfight=9 gives team A a real pre-role edge — under the
+      // hero1's tempo=10 gives team A a real pre-role edge — under the
       // advantageDirection threshold on its own, with margin on both sides
       // of the current axis-weight snapshot (server/data/axis-weights.json),
-      // not a hairline value. hero2 is otherwise matched with its opposite
-      // number (8.5 durability/control/initiating both sides) — no
-      // difference until role-fit enters.
+      // not a hairline value. Uses tempo (2026-07-25, axis composite fix) —
+      // not teamfight, which is now weighted too low on its own to provide
+      // this kind of edge — and not one of hero2's Offlane role-fit axes
+      // (durability/control/initiating) below, so the two edges stay
+      // independent. hero2 is otherwise matched with its opposite number
+      // (8.5 durability/control/initiating both sides) — no difference
+      // until role-fit enters.
       const teamAUnassigned: BattlePick[] = [
-        { hero: hero(1, 'A1', { teamfight: 10 }), assignedRole: null },
+        { hero: hero(1, 'A1', { tempo: 10 }), assignedRole: null },
         { hero: hero(2, 'A2', { durability: 8.5, control: 8.5, initiating: 8.5 }), assignedRole: null },
         ...team(3, {}, 3),
       ];

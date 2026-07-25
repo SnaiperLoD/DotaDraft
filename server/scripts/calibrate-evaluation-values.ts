@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import {
   percentileRankScale,
+  percentileRankScaleByGroup,
   medianBenchmarkValue,
   zScoreExtremityScale,
   weightedBlend,
@@ -75,6 +76,7 @@ interface RawHero {
 interface HeroMetaEntry {
   heroId: number;
   benchmarks: Record<string, { percentile: number; value: number }[]> | null;
+  positions: { position: string; share: number }[];
 }
 
 interface TempoTrendEntry {
@@ -304,11 +306,20 @@ function main() {
   const lastHitsPerMinRaw = heroes.map((h) =>
     medianBenchmarkValue(metaByHeroId.get(h.id)?.benchmarks?.last_hits_per_min),
   );
-  // Inverted before rank-scaling (same idiom as trendScoresForTempo above):
-  // skirmish_rate should score high for a hero who farms *less* efficiently,
-  // not more.
-  const invertedLastHitsScores = percentileRankScale(
+  // Ranked within each hero's dominant real position (presumed_positions),
+  // not the whole population (Blueprint/10-tech-debt-backlog.md,
+  // "skirmish_rate систематически завышает Support") — a Support's
+  // near-zero CS is structural to the role, not a skill signal; ranking
+  // against the whole population (dominated by Carry/Mid) read every
+  // Support as "extreme" regardless of how they actually farm relative to
+  // other Supports. Inverted before rank-scaling (same idiom as
+  // trendScoresForTempo above): skirmish_rate should score high for a hero
+  // who farms *less* efficiently than their positional peers, not more.
+  const topPositionByHeroId = new Map(meta.heroes.map((h) => [h.heroId, h.positions[0]?.position ?? null]));
+  const positionGroups = heroes.map((h) => topPositionByHeroId.get(h.id) ?? null);
+  const invertedLastHitsScores = percentileRankScaleByGroup(
     lastHitsPerMinRaw.map((v) => (v === null ? null : -v)),
+    positionGroups,
   );
   const skirmishRateScores = heroes.map((_, i) =>
     weightedBlend([

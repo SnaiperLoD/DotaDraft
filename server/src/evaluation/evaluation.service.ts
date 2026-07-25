@@ -55,7 +55,10 @@ const SUMMARY_KEYS = [
 // himself. New names describe the actual measured behavior.
 const BASE_ANALYZERS: Analyzer[] = [
   counterAnalyzer,
-  createAxisAnalyzer('teamfight', 'Teamfight'),
+  // Label "Damage Output", not "Teamfight" — see score-narrative.ts's
+  // AXIS_NARRATIVE.teamfight comment for why (real per-minute personal
+  // damage, not overall fight-winning potential). Key stays `teamfight`.
+  createAxisAnalyzer('teamfight', 'Damage Output'),
   createAxisAnalyzer('tempo', 'Tempo'),
   createAxisAnalyzer('scaling', 'Scaling'),
   createAxisAnalyzer('burst', 'Burst'),
@@ -79,15 +82,25 @@ const BASE_ANALYZERS: Analyzer[] = [
 // slightly smaller. `counter` is deliberately absent: the blueprint's
 // weight list omits it, so it's shown as an informational breakdown item
 // only and doesn't affect Total Score.
+// teamfight/scaling/objectives/burst/durability scaled by 0.3 (2026-07-25,
+// Blueprint/10-tech-debt-backlog.md, "Поворотный момент"/axis composite
+// fix) — these 5 are highly cross-correlated on real hero data (the same
+// "battle/core-impact spectrum" counted ~5 times, not 5 independent
+// signals; pairwise |r| up to 0.78, see backlog for the full matrix).
+// Combined weight target: ~0.15, matching tempo (the one other axis already
+// deliberately boosted above the 0.05 default) — the whole cluster now
+// counts for about as much as ONE well-weighted independent axis, not five.
+// Original values before scaling: teamfight 0.2, scaling 0.1, objectives
+// 0.1, burst 0.05, durability 0.05 (sum 0.5).
 const WEIGHTS: Record<string, number> = {
   synergy: 0.3,
-  teamfight: 0.2,
+  teamfight: 0.06,
   tempo: 0.15,
-  scaling: 0.1,
-  objectives: 0.1,
-  burst: 0.05,
+  scaling: 0.03,
+  objectives: 0.03,
+  burst: 0.015,
   control: 0.05,
-  durability: 0.05,
+  durability: 0.015,
   mobility: 0.05,
   // Disabled entirely (Blueprint/10-tech-debt-backlog.md) — same as Battle
   // Engine's AXIS_WEIGHT.map_control: vision_ability_tier (a map_control
@@ -136,13 +149,23 @@ export class EvaluationService {
         score: result.score,
         percentile: result.percentile,
         explanation: result.explanation,
+        matchUrl: result.matchUrl ?? null,
       };
     });
 
     const totalScore = this.weightedTotal(breakdown);
     const summary = this.buildSummary(breakdown);
+    const result: EvaluationResult = { draftId, totalScore, breakdown, summary };
 
-    return { draftId, totalScore, breakdown, summary };
+    // Persisted for History (Blueprint/10-tech-debt-backlog.md, "Сохранять
+    // в истории результаты боёв") — best-effort, not on the critical path:
+    // Evaluate Draft should still work even if this write fails for some
+    // reason (e.g. draft already deleted between getById above and now,
+    // which shouldn't happen in practice but isn't worth failing the whole
+    // request over).
+    await this.draftService.saveEvaluationResult(draftId, JSON.stringify(result)).catch(() => undefined);
+
+    return result;
   }
 
   private buildSummary(breakdown: AnalyzerResult[]): EvaluationSummary {
@@ -178,7 +201,11 @@ export class EvaluationService {
   // condition, then names the standout strength/weakness to lean on or
   // cover for. Recombines already-calibrated axis narratives rather than
   // introducing a new signal.
-  private buildGameplan(breakdown: AnalyzerResult[], topStrength: AnalyzerResult, topWeakness: AnalyzerResult): string {
+  private buildGameplan(
+    breakdown: AnalyzerResult[],
+    topStrength: AnalyzerResult,
+    topWeakness: AnalyzerResult,
+  ): string {
     const tempo = breakdown.find((b) => b.key === 'tempo');
     const scaling = breakdown.find((b) => b.key === 'scaling');
     const tempoBracket = tempo?.percentile != null ? percentileBracket(tempo.percentile) : 'mid';

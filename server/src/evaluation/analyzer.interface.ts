@@ -8,6 +8,12 @@ export interface AnalyzerOutput {
   // axis-based (Synergy, Counter, Pro Similarity have no such population).
   percentile: number | null;
   explanation: string[];
+  // OpenDota match link for the specific pro match an analyzer's result is
+  // drawn from (currently only Pro Similarity Analyzer sets this — see
+  // Blueprint/10-tech-debt-backlog.md, "Ссылка на исходный матч для
+  // про-пиков"). Optional so every other analyzer's object literal is
+  // unaffected.
+  matchUrl?: string | null;
 }
 
 // A drafted hero plus the role it was assigned in RoleAssignment (null

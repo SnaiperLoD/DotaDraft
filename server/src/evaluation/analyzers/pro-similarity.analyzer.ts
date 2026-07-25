@@ -56,7 +56,12 @@ export function createProSimilarityAnalyzer(compositions: ProComposition[]): Ana
 
       // Not axis-based (no evaluation_values score) — no percentile
       // distribution to rank against, see analyzer.interface.ts.
-      return { score, percentile: null, explanation };
+      return {
+        score,
+        percentile: null,
+        explanation,
+        matchUrl: `https://www.opendota.com/matches/${best!.comp.matchId}`,
+      };
     },
   };
 }

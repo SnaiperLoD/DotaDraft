@@ -2,11 +2,18 @@ import type { Hero, PresumedPosition } from 'shared';
 
 export type PresumedRole = PresumedPosition | 'Universal';
 
+// Hues spread around the wheel so no two roles read as "the same muted
+// cool color" at a glance (Blueprint/10-tech-debt-backlog.md, "Градиенты
+// ролей"). Previous Offlane/Support pair (turquoise ~178°, light green
+// ~120°) sat only 58° apart and both cool/desaturated — easy to confuse at
+// low alpha. Support moved to violet (~280°) — Carry/Mid/Universal
+// unchanged, they were already well-separated from each other and from
+// green/turquoise.
 const ROLE_TINT_RGB: Record<PresumedRole, string> = {
   Carry: '150, 35, 55', // crimson
   Offlane: '38, 130, 125', // turquoise
   Mid: '45, 82, 130', // blue
-  Support: '107, 175, 107', // light green
+  Support: '142, 78, 168', // violet
   Universal: '196, 130, 45', // sunny orange
 };
 

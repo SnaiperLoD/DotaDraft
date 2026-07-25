@@ -6,6 +6,11 @@ export interface AnalyzerResult {
   // for non-axis analyzers (Synergy, Counter, Pro Similarity).
   percentile: number | null;
   explanation: string[];
+  // OpenDota match link for the specific pro match this result is drawn
+  // from — currently only Pro Similarity Analyzer sets it. See
+  // Blueprint/10-tech-debt-backlog.md, "Ссылка на исходный матч для
+  // про-пиков".
+  matchUrl?: string | null;
 }
 
 export interface EvaluationSummary {

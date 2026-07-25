@@ -30,6 +30,15 @@
   margin: 0 0 16px;
 }
 
+.battle-match-link {
+  color: var(--gold-bright);
+  text-decoration: none;
+}
+
+.battle-match-link:hover {
+  text-decoration: underline;
+}
+
 .faceoff {
   margin: 16px 0;
 }

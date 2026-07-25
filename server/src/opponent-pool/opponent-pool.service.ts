@@ -74,6 +74,9 @@ export class OpponentPoolService {
         heroRoles: (row.heroRoles as PooledHeroRole[] | null) ?? null,
         teamName: row.teamName,
         leagueName: row.leagueName,
+        // Derived from the id, not a stored column — see seed-opponent-pool.ts
+        // (`pro-${matchId}`) and PooledDraftSummary's matchId doc comment.
+        matchId: row.source === 'pro' ? row.id.replace(/^pro-/, '') : null,
       };
     });
   }

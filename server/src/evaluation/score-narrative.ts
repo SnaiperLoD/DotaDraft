@@ -52,10 +52,20 @@ type NarrativeSet = Record<ScoreBracket, NarrativeFn>;
 type StaticNarrativeSet = Record<ScoreBracket, string>;
 
 export const AXIS_NARRATIVE: Record<string, NarrativeSet> = {
+  // Labeled "Damage Output" as of 2026-07-25 (Blueprint/10-tech-debt-backlog.md,
+  // "Teamfight axis misnamed") — the underlying signal is real
+  // hero_damage_per_min (personal damage dealt), not overall fight-winning
+  // potential. Control-heavy initiators (Magnus/Crystal Maiden/Tidehunter)
+  // score low here despite being the exact kind of hero a player calls
+  // "great in teamfights" — that strength shows up in control/initiating
+  // instead. Label-only rename ("пока", provisional) — key stays
+  // `teamfight` (HeroEvaluationValues, evaluation_values on all 127 heroes,
+  // AXES arrays) since that's a much larger, more invasive rename to
+  // revisit separately if this sticks.
   teamfight: {
-    high: (ctx) => `${lede('Teamfight', ctx)} Expect this team to look for 5v5 fights around Roshan, high ground, and objective clusters rather than split-pushing.`,
-    mid: (ctx) => `${lede('Teamfight', ctx)} It can hold its own in an even fight but shouldn't force a 5-man engagement blindly.`,
-    low: (ctx) => `${lede('Teamfight', ctx)} Avoid grouping for even fights — pick-offs, split pushes, and disengaging from bad fights are the safer path here.`,
+    high: (ctx) => `${lede('Damage Output', ctx)} Expect this team to look for 5v5 fights around Roshan, high ground, and objective clusters rather than split-pushing.`,
+    mid: (ctx) => `${lede('Damage Output', ctx)} It can hold its own in an even fight but shouldn't force a 5-man engagement blindly.`,
+    low: (ctx) => `${lede('Damage Output', ctx)} Avoid grouping for even fights — pick-offs, split pushes, and disengaging from bad fights are the safer path here.`,
   },
   tempo: {
     high: (ctx) => `${lede('Tempo', ctx)} This is a fast-start draft that wants to contest the first Rune, force early lane swaps, and close the game before the 25-minute mark — real match data shows drafts like this see their win rate fall the longer the game runs.`,

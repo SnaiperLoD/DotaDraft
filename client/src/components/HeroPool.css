@@ -36,6 +36,46 @@
     0 0 22px rgba(201, 162, 39, 0.35);
 }
 
+/* Live synergy highlight (Blueprint/10-tech-debt-backlog.md, "Живая
+   подсветка синергичного пика") — best/worst real-synergy candidate in the
+   current 5-hero pool relative to the already-picked team. Own border
+   color (not the hover gold, to stay legible while a card is also
+   hovered/focused) — !important on hover/focus so the highlight stays the
+   dominant signal even when a highlighted card is being hovered. */
+.hero-card--synergy-best {
+  border-color: #4caf6a;
+  box-shadow:
+    0 6px 16px var(--shadow-deep),
+    0 0 0 1px #4caf6a,
+    0 0 20px rgba(76, 175, 106, 0.45);
+}
+
+.hero-card--synergy-best:not(:disabled):hover,
+.hero-card--synergy-best:not(:disabled):focus-visible {
+  border-color: #4caf6a !important;
+  box-shadow:
+    0 10px 24px var(--shadow-deep),
+    0 0 0 1px #4caf6a,
+    0 0 26px rgba(76, 175, 106, 0.6) !important;
+}
+
+.hero-card--synergy-worst {
+  border-color: var(--danger);
+  box-shadow:
+    0 6px 16px var(--shadow-deep),
+    0 0 0 1px var(--danger),
+    0 0 20px rgba(200, 90, 74, 0.4);
+}
+
+.hero-card--synergy-worst:not(:disabled):hover,
+.hero-card--synergy-worst:not(:disabled):focus-visible {
+  border-color: var(--danger) !important;
+  box-shadow:
+    0 10px 24px var(--shadow-deep),
+    0 0 0 1px var(--danger),
+    0 0 26px rgba(200, 90, 74, 0.55) !important;
+}
+
 .hero-card .portrait {
   height: 137px;
   position: relative;

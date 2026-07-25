@@ -126,6 +126,7 @@ export default function DraftPage() {
                     onPick={(heroId) => void handlePick(heroId)}
                     disabled={loading}
                     pickedHeroNames={draft.heroes.map((h) => h.hero.name)}
+                    pickedHeroIds={draft.heroes.map((h) => h.heroId)}
                   />
                 </>
               )}

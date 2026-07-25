@@ -246,6 +246,38 @@ describe('Tempo Monster', () => {
   });
 });
 
+describe('Old Rivals (blessing half — same team)', () => {
+  it('does nothing with only Kunkka on the team', () => {
+    const kunkka = makeHero({ id: 1, name: 'Kunkka' });
+    const effects = blessingEffectsFor([kunkka], {});
+    expect(effects.heroAxisMultiplier.get(kunkka.id)).toBeUndefined();
+  });
+
+  it('debuffs both by 5% teamfight when Kunkka and Tidehunter are on the same team', () => {
+    const kunkka = makeHero({ id: 1, name: 'Kunkka' });
+    const tide = makeHero({ id: 2, name: 'Tidehunter' });
+    const effects = blessingEffectsFor([kunkka, tide], {});
+    expect(effects.heroAxisMultiplier.get(kunkka.id)?.teamfight).toBeCloseTo(0.95);
+    expect(effects.heroAxisMultiplier.get(tide.id)?.teamfight).toBeCloseTo(0.95);
+  });
+});
+
+describe('Reunion', () => {
+  it('does nothing with only Mirana on the team', () => {
+    const mirana = makeHero({ id: 1, name: 'Mirana' });
+    const effects = blessingEffectsFor([mirana], {});
+    expect(effects.heroAxisMultiplier.get(mirana.id)).toBeUndefined();
+  });
+
+  it('buffs both by 3% map control when Mirana and Muerta are on the same team', () => {
+    const mirana = makeHero({ id: 1, name: 'Mirana' });
+    const muerta = makeHero({ id: 2, name: 'Muerta' });
+    const effects = blessingEffectsFor([mirana, muerta], {});
+    expect(effects.heroAxisMultiplier.get(mirana.id)?.map_control).toBeCloseTo(1.03);
+    expect(effects.heroAxisMultiplier.get(muerta.id)?.map_control).toBeCloseTo(1.03);
+  });
+});
+
 describe('curseEffectsOnOpponent', () => {
   describe('Frosty', () => {
     it('does nothing with no Frosty heroes on the caster team', () => {
@@ -303,6 +335,36 @@ describe('curseEffectsOnOpponent', () => {
       });
       const effects = curseEffectsOnOpponent(caster, [strSupport]);
       expect(effects.heroPowerMultiplier.has(strSupport.id)).toBe(false);
+    });
+  });
+
+  describe('Old Rivals (curse half — opposite teams)', () => {
+    it('debuffs the enemy Tidehunter when the caster has Kunkka', () => {
+      const caster = [makeHero({ id: 1, name: 'Kunkka' })];
+      const tide = makeHero({ id: 2, name: 'Tidehunter' });
+      const effects = curseEffectsOnOpponent(caster, [tide]);
+      expect(effects.heroPowerMultiplier.get(tide.id)).toBeCloseTo(0.95);
+    });
+
+    it('debuffs the enemy Kunkka when the caster has Tidehunter (symmetric by name-set membership)', () => {
+      const caster = [makeHero({ id: 1, name: 'Tidehunter' })];
+      const kunkka = makeHero({ id: 2, name: 'Kunkka' });
+      const effects = curseEffectsOnOpponent(caster, [kunkka]);
+      expect(effects.heroPowerMultiplier.get(kunkka.id)).toBeCloseTo(0.95);
+    });
+
+    it('does nothing when neither rival is on the opponent side', () => {
+      const caster = [makeHero({ id: 1, name: 'Kunkka' })];
+      const sniper = makeHero({ id: 2, name: 'Sniper' });
+      const effects = curseEffectsOnOpponent(caster, [sniper]);
+      expect(effects.heroPowerMultiplier.size).toBe(0);
+    });
+
+    it('does nothing when neither rival is on the caster side', () => {
+      const caster = [makeHero({ id: 1, name: 'Sniper' })];
+      const tide = makeHero({ id: 2, name: 'Tidehunter' });
+      const effects = curseEffectsOnOpponent(caster, [tide]);
+      expect(effects.heroPowerMultiplier.size).toBe(0);
     });
   });
 });

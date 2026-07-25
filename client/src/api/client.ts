@@ -6,6 +6,8 @@ import type {
   EvaluationResult,
   CommitDraftResponse,
   BattleResultResponse,
+  SynergyPreviewRequest,
+  SynergyPreviewEntry,
 } from 'shared';
 import type { DraftStateView } from './types';
 
@@ -58,5 +60,11 @@ export const api = {
     request<BattleResultResponse>('/battle', {
       method: 'POST',
       body: JSON.stringify({ draftId, submitterToken }),
+    }),
+
+  getSynergyPreview: (pickedHeroIds: number[], candidateHeroIds: number[]) =>
+    request<SynergyPreviewEntry[]>('/heroes/synergy-preview', {
+      method: 'POST',
+      body: JSON.stringify({ pickedHeroIds, candidateHeroIds } satisfies SynergyPreviewRequest),
     }),
 };

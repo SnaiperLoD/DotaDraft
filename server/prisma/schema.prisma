@@ -31,6 +31,37 @@ model Draft {
   rerollsRemaining Int          @default(1)
   createdAt        DateTime     @default(now())
   heroes           DraftHero[]
+  // Most recent EvaluationResult for this draft (JSON-stringified), written
+  // by EvaluationService.evaluate() whenever it's computed — nullable, a
+  // draft only has one once Evaluate Draft has been clicked at least once
+  // (Blueprint/10-tech-debt-backlog.md, "Сохранять в истории результаты
+  // боёв"). Overwritten on each re-evaluate, not versioned — the history
+  // feature this backs wants "what does this draft evaluate as", not a
+  // point-in-time snapshot per past calibration.
+  evaluationResult String?
+  battleResults    BattleResult[]
+}
+
+// One row per Battle Mode fight against this draft — a draft can be fought
+// multiple times ("series of battles" in 06-battle-engine.md is still
+// unbuilt, but this 1:many shape means History doesn't need reshaping when
+// it lands). Written by BattleService.fight() after each resolveBattle()
+// call. Denormalized opponent fields (not a foreign key to PooledDraft)
+// because a 'player'-sourced opponent may itself later be purged/replaced
+// in the Opponent Pool — the battle record should stay meaningful on its
+// own regardless of what happens to the pool afterward.
+model BattleResult {
+  id                 Int      @id @default(autoincrement())
+  draftId            String
+  draft              Draft    @relation(fields: [draftId], references: [id])
+  resolvedOutcome    String
+  advantageDirection String
+  confidenceTier     String
+  opponentSource     String
+  opponentTeamName   String?
+  opponentLeagueName String?
+  opponentHeroIds    String
+  createdAt          DateTime @default(now())
 }
 
 model DraftHero {

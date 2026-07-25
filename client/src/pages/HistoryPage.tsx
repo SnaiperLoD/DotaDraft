@@ -49,6 +49,42 @@ export default function HistoryPage() {
                   </div>
                 ))}
             </div>
+
+            {entry.evaluation ? (
+              <div className="history-evaluation">
+                <span className="history-evaluation-score">Evaluation: {entry.evaluation.totalScore}/10</span>
+                <span className="history-evaluation-gameplan">{entry.evaluation.summary.gameplan}</span>
+              </div>
+            ) : (
+              <p className="history-evaluation-empty">Not evaluated.</p>
+            )}
+
+            {entry.battles.length > 0 && (
+              <details className="history-battles">
+                <summary>
+                  {entry.battles.length} {entry.battles.length === 1 ? 'battle' : 'battles'}
+                </summary>
+                <ul>
+                  {entry.battles.map((b) => (
+                    <li key={b.id} className={`history-battle-row history-battle-${b.resolvedOutcome.toLowerCase()}`}>
+                      <span className="history-battle-outcome">
+                        {b.resolvedOutcome === 'Win' ? 'Victory' : 'Defeat'}
+                      </span>
+                      <span className="history-battle-confidence">{b.confidenceTier} confidence</span>
+                      <span className="history-battle-opponent">
+                        vs.{' '}
+                        {b.opponentTeamName
+                          ? `${b.opponentTeamName}${b.opponentLeagueName ? ` (${b.opponentLeagueName})` : ''}`
+                          : b.opponentSource === 'pro'
+                            ? 'a professional draft'
+                            : 'another player'}
+                      </span>
+                      <span className="history-battle-date">{new Date(b.createdAt).toLocaleString()}</span>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            )}
           </div>
         ))}
       </div>

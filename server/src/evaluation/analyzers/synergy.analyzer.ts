@@ -82,9 +82,23 @@ function findPair(heroes: Hero[], tagA: string, tagB: string): [Hero, Hero] | nu
 // Real co-pick win rate minus the expected rate (average of each hero's own
 // individual win rate) — positive means the pair overperforms what you'd
 // predict from their solo strength alone, negative means it underperforms.
-// Null when either side of the comparison lacks enough real data.
-function realSynergyDelta(heroA: Hero, heroB: Hero, lookup: SynergyLookup): number | null {
-  const actual = lookup.getSynergyWinRate(heroA.id, heroB.id);
+// Null when either side of the comparison lacks enough real data. Exported
+// for reuse by the live synergy-preview endpoint (HeroController,
+// Blueprint/10-tech-debt-backlog.md "Живая подсветка синергичного пика") —
+// same real-data formula, not a second hand-rolled copy of it.
+//
+// Checks both call directions on the lookup — hero-meta.json's per-hero
+// `synergy` arrays are NOT symmetric (each hero's own list is whatever
+// OpenDota returned for that specific hero query; Sven having a Lich entry
+// doesn't guarantee Lich's own array lists Sven back). The underlying real
+// games are the same regardless of which hero was queried, so falling back
+// to the reverse direction when the forward one is missing is a genuine
+// fix, not a new signal — found while building the synergy-preview
+// endpoint, which hits this gap far more often than the 5-drafted-heroes
+// case this function was originally written for (many more possible pairs
+// once any of 127 pool candidates count, not just 10 pairs among 5 picks).
+export function realSynergyDelta(heroA: Hero, heroB: Hero, lookup: SynergyLookup): number | null {
+  const actual = lookup.getSynergyWinRate(heroA.id, heroB.id) ?? lookup.getSynergyWinRate(heroB.id, heroA.id);
   if (actual === null) return null;
   const winRateA = lookup.getWinRate(heroA.id);
   const winRateB = lookup.getWinRate(heroB.id);

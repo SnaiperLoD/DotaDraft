@@ -104,6 +104,19 @@ export default function BattlePanel({ draftId, heroes }: Props) {
               : result.opponent.source === 'pro'
                 ? 'a professional draft'
                 : 'another player'}
+            {result.opponent.matchId && (
+              <>
+                {' '}
+                <a
+                  className="battle-match-link"
+                  href={`https://www.opendota.com/matches/${result.opponent.matchId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  (view match on OpenDota →)
+                </a>
+              </>
+            )}
           </p>
 
           <FaceOff myHeroes={heroes} opponentHeroes={result.opponent.heroes} />

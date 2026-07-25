@@ -14,6 +14,12 @@ export interface PooledDraftSummary {
   heroRoles: PooledHeroRole[] | null;
   teamName: string | null;
   leagueName: string | null;
+  // OpenDota matchId for 'pro' rows (derived from the deterministic
+  // `pro-${matchId}` id scheme, see seed-opponent-pool.ts — no separate
+  // column needed). Always null for 'player' rows (no real match backs
+  // them). See Blueprint/10-tech-debt-backlog.md, "Ссылка на исходный матч
+  // для про-пиков".
+  matchId: string | null;
 }
 
 export interface CommitDraftRequest {

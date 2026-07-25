@@ -1,5 +1,7 @@
-/* Rarity palette — common/rare/epic/legendary -> green/blue/purple/orange,
-   per spec. Distinct from the role-tint system (heroRoleColor.ts) and from
+/* Rarity palette — common/uncommon/rare/epic/legendary ->
+   green/teal/blue/purple/orange, per spec (Dota's own item rarity scale —
+   uncommon is a distinct tier between common and rare, not a synonym for
+   either). Distinct from the role-tint system (heroRoleColor.ts) and from
    the page's bronze/gold accent, so a tag reads as "a different kind of
    information" at a glance. Same hex pair in both themes (dark ground vs
    light ground both have enough contrast against these) — only the fill
@@ -49,6 +51,11 @@
 .hero-tag-badge.rarity-common {
   border-color: #4caf6a;
   box-shadow: 0 0 6px rgba(76, 175, 106, 0.35);
+}
+
+.hero-tag-badge.rarity-uncommon {
+  border-color: #2fb6ad;
+  box-shadow: 0 0 6px rgba(47, 182, 173, 0.4);
 }
 
 .hero-tag-badge.rarity-rare {

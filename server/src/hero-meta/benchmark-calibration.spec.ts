@@ -1,5 +1,6 @@
 import {
   percentileRankScale,
+  percentileRankScaleByGroup,
   medianBenchmarkValue,
   zScoreExtremityScale,
   weightedBlend,
@@ -32,6 +33,35 @@ describe('percentileRankScale', () => {
 
   it('returns all nulls when no values are present', () => {
     expect(percentileRankScale([null, null])).toEqual([null, null]);
+  });
+});
+
+describe('percentileRankScaleByGroup', () => {
+  it('ranks each value only against others sharing its group, not the whole population', () => {
+    // Two groups: [10, 20, 30] and [1, 2, 3] — the second group's values
+    // would all score near 0 under a population-wide rank, but within their
+    // own group they span the full 0-10 range same as the first group.
+    const values = [10, 20, 30, 1, 2, 3];
+    const groups = ['A', 'A', 'A', 'B', 'B', 'B'];
+    const result = percentileRankScaleByGroup(values, groups);
+    expect(result).toEqual([0, 5, 10, 0, 5, 10]);
+  });
+
+  it('buckets null-group entries together rather than against the whole population', () => {
+    const values = [10, 20, 30, 100, 200];
+    const groups = ['A', 'A', 'A', null, null];
+    const result = percentileRankScaleByGroup(values, groups);
+    expect(result[3]).toBe(0); // 100 is the lower of the two null-group entries
+    expect(result[4]).toBe(10); // 200 is the higher
+  });
+
+  it('passes through null values without affecting other ranks in the same group', () => {
+    const values = [10, null, 30];
+    const groups = ['A', 'A', 'A'];
+    const result = percentileRankScaleByGroup(values, groups);
+    expect(result[1]).toBeNull();
+    expect(result[0]).toBe(0);
+    expect(result[2]).toBe(10);
   });
 });
 

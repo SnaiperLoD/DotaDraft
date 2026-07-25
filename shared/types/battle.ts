@@ -14,6 +14,9 @@ export interface BattleOpponent {
   heroes: BattleOpponentHero[];
   teamName: string | null;
   leagueName: string | null;
+  // OpenDota matchId, present only for 'pro' opponents. See
+  // Blueprint/10-tech-debt-backlog.md, "Ссылка на исходный матч для про-пиков".
+  matchId: string | null;
 }
 
 export interface BattleRequest {

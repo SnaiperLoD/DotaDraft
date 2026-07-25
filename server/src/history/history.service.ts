@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { HeroService } from '../hero/hero.service';
-import type { HistoryEntry } from 'shared';
+import type { HistoryEntry, EvaluationResult } from 'shared';
 
 @Injectable()
 export class HistoryService {
@@ -13,7 +13,7 @@ export class HistoryService {
   async findAll(): Promise<HistoryEntry[]> {
     const drafts = await this.prisma.draft.findMany({
       where: { status: 'COMPLETED' },
-      include: { heroes: true },
+      include: { heroes: true, battleResults: { orderBy: { createdAt: 'desc' } } },
       orderBy: { createdAt: 'desc' },
     });
 
@@ -32,6 +32,20 @@ export class HistoryService {
           assignedRole: dh.assignedRole,
           pickOrder: dh.pickOrder,
         })),
+      // Stored as a full JSON snapshot (see EvaluationService.evaluate()) —
+      // parsed here rather than re-run through the live calibration, so
+      // History shows what the draft evaluated as, not a fresh recompute.
+      evaluation: draft.evaluationResult ? (JSON.parse(draft.evaluationResult) as EvaluationResult) : null,
+      battles: draft.battleResults.map((b) => ({
+        id: b.id,
+        resolvedOutcome: b.resolvedOutcome,
+        advantageDirection: b.advantageDirection,
+        confidenceTier: b.confidenceTier,
+        opponentSource: b.opponentSource,
+        opponentTeamName: b.opponentTeamName,
+        opponentLeagueName: b.opponentLeagueName,
+        createdAt: b.createdAt.toISOString(),
+      })),
     }));
   }
 }

@@ -25623,8 +25623,8 @@
         ],
         "iconUrl": "/ability-icons/batrider_firefly.png",
         "categoryScores": {
-          "mobility": 6,
-          "initiating": 6
+          "mobility": 5,
+          "initiating": 4
         }
       },
       {
@@ -34000,8 +34000,8 @@
         ],
         "iconUrl": "/ability-icons/treant_eyes_in_the_forest.png",
         "categoryScores": {
-          "mobility": 7,
-          "initiating": 5
+          "mobility": 6,
+          "initiating": 3
         }
       },
       {
@@ -34065,8 +34065,8 @@
         ],
         "iconUrl": "/ability-icons/treant_natures_guise.png",
         "categoryScores": {
-          "mobility": 7,
-          "initiating": 7
+          "mobility": 6,
+          "initiating": 5
         }
       },
       {

@@ -5,3 +5,4 @@ export * from './types/opponent-pool';
 export * from './types/battle';
 export * from './constants/roles';
 export * from './utils/heroPosition';
+export * from './customTags';

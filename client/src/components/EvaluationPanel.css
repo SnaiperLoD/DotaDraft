@@ -3,7 +3,11 @@
 }
 
 .evaluation-title {
-  font-size: 18px;
+  font-size: 19px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px 10px;
 }
 
 .evaluation-title em {
@@ -11,9 +15,30 @@
   color: var(--gold);
 }
 
+.star-rating {
+  position: relative;
+  display: inline-block;
+  font-size: 16px;
+  line-height: 1;
+  letter-spacing: 2px;
+}
+
+.star-rating-bg {
+  color: var(--bronze-dim);
+}
+
+.star-rating-fg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  color: var(--gold-bright);
+}
+
 .evaluation-gameplan {
-  font-size: 13px;
-  line-height: 1.6;
+  font-size: 14px;
+  line-height: 1.65;
   color: var(--ink);
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--bronze-dim);
@@ -52,18 +77,19 @@
 }
 
 .evaluation-summary-col li {
-  font-size: 13px;
+  font-size: 14px;
+  line-height: 1.5;
   color: var(--ink-muted);
 }
 
 .evaluation-breakdown {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .evaluation-item {
-  padding: 12px 16px;
+  padding: 14px 18px;
 }
 
 .evaluation-item-header {
@@ -122,6 +148,21 @@
 }
 
 .evaluation-item li {
-  font-size: 13px;
+  font-size: 14.5px;
+  line-height: 1.55;
   color: var(--ink-muted);
+}
+
+.evaluation-match-link {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--gold-bright);
+  text-decoration: none;
+}
+
+.evaluation-match-link:hover {
+  text-decoration: underline;
 }
