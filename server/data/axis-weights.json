@@ -27,8 +27,8 @@
     "late": {
       "map_control": 0,
       "scaling": 2.2,
-      "durability": 0.46,
-      "objectives": 0.42,
+      "durability": 1.685,
+      "objectives": 1.538,
       "saving": 1.35,
       "teamfight": 0.36,
       "burst": 0.26,
@@ -49,5 +49,13 @@
     "3": 0.05,
     "4": 0.15,
     "5": 0.3
+  },
+  "utilityStackThreshold": 7,
+  "utilityStackFreeCount": 2,
+  "utilityStackPenalty": {
+    "3": 0.08,
+    "4": 0.18,
+    "5": 0.3,
+    "6": 0.45
   }
 }

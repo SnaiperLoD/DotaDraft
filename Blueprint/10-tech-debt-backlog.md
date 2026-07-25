@@ -799,6 +799,52 @@ Client (`client` workspace) тестами не покрыт вообще — т
 
 Проверено сквозно на реальных данных: полный цикл через прямые вызовы API (draft→pick×5→roles→evaluate→battle×2→history) — `evaluation.totalScore` сохранился (5.6/10), **2 отдельных `BattleResult`** записались и вернулись в правильном порядке (последний бой первым). Живая проверка в браузере: `/history` показывает новую запись с Evaluation-строкой, гейм-планом и раскрывающимся "2 BATTLES" — клик разворачивает оба боя с полными деталями (Team Spirit/Aurora Gaming, DreamLeague Season 29, верные confidence tier и timestamps). Старые записи (без `evaluationResult`) корректно показывают "Not evaluated." без ошибок. `tsc`/`eslint` (оба воркспейса) чисты, `npx jest` 169/169, консоль браузера без ошибок.
 
+### Дисперсия: late-phase durability/objectives восстановлены, добавлен utility-stacking diminishing-returns (2026-07-26)
+
+Продолжение "Поворотного момента" — та же мультиколлинеарность "боевого"/"utility" спектров осей, следующая итерация точечных находок вместо очередного глобального переweighting.
+
+**Phantom Lancer (приоритет 1 прошлой сессии) — частично решён.** Диагноз подтверждён: `durability`(7.3)/`objectives`(9.0)/`burst`(7.4)/`scaling`(9.2) все высокие у PL, но именно эти оси задисконтированы в late-фазе (~0.22-0.46), а его слабые оси (`tempo`/`skirmish_rate`/`camp_stacking`/`saving`) весят 1.0-1.3. Свип трёх вариантов restore `late.durability`/`late.objectives` (по аналогии с уже восстановленной `late.scaling=2.2`):
+
+| Вариант | late.durability | late.objectives | r | флагнуто | PL |
+|---|---|---|---|---|---|
+| Было (0.46/0.42) | — | — | 0.345-0.348 | 38-40 | −24пп |
+| Половинный откат | 1.07 | 0.98 | 0.343 | 39 | −22.3пп |
+| **Полный откат (принято)** | **1.685** | **1.538** | 0.33 | 45→43* | **−20…−22пп** |
+
+*45 сразу после применения, 43 после добавления utility-stacking ниже. Полный откат (значения — те, что были ДО многоразового дисконта этой мультиколлинеарности, т.е. 0.46/0.273 и 0.42/0.273) дал лучшее движение по PL и по всему overperform-кластеру одновременно (Treant/Batrider/KotL/Nyx — у них те же оси структурно низкие, поэтому усиление веса тянет их низкие значения вниз, а PL высокие — вверх), ценой нового хвоста underperform-саппортов (см. ниже). `npx jest` 169/169, `tsc` чист после применения.
+
+**Новый хвост от полного отката — дискаунтированные caster-саппорты.** Silencer/Lich/Skywrath Mage/Disruptor/Dark Willow/Ancient Apparition/Jakiro/Crystal Maiden/Ringmaster/Shadow Shaman — у всех `durability`/`objectives` около нуля (0.1-2.2, структурно верно, саппорт не танк) и это же теперь весит намного больше в late-фазе. Три вопроса пользователя по фиксу этой группы:
+
+- **Q1: новая ось из OpenDota данных, баффающая саппортов — не годится.** Зафетчен `assists_per_min` (Explorer, `server/scripts/fetch-support-signal-data.ts`, 126/127 героев, `server/data/support-signal-data.json`). Реальный сигнал (r с winRate=0.288), но **r(assists, map_control)=0.596** — избыточен с уже имеющейся осью, и не различает underperform-кластер (Silencer 0.44-0.49) от overperform-кластера (Treant/Chen/Io 0.35-0.46) — почти одинаковые значения у обеих групп. Не подключать.
+- **Q2: включить обратно уже отключённую `map_control` (была 0.6, отключена прошлой сессией из-за непроверенного `vision_ability_tier`) — работает, но не бесплатно.** Тест `map_control: 0→0.6` поверх полного отката PL: r 0.330→0.353 (новый максимум сессии), флагнутых 45→44, целевые саппорты заметно улучшаются (Silencer −25→−21, Skywrath −22→−19, Disruptor −20→−17, Shadow Shaman выходит из списка), но PL частично откатывается (−20.6→−22.5) и pro-match hit-rate чуть проседает (68.1%→67.0%). Не применено — компромисс отклонён в пользу пункта ниже.
+- **Q3: кластеризация — нашёлся не "support-спектр", а тот же "utility-спектр", что уже виноват в overperform.** `saving` слабо коррелирует со всем (независимый сигнал), но `control↔initiating` (r=0.556) и `map_control↔skirmish_rate/initiating/mobility` (r=0.35-0.39) — коллинеарный кластер, тот же самый, что делает Treant/Batrider/KotL/Nyx/Chen/Io переоценёнными. Поднять его весом = одновременно немного полечить Silencer-кластер и подрастить уже больной overperform-кластер — тот же компромисс, что в Q2, не независимый рычаг.
+
+**Принято решение: спроектировать diminishing-returns механизм (a не веса) — новый модуль `common/utility-stacking.ts`.** Корень: `control`/`initiating`/`mobility`/`saving`/`skirmish_rate`/`map_control` (6 "utility"-осей) взаимно коррелируют (r=0.27-0.56 попарно) — герой, максящий несколько одновременно (Treant/Batrider/KotL/Nyx/Chen/Io), считается так, будто каждая ось — независимый источник силы, а реальный winRate так не растёт после ~2-3 одновременно высоких осей (см. `12-next-session-priorities.md`, пункт 2 прошлой сессии).
+
+Механика: `utilityStackBreadth(hero)` считает, сколько из 6 utility-осей ≥ `utilityStackThreshold`(7) у героя; при breadth > `utilityStackFreeCount`(2) — дисконт `utilityStackPenalty` (по breadth: 3→8%, 4→18%, 5→30%, 6→45%, `axis-weights.json`) применяется к каждой из 6 utility-осей ЭТОГО героя (не команды — в отличие от hard-carry, это свойство кита конкретного героя, не композиции команды). Battle Engine: per-hero `heroAxisMultiplier` (не team-wide `axisMultiplier`, как у hard-carry) в `assessBattle()`. Evaluation Engine: применяется внутри `createAxisAnalyzer` на уровне отдельного пика (`axis.analyzer.ts`), с новой explanation-строкой ("stacks several overlapping utility strengths at once — discounted rather than counted at full value").
+
+**Результат (self-play + pro-match, поверх полного отката PL, БЕЗ map_control):**
+
+| Метрика | До utility-stacking | После |
+|---|---|---|
+| favoredRate↔realWinRate r | 0.33 | 0.31-0.32 (стабильно на 3 прогонах) |
+| Флагнуто (≥10пп) | 45 | 43 |
+| Treant Protector | +24.8пп | **+18.8…19.6пп** |
+| Nyx Assassin | +16-19пп | **+9.5…11.4пп** (у порога/ниже) |
+| Io | ~+12пп | **+1.5…5.5пп** (практически решено) |
+| Chen | ~+14-17пп | **+11.9…12.2пп** |
+| Batrider | +17-18пп | **+14.3…14.6пп** |
+| Keeper of the Light | +19-20пп | **17.7…18.7пп** |
+| Phantom Lancer | −20.6пп | **−19.6…−19.9пп** (не пострадал, чуть лучше) |
+| Pro-match hit-rate | 68.1% | 67.4% (в пределах шума) |
+| Tier-стратификация (delta от target) | Low +22-26пп, Moderate −4-5пп, High −13-15пп | **Low +11.5пп, Moderate +1.0пп, High −8.3пп** — заметно туже по всем трём тирам |
+
+Проверено: комбинация utility-stacking + `map_control=0.6` протестирована и **отклонена** — интеракция хуже обоих механизмов по отдельности (флагнуто 49, PL снова просел до −23.3пп) — не аддитивный выигрыш, а взаимное наложение штрафов. Финальная зафиксированная конфигурация — только utility-stacking, `map_control` остаётся 0.
+
+**Не решено этой сессией**: дискаунтированный caster-саппорт кластер (Silencer/Lich/Skywrath/Disruptor/Dark Willow/AA/Jakiro/CM/Ringmaster/Shadow Shaman, −17…−24пп) остаётся флагнутым — utility-stacking не помогает ему напрямую (эти герои не стекуют utility-оси сами, их проблема — ноль на `durability`/`objectives`, которые теперь весят больше). `map_control` include — единственный найденный рычаг, но с задокументированной ценой (PL, hit-rate). Кандидат на будущее: что-то более точечное для именно этой группы, не веса и не diminishing-returns (оба уже испробованы и дали компромисс, не чистое решение).
+
+`npx jest` 169/169, `tsc` (оба воркспейса) чисты, живая проверка через прямой вызов `createAxisAnalyzer` (Treant Protector + Anti-Mage синтетический пик) подтвердила корректный дисконт и explanation-строку на всех 4 utility-осях.
+
 ### Хайлайт топ-контрибьюторов по оси в анализе драфта
 
 Сейчас Evaluation/Battle breakdown называет героев-контрибьюторов текстом ("Strongest contributors: X, Y") — предложение: выводить это отдельным визуальным хайлайтом в UI. Пример: если герой — сильнейший контрибьютер драфта в `control`, показать его иконку крупным блоком, а под ней — иконки конкретных его способностей, которые больше всего вносят в `control_strength`-тег (данные уже есть: `hero-abilities.json`'s `categoryScores` по способности, `abilityIconUrl()` в `client/src/utils/abilityIcon.ts` уже скачивает иконки способностей, см. `10-tech-debt-backlog.md`, "`hero-abilities.json` — разметка выполнена"). Пример из обсуждения: Invoker как сильнейший control-контрибьютер команды — его иконка + иконки Tornado/Ghost Walk/Cold Snap (его самых весомых control_strength-тегов) под ней. Не начато — нужно решить, где именно в UI это показывать (Evaluation panel? Draft summary?) и как агрегировать "топ-N способностей по вкладу" из уже существующих per-ability тегов.

@@ -3,6 +3,7 @@ import * as path from 'path';
 import type { Hero, HeroEvaluationValues } from 'shared';
 import { roleFitValue } from '../common/role-fit';
 import { hardCarryAxisMultipliers, isHardCarry } from '../common/hard-carry';
+import { utilityStackAxisMultipliers } from '../common/utility-stacking';
 import {
   type CustomTagEffects,
   blessingEffectsFor,
@@ -439,6 +440,20 @@ export interface BattleAssessment {
   axisDeltas: { axis: keyof HeroEvaluationValues; delta: number }[];
 }
 
+// Per-hero (not per-team, unlike hardCarryAxisMultipliers) — utility-axis
+// stacking is a property of each hero's own kit, so every hero on the team
+// is checked independently against their own evaluation_values.
+function utilityStackHeroAxisMultipliers(
+  heroes: Hero[],
+): Map<number, Partial<Record<keyof HeroEvaluationValues, number>>> {
+  const map = new Map<number, Partial<Record<keyof HeroEvaluationValues, number>>>();
+  for (const hero of heroes) {
+    const multipliers = utilityStackAxisMultipliers(hero);
+    if (Object.keys(multipliers).length > 0) map.set(hero.id, multipliers);
+  }
+  return map;
+}
+
 // Deterministic half of resolveBattle — everything computed before the
 // random win/lose draw. Exported so calibration scripts (e.g.
 // calibrate-battle-engine.ts, simulate-self-play.ts) can grade the model's
@@ -488,11 +503,13 @@ export function assessBattle(
     blessingEffectsFor(heroesA, rawAxisAveragesA),
     curseEffectsOnOpponent(heroesB, heroesA),
     { ...emptyTagEffects(), axisMultiplier: hardCarryAxisMultipliers(heroesA) },
+    { ...emptyTagEffects(), heroAxisMultiplier: utilityStackHeroAxisMultipliers(heroesA) },
   );
   const tagEffectsB = mergeTagEffects(
     blessingEffectsFor(heroesB, rawAxisAveragesB),
     curseEffectsOnOpponent(heroesA, heroesB),
     { ...emptyTagEffects(), axisMultiplier: hardCarryAxisMultipliers(heroesB) },
+    { ...emptyTagEffects(), heroAxisMultiplier: utilityStackHeroAxisMultipliers(heroesB) },
   );
   const taggedPowerA = blendedOverallPower(teamA, tagEffectsA);
   const taggedPowerB = blendedOverallPower(teamB, tagEffectsB);

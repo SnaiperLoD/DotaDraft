@@ -4,6 +4,7 @@ import { AXIS_NARRATIVE, percentileBracket, type NarrativeContext } from '../sco
 import { percentileFor } from '../axis-percentiles';
 import { roleFitValue } from '../../common/role-fit';
 import { hardCarryPenalty, hardCarryAxisMultipliers, isHardCarry } from '../../common/hard-carry';
+import { utilityStackAxisMultipliers } from '../../common/utility-stacking';
 
 type AxisKey = keyof HeroEvaluationValues;
 
@@ -18,8 +19,22 @@ export function createAxisAnalyzer(key: AxisKey, label: string): Analyzer {
 
       const values = picks.map((p) => {
         const raw = p.hero.evaluation_values[key];
-        const value = roleFitValue(key, p.assignedRole, raw);
-        return { hero: p.hero, value, assignedRole: p.assignedRole, boosted: value > raw };
+        const roleFitAdjusted = roleFitValue(key, p.assignedRole, raw);
+        // Same utility-stacking discount as Battle Engine's overallPower
+        // (common/utility-stacking.ts) — per-hero, not per-team like
+        // hard-carry below, since it's a property of each hero's own kit
+        // (control/initiating/mobility/saving/skirmish_rate/map_control
+        // all high at once). Returns 1 for every axis outside that set, so
+        // this is a no-op for the other 7 axes.
+        const utilityMult = utilityStackAxisMultipliers(p.hero)[key] ?? 1;
+        const value = Math.round(roleFitAdjusted * utilityMult * 10) / 10;
+        return {
+          hero: p.hero,
+          value,
+          assignedRole: p.assignedRole,
+          boosted: roleFitAdjusted > raw,
+          utilityDiscounted: utilityMult < 1,
+        };
       });
       const average = values.reduce((sum, v) => sum + v.value, 0) / values.length;
 
@@ -69,6 +84,15 @@ export function createAxisAnalyzer(key: AxisKey, label: string): Analyzer {
           key === 'scaling'
             ? `This draft stacks ${hardCarryCount} hard-carry (Carry/Mid-dominant) heroes — built for a long game, so a ${Math.round((multiplier - 1) * 100)}% boost is applied here instead of the usual stacking penalty.`
             : `This draft stacks ${hardCarryCount} hard-carry (Carry/Mid-dominant) heroes, diluting focus — a ${Math.round(penalty * 100)}% penalty is applied here.`,
+        );
+      }
+
+      const utilityDiscounted = values.filter((v) => v.utilityDiscounted);
+      if (utilityDiscounted.length > 0) {
+        explanation.push(
+          `${utilityDiscounted.map((v) => v.hero.name).join(', ')} ` +
+            `${utilityDiscounted.length === 1 ? 'stacks' : 'stack'} several overlapping utility strengths at once — ` +
+            `${utilityDiscounted.length === 1 ? 'its' : 'their'} contribution here is discounted rather than counted at full value.`,
         );
       }
 

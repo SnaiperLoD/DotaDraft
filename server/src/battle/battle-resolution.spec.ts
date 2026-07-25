@@ -65,8 +65,15 @@ describe('resolveBattle', () => {
   // underdog's power up ~50% via the Non-Linearity Rule) — used only by the
   // matchup/synergy-citation test, which needs both real data AND a survived
   // A-favored, non-High tier to exercise the upset-citation branch.
+  //
+  // Same two utility axes as moderateEdgeTeam, maxed instead of 7 (not a
+  // 3rd utility axis, as this used to add — common/utility-stacking.ts,
+  // Blueprint/10-tech-debt-backlog.md "Поворотный момент", discounts any
+  // hero with 3+ of control/initiating/mobility/saving/skirmish_rate/
+  // map_control at/above 7). tempo tops up the edge instead — it's outside
+  // that discounted set, so it adds margin without tripping the penalty.
   function strongerEdgeTeam(startId = 1): BattlePick[] {
-    return team(5, { control: 9, initiating: 9, mobility: 9 }, startId);
+    return team(5, { control: 10, initiating: 10, tempo: 9 }, startId);
   }
 
   it('favors the objectively stronger team and resolves Win when the random draw favors them', () => {
