@@ -1,0 +1,4423 @@
+{
+  "summaries": [
+    {
+      "heroId": 1,
+      "name": "Anti-Mage",
+      "games": 156,
+      "avgGoldAt10": 3894,
+      "avgEarlyRank": 2.045
+    },
+    {
+      "heroId": 2,
+      "name": "Axe",
+      "games": 855,
+      "avgGoldAt10": 4035,
+      "avgEarlyRank": 2.054
+    },
+    {
+      "heroId": 3,
+      "name": "Bane",
+      "games": 437,
+      "avgGoldAt10": 1884,
+      "avgEarlyRank": 4.522
+    },
+    {
+      "heroId": 4,
+      "name": "Bloodseeker",
+      "games": 42,
+      "avgGoldAt10": 3926,
+      "avgEarlyRank": 1.952
+    },
+    {
+      "heroId": 5,
+      "name": "Crystal Maiden",
+      "games": 381,
+      "avgGoldAt10": 1752,
+      "avgEarlyRank": 4.57
+    },
+    {
+      "heroId": 6,
+      "name": "Drow Ranger",
+      "games": 581,
+      "avgGoldAt10": 4026,
+      "avgEarlyRank": 1.854
+    },
+    {
+      "heroId": 7,
+      "name": "Earthshaker",
+      "games": 107,
+      "avgGoldAt10": 3390,
+      "avgEarlyRank": 2.664
+    },
+    {
+      "heroId": 8,
+      "name": "Juggernaut",
+      "games": 233,
+      "avgGoldAt10": 3806,
+      "avgEarlyRank": 2.064
+    },
+    {
+      "heroId": 9,
+      "name": "Mirana",
+      "games": 166,
+      "avgGoldAt10": 2402,
+      "avgEarlyRank": 3.849
+    },
+    {
+      "heroId": 10,
+      "name": "Morphling",
+      "games": 128,
+      "avgGoldAt10": 3749,
+      "avgEarlyRank": 2.164
+    },
+    {
+      "heroId": 11,
+      "name": "Shadow Fiend",
+      "games": 1282,
+      "avgGoldAt10": 4615,
+      "avgEarlyRank": 1.472
+    },
+    {
+      "heroId": 12,
+      "name": "Phantom Lancer",
+      "games": 232,
+      "avgGoldAt10": 3768,
+      "avgEarlyRank": 2.065
+    },
+    {
+      "heroId": 13,
+      "name": "Puck",
+      "games": 669,
+      "avgGoldAt10": 3842,
+      "avgEarlyRank": 1.954
+    },
+    {
+      "heroId": 14,
+      "name": "Pudge",
+      "games": 579,
+      "avgGoldAt10": 2791,
+      "avgEarlyRank": 3.416
+    },
+    {
+      "heroId": 15,
+      "name": "Razor",
+      "games": 303,
+      "avgGoldAt10": 3894,
+      "avgEarlyRank": 2.056
+    },
+    {
+      "heroId": 16,
+      "name": "Sand King",
+      "games": 288,
+      "avgGoldAt10": 3913,
+      "avgEarlyRank": 1.899
+    },
+    {
+      "heroId": 17,
+      "name": "Storm Spirit",
+      "games": 827,
+      "avgGoldAt10": 4040,
+      "avgEarlyRank": 1.809
+    },
+    {
+      "heroId": 18,
+      "name": "Sven",
+      "games": 197,
+      "avgGoldAt10": 4018,
+      "avgEarlyRank": 2.046
+    },
+    {
+      "heroId": 19,
+      "name": "Tiny",
+      "games": 1111,
+      "avgGoldAt10": 3775,
+      "avgEarlyRank": 2.117
+    },
+    {
+      "heroId": 20,
+      "name": "Vengeful Spirit",
+      "games": 277,
+      "avgGoldAt10": 2192,
+      "avgEarlyRank": 3.986
+    },
+    {
+      "heroId": 21,
+      "name": "Windranger",
+      "games": 819,
+      "avgGoldAt10": 3177,
+      "avgEarlyRank": 2.927
+    },
+    {
+      "heroId": 22,
+      "name": "Zeus",
+      "games": 575,
+      "avgGoldAt10": 2519,
+      "avgEarlyRank": 3.683
+    },
+    {
+      "heroId": 23,
+      "name": "Kunkka",
+      "games": 387,
+      "avgGoldAt10": 4231,
+      "avgEarlyRank": 1.752
+    },
+    {
+      "heroId": 25,
+      "name": "Lina",
+      "games": 513,
+      "avgGoldAt10": 4311,
+      "avgEarlyRank": 1.75
+    },
+    {
+      "heroId": 26,
+      "name": "Lion",
+      "games": 1219,
+      "avgGoldAt10": 1775,
+      "avgEarlyRank": 4.514
+    },
+    {
+      "heroId": 27,
+      "name": "Shadow Shaman",
+      "games": 485,
+      "avgGoldAt10": 1735,
+      "avgEarlyRank": 4.546
+    },
+    {
+      "heroId": 28,
+      "name": "Slardar",
+      "games": 837,
+      "avgGoldAt10": 3583,
+      "avgEarlyRank": 2.374
+    },
+    {
+      "heroId": 29,
+      "name": "Tidehunter",
+      "games": 988,
+      "avgGoldAt10": 3737,
+      "avgEarlyRank": 2.312
+    },
+    {
+      "heroId": 30,
+      "name": "Witch Doctor",
+      "games": 283,
+      "avgGoldAt10": 1844,
+      "avgEarlyRank": 4.484
+    },
+    {
+      "heroId": 31,
+      "name": "Lich",
+      "games": 813,
+      "avgGoldAt10": 1781,
+      "avgEarlyRank": 4.563
+    },
+    {
+      "heroId": 32,
+      "name": "Riki",
+      "games": 65,
+      "avgGoldAt10": 3605,
+      "avgEarlyRank": 2.138
+    },
+    {
+      "heroId": 33,
+      "name": "Enigma",
+      "games": 125,
+      "avgGoldAt10": 3678,
+      "avgEarlyRank": 2.512
+    },
+    {
+      "heroId": 34,
+      "name": "Tinker",
+      "games": 108,
+      "avgGoldAt10": 3962,
+      "avgEarlyRank": 1.907
+    },
+    {
+      "heroId": 35,
+      "name": "Sniper",
+      "games": 467,
+      "avgGoldAt10": 4290,
+      "avgEarlyRank": 1.741
+    },
+    {
+      "heroId": 36,
+      "name": "Necrophos",
+      "games": 482,
+      "avgGoldAt10": 4280,
+      "avgEarlyRank": 1.627
+    },
+    {
+      "heroId": 37,
+      "name": "Warlock",
+      "games": 436,
+      "avgGoldAt10": 1851,
+      "avgEarlyRank": 4.472
+    },
+    {
+      "heroId": 38,
+      "name": "Beastmaster",
+      "games": 713,
+      "avgGoldAt10": 4050,
+      "avgEarlyRank": 1.927
+    },
+    {
+      "heroId": 39,
+      "name": "Queen of Pain",
+      "games": 883,
+      "avgGoldAt10": 3947,
+      "avgEarlyRank": 1.892
+    },
+    {
+      "heroId": 40,
+      "name": "Venomancer",
+      "games": 414,
+      "avgGoldAt10": 2224,
+      "avgEarlyRank": 4.232
+    },
+    {
+      "heroId": 41,
+      "name": "Faceless Void",
+      "games": 415,
+      "avgGoldAt10": 3535,
+      "avgEarlyRank": 2.328
+    },
+    {
+      "heroId": 42,
+      "name": "Wraith King",
+      "games": 206,
+      "avgGoldAt10": 3818,
+      "avgEarlyRank": 2.189
+    },
+    {
+      "heroId": 43,
+      "name": "Death Prophet",
+      "games": 231,
+      "avgGoldAt10": 3971,
+      "avgEarlyRank": 1.909
+    },
+    {
+      "heroId": 44,
+      "name": "Phantom Assassin",
+      "games": 142,
+      "avgGoldAt10": 3696,
+      "avgEarlyRank": 2.275
+    },
+    {
+      "heroId": 45,
+      "name": "Pugna",
+      "games": 71,
+      "avgGoldAt10": 2149,
+      "avgEarlyRank": 4.141
+    },
+    {
+      "heroId": 46,
+      "name": "Templar Assassin",
+      "games": 353,
+      "avgGoldAt10": 3986,
+      "avgEarlyRank": 2.028
+    },
+    {
+      "heroId": 47,
+      "name": "Viper",
+      "games": 419,
+      "avgGoldAt10": 3932,
+      "avgEarlyRank": 1.945
+    },
+    {
+      "heroId": 48,
+      "name": "Luna",
+      "games": 800,
+      "avgGoldAt10": 3937,
+      "avgEarlyRank": 2.104
+    },
+    {
+      "heroId": 49,
+      "name": "Dragon Knight",
+      "games": 219,
+      "avgGoldAt10": 4054,
+      "avgEarlyRank": 2.018
+    },
+    {
+      "heroId": 50,
+      "name": "Dazzle",
+      "games": 130,
+      "avgGoldAt10": 1938,
+      "avgEarlyRank": 4.438
+    },
+    {
+      "heroId": 51,
+      "name": "Clockwerk",
+      "games": 742,
+      "avgGoldAt10": 1842,
+      "avgEarlyRank": 4.594
+    },
+    {
+      "heroId": 52,
+      "name": "Leshrac",
+      "games": 124,
+      "avgGoldAt10": 3803,
+      "avgEarlyRank": 2.056
+    },
+    {
+      "heroId": 53,
+      "name": "Nature's Prophet",
+      "games": 366,
+      "avgGoldAt10": 3630,
+      "avgEarlyRank": 2.522
+    },
+    {
+      "heroId": 54,
+      "name": "Lifestealer",
+      "games": 542,
+      "avgGoldAt10": 3656,
+      "avgEarlyRank": 2.183
+    },
+    {
+      "heroId": 55,
+      "name": "Dark Seer",
+      "games": 181,
+      "avgGoldAt10": 3909,
+      "avgEarlyRank": 2.166
+    },
+    {
+      "heroId": 56,
+      "name": "Clinkz",
+      "games": 233,
+      "avgGoldAt10": 3993,
+      "avgEarlyRank": 1.833
+    },
+    {
+      "heroId": 57,
+      "name": "Omniknight",
+      "games": 70,
+      "avgGoldAt10": 2905,
+      "avgEarlyRank": 3.214
+    },
+    {
+      "heroId": 58,
+      "name": "Enchantress",
+      "games": 479,
+      "avgGoldAt10": 1896,
+      "avgEarlyRank": 4.528
+    },
+    {
+      "heroId": 59,
+      "name": "Huskar",
+      "games": 239,
+      "avgGoldAt10": 4028,
+      "avgEarlyRank": 1.9
+    },
+    {
+      "heroId": 60,
+      "name": "Night Stalker",
+      "games": 365,
+      "avgGoldAt10": 3865,
+      "avgEarlyRank": 2.115
+    },
+    {
+      "heroId": 61,
+      "name": "Broodmother",
+      "games": 59,
+      "avgGoldAt10": 3921,
+      "avgEarlyRank": 1.983
+    },
+    {
+      "heroId": 62,
+      "name": "Bounty Hunter",
+      "games": 63,
+      "avgGoldAt10": 2017,
+      "avgEarlyRank": 4.365
+    },
+    {
+      "heroId": 63,
+      "name": "Weaver",
+      "games": 245,
+      "avgGoldAt10": 3659,
+      "avgEarlyRank": 2.339
+    },
+    {
+      "heroId": 64,
+      "name": "Jakiro",
+      "games": 531,
+      "avgGoldAt10": 1831,
+      "avgEarlyRank": 4.52
+    },
+    {
+      "heroId": 65,
+      "name": "Batrider",
+      "games": 436,
+      "avgGoldAt10": 3008,
+      "avgEarlyRank": 3.133
+    },
+    {
+      "heroId": 66,
+      "name": "Chen",
+      "games": 117,
+      "avgGoldAt10": 2012,
+      "avgEarlyRank": 4.436
+    },
+    {
+      "heroId": 67,
+      "name": "Spectre",
+      "games": 117,
+      "avgGoldAt10": 3539,
+      "avgEarlyRank": 2.094
+    },
+    {
+      "heroId": 68,
+      "name": "Ancient Apparition",
+      "games": 115,
+      "avgGoldAt10": 1735,
+      "avgEarlyRank": 4.574
+    },
+    {
+      "heroId": 69,
+      "name": "Doom",
+      "games": 866,
+      "avgGoldAt10": 3886,
+      "avgEarlyRank": 2.099
+    },
+    {
+      "heroId": 70,
+      "name": "Ursa",
+      "games": 448,
+      "avgGoldAt10": 3874,
+      "avgEarlyRank": 2.085
+    },
+    {
+      "heroId": 71,
+      "name": "Spirit Breaker",
+      "games": 731,
+      "avgGoldAt10": 2303,
+      "avgEarlyRank": 4.037
+    },
+    {
+      "heroId": 72,
+      "name": "Gyrocopter",
+      "games": 207,
+      "avgGoldAt10": 3900,
+      "avgEarlyRank": 1.995
+    },
+    {
+      "heroId": 73,
+      "name": "Alchemist",
+      "games": 484,
+      "avgGoldAt10": 4494,
+      "avgEarlyRank": 1.568
+    },
+    {
+      "heroId": 74,
+      "name": "Invoker",
+      "games": 698,
+      "avgGoldAt10": 3652,
+      "avgEarlyRank": 2.234
+    },
+    {
+      "heroId": 75,
+      "name": "Silencer",
+      "games": 655,
+      "avgGoldAt10": 1907,
+      "avgEarlyRank": 4.513
+    },
+    {
+      "heroId": 76,
+      "name": "Outworld Destroyer",
+      "games": 88,
+      "avgGoldAt10": 3641,
+      "avgEarlyRank": 2.091
+    },
+    {
+      "heroId": 77,
+      "name": "Lycan",
+      "games": 170,
+      "avgGoldAt10": 3664,
+      "avgEarlyRank": 2.259
+    },
+    {
+      "heroId": 78,
+      "name": "Brewmaster",
+      "games": 210,
+      "avgGoldAt10": 3458,
+      "avgEarlyRank": 2.486
+    },
+    {
+      "heroId": 79,
+      "name": "Shadow Demon",
+      "games": 430,
+      "avgGoldAt10": 1856,
+      "avgEarlyRank": 4.458
+    },
+    {
+      "heroId": 80,
+      "name": "Lone Druid",
+      "games": 338,
+      "avgGoldAt10": 3939,
+      "avgEarlyRank": 2.009
+    },
+    {
+      "heroId": 81,
+      "name": "Chaos Knight",
+      "games": 183,
+      "avgGoldAt10": 3864,
+      "avgEarlyRank": 2.262
+    },
+    {
+      "heroId": 82,
+      "name": "Meepo",
+      "games": 110,
+      "avgGoldAt10": 4369,
+      "avgEarlyRank": 1.718
+    },
+    {
+      "heroId": 83,
+      "name": "Treant Protector",
+      "games": 513,
+      "avgGoldAt10": 1733,
+      "avgEarlyRank": 4.71
+    },
+    {
+      "heroId": 84,
+      "name": "Ogre Magi",
+      "games": 550,
+      "avgGoldAt10": 1917,
+      "avgEarlyRank": 4.32
+    },
+    {
+      "heroId": 85,
+      "name": "Undying",
+      "games": 371,
+      "avgGoldAt10": 2567,
+      "avgEarlyRank": 3.72
+    },
+    {
+      "heroId": 86,
+      "name": "Rubick",
+      "games": 2225,
+      "avgGoldAt10": 2165,
+      "avgEarlyRank": 4.18
+    },
+    {
+      "heroId": 87,
+      "name": "Disruptor",
+      "games": 745,
+      "avgGoldAt10": 1683,
+      "avgEarlyRank": 4.643
+    },
+    {
+      "heroId": 88,
+      "name": "Nyx Assassin",
+      "games": 322,
+      "avgGoldAt10": 2012,
+      "avgEarlyRank": 4.345
+    },
+    {
+      "heroId": 89,
+      "name": "Naga Siren",
+      "games": 78,
+      "avgGoldAt10": 3722,
+      "avgEarlyRank": 2.115
+    },
+    {
+      "heroId": 90,
+      "name": "Keeper of the Light",
+      "games": 493,
+      "avgGoldAt10": 2707,
+      "avgEarlyRank": 3.469
+    },
+    {
+      "heroId": 102,
+      "name": "Abaddon",
+      "games": 126,
+      "avgGoldAt10": 3424,
+      "avgEarlyRank": 2.627
+    },
+    {
+      "heroId": 103,
+      "name": "Elder Titan",
+      "games": 28,
+      "avgGoldAt10": 2461,
+      "avgEarlyRank": 3.536
+    },
+    {
+      "heroId": 104,
+      "name": "Legion Commander",
+      "games": 237,
+      "avgGoldAt10": 3740,
+      "avgEarlyRank": 2.245
+    },
+    {
+      "heroId": 105,
+      "name": "Techies",
+      "games": 641,
+      "avgGoldAt10": 1968,
+      "avgEarlyRank": 4.36
+    },
+    {
+      "heroId": 106,
+      "name": "Ember Spirit",
+      "games": 1021,
+      "avgGoldAt10": 3882,
+      "avgEarlyRank": 1.965
+    },
+    {
+      "heroId": 107,
+      "name": "Earth Spirit",
+      "games": 297,
+      "avgGoldAt10": 3143,
+      "avgEarlyRank": 2.872
+    },
+    {
+      "heroId": 108,
+      "name": "Underlord",
+      "games": 540,
+      "avgGoldAt10": 3634,
+      "avgEarlyRank": 2.278
+    },
+    {
+      "heroId": 109,
+      "name": "Terrorblade",
+      "games": 385,
+      "avgGoldAt10": 4001,
+      "avgEarlyRank": 1.784
+    },
+    {
+      "heroId": 110,
+      "name": "Phoenix",
+      "games": 1184,
+      "avgGoldAt10": 2387,
+      "avgEarlyRank": 3.995
+    },
+    {
+      "heroId": 111,
+      "name": "Oracle",
+      "games": 128,
+      "avgGoldAt10": 1874,
+      "avgEarlyRank": 4.477
+    },
+    {
+      "heroId": 112,
+      "name": "Winter Wyvern",
+      "games": 458,
+      "avgGoldAt10": 1750,
+      "avgEarlyRank": 4.592
+    },
+    {
+      "heroId": 113,
+      "name": "Arc Warden",
+      "games": 46,
+      "avgGoldAt10": 4583,
+      "avgEarlyRank": 1.435
+    },
+    {
+      "heroId": 114,
+      "name": "Monkey King",
+      "games": 619,
+      "avgGoldAt10": 3790,
+      "avgEarlyRank": 2.141
+    },
+    {
+      "heroId": 119,
+      "name": "Dark Willow",
+      "games": 402,
+      "avgGoldAt10": 1920,
+      "avgEarlyRank": 4.413
+    },
+    {
+      "heroId": 120,
+      "name": "Pangolier",
+      "games": 1264,
+      "avgGoldAt10": 3818,
+      "avgEarlyRank": 2.068
+    },
+    {
+      "heroId": 121,
+      "name": "Grimstroke",
+      "games": 487,
+      "avgGoldAt10": 1977,
+      "avgEarlyRank": 4.394
+    },
+    {
+      "heroId": 123,
+      "name": "Hoodwink",
+      "games": 1482,
+      "avgGoldAt10": 2017,
+      "avgEarlyRank": 4.36
+    },
+    {
+      "heroId": 126,
+      "name": "Void Spirit",
+      "games": 593,
+      "avgGoldAt10": 3755,
+      "avgEarlyRank": 2.067
+    },
+    {
+      "heroId": 128,
+      "name": "Snapfire",
+      "games": 1049,
+      "avgGoldAt10": 2999,
+      "avgEarlyRank": 3.198
+    },
+    {
+      "heroId": 129,
+      "name": "Mars",
+      "games": 527,
+      "avgGoldAt10": 3598,
+      "avgEarlyRank": 2.402
+    },
+    {
+      "heroId": 131,
+      "name": "Ringmaster",
+      "games": 561,
+      "avgGoldAt10": 1856,
+      "avgEarlyRank": 4.487
+    },
+    {
+      "heroId": 135,
+      "name": "Dawnbreaker",
+      "games": 761,
+      "avgGoldAt10": 3669,
+      "avgEarlyRank": 2.313
+    },
+    {
+      "heroId": 136,
+      "name": "Marci",
+      "games": 207,
+      "avgGoldAt10": 2394,
+      "avgEarlyRank": 4.014
+    },
+    {
+      "heroId": 137,
+      "name": "Primal Beast",
+      "games": 293,
+      "avgGoldAt10": 3581,
+      "avgEarlyRank": 2.43
+    },
+    {
+      "heroId": 138,
+      "name": "Muerta",
+      "games": 544,
+      "avgGoldAt10": 3671,
+      "avgEarlyRank": 2.202
+    },
+    {
+      "heroId": 145,
+      "name": "Kez",
+      "games": 560,
+      "avgGoldAt10": 3969,
+      "avgEarlyRank": 1.952
+    },
+    {
+      "heroId": 155,
+      "name": "Largo",
+      "games": 382,
+      "avgGoldAt10": 3192,
+      "avgEarlyRank": 2.898
+    },
+    {
+      "heroId": 91,
+      "name": "Io",
+      "games": 190,
+      "avgGoldAt10": 2095,
+      "avgEarlyRank": 4.305
+    },
+    {
+      "heroId": 92,
+      "name": "Visage",
+      "games": 82,
+      "avgGoldAt10": 3272,
+      "avgEarlyRank": 2.659
+    },
+    {
+      "heroId": 93,
+      "name": "Slark",
+      "games": 253,
+      "avgGoldAt10": 3754,
+      "avgEarlyRank": 2.123
+    },
+    {
+      "heroId": 94,
+      "name": "Medusa",
+      "games": 151,
+      "avgGoldAt10": 3677,
+      "avgEarlyRank": 1.987
+    },
+    {
+      "heroId": 95,
+      "name": "Troll Warlord",
+      "games": 150,
+      "avgGoldAt10": 4046,
+      "avgEarlyRank": 2.02
+    },
+    {
+      "heroId": 96,
+      "name": "Centaur Warrunner",
+      "games": 433,
+      "avgGoldAt10": 3634,
+      "avgEarlyRank": 2.395
+    },
+    {
+      "heroId": 97,
+      "name": "Magnus",
+      "games": 229,
+      "avgGoldAt10": 3604,
+      "avgEarlyRank": 2.297
+    },
+    {
+      "heroId": 98,
+      "name": "Timbersaw",
+      "games": 428,
+      "avgGoldAt10": 3641,
+      "avgEarlyRank": 2.287
+    },
+    {
+      "heroId": 99,
+      "name": "Bristleback",
+      "games": 590,
+      "avgGoldAt10": 4044,
+      "avgEarlyRank": 1.892
+    },
+    {
+      "heroId": 100,
+      "name": "Tusk",
+      "games": 1037,
+      "avgGoldAt10": 1946,
+      "avgEarlyRank": 4.53
+    },
+    {
+      "heroId": 101,
+      "name": "Skywrath Mage",
+      "games": 472,
+      "avgGoldAt10": 1953,
+      "avgEarlyRank": 4.352
+    }
+  ],
+  "rankRows": [
+    {
+      "heroId": 1,
+      "name": "Anti-Mage",
+      "rank": 2,
+      "games": 61,
+      "wins": 33,
+      "winRate": 0.541,
+      "share": 0.391
+    },
+    {
+      "heroId": 1,
+      "name": "Anti-Mage",
+      "rank": 1,
+      "games": 45,
+      "wins": 26,
+      "winRate": 0.578,
+      "share": 0.288
+    },
+    {
+      "heroId": 1,
+      "name": "Anti-Mage",
+      "rank": 3,
+      "games": 48,
+      "wins": 28,
+      "winRate": 0.583,
+      "share": 0.308
+    },
+    {
+      "heroId": 2,
+      "name": "Axe",
+      "rank": 1,
+      "games": 317,
+      "wins": 175,
+      "winRate": 0.552,
+      "share": 0.371
+    },
+    {
+      "heroId": 2,
+      "name": "Axe",
+      "rank": 2,
+      "games": 231,
+      "wins": 112,
+      "winRate": 0.485,
+      "share": 0.27
+    },
+    {
+      "heroId": 2,
+      "name": "Axe",
+      "rank": 3,
+      "games": 271,
+      "wins": 133,
+      "winRate": 0.491,
+      "share": 0.317
+    },
+    {
+      "heroId": 2,
+      "name": "Axe",
+      "rank": 4,
+      "games": 16,
+      "wins": 5,
+      "winRate": 0.313,
+      "share": 0.019
+    },
+    {
+      "heroId": 2,
+      "name": "Axe",
+      "rank": 5,
+      "games": 20,
+      "wins": 9,
+      "winRate": 0.45,
+      "share": 0.023
+    },
+    {
+      "heroId": 3,
+      "name": "Bane",
+      "rank": 5,
+      "games": 230,
+      "wins": 136,
+      "winRate": 0.591,
+      "share": 0.526
+    },
+    {
+      "heroId": 3,
+      "name": "Bane",
+      "rank": 4,
+      "games": 205,
+      "wins": 135,
+      "winRate": 0.659,
+      "share": 0.469
+    },
+    {
+      "heroId": 4,
+      "name": "Bloodseeker",
+      "rank": 1,
+      "games": 15,
+      "wins": 8,
+      "winRate": 0.533,
+      "share": 0.357
+    },
+    {
+      "heroId": 4,
+      "name": "Bloodseeker",
+      "rank": 2,
+      "games": 15,
+      "wins": 5,
+      "winRate": 0.333,
+      "share": 0.357
+    },
+    {
+      "heroId": 5,
+      "name": "Crystal Maiden",
+      "rank": 5,
+      "games": 219,
+      "wins": 104,
+      "winRate": 0.475,
+      "share": 0.575
+    },
+    {
+      "heroId": 5,
+      "name": "Crystal Maiden",
+      "rank": 4,
+      "games": 160,
+      "wins": 80,
+      "winRate": 0.5,
+      "share": 0.42
+    },
+    {
+      "heroId": 6,
+      "name": "Drow Ranger",
+      "rank": 1,
+      "games": 248,
+      "wins": 134,
+      "winRate": 0.54,
+      "share": 0.427
+    },
+    {
+      "heroId": 6,
+      "name": "Drow Ranger",
+      "rank": 2,
+      "games": 171,
+      "wins": 89,
+      "winRate": 0.52,
+      "share": 0.294
+    },
+    {
+      "heroId": 6,
+      "name": "Drow Ranger",
+      "rank": 3,
+      "games": 161,
+      "wins": 74,
+      "winRate": 0.46,
+      "share": 0.277
+    },
+    {
+      "heroId": 7,
+      "name": "Earthshaker",
+      "rank": 2,
+      "games": 24,
+      "wins": 11,
+      "winRate": 0.458,
+      "share": 0.224
+    },
+    {
+      "heroId": 7,
+      "name": "Earthshaker",
+      "rank": 1,
+      "games": 30,
+      "wins": 16,
+      "winRate": 0.533,
+      "share": 0.28
+    },
+    {
+      "heroId": 7,
+      "name": "Earthshaker",
+      "rank": 3,
+      "games": 22,
+      "wins": 8,
+      "winRate": 0.364,
+      "share": 0.206
+    },
+    {
+      "heroId": 7,
+      "name": "Earthshaker",
+      "rank": 5,
+      "games": 17,
+      "wins": 7,
+      "winRate": 0.412,
+      "share": 0.159
+    },
+    {
+      "heroId": 8,
+      "name": "Juggernaut",
+      "rank": 1,
+      "games": 79,
+      "wins": 45,
+      "winRate": 0.57,
+      "share": 0.339
+    },
+    {
+      "heroId": 8,
+      "name": "Juggernaut",
+      "rank": 2,
+      "games": 64,
+      "wins": 33,
+      "winRate": 0.516,
+      "share": 0.275
+    },
+    {
+      "heroId": 8,
+      "name": "Juggernaut",
+      "rank": 3,
+      "games": 86,
+      "wins": 47,
+      "winRate": 0.547,
+      "share": 0.369
+    },
+    {
+      "heroId": 9,
+      "name": "Mirana",
+      "rank": 4,
+      "games": 99,
+      "wins": 49,
+      "winRate": 0.495,
+      "share": 0.596
+    },
+    {
+      "heroId": 9,
+      "name": "Mirana",
+      "rank": 5,
+      "games": 38,
+      "wins": 25,
+      "winRate": 0.658,
+      "share": 0.229
+    },
+    {
+      "heroId": 10,
+      "name": "Morphling",
+      "rank": 2,
+      "games": 41,
+      "wins": 19,
+      "winRate": 0.463,
+      "share": 0.32
+    },
+    {
+      "heroId": 10,
+      "name": "Morphling",
+      "rank": 1,
+      "games": 33,
+      "wins": 17,
+      "winRate": 0.515,
+      "share": 0.258
+    },
+    {
+      "heroId": 10,
+      "name": "Morphling",
+      "rank": 3,
+      "games": 54,
+      "wins": 22,
+      "winRate": 0.407,
+      "share": 0.422
+    },
+    {
+      "heroId": 11,
+      "name": "Shadow Fiend",
+      "rank": 2,
+      "games": 315,
+      "wins": 151,
+      "winRate": 0.479,
+      "share": 0.246
+    },
+    {
+      "heroId": 11,
+      "name": "Shadow Fiend",
+      "rank": 1,
+      "games": 823,
+      "wins": 397,
+      "winRate": 0.482,
+      "share": 0.642
+    },
+    {
+      "heroId": 11,
+      "name": "Shadow Fiend",
+      "rank": 3,
+      "games": 142,
+      "wins": 77,
+      "winRate": 0.542,
+      "share": 0.111
+    },
+    {
+      "heroId": 12,
+      "name": "Phantom Lancer",
+      "rank": 2,
+      "games": 90,
+      "wins": 42,
+      "winRate": 0.467,
+      "share": 0.388
+    },
+    {
+      "heroId": 12,
+      "name": "Phantom Lancer",
+      "rank": 1,
+      "games": 64,
+      "wins": 31,
+      "winRate": 0.484,
+      "share": 0.276
+    },
+    {
+      "heroId": 12,
+      "name": "Phantom Lancer",
+      "rank": 3,
+      "games": 77,
+      "wins": 42,
+      "winRate": 0.545,
+      "share": 0.332
+    },
+    {
+      "heroId": 13,
+      "name": "Puck",
+      "rank": 2,
+      "games": 265,
+      "wins": 147,
+      "winRate": 0.555,
+      "share": 0.396
+    },
+    {
+      "heroId": 13,
+      "name": "Puck",
+      "rank": 1,
+      "games": 219,
+      "wins": 108,
+      "winRate": 0.493,
+      "share": 0.327
+    },
+    {
+      "heroId": 13,
+      "name": "Puck",
+      "rank": 3,
+      "games": 182,
+      "wins": 105,
+      "winRate": 0.577,
+      "share": 0.272
+    },
+    {
+      "heroId": 14,
+      "name": "Pudge",
+      "rank": 2,
+      "games": 103,
+      "wins": 54,
+      "winRate": 0.524,
+      "share": 0.178
+    },
+    {
+      "heroId": 14,
+      "name": "Pudge",
+      "rank": 1,
+      "games": 61,
+      "wins": 32,
+      "winRate": 0.525,
+      "share": 0.105
+    },
+    {
+      "heroId": 14,
+      "name": "Pudge",
+      "rank": 4,
+      "games": 224,
+      "wins": 100,
+      "winRate": 0.446,
+      "share": 0.387
+    },
+    {
+      "heroId": 14,
+      "name": "Pudge",
+      "rank": 3,
+      "games": 70,
+      "wins": 31,
+      "winRate": 0.443,
+      "share": 0.121
+    },
+    {
+      "heroId": 14,
+      "name": "Pudge",
+      "rank": 5,
+      "games": 121,
+      "wins": 46,
+      "winRate": 0.38,
+      "share": 0.209
+    },
+    {
+      "heroId": 15,
+      "name": "Razor",
+      "rank": 2,
+      "games": 100,
+      "wins": 44,
+      "winRate": 0.44,
+      "share": 0.33
+    },
+    {
+      "heroId": 15,
+      "name": "Razor",
+      "rank": 1,
+      "games": 97,
+      "wins": 41,
+      "winRate": 0.423,
+      "share": 0.32
+    },
+    {
+      "heroId": 15,
+      "name": "Razor",
+      "rank": 3,
+      "games": 99,
+      "wins": 45,
+      "winRate": 0.455,
+      "share": 0.327
+    },
+    {
+      "heroId": 16,
+      "name": "Sand King",
+      "rank": 1,
+      "games": 110,
+      "wins": 49,
+      "winRate": 0.445,
+      "share": 0.382
+    },
+    {
+      "heroId": 16,
+      "name": "Sand King",
+      "rank": 2,
+      "games": 101,
+      "wins": 40,
+      "winRate": 0.396,
+      "share": 0.351
+    },
+    {
+      "heroId": 16,
+      "name": "Sand King",
+      "rank": 3,
+      "games": 73,
+      "wins": 32,
+      "winRate": 0.438,
+      "share": 0.253
+    },
+    {
+      "heroId": 17,
+      "name": "Storm Spirit",
+      "rank": 1,
+      "games": 334,
+      "wins": 172,
+      "winRate": 0.515,
+      "share": 0.404
+    },
+    {
+      "heroId": 17,
+      "name": "Storm Spirit",
+      "rank": 2,
+      "games": 319,
+      "wins": 140,
+      "winRate": 0.439,
+      "share": 0.386
+    },
+    {
+      "heroId": 17,
+      "name": "Storm Spirit",
+      "rank": 3,
+      "games": 172,
+      "wins": 94,
+      "winRate": 0.547,
+      "share": 0.208
+    },
+    {
+      "heroId": 18,
+      "name": "Sven",
+      "rank": 1,
+      "games": 61,
+      "wins": 31,
+      "winRate": 0.508,
+      "share": 0.31
+    },
+    {
+      "heroId": 18,
+      "name": "Sven",
+      "rank": 2,
+      "games": 67,
+      "wins": 35,
+      "winRate": 0.522,
+      "share": 0.34
+    },
+    {
+      "heroId": 18,
+      "name": "Sven",
+      "rank": 3,
+      "games": 68,
+      "wins": 27,
+      "winRate": 0.397,
+      "share": 0.345
+    },
+    {
+      "heroId": 19,
+      "name": "Tiny",
+      "rank": 1,
+      "games": 323,
+      "wins": 147,
+      "winRate": 0.455,
+      "share": 0.291
+    },
+    {
+      "heroId": 19,
+      "name": "Tiny",
+      "rank": 2,
+      "games": 431,
+      "wins": 221,
+      "winRate": 0.513,
+      "share": 0.388
+    },
+    {
+      "heroId": 19,
+      "name": "Tiny",
+      "rank": 3,
+      "games": 290,
+      "wins": 155,
+      "winRate": 0.534,
+      "share": 0.261
+    },
+    {
+      "heroId": 19,
+      "name": "Tiny",
+      "rank": 4,
+      "games": 38,
+      "wins": 17,
+      "winRate": 0.447,
+      "share": 0.034
+    },
+    {
+      "heroId": 19,
+      "name": "Tiny",
+      "rank": 5,
+      "games": 29,
+      "wins": 14,
+      "winRate": 0.483,
+      "share": 0.026
+    },
+    {
+      "heroId": 20,
+      "name": "Vengeful Spirit",
+      "rank": 2,
+      "games": 24,
+      "wins": 13,
+      "winRate": 0.542,
+      "share": 0.087
+    },
+    {
+      "heroId": 20,
+      "name": "Vengeful Spirit",
+      "rank": 4,
+      "games": 85,
+      "wins": 42,
+      "winRate": 0.494,
+      "share": 0.307
+    },
+    {
+      "heroId": 20,
+      "name": "Vengeful Spirit",
+      "rank": 3,
+      "games": 36,
+      "wins": 19,
+      "winRate": 0.528,
+      "share": 0.13
+    },
+    {
+      "heroId": 20,
+      "name": "Vengeful Spirit",
+      "rank": 5,
+      "games": 119,
+      "wins": 61,
+      "winRate": 0.513,
+      "share": 0.43
+    },
+    {
+      "heroId": 21,
+      "name": "Windranger",
+      "rank": 2,
+      "games": 156,
+      "wins": 83,
+      "winRate": 0.532,
+      "share": 0.19
+    },
+    {
+      "heroId": 21,
+      "name": "Windranger",
+      "rank": 1,
+      "games": 188,
+      "wins": 95,
+      "winRate": 0.505,
+      "share": 0.23
+    },
+    {
+      "heroId": 21,
+      "name": "Windranger",
+      "rank": 4,
+      "games": 220,
+      "wins": 106,
+      "winRate": 0.482,
+      "share": 0.269
+    },
+    {
+      "heroId": 21,
+      "name": "Windranger",
+      "rank": 3,
+      "games": 129,
+      "wins": 66,
+      "winRate": 0.512,
+      "share": 0.158
+    },
+    {
+      "heroId": 21,
+      "name": "Windranger",
+      "rank": 5,
+      "games": 126,
+      "wins": 61,
+      "winRate": 0.484,
+      "share": 0.154
+    },
+    {
+      "heroId": 22,
+      "name": "Zeus",
+      "rank": 1,
+      "games": 97,
+      "wins": 44,
+      "winRate": 0.454,
+      "share": 0.169
+    },
+    {
+      "heroId": 22,
+      "name": "Zeus",
+      "rank": 2,
+      "games": 53,
+      "wins": 23,
+      "winRate": 0.434,
+      "share": 0.092
+    },
+    {
+      "heroId": 22,
+      "name": "Zeus",
+      "rank": 4,
+      "games": 156,
+      "wins": 80,
+      "winRate": 0.513,
+      "share": 0.271
+    },
+    {
+      "heroId": 22,
+      "name": "Zeus",
+      "rank": 3,
+      "games": 27,
+      "wins": 11,
+      "winRate": 0.407,
+      "share": 0.047
+    },
+    {
+      "heroId": 22,
+      "name": "Zeus",
+      "rank": 5,
+      "games": 242,
+      "wins": 122,
+      "winRate": 0.504,
+      "share": 0.421
+    },
+    {
+      "heroId": 23,
+      "name": "Kunkka",
+      "rank": 2,
+      "games": 100,
+      "wins": 46,
+      "winRate": 0.46,
+      "share": 0.258
+    },
+    {
+      "heroId": 23,
+      "name": "Kunkka",
+      "rank": 1,
+      "games": 194,
+      "wins": 105,
+      "winRate": 0.541,
+      "share": 0.501
+    },
+    {
+      "heroId": 23,
+      "name": "Kunkka",
+      "rank": 3,
+      "games": 89,
+      "wins": 52,
+      "winRate": 0.584,
+      "share": 0.23
+    },
+    {
+      "heroId": 25,
+      "name": "Lina",
+      "rank": 1,
+      "games": 261,
+      "wins": 119,
+      "winRate": 0.456,
+      "share": 0.509
+    },
+    {
+      "heroId": 25,
+      "name": "Lina",
+      "rank": 2,
+      "games": 151,
+      "wins": 78,
+      "winRate": 0.517,
+      "share": 0.294
+    },
+    {
+      "heroId": 25,
+      "name": "Lina",
+      "rank": 3,
+      "games": 80,
+      "wins": 33,
+      "winRate": 0.413,
+      "share": 0.156
+    },
+    {
+      "heroId": 26,
+      "name": "Lion",
+      "rank": 2,
+      "games": 15,
+      "wins": 5,
+      "winRate": 0.333,
+      "share": 0.012
+    },
+    {
+      "heroId": 26,
+      "name": "Lion",
+      "rank": 4,
+      "games": 502,
+      "wins": 251,
+      "winRate": 0.5,
+      "share": 0.412
+    },
+    {
+      "heroId": 26,
+      "name": "Lion",
+      "rank": 5,
+      "games": 685,
+      "wins": 368,
+      "winRate": 0.537,
+      "share": 0.562
+    },
+    {
+      "heroId": 27,
+      "name": "Shadow Shaman",
+      "rank": 5,
+      "games": 272,
+      "wins": 124,
+      "winRate": 0.456,
+      "share": 0.561
+    },
+    {
+      "heroId": 27,
+      "name": "Shadow Shaman",
+      "rank": 4,
+      "games": 206,
+      "wins": 94,
+      "winRate": 0.456,
+      "share": 0.425
+    },
+    {
+      "heroId": 28,
+      "name": "Slardar",
+      "rank": 2,
+      "games": 250,
+      "wins": 137,
+      "winRate": 0.548,
+      "share": 0.299
+    },
+    {
+      "heroId": 28,
+      "name": "Slardar",
+      "rank": 1,
+      "games": 149,
+      "wins": 76,
+      "winRate": 0.51,
+      "share": 0.178
+    },
+    {
+      "heroId": 28,
+      "name": "Slardar",
+      "rank": 3,
+      "games": 417,
+      "wins": 206,
+      "winRate": 0.494,
+      "share": 0.498
+    },
+    {
+      "heroId": 28,
+      "name": "Slardar",
+      "rank": 4,
+      "games": 18,
+      "wins": 6,
+      "winRate": 0.333,
+      "share": 0.022
+    },
+    {
+      "heroId": 29,
+      "name": "Tidehunter",
+      "rank": 1,
+      "games": 208,
+      "wins": 116,
+      "winRate": 0.558,
+      "share": 0.211
+    },
+    {
+      "heroId": 29,
+      "name": "Tidehunter",
+      "rank": 2,
+      "games": 292,
+      "wins": 136,
+      "winRate": 0.466,
+      "share": 0.296
+    },
+    {
+      "heroId": 29,
+      "name": "Tidehunter",
+      "rank": 3,
+      "games": 468,
+      "wins": 205,
+      "winRate": 0.438,
+      "share": 0.474
+    },
+    {
+      "heroId": 30,
+      "name": "Witch Doctor",
+      "rank": 4,
+      "games": 131,
+      "wins": 78,
+      "winRate": 0.595,
+      "share": 0.463
+    },
+    {
+      "heroId": 30,
+      "name": "Witch Doctor",
+      "rank": 5,
+      "games": 146,
+      "wins": 72,
+      "winRate": 0.493,
+      "share": 0.516
+    },
+    {
+      "heroId": 31,
+      "name": "Lich",
+      "rank": 4,
+      "games": 342,
+      "wins": 167,
+      "winRate": 0.488,
+      "share": 0.421
+    },
+    {
+      "heroId": 31,
+      "name": "Lich",
+      "rank": 5,
+      "games": 465,
+      "wins": 233,
+      "winRate": 0.501,
+      "share": 0.572
+    },
+    {
+      "heroId": 32,
+      "name": "Riki",
+      "rank": 2,
+      "games": 24,
+      "wins": 12,
+      "winRate": 0.5,
+      "share": 0.369
+    },
+    {
+      "heroId": 32,
+      "name": "Riki",
+      "rank": 1,
+      "games": 18,
+      "wins": 7,
+      "winRate": 0.389,
+      "share": 0.277
+    },
+    {
+      "heroId": 32,
+      "name": "Riki",
+      "rank": 3,
+      "games": 20,
+      "wins": 10,
+      "winRate": 0.5,
+      "share": 0.308
+    },
+    {
+      "heroId": 33,
+      "name": "Enigma",
+      "rank": 2,
+      "games": 47,
+      "wins": 29,
+      "winRate": 0.617,
+      "share": 0.376
+    },
+    {
+      "heroId": 33,
+      "name": "Enigma",
+      "rank": 1,
+      "games": 18,
+      "wins": 10,
+      "winRate": 0.556,
+      "share": 0.144
+    },
+    {
+      "heroId": 33,
+      "name": "Enigma",
+      "rank": 3,
+      "games": 46,
+      "wins": 27,
+      "winRate": 0.587,
+      "share": 0.368
+    },
+    {
+      "heroId": 34,
+      "name": "Tinker",
+      "rank": 1,
+      "games": 40,
+      "wins": 21,
+      "winRate": 0.525,
+      "share": 0.37
+    },
+    {
+      "heroId": 34,
+      "name": "Tinker",
+      "rank": 2,
+      "games": 40,
+      "wins": 17,
+      "winRate": 0.425,
+      "share": 0.37
+    },
+    {
+      "heroId": 34,
+      "name": "Tinker",
+      "rank": 3,
+      "games": 27,
+      "wins": 12,
+      "winRate": 0.444,
+      "share": 0.25
+    },
+    {
+      "heroId": 35,
+      "name": "Sniper",
+      "rank": 1,
+      "games": 237,
+      "wins": 134,
+      "winRate": 0.565,
+      "share": 0.507
+    },
+    {
+      "heroId": 35,
+      "name": "Sniper",
+      "rank": 2,
+      "games": 123,
+      "wins": 61,
+      "winRate": 0.496,
+      "share": 0.263
+    },
+    {
+      "heroId": 35,
+      "name": "Sniper",
+      "rank": 3,
+      "games": 101,
+      "wins": 51,
+      "winRate": 0.505,
+      "share": 0.216
+    },
+    {
+      "heroId": 36,
+      "name": "Necrophos",
+      "rank": 2,
+      "games": 149,
+      "wins": 81,
+      "winRate": 0.544,
+      "share": 0.309
+    },
+    {
+      "heroId": 36,
+      "name": "Necrophos",
+      "rank": 1,
+      "games": 258,
+      "wins": 124,
+      "winRate": 0.481,
+      "share": 0.535
+    },
+    {
+      "heroId": 36,
+      "name": "Necrophos",
+      "rank": 3,
+      "games": 73,
+      "wins": 39,
+      "winRate": 0.534,
+      "share": 0.151
+    },
+    {
+      "heroId": 37,
+      "name": "Warlock",
+      "rank": 4,
+      "games": 221,
+      "wins": 115,
+      "winRate": 0.52,
+      "share": 0.507
+    },
+    {
+      "heroId": 37,
+      "name": "Warlock",
+      "rank": 5,
+      "games": 211,
+      "wins": 94,
+      "winRate": 0.445,
+      "share": 0.484
+    },
+    {
+      "heroId": 38,
+      "name": "Beastmaster",
+      "rank": 1,
+      "games": 282,
+      "wins": 136,
+      "winRate": 0.482,
+      "share": 0.396
+    },
+    {
+      "heroId": 38,
+      "name": "Beastmaster",
+      "rank": 2,
+      "games": 203,
+      "wins": 112,
+      "winRate": 0.552,
+      "share": 0.285
+    },
+    {
+      "heroId": 38,
+      "name": "Beastmaster",
+      "rank": 3,
+      "games": 226,
+      "wins": 110,
+      "winRate": 0.487,
+      "share": 0.317
+    },
+    {
+      "heroId": 39,
+      "name": "Queen of Pain",
+      "rank": 1,
+      "games": 359,
+      "wins": 155,
+      "winRate": 0.432,
+      "share": 0.407
+    },
+    {
+      "heroId": 39,
+      "name": "Queen of Pain",
+      "rank": 2,
+      "games": 288,
+      "wins": 158,
+      "winRate": 0.549,
+      "share": 0.326
+    },
+    {
+      "heroId": 39,
+      "name": "Queen of Pain",
+      "rank": 3,
+      "games": 214,
+      "wins": 110,
+      "winRate": 0.514,
+      "share": 0.242
+    },
+    {
+      "heroId": 39,
+      "name": "Queen of Pain",
+      "rank": 4,
+      "games": 16,
+      "wins": 8,
+      "winRate": 0.5,
+      "share": 0.018
+    },
+    {
+      "heroId": 40,
+      "name": "Venomancer",
+      "rank": 4,
+      "games": 261,
+      "wins": 142,
+      "winRate": 0.544,
+      "share": 0.63
+    },
+    {
+      "heroId": 40,
+      "name": "Venomancer",
+      "rank": 3,
+      "games": 15,
+      "wins": 6,
+      "winRate": 0.4,
+      "share": 0.036
+    },
+    {
+      "heroId": 40,
+      "name": "Venomancer",
+      "rank": 5,
+      "games": 130,
+      "wins": 62,
+      "winRate": 0.477,
+      "share": 0.314
+    },
+    {
+      "heroId": 41,
+      "name": "Faceless Void",
+      "rank": 2,
+      "games": 149,
+      "wins": 68,
+      "winRate": 0.456,
+      "share": 0.359
+    },
+    {
+      "heroId": 41,
+      "name": "Faceless Void",
+      "rank": 1,
+      "games": 72,
+      "wins": 27,
+      "winRate": 0.375,
+      "share": 0.173
+    },
+    {
+      "heroId": 41,
+      "name": "Faceless Void",
+      "rank": 3,
+      "games": 182,
+      "wins": 95,
+      "winRate": 0.522,
+      "share": 0.439
+    },
+    {
+      "heroId": 42,
+      "name": "Wraith King",
+      "rank": 1,
+      "games": 40,
+      "wins": 14,
+      "winRate": 0.35,
+      "share": 0.194
+    },
+    {
+      "heroId": 42,
+      "name": "Wraith King",
+      "rank": 2,
+      "games": 90,
+      "wins": 47,
+      "winRate": 0.522,
+      "share": 0.437
+    },
+    {
+      "heroId": 42,
+      "name": "Wraith King",
+      "rank": 3,
+      "games": 73,
+      "wins": 34,
+      "winRate": 0.466,
+      "share": 0.354
+    },
+    {
+      "heroId": 43,
+      "name": "Death Prophet",
+      "rank": 1,
+      "games": 103,
+      "wins": 42,
+      "winRate": 0.408,
+      "share": 0.446
+    },
+    {
+      "heroId": 43,
+      "name": "Death Prophet",
+      "rank": 2,
+      "games": 64,
+      "wins": 28,
+      "winRate": 0.438,
+      "share": 0.277
+    },
+    {
+      "heroId": 43,
+      "name": "Death Prophet",
+      "rank": 3,
+      "games": 52,
+      "wins": 25,
+      "winRate": 0.481,
+      "share": 0.225
+    },
+    {
+      "heroId": 44,
+      "name": "Phantom Assassin",
+      "rank": 2,
+      "games": 55,
+      "wins": 23,
+      "winRate": 0.418,
+      "share": 0.387
+    },
+    {
+      "heroId": 44,
+      "name": "Phantom Assassin",
+      "rank": 1,
+      "games": 25,
+      "wins": 9,
+      "winRate": 0.36,
+      "share": 0.176
+    },
+    {
+      "heroId": 44,
+      "name": "Phantom Assassin",
+      "rank": 3,
+      "games": 60,
+      "wins": 30,
+      "winRate": 0.5,
+      "share": 0.423
+    },
+    {
+      "heroId": 45,
+      "name": "Pugna",
+      "rank": 4,
+      "games": 35,
+      "wins": 16,
+      "winRate": 0.457,
+      "share": 0.493
+    },
+    {
+      "heroId": 45,
+      "name": "Pugna",
+      "rank": 5,
+      "games": 28,
+      "wins": 14,
+      "winRate": 0.5,
+      "share": 0.394
+    },
+    {
+      "heroId": 46,
+      "name": "Templar Assassin",
+      "rank": 2,
+      "games": 109,
+      "wins": 58,
+      "winRate": 0.532,
+      "share": 0.309
+    },
+    {
+      "heroId": 46,
+      "name": "Templar Assassin",
+      "rank": 1,
+      "games": 119,
+      "wins": 54,
+      "winRate": 0.454,
+      "share": 0.337
+    },
+    {
+      "heroId": 46,
+      "name": "Templar Assassin",
+      "rank": 3,
+      "games": 121,
+      "wins": 62,
+      "winRate": 0.512,
+      "share": 0.343
+    },
+    {
+      "heroId": 47,
+      "name": "Viper",
+      "rank": 2,
+      "games": 155,
+      "wins": 80,
+      "winRate": 0.516,
+      "share": 0.37
+    },
+    {
+      "heroId": 47,
+      "name": "Viper",
+      "rank": 1,
+      "games": 146,
+      "wins": 61,
+      "winRate": 0.418,
+      "share": 0.348
+    },
+    {
+      "heroId": 47,
+      "name": "Viper",
+      "rank": 3,
+      "games": 114,
+      "wins": 56,
+      "winRate": 0.491,
+      "share": 0.272
+    },
+    {
+      "heroId": 48,
+      "name": "Luna",
+      "rank": 2,
+      "games": 264,
+      "wins": 130,
+      "winRate": 0.492,
+      "share": 0.33
+    },
+    {
+      "heroId": 48,
+      "name": "Luna",
+      "rank": 1,
+      "games": 227,
+      "wins": 96,
+      "winRate": 0.423,
+      "share": 0.284
+    },
+    {
+      "heroId": 48,
+      "name": "Luna",
+      "rank": 3,
+      "games": 308,
+      "wins": 154,
+      "winRate": 0.5,
+      "share": 0.385
+    },
+    {
+      "heroId": 49,
+      "name": "Dragon Knight",
+      "rank": 2,
+      "games": 71,
+      "wins": 36,
+      "winRate": 0.507,
+      "share": 0.324
+    },
+    {
+      "heroId": 49,
+      "name": "Dragon Knight",
+      "rank": 1,
+      "games": 73,
+      "wins": 37,
+      "winRate": 0.507,
+      "share": 0.333
+    },
+    {
+      "heroId": 49,
+      "name": "Dragon Knight",
+      "rank": 3,
+      "games": 73,
+      "wins": 39,
+      "winRate": 0.534,
+      "share": 0.333
+    },
+    {
+      "heroId": 50,
+      "name": "Dazzle",
+      "rank": 4,
+      "games": 59,
+      "wins": 28,
+      "winRate": 0.475,
+      "share": 0.454
+    },
+    {
+      "heroId": 50,
+      "name": "Dazzle",
+      "rank": 5,
+      "games": 66,
+      "wins": 32,
+      "winRate": 0.485,
+      "share": 0.508
+    },
+    {
+      "heroId": 51,
+      "name": "Clockwerk",
+      "rank": 4,
+      "games": 241,
+      "wins": 129,
+      "winRate": 0.535,
+      "share": 0.325
+    },
+    {
+      "heroId": 51,
+      "name": "Clockwerk",
+      "rank": 3,
+      "games": 16,
+      "wins": 10,
+      "winRate": 0.625,
+      "share": 0.022
+    },
+    {
+      "heroId": 51,
+      "name": "Clockwerk",
+      "rank": 5,
+      "games": 477,
+      "wins": 251,
+      "winRate": 0.526,
+      "share": 0.643
+    },
+    {
+      "heroId": 52,
+      "name": "Leshrac",
+      "rank": 1,
+      "games": 46,
+      "wins": 16,
+      "winRate": 0.348,
+      "share": 0.371
+    },
+    {
+      "heroId": 52,
+      "name": "Leshrac",
+      "rank": 2,
+      "games": 42,
+      "wins": 25,
+      "winRate": 0.595,
+      "share": 0.339
+    },
+    {
+      "heroId": 52,
+      "name": "Leshrac",
+      "rank": 3,
+      "games": 22,
+      "wins": 9,
+      "winRate": 0.409,
+      "share": 0.177
+    },
+    {
+      "heroId": 53,
+      "name": "Nature's Prophet",
+      "rank": 1,
+      "games": 112,
+      "wins": 63,
+      "winRate": 0.563,
+      "share": 0.306
+    },
+    {
+      "heroId": 53,
+      "name": "Nature's Prophet",
+      "rank": 2,
+      "games": 70,
+      "wins": 38,
+      "winRate": 0.543,
+      "share": 0.191
+    },
+    {
+      "heroId": 53,
+      "name": "Nature's Prophet",
+      "rank": 3,
+      "games": 88,
+      "wins": 45,
+      "winRate": 0.511,
+      "share": 0.24
+    },
+    {
+      "heroId": 53,
+      "name": "Nature's Prophet",
+      "rank": 4,
+      "games": 73,
+      "wins": 34,
+      "winRate": 0.466,
+      "share": 0.199
+    },
+    {
+      "heroId": 53,
+      "name": "Nature's Prophet",
+      "rank": 5,
+      "games": 23,
+      "wins": 14,
+      "winRate": 0.609,
+      "share": 0.063
+    },
+    {
+      "heroId": 54,
+      "name": "Lifestealer",
+      "rank": 2,
+      "games": 190,
+      "wins": 82,
+      "winRate": 0.432,
+      "share": 0.351
+    },
+    {
+      "heroId": 54,
+      "name": "Lifestealer",
+      "rank": 1,
+      "games": 129,
+      "wins": 67,
+      "winRate": 0.519,
+      "share": 0.238
+    },
+    {
+      "heroId": 54,
+      "name": "Lifestealer",
+      "rank": 3,
+      "games": 219,
+      "wins": 99,
+      "winRate": 0.452,
+      "share": 0.404
+    },
+    {
+      "heroId": 55,
+      "name": "Dark Seer",
+      "rank": 1,
+      "games": 46,
+      "wins": 27,
+      "winRate": 0.587,
+      "share": 0.254
+    },
+    {
+      "heroId": 55,
+      "name": "Dark Seer",
+      "rank": 2,
+      "games": 63,
+      "wins": 34,
+      "winRate": 0.54,
+      "share": 0.348
+    },
+    {
+      "heroId": 55,
+      "name": "Dark Seer",
+      "rank": 3,
+      "games": 68,
+      "wins": 30,
+      "winRate": 0.441,
+      "share": 0.376
+    },
+    {
+      "heroId": 56,
+      "name": "Clinkz",
+      "rank": 1,
+      "games": 93,
+      "wins": 42,
+      "winRate": 0.452,
+      "share": 0.399
+    },
+    {
+      "heroId": 56,
+      "name": "Clinkz",
+      "rank": 2,
+      "games": 89,
+      "wins": 50,
+      "winRate": 0.562,
+      "share": 0.382
+    },
+    {
+      "heroId": 56,
+      "name": "Clinkz",
+      "rank": 3,
+      "games": 48,
+      "wins": 27,
+      "winRate": 0.563,
+      "share": 0.206
+    },
+    {
+      "heroId": 57,
+      "name": "Omniknight",
+      "rank": 3,
+      "games": 26,
+      "wins": 13,
+      "winRate": 0.5,
+      "share": 0.371
+    },
+    {
+      "heroId": 57,
+      "name": "Omniknight",
+      "rank": 5,
+      "games": 18,
+      "wins": 7,
+      "winRate": 0.389,
+      "share": 0.257
+    },
+    {
+      "heroId": 58,
+      "name": "Enchantress",
+      "rank": 4,
+      "games": 204,
+      "wins": 112,
+      "winRate": 0.549,
+      "share": 0.426
+    },
+    {
+      "heroId": 58,
+      "name": "Enchantress",
+      "rank": 5,
+      "games": 267,
+      "wins": 129,
+      "winRate": 0.483,
+      "share": 0.557
+    },
+    {
+      "heroId": 59,
+      "name": "Huskar",
+      "rank": 1,
+      "games": 104,
+      "wins": 56,
+      "winRate": 0.538,
+      "share": 0.435
+    },
+    {
+      "heroId": 59,
+      "name": "Huskar",
+      "rank": 2,
+      "games": 71,
+      "wins": 32,
+      "winRate": 0.451,
+      "share": 0.297
+    },
+    {
+      "heroId": 59,
+      "name": "Huskar",
+      "rank": 3,
+      "games": 53,
+      "wins": 26,
+      "winRate": 0.491,
+      "share": 0.222
+    },
+    {
+      "heroId": 60,
+      "name": "Night Stalker",
+      "rank": 1,
+      "games": 106,
+      "wins": 48,
+      "winRate": 0.453,
+      "share": 0.29
+    },
+    {
+      "heroId": 60,
+      "name": "Night Stalker",
+      "rank": 2,
+      "games": 114,
+      "wins": 59,
+      "winRate": 0.518,
+      "share": 0.312
+    },
+    {
+      "heroId": 60,
+      "name": "Night Stalker",
+      "rank": 3,
+      "games": 142,
+      "wins": 67,
+      "winRate": 0.472,
+      "share": 0.389
+    },
+    {
+      "heroId": 61,
+      "name": "Broodmother",
+      "rank": 2,
+      "games": 20,
+      "wins": 10,
+      "winRate": 0.5,
+      "share": 0.339
+    },
+    {
+      "heroId": 61,
+      "name": "Broodmother",
+      "rank": 1,
+      "games": 20,
+      "wins": 9,
+      "winRate": 0.45,
+      "share": 0.339
+    },
+    {
+      "heroId": 61,
+      "name": "Broodmother",
+      "rank": 3,
+      "games": 19,
+      "wins": 8,
+      "winRate": 0.421,
+      "share": 0.322
+    },
+    {
+      "heroId": 62,
+      "name": "Bounty Hunter",
+      "rank": 4,
+      "games": 29,
+      "wins": 16,
+      "winRate": 0.552,
+      "share": 0.46
+    },
+    {
+      "heroId": 62,
+      "name": "Bounty Hunter",
+      "rank": 5,
+      "games": 29,
+      "wins": 17,
+      "winRate": 0.586,
+      "share": 0.46
+    },
+    {
+      "heroId": 63,
+      "name": "Weaver",
+      "rank": 1,
+      "games": 70,
+      "wins": 28,
+      "winRate": 0.4,
+      "share": 0.286
+    },
+    {
+      "heroId": 63,
+      "name": "Weaver",
+      "rank": 2,
+      "games": 70,
+      "wins": 25,
+      "winRate": 0.357,
+      "share": 0.286
+    },
+    {
+      "heroId": 63,
+      "name": "Weaver",
+      "rank": 3,
+      "games": 69,
+      "wins": 39,
+      "winRate": 0.565,
+      "share": 0.282
+    },
+    {
+      "heroId": 63,
+      "name": "Weaver",
+      "rank": 4,
+      "games": 24,
+      "wins": 13,
+      "winRate": 0.542,
+      "share": 0.098
+    },
+    {
+      "heroId": 64,
+      "name": "Jakiro",
+      "rank": 4,
+      "games": 223,
+      "wins": 99,
+      "winRate": 0.444,
+      "share": 0.42
+    },
+    {
+      "heroId": 64,
+      "name": "Jakiro",
+      "rank": 5,
+      "games": 294,
+      "wins": 132,
+      "winRate": 0.449,
+      "share": 0.554
+    },
+    {
+      "heroId": 65,
+      "name": "Batrider",
+      "rank": 1,
+      "games": 35,
+      "wins": 25,
+      "winRate": 0.714,
+      "share": 0.08
+    },
+    {
+      "heroId": 65,
+      "name": "Batrider",
+      "rank": 2,
+      "games": 86,
+      "wins": 58,
+      "winRate": 0.674,
+      "share": 0.197
+    },
+    {
+      "heroId": 65,
+      "name": "Batrider",
+      "rank": 4,
+      "games": 92,
+      "wins": 42,
+      "winRate": 0.457,
+      "share": 0.211
+    },
+    {
+      "heroId": 65,
+      "name": "Batrider",
+      "rank": 3,
+      "games": 162,
+      "wins": 93,
+      "winRate": 0.574,
+      "share": 0.372
+    },
+    {
+      "heroId": 65,
+      "name": "Batrider",
+      "rank": 5,
+      "games": 61,
+      "wins": 30,
+      "winRate": 0.492,
+      "share": 0.14
+    },
+    {
+      "heroId": 66,
+      "name": "Chen",
+      "rank": 5,
+      "games": 51,
+      "wins": 35,
+      "winRate": 0.686,
+      "share": 0.436
+    },
+    {
+      "heroId": 66,
+      "name": "Chen",
+      "rank": 4,
+      "games": 66,
+      "wins": 36,
+      "winRate": 0.545,
+      "share": 0.564
+    },
+    {
+      "heroId": 67,
+      "name": "Spectre",
+      "rank": 2,
+      "games": 53,
+      "wins": 19,
+      "winRate": 0.358,
+      "share": 0.453
+    },
+    {
+      "heroId": 67,
+      "name": "Spectre",
+      "rank": 1,
+      "games": 28,
+      "wins": 12,
+      "winRate": 0.429,
+      "share": 0.239
+    },
+    {
+      "heroId": 67,
+      "name": "Spectre",
+      "rank": 3,
+      "games": 34,
+      "wins": 18,
+      "winRate": 0.529,
+      "share": 0.291
+    },
+    {
+      "heroId": 68,
+      "name": "Ancient Apparition",
+      "rank": 5,
+      "games": 66,
+      "wins": 32,
+      "winRate": 0.485,
+      "share": 0.574
+    },
+    {
+      "heroId": 68,
+      "name": "Ancient Apparition",
+      "rank": 4,
+      "games": 49,
+      "wins": 24,
+      "winRate": 0.49,
+      "share": 0.426
+    },
+    {
+      "heroId": 69,
+      "name": "Doom",
+      "rank": 2,
+      "games": 263,
+      "wins": 150,
+      "winRate": 0.57,
+      "share": 0.304
+    },
+    {
+      "heroId": 69,
+      "name": "Doom",
+      "rank": 1,
+      "games": 263,
+      "wins": 150,
+      "winRate": 0.57,
+      "share": 0.304
+    },
+    {
+      "heroId": 69,
+      "name": "Doom",
+      "rank": 3,
+      "games": 333,
+      "wins": 165,
+      "winRate": 0.495,
+      "share": 0.385
+    },
+    {
+      "heroId": 70,
+      "name": "Ursa",
+      "rank": 2,
+      "games": 169,
+      "wins": 72,
+      "winRate": 0.426,
+      "share": 0.377
+    },
+    {
+      "heroId": 70,
+      "name": "Ursa",
+      "rank": 1,
+      "games": 121,
+      "wins": 56,
+      "winRate": 0.463,
+      "share": 0.27
+    },
+    {
+      "heroId": 70,
+      "name": "Ursa",
+      "rank": 3,
+      "games": 157,
+      "wins": 72,
+      "winRate": 0.459,
+      "share": 0.35
+    },
+    {
+      "heroId": 71,
+      "name": "Spirit Breaker",
+      "rank": 2,
+      "games": 55,
+      "wins": 31,
+      "winRate": 0.564,
+      "share": 0.075
+    },
+    {
+      "heroId": 71,
+      "name": "Spirit Breaker",
+      "rank": 4,
+      "games": 317,
+      "wins": 152,
+      "winRate": 0.479,
+      "share": 0.434
+    },
+    {
+      "heroId": 71,
+      "name": "Spirit Breaker",
+      "rank": 3,
+      "games": 83,
+      "wins": 47,
+      "winRate": 0.566,
+      "share": 0.114
+    },
+    {
+      "heroId": 71,
+      "name": "Spirit Breaker",
+      "rank": 5,
+      "games": 262,
+      "wins": 139,
+      "winRate": 0.531,
+      "share": 0.358
+    },
+    {
+      "heroId": 72,
+      "name": "Gyrocopter",
+      "rank": 2,
+      "games": 67,
+      "wins": 32,
+      "winRate": 0.478,
+      "share": 0.324
+    },
+    {
+      "heroId": 72,
+      "name": "Gyrocopter",
+      "rank": 1,
+      "games": 77,
+      "wins": 31,
+      "winRate": 0.403,
+      "share": 0.372
+    },
+    {
+      "heroId": 72,
+      "name": "Gyrocopter",
+      "rank": 3,
+      "games": 53,
+      "wins": 24,
+      "winRate": 0.453,
+      "share": 0.256
+    },
+    {
+      "heroId": 73,
+      "name": "Alchemist",
+      "rank": 1,
+      "games": 308,
+      "wins": 161,
+      "winRate": 0.523,
+      "share": 0.636
+    },
+    {
+      "heroId": 73,
+      "name": "Alchemist",
+      "rank": 2,
+      "games": 99,
+      "wins": 48,
+      "winRate": 0.485,
+      "share": 0.205
+    },
+    {
+      "heroId": 73,
+      "name": "Alchemist",
+      "rank": 3,
+      "games": 56,
+      "wins": 31,
+      "winRate": 0.554,
+      "share": 0.116
+    },
+    {
+      "heroId": 73,
+      "name": "Alchemist",
+      "rank": 4,
+      "games": 20,
+      "wins": 11,
+      "winRate": 0.55,
+      "share": 0.041
+    },
+    {
+      "heroId": 74,
+      "name": "Invoker",
+      "rank": 1,
+      "games": 191,
+      "wins": 99,
+      "winRate": 0.518,
+      "share": 0.274
+    },
+    {
+      "heroId": 74,
+      "name": "Invoker",
+      "rank": 2,
+      "games": 230,
+      "wins": 115,
+      "winRate": 0.5,
+      "share": 0.33
+    },
+    {
+      "heroId": 74,
+      "name": "Invoker",
+      "rank": 4,
+      "games": 31,
+      "wins": 14,
+      "winRate": 0.452,
+      "share": 0.044
+    },
+    {
+      "heroId": 74,
+      "name": "Invoker",
+      "rank": 3,
+      "games": 223,
+      "wins": 123,
+      "winRate": 0.552,
+      "share": 0.319
+    },
+    {
+      "heroId": 74,
+      "name": "Invoker",
+      "rank": 5,
+      "games": 23,
+      "wins": 13,
+      "winRate": 0.565,
+      "share": 0.033
+    },
+    {
+      "heroId": 75,
+      "name": "Silencer",
+      "rank": 4,
+      "games": 287,
+      "wins": 133,
+      "winRate": 0.463,
+      "share": 0.438
+    },
+    {
+      "heroId": 75,
+      "name": "Silencer",
+      "rank": 5,
+      "games": 356,
+      "wins": 170,
+      "winRate": 0.478,
+      "share": 0.544
+    },
+    {
+      "heroId": 76,
+      "name": "Outworld Destroyer",
+      "rank": 2,
+      "games": 32,
+      "wins": 12,
+      "winRate": 0.375,
+      "share": 0.364
+    },
+    {
+      "heroId": 76,
+      "name": "Outworld Destroyer",
+      "rank": 1,
+      "games": 26,
+      "wins": 12,
+      "winRate": 0.462,
+      "share": 0.295
+    },
+    {
+      "heroId": 76,
+      "name": "Outworld Destroyer",
+      "rank": 3,
+      "games": 26,
+      "wins": 11,
+      "winRate": 0.423,
+      "share": 0.295
+    },
+    {
+      "heroId": 77,
+      "name": "Lycan",
+      "rank": 2,
+      "games": 45,
+      "wins": 24,
+      "winRate": 0.533,
+      "share": 0.265
+    },
+    {
+      "heroId": 77,
+      "name": "Lycan",
+      "rank": 1,
+      "games": 41,
+      "wins": 23,
+      "winRate": 0.561,
+      "share": 0.241
+    },
+    {
+      "heroId": 77,
+      "name": "Lycan",
+      "rank": 3,
+      "games": 83,
+      "wins": 51,
+      "winRate": 0.614,
+      "share": 0.488
+    },
+    {
+      "heroId": 78,
+      "name": "Brewmaster",
+      "rank": 2,
+      "games": 64,
+      "wins": 28,
+      "winRate": 0.438,
+      "share": 0.305
+    },
+    {
+      "heroId": 78,
+      "name": "Brewmaster",
+      "rank": 1,
+      "games": 28,
+      "wins": 11,
+      "winRate": 0.393,
+      "share": 0.133
+    },
+    {
+      "heroId": 78,
+      "name": "Brewmaster",
+      "rank": 3,
+      "games": 109,
+      "wins": 50,
+      "winRate": 0.459,
+      "share": 0.519
+    },
+    {
+      "heroId": 79,
+      "name": "Shadow Demon",
+      "rank": 4,
+      "games": 212,
+      "wins": 93,
+      "winRate": 0.439,
+      "share": 0.493
+    },
+    {
+      "heroId": 79,
+      "name": "Shadow Demon",
+      "rank": 5,
+      "games": 211,
+      "wins": 91,
+      "winRate": 0.431,
+      "share": 0.491
+    },
+    {
+      "heroId": 80,
+      "name": "Lone Druid",
+      "rank": 1,
+      "games": 120,
+      "wins": 78,
+      "winRate": 0.65,
+      "share": 0.355
+    },
+    {
+      "heroId": 80,
+      "name": "Lone Druid",
+      "rank": 2,
+      "games": 113,
+      "wins": 73,
+      "winRate": 0.646,
+      "share": 0.334
+    },
+    {
+      "heroId": 80,
+      "name": "Lone Druid",
+      "rank": 3,
+      "games": 92,
+      "wins": 59,
+      "winRate": 0.641,
+      "share": 0.272
+    },
+    {
+      "heroId": 81,
+      "name": "Chaos Knight",
+      "rank": 2,
+      "games": 79,
+      "wins": 36,
+      "winRate": 0.456,
+      "share": 0.432
+    },
+    {
+      "heroId": 81,
+      "name": "Chaos Knight",
+      "rank": 1,
+      "games": 31,
+      "wins": 18,
+      "winRate": 0.581,
+      "share": 0.169
+    },
+    {
+      "heroId": 81,
+      "name": "Chaos Knight",
+      "rank": 3,
+      "games": 68,
+      "wins": 33,
+      "winRate": 0.485,
+      "share": 0.372
+    },
+    {
+      "heroId": 82,
+      "name": "Meepo",
+      "rank": 2,
+      "games": 31,
+      "wins": 14,
+      "winRate": 0.452,
+      "share": 0.282
+    },
+    {
+      "heroId": 82,
+      "name": "Meepo",
+      "rank": 1,
+      "games": 55,
+      "wins": 21,
+      "winRate": 0.382,
+      "share": 0.5
+    },
+    {
+      "heroId": 82,
+      "name": "Meepo",
+      "rank": 3,
+      "games": 24,
+      "wins": 16,
+      "winRate": 0.667,
+      "share": 0.218
+    },
+    {
+      "heroId": 83,
+      "name": "Treant Protector",
+      "rank": 5,
+      "games": 364,
+      "wins": 204,
+      "winRate": 0.56,
+      "share": 0.71
+    },
+    {
+      "heroId": 83,
+      "name": "Treant Protector",
+      "rank": 4,
+      "games": 149,
+      "wins": 81,
+      "winRate": 0.544,
+      "share": 0.29
+    },
+    {
+      "heroId": 84,
+      "name": "Ogre Magi",
+      "rank": 2,
+      "games": 24,
+      "wins": 15,
+      "winRate": 0.625,
+      "share": 0.044
+    },
+    {
+      "heroId": 84,
+      "name": "Ogre Magi",
+      "rank": 1,
+      "games": 16,
+      "wins": 9,
+      "winRate": 0.563,
+      "share": 0.029
+    },
+    {
+      "heroId": 84,
+      "name": "Ogre Magi",
+      "rank": 4,
+      "games": 176,
+      "wins": 84,
+      "winRate": 0.477,
+      "share": 0.32
+    },
+    {
+      "heroId": 84,
+      "name": "Ogre Magi",
+      "rank": 3,
+      "games": 31,
+      "wins": 17,
+      "winRate": 0.548,
+      "share": 0.056
+    },
+    {
+      "heroId": 84,
+      "name": "Ogre Magi",
+      "rank": 5,
+      "games": 303,
+      "wins": 157,
+      "winRate": 0.518,
+      "share": 0.551
+    },
+    {
+      "heroId": 85,
+      "name": "Undying",
+      "rank": 2,
+      "games": 43,
+      "wins": 24,
+      "winRate": 0.558,
+      "share": 0.116
+    },
+    {
+      "heroId": 85,
+      "name": "Undying",
+      "rank": 1,
+      "games": 23,
+      "wins": 8,
+      "winRate": 0.348,
+      "share": 0.062
+    },
+    {
+      "heroId": 85,
+      "name": "Undying",
+      "rank": 3,
+      "games": 56,
+      "wins": 21,
+      "winRate": 0.375,
+      "share": 0.151
+    },
+    {
+      "heroId": 85,
+      "name": "Undying",
+      "rank": 4,
+      "games": 142,
+      "wins": 72,
+      "winRate": 0.507,
+      "share": 0.383
+    },
+    {
+      "heroId": 85,
+      "name": "Undying",
+      "rank": 5,
+      "games": 107,
+      "wins": 44,
+      "winRate": 0.411,
+      "share": 0.288
+    },
+    {
+      "heroId": 86,
+      "name": "Rubick",
+      "rank": 4,
+      "games": 1175,
+      "wins": 569,
+      "winRate": 0.484,
+      "share": 0.528
+    },
+    {
+      "heroId": 86,
+      "name": "Rubick",
+      "rank": 5,
+      "games": 829,
+      "wins": 438,
+      "winRate": 0.528,
+      "share": 0.373
+    },
+    {
+      "heroId": 86,
+      "name": "Rubick",
+      "rank": 2,
+      "games": 88,
+      "wins": 49,
+      "winRate": 0.557,
+      "share": 0.04
+    },
+    {
+      "heroId": 86,
+      "name": "Rubick",
+      "rank": 1,
+      "games": 60,
+      "wins": 26,
+      "winRate": 0.433,
+      "share": 0.027
+    },
+    {
+      "heroId": 86,
+      "name": "Rubick",
+      "rank": 3,
+      "games": 73,
+      "wins": 42,
+      "winRate": 0.575,
+      "share": 0.033
+    },
+    {
+      "heroId": 87,
+      "name": "Disruptor",
+      "rank": 5,
+      "games": 487,
+      "wins": 227,
+      "winRate": 0.466,
+      "share": 0.654
+    },
+    {
+      "heroId": 87,
+      "name": "Disruptor",
+      "rank": 4,
+      "games": 250,
+      "wins": 125,
+      "winRate": 0.5,
+      "share": 0.336
+    },
+    {
+      "heroId": 88,
+      "name": "Nyx Assassin",
+      "rank": 4,
+      "games": 138,
+      "wins": 83,
+      "winRate": 0.601,
+      "share": 0.429
+    },
+    {
+      "heroId": 88,
+      "name": "Nyx Assassin",
+      "rank": 5,
+      "games": 158,
+      "wins": 80,
+      "winRate": 0.506,
+      "share": 0.491
+    },
+    {
+      "heroId": 89,
+      "name": "Naga Siren",
+      "rank": 2,
+      "games": 30,
+      "wins": 17,
+      "winRate": 0.567,
+      "share": 0.385
+    },
+    {
+      "heroId": 89,
+      "name": "Naga Siren",
+      "rank": 1,
+      "games": 22,
+      "wins": 13,
+      "winRate": 0.591,
+      "share": 0.282
+    },
+    {
+      "heroId": 89,
+      "name": "Naga Siren",
+      "rank": 3,
+      "games": 22,
+      "wins": 9,
+      "winRate": 0.409,
+      "share": 0.282
+    },
+    {
+      "heroId": 90,
+      "name": "Keeper of the Light",
+      "rank": 2,
+      "games": 69,
+      "wins": 41,
+      "winRate": 0.594,
+      "share": 0.14
+    },
+    {
+      "heroId": 90,
+      "name": "Keeper of the Light",
+      "rank": 1,
+      "games": 73,
+      "wins": 39,
+      "winRate": 0.534,
+      "share": 0.148
+    },
+    {
+      "heroId": 90,
+      "name": "Keeper of the Light",
+      "rank": 4,
+      "games": 182,
+      "wins": 114,
+      "winRate": 0.626,
+      "share": 0.369
+    },
+    {
+      "heroId": 90,
+      "name": "Keeper of the Light",
+      "rank": 3,
+      "games": 37,
+      "wins": 22,
+      "winRate": 0.595,
+      "share": 0.075
+    },
+    {
+      "heroId": 90,
+      "name": "Keeper of the Light",
+      "rank": 5,
+      "games": 132,
+      "wins": 74,
+      "winRate": 0.561,
+      "share": 0.268
+    },
+    {
+      "heroId": 102,
+      "name": "Abaddon",
+      "rank": 2,
+      "games": 38,
+      "wins": 18,
+      "winRate": 0.474,
+      "share": 0.302
+    },
+    {
+      "heroId": 102,
+      "name": "Abaddon",
+      "rank": 1,
+      "games": 28,
+      "wins": 14,
+      "winRate": 0.5,
+      "share": 0.222
+    },
+    {
+      "heroId": 102,
+      "name": "Abaddon",
+      "rank": 3,
+      "games": 31,
+      "wins": 18,
+      "winRate": 0.581,
+      "share": 0.246
+    },
+    {
+      "heroId": 102,
+      "name": "Abaddon",
+      "rank": 5,
+      "games": 18,
+      "wins": 8,
+      "winRate": 0.444,
+      "share": 0.143
+    },
+    {
+      "heroId": 104,
+      "name": "Legion Commander",
+      "rank": 1,
+      "games": 45,
+      "wins": 28,
+      "winRate": 0.622,
+      "share": 0.19
+    },
+    {
+      "heroId": 104,
+      "name": "Legion Commander",
+      "rank": 2,
+      "games": 91,
+      "wins": 39,
+      "winRate": 0.429,
+      "share": 0.384
+    },
+    {
+      "heroId": 104,
+      "name": "Legion Commander",
+      "rank": 3,
+      "games": 99,
+      "wins": 54,
+      "winRate": 0.545,
+      "share": 0.418
+    },
+    {
+      "heroId": 105,
+      "name": "Techies",
+      "rank": 4,
+      "games": 329,
+      "wins": 149,
+      "winRate": 0.453,
+      "share": 0.513
+    },
+    {
+      "heroId": 105,
+      "name": "Techies",
+      "rank": 3,
+      "games": 16,
+      "wins": 10,
+      "winRate": 0.625,
+      "share": 0.025
+    },
+    {
+      "heroId": 105,
+      "name": "Techies",
+      "rank": 5,
+      "games": 281,
+      "wins": 147,
+      "winRate": 0.523,
+      "share": 0.438
+    },
+    {
+      "heroId": 106,
+      "name": "Ember Spirit",
+      "rank": 2,
+      "games": 417,
+      "wins": 208,
+      "winRate": 0.499,
+      "share": 0.408
+    },
+    {
+      "heroId": 106,
+      "name": "Ember Spirit",
+      "rank": 1,
+      "games": 328,
+      "wins": 166,
+      "winRate": 0.506,
+      "share": 0.321
+    },
+    {
+      "heroId": 106,
+      "name": "Ember Spirit",
+      "rank": 3,
+      "games": 263,
+      "wins": 144,
+      "winRate": 0.548,
+      "share": 0.258
+    },
+    {
+      "heroId": 107,
+      "name": "Earth Spirit",
+      "rank": 2,
+      "games": 71,
+      "wins": 29,
+      "winRate": 0.408,
+      "share": 0.239
+    },
+    {
+      "heroId": 107,
+      "name": "Earth Spirit",
+      "rank": 1,
+      "games": 54,
+      "wins": 34,
+      "winRate": 0.63,
+      "share": 0.182
+    },
+    {
+      "heroId": 107,
+      "name": "Earth Spirit",
+      "rank": 4,
+      "games": 51,
+      "wins": 36,
+      "winRate": 0.706,
+      "share": 0.172
+    },
+    {
+      "heroId": 107,
+      "name": "Earth Spirit",
+      "rank": 3,
+      "games": 76,
+      "wins": 38,
+      "winRate": 0.5,
+      "share": 0.256
+    },
+    {
+      "heroId": 107,
+      "name": "Earth Spirit",
+      "rank": 5,
+      "games": 45,
+      "wins": 17,
+      "winRate": 0.378,
+      "share": 0.152
+    },
+    {
+      "heroId": 108,
+      "name": "Underlord",
+      "rank": 2,
+      "games": 189,
+      "wins": 84,
+      "winRate": 0.444,
+      "share": 0.35
+    },
+    {
+      "heroId": 108,
+      "name": "Underlord",
+      "rank": 1,
+      "games": 104,
+      "wins": 48,
+      "winRate": 0.462,
+      "share": 0.193
+    },
+    {
+      "heroId": 108,
+      "name": "Underlord",
+      "rank": 3,
+      "games": 240,
+      "wins": 100,
+      "winRate": 0.417,
+      "share": 0.444
+    },
+    {
+      "heroId": 109,
+      "name": "Terrorblade",
+      "rank": 1,
+      "games": 167,
+      "wins": 86,
+      "winRate": 0.515,
+      "share": 0.434
+    },
+    {
+      "heroId": 109,
+      "name": "Terrorblade",
+      "rank": 2,
+      "games": 137,
+      "wins": 77,
+      "winRate": 0.562,
+      "share": 0.356
+    },
+    {
+      "heroId": 109,
+      "name": "Terrorblade",
+      "rank": 3,
+      "games": 78,
+      "wins": 35,
+      "winRate": 0.449,
+      "share": 0.203
+    },
+    {
+      "heroId": 110,
+      "name": "Phoenix",
+      "rank": 1,
+      "games": 69,
+      "wins": 37,
+      "winRate": 0.536,
+      "share": 0.058
+    },
+    {
+      "heroId": 110,
+      "name": "Phoenix",
+      "rank": 2,
+      "games": 55,
+      "wins": 34,
+      "winRate": 0.618,
+      "share": 0.046
+    },
+    {
+      "heroId": 110,
+      "name": "Phoenix",
+      "rank": 4,
+      "games": 599,
+      "wins": 313,
+      "winRate": 0.523,
+      "share": 0.506
+    },
+    {
+      "heroId": 110,
+      "name": "Phoenix",
+      "rank": 3,
+      "games": 75,
+      "wins": 47,
+      "winRate": 0.627,
+      "share": 0.063
+    },
+    {
+      "heroId": 110,
+      "name": "Phoenix",
+      "rank": 5,
+      "games": 386,
+      "wins": 201,
+      "winRate": 0.521,
+      "share": 0.326
+    },
+    {
+      "heroId": 111,
+      "name": "Oracle",
+      "rank": 4,
+      "games": 60,
+      "wins": 24,
+      "winRate": 0.4,
+      "share": 0.469
+    },
+    {
+      "heroId": 111,
+      "name": "Oracle",
+      "rank": 5,
+      "games": 65,
+      "wins": 31,
+      "winRate": 0.477,
+      "share": 0.508
+    },
+    {
+      "heroId": 112,
+      "name": "Winter Wyvern",
+      "rank": 4,
+      "games": 162,
+      "wins": 86,
+      "winRate": 0.531,
+      "share": 0.354
+    },
+    {
+      "heroId": 112,
+      "name": "Winter Wyvern",
+      "rank": 5,
+      "games": 286,
+      "wins": 142,
+      "winRate": 0.497,
+      "share": 0.624
+    },
+    {
+      "heroId": 113,
+      "name": "Arc Warden",
+      "rank": 1,
+      "games": 32,
+      "wins": 20,
+      "winRate": 0.625,
+      "share": 0.696
+    },
+    {
+      "heroId": 114,
+      "name": "Monkey King",
+      "rank": 1,
+      "games": 177,
+      "wins": 93,
+      "winRate": 0.525,
+      "share": 0.286
+    },
+    {
+      "heroId": 114,
+      "name": "Monkey King",
+      "rank": 2,
+      "games": 210,
+      "wins": 113,
+      "winRate": 0.538,
+      "share": 0.339
+    },
+    {
+      "heroId": 114,
+      "name": "Monkey King",
+      "rank": 3,
+      "games": 208,
+      "wins": 102,
+      "winRate": 0.49,
+      "share": 0.336
+    },
+    {
+      "heroId": 114,
+      "name": "Monkey King",
+      "rank": 4,
+      "games": 16,
+      "wins": 11,
+      "winRate": 0.688,
+      "share": 0.026
+    },
+    {
+      "heroId": 119,
+      "name": "Dark Willow",
+      "rank": 5,
+      "games": 172,
+      "wins": 67,
+      "winRate": 0.39,
+      "share": 0.428
+    },
+    {
+      "heroId": 119,
+      "name": "Dark Willow",
+      "rank": 4,
+      "games": 224,
+      "wins": 108,
+      "winRate": 0.482,
+      "share": 0.557
+    },
+    {
+      "heroId": 120,
+      "name": "Pangolier",
+      "rank": 1,
+      "games": 375,
+      "wins": 201,
+      "winRate": 0.536,
+      "share": 0.297
+    },
+    {
+      "heroId": 120,
+      "name": "Pangolier",
+      "rank": 2,
+      "games": 433,
+      "wins": 211,
+      "winRate": 0.487,
+      "share": 0.343
+    },
+    {
+      "heroId": 120,
+      "name": "Pangolier",
+      "rank": 3,
+      "games": 452,
+      "wins": 215,
+      "winRate": 0.476,
+      "share": 0.358
+    },
+    {
+      "heroId": 121,
+      "name": "Grimstroke",
+      "rank": 4,
+      "games": 264,
+      "wins": 140,
+      "winRate": 0.53,
+      "share": 0.542
+    },
+    {
+      "heroId": 121,
+      "name": "Grimstroke",
+      "rank": 5,
+      "games": 211,
+      "wins": 100,
+      "winRate": 0.474,
+      "share": 0.433
+    },
+    {
+      "heroId": 123,
+      "name": "Hoodwink",
+      "rank": 4,
+      "games": 884,
+      "wins": 468,
+      "winRate": 0.529,
+      "share": 0.596
+    },
+    {
+      "heroId": 123,
+      "name": "Hoodwink",
+      "rank": 3,
+      "games": 20,
+      "wins": 9,
+      "winRate": 0.45,
+      "share": 0.013
+    },
+    {
+      "heroId": 123,
+      "name": "Hoodwink",
+      "rank": 5,
+      "games": 571,
+      "wins": 286,
+      "winRate": 0.501,
+      "share": 0.385
+    },
+    {
+      "heroId": 126,
+      "name": "Void Spirit",
+      "rank": 1,
+      "games": 167,
+      "wins": 65,
+      "winRate": 0.389,
+      "share": 0.282
+    },
+    {
+      "heroId": 126,
+      "name": "Void Spirit",
+      "rank": 2,
+      "games": 234,
+      "wins": 95,
+      "winRate": 0.406,
+      "share": 0.395
+    },
+    {
+      "heroId": 126,
+      "name": "Void Spirit",
+      "rank": 3,
+      "games": 182,
+      "wins": 92,
+      "winRate": 0.505,
+      "share": 0.307
+    },
+    {
+      "heroId": 128,
+      "name": "Snapfire",
+      "rank": 1,
+      "games": 208,
+      "wins": 121,
+      "winRate": 0.582,
+      "share": 0.198
+    },
+    {
+      "heroId": 128,
+      "name": "Snapfire",
+      "rank": 2,
+      "games": 183,
+      "wins": 97,
+      "winRate": 0.53,
+      "share": 0.174
+    },
+    {
+      "heroId": 128,
+      "name": "Snapfire",
+      "rank": 4,
+      "games": 293,
+      "wins": 136,
+      "winRate": 0.464,
+      "share": 0.279
+    },
+    {
+      "heroId": 128,
+      "name": "Snapfire",
+      "rank": 3,
+      "games": 108,
+      "wins": 64,
+      "winRate": 0.593,
+      "share": 0.103
+    },
+    {
+      "heroId": 128,
+      "name": "Snapfire",
+      "rank": 5,
+      "games": 257,
+      "wins": 145,
+      "winRate": 0.564,
+      "share": 0.245
+    },
+    {
+      "heroId": 129,
+      "name": "Mars",
+      "rank": 2,
+      "games": 170,
+      "wins": 81,
+      "winRate": 0.476,
+      "share": 0.323
+    },
+    {
+      "heroId": 129,
+      "name": "Mars",
+      "rank": 1,
+      "games": 77,
+      "wins": 36,
+      "winRate": 0.468,
+      "share": 0.146
+    },
+    {
+      "heroId": 129,
+      "name": "Mars",
+      "rank": 3,
+      "games": 272,
+      "wins": 123,
+      "winRate": 0.452,
+      "share": 0.516
+    },
+    {
+      "heroId": 131,
+      "name": "Ringmaster",
+      "rank": 4,
+      "games": 271,
+      "wins": 120,
+      "winRate": 0.443,
+      "share": 0.483
+    },
+    {
+      "heroId": 131,
+      "name": "Ringmaster",
+      "rank": 5,
+      "games": 282,
+      "wins": 132,
+      "winRate": 0.468,
+      "share": 0.503
+    },
+    {
+      "heroId": 135,
+      "name": "Dawnbreaker",
+      "rank": 1,
+      "games": 172,
+      "wins": 93,
+      "winRate": 0.541,
+      "share": 0.226
+    },
+    {
+      "heroId": 135,
+      "name": "Dawnbreaker",
+      "rank": 2,
+      "games": 208,
+      "wins": 106,
+      "winRate": 0.51,
+      "share": 0.273
+    },
+    {
+      "heroId": 135,
+      "name": "Dawnbreaker",
+      "rank": 3,
+      "games": 359,
+      "wins": 169,
+      "winRate": 0.471,
+      "share": 0.472
+    },
+    {
+      "heroId": 135,
+      "name": "Dawnbreaker",
+      "rank": 4,
+      "games": 15,
+      "wins": 4,
+      "winRate": 0.267,
+      "share": 0.02
+    },
+    {
+      "heroId": 136,
+      "name": "Marci",
+      "rank": 4,
+      "games": 64,
+      "wins": 31,
+      "winRate": 0.484,
+      "share": 0.309
+    },
+    {
+      "heroId": 136,
+      "name": "Marci",
+      "rank": 3,
+      "games": 25,
+      "wins": 14,
+      "winRate": 0.56,
+      "share": 0.121
+    },
+    {
+      "heroId": 136,
+      "name": "Marci",
+      "rank": 5,
+      "games": 92,
+      "wins": 42,
+      "winRate": 0.457,
+      "share": 0.444
+    },
+    {
+      "heroId": 137,
+      "name": "Primal Beast",
+      "rank": 2,
+      "games": 94,
+      "wins": 44,
+      "winRate": 0.468,
+      "share": 0.321
+    },
+    {
+      "heroId": 137,
+      "name": "Primal Beast",
+      "rank": 1,
+      "games": 39,
+      "wins": 22,
+      "winRate": 0.564,
+      "share": 0.133
+    },
+    {
+      "heroId": 137,
+      "name": "Primal Beast",
+      "rank": 3,
+      "games": 155,
+      "wins": 88,
+      "winRate": 0.568,
+      "share": 0.529
+    },
+    {
+      "heroId": 138,
+      "name": "Muerta",
+      "rank": 1,
+      "games": 194,
+      "wins": 98,
+      "winRate": 0.505,
+      "share": 0.357
+    },
+    {
+      "heroId": 138,
+      "name": "Muerta",
+      "rank": 2,
+      "games": 147,
+      "wins": 81,
+      "winRate": 0.551,
+      "share": 0.27
+    },
+    {
+      "heroId": 138,
+      "name": "Muerta",
+      "rank": 3,
+      "games": 129,
+      "wins": 67,
+      "winRate": 0.519,
+      "share": 0.237
+    },
+    {
+      "heroId": 138,
+      "name": "Muerta",
+      "rank": 4,
+      "games": 47,
+      "wins": 19,
+      "winRate": 0.404,
+      "share": 0.086
+    },
+    {
+      "heroId": 138,
+      "name": "Muerta",
+      "rank": 5,
+      "games": 27,
+      "wins": 8,
+      "winRate": 0.296,
+      "share": 0.05
+    },
+    {
+      "heroId": 145,
+      "name": "Kez",
+      "rank": 1,
+      "games": 188,
+      "wins": 97,
+      "winRate": 0.516,
+      "share": 0.336
+    },
+    {
+      "heroId": 145,
+      "name": "Kez",
+      "rank": 2,
+      "games": 213,
+      "wins": 118,
+      "winRate": 0.554,
+      "share": 0.38
+    },
+    {
+      "heroId": 145,
+      "name": "Kez",
+      "rank": 3,
+      "games": 157,
+      "wins": 95,
+      "winRate": 0.605,
+      "share": 0.28
+    },
+    {
+      "heroId": 155,
+      "name": "Largo",
+      "rank": 2,
+      "games": 81,
+      "wins": 42,
+      "winRate": 0.519,
+      "share": 0.212
+    },
+    {
+      "heroId": 155,
+      "name": "Largo",
+      "rank": 1,
+      "games": 50,
+      "wins": 27,
+      "winRate": 0.54,
+      "share": 0.131
+    },
+    {
+      "heroId": 155,
+      "name": "Largo",
+      "rank": 4,
+      "games": 42,
+      "wins": 25,
+      "winRate": 0.595,
+      "share": 0.11
+    },
+    {
+      "heroId": 155,
+      "name": "Largo",
+      "rank": 3,
+      "games": 159,
+      "wins": 73,
+      "winRate": 0.459,
+      "share": 0.416
+    },
+    {
+      "heroId": 155,
+      "name": "Largo",
+      "rank": 5,
+      "games": 50,
+      "wins": 28,
+      "winRate": 0.56,
+      "share": 0.131
+    },
+    {
+      "heroId": 91,
+      "name": "Io",
+      "rank": 4,
+      "games": 95,
+      "wins": 51,
+      "winRate": 0.537,
+      "share": 0.5
+    },
+    {
+      "heroId": 91,
+      "name": "Io",
+      "rank": 5,
+      "games": 82,
+      "wins": 47,
+      "winRate": 0.573,
+      "share": 0.432
+    },
+    {
+      "heroId": 92,
+      "name": "Visage",
+      "rank": 2,
+      "games": 20,
+      "wins": 11,
+      "winRate": 0.55,
+      "share": 0.244
+    },
+    {
+      "heroId": 92,
+      "name": "Visage",
+      "rank": 3,
+      "games": 45,
+      "wins": 28,
+      "winRate": 0.622,
+      "share": 0.549
+    },
+    {
+      "heroId": 93,
+      "name": "Slark",
+      "rank": 2,
+      "games": 81,
+      "wins": 38,
+      "winRate": 0.469,
+      "share": 0.32
+    },
+    {
+      "heroId": 93,
+      "name": "Slark",
+      "rank": 1,
+      "games": 72,
+      "wins": 38,
+      "winRate": 0.528,
+      "share": 0.285
+    },
+    {
+      "heroId": 93,
+      "name": "Slark",
+      "rank": 3,
+      "games": 97,
+      "wins": 48,
+      "winRate": 0.495,
+      "share": 0.383
+    },
+    {
+      "heroId": 94,
+      "name": "Medusa",
+      "rank": 2,
+      "games": 55,
+      "wins": 22,
+      "winRate": 0.4,
+      "share": 0.364
+    },
+    {
+      "heroId": 94,
+      "name": "Medusa",
+      "rank": 1,
+      "games": 49,
+      "wins": 25,
+      "winRate": 0.51,
+      "share": 0.325
+    },
+    {
+      "heroId": 94,
+      "name": "Medusa",
+      "rank": 3,
+      "games": 47,
+      "wins": 12,
+      "winRate": 0.255,
+      "share": 0.311
+    },
+    {
+      "heroId": 95,
+      "name": "Troll Warlord",
+      "rank": 1,
+      "games": 43,
+      "wins": 24,
+      "winRate": 0.558,
+      "share": 0.287
+    },
+    {
+      "heroId": 95,
+      "name": "Troll Warlord",
+      "rank": 2,
+      "games": 63,
+      "wins": 32,
+      "winRate": 0.508,
+      "share": 0.42
+    },
+    {
+      "heroId": 95,
+      "name": "Troll Warlord",
+      "rank": 3,
+      "games": 42,
+      "wins": 21,
+      "winRate": 0.5,
+      "share": 0.28
+    },
+    {
+      "heroId": 96,
+      "name": "Centaur Warrunner",
+      "rank": 2,
+      "games": 134,
+      "wins": 64,
+      "winRate": 0.478,
+      "share": 0.309
+    },
+    {
+      "heroId": 96,
+      "name": "Centaur Warrunner",
+      "rank": 1,
+      "games": 67,
+      "wins": 35,
+      "winRate": 0.522,
+      "share": 0.155
+    },
+    {
+      "heroId": 96,
+      "name": "Centaur Warrunner",
+      "rank": 3,
+      "games": 226,
+      "wins": 115,
+      "winRate": 0.509,
+      "share": 0.522
+    },
+    {
+      "heroId": 97,
+      "name": "Magnus",
+      "rank": 1,
+      "games": 75,
+      "wins": 37,
+      "winRate": 0.493,
+      "share": 0.328
+    },
+    {
+      "heroId": 97,
+      "name": "Magnus",
+      "rank": 2,
+      "games": 56,
+      "wins": 25,
+      "winRate": 0.446,
+      "share": 0.245
+    },
+    {
+      "heroId": 97,
+      "name": "Magnus",
+      "rank": 3,
+      "games": 65,
+      "wins": 36,
+      "winRate": 0.554,
+      "share": 0.284
+    },
+    {
+      "heroId": 97,
+      "name": "Magnus",
+      "rank": 4,
+      "games": 21,
+      "wins": 13,
+      "winRate": 0.619,
+      "share": 0.092
+    },
+    {
+      "heroId": 98,
+      "name": "Timbersaw",
+      "rank": 2,
+      "games": 127,
+      "wins": 59,
+      "winRate": 0.465,
+      "share": 0.297
+    },
+    {
+      "heroId": 98,
+      "name": "Timbersaw",
+      "rank": 1,
+      "games": 91,
+      "wins": 48,
+      "winRate": 0.527,
+      "share": 0.213
+    },
+    {
+      "heroId": 98,
+      "name": "Timbersaw",
+      "rank": 3,
+      "games": 206,
+      "wins": 99,
+      "winRate": 0.481,
+      "share": 0.481
+    },
+    {
+      "heroId": 99,
+      "name": "Bristleback",
+      "rank": 1,
+      "games": 236,
+      "wins": 125,
+      "winRate": 0.53,
+      "share": 0.4
+    },
+    {
+      "heroId": 99,
+      "name": "Bristleback",
+      "rank": 2,
+      "games": 185,
+      "wins": 76,
+      "winRate": 0.411,
+      "share": 0.314
+    },
+    {
+      "heroId": 99,
+      "name": "Bristleback",
+      "rank": 3,
+      "games": 166,
+      "wins": 67,
+      "winRate": 0.404,
+      "share": 0.281
+    },
+    {
+      "heroId": 100,
+      "name": "Tusk",
+      "rank": 4,
+      "games": 417,
+      "wins": 202,
+      "winRate": 0.484,
+      "share": 0.402
+    },
+    {
+      "heroId": 100,
+      "name": "Tusk",
+      "rank": 3,
+      "games": 19,
+      "wins": 14,
+      "winRate": 0.737,
+      "share": 0.018
+    },
+    {
+      "heroId": 100,
+      "name": "Tusk",
+      "rank": 5,
+      "games": 592,
+      "wins": 308,
+      "winRate": 0.52,
+      "share": 0.571
+    },
+    {
+      "heroId": 101,
+      "name": "Skywrath Mage",
+      "rank": 4,
+      "games": 247,
+      "wins": 109,
+      "winRate": 0.441,
+      "share": 0.523
+    },
+    {
+      "heroId": 101,
+      "name": "Skywrath Mage",
+      "rank": 5,
+      "games": 203,
+      "wins": 85,
+      "winRate": 0.419,
+      "share": 0.43
+    }
+  ]
+}

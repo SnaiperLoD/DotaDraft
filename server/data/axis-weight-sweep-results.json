@@ -1,0 +1,262 @@
+[
+  {
+    "axis": "BASELINE",
+    "delta": 0,
+    "newValue": null,
+    "r": 0.31,
+    "flagged": 46,
+    "pl": -20.1,
+    "treant": 19.3,
+    "silencer": -23
+  },
+  {
+    "axis": "control",
+    "delta": -0.5,
+    "newValue": 0.5,
+    "r": 0.315,
+    "flagged": 46,
+    "pl": -18.2,
+    "treant": 17.1,
+    "silencer": -23.6
+  },
+  {
+    "axis": "control",
+    "delta": 0.5,
+    "newValue": 1.5,
+    "r": 0.311,
+    "flagged": 45,
+    "pl": -22.6,
+    "treant": 20.5,
+    "silencer": -24.8
+  },
+  {
+    "axis": "initiating",
+    "delta": -0.5,
+    "newValue": 0.5,
+    "r": 0.315,
+    "flagged": 43,
+    "pl": -20.3,
+    "treant": 18.6,
+    "silencer": -24.1
+  },
+  {
+    "axis": "initiating",
+    "delta": 0.5,
+    "newValue": 1.5,
+    "r": 0.308,
+    "flagged": 48,
+    "pl": -21.3,
+    "treant": 19.7,
+    "silencer": -25.1
+  },
+  {
+    "axis": "mobility",
+    "delta": -0.5,
+    "newValue": 0.5,
+    "r": 0.309,
+    "flagged": 43,
+    "pl": -21.8,
+    "treant": 18.4,
+    "silencer": -23.9
+  },
+  {
+    "axis": "mobility",
+    "delta": 0.5,
+    "newValue": 1.5,
+    "r": 0.319,
+    "flagged": 45,
+    "pl": -18.9,
+    "treant": 19.7,
+    "silencer": -24.7
+  },
+  {
+    "axis": "saving",
+    "delta": -0.5,
+    "newValue": 0.7,
+    "r": 0.31,
+    "flagged": 43,
+    "pl": -20.6,
+    "treant": 19.2,
+    "silencer": -23.9
+  },
+  {
+    "axis": "saving",
+    "delta": 0.5,
+    "newValue": 1.7,
+    "r": 0.324,
+    "flagged": 42,
+    "pl": -18.8,
+    "treant": 18.9,
+    "silencer": -24.5
+  },
+  {
+    "axis": "skirmish_rate",
+    "delta": -0.5,
+    "newValue": 0.8,
+    "r": 0.313,
+    "flagged": 41,
+    "pl": -19.1,
+    "treant": 17.8,
+    "silencer": -24.7
+  },
+  {
+    "axis": "skirmish_rate",
+    "delta": 0.5,
+    "newValue": 1.8,
+    "r": 0.324,
+    "flagged": 45,
+    "pl": -20.5,
+    "treant": 19.2,
+    "silencer": -23.8
+  },
+  {
+    "axis": "camp_stacking",
+    "delta": -0.5,
+    "newValue": 0.5,
+    "r": 0.327,
+    "flagged": 46,
+    "pl": -20.4,
+    "treant": 18.4,
+    "silencer": -25.3
+  },
+  {
+    "axis": "camp_stacking",
+    "delta": 0.5,
+    "newValue": 1.5,
+    "r": 0.304,
+    "flagged": 43,
+    "pl": -21.1,
+    "treant": 17.8,
+    "silencer": -23.6
+  },
+  {
+    "axis": "tempo",
+    "delta": -0.5,
+    "newValue": 0.7,
+    "r": 0.314,
+    "flagged": 45,
+    "pl": -20.2,
+    "treant": 19.1,
+    "silencer": -24
+  },
+  {
+    "axis": "tempo",
+    "delta": 0.5,
+    "newValue": 1.7,
+    "r": 0.31,
+    "flagged": 44,
+    "pl": -19.6,
+    "treant": 19,
+    "silencer": -24.6
+  },
+  {
+    "axis": "durability",
+    "delta": -0.5,
+    "newValue": 0,
+    "r": 0.309,
+    "flagged": 44,
+    "pl": -21.3,
+    "treant": 18.6,
+    "silencer": -24
+  },
+  {
+    "axis": "durability",
+    "delta": 0.5,
+    "newValue": 0.72,
+    "r": 0.294,
+    "flagged": 46,
+    "pl": -20,
+    "treant": 18.5,
+    "silencer": -24.4
+  },
+  {
+    "axis": "objectives",
+    "delta": -0.5,
+    "newValue": 0,
+    "r": 0.315,
+    "flagged": 44,
+    "pl": -22,
+    "treant": 18.4,
+    "silencer": -24.5
+  },
+  {
+    "axis": "objectives",
+    "delta": 0.5,
+    "newValue": 0.72,
+    "r": 0.319,
+    "flagged": 42,
+    "pl": -19.2,
+    "treant": 17.3,
+    "silencer": -23.5
+  },
+  {
+    "axis": "burst",
+    "delta": -0.5,
+    "newValue": 0,
+    "r": 0.311,
+    "flagged": 45,
+    "pl": -20.7,
+    "treant": 19.8,
+    "silencer": -24.3
+  },
+  {
+    "axis": "burst",
+    "delta": 0.5,
+    "newValue": 0.72,
+    "r": 0.327,
+    "flagged": 46,
+    "pl": -18.7,
+    "treant": 17,
+    "silencer": -25.5
+  },
+  {
+    "axis": "teamfight",
+    "delta": -0.5,
+    "newValue": 0,
+    "r": 0.319,
+    "flagged": 45,
+    "pl": -21.6,
+    "treant": 19.4,
+    "silencer": -24.5
+  },
+  {
+    "axis": "teamfight",
+    "delta": 0.5,
+    "newValue": 0.77,
+    "r": 0.31,
+    "flagged": 41,
+    "pl": -19.3,
+    "treant": 17.9,
+    "silencer": -25
+  },
+  {
+    "axis": "scaling",
+    "delta": -0.5,
+    "newValue": 0,
+    "r": 0.32,
+    "flagged": 43,
+    "pl": -20.5,
+    "treant": 20.1,
+    "silencer": -23.7
+  },
+  {
+    "axis": "scaling",
+    "delta": 0.5,
+    "newValue": 0.77,
+    "r": 0.31,
+    "flagged": 46,
+    "pl": -19.4,
+    "treant": 18.1,
+    "silencer": -24.7
+  },
+  {
+    "axis": "map_control",
+    "delta": 0.5,
+    "newValue": 0.5,
+    "r": 0.328,
+    "flagged": 43,
+    "pl": -20.7,
+    "treant": 20.8,
+    "silencer": -23.4
+  }
+]
