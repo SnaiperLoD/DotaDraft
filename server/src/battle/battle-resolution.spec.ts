@@ -181,15 +181,21 @@ describe('resolveBattle', () => {
       // independent. hero2 is otherwise matched with its opposite number
       // (8.5 durability/control/initiating both sides) — no difference
       // until role-fit enters.
+      // Filler IDs start at 9001/9011, not 3/8 — real hero IDs top out
+      // around 160, and server/data/manual-power-overrides.json (keyed by
+      // real hero.id, common/manual-power-overrides.ts) is recalibrated
+      // often enough that a small filler ID risks silently colliding with
+      // one and breaking this test's "otherwise matched" assumption (id=5
+      // did exactly that once already).
       const teamAUnassigned: BattlePick[] = [
         { hero: hero(1, 'A1', { tempo: 10 }), assignedRole: null },
         { hero: hero(2, 'A2', { durability: 8.5, control: 8.5, initiating: 8.5 }), assignedRole: null },
-        ...team(3, {}, 3),
+        ...team(3, {}, 9001),
       ];
       const teamB: BattlePick[] = [
         { hero: hero(6, 'B1'), assignedRole: null },
         { hero: hero(7, 'B2', { durability: 8.5, control: 8.5, initiating: 8.5 }), assignedRole: null },
-        ...team(3, {}, 8),
+        ...team(3, {}, 9011),
       ];
       const closeButEven = resolveBattle(teamAUnassigned, teamB, noData, () => 0.4);
       expect(closeButEven.advantageDirection).toBe('Even');

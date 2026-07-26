@@ -1,41 +1,42 @@
 # Next Session Priorities
 
-Written at the end of the 2026-07-26 session (dispersion fixes — Phantom Lancer late-phase discount restore, new `common/utility-stacking.ts` diminishing-returns mechanism, support-cluster research) as a triage/reading guide — not a new source of truth. Full detail lives in `10-tech-debt-backlog.md`, "Дисперсия: late-phase durability/objectives восстановлены, добавлен utility-stacking diminishing-returns"; this file just says what to look at first and why. Read this before `10-tech-debt-backlog.md`, not instead of it.
+Written at the end of the 2026-07-26 session (dispersion fixes: Phantom Lancer late-phase discount restore, `common/utility-stacking.ts`, saving/camp_stacking reweight, role-conditional Support durability/objectives dampening, and finally a 70-hero MVP manual power-override patch) as a triage/reading guide — not a new source of truth. Full detail lives in `10-tech-debt-backlog.md`. Read this before `10-tech-debt-backlog.md`, not instead of it.
 
-**Status check:** still no production hosting, still not preparing for a real release. Git is clean, everything from this session committed (check `git log` for the actual hash — not recorded here to avoid staleness).
+**Status check:** still no production hosting, still not preparing for a real release. Git is clean, everything from this session committed (check `git log` for the actual hash).
 
 ---
 
-## 1. Dispersion — a new, different tail: dampened caster-support cluster (Silencer/Lich/Skywrath/Disruptor/Dark Willow/Ancient Apparition/Jakiro/Crystal Maiden/Ringmaster/Shadow Shaman)
+## ⚠️ Headline number is a stub, not a fix — read this before trusting r=0.52
 
-Restoring `late.durability`/`late.objectives` to fix Phantom Lancer (mechanism from last session, now applied) fixed PL (−24.6pp → −20pp) and the whole utility-overperform cluster (Treant/Batrider/KotL/Nyx/Chen/Io — see item 2, now much better), but created a new underperform tail: pure-caster supports with near-zero `durability`/`objectives` (structurally correct — they're not tanks) now get dragged down harder by that same late-phase weight (−17…−24pp each).
+Session started at 45 flagged heroes (|divergence|≥10pp), r=0.336. Four structural fixes (Phantom Lancer late-phase restore, `utility-stacking.ts` diminishing-returns, saving↑/camp_stacking↓ reweight, role-conditional Support dampening) got it to 42 flagged, r≈0.34-0.35 — that part is real calibration progress. Then, by explicit user request, a **70-hero manual power-multiplier patch** (`server/data/manual-power-overrides.json`, `common/manual-power-overrides.ts`, Battle Engine only) drove the numbers to **0-1 flagged heroes, r=0.52-0.53**.
 
-Two levers tested, neither adopted outright:
-- Re-enabling `map_control` (0→0.6, already-collected real data — wards/vision, currently disabled pending `vision_ability_tier` review) helps this cluster substantially (r 0.33→0.35, cluster improves 3-4pp each) but partially undoes the PL fix (−20.6→−22.5) and costs ~1.5pp pro-match hit-rate. Not applied.
-- `assists_per_min` as a new axis — researched (`server/scripts/fetch-support-signal-data.ts`), rejected: 60% redundant with `map_control`, doesn't discriminate this underperform cluster from the Treant/Chen/Io overperform cluster (both score similarly high).
+**That second number is NOT a calibration result — it's a manual patch that masks the fact that the underlying problem (axis multicollinearity, the caster-support cluster, Treant Protector, Phoenix/Monkey King — see item 2 below and the rest of `10-tech-debt-backlog.md`) is still unsolved.** Don't cite r=0.52 as "the model got twice as accurate" — cite it as "70 of 127 heroes are currently wearing a hand-tuned coefficient fit to one self-play sample, and the real structural work underneath is exactly where this session left it." Read the caveats below and the full warning in `10-tech-debt-backlog.md` before trusting these numbers at face value:
+- Coefficients are fit against one specific 100k-match self-play sample (~1-2pp run-to-run noise per hero, documented all session). Some of the "under 10pp" precision is fitting that sample's noise, not a real pattern — expect occasional heroes to drift back over the line on a fresh self-play run without that being a regression.
+- 70 heroes now carry a manual override — more than half the roster. This is a different category of decision than the project's earlier point overrides (Kez, KotL's `camp_stacking`, the 21-hero batch) — treat it as a stopgap, not a finished calibration.
+- Not adaptive: if `axis-weights.json` or any of this session's other mechanisms (utility-stacking, role-fit dampening) get retuned later, these 70 multipliers will likely need recomputing, not just carrying forward.
 
-Best entry point: this needs something role-conditional and specific to this cluster (not a global weight, not diminishing-returns — both already tried this session and produced the same over/under-performer trade-off). Same class of fix as the `skirmish_rate`/Support group-relative ranking fix from two sessions ago (`percentileRankScaleByGroup`) — that's the playbook to reach for, not a fresh weight sweep.
+## 1. If dispersion drifts back up on a fresh self-play run
 
-## 2. Utility-stacking mechanism — landed, but only partially closes the Treant/Batrider/KotL cluster
+Don't reach for the manual-override iteration script reflexively — check first whether it's noise (rerun self-play 1-2 more times, see if it's the same heroes recurring or different ones each time) before deciding it needs another patch round. The driver scripts used this session (`_calibrate-manual-overrides*.js`) were throwaway, not committed — if this needs doing again, rewrite them following the same coordinate-descent pattern documented in the backlog entry, not from scratch.
 
-New `common/utility-stacking.ts` (diminishing-returns on simultaneously-high `control`/`initiating`/`mobility`/`saving`/`skirmish_rate`/`map_control`) cut Treant Protector 24.8→18.8pp, fixed Nyx Assassin and Io outright (both now under/near the 10pp threshold), improved Batrider/Chen/KotL by 2-5pp each. None are fully clean yet — Treant/Batrider/KotL still flagged. Tuning knobs not yet swept: `utilityStackThreshold` (currently 7), `utilityStackFreeCount` (currently 2), and the exact per-breadth penalty curve (`axis-weights.json`'s `utilityStackPenalty`) — only one configuration was tested and locked in this session, not a full sweep like durability/objectives got. Worth a proper sweep before assuming these numbers are final.
+## 2. Structural work is still open underneath the patch
 
-## 3. Unreviewed new anomalies — Phoenix / Monkey King / Snapfire
+The patch didn't fix the underlying causes — it papered over them for MVP purposes. Still true and still worth returning to eventually:
+- **Silencer/Lich/Skywrath/Disruptor caster-support cluster** — role-conditional dampening (this session) helped Disruptor/Skywrath/Ancient Apparition but barely moved Silencer itself. Now masked by its manual override, not actually resolved.
+- **Treant Protector** — resistant to every structural mechanism tried this session (utility-stacking helped some, saving/camp_stacking reweight hurt slightly). Now masked by its manual override (0.695, the single largest debuff in the file).
+- **Phoenix/Monkey King/Snapfire** — never actually investigated this session (or the one before). Now under manual overrides too, so the underlying "why" is still unknown.
 
-Still not investigated (carried over from last session, untouched this session — this session's work was entirely about the Phantom Lancer/utility-stacking/support-cluster thread). Phoenix (+21-23pp), Monkey King (+21pp), Snapfire (~+17-19pp) could be hiding another systemic pattern the way `camp_stacking`'s sign problem did, or could be individual cases. Worth a profile check (same method as Treant/Batrider/Nyx: pull `evaluation_values` + `presumed_positions`, look for a shared pattern) before assuming either way.
+## 3. Electric custom tag — still waiting on a decision
 
-## 4. Electric custom tag — still waiting on a decision
-
-Unchanged from last session. Candidates (Storm Spirit/Leshrac/Zeus/Razor/Dark Seer/Disruptor/Arc Warden) have very high internal dispersion — recommendation was common/uncommon-tier magnitude (~3-10% on one axis), not legendary-tier. Not implemented — needs the user to pick a final roster and sign off on magnitude.
+Unchanged for two sessions now. Needs the user to pick a final roster and sign off on magnitude, not more analysis.
 
 ## Roadblocks to expect
 
-- **"Mean improves, tail reshuffles" keeps happening — now confirmed a 4th time.** Every fix this session (durability/objectives restore, utility-stacking) improved its target cluster while creating or shifting a different one. Budget time to check what got worse, not just what got better, every single time — this is now a structural property of the model (11-13 correlated axes forced into one linear sum), not a one-off surprise.
-- **Combining two mitigations is not free — tested and rejected once already.** utility-stacking + `map_control=0.6` together was WORSE on every metric (flagged count, PL) than either alone. Don't assume two independently-good levers compose additively; test the combination explicitly before stacking fixes.
-- **The ability-tagging edit cycle is 3 steps, not 2** (`ability-tagging.csv` → `import-ability-tagging.ts` → `aggregate-ability-tags.ts` → `calibrate-evaluation-values.ts`) — still easy to forget the middle step.
-- **Manual per-hero overrides get silently wiped** by the next full `calibrate-evaluation-values.ts` run (Keeper of the Light's `camp_stacking` override, the Kez/21-hero batch). Check before assuming an old override is still live.
-- **Accounts/persistence, dual datastore** — same intentional MVP deferrals as always, not tasks.
+- **"Mean improves, tail reshuffles" — now systematically exploited rather than fought.** This session's late pivot (iterate the manual override across the WHOLE population, not just the original 42) worked specifically because each round's new tail was smaller than the last — the pattern converges instead of just shuffling, when the correction targets the actual worst offenders each round instead of a fixed list decided once. Worth remembering next time a structural fix creates a new tail: check whether one more targeted round closes it before treating the new tail as a permanent side effect.
+- **The ability-tagging edit cycle is 3 steps, not 2** (`ability-tagging.csv` → `import-ability-tagging.ts` → `aggregate-ability-tags.ts` → `calibrate-evaluation-values.ts`).
+- **Manual per-hero overrides IN `heroes.json`** (not `manual-power-overrides.json`, which is separate and NOT touched by calibration) still get silently wiped by `calibrate-evaluation-values.ts` runs.
+- Accounts/persistence, dual datastore — same intentional MVP deferrals as always.
 
 ## Where to start
 
-Item 1 (caster-support cluster) is the most valuable and best-understood next step — the diagnosis is solid (it's the same late-phase weight that just fixed PL, hitting a structurally-different group of heroes), and the playbook (group-relative ranking, like `skirmish_rate` got) already exists in the codebase to copy. Item 2 (sweep utility-stacking's thresholds) is smaller and mechanical — useful if item 1 doesn't fully absorb the session. Item 3 is a cheap diagnostic pass. Item 4 needs the user, not more analysis.
+Nothing is urgent on dispersion right now — it's in the best state it's ever been, even if by a patch rather than a finding. If picking this up again, item 1 (verify the patch is still holding) is the cheap first check. Item 2 (the underlying structural causes) is where real, durable progress would come from, but it's exploratory, not a quick win — treat it the way this session treated the caster-support cluster: diagnose, try a scoped mechanism, expect a partial result, report honestly. Item 4 (Electric tag) needs the user, not more analysis.

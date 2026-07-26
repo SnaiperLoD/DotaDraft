@@ -4,6 +4,7 @@ import type { Hero, HeroEvaluationValues } from 'shared';
 import { roleFitValue } from '../common/role-fit';
 import { hardCarryAxisMultipliers, isHardCarry } from '../common/hard-carry';
 import { utilityStackAxisMultipliers, utilityStackBreadth } from '../common/utility-stacking';
+import { manualPowerMultiplier } from '../common/manual-power-overrides';
 import {
   type CustomTagEffects,
   blessingEffectsFor,
@@ -440,6 +441,19 @@ export interface BattleAssessment {
   axisDeltas: { axis: keyof HeroEvaluationValues; delta: number }[];
 }
 
+// Per-hero final power multiplier (manual-power-overrides.ts) — every axis
+// equally, unlike utilityStackHeroAxisMultipliers below (which only touches
+// the 6 utility axes). Same map shape as CustomTagEffects.heroPowerMultiplier
+// expects directly, so no per-hero loop/filter needed here.
+function manualPowerHeroMultipliers(heroes: Hero[]): Map<number, number> {
+  const map = new Map<number, number>();
+  for (const hero of heroes) {
+    const mult = manualPowerMultiplier(hero);
+    if (mult !== 1) map.set(hero.id, mult);
+  }
+  return map;
+}
+
 // Per-hero (not per-team, unlike hardCarryAxisMultipliers) — utility-axis
 // stacking is a property of each hero's own kit, so every hero on the team
 // is checked independently against their own evaluation_values.
@@ -504,12 +518,14 @@ export function assessBattle(
     curseEffectsOnOpponent(heroesB, heroesA),
     { ...emptyTagEffects(), axisMultiplier: hardCarryAxisMultipliers(heroesA) },
     { ...emptyTagEffects(), heroAxisMultiplier: utilityStackHeroAxisMultipliers(heroesA) },
+    { ...emptyTagEffects(), heroPowerMultiplier: manualPowerHeroMultipliers(heroesA) },
   );
   const tagEffectsB = mergeTagEffects(
     blessingEffectsFor(heroesB, rawAxisAveragesB),
     curseEffectsOnOpponent(heroesA, heroesB),
     { ...emptyTagEffects(), axisMultiplier: hardCarryAxisMultipliers(heroesB) },
     { ...emptyTagEffects(), heroAxisMultiplier: utilityStackHeroAxisMultipliers(heroesB) },
+    { ...emptyTagEffects(), heroPowerMultiplier: manualPowerHeroMultipliers(heroesB) },
   );
   const taggedPowerA = blendedOverallPower(teamA, tagEffectsA);
   const taggedPowerB = blendedOverallPower(teamB, tagEffectsB);
