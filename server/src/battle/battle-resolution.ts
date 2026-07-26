@@ -3,7 +3,7 @@ import * as path from 'path';
 import type { Hero, HeroEvaluationValues } from 'shared';
 import { roleFitValue } from '../common/role-fit';
 import { hardCarryAxisMultipliers, isHardCarry } from '../common/hard-carry';
-import { utilityStackAxisMultipliers } from '../common/utility-stacking';
+import { utilityStackAxisMultipliers, utilityStackBreadth } from '../common/utility-stacking';
 import {
   type CustomTagEffects,
   blessingEffectsFor,
@@ -205,7 +205,7 @@ export function axisAverage(
 ): number {
   const raw =
     team.reduce((sum, p) => {
-      const base = roleFitValue(axis, p.assignedRole, p.hero.evaluation_values[axis]);
+      const base = roleFitValue(axis, p.assignedRole, p.hero.evaluation_values[axis], utilityStackBreadth(p.hero));
       const heroMult = tagEffects?.heroPowerMultiplier.get(p.hero.id) ?? 1;
       const heroAxisMult = tagEffects?.heroAxisMultiplier.get(p.hero.id)?.[axis] ?? 1;
       const phaseHeroMult = (phase && tagEffects?.phaseHeroPowerMultiplier.get(phase)?.get(p.hero.id)) ?? 1;

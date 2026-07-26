@@ -46,16 +46,66 @@ const BASELINE = 5;
 // fit, only amplify a real one.
 const BOOST_WEIGHT = 0.3;
 
+// Symmetric complement to ROLE_AXES/BOOST_WEIGHT above, added 2026-07-26
+// (Blueprint/10-tech-debt-backlog.md, dampened caster-support cluster):
+// axes a role isn't expected to contribute on get their below-baseline
+// weakness partially forgiven, not amplified into a bonus. Narrowly scoped
+// to durability/objectives for Hard/Soft Support — Variant A's late-phase
+// weight restore (fixing Phantom Lancer) started weighting those two axes
+// heavily enough that pure-caster supports' structurally-correct near-zero
+// tankiness/push presence (not a flaw — they were never supposed to be
+// tanky or push towers) started reading as a real weakness. Not applied to
+// Carry/Mid/Offlane/other axis combos — those haven't been shown to have
+// this problem, and widening the map without evidence would be scope creep
+// beyond the diagnosed issue.
+const IRRELEVANT_AXIS_DAMPEN: Record<string, string[]> = {
+  'Hard Support': ['durability', 'objectives'],
+  'Soft Support': ['durability', 'objectives'],
+};
+const DAMPEN_WEIGHT = 0.3;
+
+// Gate found necessary after the first calibration pass: presumed_positions
+// is 100% Support for BOTH the underperforming pure-caster cluster this was
+// built for (Silencer/Lich/Disruptor) AND the already-overperforming
+// utility-stacking cluster (Treant Protector/Chen/Io, common/utility-
+// stacking.ts) — both share near-zero durability/objectives, just for
+// opposite reasons (one needs the forgiveness, the other is already ahead
+// on control/initiating/mobility/skirmish_rate/map_control and doesn't).
+// Ungated, the dampen made Treant Protector's overperformance WORSE
+// (+18.9pp -> +20.3/+21.5pp across two calibration runs) while barely
+// moving the actual target (Silencer). Reusing utility-stacking's own
+// utilityStackFreeCount(2) as the cutoff — a hero already past that
+// breadth is, by definition, the OTHER cluster, not this one.
+const UTILITY_BREADTH_GATE = 2;
+
 // Boosts a hero's own axis value when assignedRole is relevant to axisKey
 // AND the hero already scores above the population baseline (5) on it.
 // Proportional to how far above baseline they already are, so it amplifies
 // an existing strength rather than adding a flat bonus regardless of fit.
-export function roleFitValue(axisKey: string, assignedRole: string | null, rawValue: number): number {
+// Symmetrically, dampens (partially forgives) a below-baseline value on an
+// axis the role isn't expected to care about (IRRELEVANT_AXIS_DAMPEN) —
+// same proportional shape, opposite direction and a separate, narrower map
+// — but only for heroes NOT already past UTILITY_BREADTH_GATE on the
+// utility-stacking axes (see above); callers pass that breadth in since
+// computing it here would require importing a Hero object, not just the
+// single axis value this function otherwise only needs.
+export function roleFitValue(
+  axisKey: string,
+  assignedRole: string | null,
+  rawValue: number,
+  utilityStackBreadth = 0,
+): number {
   if (!assignedRole) return rawValue;
-  const axes = ROLE_AXES[assignedRole];
-  if (!axes || !axes.includes(axisKey)) return rawValue;
-  if (rawValue <= BASELINE) return rawValue;
-  return Math.min(10, Math.round((rawValue + BOOST_WEIGHT * (rawValue - BASELINE)) * 10) / 10);
+  const boostAxes = ROLE_AXES[assignedRole];
+  if (boostAxes?.includes(axisKey)) {
+    if (rawValue <= BASELINE) return rawValue;
+    return Math.min(10, Math.round((rawValue + BOOST_WEIGHT * (rawValue - BASELINE)) * 10) / 10);
+  }
+  const dampenAxes = IRRELEVANT_AXIS_DAMPEN[assignedRole];
+  if (dampenAxes?.includes(axisKey) && rawValue < BASELINE && utilityStackBreadth <= UTILITY_BREADTH_GATE) {
+    return Math.round((rawValue + DAMPEN_WEIGHT * (BASELINE - rawValue)) * 10) / 10;
+  }
+  return rawValue;
 }
 
 export function isRoleFitAxis(axisKey: string, assignedRole: string | null): boolean {

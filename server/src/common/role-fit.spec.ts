@@ -43,6 +43,34 @@ describe('roleFitValue', () => {
   it('does not boost an unrecognized role string', () => {
     expect(roleFitValue('scaling', 'Jungle', 9)).toBe(9);
   });
+
+  it('dampens a below-baseline durability/objectives value for Hard/Soft Support', () => {
+    // 0.6 is 4.4 below baseline (5); dampen = 0.3 * 4.4 = 1.32 -> 1.9
+    expect(roleFitValue('durability', 'Hard Support', 0.6)).toBe(1.9);
+    expect(roleFitValue('objectives', 'Soft Support', 0.6)).toBe(1.9);
+  });
+
+  it('does not dampen durability/objectives for roles outside the map', () => {
+    expect(roleFitValue('durability', 'Carry', 0.6)).toBe(0.6);
+    expect(roleFitValue('objectives', 'Mid', 0.6)).toBe(0.6);
+  });
+
+  it('does not dampen an axis at or above baseline', () => {
+    expect(roleFitValue('durability', 'Hard Support', 5)).toBe(5);
+    expect(roleFitValue('durability', 'Hard Support', 7)).toBe(7);
+  });
+
+  it('does not dampen a hero already past the utility-stacking breadth gate', () => {
+    // Same low value as the dampened case above, but utilityStackBreadth=3
+    // (past UTILITY_BREADTH_GATE=2) — this is the Treant Protector/Chen/Io
+    // signature (common/utility-stacking.ts), not the pure-caster-support
+    // case this dampening targets, so it must stay unchanged.
+    expect(roleFitValue('durability', 'Hard Support', 0.6, 3)).toBe(0.6);
+  });
+
+  it('still dampens at exactly the gate boundary (breadth=2)', () => {
+    expect(roleFitValue('durability', 'Hard Support', 0.6, 2)).toBe(1.9);
+  });
 });
 
 describe('isRoleFitAxis', () => {
