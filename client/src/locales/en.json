@@ -2,9 +2,31 @@
   "app": {
     "nav": {
       "draft": "Draft",
+      "about": "About",
       "history": "History",
       "reportBug": "Report a Bug"
     }
+  },
+  "landing": {
+    "title": "DotaDraft",
+    "tagline": "Draft five heroes. Get honest analysis. Fight for the win.",
+    "pitch": "DotaDraft is a browser strategy game built around the Dota 2 draft — pick a team, get a real evaluation of its strengths and weaknesses, then send it into Battle Mode against another player's draft or a professional lineup. No accounts, no downloads — just the draft.",
+    "cta": "Start Draft",
+    "aboutLink": "How scoring works"
+  },
+  "about": {
+    "title": "How This Works",
+    "intro": "DotaDraft isn't a full match simulator — there's no lane phase, no item builds, no player skill. It's an honest statistical model built on real match data, and it's upfront about what that can and can't tell you.",
+    "evaluationTitle": "Evaluation",
+    "evaluationText": "Your draft gets scored on things like synergy, tempo, control, and scaling — each axis is calibrated against real win-rate data from thousands of matches, not just a hand-picked formula.",
+    "battleTitle": "Battle Mode",
+    "battleText": "Your draft is compared against another draft — a real player's submission or a professional lineup — and resolved into a Win or Lose with a Confidence Tier (Low/Moderate/High), never a fake precise percentage.",
+    "ceilingTitle": "What we don't claim",
+    "ceilingText": "A draft alone can't fully predict a real match — execution matters more than any stat sheet. We'd rather be honest about that uncertainty than pretend to false precision."
+  },
+  "footer": {
+    "email": "Email",
+    "github": "GitHub"
   },
   "draft": {
     "restart": "Restart",

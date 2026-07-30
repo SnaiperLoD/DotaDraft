@@ -10,7 +10,12 @@ export type PresumedRole = PresumedPosition | 'Universal';
 // unchanged, they were already well-separated from each other and from
 // green/turquoise.
 const ROLE_TINT_RGB: Record<PresumedRole, string> = {
-  Carry: '150, 35, 55', // crimson
+  // Matches --blood-bright (#a3313f) from tokens.css exactly — the
+  // previous (150, 35, 55) read as muddy/desaturated per user feedback
+  // (Blueprint/10-tech-debt-backlog.md, "Перекрасить градиенты"). Reusing
+  // the palette's own established "vivid red" token value keeps this in
+  // the same family as buttons/accents instead of introducing a new red.
+  Carry: '163, 49, 63',
   Offlane: '38, 130, 125', // turquoise
   Mid: '45, 82, 130', // blue
   Support: '142, 78, 168', // violet

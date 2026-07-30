@@ -1,0 +1,41 @@
+.app-footer {
+  border-top: 1px solid var(--bronze-dim);
+  margin-top: 48px;
+}
+
+.app-footer-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 20px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.app-footer-brand {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  color: var(--ink-faint);
+}
+
+.app-footer-links {
+  display: flex;
+  gap: 20px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.app-footer-links a {
+  color: var(--ink-muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.app-footer-links a:hover {
+  color: var(--gold-bright);
+}
