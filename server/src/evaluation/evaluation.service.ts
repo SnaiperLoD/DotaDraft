@@ -150,6 +150,7 @@ export class EvaluationService {
         percentile: result.percentile,
         explanation: result.explanation,
         matchUrl: result.matchUrl ?? null,
+        topContributorHeroId: result.topContributorHeroId ?? null,
       };
     });
 

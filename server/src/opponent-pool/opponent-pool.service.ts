@@ -7,7 +7,14 @@ import {
 import { PoolPrismaService } from './pool-prisma.service';
 import type { Prisma } from '../../generated/pool-client';
 import { DraftService } from '../draft/draft.service';
-import type { CommitDraftResponse, PooledDraftSummary, PooledDraftSource, PooledHeroRole } from 'shared';
+import type {
+  CommitDraftResponse,
+  PooledDraftSummary,
+  PooledDraftSource,
+  PooledHeroRole,
+  LeaderboardEntryView,
+  ResolvedOutcome,
+} from 'shared';
 
 @Injectable()
 export class OpponentPoolService {
@@ -79,6 +86,43 @@ export class OpponentPoolService {
         matchId: row.source === 'pro' ? row.id.replace(/^pro-/, '') : null,
       };
     });
+  }
+
+  // "Weak" leaderboard (Blueprint/10-tech-debt-backlog.md, "Лидерборд") —
+  // one counter row per anonymous submitterToken, upserted in place on
+  // every fight (BattleService.fight()). Best-effort by design at the call
+  // site (same .catch(() => undefined) pattern as saveBattleResult/
+  // saveEvaluationResult) — a leaderboard write failing must never fail
+  // the fight itself.
+  async recordBattleOutcome(submitterToken: string, outcome: ResolvedOutcome): Promise<void> {
+    await this.runPoolQuery(() =>
+      this.pool.leaderboardEntry.upsert({
+        where: { submitterToken },
+        create: { submitterToken, wins: outcome === 'Win' ? 1 : 0, losses: outcome === 'Lose' ? 1 : 0 },
+        update: outcome === 'Win' ? { wins: { increment: 1 } } : { losses: { increment: 1 } },
+      }),
+    );
+  }
+
+  // Ranked by wins first (the simple, gameable-by-design metric this
+  // "weak" leaderboard is upfront about — see the model's doc comment in
+  // prisma-pool/schema.prisma), win rate as a tiebreaker among equal win
+  // counts. winRate isn't a stored column, so the tiebreak sort happens in
+  // memory after fetching — fine at this MVP's scale (a handful of
+  // anonymous tokens, not a table needing DB-side pagination). No
+  // minimum-battle-count floor — keeping this MVP-simple rather than
+  // inventing a credibility threshold nobody asked for yet.
+  async getLeaderboard(limit: number): Promise<LeaderboardEntryView[]> {
+    const rows = await this.runPoolQuery(() => this.pool.leaderboardEntry.findMany());
+    return rows
+      .map((row) => ({
+        submitterToken: row.submitterToken,
+        wins: row.wins,
+        losses: row.losses,
+        winRate: row.wins + row.losses > 0 ? row.wins / (row.wins + row.losses) : 0,
+      }))
+      .sort((a, b) => b.wins - a.wins || b.winRate - a.winRate)
+      .slice(0, limit);
   }
 
   private async runPoolQuery<T>(fn: () => Promise<T>): Promise<T> {

@@ -4,6 +4,7 @@
       "draft": "Draft",
       "about": "About",
       "history": "History",
+      "leaderboard": "Leaderboard",
       "reportBug": "Report a Bug"
     }
   },
@@ -74,7 +75,8 @@
     "strengths": "Strengths",
     "weaknesses": "Weaknesses",
     "notAvailable": "N/A",
-    "viewMatch": "View match on OpenDota →"
+    "viewMatch": "View match on OpenDota →",
+    "topContributorHeading": "Top {{axis}} Contributor"
   },
   "commitToPool": {
     "committing": "Committing…",
@@ -115,5 +117,14 @@
   },
   "adSlot": {
     "label": "Advertisement"
+  },
+  "leaderboard": {
+    "title": "Leaderboard",
+    "note": "No accounts here — rankings are tied to an anonymous id stored in your browser, so this resets if you clear your browser data.",
+    "empty": "No battles fought yet — be the first.",
+    "player": "Player",
+    "wins": "Wins",
+    "losses": "Losses",
+    "winRate": "Win Rate"
   }
 }

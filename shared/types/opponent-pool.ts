@@ -31,3 +31,16 @@ export interface CommitDraftResponse {
   id: string;
   committedAt: string;
 }
+
+// GET /leaderboard — Blueprint/10-tech-debt-backlog.md, "Лидерборд". No
+// account system backs this (explicit MVP shortcut) — submitterToken is
+// the same anonymous client-generated UUID used to commit to the
+// Opponent Pool, not a player identity. The client is responsible for
+// deciding how to display a raw token (e.g. a short "Player #ab12cd34"
+// label) and for recognizing its own row via getSubmitterToken().
+export interface LeaderboardEntryView {
+  submitterToken: string;
+  wins: number;
+  losses: number;
+  winRate: number;
+}

@@ -58,6 +58,12 @@ export class BattleService {
       })
       .catch(() => undefined);
 
+    // Best-effort, same reasoning as saveBattleResult above — the
+    // leaderboard (Blueprint/10-tech-debt-backlog.md, "Лидерборд") is a
+    // nice-to-have ranking, not something that should ever fail Battle
+    // Mode itself if the shared Postgres pool is briefly unreachable.
+    await this.opponentPoolService.recordBattleOutcome(submitterToken, result.resolvedOutcome).catch(() => undefined);
+
     return {
       resolvedOutcome: result.resolvedOutcome,
       advantageDirection: result.advantageDirection,

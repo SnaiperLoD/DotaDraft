@@ -11,6 +11,12 @@ export interface AnalyzerResult {
   // Blueprint/10-tech-debt-backlog.md, "Ссылка на исходный матч для
   // про-пиков".
   matchUrl?: string | null;
+  // heroId of the single highest-value hero on this axis (axis analyzers
+  // only — undefined/null for Synergy/Counter/Pro Similarity, which aren't
+  // per-hero axis scores). Powers the top-contributor ability highlight in
+  // EvaluationPanel — see Blueprint/10-tech-debt-backlog.md, "Хайлайт
+  // топ-контрибьюторов по оси".
+  topContributorHeroId?: number | null;
 }
 
 export interface EvaluationSummary {

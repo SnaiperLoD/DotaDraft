@@ -5,6 +5,7 @@ import type { EvaluationResult } from 'shared';
 import type { DraftHeroView } from '../api/types';
 import { detectBadges } from '../data/badges';
 import BadgeRow from './BadgeRow';
+import TopContributorHighlight from './TopContributorHighlight';
 import './EvaluationPanel.css';
 
 interface Props {
@@ -88,6 +89,8 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
       </h3>
 
       <p className="evaluation-gameplan">{result.summary.gameplan}</p>
+
+      <TopContributorHighlight breakdown={result.breakdown} heroes={heroes} />
 
       <div className="evaluation-summary">
         <div className="evaluation-summary-col">

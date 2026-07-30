@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
 import { HeroService } from './hero.service';
+import { HeroAbilitiesService } from './hero-abilities.service';
 import { HeroController } from './hero.controller';
 import { HeroMetaModule } from '../hero-meta/hero-meta.module';
 
 @Module({
   imports: [HeroMetaModule],
   controllers: [HeroController],
-  providers: [HeroService],
+  providers: [HeroService, HeroAbilitiesService],
   exports: [HeroService],
 })
 export class HeroModule {}

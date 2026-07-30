@@ -8,6 +8,9 @@ import type {
   BattleResultResponse,
   SynergyPreviewRequest,
   SynergyPreviewEntry,
+  TopAbility,
+  AbilityCategory,
+  LeaderboardEntryView,
 } from 'shared';
 import type { DraftStateView } from './types';
 
@@ -67,4 +70,9 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ pickedHeroIds, candidateHeroIds } satisfies SynergyPreviewRequest),
     }),
+
+  getTopAbilities: (heroId: number, category: AbilityCategory, limit = 3) =>
+    request<TopAbility[]>(`/heroes/${heroId}/top-abilities?category=${category}&limit=${limit}`),
+
+  getLeaderboard: (limit = 20) => request<LeaderboardEntryView[]>(`/leaderboard?limit=${limit}`),
 };

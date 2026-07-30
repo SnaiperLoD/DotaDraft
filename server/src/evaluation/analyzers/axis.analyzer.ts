@@ -101,7 +101,7 @@ export function createAxisAnalyzer(key: AxisKey, label: string): Analyzer {
       // narrative sentence, not a numeric role-fit/hard-carry aside.
       explanation.push(AXIS_NARRATIVE[key][bracket](ctx));
 
-      return { score, percentile, explanation };
+      return { score, percentile, explanation, topContributorHeroId: top[0]?.hero.id ?? null };
     },
   };
 }

@@ -4,6 +4,7 @@ import LandingPage from './pages/LandingPage';
 import DraftPage from './pages/DraftPage';
 import AboutPage from './pages/AboutPage';
 import HistoryPage from './pages/HistoryPage';
+import LeaderboardPage from './pages/LeaderboardPage';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import Footer from './components/Footer';
 import { BUG_REPORT_MAILTO_HREF } from './utils/bugReport';
@@ -28,6 +29,9 @@ export default function App() {
           <NavLink to="/history" className={({ isActive }) => (isActive ? 'active' : undefined)}>
             {t('app.nav.history')}
           </NavLink>
+          <NavLink to="/leaderboard" className={({ isActive }) => (isActive ? 'active' : undefined)}>
+            {t('app.nav.leaderboard')}
+          </NavLink>
           <a href={BUG_REPORT_MAILTO_HREF}>{t('app.nav.reportBug')}</a>
           <LanguageSwitcher />
         </nav>
@@ -38,6 +42,7 @@ export default function App() {
           <Route path="/draft" element={<DraftPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/history" element={<HistoryPage />} />
+          <Route path="/leaderboard" element={<LeaderboardPage />} />
         </Routes>
       </main>
       <Footer />

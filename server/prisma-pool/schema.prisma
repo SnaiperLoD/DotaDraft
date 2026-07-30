@@ -27,3 +27,21 @@ model PooledDraft {
   leagueName     String?
   createdAt      DateTime @default(now())
 }
+
+// "Weak" leaderboard (Blueprint/10-tech-debt-backlog.md, "Лидерборд") —
+// aggregated per anonymous submitterToken (the same client-generated
+// localStorage UUID used to commit to the Opponent Pool), not a real
+// account system. One row per token, incremented in place on every fight
+// (BattleService.fight()) rather than one row per battle — this is a
+// counter table, not a history log (BattleResult in the local SQLite
+// schema already covers per-battle history for the browser that played
+// it). Explicitly gameable (unlimited free fights per visit already exist
+// in Battle Mode) and resets to a new row if the user clears
+// localStorage — acceptable for what this is, a lightweight ranking, not
+// a competitive-integrity leaderboard.
+model LeaderboardEntry {
+  submitterToken String   @id
+  wins           Int      @default(0)
+  losses         Int      @default(0)
+  updatedAt      DateTime @updatedAt
+}

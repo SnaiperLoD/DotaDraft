@@ -14,6 +14,10 @@ export interface AnalyzerOutput {
   // про-пиков"). Optional so every other analyzer's object literal is
   // unaffected.
   matchUrl?: string | null;
+  // See shared/types/evaluation.ts's AnalyzerResult.topContributorHeroId —
+  // same field, propagated as-is through evaluation.service.ts's breakdown
+  // mapping.
+  topContributorHeroId?: number | null;
 }
 
 // A drafted hero plus the role it was assigned in RoleAssignment (null

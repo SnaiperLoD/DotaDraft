@@ -49,3 +49,14 @@ export interface SynergyPreviewEntry {
   // yet. Ranking (top/bottom-of-pool) happens client-side.
   score: number | null;
 }
+
+// GET /heroes/:id/top-abilities response entry — Blueprint/10-tech-debt-backlog.md,
+// "Хайлайт топ-контрибьюторов по оси". `score` is the ability's raw
+// categoryScores value from the hand-tagged ability-tagging pipeline
+// (server/data/hero-abilities.json), not a 0-10/percentile value.
+export interface TopAbility {
+  abilityKey: string;
+  abilityName: string;
+  iconUrl: string;
+  score: number;
+}

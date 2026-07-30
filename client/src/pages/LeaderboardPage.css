@@ -1,0 +1,41 @@
+.leaderboard-note {
+  font-size: 13px;
+  color: var(--ink-faint);
+  margin: -4px 0 20px;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.leaderboard-table th {
+  text-align: left;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--bronze-dim);
+}
+
+.leaderboard-table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--bronze-dim);
+  color: var(--ink);
+}
+
+.leaderboard-table tbody tr:hover {
+  background: var(--ground-2);
+}
+
+.leaderboard-row-me {
+  background: rgba(201, 162, 39, 0.12);
+}
+
+.leaderboard-row-me td:first-child {
+  color: var(--gold-bright);
+  font-weight: 700;
+}

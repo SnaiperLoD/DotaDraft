@@ -1,13 +1,20 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
 import { HeroService } from './hero.service';
+import { HeroAbilitiesService } from './hero-abilities.service';
 import { HeroMetaService } from '../hero-meta/hero-meta.service';
 import { realSynergyDelta } from '../evaluation/analyzers/synergy.analyzer';
-import type { SynergyPreviewRequest, SynergyPreviewEntry } from 'shared';
+import { ABILITY_CATEGORY_FOR_AXIS } from 'shared';
+import type { SynergyPreviewRequest, SynergyPreviewEntry, TopAbility, AbilityCategory } from 'shared';
+
+const VALID_CATEGORIES = new Set<string>(Object.values(ABILITY_CATEGORY_FOR_AXIS));
+const DEFAULT_TOP_ABILITIES_LIMIT = 3;
+const MAX_TOP_ABILITIES_LIMIT = 10;
 
 @Controller('heroes')
 export class HeroController {
   constructor(
     private readonly heroService: HeroService,
+    private readonly heroAbilitiesService: HeroAbilitiesService,
     private readonly heroMetaService: HeroMetaService,
   ) {}
 
@@ -41,5 +48,25 @@ export class HeroController {
       const score = deltas.length > 0 ? deltas.reduce((sum, d) => sum + d, 0) / deltas.length : null;
       return { heroId: candidate.id, score };
     });
+  }
+
+  // Blueprint/10-tech-debt-backlog.md, "Хайлайт топ-контрибьюторов по оси" —
+  // powers EvaluationPanel's top-contributor ability drill-down. `category`
+  // is the ability-tagging category (control_strength/mobility/saving/
+  // initiating), not the evaluation axis key — see
+  // shared/constants/ability-categories.ts for the mapping the client uses
+  // to pick which one to ask for.
+  @Get(':id/top-abilities')
+  topAbilities(
+    @Param('id', ParseIntPipe) id: number,
+    @Query('category') category: string,
+    @Query('limit') limitParam?: string,
+  ): TopAbility[] {
+    if (!VALID_CATEGORIES.has(category)) {
+      throw new BadRequestException(`category must be one of: ${[...VALID_CATEGORIES].join(', ')}`);
+    }
+    const parsedLimit = limitParam ? parseInt(limitParam, 10) : NaN;
+    const limit = Number.isNaN(parsedLimit) ? DEFAULT_TOP_ABILITIES_LIMIT : Math.min(MAX_TOP_ABILITIES_LIMIT, Math.max(1, parsedLimit));
+    return this.heroAbilitiesService.topAbilities(id, category as AbilityCategory, limit);
   }
 }

@@ -8,6 +8,10 @@ function makeMockPool() {
       count: jest.fn(),
       findMany: jest.fn(),
     },
+    leaderboardEntry: {
+      upsert: jest.fn(),
+      findMany: jest.fn(),
+    },
   };
 }
 
@@ -112,6 +116,66 @@ describe('OpponentPoolService.pullRandom', () => {
     expect(whereArg).toEqual({
       OR: [{ submitterToken: null }, { NOT: { submitterToken: 'my-token' } }],
     });
+  });
+});
+
+describe('OpponentPoolService.recordBattleOutcome', () => {
+  it('upserts a win, creating the row if the token has never fought before', async () => {
+    const pool = makeMockPool();
+    const service = new OpponentPoolService(pool as any, {} as any);
+
+    await service.recordBattleOutcome('token-1', 'Win');
+
+    expect(pool.leaderboardEntry.upsert).toHaveBeenCalledWith({
+      where: { submitterToken: 'token-1' },
+      create: { submitterToken: 'token-1', wins: 1, losses: 0 },
+      update: { wins: { increment: 1 } },
+    });
+  });
+
+  it('upserts a loss', async () => {
+    const pool = makeMockPool();
+    const service = new OpponentPoolService(pool as any, {} as any);
+
+    await service.recordBattleOutcome('token-1', 'Lose');
+
+    expect(pool.leaderboardEntry.upsert).toHaveBeenCalledWith({
+      where: { submitterToken: 'token-1' },
+      create: { submitterToken: 'token-1', wins: 0, losses: 1 },
+      update: { losses: { increment: 1 } },
+    });
+  });
+});
+
+describe('OpponentPoolService.getLeaderboard', () => {
+  it('ranks by wins first, win rate as a tiebreaker among equal win counts', async () => {
+    const pool = makeMockPool();
+    pool.leaderboardEntry.findMany.mockResolvedValue([
+      { submitterToken: 'low-wins', wins: 2, losses: 0 },
+      { submitterToken: 'high-wins-low-rate', wins: 5, losses: 15 },
+      { submitterToken: 'high-wins-high-rate', wins: 5, losses: 1 },
+    ]);
+    const service = new OpponentPoolService(pool as any, {} as any);
+
+    const result = await service.getLeaderboard(10);
+
+    expect(result.map((r) => r.submitterToken)).toEqual(['high-wins-high-rate', 'high-wins-low-rate', 'low-wins']);
+    expect(result[0].winRate).toBeCloseTo(5 / 6);
+  });
+
+  it('truncates to the requested limit after ranking', async () => {
+    const pool = makeMockPool();
+    pool.leaderboardEntry.findMany.mockResolvedValue([
+      { submitterToken: 'a', wins: 3, losses: 0 },
+      { submitterToken: 'b', wins: 2, losses: 0 },
+      { submitterToken: 'c', wins: 1, losses: 0 },
+    ]);
+    const service = new OpponentPoolService(pool as any, {} as any);
+
+    const result = await service.getLeaderboard(2);
+
+    expect(result).toHaveLength(2);
+    expect(result.map((r) => r.submitterToken)).toEqual(['a', 'b']);
   });
 });
 

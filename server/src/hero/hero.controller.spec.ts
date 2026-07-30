@@ -1,6 +1,7 @@
 import { HeroController } from './hero.controller';
 import { makeHero } from '../test-utils/hero-factory';
 import type { HeroService } from './hero.service';
+import type { HeroAbilitiesService } from './hero-abilities.service';
 import type { HeroMetaService } from '../hero-meta/hero-meta.service';
 
 describe('HeroController.synergyPreview', () => {
@@ -17,7 +18,9 @@ describe('HeroController.synergyPreview', () => {
       },
     } as unknown as HeroMetaService;
 
-    return new HeroController(heroService, heroMetaService);
+    const heroAbilitiesService = {} as unknown as HeroAbilitiesService;
+
+    return new HeroController(heroService, heroAbilitiesService, heroMetaService);
   }
 
   it('returns all-null scores with no picked heroes yet (round 1)', async () => {
