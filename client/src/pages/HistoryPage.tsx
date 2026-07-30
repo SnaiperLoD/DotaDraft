@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { api } from '../api/client';
-import type { HistoryEntry } from 'shared';
+import type { HistoryEntry, ConfidenceTier } from 'shared';
 import './HistoryPage.css';
 
 export default function HistoryPage() {
+  const { t } = useTranslation();
   const [entries, setEntries] = useState<HistoryEntry[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -25,14 +27,14 @@ export default function HistoryPage() {
   if (entries.length === 0) {
     return (
       <div className="page">
-        <p className="empty-text">No completed drafts yet.</p>
+        <p className="empty-text">{t('history.empty')}</p>
       </div>
     );
   }
 
   return (
     <div className="page">
-      <h2>History</h2>
+      <h2>{t('history.title')}</h2>
       <div className="history-list">
         {entries.map((entry) => (
           <div key={entry.id} className="panel history-entry">
@@ -45,39 +47,41 @@ export default function HistoryPage() {
                   <div key={h.heroId} className="history-hero-row">
                     <span className="index">#{h.pickOrder}</span>
                     <span className="name">{h.heroName}</span>
-                    <span className="role">{h.assignedRole}</span>
+                    <span className="role">{h.assignedRole ? t(`roles.${h.assignedRole}`) : ''}</span>
                   </div>
                 ))}
             </div>
 
             {entry.evaluation ? (
               <div className="history-evaluation">
-                <span className="history-evaluation-score">Evaluation: {entry.evaluation.totalScore}/10</span>
+                <span className="history-evaluation-score">
+                  {t('history.evaluationScore', { score: entry.evaluation.totalScore })}
+                </span>
                 <span className="history-evaluation-gameplan">{entry.evaluation.summary.gameplan}</span>
               </div>
             ) : (
-              <p className="history-evaluation-empty">Not evaluated.</p>
+              <p className="history-evaluation-empty">{t('history.notEvaluated')}</p>
             )}
 
             {entry.battles.length > 0 && (
               <details className="history-battles">
-                <summary>
-                  {entry.battles.length} {entry.battles.length === 1 ? 'battle' : 'battles'}
-                </summary>
+                <summary>{t('history.battleCount', { count: entry.battles.length })}</summary>
                 <ul>
                   {entry.battles.map((b) => (
                     <li key={b.id} className={`history-battle-row history-battle-${b.resolvedOutcome.toLowerCase()}`}>
                       <span className="history-battle-outcome">
-                        {b.resolvedOutcome === 'Win' ? 'Victory' : 'Defeat'}
+                        {b.resolvedOutcome === 'Win' ? t('battle.victory') : t('battle.defeat')}
                       </span>
-                      <span className="history-battle-confidence">{b.confidenceTier} confidence</span>
+                      <span className="history-battle-confidence">
+                        {t('history.confidenceLower', { tier: t(`battle.tier.${b.confidenceTier as ConfidenceTier}`) })}
+                      </span>
                       <span className="history-battle-opponent">
-                        vs.{' '}
+                        {t('battle.vs')}{' '}
                         {b.opponentTeamName
                           ? `${b.opponentTeamName}${b.opponentLeagueName ? ` (${b.opponentLeagueName})` : ''}`
                           : b.opponentSource === 'pro'
-                            ? 'a professional draft'
-                            : 'another player'}
+                            ? t('battle.proDraft')
+                            : t('battle.anotherPlayer')}
                       </span>
                       <span className="history-battle-date">{new Date(b.createdAt).toLocaleString()}</span>
                     </li>

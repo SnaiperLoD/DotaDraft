@@ -1,0 +1,99 @@
+{
+  "app": {
+    "nav": {
+      "draft": "Драфт",
+      "history": "История",
+      "reportBug": "Сообщить об ошибке"
+    }
+  },
+  "draft": {
+    "restart": "Начать заново",
+    "loading": "Загрузка…",
+    "roundNumber": "Раунд {{round}}",
+    "ofFive": "из 5",
+    "poolHint": "Выберите героя, чтобы заполнить следующий слот",
+    "reroll": "Реролл ({{count}})",
+    "yourTeam": "Ваша команда",
+    "startNewDraft": "Начать новый драфт"
+  },
+  "roleAssignment": {
+    "heading": "Назначение ролей",
+    "selectRole": "Выберите роль",
+    "taken": "(занято)",
+    "error": "Каждая роль должна быть назначена своему герою.",
+    "confirm": "Подтвердить роли"
+  },
+  "roles": {
+    "Carry": "Керри",
+    "Mid": "Мид",
+    "Offlane": "Оффлейн",
+    "Soft Support": "Софт-саппорт",
+    "Hard Support": "Хард-саппорт"
+  },
+  "positions": {
+    "Carry": "Керри",
+    "Mid": "Мид",
+    "Offlane": "Оффлейн",
+    "Support": "Саппорт"
+  },
+  "draftLedger": {
+    "defaultTitle": "Ваш драфт",
+    "picked": "Выбрано {{picked}} из {{total}}",
+    "rolePending": "Роль не назначена",
+    "emptySlot": "Пустой слот"
+  },
+  "roleTooltip": {
+    "noData": "Нет данных о реальных позициях"
+  },
+  "evaluation": {
+    "evaluating": "Оцениваем…",
+    "evaluateDraft": "Оценить драфт",
+    "totalScore": "Оценка — итоговый балл:",
+    "strengths": "Сильные стороны",
+    "weaknesses": "Слабые стороны",
+    "notAvailable": "Н/Д",
+    "viewMatch": "Матч на OpenDota →"
+  },
+  "commitToPool": {
+    "committing": "Отправляем…",
+    "commit": "Отправить в пул",
+    "done": "Драфт отправлен в пул соперников — теперь другие игроки могут встретить его в режиме «Схватка»."
+  },
+  "battle": {
+    "title": "Режим «Схватка»",
+    "findingOpponent": "Ищем соперника…",
+    "enterBattle": "Вступить в бой",
+    "victory": "Победа",
+    "defeat": "Поражение",
+    "confidence": "Уверенность: {{tier}}",
+    "vs": "против",
+    "proDraft": "профессионального драфта",
+    "anotherPlayer": "другого игрока",
+    "viewMatch": "(матч на OpenDota →)",
+    "decidingFactors": "Решающие факторы",
+    "advantages": "Преимущества",
+    "disadvantages": "Слабые стороны",
+    "explanation": "Объяснение",
+    "fightAgain": "Сразиться снова",
+    "battlesThisVisit": "Боёв за визит: {{count}}",
+    "tier": {
+      "Low": "Низкая",
+      "Moderate": "Средняя",
+      "High": "Высокая"
+    }
+  },
+  "history": {
+    "title": "История",
+    "empty": "Завершённых драфтов пока нет.",
+    "evaluationScore": "Оценка: {{score}}/10",
+    "notEvaluated": "Не оценено.",
+    "battleCount_one": "{{count}} бой",
+    "battleCount_few": "{{count}} боя",
+    "battleCount_many": "{{count}} боёв",
+    "battleCount_other": "{{count}} боя",
+    "confidenceLower": "уверенность: {{tier}}"
+  },
+  "adSlot": {
+    "label": "Реклама"
+  }
+}

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import './AdSlot.css';
 
 // Reserved static banner placement (Blueprint/00-project-overview.md
@@ -15,9 +16,10 @@ const DIMENSIONS: Record<Props['size'], string> = {
 };
 
 export default function AdSlot({ size }: Props) {
+  const { t } = useTranslation();
   return (
     <div className={`ad-slot ad-slot-${size}`}>
-      <span className="ad-slot-label">Advertisement</span>
+      <span className="ad-slot-label">{t('adSlot.label')}</span>
       <span className="ad-slot-dims">{DIMENSIONS[size]}</span>
     </div>
   );

@@ -43,6 +43,7 @@ export interface BattleResult {
   advantages: string[];
   disadvantages: string[];
   explanation: string[];
+  winningHighlights: string[];
 }
 
 export const AXES: (keyof HeroEvaluationValues)[] = [
@@ -289,6 +290,72 @@ export function bestMatchupEdge(
     }
   }
   return best;
+}
+
+// Blueprint/10-tech-debt-backlog.md, "Комментарии по конкретным успешным
+// матчапам в результатах боя" — the same real matchup/synergy data that
+// bestMatchupEdge/bestSynergyPair use for upset explanations, generalized
+// to top-N and surfaced for EVERY battle result, not just upsets. Kept
+// separate from bestMatchupEdge/bestSynergyPair (which intentionally return
+// the single best pair even below 50%, for the underdog's "least-bad"
+// option in an upset) — these two only collect genuinely advantageous
+// (winRate > 0.5) pairs, since the point here is "what actually worked",
+// not "the closest thing to an edge available."
+function topMatchupEdges(
+  team: Hero[],
+  opponent: Hero[],
+  lookup: MatchupLookup,
+  limit: number,
+): { hero: string; vs: string; winRate: number }[] {
+  const edges: { hero: string; vs: string; winRate: number }[] = [];
+  for (const h of team) {
+    for (const o of opponent) {
+      const wr = lookup.getMatchupWinRate(h.id, o.id);
+      if (wr !== null && wr > 0.5) edges.push({ hero: h.name, vs: o.name, winRate: wr });
+    }
+  }
+  return edges.sort((a, b) => b.winRate - a.winRate).slice(0, limit);
+}
+
+function topSynergyPairs(
+  team: Hero[],
+  lookup: MatchupLookup,
+  limit: number,
+): { heroA: string; heroB: string; winRate: number }[] {
+  const pairs: { heroA: string; heroB: string; winRate: number }[] = [];
+  for (let i = 0; i < team.length; i++) {
+    for (let j = i + 1; j < team.length; j++) {
+      const wr = lookup.getSynergyWinRate(team[i].id, team[j].id);
+      if (wr !== null && wr > 0.5) pairs.push({ heroA: team[i].name, heroB: team[j].name, winRate: wr });
+    }
+  }
+  return pairs.sort((a, b) => b.winRate - a.winRate).slice(0, limit);
+}
+
+// Combines both sources into one ranked top-N (by real winRate) for the
+// side that actually won this battle — narrative sentences only, no raw
+// percentage surfaced to the client, same "no false precision" convention
+// as the rest of this file's explanation text (Accuracy Ceiling Rule,
+// Blueprint/06-battle-engine.md).
+function winningHighlights(
+  team: Hero[],
+  opponent: Hero[],
+  lookup: MatchupLookup,
+  perspectiveLabel: string,
+  limit = 3,
+): string[] {
+  const matchups = topMatchupEdges(team, opponent, lookup, limit).map((m) => ({
+    text: `${m.hero}'s matchup into ${m.vs} worked in ${perspectiveLabel}'s favor.`,
+    winRate: m.winRate,
+  }));
+  const synergies = topSynergyPairs(team, lookup, limit).map((s) => ({
+    text: `The ${s.heroA} + ${s.heroB} combination gave ${perspectiveLabel} a real, data-backed edge.`,
+    winRate: s.winRate,
+  }));
+  return [...matchups, ...synergies]
+    .sort((a, b) => b.winRate - a.winRate)
+    .slice(0, limit)
+    .map((h) => h.text);
 }
 
 export const AXIS_LABEL: Record<keyof HeroEvaluationValues, string> = {
@@ -668,5 +735,21 @@ export function resolveBattle(
     highSkillSwingHero,
   });
 
-  return { resolvedOutcome, advantageDirection, confidenceTier, advantages, disadvantages, explanation };
+  const winnerIsA = resolvedOutcome === 'Win';
+  const highlights = winningHighlights(
+    winnerIsA ? heroesA : heroesB,
+    winnerIsA ? heroesB : heroesA,
+    lookup,
+    winnerIsA ? 'your draft' : 'the opponent',
+  );
+
+  return {
+    resolvedOutcome,
+    advantageDirection,
+    confidenceTier,
+    advantages,
+    disadvantages,
+    explanation,
+    winningHighlights: highlights,
+  };
 }

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import type { DraftHeroView } from '../api/types';
 import { heroIconUrl } from '../utils/heroIcon';
 import { visibleTagsFor } from '../data/customTags';
@@ -16,17 +17,16 @@ interface Props {
   title?: string;
 }
 
-export default function DraftLedger({ heroes, totalSlots, title = 'Your Draft' }: Props) {
+export default function DraftLedger({ heroes, totalSlots, title }: Props) {
+  const { t } = useTranslation();
   const sorted = heroes.slice().sort((a, b) => a.pickOrder - b.pickOrder);
   const slots = Array.from({ length: totalSlots }, (_, i) => sorted[i] ?? null);
   const pickedHeroNames = sorted.map((h) => h.hero.name);
 
   return (
     <div className="panel ledger">
-      <h2 className="ledger-title">{title}</h2>
-      <p className="ledger-sub">
-        {sorted.length} of {totalSlots} picked
-      </p>
+      <h2 className="ledger-title">{title ?? t('draftLedger.defaultTitle')}</h2>
+      <p className="ledger-sub">{t('draftLedger.picked', { picked: sorted.length, total: totalSlots })}</p>
       <ol className="ledger-list">
         {slots.map((h, i) => (
           <li key={h?.heroId ?? `empty-${i}`} className={`ledger-slot ${h ? 'filled' : 'empty'}`}>
@@ -45,7 +45,9 @@ export default function DraftLedger({ heroes, totalSlots, title = 'Your Draft' }
                 </RoleTooltip>
                 <span className="slot-text">
                   <span className="slot-name">{h.hero.name}</span>
-                  <span className="slot-role">{h.assignedRole ?? 'Role pending'}</span>
+                  <span className="slot-role">
+                    {h.assignedRole ? t(`roles.${h.assignedRole}`) : t('draftLedger.rolePending')}
+                  </span>
                 </span>
                 <HeroTagBadges tags={visibleTagsFor(h.hero.name, pickedHeroNames)} variant="inline" />
               </>
@@ -53,7 +55,7 @@ export default function DraftLedger({ heroes, totalSlots, title = 'Your Draft' }
               <>
                 <span className="slot-portrait placeholder" aria-hidden="true" />
                 <span className="slot-text">
-                  <span className="slot-name placeholder">Empty slot</span>
+                  <span className="slot-name placeholder">{t('draftLedger.emptySlot')}</span>
                 </span>
               </>
             )}

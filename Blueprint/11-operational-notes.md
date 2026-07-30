@@ -4,6 +4,12 @@ Environment/tooling gotchas discovered while building this project (Windows + Gi
 
 ---
 
+## `server`'s `nodemon --exec ts-node` did NOT restart on `.ts` changes (fixed via `nodemon.json`)
+
+Without a `nodemon.json`, nodemon's default watched extensions are `js,mjs,cjs,json` — `.ts` isn't included just because `--exec ts-node` is used. Symptom: edit a server `.ts` file, hit the running API, and get the pre-edit behavior with zero errors and zero restart log lines — easy to mistake for "the change didn't take effect for some other reason" and start debugging the wrong thing. Fixed by adding `server/nodemon.json` (`{"watch": ["src"], "ext": "ts,json"}`). If the server preview was already running before this fix landed, it still needs a manual stop/restart once — nodemon can't pick up a fix to its own watch config while running unwatched.
+
+---
+
 ## Background processes must use the tool's own `run_in_background`, not `nohup ... &`
 
 Wrapping a long-running command in `nohup cmd > log 2>&1 &` inside a single Bash tool call does NOT survive past that tool call returning in this environment — the child process gets killed along with it, `nohup` notwithstanding. To run something long (dev servers, the OpenDota fetch scripts) in the background, pass the command directly with `run_in_background: true` on the Bash/PowerShell tool call itself — no `&`, no `nohup`.

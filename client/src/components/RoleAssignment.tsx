@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ROLES } from 'shared';
 import type { DraftHeroView } from '../api/types';
 import { heroPortraitUrl } from '../utils/heroIcon';
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export default function RoleAssignment({ heroes, onSubmit, submitting }: Props) {
+  const { t } = useTranslation();
   const [roleByHero, setRoleByHero] = useState<Record<number, string>>({});
 
   const allAssigned = heroes.every((h) => roleByHero[h.heroId]);
@@ -25,7 +27,7 @@ export default function RoleAssignment({ heroes, onSubmit, submitting }: Props) 
 
   return (
     <div>
-      <h3>Assign Roles</h3>
+      <h3>{t('roleAssignment.heading')}</h3>
       <div className="role-assignment-grid">
         {heroes.map((h) => (
           <div key={h.heroId} className="role-assignment-card">
@@ -43,14 +45,14 @@ export default function RoleAssignment({ heroes, onSubmit, submitting }: Props) 
               required
             >
               <option value="" disabled>
-                Select role
+                {t('roleAssignment.selectRole')}
               </option>
               {ROLES.map((role) => {
                 const takenByOther = assignedRoles.includes(role) && roleByHero[h.heroId] !== role;
                 return (
                   <option key={role} value={role} disabled={takenByOther}>
-                    {role}
-                    {takenByOther ? ' (taken)' : ''}
+                    {t(`roles.${role}`)}
+                    {takenByOther ? ` ${t('roleAssignment.taken')}` : ''}
                   </option>
                 );
               })}
@@ -58,11 +60,9 @@ export default function RoleAssignment({ heroes, onSubmit, submitting }: Props) 
           </div>
         ))}
       </div>
-      {allAssigned && !rolesAreUnique && (
-        <p className="role-assignment-error">Each role must be assigned to a different hero.</p>
-      )}
+      {allAssigned && !rolesAreUnique && <p className="role-assignment-error">{t('roleAssignment.error')}</p>}
       <button className="btn btn-primary" onClick={handleSubmit} disabled={!canSubmit || submitting}>
-        Confirm Roles
+        {t('roleAssignment.confirm')}
       </button>
     </div>
   );

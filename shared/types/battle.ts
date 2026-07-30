@@ -31,5 +31,9 @@ export interface BattleResultResponse {
   advantages: string[];
   disadvantages: string[];
   explanation: string[];
+  // Blueprint/10-tech-debt-backlog.md, "Комментарии по конкретным успешным
+  // матчапам" — top real matchup/synergy pairs for whichever side actually
+  // won this battle, narrative sentences only (see battle-resolution.ts).
+  winningHighlights: string[];
   opponent: BattleOpponent;
 }

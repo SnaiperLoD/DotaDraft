@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import ScreenFlash from './ScreenFlash';
 import { ROLES } from 'shared';
 import type { BattleResultResponse, BattleOpponentHero } from 'shared';
@@ -10,11 +11,12 @@ import AdSlot from './AdSlot';
 import './BattlePanel.css';
 
 function PortraitCard({ heroId, name, caption }: { heroId: number; name: string; caption?: string | null }) {
+  const { t } = useTranslation();
   return (
     <div className="portrait-card">
       <img src={heroPortraitUrl(heroId)} alt={name} width={130} height={81} />
       <div className="name">{name}</div>
-      {caption && <div className="caption">{caption}</div>}
+      {caption && <div className="caption">{t(`roles.${caption}`)}</div>}
     </div>
   );
 }
@@ -59,6 +61,7 @@ interface Props {
 }
 
 export default function BattlePanel({ draftId, heroes }: Props) {
+  const { t } = useTranslation();
   const [result, setResult] = useState<BattleResultResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -80,11 +83,11 @@ export default function BattlePanel({ draftId, heroes }: Props) {
 
   return (
     <div className="battle-panel">
-      <h3>Battle Mode</h3>
+      <h3>{t('battle.title')}</h3>
 
       {!result && (
         <button className="btn btn-primary" onClick={() => void handleFight()} disabled={loading}>
-          {loading ? 'Finding Opponent…' : 'Enter Battle'}
+          {loading ? t('battle.findingOpponent') : t('battle.enterBattle')}
         </button>
       )}
 
@@ -94,16 +97,17 @@ export default function BattlePanel({ draftId, heroes }: Props) {
         <div className="battle-result">
           <ScreenFlash outcome={result.resolvedOutcome} flashKey={battleCount} />
           <p className="battle-outcome">
-            {result.resolvedOutcome === 'Win' ? 'Victory' : 'Defeat'} — {result.confidenceTier} Confidence
+            {result.resolvedOutcome === 'Win' ? t('battle.victory') : t('battle.defeat')} —{' '}
+            {t('battle.confidence', { tier: t(`battle.tier.${result.confidenceTier}`) })}
           </p>
 
           <p className="battle-vs">
-            vs.{' '}
+            {t('battle.vs')}{' '}
             {result.opponent.teamName
               ? `${result.opponent.teamName}${result.opponent.leagueName ? ` (${result.opponent.leagueName})` : ''}`
               : result.opponent.source === 'pro'
-                ? 'a professional draft'
-                : 'another player'}
+                ? t('battle.proDraft')
+                : t('battle.anotherPlayer')}
             {result.opponent.matchId && (
               <>
                 {' '}
@@ -113,7 +117,7 @@ export default function BattlePanel({ draftId, heroes }: Props) {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  (view match on OpenDota →)
+                  {t('battle.viewMatch')}
                 </a>
               </>
             )}
@@ -121,9 +125,20 @@ export default function BattlePanel({ draftId, heroes }: Props) {
 
           <FaceOff myHeroes={heroes} opponentHeroes={result.opponent.heroes} />
 
+          {result.winningHighlights.length > 0 && (
+            <div className="battle-list-block">
+              <div className="battle-list-heading">{t('battle.decidingFactors')}</div>
+              <ul>
+                {result.winningHighlights.map((h, i) => (
+                  <li key={i}>{h}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           {result.advantages.length > 0 && (
             <div className="battle-list-block">
-              <div className="battle-list-heading">Advantages</div>
+              <div className="battle-list-heading">{t('battle.advantages')}</div>
               <ul>
                 {result.advantages.map((a, i) => (
                   <li key={i}>{a}</li>
@@ -134,7 +149,7 @@ export default function BattlePanel({ draftId, heroes }: Props) {
 
           {result.disadvantages.length > 0 && (
             <div className="battle-list-block">
-              <div className="battle-list-heading">Disadvantages</div>
+              <div className="battle-list-heading">{t('battle.disadvantages')}</div>
               <ul>
                 {result.disadvantages.map((d, i) => (
                   <li key={i}>{d}</li>
@@ -144,7 +159,7 @@ export default function BattlePanel({ draftId, heroes }: Props) {
           )}
 
           <div className="battle-list-block">
-            <div className="battle-list-heading">Explanation</div>
+            <div className="battle-list-heading">{t('battle.explanation')}</div>
             <ul>
               {result.explanation.map((line, i) => (
                 <li key={i}>{line}</li>
@@ -157,9 +172,9 @@ export default function BattlePanel({ draftId, heroes }: Props) {
           </div>
 
           <button className="btn btn-primary" onClick={() => void handleFight()} disabled={loading}>
-            {loading ? 'Finding Opponent…' : 'Fight Again'}
+            {loading ? t('battle.findingOpponent') : t('battle.fightAgain')}
           </button>
-          <p className="battle-count">Battles this visit: {battleCount}</p>
+          <p className="battle-count">{t('battle.battlesThisVisit', { count: battleCount })}</p>
         </div>
       )}
     </div>

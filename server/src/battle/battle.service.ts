@@ -65,6 +65,7 @@ export class BattleService {
       advantages: result.advantages,
       disadvantages: result.disadvantages,
       explanation: result.explanation,
+      winningHighlights: result.winningHighlights,
       opponent: {
         source: opponent.source,
         heroes: teamBAligned.map((h) => ({ heroId: h.id, heroName: h.name })),

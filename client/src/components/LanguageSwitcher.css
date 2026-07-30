@@ -1,0 +1,33 @@
+.language-switcher {
+  display: inline-flex;
+  gap: 2px;
+  border: 1px solid var(--bronze-dim);
+  border-radius: 3px;
+  padding: 2px;
+  margin-left: -8px;
+}
+
+.language-switcher button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+  padding: 4px 9px;
+  border-radius: 2px;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.language-switcher button:hover {
+  color: var(--gold-bright);
+}
+
+.language-switcher button.active {
+  color: var(--ink);
+  background: var(--panel-raised);
+}

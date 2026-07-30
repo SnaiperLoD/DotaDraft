@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { api } from '../api/client';
 import type { DraftStateView } from '../api/types';
 import HeroPool from '../components/HeroPool';
@@ -11,6 +12,7 @@ import AdSlot from '../components/AdSlot';
 import './DraftPage.css';
 
 export default function DraftPage() {
+  const { t } = useTranslation();
   const [draft, setDraft] = useState<DraftStateView | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -79,7 +81,7 @@ export default function DraftPage() {
         <div className="draft-error">
           <p className="error-text">{error}</p>
           <button className="btn btn-secondary" onClick={handleRestart}>
-            Restart
+            {t('draft.restart')}
           </button>
         </div>
       </div>
@@ -89,7 +91,7 @@ export default function DraftPage() {
   if (!draft) {
     return (
       <div className="page">
-        <p className="draft-loading loading-text">Loading…</p>
+        <p className="draft-loading loading-text">{t('draft.loading')}</p>
       </div>
     );
   }
@@ -102,7 +104,7 @@ export default function DraftPage() {
         <>
           <div className="round-banner">
             <h1>
-              <em>Round {round}</em> of 5
+              <em>{t('draft.roundNumber', { round })}</em> {t('draft.ofFive')}
             </h1>
             <div className="rule" />
           </div>
@@ -114,10 +116,10 @@ export default function DraftPage() {
               {draft.status === 'PICKING' && (
                 <>
                   <div className="pool-hint-row">
-                    <p className="pool-hint">Choose one hero to fill your next slot</p>
+                    <p className="pool-hint">{t('draft.poolHint')}</p>
                     {draft.rerollsRemaining > 0 && (
                       <button className="btn btn-secondary reroll-btn" onClick={() => void handleReroll()} disabled={loading}>
-                        Re-roll ({draft.rerollsRemaining})
+                        {t('draft.reroll', { count: draft.rerollsRemaining })}
                       </button>
                     )}
                   </div>
@@ -150,13 +152,13 @@ export default function DraftPage() {
 
       {draft.status === 'COMPLETED' && (
         <div className="completed-section">
-          <DraftLedger heroes={draft.heroes} totalSlots={5} title="Your Team" />
+          <DraftLedger heroes={draft.heroes} totalSlots={5} title={t('draft.yourTeam')} />
           <EvaluationPanel draftId={draft.id} heroes={draft.heroes} />
           <CommitToPoolButton draftId={draft.id} />
           <BattlePanel draftId={draft.id} heroes={draft.heroes} />
           <div className="completed-actions">
             <button className="btn btn-secondary" onClick={handleRestart}>
-              Start New Draft
+              {t('draft.startNewDraft')}
             </button>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { api } from '../api/client';
 import type { EvaluationResult } from 'shared';
 import type { DraftHeroView } from '../api/types';
@@ -46,6 +47,7 @@ function StarRating({ score }: { score: number }) {
 }
 
 export default function EvaluationPanel({ draftId, heroes }: Props) {
+  const { t } = useTranslation();
   const [result, setResult] = useState<EvaluationResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -67,7 +69,7 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
     return (
       <div className="evaluation-panel">
         <button className="btn btn-primary" onClick={() => void handleEvaluate()} disabled={loading}>
-          {loading ? 'Evaluating…' : 'Evaluate Draft'}
+          {loading ? t('evaluation.evaluating') : t('evaluation.evaluateDraft')}
         </button>
         {error && <p className="error-text">{error}</p>}
       </div>
@@ -81,7 +83,7 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
       <BadgeRow badges={badges} />
 
       <h3 className="evaluation-title">
-        Evaluation — Total Score: <em>{result.totalScore}/10</em>
+        {t('evaluation.totalScore')} <em>{result.totalScore}/10</em>
         <StarRating score={result.totalScore} />
       </h3>
 
@@ -89,7 +91,7 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
 
       <div className="evaluation-summary">
         <div className="evaluation-summary-col">
-          <div className="evaluation-summary-heading">Strengths</div>
+          <div className="evaluation-summary-heading">{t('evaluation.strengths')}</div>
           <ul>
             {result.summary.strengths.map((line, i) => (
               <li key={i}>{line}</li>
@@ -97,7 +99,7 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
           </ul>
         </div>
         <div className="evaluation-summary-col">
-          <div className="evaluation-summary-heading">Weaknesses</div>
+          <div className="evaluation-summary-heading">{t('evaluation.weaknesses')}</div>
           <ul>
             {result.summary.weaknesses.map((line, i) => (
               <li key={i}>{line}</li>
@@ -117,7 +119,7 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
                     {percentileLabel(item.percentile)}
                   </span>
                 )}
-                <span className="score">{item.score === null ? 'N/A' : `${item.score}/10`}</span>
+                <span className="score">{item.score === null ? t('evaluation.notAvailable') : `${item.score}/10`}</span>
               </span>
             </div>
             <ul>
@@ -132,7 +134,7 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                View match on OpenDota →
+                {t('evaluation.viewMatch')}
               </a>
             )}
           </div>

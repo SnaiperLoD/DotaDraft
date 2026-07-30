@@ -1,0 +1,97 @@
+{
+  "app": {
+    "nav": {
+      "draft": "Draft",
+      "history": "History",
+      "reportBug": "Report a Bug"
+    }
+  },
+  "draft": {
+    "restart": "Restart",
+    "loading": "Loading…",
+    "roundNumber": "Round {{round}}",
+    "ofFive": "of 5",
+    "poolHint": "Choose one hero to fill your next slot",
+    "reroll": "Re-roll ({{count}})",
+    "yourTeam": "Your Team",
+    "startNewDraft": "Start New Draft"
+  },
+  "roleAssignment": {
+    "heading": "Assign Roles",
+    "selectRole": "Select role",
+    "taken": "(taken)",
+    "error": "Each role must be assigned to a different hero.",
+    "confirm": "Confirm Roles"
+  },
+  "roles": {
+    "Carry": "Carry",
+    "Mid": "Mid",
+    "Offlane": "Offlane",
+    "Soft Support": "Soft Support",
+    "Hard Support": "Hard Support"
+  },
+  "positions": {
+    "Carry": "Carry",
+    "Mid": "Mid",
+    "Offlane": "Offlane",
+    "Support": "Support"
+  },
+  "draftLedger": {
+    "defaultTitle": "Your Draft",
+    "picked": "{{picked}} of {{total}} picked",
+    "rolePending": "Role pending",
+    "emptySlot": "Empty slot"
+  },
+  "roleTooltip": {
+    "noData": "No strong real-position data"
+  },
+  "evaluation": {
+    "evaluating": "Evaluating…",
+    "evaluateDraft": "Evaluate Draft",
+    "totalScore": "Evaluation — Total Score:",
+    "strengths": "Strengths",
+    "weaknesses": "Weaknesses",
+    "notAvailable": "N/A",
+    "viewMatch": "View match on OpenDota →"
+  },
+  "commitToPool": {
+    "committing": "Committing…",
+    "commit": "Commit to Pool",
+    "done": "Committed to the Opponent Pool — other players may now face this draft in Battle Mode."
+  },
+  "battle": {
+    "title": "Battle Mode",
+    "findingOpponent": "Finding Opponent…",
+    "enterBattle": "Enter Battle",
+    "victory": "Victory",
+    "defeat": "Defeat",
+    "confidence": "{{tier}} Confidence",
+    "vs": "vs.",
+    "proDraft": "a professional draft",
+    "anotherPlayer": "another player",
+    "viewMatch": "(view match on OpenDota →)",
+    "decidingFactors": "Deciding Factors",
+    "advantages": "Advantages",
+    "disadvantages": "Disadvantages",
+    "explanation": "Explanation",
+    "fightAgain": "Fight Again",
+    "battlesThisVisit": "Battles this visit: {{count}}",
+    "tier": {
+      "Low": "Low",
+      "Moderate": "Moderate",
+      "High": "High"
+    }
+  },
+  "history": {
+    "title": "History",
+    "empty": "No completed drafts yet.",
+    "evaluationScore": "Evaluation: {{score}}/10",
+    "notEvaluated": "Not evaluated.",
+    "battleCount_one": "{{count}} battle",
+    "battleCount_other": "{{count}} battles",
+    "confidenceLower": "{{tier}} confidence"
+  },
+  "adSlot": {
+    "label": "Advertisement"
+  }
+}

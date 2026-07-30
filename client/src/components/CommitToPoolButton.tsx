@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { api } from '../api/client';
 import { getSubmitterToken } from '../utils/submitterToken';
 
@@ -7,6 +8,7 @@ interface Props {
 }
 
 export default function CommitToPoolButton({ draftId }: Props) {
+  const { t } = useTranslation();
   const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle');
   const [error, setError] = useState<string | null>(null);
 
@@ -23,17 +25,13 @@ export default function CommitToPoolButton({ draftId }: Props) {
   };
 
   if (status === 'done') {
-    return (
-      <p className="loading-text">
-        Committed to the Opponent Pool — other players may now face this draft in Battle Mode.
-      </p>
-    );
+    return <p className="loading-text">{t('commitToPool.done')}</p>;
   }
 
   return (
     <div>
       <button className="btn btn-secondary" onClick={() => void handleCommit()} disabled={status === 'loading'}>
-        {status === 'loading' ? 'Committing…' : 'Commit to Pool'}
+        {status === 'loading' ? t('commitToPool.committing') : t('commitToPool.commit')}
       </button>
       {status === 'error' && <p className="error-text">{error}</p>}
     </div>
