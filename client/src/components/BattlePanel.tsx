@@ -10,13 +10,26 @@ import type { DraftHeroView } from '../api/types';
 import AdSlot from './AdSlot';
 import './BattlePanel.css';
 
-function PortraitCard({ heroId, name, caption }: { heroId: number; name: string; caption?: string | null }) {
+function PortraitCard({
+  heroId,
+  name,
+  caption,
+  translateCaption = true,
+}: {
+  heroId: number;
+  name: string;
+  caption?: string | null;
+  // My side's caption is a role key (translated via roles.*); the
+  // opponent side's caption (when present) is a real player's OpenDota
+  // name — display verbatim, never run through the roles.* dictionary.
+  translateCaption?: boolean;
+}) {
   const { t } = useTranslation();
   return (
     <div className="portrait-card">
       <img src={heroPortraitUrl(heroId)} alt={name} width={130} height={81} />
       <div className="name">{name}</div>
-      {caption && <div className="caption">{t(`roles.${caption}`)}</div>}
+      {caption && <div className="caption">{translateCaption ? t(`roles.${caption}`) : caption}</div>}
     </div>
   );
 }
@@ -48,7 +61,7 @@ function FaceOff({
       <div className="faceoff-divider">VS</div>
       <div className="faceoff-row">
         {opponentHeroes.map((h) => (
-          <PortraitCard key={h.heroId} heroId={h.heroId} name={h.heroName} />
+          <PortraitCard key={h.heroId} heroId={h.heroId} name={h.heroName} caption={h.playerName} translateCaption={false} />
         ))}
       </div>
     </div>

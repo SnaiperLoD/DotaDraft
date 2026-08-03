@@ -7,6 +7,9 @@ export type ResolvedOutcome = 'Win' | 'Lose';
 export interface BattleOpponentHero {
   heroId: number;
   heroName: string;
+  // See PooledHeroRole.playerName (opponent-pool.ts) — only ever set for
+  // 'pro' opponents with backfilled player data.
+  playerName?: string | null;
 }
 
 export interface BattleOpponent {

@@ -8,6 +8,8 @@ Environment/tooling gotchas discovered while building this project (Windows + Gi
 
 Without a `nodemon.json`, nodemon's default watched extensions are `js,mjs,cjs,json` — `.ts` isn't included just because `--exec ts-node` is used. Symptom: edit a server `.ts` file, hit the running API, and get the pre-edit behavior with zero errors and zero restart log lines — easy to mistake for "the change didn't take effect for some other reason" and start debugging the wrong thing. Fixed by adding `server/nodemon.json` (`{"watch": ["src"], "ext": "ts,json"}`). If the server preview was already running before this fix landed, it still needs a manual stop/restart once — nodemon can't pick up a fix to its own watch config while running unwatched.
 
+**Even with the config fixed, don't fully trust it — nodemon has since silently failed to restart on a real `src` edit at least once** (player-nicknames feature, 2026-07-30): edited `battle.service.ts`, ran unrelated scripts for a while, then hit the live API and got the pre-edit response (missing field) with zero errors — `preview_logs` search for `"restart"` came back empty, meaning nodemon never even tried. A manual `preview_stop`/`preview_start` immediately fixed it. Root cause not confirmed (chokidar file-watching can be unreliable on Windows/virtualized filesystems without polling) — but the practical lesson: if a server-side change doesn't seem to take effect and there's no error, don't assume the code is wrong before checking `preview_logs` for an actual restart between the edit and the test. When in doubt, manually stop/start rather than trusting nodemon picked it up.
+
 ---
 
 ## Background processes must use the tool's own `run_in_background`, not `nohup ... &`

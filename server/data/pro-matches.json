@@ -25,45 +25,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 12,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "arima-"
         },
         {
           "heroId": 96,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "bangkok"
         },
         {
           "heroId": 7,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "CHIRA_JUNIOR"
         },
         {
           "heroId": 9,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "lostreak chicken"
         },
         {
           "heroId": 112,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "; ]"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 6,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Hey Mama"
         },
         {
           "heroId": 39,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "PI$70L"
         },
         {
           "heroId": 2,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "not human (животное)"
         },
         {
           "heroId": 119,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Arianka"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "NongMon"
         }
       ]
     },
@@ -91,45 +101,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 80,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Hey Mama"
         },
         {
           "heroId": 155,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "not human (животное)"
         },
         {
           "heroId": 107,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "PI$70L"
         },
         {
           "heroId": 31,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "NongMon"
         },
         {
           "heroId": 119,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Arianka"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 25,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "arima-"
         },
         {
           "heroId": 96,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "bangkok"
         },
         {
           "heroId": 28,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "CHIRA_JUNIOR"
         },
         {
           "heroId": 85,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "; ]"
         },
         {
           "heroId": 123,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "lostreak chicken"
         }
       ]
     },
@@ -157,45 +177,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 89,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "effect"
         },
         {
           "heroId": 13,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "not_him"
         },
         {
           "heroId": 2,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 110,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "123"
         },
         {
           "heroId": 86,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Mr.Kezik"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 145,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Satanic"
         },
         {
           "heroId": 120,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Have fun"
         },
         {
           "heroId": 28,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "strafe instructor"
         },
         {
           "heroId": 119,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Pele"
         },
         {
           "heroId": 112,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Dukalis"
         }
       ]
     },
@@ -223,45 +253,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 17,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "^"
         },
         {
           "heroId": 21,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Imailisa"
         },
         {
           "heroId": 38,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Bach"
         },
         {
           "heroId": 90,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "烟弹漏油"
         },
         {
           "heroId": 123,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "宇宙にきらめく エメラルド"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 114,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "KITR"
         },
         {
           "heroId": 106,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "GAYLAPSE"
         },
         {
           "heroId": 65,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Mlha"
         },
         {
           "heroId": 131,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "sustain"
         },
         {
           "heroId": 14,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "mid two"
         }
       ]
     },
@@ -289,45 +329,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 155,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Have fun"
         },
         {
           "heroId": 145,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Satanic"
         },
         {
           "heroId": 60,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "strafe instructor"
         },
         {
           "heroId": 91,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Pele"
         },
         {
           "heroId": 121,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Dukalis"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 10,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "effect"
         },
         {
           "heroId": 74,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "not_him"
         },
         {
           "heroId": 29,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 119,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Mr.Kezik"
         },
         {
           "heroId": 3,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "123"
         }
       ]
     },
@@ -355,45 +405,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 74,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "GAYLAPSE"
         },
         {
           "heroId": 12,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "KITR"
         },
         {
           "heroId": 65,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Mlha"
         },
         {
           "heroId": 14,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "mid two"
         },
         {
           "heroId": 85,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "sustain"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 25,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "^"
         },
         {
           "heroId": 41,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Imailisa"
         },
         {
           "heroId": 38,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Bach"
         },
         {
           "heroId": 51,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "烟弹漏油"
         },
         {
           "heroId": 123,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "宇宙にきらめく エメラルド"
         }
       ]
     },
@@ -421,45 +481,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 19,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "yondaime"
         },
         {
           "heroId": 96,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "oRb WaLk )"
         },
         {
           "heroId": 106,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "мусор"
         },
         {
           "heroId": 9,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "tOfu"
         },
         {
           "heroId": 107,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Boxi"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 98,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 21,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 13,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 123,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "get up"
         },
         {
           "heroId": 64,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "save丶nic"
         }
       ]
     },
@@ -487,45 +557,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 12,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 25,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 85,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 123,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "get up"
         },
         {
           "heroId": 64,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "save丶nic"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 46,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "yondaime"
         },
         {
           "heroId": 107,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "мусор"
         },
         {
           "heroId": 2,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "oRb WaLk )"
         },
         {
           "heroId": 21,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Boxi"
         },
         {
           "heroId": 30,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "tOfu"
         }
       ]
     },
@@ -553,45 +633,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 69,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Suma1L-"
         },
         {
           "heroId": 106,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Буська"
         },
         {
           "heroId": 21,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "I m Going To Be The Best Carry"
         },
         {
           "heroId": 51,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "o_o"
         },
         {
           "heroId": 85,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Sneyking"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 109,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "NothingToGay"
         },
         {
           "heroId": 2,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "¿"
         },
         {
           "heroId": 128,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "NothingToSay"
         },
         {
           "heroId": 86,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "其疾如风"
         },
         {
           "heroId": 3,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "lavie"
         }
       ]
     },
@@ -619,45 +709,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 48,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "NothingToGay"
         },
         {
           "heroId": 128,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "NothingToSay"
         },
         {
           "heroId": 96,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "¿"
         },
         {
           "heroId": 110,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "lavie"
         },
         {
           "heroId": 123,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "其疾如风"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 36,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Suma1L-"
         },
         {
           "heroId": 21,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "I m Going To Be The Best Carry"
         },
         {
           "heroId": 106,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Буська"
         },
         {
           "heroId": 131,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Sneyking"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "o_o"
         }
       ]
     },
@@ -685,45 +785,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 128,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "PI$70L"
         },
         {
           "heroId": 67,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Hey Mama"
         },
         {
           "heroId": 55,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "not human (животное)"
         },
         {
           "heroId": 90,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Arianka"
         },
         {
           "heroId": 131,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "NongMon"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 6,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": ">>>>>>>><<<<<<<<<"
         },
         {
           "heroId": 52,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Rasmus?"
         },
         {
           "heroId": 69,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "33333333333333333"
         },
         {
           "heroId": 86,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Kimber2k11"
         },
         {
           "heroId": 3,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "mamba24"
         }
       ]
     },
@@ -751,45 +861,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 19,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": ">>>>>>>><<<<<<<<<"
         },
         {
           "heroId": 22,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Rasmus?"
         },
         {
           "heroId": 85,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "33333333333333333"
         },
         {
           "heroId": 105,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Kimber2k11"
         },
         {
           "heroId": 9,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "mamba24"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 6,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Hey Mama"
         },
         {
           "heroId": 25,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "PI$70L"
         },
         {
           "heroId": 2,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "not human (животное)"
         },
         {
           "heroId": 21,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Arianka"
         },
         {
           "heroId": 100,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "NongMon"
         }
       ]
     },
@@ -817,45 +937,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 55,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 145,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "effect"
         },
         {
           "heroId": 74,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "not_him"
         },
         {
           "heroId": 123,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Mr.Kezik"
         },
         {
           "heroId": 3,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "123"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 11,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "abi eja"
         },
         {
           "heroId": 128,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "eco fragger"
         },
         {
           "heroId": 77,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "underLORD"
         },
         {
           "heroId": 65,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "reckless"
         },
         {
           "heroId": 5,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Joana"
         }
       ]
     },
@@ -883,45 +1013,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 55,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Mlha"
         },
         {
           "heroId": 73,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "KITR"
         },
         {
           "heroId": 74,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "GAYLAPSE"
         },
         {
           "heroId": 51,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "mid two"
         },
         {
           "heroId": 3,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "sustain"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 6,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Satanic"
         },
         {
           "heroId": 38,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "strafe instructor"
         },
         {
           "heroId": 120,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Have fun"
         },
         {
           "heroId": 90,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Pele"
         },
         {
           "heroId": 84,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Dukalis"
         }
       ]
     },
@@ -949,45 +1089,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 48,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "abi eja"
         },
         {
           "heroId": 13,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "eco fragger"
         },
         {
           "heroId": 137,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "underLORD"
         },
         {
           "heroId": 105,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "reckless"
         },
         {
           "heroId": 58,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Joana"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 6,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "effect"
         },
         {
           "heroId": 107,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "not_him"
         },
         {
           "heroId": 69,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 86,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Mr.Kezik"
         },
         {
           "heroId": 31,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "123"
         }
       ]
     },
@@ -1015,45 +1165,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 6,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Satanic"
         },
         {
           "heroId": 106,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Have fun"
         },
         {
           "heroId": 155,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "strafe instructor"
         },
         {
           "heroId": 90,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Pele"
         },
         {
           "heroId": 105,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Dukalis"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 13,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "GAYLAPSE"
         },
         {
           "heroId": 55,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Mlha"
         },
         {
           "heroId": 49,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "KITR"
         },
         {
           "heroId": 58,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "sustain"
         },
         {
           "heroId": 83,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "mid two"
         }
       ]
     },
@@ -1081,45 +1241,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 36,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Imailisa"
         },
         {
           "heroId": 96,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Bach"
         },
         {
           "heroId": 120,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "^"
         },
         {
           "heroId": 21,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "烟弹漏油"
         },
         {
           "heroId": 3,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "宇宙にきらめく エメラルド"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 109,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "effect"
         },
         {
           "heroId": 2,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 128,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "not_him"
         },
         {
           "heroId": 131,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Mr.Kezik"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "123"
         }
       ]
     },
@@ -1147,45 +1317,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 18,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Satanic"
         },
         {
           "heroId": 107,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Have fun"
         },
         {
           "heroId": 108,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "strafe instructor"
         },
         {
           "heroId": 90,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Pele"
         },
         {
           "heroId": 31,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Dukalis"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 80,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "abi eja"
         },
         {
           "heroId": 96,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "underLORD"
         },
         {
           "heroId": 17,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "eco fragger"
         },
         {
           "heroId": 86,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "reckless"
         },
         {
           "heroId": 121,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Joana"
         }
       ]
     },
@@ -1213,45 +1393,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 109,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Imailisa"
         },
         {
           "heroId": 17,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "^"
         },
         {
           "heroId": 96,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Bach"
         },
         {
           "heroId": 101,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "烟弹漏油"
         },
         {
           "heroId": 83,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "宇宙にきらめく エメラルド"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 54,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "effect"
         },
         {
           "heroId": 106,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "not_him"
         },
         {
           "heroId": 155,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 119,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Mr.Kezik"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "123"
         }
       ]
     },
@@ -1279,45 +1469,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 19,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "abi eja"
         },
         {
           "heroId": 38,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "eco fragger"
         },
         {
           "heroId": 137,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "underLORD"
         },
         {
           "heroId": 105,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "reckless"
         },
         {
           "heroId": 58,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Joana"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 6,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Satanic"
         },
         {
           "heroId": 107,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Have fun"
         },
         {
           "heroId": 135,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "strafe instructor"
         },
         {
           "heroId": 119,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Pele"
         },
         {
           "heroId": 112,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Dukalis"
         }
       ]
     },
@@ -1345,45 +1545,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 36,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Suma1L-"
         },
         {
           "heroId": 107,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Буська"
         },
         {
           "heroId": 19,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "I m Going To Be The Best Carry"
         },
         {
           "heroId": 58,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Sneyking"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "o_o"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 11,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "鬼"
         },
         {
           "heroId": 74,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "))"
         },
         {
           "heroId": 60,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "ak b"
         },
         {
           "heroId": 85,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Speeed"
         },
         {
           "heroId": 119,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "discovery subscription"
         }
       ]
     },
@@ -1411,45 +1621,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 47,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "))"
         },
         {
           "heroId": 6,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "鬼"
         },
         {
           "heroId": 2,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "ak b"
         },
         {
           "heroId": 75,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Speeed"
         },
         {
           "heroId": 119,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "discovery subscription"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 128,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Буська"
         },
         {
           "heroId": 21,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "I m Going To Be The Best Carry"
         },
         {
           "heroId": 135,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Suma1L-"
         },
         {
           "heroId": 83,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Sneyking"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "o_o"
         }
       ]
     },
@@ -1477,45 +1697,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 70,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Imailisa"
         },
         {
           "heroId": 17,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "^"
         },
         {
           "heroId": 155,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Bach"
         },
         {
           "heroId": 21,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "烟弹漏油"
         },
         {
           "heroId": 131,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "宇宙にきらめく エメラルド"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 54,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Satanic"
         },
         {
           "heroId": 55,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "strafe instructor"
         },
         {
           "heroId": 106,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Have fun"
         },
         {
           "heroId": 107,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Pele"
         },
         {
           "heroId": 75,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Dukalis"
         }
       ]
     },
@@ -1543,45 +1773,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 11,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Imailisa"
         },
         {
           "heroId": 52,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "^"
         },
         {
           "heroId": 65,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Bach"
         },
         {
           "heroId": 51,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "烟弹漏油"
         },
         {
           "heroId": 111,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "宇宙にきらめく エメラルド"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 18,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Satanic"
         },
         {
           "heroId": 55,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "strafe instructor"
         },
         {
           "heroId": 120,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Have fun"
         },
         {
           "heroId": 107,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Pele"
         },
         {
           "heroId": 112,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Dukalis"
         }
       ]
     },
@@ -1609,45 +1849,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 114,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "KITR"
         },
         {
           "heroId": 17,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "GAYLAPSE"
         },
         {
           "heroId": 55,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Mlha"
         },
         {
           "heroId": 123,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "sustain"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "mid two"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 138,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "abi eja"
         },
         {
           "heroId": 33,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "underLORD"
         },
         {
           "heroId": 120,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "eco fragger"
         },
         {
           "heroId": 131,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "reckless"
         },
         {
           "heroId": 83,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Joana"
         }
       ]
     },
@@ -1675,45 +1925,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 74,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "GAYLAPSE"
         },
         {
           "heroId": 99,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "KITR"
         },
         {
           "heroId": 65,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Mlha"
         },
         {
           "heroId": 3,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "sustain"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "mid two"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 72,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "abi eja"
         },
         {
           "heroId": 47,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "underLORD"
         },
         {
           "heroId": 17,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "eco fragger"
         },
         {
           "heroId": 33,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Joana"
         },
         {
           "heroId": 100,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "reckless"
         }
       ]
     },
@@ -1741,45 +2001,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 36,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "鬼"
         },
         {
           "heroId": 23,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "))"
         },
         {
           "heroId": 108,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "ak b"
         },
         {
           "heroId": 112,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Speeed"
         },
         {
           "heroId": 119,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "discovery subscription"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 53,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "NothingToSay"
         },
         {
           "heroId": 80,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "NothingToGay"
         },
         {
           "heroId": 128,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "¿"
         },
         {
           "heroId": 31,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "lavie"
         },
         {
           "heroId": 86,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "其疾如风"
         }
       ]
     },
@@ -1807,45 +2077,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 155,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "))"
         },
         {
           "heroId": 11,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "鬼"
         },
         {
           "heroId": 33,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "ak b"
         },
         {
           "heroId": 119,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "discovery subscription"
         },
         {
           "heroId": 112,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Speeed"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 80,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "NothingToGay"
         },
         {
           "heroId": 25,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "NothingToSay"
         },
         {
           "heroId": 55,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "¿"
         },
         {
           "heroId": 71,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "其疾如风"
         },
         {
           "heroId": 31,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "lavie"
         }
       ]
     },
@@ -1873,45 +2153,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 109,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "arima-"
         },
         {
           "heroId": 38,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "bangkok"
         },
         {
           "heroId": 106,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "CHIRA_JUNIOR"
         },
         {
           "heroId": 90,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "lostreak chicken"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "; ]"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 6,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": ">>>>>>>><<<<<<<<<"
         },
         {
           "heroId": 107,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Rasmus?"
         },
         {
           "heroId": 96,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "33333333333333333"
         },
         {
           "heroId": 9,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "mamba24"
         },
         {
           "heroId": 119,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Kimber2k11"
         }
       ]
     },
@@ -1939,45 +2229,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 73,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": ">>>>>>>><<<<<<<<<"
         },
         {
           "heroId": 107,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Rasmus?"
         },
         {
           "heroId": 38,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "33333333333333333"
         },
         {
           "heroId": 9,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "mamba24"
         },
         {
           "heroId": 71,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Kimber2k11"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 145,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "arima-"
         },
         {
           "heroId": 96,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "bangkok"
         },
         {
           "heroId": 106,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "CHIRA_JUNIOR"
         },
         {
           "heroId": 53,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "lostreak chicken"
         },
         {
           "heroId": 112,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "; ]"
         }
       ]
     },
@@ -2005,45 +2305,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 96,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 22,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "not_him"
         },
         {
           "heroId": 21,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "effect"
         },
         {
           "heroId": 105,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Mr.Kezik"
         },
         {
           "heroId": 58,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "123"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 15,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "KITR"
         },
         {
           "heroId": 13,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "GAYLAPSE"
         },
         {
           "heroId": 29,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Mlha"
         },
         {
           "heroId": 83,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "sustain"
         },
         {
           "heroId": 121,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "mid two"
         }
       ]
     },
@@ -2071,45 +2381,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 11,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Imailisa"
         },
         {
           "heroId": 17,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "^"
         },
         {
           "heroId": 155,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Bach"
         },
         {
           "heroId": 123,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "烟弹漏油"
         },
         {
           "heroId": 85,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "宇宙にきらめく エメラルド"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 6,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "abi eja"
         },
         {
           "heroId": 120,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "eco fragger"
         },
         {
           "heroId": 2,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "underLORD"
         },
         {
           "heroId": 5,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Joana"
         },
         {
           "heroId": 21,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "reckless"
         }
       ]
     },
@@ -2137,45 +2457,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 114,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "KITR"
         },
         {
           "heroId": 47,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Mlha"
         },
         {
           "heroId": 107,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "GAYLAPSE"
         },
         {
           "heroId": 100,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "mid two"
         },
         {
           "heroId": 3,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "sustain"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 13,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "not_him"
         },
         {
           "heroId": 56,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "effect"
         },
         {
           "heroId": 69,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 86,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Mr.Kezik"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "123"
         }
       ]
     },
@@ -2203,45 +2533,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 72,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "abi eja"
         },
         {
           "heroId": 69,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "underLORD"
         },
         {
           "heroId": 17,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "eco fragger"
         },
         {
           "heroId": 22,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Joana"
         },
         {
           "heroId": 123,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "reckless"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 11,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Imailisa"
         },
         {
           "heroId": 128,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "^"
         },
         {
           "heroId": 85,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Bach"
         },
         {
           "heroId": 9,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "烟弹漏油"
         },
         {
           "heroId": 3,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "宇宙にきらめく エメラルド"
         }
       ]
     },
@@ -2269,45 +2609,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 46,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "safeword"
         },
         {
           "heroId": 74,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "vv"
         },
         {
           "heroId": 2,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "???"
         },
         {
           "heroId": 51,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "old dog new tricksᡕᠵデ气亠"
         },
         {
           "heroId": 123,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "cucu"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 11,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "KITR"
         },
         {
           "heroId": 33,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Mlha"
         },
         {
           "heroId": 19,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "GAYLAPSE"
         },
         {
           "heroId": 90,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "mid two"
         },
         {
           "heroId": 155,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "sustain"
         }
       ]
     },
@@ -2335,45 +2685,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 21,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "safeword"
         },
         {
           "heroId": 74,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "vv"
         },
         {
           "heroId": 65,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "???"
         },
         {
           "heroId": 105,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "cucu"
         },
         {
           "heroId": 83,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "old dog new tricksᡕᠵデ气亠"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 34,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "GAYLAPSE"
         },
         {
           "heroId": 36,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "KITR"
         },
         {
           "heroId": 69,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Mlha"
         },
         {
           "heroId": 3,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "sustain"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "mid two"
         }
       ]
     },
@@ -2401,45 +2761,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 145,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "abi eja"
         },
         {
           "heroId": 47,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "underLORD"
         },
         {
           "heroId": 126,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "eco fragger"
         },
         {
           "heroId": 123,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "reckless"
         },
         {
           "heroId": 31,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Joana"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 21,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": ">>>>>>>><<<<<<<<<"
         },
         {
           "heroId": 77,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "33333333333333333"
         },
         {
           "heroId": 13,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Rasmus?"
         },
         {
           "heroId": 72,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Kimber2k11"
         },
         {
           "heroId": 87,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "mamba24"
         }
       ]
     },
@@ -2467,45 +2837,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 72,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "abi eja"
         },
         {
           "heroId": 137,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "underLORD"
         },
         {
           "heroId": 126,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "eco fragger"
         },
         {
           "heroId": 123,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "reckless"
         },
         {
           "heroId": 87,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Joana"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 53,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "mamba24"
         },
         {
           "heroId": 13,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Rasmus?"
         },
         {
           "heroId": 49,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": ">>>>>>>><<<<<<<<<"
         },
         {
           "heroId": 85,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "33333333333333333"
         },
         {
           "heroId": 21,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Kimber2k11"
         }
       ]
     },
@@ -2533,45 +2913,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 19,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "abi eja"
         },
         {
           "heroId": 22,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "eco fragger"
         },
         {
           "heroId": 23,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "underLORD"
         },
         {
           "heroId": 58,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Joana"
         },
         {
           "heroId": 26,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "reckless"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 72,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": ">>>>>>>><<<<<<<<<"
         },
         {
           "heroId": 13,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Rasmus?"
         },
         {
           "heroId": 53,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "mamba24"
         },
         {
           "heroId": 2,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "33333333333333333"
         },
         {
           "heroId": 91,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Kimber2k11"
         }
       ]
     },
@@ -2599,45 +2989,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 53,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "GAYLAPSE"
         },
         {
           "heroId": 55,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Mlha"
         },
         {
           "heroId": 6,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "KITR"
         },
         {
           "heroId": 30,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "sustain"
         },
         {
           "heroId": 71,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "mid two"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 77,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "GAMBOT-PARIS"
         },
         {
           "heroId": 19,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "nightcrawler"
         },
         {
           "heroId": 74,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "solo tinkering"
         },
         {
           "heroId": 65,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "louis vuitton"
         },
         {
           "heroId": 131,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Xakoda"
         }
       ]
     },
@@ -2665,45 +3065,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 56,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "nightcrawler"
         },
         {
           "heroId": 155,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "solo tinkering"
         },
         {
           "heroId": 65,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "GAMBOT-PARIS"
         },
         {
           "heroId": 31,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Xakoda"
         },
         {
           "heroId": 19,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "louis vuitton"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 11,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "KITR"
         },
         {
           "heroId": 74,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "GAYLAPSE"
         },
         {
           "heroId": 85,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Mlha"
         },
         {
           "heroId": 123,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "mid two"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "sustain"
         }
       ]
     },
@@ -2731,45 +3141,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 21,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 17,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 120,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 68,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "save丶nic"
         },
         {
           "heroId": 123,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "get up"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 54,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "I m Going To Be The Best Carry"
         },
         {
           "heroId": 90,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Miracle-"
         },
         {
           "heroId": 129,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Suma1L-"
         },
         {
           "heroId": 66,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Sneyking"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "o_o"
         }
       ]
     },
@@ -2797,45 +3217,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 106,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Miracle-"
         },
         {
           "heroId": 15,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Suma1L-"
         },
         {
           "heroId": 81,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "I m Going To Be The Best Carry"
         },
         {
           "heroId": 75,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Sneyking"
         },
         {
           "heroId": 123,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "o_o"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 21,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 69,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 47,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 26,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "get up"
         },
         {
           "heroId": 3,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "save丶nic"
         }
       ]
     },
@@ -2863,45 +3293,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 21,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 17,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 135,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 37,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "save丶nic"
         },
         {
           "heroId": 26,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "get up"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 99,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Suma1L-"
         },
         {
           "heroId": 90,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Miracle-"
         },
         {
           "heroId": 19,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "I m Going To Be The Best Carry"
         },
         {
           "heroId": 3,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Sneyking"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "o_o"
         }
       ]
     },
@@ -2929,45 +3369,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 6,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "I m Going To Be The Best Carry"
         },
         {
           "heroId": 108,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Suma1L-"
         },
         {
           "heroId": 106,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Miracle-"
         },
         {
           "heroId": 110,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Sneyking"
         },
         {
           "heroId": 26,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "o_o"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 74,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "мусор"
         },
         {
           "heroId": 19,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "yondaime"
         },
         {
           "heroId": 135,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "oRb WaLk )"
         },
         {
           "heroId": 123,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "tOfu"
         },
         {
           "heroId": 100,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Boxi"
         }
       ]
     },
@@ -2995,45 +3445,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 73,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "I m Going To Be The Best Carry"
         },
         {
           "heroId": 36,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Suma1L-"
         },
         {
           "heroId": 106,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Miracle-"
         },
         {
           "heroId": 110,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Sneyking"
         },
         {
           "heroId": 26,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "o_o"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 13,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "мусор"
         },
         {
           "heroId": 128,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "oRb WaLk )"
         },
         {
           "heroId": 19,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "yondaime"
         },
         {
           "heroId": 53,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "tOfu"
         },
         {
           "heroId": 14,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Boxi"
         }
       ]
     },
@@ -3061,45 +3521,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 74,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "CHIRA_JUNIOR"
         },
         {
           "heroId": 19,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "arima-"
         },
         {
           "heroId": 98,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "bangkok"
         },
         {
           "heroId": 128,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "lostreak chicken"
         },
         {
           "heroId": 112,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "; ]"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 70,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 39,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 2,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 58,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "save丶nic"
         },
         {
           "heroId": 26,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "get up"
         }
       ]
     },
@@ -3127,45 +3597,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 109,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 39,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 2,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 58,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "save丶nic"
         },
         {
           "heroId": 123,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "get up"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 46,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "arima-"
         },
         {
           "heroId": 106,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "CHIRA_JUNIOR"
         },
         {
           "heroId": 28,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "bangkok"
         },
         {
           "heroId": 128,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "lostreak chicken"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "; ]"
         }
       ]
     },
@@ -3193,45 +3673,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 12,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 2,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 21,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 26,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "get up"
         },
         {
           "heroId": 112,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "save丶nic"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 6,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "yondaime"
         },
         {
           "heroId": 126,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "мусор"
         },
         {
           "heroId": 28,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "oRb WaLk )"
         },
         {
           "heroId": 105,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Boxi"
         },
         {
           "heroId": 83,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "tOfu"
         }
       ]
     },
@@ -3259,45 +3749,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 54,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "yondaime"
         },
         {
           "heroId": 120,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "мусор"
         },
         {
           "heroId": 135,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "oRb WaLk )"
         },
         {
           "heroId": 75,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "tOfu"
         },
         {
           "heroId": 26,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Boxi"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 21,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 13,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 2,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 110,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "save丶nic"
         },
         {
           "heroId": 123,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "get up"
         }
       ]
     },
@@ -3325,45 +3825,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 80,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "arima-"
         },
         {
           "heroId": 53,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "CHIRA_JUNIOR"
         },
         {
           "heroId": 2,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "bangkok"
         },
         {
           "heroId": 86,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "lostreak chicken"
         },
         {
           "heroId": 3,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "; ]"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 73,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "effect"
         },
         {
           "heroId": 120,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 47,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "not_him"
         },
         {
           "heroId": 105,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Mr.Kezik"
         },
         {
           "heroId": 123,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "123"
         }
       ]
     },
@@ -3391,45 +3901,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 11,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "effect"
         },
         {
           "heroId": 155,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 106,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "not_him"
         },
         {
           "heroId": 100,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "123"
         },
         {
           "heroId": 26,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Mr.Kezik"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 46,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "arima-"
         },
         {
           "heroId": 74,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "CHIRA_JUNIOR"
         },
         {
           "heroId": 108,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "bangkok"
         },
         {
           "heroId": 86,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "lostreak chicken"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "; ]"
         }
       ]
     },
@@ -3457,45 +3977,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 145,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": ">>>>>>>><<<<<<<<<"
         },
         {
           "heroId": 98,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Rasmus?"
         },
         {
           "heroId": 77,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "∩ (◣_◢) ∩"
         },
         {
           "heroId": 100,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Kimber2k11"
         },
         {
           "heroId": 3,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "mamba24"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 6,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "effect"
         },
         {
           "heroId": 29,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 106,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "not_him"
         },
         {
           "heroId": 131,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Mr.Kezik"
         },
         {
           "heroId": 83,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "123"
         }
       ]
     },
@@ -3523,45 +4053,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 19,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "effect"
         },
         {
           "heroId": 155,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 39,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "not_him"
         },
         {
           "heroId": 51,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Mr.Kezik"
         },
         {
           "heroId": 123,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "123"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 69,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "∩ (◣_◢) ∩"
         },
         {
           "heroId": 21,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": ">>>>>>>><<<<<<<<<"
         },
         {
           "heroId": 17,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Rasmus?"
         },
         {
           "heroId": 86,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Kimber2k11"
         },
         {
           "heroId": 83,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "mamba24"
         }
       ]
     },
@@ -3589,45 +4129,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 36,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "мусор"
         },
         {
           "heroId": 6,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "yondaime"
         },
         {
           "heroId": 28,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "oRb WaLk )"
         },
         {
           "heroId": 3,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "tOfu"
         },
         {
           "heroId": 123,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Boxi"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 12,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": ">>>>>>>><<<<<<<<<"
         },
         {
           "heroId": 98,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "∩ (◣_◢) ∩"
         },
         {
           "heroId": 120,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Rasmus?"
         },
         {
           "heroId": 66,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "mamba24"
         },
         {
           "heroId": 26,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Kimber2k11"
         }
       ]
     },
@@ -3655,45 +4205,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 11,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Satanic"
         },
         {
           "heroId": 17,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Have fun"
         },
         {
           "heroId": 2,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "strafe instructor"
         },
         {
           "heroId": 101,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Pele"
         },
         {
           "heroId": 30,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Dukalis"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 129,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Suma1L-"
         },
         {
           "heroId": 128,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Буська"
         },
         {
           "heroId": 20,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "I m Going To Be The Best Carry"
         },
         {
           "heroId": 110,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Sneyking"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "o_o"
         }
       ]
     },
@@ -3721,45 +4281,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 19,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "NothingToGay"
         },
         {
           "heroId": 135,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "¿"
         },
         {
           "heroId": 17,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "NothingToSay"
         },
         {
           "heroId": 90,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "其疾如风"
         },
         {
           "heroId": 110,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "lavie"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 53,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 106,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 2,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 123,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "save丶nic"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "get up"
         }
       ]
     },
@@ -3787,45 +4357,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 36,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "effect"
         },
         {
           "heroId": 69,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 120,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "not_him"
         },
         {
           "heroId": 100,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "123"
         },
         {
           "heroId": 26,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Mr.Kezik"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 20,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": ">>>>>>>><<<<<<<<<"
         },
         {
           "heroId": 2,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "∩ (◣_◢) ∩"
         },
         {
           "heroId": 13,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Rasmus?"
         },
         {
           "heroId": 112,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "mamba24"
         },
         {
           "heroId": 119,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Kimber2k11"
         }
       ]
     },
@@ -3853,45 +4433,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 145,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Satanic"
         },
         {
           "heroId": 47,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Have fun"
         },
         {
           "heroId": 38,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "strafe instructor"
         },
         {
           "heroId": 90,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Pele"
         },
         {
           "heroId": 31,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Dukalis"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 6,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "yondaime"
         },
         {
           "heroId": 69,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "oRb WaLk )"
         },
         {
           "heroId": 17,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "мусор"
         },
         {
           "heroId": 83,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "tOfu"
         },
         {
           "heroId": 91,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Boxi"
         }
       ]
     },
@@ -3919,45 +4509,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 12,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 17,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 2,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 110,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "save丶nic"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "get up"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 6,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": ">>>>>>>><<<<<<<<<"
         },
         {
           "heroId": 69,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "∩ (◣_◢) ∩"
         },
         {
           "heroId": 120,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Rasmus?"
         },
         {
           "heroId": 83,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "mamba24"
         },
         {
           "heroId": 26,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Kimber2k11"
         }
       ]
     },
@@ -3985,45 +4585,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 11,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Satanic"
         },
         {
           "heroId": 17,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Have fun"
         },
         {
           "heroId": 2,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "strafe instructor"
         },
         {
           "heroId": 101,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Pele"
         },
         {
           "heroId": 83,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Dukalis"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 6,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "effect"
         },
         {
           "heroId": 65,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 137,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "not_him"
         },
         {
           "heroId": 26,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Mr.Kezik"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "123"
         }
       ]
     },
@@ -4051,45 +4661,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 19,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "I m Going To Be The Best Carry"
         },
         {
           "heroId": 120,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Suma1L-"
         },
         {
           "heroId": 114,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Буська"
         },
         {
           "heroId": 31,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Sneyking"
         },
         {
           "heroId": 26,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "o_o"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 6,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "yondaime"
         },
         {
           "heroId": 135,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "oRb WaLk )"
         },
         {
           "heroId": 28,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "мусор"
         },
         {
           "heroId": 91,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Boxi"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "tOfu"
         }
       ]
     },
@@ -4117,45 +4737,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 6,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "effect"
         },
         {
           "heroId": 65,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 137,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "not_him"
         },
         {
           "heroId": 100,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "123"
         },
         {
           "heroId": 21,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Mr.Kezik"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 13,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "мусор"
         },
         {
           "heroId": 11,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "yondaime"
         },
         {
           "heroId": 2,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "oRb WaLk )"
         },
         {
           "heroId": 105,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Boxi"
         },
         {
           "heroId": 57,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "tOfu"
         }
       ]
     },
@@ -4183,45 +4813,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 11,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Satanic"
         },
         {
           "heroId": 126,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Have fun"
         },
         {
           "heroId": 2,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "strafe instructor"
         },
         {
           "heroId": 53,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Pele"
         },
         {
           "heroId": 3,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Dukalis"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 39,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 19,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 135,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 51,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "get up"
         },
         {
           "heroId": 40,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "save丶nic"
         }
       ]
     },
@@ -4249,45 +4889,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 48,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "arima-"
         },
         {
           "heroId": 33,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "bangkok"
         },
         {
           "heroId": 60,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "CHIRA_JUNIOR"
         },
         {
           "heroId": 128,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "; ]"
         },
         {
           "heroId": 88,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "lostreak chicken"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 72,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 13,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 2,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 110,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "save丶nic"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "get up"
         }
       ]
     },
@@ -4315,45 +4965,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 145,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "NothingToGay"
         },
         {
           "heroId": 38,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "¿"
         },
         {
           "heroId": 114,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "NothingToSay"
         },
         {
           "heroId": 31,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "lavie"
         },
         {
           "heroId": 105,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "其疾如风"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 19,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "effect"
         },
         {
           "heroId": 120,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "not_him"
         },
         {
           "heroId": 28,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 86,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Mr.Kezik"
         },
         {
           "heroId": 121,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "123"
         }
       ]
     },
@@ -4381,45 +5041,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 135,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 19,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 13,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 37,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "save丶nic"
         },
         {
           "heroId": 26,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "get up"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 49,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "yondaime"
         },
         {
           "heroId": 106,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "мусор"
         },
         {
           "heroId": 108,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "oRb WaLk )"
         },
         {
           "heroId": 123,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Boxi"
         },
         {
           "heroId": 86,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "tOfu"
         }
       ]
     },
@@ -4447,45 +5117,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 73,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "I m Going To Be The Best Carry"
         },
         {
           "heroId": 137,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Буська"
         },
         {
           "heroId": 15,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Suma1L-"
         },
         {
           "heroId": 110,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Sneyking"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "o_o"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 21,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "effect"
         },
         {
           "heroId": 120,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "not_him"
         },
         {
           "heroId": 43,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 123,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Mr.Kezik"
         },
         {
           "heroId": 100,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "123"
         }
       ]
     },
@@ -4513,45 +5193,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 22,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "CHIRA_JUNIOR"
         },
         {
           "heroId": 145,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "arima-"
         },
         {
           "heroId": 120,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "bangkok"
         },
         {
           "heroId": 21,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "lostreak chicken"
         },
         {
           "heroId": 31,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "; ]"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 128,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Буська"
         },
         {
           "heroId": 19,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "I m Going To Be The Best Carry"
         },
         {
           "heroId": 104,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Suma1L-"
         },
         {
           "heroId": 110,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Sneyking"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "o_o"
         }
       ]
     },
@@ -4579,45 +5269,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 19,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 39,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 155,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 26,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "get up"
         },
         {
           "heroId": 68,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "save丶nic"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 145,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "effect"
         },
         {
           "heroId": 59,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "not_him"
         },
         {
           "heroId": 57,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 123,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Mr.Kezik"
         },
         {
           "heroId": 83,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "123"
         }
       ]
     },
@@ -4645,45 +5345,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 145,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "NothingToGay"
         },
         {
           "heroId": 34,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "NothingToSay"
         },
         {
           "heroId": 97,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "¿"
         },
         {
           "heroId": 110,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "lavie"
         },
         {
           "heroId": 26,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "其疾如风"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 21,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "arima-"
         },
         {
           "heroId": 74,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "CHIRA_JUNIOR"
         },
         {
           "heroId": 28,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "bangkok"
         },
         {
           "heroId": 123,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "lostreak chicken"
         },
         {
           "heroId": 31,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "; ]"
         }
       ]
     },
@@ -4711,45 +5421,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 7,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Буська"
         },
         {
           "heroId": 15,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Suma1L-"
         },
         {
           "heroId": 20,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "I m Going To Be The Best Carry"
         },
         {
           "heroId": 58,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Sneyking"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "o_o"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 69,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 21,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 126,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 123,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "get up"
         },
         {
           "heroId": 3,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "save丶nic"
         }
       ]
     },
@@ -4777,45 +5497,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 19,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": ">>>>>>>><<<<<<<<<"
         },
         {
           "heroId": 69,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "∩ (◣_◢) ∩"
         },
         {
           "heroId": 13,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Rasmus?"
         },
         {
           "heroId": 31,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "mamba24"
         },
         {
           "heroId": 100,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Kimber2k11"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 145,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "arima-"
         },
         {
           "heroId": 120,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "bangkok"
         },
         {
           "heroId": 60,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "CHIRA_JUNIOR"
         },
         {
           "heroId": 105,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "; ]"
         },
         {
           "heroId": 86,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "lostreak chicken"
         }
       ]
     },
@@ -4843,45 +5573,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 16,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "NothingToSay"
         },
         {
           "heroId": 145,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "NothingToGay"
         },
         {
           "heroId": 60,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "¿"
         },
         {
           "heroId": 123,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "其疾如风"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "lavie"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 73,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "I m Going To Be The Best Carry"
         },
         {
           "heroId": 120,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Suma1L-"
         },
         {
           "heroId": 137,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Буська"
         },
         {
           "heroId": 58,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Sneyking"
         },
         {
           "heroId": 26,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "o_o"
         }
       ]
     },
@@ -4909,45 +5649,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 36,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Satanic"
         },
         {
           "heroId": 98,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "strafe instructor"
         },
         {
           "heroId": 17,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Have fun"
         },
         {
           "heroId": 90,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Pele"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Dukalis"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 80,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "arima-"
         },
         {
           "heroId": 110,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "bangkok"
         },
         {
           "heroId": 28,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "CHIRA_JUNIOR"
         },
         {
           "heroId": 86,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "lostreak chicken"
         },
         {
           "heroId": 31,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "; ]"
         }
       ]
     },
@@ -4975,45 +5725,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 19,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "NothingToGay"
         },
         {
           "heroId": 38,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "¿"
         },
         {
           "heroId": 128,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "NothingToSay"
         },
         {
           "heroId": 90,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "其疾如风"
         },
         {
           "heroId": 3,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "lavie"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 48,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": ">>>>>>>><<<<<<<<<"
         },
         {
           "heroId": 120,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Rasmus?"
         },
         {
           "heroId": 135,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "∩ (◣_◢) ∩"
         },
         {
           "heroId": 58,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "mamba24"
         },
         {
           "heroId": 123,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Kimber2k11"
         }
       ]
     },
@@ -5041,45 +5801,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 11,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "arima-"
         },
         {
           "heroId": 38,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "bangkok"
         },
         {
           "heroId": 106,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "CHIRA_JUNIOR"
         },
         {
           "heroId": 90,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "lostreak chicken"
         },
         {
           "heroId": 3,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "; ]"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 13,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "мусор"
         },
         {
           "heroId": 21,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "yondaime"
         },
         {
           "heroId": 69,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "oRb WaLk )"
         },
         {
           "heroId": 105,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Boxi"
         },
         {
           "heroId": 31,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "tOfu"
         }
       ]
     },
@@ -5107,45 +5877,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 8,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Satanic"
         },
         {
           "heroId": 47,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Have fun"
         },
         {
           "heroId": 28,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "strafe instructor"
         },
         {
           "heroId": 91,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Pele"
         },
         {
           "heroId": 83,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Dukalis"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 129,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "¿"
         },
         {
           "heroId": 138,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "NothingToGay"
         },
         {
           "heroId": 128,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "NothingToSay"
         },
         {
           "heroId": 90,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "其疾如风"
         },
         {
           "heroId": 103,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "lavie"
         }
       ]
     },
@@ -5173,45 +5953,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 35,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Буська"
         },
         {
           "heroId": 36,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "I m Going To Be The Best Carry"
         },
         {
           "heroId": 120,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Suma1L-"
         },
         {
           "heroId": 66,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Sneyking"
         },
         {
           "heroId": 26,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "o_o"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 138,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": ">>>>>>>><<<<<<<<<"
         },
         {
           "heroId": 98,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "∩ (◣_◢) ∩"
         },
         {
           "heroId": 114,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Rasmus?"
         },
         {
           "heroId": 90,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Kimber2k11"
         },
         {
           "heroId": 3,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "mamba24"
         }
       ]
     },
@@ -5239,45 +6029,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 11,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "arima-"
         },
         {
           "heroId": 33,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "bangkok"
         },
         {
           "heroId": 60,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "CHIRA_JUNIOR"
         },
         {
           "heroId": 83,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "; ]"
         },
         {
           "heroId": 123,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "lostreak chicken"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 80,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "effect"
         },
         {
           "heroId": 13,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "not_him"
         },
         {
           "heroId": 2,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 110,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "123"
         },
         {
           "heroId": 21,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Mr.Kezik"
         }
       ]
     },
@@ -5305,45 +6105,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 41,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "NothingToGay"
         },
         {
           "heroId": 128,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "NothingToSay"
         },
         {
           "heroId": 108,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "¿"
         },
         {
           "heroId": 58,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "lavie"
         },
         {
           "heroId": 26,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "其疾如风"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 19,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "yondaime"
         },
         {
           "heroId": 17,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "мусор"
         },
         {
           "heroId": 60,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "oRb WaLk )"
         },
         {
           "heroId": 90,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Boxi"
         },
         {
           "heroId": 30,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "tOfu"
         }
       ]
     },
@@ -5371,45 +6181,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 109,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Satanic"
         },
         {
           "heroId": 38,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "strafe instructor"
         },
         {
           "heroId": 120,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Have fun"
         },
         {
           "heroId": 86,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Pele"
         },
         {
           "heroId": 111,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Dukalis"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 21,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": ">>>>>>>><<<<<<<<<"
         },
         {
           "heroId": 128,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Rasmus?"
         },
         {
           "heroId": 110,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "∩ (◣_◢) ∩"
         },
         {
           "heroId": 58,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "mamba24"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Kimber2k11"
         }
       ]
     },
@@ -5437,45 +6257,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 41,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "effect"
         },
         {
           "heroId": 74,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "not_him"
         },
         {
           "heroId": 86,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "123"
         },
         {
           "heroId": 104,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 136,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Mr.Kezik"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 89,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 98,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 126,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 58,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "save丶nic"
         },
         {
           "heroId": 26,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "get up"
         }
       ]
     },
@@ -5503,45 +6333,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 39,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 41,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 69,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 37,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "save丶nic"
         },
         {
           "heroId": 26,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "get up"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 73,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "effect"
         },
         {
           "heroId": 126,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "not_him"
         },
         {
           "heroId": 137,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 110,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "123"
         },
         {
           "heroId": 105,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Mr.Kezik"
         }
       ]
     },
@@ -5569,45 +6409,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 54,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "I m Going To Be The Best Carry"
         },
         {
           "heroId": 29,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Suma1L-"
         },
         {
           "heroId": 43,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Буська"
         },
         {
           "heroId": 31,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Sneyking"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "o_o"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 70,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 128,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 2,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 110,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "save丶nic"
         },
         {
           "heroId": 3,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "get up"
         }
       ]
     },
@@ -5635,45 +6485,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 80,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 28,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 114,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 110,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "save丶nic"
         },
         {
           "heroId": 3,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "get up"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 21,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "I m Going To Be The Best Carry"
         },
         {
           "heroId": 98,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Suma1L-"
         },
         {
           "heroId": 120,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Буська"
         },
         {
           "heroId": 19,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "o_o"
         },
         {
           "heroId": 31,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Sneyking"
         }
       ]
     },
@@ -5701,45 +6561,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 106,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "†Alessini Bananini†"
         },
         {
           "heroId": 47,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "^"
         },
         {
           "heroId": 11,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "()"
         },
         {
           "heroId": 85,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Mode Philippines"
         },
         {
           "heroId": 155,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "6"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 13,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "Буська"
         },
         {
           "heroId": 19,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "I m Going To Be The Best Carry"
         },
         {
           "heroId": 29,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Suma1L-"
         },
         {
           "heroId": 128,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "o_o"
         },
         {
           "heroId": 31,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Sneyking"
         }
       ]
     },
@@ -5767,45 +6637,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 11,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "()"
         },
         {
           "heroId": 28,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "†Alessini Bananini†"
         },
         {
           "heroId": 155,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "^"
         },
         {
           "heroId": 123,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "6"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Mode Philippines"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 54,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "I m Going To Be The Best Carry"
         },
         {
           "heroId": 120,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Буська"
         },
         {
           "heroId": 69,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Suma1L-"
         },
         {
           "heroId": 31,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Sneyking"
         },
         {
           "heroId": 86,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "o_o"
         }
       ]
     },
@@ -5833,45 +6713,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 73,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "effect"
         },
         {
           "heroId": 74,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "not_him"
         },
         {
           "heroId": 137,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 123,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "123"
         },
         {
           "heroId": 131,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Mr.Kezik"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 21,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 17,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 135,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 110,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "save丶nic"
         },
         {
           "heroId": 51,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "get up"
         }
       ]
     },
@@ -5899,45 +6789,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 53,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "effect"
         },
         {
           "heroId": 129,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 17,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "not_him"
         },
         {
           "heroId": 83,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "123"
         },
         {
           "heroId": 123,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Mr.Kezik"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 69,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 2,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 106,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 110,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "save丶nic"
         },
         {
           "heroId": 26,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "get up"
         }
       ]
     },
@@ -5965,45 +6865,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 54,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 69,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 21,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 105,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "get up"
         },
         {
           "heroId": 31,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "save丶nic"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 11,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "effect"
         },
         {
           "heroId": 128,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "pos3jungler"
         },
         {
           "heroId": 23,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "not_him"
         },
         {
           "heroId": 86,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Mr.Kezik"
         },
         {
           "heroId": 83,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "123"
         }
       ]
     },
@@ -6031,45 +6941,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 11,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "()"
         },
         {
           "heroId": 120,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "†Alessini Bananini†"
         },
         {
           "heroId": 33,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "^"
         },
         {
           "heroId": 105,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "6"
         },
         {
           "heroId": 123,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Mode Philippines"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 108,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "???"
         },
         {
           "heroId": 145,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "vv"
         },
         {
           "heroId": 21,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "safeword"
         },
         {
           "heroId": 40,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "old dog new tricksᡕᠵデ气亠"
         },
         {
           "heroId": 79,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "cucu"
         }
       ]
     },
@@ -6097,45 +7017,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 55,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "^"
         },
         {
           "heroId": 11,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "()"
         },
         {
           "heroId": 28,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "†Alessini Bananini†"
         },
         {
           "heroId": 123,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "6"
         },
         {
           "heroId": 85,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Mode Philippines"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 109,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "safeword"
         },
         {
           "heroId": 108,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "???"
         },
         {
           "heroId": 145,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "vv"
         },
         {
           "heroId": 86,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "cucu"
         },
         {
           "heroId": 79,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "old dog new tricksᡕᠵデ气亠"
         }
       ]
     },
@@ -6163,45 +7093,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 74,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "vv"
         },
         {
           "heroId": 138,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "safeword"
         },
         {
           "heroId": 2,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "???"
         },
         {
           "heroId": 40,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "old dog new tricksᡕᠵデ气亠"
         },
         {
           "heroId": 86,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "cucu"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 36,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "()"
         },
         {
           "heroId": 155,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "^"
         },
         {
           "heroId": 120,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "†Alessini Bananini†"
         },
         {
           "heroId": 123,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "6"
         },
         {
           "heroId": 100,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Mode Philippines"
         }
       ]
     },
@@ -6229,45 +7169,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 6,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "NothingToGay"
         },
         {
           "heroId": 52,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "NothingToSay"
         },
         {
           "heroId": 96,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "¿"
         },
         {
           "heroId": 31,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "lavie"
         },
         {
           "heroId": 88,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "其疾如风"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 13,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "мусор"
         },
         {
           "heroId": 21,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "yondaime"
         },
         {
           "heroId": 69,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "oRb WaLk )"
         },
         {
           "heroId": 105,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Boxi"
         },
         {
           "heroId": 103,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "tOfu"
         }
       ]
     },
@@ -6295,45 +7245,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 38,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "NothingToSay"
         },
         {
           "heroId": 135,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "¿"
         },
         {
           "heroId": 41,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "NothingToGay"
         },
         {
           "heroId": 86,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "其疾如风"
         },
         {
           "heroId": 58,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "lavie"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 19,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "yondaime"
         },
         {
           "heroId": 29,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "oRb WaLk )"
         },
         {
           "heroId": 120,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "мусор"
         },
         {
           "heroId": 90,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "Boxi"
         },
         {
           "heroId": 110,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "tOfu"
         }
       ]
     },
@@ -6361,45 +7321,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 19,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "yondaime"
         },
         {
           "heroId": 106,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "мусор"
         },
         {
           "heroId": 28,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "oRb WaLk )"
         },
         {
           "heroId": 31,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "tOfu"
         },
         {
           "heroId": 123,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "Boxi"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 6,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "NothingToGay"
         },
         {
           "heroId": 38,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "NothingToSay"
         },
         {
           "heroId": 135,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "¿"
         },
         {
           "heroId": 110,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "lavie"
         },
         {
           "heroId": 86,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "其疾如风"
         }
       ]
     },
@@ -6427,45 +7397,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 19,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 135,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 17,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 40,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "save丶nic"
         },
         {
           "heroId": 123,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "get up"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 98,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "???"
         },
         {
           "heroId": 114,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "safeword"
         },
         {
           "heroId": 120,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "vv"
         },
         {
           "heroId": 110,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "old dog new tricksᡕᠵデ气亠"
         },
         {
           "heroId": 26,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "cucu"
         }
       ]
     },
@@ -6493,45 +7473,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 70,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 135,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 13,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 110,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "save丶nic"
         },
         {
           "heroId": 123,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "get up"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 41,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "safeword"
         },
         {
           "heroId": 126,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "vv"
         },
         {
           "heroId": 97,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "???"
         },
         {
           "heroId": 128,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "cucu"
         },
         {
           "heroId": 26,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "old dog new tricksᡕᠵデ气亠"
         }
       ]
     },
@@ -6559,45 +7549,55 @@
       "radiantHeroRoles": [
         {
           "heroId": 46,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "safeword"
         },
         {
           "heroId": 60,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "vv"
         },
         {
           "heroId": 2,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "???"
         },
         {
           "heroId": 128,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "cucu"
         },
         {
           "heroId": 75,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "old dog new tricksᡕᠵデ气亠"
         }
       ],
       "direHeroRoles": [
         {
           "heroId": 70,
-          "role": "Carry"
+          "role": "Carry",
+          "playerName": "mode: m0NESY"
         },
         {
           "heroId": 13,
-          "role": "Mid"
+          "role": "Mid",
+          "playerName": "Katanaa"
         },
         {
           "heroId": 110,
-          "role": "Offlane"
+          "role": "Offlane",
+          "playerName": "Shenorita`"
         },
         {
           "heroId": 37,
-          "role": "Soft Support"
+          "role": "Soft Support",
+          "playerName": "save丶nic"
         },
         {
           "heroId": 26,
-          "role": "Hard Support"
+          "role": "Hard Support",
+          "playerName": "get up"
         }
       ]
     }

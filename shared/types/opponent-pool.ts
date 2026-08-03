@@ -3,6 +3,14 @@ export type PooledDraftSource = 'player' | 'pro';
 export interface PooledHeroRole {
   heroId: number;
   role: string;
+  // OpenDota personaname (falls back to in-game `name`) of the player who
+  // played this hero in the source match — only ever set for 'pro' rows,
+  // where a real match backs the pick. undefined/null for 'player' rows
+  // and for pro rows imported before this field existed (backfilled via
+  // server/scripts/backfill-pro-match-roles.ts). See
+  // Blueprint/10-tech-debt-backlog.md, "Имена про-игроков под портретами
+  // героев в Battle".
+  playerName?: string | null;
 }
 
 export interface PooledDraftSummary {

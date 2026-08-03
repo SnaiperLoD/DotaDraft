@@ -9,6 +9,7 @@ import EvaluationPanel from '../components/EvaluationPanel';
 import CommitToPoolButton from '../components/CommitToPoolButton';
 import BattlePanel from '../components/BattlePanel';
 import AdSlot from '../components/AdSlot';
+import TapalkaWidget from '../components/TapalkaWidget';
 import './DraftPage.css';
 
 export default function DraftPage() {
@@ -144,6 +145,7 @@ export default function DraftPage() {
 
             <aside className="draft-sidebar">
               <DraftLedger heroes={draft.heroes} totalSlots={5} />
+              <TapalkaWidget />
               <AdSlot size="rectangle" />
             </aside>
           </div>

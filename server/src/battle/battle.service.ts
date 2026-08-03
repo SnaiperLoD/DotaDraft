@@ -31,6 +31,10 @@ export class BattleService {
     // Battle Engine (see opponent-pool schema) — those heroes just get no
     // boost, same as any hero with assignedRole: null.
     const roleByHeroId = new Map((opponent.heroRoles ?? []).map((r) => [r.heroId, r.role]));
+    // playerName is only ever populated for 'pro' rows with backfilled
+    // OpenDota player data (see PooledHeroRole.playerName) — undefined for
+    // everything else, same null-safe map lookup as roleByHeroId.
+    const playerNameByHeroId = new Map((opponent.heroRoles ?? []).map((r) => [r.heroId, r.playerName]));
     const teamB: BattlePick[] = opponentHeroes.map((hero) => ({
       hero,
       assignedRole: roleByHeroId.get(hero.id) ?? null,
@@ -74,7 +78,11 @@ export class BattleService {
       winningHighlights: result.winningHighlights,
       opponent: {
         source: opponent.source,
-        heroes: teamBAligned.map((h) => ({ heroId: h.id, heroName: h.name })),
+        heroes: teamBAligned.map((h) => ({
+          heroId: h.id,
+          heroName: h.name,
+          playerName: playerNameByHeroId.get(h.id) ?? null,
+        })),
         teamName: opponent.teamName,
         leagueName: opponent.leagueName,
         matchId: opponent.matchId,

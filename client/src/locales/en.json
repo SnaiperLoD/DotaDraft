@@ -118,6 +118,11 @@
   "adSlot": {
     "label": "Advertisement"
   },
+  "tapalka": {
+    "heading": "Waiting Room",
+    "clicks_one": "{{count}} click this visit",
+    "clicks_other": "{{count}} clicks this visit"
+  },
   "leaderboard": {
     "title": "Leaderboard",
     "note": "No accounts here — rankings are tied to an anonymous id stored in your browser, so this resets if you clear your browser data.",

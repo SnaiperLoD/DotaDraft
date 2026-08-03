@@ -25,6 +25,12 @@ const RANK_TO_ROLE: Record<number, string> = {
 interface PooledHeroRole {
   heroId: number;
   role: string;
+  // Blueprint/10-tech-debt-backlog.md, "Имена про-игроков под портретами
+  // героев в Battle" — same /api/matches/{id} response this script already
+  // fetches for gold_per_min, personaname/name just weren't extracted
+  // before. null when a pro player has hidden their profile (personaname
+  // AND name both absent) rather than a fetch failure.
+  playerName?: string | null;
 }
 
 interface StoredProMatch {
@@ -59,10 +65,16 @@ async function withRetry<T>(fn: () => Promise<T>, retries = 3): Promise<T | null
   return null;
 }
 
-function rolesForSide(players: { hero_id: number; gold_per_min: number }[]): PooledHeroRole[] {
+function rolesForSide(
+  players: { hero_id: number; gold_per_min: number; personaname?: string | null; name?: string | null }[],
+): PooledHeroRole[] {
   return [...players]
     .sort((a, b) => b.gold_per_min - a.gold_per_min)
-    .map((p, i) => ({ heroId: p.hero_id, role: RANK_TO_ROLE[i + 1] }));
+    .map((p, i) => ({
+      heroId: p.hero_id,
+      role: RANK_TO_ROLE[i + 1],
+      playerName: p.personaname ?? p.name ?? null,
+    }));
 }
 
 async function main() {
@@ -78,7 +90,13 @@ async function main() {
       const res = await fetch(`https://api.opendota.com/api/matches/${match.matchId}`);
       if (!res.ok) throw new Error(`matches HTTP ${res.status}`);
       return (await res.json()) as {
-        players: { hero_id: number; player_slot: number; gold_per_min: number }[];
+        players: {
+          hero_id: number;
+          player_slot: number;
+          gold_per_min: number;
+          personaname?: string | null;
+          name?: string | null;
+        }[];
       };
     });
 

@@ -1,0 +1,85 @@
+.tapalka {
+  padding: 14px 16px 16px;
+  text-align: center;
+}
+
+.tapalka-heading {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 10px;
+}
+
+.tapalka-button {
+  position: relative;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tapalka-portrait {
+  display: block;
+  border-radius: 4px;
+  border: 1px solid var(--bronze-dim);
+  transform-origin: 70% 100%;
+  animation: tapalka-swing 0.4s ease-out;
+}
+
+.tapalka-button:hover .tapalka-portrait {
+  border-color: var(--gold);
+}
+
+@keyframes tapalka-swing {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  30% {
+    transform: rotate(-14deg) scale(1.04);
+  }
+  60% {
+    transform: rotate(8deg) scale(1.02);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+.tapalka-count {
+  margin-top: 8px;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--ink-faint);
+}
+
+.tapalka-speech-bubble {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  background: var(--ink);
+  color: var(--ground);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 8px;
+  max-width: 200px;
+  white-space: normal;
+  z-index: 5;
+  box-shadow: 0 4px 14px var(--shadow-deep);
+}
+
+.tapalka-speech-bubble::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--ink);
+}
