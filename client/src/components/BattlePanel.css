@@ -50,6 +50,54 @@
   flex-wrap: wrap;
 }
 
+/* Blueprint/10-tech-debt-backlog.md, "Анимация столкновения" — each row
+   slides in from its own side and settles with a small overshoot/recoil,
+   landing roughly when ScreenFlash's flash peaks (~440ms into its 2.2s
+   fade, see ScreenFlash.css) rather than being precisely synced frame-by-
+   frame. First-pass draft. */
+.faceoff-row--mine {
+  animation: faceoff-slide-in-left 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.faceoff-row--opponent {
+  animation: faceoff-slide-in-right 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes faceoff-slide-in-left {
+  0% {
+    transform: translateX(-60px);
+    opacity: 0;
+  }
+  70% {
+    transform: translateX(6px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes faceoff-slide-in-right {
+  0% {
+    transform: translateX(60px);
+    opacity: 0;
+  }
+  70% {
+    transform: translateX(-6px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faceoff-row--mine,
+  .faceoff-row--opponent {
+    animation: none;
+  }
+}
+
 .faceoff-divider {
   text-align: center;
   font-family: var(--font-display);

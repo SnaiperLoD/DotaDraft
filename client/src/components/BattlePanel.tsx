@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ScreenFlash from './ScreenFlash';
+import OpponentRollAnimation from './OpponentRollAnimation';
 import { ROLES } from 'shared';
 import type { BattleResultResponse, BattleOpponentHero } from 'shared';
 import { api } from '../api/client';
@@ -9,6 +10,17 @@ import { heroPortraitUrl } from '../utils/heroIcon';
 import type { DraftHeroView } from '../api/types';
 import AdSlot from './AdSlot';
 import './BattlePanel.css';
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// Blueprint/10-tech-debt-backlog.md, "Анимация подбора оппонента" — the
+// real API call resolves near-instantly, so without a floor the roll
+// animation would just flash and disappear rather than read as "finding an
+// opponent." Runs in parallel with the real request, not sequentially
+// after it — a slow request never waits on this on top of its own latency.
+const MIN_ROLL_DURATION_MS = 1200;
 
 function PortraitCard({
   heroId,
@@ -39,12 +51,20 @@ function PortraitCard({
 // lines up in the same column. No score/evaluation here on either side —
 // Battle Mode is a separate system from the Evaluation Engine (Core Rules
 // Separation) and this view is purely who's facing whom.
+// collisionKey remounts both rows (React key trick, same pattern as
+// ScreenFlash's flashKey) so the slide-in-and-clash animation replays on
+// every fight, not just the first one. Blueprint/10-tech-debt-backlog.md,
+// "Анимация столкновения в Battle" — first-pass draft: each row slides in
+// from its own side and the impact beat is timed to land under
+// ScreenFlash's flash rather than choreographed against it precisely.
 function FaceOff({
   myHeroes,
   opponentHeroes,
+  collisionKey,
 }: {
   myHeroes: DraftHeroView[];
   opponentHeroes: BattleOpponentHero[];
+  collisionKey: number;
 }) {
   const roleOrder = ROLES as readonly string[];
   const sortedMine = myHeroes
@@ -52,14 +72,14 @@ function FaceOff({
     .sort((a, b) => roleOrder.indexOf(a.assignedRole ?? '') - roleOrder.indexOf(b.assignedRole ?? ''));
 
   return (
-    <div className="faceoff">
-      <div className="faceoff-row">
+    <div className="faceoff" key={collisionKey}>
+      <div className="faceoff-row faceoff-row--mine">
         {sortedMine.map((h) => (
           <PortraitCard key={h.heroId} heroId={h.heroId} name={h.hero.name} caption={h.assignedRole} />
         ))}
       </div>
       <div className="faceoff-divider">VS</div>
-      <div className="faceoff-row">
+      <div className="faceoff-row faceoff-row--opponent">
         {opponentHeroes.map((h) => (
           <PortraitCard key={h.heroId} heroId={h.heroId} name={h.heroName} caption={h.playerName} translateCaption={false} />
         ))}
@@ -84,7 +104,7 @@ export default function BattlePanel({ draftId, heroes }: Props) {
     setLoading(true);
     setError(null);
     try {
-      const res = await api.fightBattle(draftId, getSubmitterToken());
+      const [res] = await Promise.all([api.fightBattle(draftId, getSubmitterToken()), sleep(MIN_ROLL_DURATION_MS)]);
       setResult(res);
       setBattleCount((c) => c + 1);
     } catch (err) {
@@ -104,9 +124,14 @@ export default function BattlePanel({ draftId, heroes }: Props) {
         </button>
       )}
 
+      {/* Shown on both the first fight and every "Fight Again" reroll —
+          loading is independent of whether a previous result is still on
+          screen underneath. */}
+      {loading && <OpponentRollAnimation />}
+
       {error && <p className="error-text">{error}</p>}
 
-      {result && (
+      {result && !loading && (
         <div className="battle-result">
           <ScreenFlash outcome={result.resolvedOutcome} flashKey={battleCount} />
           <p className="battle-outcome">
@@ -136,7 +161,7 @@ export default function BattlePanel({ draftId, heroes }: Props) {
             )}
           </p>
 
-          <FaceOff myHeroes={heroes} opponentHeroes={result.opponent.heroes} />
+          <FaceOff myHeroes={heroes} opponentHeroes={result.opponent.heroes} collisionKey={battleCount} />
 
           {result.winningHighlights.length > 0 && (
             <div className="battle-list-block">
