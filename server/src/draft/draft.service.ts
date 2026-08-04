@@ -85,6 +85,20 @@ export class DraftService {
     return this.toView(draft);
   }
 
+  // Blueprint/10-tech-debt-backlog.md, "Лидерборд драфтов" — read at commit
+  // time (OpponentPoolService.commit()) to snapshot the draft's evaluation
+  // score into the shared pool. Not part of DraftStateView (that's the
+  // draft-flow UI shape) — a narrow read, not a general-purpose accessor.
+  async getEvaluationScore(draftId: string): Promise<number | null> {
+    const draft = await this.prisma.draft.findUnique({
+      where: { id: draftId },
+      select: { evaluationResult: true },
+    });
+    if (!draft?.evaluationResult) return null;
+    const parsed = JSON.parse(draft.evaluationResult) as { totalScore: number };
+    return parsed.totalScore;
+  }
+
   // Persists the most recent EvaluationResult for History (Blueprint/10-tech-debt-backlog.md,
   // "Сохранять в истории результаты боёв") — called by EvaluationService
   // after computing a result, not versioned (overwrites on re-evaluate).

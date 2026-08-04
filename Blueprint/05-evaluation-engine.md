@@ -30,7 +30,6 @@ Breakdown:
 - Durability
 - Initiating
 - Mobility
-- Map Control
 - Saving
 - Objectives
 - Skirmish Rate
@@ -50,7 +49,7 @@ Burst/Control/Durability добавлены вместе с Role-fit модиф�
 - Control: 5%
 - Durability: 5%
 - Mobility: 5%
-- Map Control: 5% (текущий эффективный вес — 0%, ось отключена до ревью `vision_ability_tier`, см. `10-tech-debt-backlog.md` — строка breakdown по-прежнему показывается)
+- ~~Map Control: 5%~~ — **⚠️ ЯВНЫЙ КОСТЫЛЬ: убрана из breakdown Evaluation Engine (2026-08-03, по прямому запросу пользователя).** Слабо проработанный сигнал — `vision_ability_tier` так и не мигрирован на per-ability CSV-разметку (в отличие от mobility/saving/initiating/control), эффективный вес и так был 0% давно. Данные по-прежнему считаются (`evaluation_values.map_control`) и используются Battle Engine (тоже с весом 0 в `axis-weights.json`) — убрано только отображение строки в Evaluation breakdown, не сама ось. Вернуть в список, когда `vision_ability_tier` будет пересмотрен, см. `10-tech-debt-backlog.md`.
 - Saving: 5%
 - Initiating: 5%
 - Skirmish Rate: 5%

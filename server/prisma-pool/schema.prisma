@@ -25,23 +25,20 @@ model PooledDraft {
   heroRoles      Json?
   teamName       String?
   leagueName     String?
-  createdAt      DateTime @default(now())
-}
-
-// "Weak" leaderboard (Blueprint/10-tech-debt-backlog.md, "Лидерборд") —
-// aggregated per anonymous submitterToken (the same client-generated
-// localStorage UUID used to commit to the Opponent Pool), not a real
-// account system. One row per token, incremented in place on every fight
-// (BattleService.fight()) rather than one row per battle — this is a
-// counter table, not a history log (BattleResult in the local SQLite
-// schema already covers per-battle history for the browser that played
-// it). Explicitly gameable (unlimited free fights per visit already exist
-// in Battle Mode) and resets to a new row if the user clears
-// localStorage — acceptable for what this is, a lightweight ranking, not
-// a competitive-integrity leaderboard.
-model LeaderboardEntry {
-  submitterToken String   @id
+  // Blueprint/10-tech-debt-backlog.md, "Лидерборд драфтов" — snapshot of
+  // EvaluationResult.totalScore at commit time (null if the draft was
+  // never evaluated before committing). Not kept live-updated if the
+  // local draft is re-evaluated afterward — a leaderboard row is a
+  // snapshot of the draft as committed, not a synced mirror.
+  evaluationScore Float?
+  // Wins/losses are for THIS draft as the OPPONENT (pulled by
+  // pullRandom() into someone ELSE's battle) — NOT for the committing
+  // player's own battles played with other drafts. Incremented directly
+  // on this row (not a separate join table) since each row already IS
+  // one specific draft. Replaces the earlier submitterToken-keyed
+  // LeaderboardEntry model (removed) — "weak" in the same sense that one
+  // was: gameable, no minimum-battle floor.
   wins           Int      @default(0)
   losses         Int      @default(0)
-  updatedAt      DateTime @updatedAt
+  createdAt      DateTime @default(now())
 }

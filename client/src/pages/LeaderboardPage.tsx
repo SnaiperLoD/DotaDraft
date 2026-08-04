@@ -3,18 +3,14 @@ import { useTranslation } from 'react-i18next';
 import type { LeaderboardEntryView } from 'shared';
 import { api } from '../api/client';
 import { getSubmitterToken } from '../utils/submitterToken';
+import { heroIconUrl } from '../utils/heroIcon';
 import './LeaderboardPage.css';
 
-// Blueprint/10-tech-debt-backlog.md, "Лидерборд" — deliberately weak: no
-// accounts, ranked by an anonymous localStorage token. Displayed as
-// "Player #AB12CD34" (first 8 chars of the UUID, uppercased) rather than
-// the raw token — same anonymity, more readable. The viewer's own row
-// (matched via getSubmitterToken(), the same token Battle Mode sends) is
-// highlighted so a single player can find themselves in the list.
-function playerLabel(token: string): string {
-  return `#${token.slice(0, 8).toUpperCase()}`;
-}
-
+// Blueprint/10-tech-debt-backlog.md, "Лидерборд драфтов" — deliberately
+// weak: no accounts, ranked by wins as the OPPONENT when other players'
+// battles pull this committed draft (not the committing player's own
+// battle record — that isn't tracked at all). A row the viewer's own
+// browser committed (matched via getSubmitterToken()) is highlighted.
 export default function LeaderboardPage() {
   const { t } = useTranslation();
   const [entries, setEntries] = useState<LeaderboardEntryView[] | null>(null);
@@ -56,7 +52,8 @@ export default function LeaderboardPage() {
           <thead>
             <tr>
               <th>#</th>
-              <th>{t('leaderboard.player')}</th>
+              <th>{t('leaderboard.draft')}</th>
+              <th>{t('leaderboard.evaluation')}</th>
               <th>{t('leaderboard.wins')}</th>
               <th>{t('leaderboard.losses')}</th>
               <th>{t('leaderboard.winRate')}</th>
@@ -64,9 +61,24 @@ export default function LeaderboardPage() {
           </thead>
           <tbody>
             {entries.map((entry, i) => (
-              <tr key={entry.submitterToken} className={entry.submitterToken === myToken ? 'leaderboard-row-me' : undefined}>
+              <tr key={entry.id} className={entry.submitterToken === myToken ? 'leaderboard-row-me' : undefined}>
                 <td>{i + 1}</td>
-                <td>{playerLabel(entry.submitterToken)}</td>
+                <td>
+                  <div className="leaderboard-draft-cell">
+                    <div className="leaderboard-draft-icons">
+                      {entry.heroIds.map((heroId) => (
+                        <img key={heroId} src={heroIconUrl(heroId)} alt="" width={24} height={24} />
+                      ))}
+                    </div>
+                    {entry.source === 'pro' && entry.teamName && (
+                      <span className="leaderboard-team-name">
+                        {entry.teamName}
+                        {entry.leagueName ? ` (${entry.leagueName})` : ''}
+                      </span>
+                    )}
+                  </div>
+                </td>
+                <td>{entry.evaluationScore !== null ? `${entry.evaluationScore}/10` : t('evaluation.notAvailable')}</td>
                 <td>{entry.wins}</td>
                 <td>{entry.losses}</td>
                 <td>{Math.round(entry.winRate * 100)}%</td>

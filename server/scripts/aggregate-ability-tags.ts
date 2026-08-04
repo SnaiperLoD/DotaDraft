@@ -25,7 +25,7 @@ import * as path from 'path';
 const HERO_ABILITIES_PATH = path.join(__dirname, '..', 'data', 'hero-abilities.json');
 const OUTPUT_PATH = path.join(__dirname, '..', 'data', 'ability-tag-aggregates.json');
 
-const CATEGORIES = ['mobility', 'saving', 'initiating', 'control_strength'] as const;
+const CATEGORIES = ['mobility', 'saving', 'initiating', 'control_strength', 'damage_mitigation'] as const;
 const MAX_ABILITIES_PER_CATEGORY = 6;
 
 interface AbilityRecord {
@@ -46,6 +46,7 @@ interface HeroAggregate {
   saving: number;
   initiating: number;
   control_strength: number;
+  damage_mitigation: number;
 }
 
 function main() {
@@ -70,6 +71,7 @@ function main() {
       saving: Math.round(sums.saving * 10) / 10,
       initiating: Math.round(sums.initiating * 10) / 10,
       control_strength: Math.round(sums.control_strength * 10) / 10,
+      damage_mitigation: Math.round(sums.damage_mitigation * 10) / 10,
     };
   });
 

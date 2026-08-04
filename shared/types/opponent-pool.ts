@@ -40,14 +40,25 @@ export interface CommitDraftResponse {
   committedAt: string;
 }
 
-// GET /leaderboard — Blueprint/10-tech-debt-backlog.md, "Лидерборд". No
-// account system backs this (explicit MVP shortcut) — submitterToken is
-// the same anonymous client-generated UUID used to commit to the
-// Opponent Pool, not a player identity. The client is responsible for
-// deciding how to display a raw token (e.g. a short "Player #ab12cd34"
-// label) and for recognizing its own row via getSubmitterToken().
+// GET /leaderboard — Blueprint/10-tech-debt-backlog.md, "Лидерборд
+// драфтов". Each row is one committed PooledDraft (player or pro), ranked
+// by how it performs as the OPPONENT when other players' battles pull it
+// — not the committing player's own battle record (that isn't tracked at
+// all; see OpponentPoolService.recordDraftOutcome). No account system —
+// submitterToken is the same anonymous client-generated UUID used to
+// commit, present so the client can highlight rows it committed itself
+// via getSubmitterToken(), not a player identity.
 export interface LeaderboardEntryView {
-  submitterToken: string;
+  id: string;
+  source: PooledDraftSource;
+  heroIds: number[];
+  heroRoles: PooledHeroRole[] | null;
+  teamName: string | null;
+  leagueName: string | null;
+  // Snapshot of the draft's Evaluation total score at commit time — null
+  // if it was never evaluated before committing.
+  evaluationScore: number | null;
+  submitterToken: string | null;
   wins: number;
   losses: number;
   winRate: number;

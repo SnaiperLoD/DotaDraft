@@ -7,6 +7,7 @@ import HistoryPage from './pages/HistoryPage';
 import LeaderboardPage from './pages/LeaderboardPage';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import Footer from './components/Footer';
+import LegendPanel from './components/LegendPanel';
 import { BUG_REPORT_MAILTO_HREF } from './utils/bugReport';
 import './App.css';
 
@@ -46,6 +47,7 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
+      <LegendPanel />
     </BrowserRouter>
   );
 }

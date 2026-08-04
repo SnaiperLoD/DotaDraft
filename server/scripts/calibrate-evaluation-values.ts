@@ -16,7 +16,13 @@ import {
 //   objectives <- tower_damage (benchmarks)
 //   tempo      <- 37.5% win/loss duration gap + 37.5% win-rate-falls-with-duration trend + 25% early kills/game
 //   control    <- 50% stuns per minute + 50% hand-tagged control_strength (see server/data/ability-tag-weights.json)
-//   durability <- damage_taken / deaths (summed across matches, not averaged per-match)
+//   durability <- 75% damage_taken/deaths (summed across matches, not averaged per-match) + 25% hand-tagged
+//                 damage_mitigation (per-ability, summed per hero, see server/data/ability-tag-weights.json) — added
+//                 2026-08-03: the real stat is blind to active mitigation (Bulwark/Kraken Shell/Mana Shield/etc. all
+//                 REDUCE the recorded damage_taken numerator precisely because they're working, so a hero who blocks/
+//                 absorbs damage looks LESS tanky by this stat, not more — confirmed on Medusa (Mana Shield, 98%
+//                 damage-to-mana) and Treant Protector (Living Armor), both scoring near-bottom pre-fix despite being
+//                 reputationally some of the tankiest heroes in the game. See Blueprint/10-tech-debt-backlog.md.
 //   mobility   <- move-speed extremity (20%) + hand-tagged mobility (70%, per-ability, summed per hero) + Blink/BoT purchase rank (10%) (see server/data/map-control-weights.json)
 //   map_control <- see server/data/map-control-weights.json (vision + mobility + ability tags), rank-rescaled
 //   saving     <- 40% hero_healing_per_min (benchmarks, skipped for heroes with zero hand-tagged saving abilities — see below) + 60% hand-tagged saving (per-ability, summed per hero, see server/data/ability-tag-weights.json)
@@ -125,6 +131,7 @@ interface AbilityTagAggregate {
   saving: number;
   initiating: number;
   control_strength: number;
+  damage_mitigation: number;
 }
 
 interface DeathsCampsEntry {
@@ -134,11 +141,18 @@ interface DeathsCampsEntry {
 }
 
 interface AbilityTagWeights {
-  extremityExponents: { mobility: number; saving: number; initiating: number; control_strength: number };
+  extremityExponents: {
+    mobility: number;
+    saving: number;
+    initiating: number;
+    control_strength: number;
+    damage_mitigation: number;
+  };
   blend: {
     saving: { healingWeight: number; abilityTagWeight: number };
     control: { stunsWeight: number; abilityTagWeight: number };
     initiating: { abilityTagWeight: number; blinkWeight: number };
+    durability: { damageTakenWeight: number; abilityTagWeight: number };
   };
 }
 
@@ -233,7 +247,28 @@ function main() {
   );
 
   const durabilityRaw = heroes.map((h) => cdvByHeroId.get(h.id)?.durability ?? null);
-  const durabilityScores = percentileRankScale(durabilityRaw);
+  const durabilityStatScores = percentileRankScale(durabilityRaw);
+
+  // damage_mitigation (hand-tagged, per-ability, summed per hero) supplements
+  // damage_taken/deaths the same way control_strength supplements stuns above
+  // — see the header comment for why the real stat structurally undercounts
+  // heroes with active damage reduction/block/absorption. Only ~18 abilities
+  // tagged so far (a scoped first pass on the clearest cases found via
+  // keyword search, not a full audit of all 789 abilities — see
+  // Blueprint/10-tech-debt-backlog.md), so this is weighted well below the
+  // real stat (unlike saving, where the real stat itself is the less-trusted
+  // input) — a light correction, not a replacement.
+  const damageMitigationTagRaw = heroes.map((h) => abilityTagByHeroId.get(h.id)?.damage_mitigation ?? 0);
+  const damageMitigationTagScores = zScoreExtremityScale(
+    damageMitigationTagRaw,
+    tagWeights.extremityExponents.damage_mitigation,
+  );
+  const durabilityScores = heroes.map((_, i) =>
+    weightedBlend([
+      { value: durabilityStatScores[i], weight: tagWeights.blend.durability.damageTakenWeight },
+      { value: damageMitigationTagScores[i], weight: tagWeights.blend.durability.abilityTagWeight },
+    ]),
+  );
 
   // --- map control / mobility: vision + mobility + ability tags ---
   const wardsRaw = heroes.map((h) => cdvByHeroId.get(h.id)?.wardsPerMin ?? null);

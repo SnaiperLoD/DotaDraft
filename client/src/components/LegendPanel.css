@@ -1,0 +1,182 @@
+.legend-widget {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.legend-toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  background: var(--panel-raised);
+  color: var(--gold-bright);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px var(--shadow-deep);
+  flex-shrink: 0;
+}
+
+.legend-toggle:hover {
+  filter: brightness(1.15);
+}
+
+.legend-panel {
+  width: 280px;
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 14px 16px;
+}
+
+.legend-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--gold);
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--bronze-dim);
+}
+
+.legend-close {
+  background: none;
+  border: none;
+  color: var(--ink-faint);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 2px;
+}
+
+.legend-close:hover {
+  color: var(--ink);
+}
+
+.legend-section {
+  margin-bottom: 14px;
+}
+
+.legend-section:last-child {
+  margin-bottom: 0;
+}
+
+.legend-section h4 {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  margin: 0 0 6px;
+}
+
+.legend-note {
+  font-size: 11px;
+  color: var(--ink-faint);
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+
+.legend-swatch-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.legend-swatch-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+
+.legend-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--ink-muted);
+  margin-bottom: 6px;
+}
+
+.legend-row:last-child {
+  margin-bottom: 0;
+}
+
+/* Matches HeroPool.css's .hero-card--synergy-best/worst border colors
+   exactly (kept in sync by hand, same convention as other duplicated
+   color constants in this codebase, e.g. EvaluationPanel.tsx's
+   percentileLabel()). */
+.legend-border-swatch {
+  width: 20px;
+  height: 14px;
+  border-radius: 3px;
+  border: 2px solid;
+  flex-shrink: 0;
+  background: var(--panel-raised);
+}
+
+.legend-border-swatch--best {
+  border-color: #4caf6a;
+  box-shadow: 0 0 8px rgba(76, 175, 106, 0.45);
+}
+
+.legend-border-swatch--worst {
+  border-color: var(--danger);
+  box-shadow: 0 0 8px rgba(200, 90, 74, 0.4);
+}
+
+/* Matches HeroTagBadges.css's rarity-* border colors exactly (kept in
+   sync by hand — see that file's comment for the rarity palette
+   rationale). */
+.legend-rarity-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 2px solid;
+  flex-shrink: 0;
+  background: var(--panel-raised);
+}
+
+.legend-rarity-swatch.rarity-common {
+  border-color: #4caf6a;
+}
+
+.legend-rarity-swatch.rarity-uncommon {
+  border-color: #2fb6ad;
+}
+
+.legend-rarity-swatch.rarity-rare {
+  border-color: #3f8fd6;
+}
+
+.legend-rarity-swatch.rarity-epic {
+  border-color: #a866d9;
+}
+
+.legend-rarity-swatch.rarity-legendary {
+  border-color: #e08a2e;
+}
+
+@media (max-width: 480px) {
+  .legend-panel {
+    width: calc(100vw - 40px);
+  }
+}

@@ -7,16 +7,16 @@ function makeMockPool() {
       create: jest.fn(),
       count: jest.fn(),
       findMany: jest.fn(),
-    },
-    leaderboardEntry: {
-      upsert: jest.fn(),
-      findMany: jest.fn(),
+      update: jest.fn(),
     },
   };
 }
 
-function makeMockDraftService(draft: { status: string; heroes: { heroId: number; assignedRole?: string }[] }) {
-  return { getById: jest.fn().mockResolvedValue(draft) };
+function makeMockDraftService(
+  draft: { status: string; heroes: { heroId: number; assignedRole?: string }[] },
+  evaluationScore: number | null = null,
+) {
+  return { getById: jest.fn().mockResolvedValue(draft), getEvaluationScore: jest.fn().mockResolvedValue(evaluationScore) };
 }
 
 describe('OpponentPoolService.commit', () => {
@@ -40,7 +40,7 @@ describe('OpponentPoolService.commit', () => {
       { heroId: 4, assignedRole: 'Soft Support' },
       { heroId: 5, assignedRole: 'Hard Support' },
     ];
-    const draftService = makeMockDraftService({ status: 'COMPLETED', heroes });
+    const draftService = makeMockDraftService({ status: 'COMPLETED', heroes }, null);
     pool.pooledDraft.create.mockResolvedValue({ id: 'pool-1', createdAt: new Date('2026-01-01T00:00:00Z') });
     const service = new OpponentPoolService(pool as any, draftService as any);
 
@@ -58,9 +58,30 @@ describe('OpponentPoolService.commit', () => {
           { heroId: 4, role: 'Soft Support' },
           { heroId: 5, role: 'Hard Support' },
         ],
+        evaluationScore: null,
       },
     });
     expect(result).toEqual({ id: 'pool-1', committedAt: '2026-01-01T00:00:00.000Z' });
+  });
+
+  it('snapshots the evaluation score when the draft was already evaluated', async () => {
+    const pool = makeMockPool();
+    const heroes = [
+      { heroId: 1, assignedRole: 'Carry' },
+      { heroId: 2, assignedRole: 'Mid' },
+      { heroId: 3, assignedRole: 'Offlane' },
+      { heroId: 4, assignedRole: 'Soft Support' },
+      { heroId: 5, assignedRole: 'Hard Support' },
+    ];
+    const draftService = makeMockDraftService({ status: 'COMPLETED', heroes }, 7.2);
+    pool.pooledDraft.create.mockResolvedValue({ id: 'pool-1', createdAt: new Date('2026-01-01T00:00:00Z') });
+    const service = new OpponentPoolService(pool as any, draftService as any);
+
+    await service.commit('draft-1', 'my-token');
+
+    expect(pool.pooledDraft.create).toHaveBeenCalledWith(
+      expect.objectContaining({ data: expect.objectContaining({ evaluationScore: 7.2 }) }),
+    );
   });
 
   it('reports storage as unreachable rather than a raw Prisma error when POOL_DATABASE_URL is unset', async () => {
@@ -119,63 +140,99 @@ describe('OpponentPoolService.pullRandom', () => {
   });
 });
 
-describe('OpponentPoolService.recordBattleOutcome', () => {
-  it('upserts a win, creating the row if the token has never fought before', async () => {
+describe('OpponentPoolService.recordDraftOutcome', () => {
+  it('increments wins on the given PooledDraft row', async () => {
     const pool = makeMockPool();
     const service = new OpponentPoolService(pool as any, {} as any);
 
-    await service.recordBattleOutcome('token-1', 'Win');
+    await service.recordDraftOutcome('draft-1', 'Win');
 
-    expect(pool.leaderboardEntry.upsert).toHaveBeenCalledWith({
-      where: { submitterToken: 'token-1' },
-      create: { submitterToken: 'token-1', wins: 1, losses: 0 },
-      update: { wins: { increment: 1 } },
+    expect(pool.pooledDraft.update).toHaveBeenCalledWith({
+      where: { id: 'draft-1' },
+      data: { wins: { increment: 1 } },
     });
   });
 
-  it('upserts a loss', async () => {
+  it('increments losses', async () => {
     const pool = makeMockPool();
     const service = new OpponentPoolService(pool as any, {} as any);
 
-    await service.recordBattleOutcome('token-1', 'Lose');
+    await service.recordDraftOutcome('draft-1', 'Lose');
 
-    expect(pool.leaderboardEntry.upsert).toHaveBeenCalledWith({
-      where: { submitterToken: 'token-1' },
-      create: { submitterToken: 'token-1', wins: 0, losses: 1 },
-      update: { losses: { increment: 1 } },
+    expect(pool.pooledDraft.update).toHaveBeenCalledWith({
+      where: { id: 'draft-1' },
+      data: { losses: { increment: 1 } },
     });
   });
 });
 
 describe('OpponentPoolService.getLeaderboard', () => {
+  function makeRow(overrides: Partial<Record<string, unknown>>) {
+    return {
+      id: 'row',
+      source: 'player',
+      heroIds: [1, 2, 3, 4, 5],
+      heroRoles: null,
+      teamName: null,
+      leagueName: null,
+      evaluationScore: null,
+      submitterToken: null,
+      wins: 0,
+      losses: 0,
+      ...overrides,
+    };
+  }
+
+  it('only includes drafts that have actually been fought (wins+losses > 0)', async () => {
+    const pool = makeMockPool();
+    pool.pooledDraft.findMany.mockResolvedValue([makeRow({ id: 'fought', wins: 1, losses: 0 })]);
+    const service = new OpponentPoolService(pool as any, {} as any);
+
+    await service.getLeaderboard(10);
+
+    expect(pool.pooledDraft.findMany).toHaveBeenCalledWith({
+      where: { OR: [{ wins: { gt: 0 } }, { losses: { gt: 0 } }] },
+    });
+  });
+
   it('ranks by wins first, win rate as a tiebreaker among equal win counts', async () => {
     const pool = makeMockPool();
-    pool.leaderboardEntry.findMany.mockResolvedValue([
-      { submitterToken: 'low-wins', wins: 2, losses: 0 },
-      { submitterToken: 'high-wins-low-rate', wins: 5, losses: 15 },
-      { submitterToken: 'high-wins-high-rate', wins: 5, losses: 1 },
+    pool.pooledDraft.findMany.mockResolvedValue([
+      makeRow({ id: 'low-wins', wins: 2, losses: 0 }),
+      makeRow({ id: 'high-wins-low-rate', wins: 5, losses: 15 }),
+      makeRow({ id: 'high-wins-high-rate', wins: 5, losses: 1 }),
     ]);
     const service = new OpponentPoolService(pool as any, {} as any);
 
     const result = await service.getLeaderboard(10);
 
-    expect(result.map((r) => r.submitterToken)).toEqual(['high-wins-high-rate', 'high-wins-low-rate', 'low-wins']);
+    expect(result.map((r) => r.id)).toEqual(['high-wins-high-rate', 'high-wins-low-rate', 'low-wins']);
     expect(result[0].winRate).toBeCloseTo(5 / 6);
   });
 
   it('truncates to the requested limit after ranking', async () => {
     const pool = makeMockPool();
-    pool.leaderboardEntry.findMany.mockResolvedValue([
-      { submitterToken: 'a', wins: 3, losses: 0 },
-      { submitterToken: 'b', wins: 2, losses: 0 },
-      { submitterToken: 'c', wins: 1, losses: 0 },
+    pool.pooledDraft.findMany.mockResolvedValue([
+      makeRow({ id: 'a', wins: 3, losses: 0 }),
+      makeRow({ id: 'b', wins: 2, losses: 0 }),
+      makeRow({ id: 'c', wins: 1, losses: 0 }),
     ]);
     const service = new OpponentPoolService(pool as any, {} as any);
 
     const result = await service.getLeaderboard(2);
 
     expect(result).toHaveLength(2);
-    expect(result.map((r) => r.submitterToken)).toEqual(['a', 'b']);
+    expect(result.map((r) => r.id)).toEqual(['a', 'b']);
+  });
+
+  it('carries the evaluationScore snapshot through unchanged', async () => {
+    const pool = makeMockPool();
+    pool.pooledDraft.findMany.mockResolvedValue([makeRow({ id: 'a', wins: 1, evaluationScore: 6.4 })]);
+    const service = new OpponentPoolService(pool as any, {} as any);
+
+    const result = await service.getLeaderboard(10);
+
+    expect(result[0].evaluationScore).toBe(6.4);
   });
 });
 

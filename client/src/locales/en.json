@@ -57,7 +57,8 @@
     "Carry": "Carry",
     "Mid": "Mid",
     "Offlane": "Offlane",
-    "Support": "Support"
+    "Support": "Support",
+    "Universal": "Universal"
   },
   "draftLedger": {
     "defaultTitle": "Your Draft",
@@ -123,11 +124,36 @@
     "clicks_one": "{{count}} click this visit",
     "clicks_other": "{{count}} clicks this visit"
   },
+  "legend": {
+    "toggle": "Legend",
+    "title": "Legend",
+    "close": "Close",
+    "rolesHeading": "Role colors",
+    "rolesNote": "Portrait border/tint colors show a hero's real position, from actual match data — not the role you assign them.",
+    "pickHighlightHeading": "Pick highlight",
+    "pickHighlightBest": "Best real synergy with your picks so far, among this round's 5 candidates",
+    "pickHighlightWorst": "Worst real synergy with your picks so far, among this round's 5 candidates",
+    "tagsHeading": "Hero tags",
+    "tagsNote": "Hand-authored combo tags — hover a badge to see what it does. Border color shows rarity.",
+    "rarity": {
+      "common": "Common",
+      "uncommon": "Uncommon",
+      "rare": "Rare",
+      "epic": "Epic",
+      "legendary": "Legendary"
+    },
+    "percentileHeading": "Evaluation percentile",
+    "percentileNote": "How this draft's score on an axis ranks against 10,000 random 5-hero teams.",
+    "percentileHigh": "Top 30%",
+    "percentileMid": "Middle 40%",
+    "percentileLow": "Bottom 30%"
+  },
   "leaderboard": {
     "title": "Leaderboard",
-    "note": "No accounts here — rankings are tied to an anonymous id stored in your browser, so this resets if you clear your browser data.",
-    "empty": "No battles fought yet — be the first.",
-    "player": "Player",
+    "note": "Ranks committed drafts by how they perform as the opponent in other players' battles — not your own personal win/loss record.",
+    "empty": "No drafts have been fought yet — commit one to the pool and start battling.",
+    "draft": "Draft",
+    "evaluation": "Evaluation",
     "wins": "Wins",
     "losses": "Losses",
     "winRate": "Win Rate"

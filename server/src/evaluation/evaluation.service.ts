@@ -10,7 +10,8 @@ import { percentileBracket } from './score-narrative';
 import type { Analyzer, DraftPick } from './analyzer.interface';
 import type { EvaluationResult, EvaluationSummary, AnalyzerResult } from 'shared';
 
-// Categories eligible for the strengths/weaknesses summary.
+// Categories eligible for the strengths/weaknesses summary. map_control
+// deliberately absent — see BASE_ANALYZERS below.
 const SUMMARY_KEYS = [
   'synergy',
   'counter',
@@ -21,7 +22,6 @@ const SUMMARY_KEYS = [
   'control',
   'durability',
   'mobility',
-  'map_control',
   'saving',
   'objectives',
   'initiating',
@@ -68,7 +68,17 @@ const BASE_ANALYZERS: Analyzer[] = [
   createAxisAnalyzer('skirmish_rate', 'Skirmish Rate'),
   createAxisAnalyzer('camp_stacking', 'Camp Stacking'),
   createAxisAnalyzer('mobility', 'Mobility'),
-  createAxisAnalyzer('map_control', 'Map Control'),
+  // map_control deliberately NOT in this list — 2026-08-03, by explicit
+  // user request. Blueprint/10-tech-debt-backlog.md: this axis's real-data
+  // component (vision_ability_tier) is still the old coarse per-hero tag,
+  // never migrated to the per-ability CSV pipeline the way mobility/saving/
+  // initiating/control were — the underlying signal is weak enough that
+  // showing it as a breakdown row (even at 0 weight) read as more
+  // authoritative than it is. Still computed by evaluation_values/
+  // calibrate-evaluation-values.ts and consumed by Battle Engine's AXES
+  // list (server/data/axis-weights.json, weight 0 there too) — this only
+  // removes it from Evaluation Engine's user-facing breakdown, not the
+  // underlying data or Battle Engine.
   createAxisAnalyzer('saving', 'Saving'),
   createAxisAnalyzer('objectives', 'Objectives'),
 ];
@@ -102,12 +112,8 @@ const WEIGHTS: Record<string, number> = {
   control: 0.05,
   durability: 0.015,
   mobility: 0.05,
-  // Disabled entirely (Blueprint/10-tech-debt-backlog.md) — same as Battle
-  // Engine's AXIS_WEIGHT.map_control: vision_ability_tier (a map_control
-  // input) is still the old coarse per-hero tag, not yet reviewed/migrated.
-  // Still shown as an informational breakdown row (createAxisAnalyzer
-  // reports the true, undiscounted score) — just doesn't affect Total Score.
-  map_control: 0,
+  // map_control entry intentionally removed (not just zeroed) — see
+  // BASE_ANALYZERS above, the axis isn't in breakdown at all anymore.
   saving: 0.05,
   initiating: 0.05,
   // Default weight, same as every other axis when first introduced
@@ -118,6 +124,16 @@ const WEIGHTS: Record<string, number> = {
   camp_stacking: 0.05,
   proSimilarity: 0.05,
 };
+
+// Mirrors EvaluationPanel.tsx's percentileLabel() exactly (same 30/70
+// split as score-narrative.ts's percentileBracket()) — used only for the
+// compact strengths/weaknesses list, not the breakdown cards (which get
+// their percentile pill text formatted client-side, unchanged).
+function formatPercentile(percentile: number): string {
+  if (percentile < 30) return `bottom ${Math.max(1, percentile)}%`;
+  if (percentile < 70) return `${percentile}th percentile`;
+  return `top ${Math.max(1, 100 - percentile)}%`;
+}
 
 @Injectable()
 export class EvaluationService {
@@ -182,11 +198,20 @@ export class EvaluationService {
       .filter((b) => SUMMARY_KEYS.includes(b.key) && b.score !== null)
       .sort((a, b) => rankValue(b) - rankValue(a));
 
-    // Just the narrative sentence itself (always the last explanation line,
-    // see axis.analyzer.ts) — it already names the axis and cites
-    // contributors via score-narrative.ts's lede(), so a "Label (n/10):"
-    // prefix on top of it was redundant formality, not added information.
-    const describe = (item: AnalyzerResult) => item.explanation[item.explanation.length - 1];
+    // Compact "Label — percentile" line, NOT the full narrative sentence
+    // (2026-08-03, by explicit user request — the previous version quoted
+    // the same narrative sentence here, in this axis's breakdown card
+    // below, AND in the gameplan paragraph for whichever item ranks #1,
+    // up to 3x duplication of one sentence). The breakdown grid remains
+    // the one place the full narrative lives; this list is now purely a
+    // fast-scan index into it. Same percentile-bucket phrasing as the
+    // client's percentile pill labels (EvaluationPanel.tsx's
+    // percentileLabel()) — kept in sync by hand, same as that comment
+    // already documents for the 30/70 split itself.
+    const describe = (item: AnalyzerResult) => {
+      const detail = item.percentile !== null ? formatPercentile(item.percentile) : `${item.score}/10`;
+      return `${item.label} — ${detail}`;
+    };
 
     const strengths = ranked.slice(0, 3).map(describe);
     const weaknesses = ranked.slice(-3).reverse().map(describe);

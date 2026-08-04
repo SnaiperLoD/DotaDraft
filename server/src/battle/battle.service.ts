@@ -5,7 +5,7 @@ import { HeroMetaService } from '../hero-meta/hero-meta.service';
 import { OpponentPoolService } from '../opponent-pool/opponent-pool.service';
 import { resolveBattle, type BattlePick } from './battle-resolution';
 import { alignOpponentToRoles } from './opponent-alignment';
-import type { BattleResultResponse } from 'shared';
+import type { BattleResultResponse, ResolvedOutcome } from 'shared';
 
 @Injectable()
 export class BattleService {
@@ -63,10 +63,14 @@ export class BattleService {
       .catch(() => undefined);
 
     // Best-effort, same reasoning as saveBattleResult above — the
-    // leaderboard (Blueprint/10-tech-debt-backlog.md, "Лидерборд") is a
-    // nice-to-have ranking, not something that should ever fail Battle
-    // Mode itself if the shared Postgres pool is briefly unreachable.
-    await this.opponentPoolService.recordBattleOutcome(submitterToken, result.resolvedOutcome).catch(() => undefined);
+    // leaderboard (Blueprint/10-tech-debt-backlog.md, "Лидерборд драфтов")
+    // is a nice-to-have ranking, not something that should ever fail
+    // Battle Mode itself if the shared Postgres pool is briefly
+    // unreachable. Inverted outcome: result.resolvedOutcome is from the
+    // CALLING player's perspective (teamA) — the opponent draft (teamB)
+    // won exactly when the caller lost, and vice versa.
+    const opponentOutcome: ResolvedOutcome = result.resolvedOutcome === 'Win' ? 'Lose' : 'Win';
+    await this.opponentPoolService.recordDraftOutcome(opponent.id, opponentOutcome).catch(() => undefined);
 
     return {
       resolvedOutcome: result.resolvedOutcome,

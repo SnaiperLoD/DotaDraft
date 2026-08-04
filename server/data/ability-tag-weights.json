@@ -3,11 +3,13 @@
     "mobility": 1.2,
     "saving": 1.6,
     "initiating": 1.2,
-    "control_strength": 1.6
+    "control_strength": 1.6,
+    "damage_mitigation": 1.2
   },
   "blend": {
     "saving": { "healingWeight": 0.3, "abilityTagWeight": 0.7 },
     "control": { "stunsWeight": 0.5, "abilityTagWeight": 0.5 },
-    "initiating": { "abilityTagWeight": 0.85, "blinkWeight": 0.15 }
+    "initiating": { "abilityTagWeight": 0.85, "blinkWeight": 0.15 },
+    "durability": { "damageTakenWeight": 0.75, "abilityTagWeight": 0.25 }
   }
 }

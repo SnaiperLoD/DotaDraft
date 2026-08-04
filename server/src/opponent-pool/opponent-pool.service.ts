@@ -36,10 +36,21 @@ export class OpponentPoolService {
       heroId: h.heroId,
       role: h.assignedRole!,
     }));
+    // Blueprint/10-tech-debt-backlog.md, "Лидерборд драфтов" — a snapshot,
+    // not a live link: null if the player never clicked Evaluate Draft
+    // before committing (Evaluate and Commit are independent actions, see
+    // DraftPage.tsx).
+    const evaluationScore = await this.draftService.getEvaluationScore(draftId);
 
     const created = await this.runPoolQuery(() =>
       this.pool.pooledDraft.create({
-        data: { source: 'player', submitterToken, heroIds, heroRoles: heroRoles as unknown as Prisma.InputJsonValue },
+        data: {
+          source: 'player',
+          submitterToken,
+          heroIds,
+          heroRoles: heroRoles as unknown as Prisma.InputJsonValue,
+          evaluationScore,
+        },
       }),
     );
 
@@ -88,34 +99,43 @@ export class OpponentPoolService {
     });
   }
 
-  // "Weak" leaderboard (Blueprint/10-tech-debt-backlog.md, "Лидерборд") —
-  // one counter row per anonymous submitterToken, upserted in place on
-  // every fight (BattleService.fight()). Best-effort by design at the call
-  // site (same .catch(() => undefined) pattern as saveBattleResult/
-  // saveEvaluationResult) — a leaderboard write failing must never fail
-  // the fight itself.
-  async recordBattleOutcome(submitterToken: string, outcome: ResolvedOutcome): Promise<void> {
+  // "Weak" leaderboard, v2 — Blueprint/10-tech-debt-backlog.md, "Лидерборд
+  // драфтов". Records the outcome for a specific PooledDraft as the
+  // OPPONENT it was pulled as (BattleService.fight() calls this with the
+  // opponent's id and the INVERSE of the calling player's own outcome —
+  // this draft won/lost from its own perspective, not the caller's). Not
+  // the calling player's own battle record — that's not tracked at all
+  // anymore (superseded the earlier submitterToken-keyed version, which
+  // tracked the wrong thing for what "лидерборд драфтов" asks for). Same
+  // best-effort-at-the-call-site pattern as saveBattleResult.
+  async recordDraftOutcome(pooledDraftId: string, outcome: ResolvedOutcome): Promise<void> {
     await this.runPoolQuery(() =>
-      this.pool.leaderboardEntry.upsert({
-        where: { submitterToken },
-        create: { submitterToken, wins: outcome === 'Win' ? 1 : 0, losses: outcome === 'Lose' ? 1 : 0 },
-        update: outcome === 'Win' ? { wins: { increment: 1 } } : { losses: { increment: 1 } },
+      this.pool.pooledDraft.update({
+        where: { id: pooledDraftId },
+        data: outcome === 'Win' ? { wins: { increment: 1 } } : { losses: { increment: 1 } },
       }),
     );
   }
 
   // Ranked by wins first (the simple, gameable-by-design metric this
-  // "weak" leaderboard is upfront about — see the model's doc comment in
+  // "weak" leaderboard is upfront about — see PooledDraft's doc comment in
   // prisma-pool/schema.prisma), win rate as a tiebreaker among equal win
-  // counts. winRate isn't a stored column, so the tiebreak sort happens in
-  // memory after fetching — fine at this MVP's scale (a handful of
-  // anonymous tokens, not a table needing DB-side pagination). No
-  // minimum-battle-count floor — keeping this MVP-simple rather than
-  // inventing a credibility threshold nobody asked for yet.
+  // counts. Only rows that have actually been fought at least once
+  // (wins+losses > 0) — an unfought committed draft isn't a leaderboard
+  // entry, just an unused pool row.
   async getLeaderboard(limit: number): Promise<LeaderboardEntryView[]> {
-    const rows = await this.runPoolQuery(() => this.pool.leaderboardEntry.findMany());
+    const rows = await this.runPoolQuery(() =>
+      this.pool.pooledDraft.findMany({ where: { OR: [{ wins: { gt: 0 } }, { losses: { gt: 0 } }] } }),
+    );
     return rows
       .map((row) => ({
+        id: row.id,
+        source: row.source as PooledDraftSource,
+        heroIds: row.heroIds as number[],
+        heroRoles: (row.heroRoles as PooledHeroRole[] | null) ?? null,
+        teamName: row.teamName,
+        leagueName: row.leagueName,
+        evaluationScore: row.evaluationScore,
         submitterToken: row.submitterToken,
         wins: row.wins,
         losses: row.losses,

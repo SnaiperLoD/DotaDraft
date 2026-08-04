@@ -5,7 +5,8 @@
     "mobility": 0,
     "saving": 0,
     "initiating": 2,
-    "control_strength": 2
+    "control_strength": 2,
+    "damage_mitigation": 4
   },
   {
     "heroId": 2,
@@ -13,7 +14,8 @@
     "mobility": 0,
     "saving": 0,
     "initiating": 6,
-    "control_strength": 9
+    "control_strength": 9,
+    "damage_mitigation": 0
   },
   {
     "heroId": 3,
@@ -21,7 +23,8 @@
     "mobility": 0,
     "saving": 5,
     "initiating": 7,
-    "control_strength": 13
+    "control_strength": 13,
+    "damage_mitigation": 0
   },
   {
     "heroId": 4,
@@ -29,7 +32,8 @@
     "mobility": 6,
     "saving": 0,
     "initiating": 3,
-    "control_strength": 4
+    "control_strength": 4,
+    "damage_mitigation": 0
   },
   {
     "heroId": 5,
@@ -37,7 +41,8 @@
     "mobility": 1,
     "saving": 0,
     "initiating": 1,
-    "control_strength": 11
+    "control_strength": 11,
+    "damage_mitigation": 0
   },
   {
     "heroId": 6,
@@ -45,7 +50,8 @@
     "mobility": 1,
     "saving": 0,
     "initiating": 0,
-    "control_strength": 6
+    "control_strength": 6,
+    "damage_mitigation": 0
   },
   {
     "heroId": 7,
@@ -53,7 +59,8 @@
     "mobility": 4,
     "saving": 2,
     "initiating": 18,
-    "control_strength": 18
+    "control_strength": 18,
+    "damage_mitigation": 0
   },
   {
     "heroId": 8,
@@ -61,7 +68,8 @@
     "mobility": 0,
     "saving": 4,
     "initiating": 5,
-    "control_strength": 0
+    "control_strength": 0,
+    "damage_mitigation": 2
   },
   {
     "heroId": 9,
@@ -69,7 +77,8 @@
     "mobility": 8,
     "saving": 6,
     "initiating": 7,
-    "control_strength": 3
+    "control_strength": 3,
+    "damage_mitigation": 0
   },
   {
     "heroId": 10,
@@ -77,7 +86,8 @@
     "mobility": 6,
     "saving": 0,
     "initiating": 6,
-    "control_strength": 5
+    "control_strength": 5,
+    "damage_mitigation": 0
   },
   {
     "heroId": 11,
@@ -85,7 +95,8 @@
     "mobility": 1,
     "saving": 1,
     "initiating": 2,
-    "control_strength": 6
+    "control_strength": 6,
+    "damage_mitigation": 0
   },
   {
     "heroId": 12,
@@ -93,7 +104,8 @@
     "mobility": 7,
     "saving": 0,
     "initiating": 0,
-    "control_strength": 1
+    "control_strength": 1,
+    "damage_mitigation": 0
   },
   {
     "heroId": 13,
@@ -101,7 +113,8 @@
     "mobility": 7,
     "saving": 0,
     "initiating": 8,
-    "control_strength": 8
+    "control_strength": 8,
+    "damage_mitigation": 0
   },
   {
     "heroId": 14,
@@ -109,7 +122,8 @@
     "mobility": 0,
     "saving": 9,
     "initiating": 9,
-    "control_strength": 9
+    "control_strength": 9,
+    "damage_mitigation": 6
   },
   {
     "heroId": 15,
@@ -117,7 +131,8 @@
     "mobility": 0,
     "saving": 1,
     "initiating": 2,
-    "control_strength": 2
+    "control_strength": 2,
+    "damage_mitigation": 0
   },
   {
     "heroId": 16,
@@ -125,7 +140,8 @@
     "mobility": 10,
     "saving": 0,
     "initiating": 12,
-    "control_strength": 8
+    "control_strength": 8,
+    "damage_mitigation": 0
   },
   {
     "heroId": 17,
@@ -133,7 +149,8 @@
     "mobility": 10,
     "saving": 0,
     "initiating": 10,
-    "control_strength": 5
+    "control_strength": 5,
+    "damage_mitigation": 0
   },
   {
     "heroId": 18,
@@ -141,7 +158,8 @@
     "mobility": 6,
     "saving": 3,
     "initiating": 3,
-    "control_strength": 5
+    "control_strength": 5,
+    "damage_mitigation": 0
   },
   {
     "heroId": 19,
@@ -149,7 +167,8 @@
     "mobility": 0,
     "saving": 0,
     "initiating": 12,
-    "control_strength": 10
+    "control_strength": 10,
+    "damage_mitigation": 0
   },
   {
     "heroId": 20,
@@ -157,7 +176,8 @@
     "mobility": 1,
     "saving": 10,
     "initiating": 12,
-    "control_strength": 5
+    "control_strength": 5,
+    "damage_mitigation": 0
   },
   {
     "heroId": 21,
@@ -165,7 +185,8 @@
     "mobility": 7,
     "saving": 1,
     "initiating": 10,
-    "control_strength": 9
+    "control_strength": 9,
+    "damage_mitigation": 0
   },
   {
     "heroId": 22,
@@ -173,7 +194,8 @@
     "mobility": 5,
     "saving": 0,
     "initiating": 15,
-    "control_strength": 6
+    "control_strength": 6,
+    "damage_mitigation": 0
   },
   {
     "heroId": 23,
@@ -181,7 +203,8 @@
     "mobility": 1,
     "saving": 7,
     "initiating": 20,
-    "control_strength": 17
+    "control_strength": 17,
+    "damage_mitigation": 0
   },
   {
     "heroId": 25,
@@ -189,7 +212,8 @@
     "mobility": 9,
     "saving": 0,
     "initiating": 3,
-    "control_strength": 6
+    "control_strength": 6,
+    "damage_mitigation": 0
   },
   {
     "heroId": 26,
@@ -197,7 +221,8 @@
     "mobility": 0,
     "saving": 1,
     "initiating": 9,
-    "control_strength": 14
+    "control_strength": 14,
+    "damage_mitigation": 0
   },
   {
     "heroId": 27,
@@ -205,7 +230,8 @@
     "mobility": 0,
     "saving": 0,
     "initiating": 6,
-    "control_strength": 14
+    "control_strength": 14,
+    "damage_mitigation": 0
   },
   {
     "heroId": 28,
@@ -213,7 +239,8 @@
     "mobility": 8,
     "saving": 0,
     "initiating": 13,
-    "control_strength": 11
+    "control_strength": 11,
+    "damage_mitigation": 0
   },
   {
     "heroId": 29,
@@ -221,7 +248,8 @@
     "mobility": 0,
     "saving": 2,
     "initiating": 12,
-    "control_strength": 17
+    "control_strength": 17,
+    "damage_mitigation": 6
   },
   {
     "heroId": 30,
@@ -229,7 +257,8 @@
     "mobility": 0,
     "saving": 8,
     "initiating": 5,
-    "control_strength": 6
+    "control_strength": 6,
+    "damage_mitigation": 0
   },
   {
     "heroId": 31,
@@ -237,7 +266,8 @@
     "mobility": 0,
     "saving": 6,
     "initiating": 8,
-    "control_strength": 13
+    "control_strength": 13,
+    "damage_mitigation": 0
   },
   {
     "heroId": 32,
@@ -245,7 +275,8 @@
     "mobility": 12,
     "saving": 2,
     "initiating": 4,
-    "control_strength": 4
+    "control_strength": 4,
+    "damage_mitigation": 0
   },
   {
     "heroId": 33,
@@ -253,7 +284,8 @@
     "mobility": 2,
     "saving": 0,
     "initiating": 8,
-    "control_strength": 15
+    "control_strength": 15,
+    "damage_mitigation": 0
   },
   {
     "heroId": 34,
@@ -261,7 +293,8 @@
     "mobility": 10,
     "saving": 3,
     "initiating": 6,
-    "control_strength": 6
+    "control_strength": 6,
+    "damage_mitigation": 0
   },
   {
     "heroId": 35,
@@ -269,7 +302,8 @@
     "mobility": 3,
     "saving": 1,
     "initiating": 9,
-    "control_strength": 8
+    "control_strength": 8,
+    "damage_mitigation": 0
   },
   {
     "heroId": 36,
@@ -277,7 +311,8 @@
     "mobility": 3,
     "saving": 4,
     "initiating": 6,
-    "control_strength": 7
+    "control_strength": 7,
+    "damage_mitigation": 0
   },
   {
     "heroId": 37,
@@ -285,7 +320,8 @@
     "mobility": 0,
     "saving": 10,
     "initiating": 14,
-    "control_strength": 11
+    "control_strength": 11,
+    "damage_mitigation": 0
   },
   {
     "heroId": 38,
@@ -293,7 +329,8 @@
     "mobility": 7,
     "saving": 1,
     "initiating": 14,
-    "control_strength": 9
+    "control_strength": 9,
+    "damage_mitigation": 0
   },
   {
     "heroId": 39,
@@ -301,7 +338,8 @@
     "mobility": 9,
     "saving": 2,
     "initiating": 16,
-    "control_strength": 4
+    "control_strength": 4,
+    "damage_mitigation": 0
   },
   {
     "heroId": 40,
@@ -309,7 +347,8 @@
     "mobility": 4,
     "saving": 1,
     "initiating": 7,
-    "control_strength": 9
+    "control_strength": 9,
+    "damage_mitigation": 0
   },
   {
     "heroId": 41,
@@ -317,7 +356,8 @@
     "mobility": 7,
     "saving": 1,
     "initiating": 16,
-    "control_strength": 15
+    "control_strength": 15,
+    "damage_mitigation": 0
   },
   {
     "heroId": 42,
@@ -325,7 +365,8 @@
     "mobility": 2,
     "saving": 3,
     "initiating": 12,
-    "control_strength": 9
+    "control_strength": 9,
+    "damage_mitigation": 0
   },
   {
     "heroId": 43,
@@ -333,7 +374,8 @@
     "mobility": 0,
     "saving": 2,
     "initiating": 8,
-    "control_strength": 6
+    "control_strength": 6,
+    "damage_mitigation": 0
   },
   {
     "heroId": 44,
@@ -341,7 +383,8 @@
     "mobility": 9,
     "saving": 0,
     "initiating": 9,
-    "control_strength": 1
+    "control_strength": 1,
+    "damage_mitigation": 0
   },
   {
     "heroId": 45,
@@ -349,7 +392,8 @@
     "mobility": 0,
     "saving": 12,
     "initiating": 4,
-    "control_strength": 5
+    "control_strength": 5,
+    "damage_mitigation": 0
   },
   {
     "heroId": 46,
@@ -357,7 +401,8 @@
     "mobility": 9,
     "saving": 0,
     "initiating": 12,
-    "control_strength": 4
+    "control_strength": 4,
+    "damage_mitigation": 5
   },
   {
     "heroId": 47,
@@ -365,7 +410,8 @@
     "mobility": 2,
     "saving": 1,
     "initiating": 11,
-    "control_strength": 11
+    "control_strength": 11,
+    "damage_mitigation": 0
   },
   {
     "heroId": 48,
@@ -373,7 +419,8 @@
     "mobility": 0,
     "saving": 1,
     "initiating": 8,
-    "control_strength": 4
+    "control_strength": 4,
+    "damage_mitigation": 0
   },
   {
     "heroId": 49,
@@ -381,7 +428,8 @@
     "mobility": 0,
     "saving": 2,
     "initiating": 13,
-    "control_strength": 11
+    "control_strength": 11,
+    "damage_mitigation": 0
   },
   {
     "heroId": 50,
@@ -389,7 +437,8 @@
     "mobility": 0,
     "saving": 19,
     "initiating": 11,
-    "control_strength": 8
+    "control_strength": 8,
+    "damage_mitigation": 0
   },
   {
     "heroId": 51,
@@ -397,7 +446,8 @@
     "mobility": 8,
     "saving": 9,
     "initiating": 25,
-    "control_strength": 12
+    "control_strength": 12,
+    "damage_mitigation": 0
   },
   {
     "heroId": 52,
@@ -405,7 +455,8 @@
     "mobility": 0,
     "saving": 1,
     "initiating": 12,
-    "control_strength": 14
+    "control_strength": 14,
+    "damage_mitigation": 0
   },
   {
     "heroId": 53,
@@ -413,7 +464,8 @@
     "mobility": 19,
     "saving": 3,
     "initiating": 18,
-    "control_strength": 7
+    "control_strength": 7,
+    "damage_mitigation": 0
   },
   {
     "heroId": 54,
@@ -421,7 +473,8 @@
     "mobility": 2,
     "saving": 6,
     "initiating": 17,
-    "control_strength": 3
+    "control_strength": 3,
+    "damage_mitigation": 3
   },
   {
     "heroId": 55,
@@ -429,7 +482,8 @@
     "mobility": 7,
     "saving": 6,
     "initiating": 20,
-    "control_strength": 13
+    "control_strength": 13,
+    "damage_mitigation": 0
   },
   {
     "heroId": 56,
@@ -437,7 +491,8 @@
     "mobility": 8,
     "saving": 0,
     "initiating": 9,
-    "control_strength": 1
+    "control_strength": 1,
+    "damage_mitigation": 0
   },
   {
     "heroId": 57,
@@ -445,7 +500,8 @@
     "mobility": 1,
     "saving": 25,
     "initiating": 2,
-    "control_strength": 2
+    "control_strength": 2,
+    "damage_mitigation": 2
   },
   {
     "heroId": 58,
@@ -453,7 +509,8 @@
     "mobility": 7,
     "saving": 9,
     "initiating": 15,
-    "control_strength": 7
+    "control_strength": 7,
+    "damage_mitigation": 0
   },
   {
     "heroId": 59,
@@ -461,7 +518,8 @@
     "mobility": 0,
     "saving": 2,
     "initiating": 15,
-    "control_strength": 8
+    "control_strength": 8,
+    "damage_mitigation": 0
   },
   {
     "heroId": 60,
@@ -469,7 +527,8 @@
     "mobility": 11,
     "saving": 2,
     "initiating": 16,
-    "control_strength": 8
+    "control_strength": 8,
+    "damage_mitigation": 0
   },
   {
     "heroId": 61,
@@ -477,7 +536,8 @@
     "mobility": 12,
     "saving": 0,
     "initiating": 10,
-    "control_strength": 2
+    "control_strength": 2,
+    "damage_mitigation": 0
   },
   {
     "heroId": 62,
@@ -485,7 +545,8 @@
     "mobility": 7,
     "saving": 4,
     "initiating": 20,
-    "control_strength": 6
+    "control_strength": 6,
+    "damage_mitigation": 0
   },
   {
     "heroId": 63,
@@ -493,7 +554,8 @@
     "mobility": 9,
     "saving": 5,
     "initiating": 13,
-    "control_strength": 2
+    "control_strength": 2,
+    "damage_mitigation": 0
   },
   {
     "heroId": 64,
@@ -501,7 +563,8 @@
     "mobility": 0,
     "saving": 3,
     "initiating": 16,
-    "control_strength": 14
+    "control_strength": 14,
+    "damage_mitigation": 0
   },
   {
     "heroId": 65,
@@ -509,7 +572,8 @@
     "mobility": 5,
     "saving": 3,
     "initiating": 22,
-    "control_strength": 14
+    "control_strength": 14,
+    "damage_mitigation": 0
   },
   {
     "heroId": 66,
@@ -517,7 +581,8 @@
     "mobility": 4,
     "saving": 13,
     "initiating": 6,
-    "control_strength": 5
+    "control_strength": 5,
+    "damage_mitigation": 0
   },
   {
     "heroId": 67,
@@ -525,7 +590,8 @@
     "mobility": 10,
     "saving": 0,
     "initiating": 17,
-    "control_strength": 2
+    "control_strength": 2,
+    "damage_mitigation": 0
   },
   {
     "heroId": 68,
@@ -533,7 +599,8 @@
     "mobility": 0,
     "saving": 1,
     "initiating": 10,
-    "control_strength": 12
+    "control_strength": 12,
+    "damage_mitigation": 0
   },
   {
     "heroId": 69,
@@ -541,7 +608,8 @@
     "mobility": 3,
     "saving": 1,
     "initiating": 16,
-    "control_strength": 13
+    "control_strength": 13,
+    "damage_mitigation": 0
   },
   {
     "heroId": 70,
@@ -549,7 +617,8 @@
     "mobility": 2,
     "saving": 0,
     "initiating": 11,
-    "control_strength": 2
+    "control_strength": 2,
+    "damage_mitigation": 4
   },
   {
     "heroId": 71,
@@ -557,7 +626,8 @@
     "mobility": 16,
     "saving": 3,
     "initiating": 25,
-    "control_strength": 12
+    "control_strength": 12,
+    "damage_mitigation": 0
   },
   {
     "heroId": 72,
@@ -565,7 +635,8 @@
     "mobility": 2,
     "saving": 0,
     "initiating": 11,
-    "control_strength": 6
+    "control_strength": 6,
+    "damage_mitigation": 0
   },
   {
     "heroId": 73,
@@ -573,7 +644,8 @@
     "mobility": 0,
     "saving": 4,
     "initiating": 8,
-    "control_strength": 8
+    "control_strength": 8,
+    "damage_mitigation": 0
   },
   {
     "heroId": 74,
@@ -581,7 +653,8 @@
     "mobility": 12,
     "saving": 5,
     "initiating": 26,
-    "control_strength": 17
+    "control_strength": 17,
+    "damage_mitigation": 0
   },
   {
     "heroId": 75,
@@ -589,7 +662,8 @@
     "mobility": 0,
     "saving": 7,
     "initiating": 11,
-    "control_strength": 13
+    "control_strength": 13,
+    "damage_mitigation": 2
   },
   {
     "heroId": 76,
@@ -597,7 +671,8 @@
     "mobility": 0,
     "saving": 6,
     "initiating": 9,
-    "control_strength": 6
+    "control_strength": 6,
+    "damage_mitigation": 0
   },
   {
     "heroId": 77,
@@ -605,7 +680,8 @@
     "mobility": 13,
     "saving": 5,
     "initiating": 14,
-    "control_strength": 5
+    "control_strength": 5,
+    "damage_mitigation": 0
   },
   {
     "heroId": 78,
@@ -613,7 +689,8 @@
     "mobility": 8,
     "saving": 2,
     "initiating": 16,
-    "control_strength": 9
+    "control_strength": 9,
+    "damage_mitigation": 0
   },
   {
     "heroId": 79,
@@ -621,7 +698,8 @@
     "mobility": 0,
     "saving": 15,
     "initiating": 16,
-    "control_strength": 10
+    "control_strength": 10,
+    "damage_mitigation": 0
   },
   {
     "heroId": 80,
@@ -629,7 +707,8 @@
     "mobility": 9,
     "saving": 2,
     "initiating": 16,
-    "control_strength": 14
+    "control_strength": 14,
+    "damage_mitigation": 0
   },
   {
     "heroId": 81,
@@ -637,7 +716,8 @@
     "mobility": 2,
     "saving": 0,
     "initiating": 9,
-    "control_strength": 4
+    "control_strength": 4,
+    "damage_mitigation": 0
   },
   {
     "heroId": 82,
@@ -645,7 +725,8 @@
     "mobility": 9,
     "saving": 1,
     "initiating": 19,
-    "control_strength": 6
+    "control_strength": 6,
+    "damage_mitigation": 0
   },
   {
     "heroId": 83,
@@ -653,7 +734,8 @@
     "mobility": 12,
     "saving": 10,
     "initiating": 21,
-    "control_strength": 13
+    "control_strength": 13,
+    "damage_mitigation": 3
   },
   {
     "heroId": 84,
@@ -661,7 +743,8 @@
     "mobility": 0,
     "saving": 6,
     "initiating": 11,
-    "control_strength": 13
+    "control_strength": 13,
+    "damage_mitigation": 0
   },
   {
     "heroId": 85,
@@ -669,7 +752,8 @@
     "mobility": 0,
     "saving": 10,
     "initiating": 10,
-    "control_strength": 8
+    "control_strength": 8,
+    "damage_mitigation": 0
   },
   {
     "heroId": 86,
@@ -677,7 +761,8 @@
     "mobility": 0,
     "saving": 10,
     "initiating": 18,
-    "control_strength": 18
+    "control_strength": 18,
+    "damage_mitigation": 0
   },
   {
     "heroId": 87,
@@ -685,7 +770,8 @@
     "mobility": 0,
     "saving": 1,
     "initiating": 18,
-    "control_strength": 18
+    "control_strength": 18,
+    "damage_mitigation": 0
   },
   {
     "heroId": 88,
@@ -693,7 +779,8 @@
     "mobility": 8,
     "saving": 1,
     "initiating": 19,
-    "control_strength": 14
+    "control_strength": 14,
+    "damage_mitigation": 4
   },
   {
     "heroId": 89,
@@ -701,7 +788,8 @@
     "mobility": 5,
     "saving": 6,
     "initiating": 15,
-    "control_strength": 10
+    "control_strength": 10,
+    "damage_mitigation": 0
   },
   {
     "heroId": 90,
@@ -709,7 +797,8 @@
     "mobility": 9,
     "saving": 13,
     "initiating": 12,
-    "control_strength": 11
+    "control_strength": 11,
+    "damage_mitigation": 0
   },
   {
     "heroId": 91,
@@ -717,7 +806,8 @@
     "mobility": 13,
     "saving": 15,
     "initiating": 12,
-    "control_strength": 1
+    "control_strength": 1,
+    "damage_mitigation": 0
   },
   {
     "heroId": 92,
@@ -725,7 +815,8 @@
     "mobility": 11,
     "saving": 0,
     "initiating": 18,
-    "control_strength": 9
+    "control_strength": 9,
+    "damage_mitigation": 0
   },
   {
     "heroId": 93,
@@ -733,7 +824,8 @@
     "mobility": 12,
     "saving": 6,
     "initiating": 21,
-    "control_strength": 6
+    "control_strength": 6,
+    "damage_mitigation": 0
   },
   {
     "heroId": 94,
@@ -741,7 +833,8 @@
     "mobility": 1,
     "saving": 3,
     "initiating": 12,
-    "control_strength": 15
+    "control_strength": 15,
+    "damage_mitigation": 9
   },
   {
     "heroId": 95,
@@ -749,7 +842,8 @@
     "mobility": 3,
     "saving": 0,
     "initiating": 3,
-    "control_strength": 8
+    "control_strength": 8,
+    "damage_mitigation": 0
   },
   {
     "heroId": 96,
@@ -757,7 +851,8 @@
     "mobility": 2,
     "saving": 12,
     "initiating": 20,
-    "control_strength": 10
+    "control_strength": 10,
+    "damage_mitigation": 0
   },
   {
     "heroId": 97,
@@ -765,7 +860,8 @@
     "mobility": 0,
     "saving": 0,
     "initiating": 26,
-    "control_strength": 20
+    "control_strength": 20,
+    "damage_mitigation": 0
   },
   {
     "heroId": 98,
@@ -773,7 +869,8 @@
     "mobility": 5,
     "saving": 0,
     "initiating": 14,
-    "control_strength": 4
+    "control_strength": 4,
+    "damage_mitigation": 0
   },
   {
     "heroId": 99,
@@ -781,7 +878,8 @@
     "mobility": 6,
     "saving": 0,
     "initiating": 16,
-    "control_strength": 4
+    "control_strength": 4,
+    "damage_mitigation": 7
   },
   {
     "heroId": 100,
@@ -789,7 +887,8 @@
     "mobility": 3,
     "saving": 12,
     "initiating": 29,
-    "control_strength": 17
+    "control_strength": 17,
+    "damage_mitigation": 0
   },
   {
     "heroId": 101,
@@ -797,7 +896,8 @@
     "mobility": 2,
     "saving": 1,
     "initiating": 6,
-    "control_strength": 8
+    "control_strength": 8,
+    "damage_mitigation": 0
   },
   {
     "heroId": 102,
@@ -805,7 +905,8 @@
     "mobility": 0,
     "saving": 16,
     "initiating": 12,
-    "control_strength": 3
+    "control_strength": 3,
+    "damage_mitigation": 0
   },
   {
     "heroId": 103,
@@ -813,7 +914,8 @@
     "mobility": 3,
     "saving": 0,
     "initiating": 18,
-    "control_strength": 12
+    "control_strength": 12,
+    "damage_mitigation": 0
   },
   {
     "heroId": 104,
@@ -821,7 +923,8 @@
     "mobility": 2,
     "saving": 9,
     "initiating": 13,
-    "control_strength": 8
+    "control_strength": 8,
+    "damage_mitigation": 0
   },
   {
     "heroId": 105,
@@ -829,7 +932,8 @@
     "mobility": 5,
     "saving": 3,
     "initiating": 16,
-    "control_strength": 12
+    "control_strength": 12,
+    "damage_mitigation": 0
   },
   {
     "heroId": 106,
@@ -837,7 +941,8 @@
     "mobility": 12,
     "saving": 0,
     "initiating": 19,
-    "control_strength": 7
+    "control_strength": 7,
+    "damage_mitigation": 4
   },
   {
     "heroId": 107,
@@ -845,7 +950,8 @@
     "mobility": 11,
     "saving": 7,
     "initiating": 28,
-    "control_strength": 14
+    "control_strength": 14,
+    "damage_mitigation": 0
   },
   {
     "heroId": 108,
@@ -853,7 +959,8 @@
     "mobility": 8,
     "saving": 3,
     "initiating": 14,
-    "control_strength": 8
+    "control_strength": 8,
+    "damage_mitigation": 0
   },
   {
     "heroId": 109,
@@ -861,7 +968,8 @@
     "mobility": 4,
     "saving": 7,
     "initiating": 13,
-    "control_strength": 6
+    "control_strength": 6,
+    "damage_mitigation": 0
   },
   {
     "heroId": 110,
@@ -869,7 +977,8 @@
     "mobility": 5,
     "saving": 7,
     "initiating": 16,
-    "control_strength": 15
+    "control_strength": 15,
+    "damage_mitigation": 0
   },
   {
     "heroId": 111,
@@ -877,7 +986,8 @@
     "mobility": 0,
     "saving": 31,
     "initiating": 7,
-    "control_strength": 8
+    "control_strength": 8,
+    "damage_mitigation": 0
   },
   {
     "heroId": 112,
@@ -885,7 +995,8 @@
     "mobility": 4,
     "saving": 9,
     "initiating": 16,
-    "control_strength": 13
+    "control_strength": 13,
+    "damage_mitigation": 0
   },
   {
     "heroId": 113,
@@ -893,7 +1004,8 @@
     "mobility": 10,
     "saving": 4,
     "initiating": 13,
-    "control_strength": 10
+    "control_strength": 10,
+    "damage_mitigation": 0
   },
   {
     "heroId": 114,
@@ -901,7 +1013,8 @@
     "mobility": 14,
     "saving": 0,
     "initiating": 23,
-    "control_strength": 10
+    "control_strength": 10,
+    "damage_mitigation": 0
   },
   {
     "heroId": 119,
@@ -909,7 +1022,8 @@
     "mobility": 1,
     "saving": 2,
     "initiating": 20,
-    "control_strength": 19
+    "control_strength": 19,
+    "damage_mitigation": 0
   },
   {
     "heroId": 120,
@@ -917,7 +1031,8 @@
     "mobility": 14,
     "saving": 0,
     "initiating": 22,
-    "control_strength": 15
+    "control_strength": 15,
+    "damage_mitigation": 6
   },
   {
     "heroId": 121,
@@ -925,7 +1040,8 @@
     "mobility": 1,
     "saving": 4,
     "initiating": 23,
-    "control_strength": 17
+    "control_strength": 17,
+    "damage_mitigation": 0
   },
   {
     "heroId": 123,
@@ -933,7 +1049,8 @@
     "mobility": 6,
     "saving": 0,
     "initiating": 24,
-    "control_strength": 12
+    "control_strength": 12,
+    "damage_mitigation": 0
   },
   {
     "heroId": 126,
@@ -941,7 +1058,8 @@
     "mobility": 11,
     "saving": 0,
     "initiating": 22,
-    "control_strength": 12
+    "control_strength": 12,
+    "damage_mitigation": 4
   },
   {
     "heroId": 128,
@@ -949,7 +1067,8 @@
     "mobility": 0,
     "saving": 9,
     "initiating": 21,
-    "control_strength": 11
+    "control_strength": 11,
+    "damage_mitigation": 0
   },
   {
     "heroId": 129,
@@ -957,7 +1076,8 @@
     "mobility": 0,
     "saving": 1,
     "initiating": 20,
-    "control_strength": 16
+    "control_strength": 16,
+    "damage_mitigation": 6
   },
   {
     "heroId": 131,
@@ -965,7 +1085,8 @@
     "mobility": 1,
     "saving": 9,
     "initiating": 17,
-    "control_strength": 16
+    "control_strength": 16,
+    "damage_mitigation": 0
   },
   {
     "heroId": 135,
@@ -973,7 +1094,8 @@
     "mobility": 12,
     "saving": 9,
     "initiating": 16,
-    "control_strength": 11
+    "control_strength": 11,
+    "damage_mitigation": 0
   },
   {
     "heroId": 136,
@@ -981,7 +1103,8 @@
     "mobility": 6,
     "saving": 10,
     "initiating": 18,
-    "control_strength": 5
+    "control_strength": 5,
+    "damage_mitigation": 0
   },
   {
     "heroId": 137,
@@ -989,7 +1112,8 @@
     "mobility": 6,
     "saving": 1,
     "initiating": 27,
-    "control_strength": 14
+    "control_strength": 14,
+    "damage_mitigation": 0
   },
   {
     "heroId": 138,
@@ -997,7 +1121,8 @@
     "mobility": 0,
     "saving": 3,
     "initiating": 16,
-    "control_strength": 12
+    "control_strength": 12,
+    "damage_mitigation": 0
   },
   {
     "heroId": 145,
@@ -1005,7 +1130,8 @@
     "mobility": 9,
     "saving": 0,
     "initiating": 19,
-    "control_strength": 8
+    "control_strength": 8,
+    "damage_mitigation": 0
   },
   {
     "heroId": 155,
@@ -1013,6 +1139,7 @@
     "mobility": 0,
     "saving": 18,
     "initiating": 13,
-    "control_strength": 9
+    "control_strength": 9,
+    "damage_mitigation": 0
   }
 ]

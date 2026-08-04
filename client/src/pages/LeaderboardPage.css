@@ -39,3 +39,25 @@
   color: var(--gold-bright);
   font-weight: 700;
 }
+
+.leaderboard-draft-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.leaderboard-draft-icons {
+  display: flex;
+  gap: 3px;
+}
+
+.leaderboard-draft-icons img {
+  border-radius: 2px;
+  border: 1px solid var(--bronze-dim);
+}
+
+.leaderboard-team-name {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  color: var(--ink-faint);
+}

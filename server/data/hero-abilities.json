@@ -204,7 +204,9 @@
           }
         ],
         "iconUrl": "/ability-icons/antimage_counterspell.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "damage_mitigation": 4
+        }
       },
       {
         "abilityKey": "antimage_persectur",
@@ -2717,7 +2719,9 @@
           }
         ],
         "iconUrl": "/ability-icons/juggernaut_blade_fury.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "damage_mitigation": 2
+        }
       },
       {
         "abilityKey": "juggernaut_healing_ward",
@@ -5245,7 +5249,9 @@
           }
         ],
         "iconUrl": "/ability-icons/pudge_flesh_heap.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "damage_mitigation": 6
+        }
       },
       {
         "abilityKey": "pudge_innate_graft_flesh",
@@ -10607,7 +10613,9 @@
           }
         ],
         "iconUrl": "/ability-icons/tidehunter_kraken_shell.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "damage_mitigation": 6
+        }
       },
       {
         "abilityKey": "tidehunter_anchor_smash",
@@ -17513,7 +17521,8 @@
         ],
         "iconUrl": "/ability-icons/templar_assassin_refraction.png",
         "categoryScores": {
-          "initiating": 1
+          "initiating": 1,
+          "damage_mitigation": 5
         }
       },
       {
@@ -21002,7 +21011,8 @@
         "iconUrl": "/ability-icons/life_stealer_rage.png",
         "categoryScores": {
           "mobility": 2,
-          "initiating": 5
+          "initiating": 5,
+          "damage_mitigation": 3
         }
       },
       {
@@ -22290,7 +22300,8 @@
         ],
         "iconUrl": "/ability-icons/omniknight_martyr.png",
         "categoryScores": {
-          "saving": 8
+          "saving": 8,
+          "damage_mitigation": 2
         }
       },
       {
@@ -27671,7 +27682,8 @@
         ],
         "iconUrl": "/ability-icons/ursa_enrage.png",
         "categoryScores": {
-          "initiating": 5
+          "initiating": 5,
+          "damage_mitigation": 4
         }
       }
     ]
@@ -30822,7 +30834,9 @@
           }
         ],
         "iconUrl": "/ability-icons/silencer_brain_drain.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "damage_mitigation": 2
+        }
       },
       {
         "abilityKey": "silencer_global_silence",
@@ -33935,7 +33949,8 @@
         ],
         "iconUrl": "/ability-icons/treant_living_armor.png",
         "categoryScores": {
-          "saving": 7
+          "saving": 7,
+          "damage_mitigation": 3
         }
       },
       {
@@ -36105,7 +36120,8 @@
         "iconUrl": "/ability-icons/nyx_assassin_spiked_carapace.png",
         "categoryScores": {
           "initiating": 5,
-          "control_strength": 4
+          "control_strength": 4,
+          "damage_mitigation": 4
         }
       },
       {
@@ -39040,7 +39056,9 @@
           }
         ],
         "iconUrl": "/ability-icons/medusa_mana_shield.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "damage_mitigation": 9
+        }
       },
       {
         "abilityKey": "medusa_stone_gaze",
@@ -41166,7 +41184,8 @@
         ],
         "iconUrl": "/ability-icons/bristleback_bristleback.png",
         "categoryScores": {
-          "initiating": 5
+          "initiating": 5,
+          "damage_mitigation": 7
         }
       },
       {
@@ -44076,7 +44095,8 @@
         ],
         "iconUrl": "/ability-icons/ember_spirit_flame_guard.png",
         "categoryScores": {
-          "initiating": 1
+          "initiating": 1,
+          "damage_mitigation": 4
         }
       },
       {
@@ -49019,7 +49039,8 @@
         "iconUrl": "/ability-icons/pangolier_rollup.png",
         "categoryScores": {
           "initiating": 3,
-          "control_strength": 2
+          "control_strength": 2,
+          "damage_mitigation": 3
         }
       },
       {
@@ -49142,7 +49163,8 @@
         "categoryScores": {
           "mobility": 6,
           "initiating": 9,
-          "control_strength": 8
+          "control_strength": 8,
+          "damage_mitigation": 3
         }
       },
       {
@@ -50764,7 +50786,8 @@
         "iconUrl": "/ability-icons/void_spirit_resonant_pulse.png",
         "categoryScores": {
           "initiating": 1,
-          "control_strength": 5
+          "control_strength": 5,
+          "damage_mitigation": 4
         }
       },
       {
@@ -51844,7 +51867,8 @@
         ],
         "iconUrl": "/ability-icons/mars_bulwark.png",
         "categoryScores": {
-          "initiating": 2
+          "initiating": 2,
+          "damage_mitigation": 6
         }
       },
       {
