@@ -1,7 +1,6 @@
 heroId,name,direction,divergence_pp,favoredRate_pct,realWinRate_pct,axisSum_of_11,topAxis,topAxisValue
-88,Nyx Assassin,overperforms,14.7,67.0,52.3,65.3,map control,9.2
-62,Bounty Hunter,overperforms,14.5,68.6,54.0,56.2,map control,10.0
-56,Clinkz,overperforms,11.5,62.2,50.7,73.2,burst damage,9.7
-43,Death Prophet,underperforms,-10.3,37.1,47.4,68.0,damage output,8.8
-34,Tinker,underperforms,-10.3,38.6,48.9,68.9,late-game scaling,9.6
-18,Sven,underperforms,-11.1,39.5,50.6,69.0,objective pressure,8.6
+62,Bounty Hunter,overperforms,14.2,68.2,54.0,56.2,map control,10.0
+88,Nyx Assassin,overperforms,14.0,66.4,52.3,65.3,map control,9.2
+56,Clinkz,overperforms,12.5,63.2,50.7,73.2,burst damage,9.7
+109,Terrorblade,overperforms,10.3,58.6,48.3,64.9,objective pressure,9.8
+18,Sven,underperforms,-10.1,40.5,50.6,69.0,objective pressure,8.6
