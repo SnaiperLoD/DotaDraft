@@ -127,6 +127,11 @@ export const AXIS_NARRATIVE: Record<string, NarrativeSet> = {
     mid: (ctx) => `${lede('Camp stacking', ctx)} Camps get stacked occasionally, without a game plan built around it.`,
     low: (ctx) => `${lede('Camp stacking', ctx)} This team doesn't stack camps for each other — not necessarily a problem (efficient personal farmers score low here too), but the team isn't generating this kind of shared resource.`,
   },
+  resource_efficiency: {
+    high: (ctx) => `${lede('Resource efficiency', ctx)} This team deals real damage without needing a large share of the team's gold to do it — priority farm can go to whichever hero needs it most instead of being locked to whoever hits hardest.`,
+    mid: (ctx) => `${lede('Resource efficiency', ctx)} Damage output is reasonably proportionate to farm priority — no strong efficiency edge either way.`,
+    low: (ctx) => `${lede('Resource efficiency', ctx)} This team's damage is expensive — it depends on a hero (or heroes) getting a large share of the team's resources first, so a slow start or contested farm hits harder here than for a more efficient draft.`,
+  },
 };
 
 export const SYNERGY_NARRATIVE: StaticNarrativeSet = {

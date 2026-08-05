@@ -4,7 +4,7 @@ import { AXES } from '../src/battle/battle-resolution';
 import { roleFitValue } from '../src/common/role-fit';
 import { hardCarryAxisMultipliers } from '../src/common/hard-carry';
 import { ROLES } from 'shared';
-import type { Hero } from 'shared';
+import type { Hero, HeroEvaluationValues } from 'shared';
 
 // Percentile calibration for Evaluation's "where does this draft rank"
 // display (self-play outlier investigation follow-up, Blueprint/
@@ -19,6 +19,14 @@ const OUTPUT_PATH = path.join(__dirname, '..', 'data', 'axis-percentile-distribu
 
 const N_SAMPLES = 10000;
 const TEAM_SIZE = 5;
+
+// resource_efficiency isn't in Battle Engine's AXES (server/src/battle/
+// battle-resolution.ts) — it's Evaluation-Engine-only, not wired into the
+// real power/win-probability calc (see calibrate-evaluation-values.ts's
+// header comment). Sampled here anyway, alongside AXES, purely so it gets
+// a percentile distribution for axis.analyzer.ts's percentileFor() to rank
+// against — this loop is agnostic to what each axis feeds into.
+const AXES_TO_SAMPLE: (keyof HeroEvaluationValues)[] = [...AXES, 'resource_efficiency'];
 
 function shuffle<T>(arr: readonly T[]): T[] {
   const a = [...arr];
@@ -82,14 +90,14 @@ function main() {
   for (const h of heroes) h.presumed_positions = (positionsById.get(h.id) ?? []) as Hero['presumed_positions'];
   const weightsById = new Map(heroes.map((h) => [h.id, roleWeights(positionsById.get(h.id) ?? [])]));
 
-  const scoresByAxis: Record<string, number[]> = Object.fromEntries(AXES.map((a) => [a, []]));
+  const scoresByAxis: Record<string, number[]> = Object.fromEntries(AXES_TO_SAMPLE.map((a) => [a, []]));
 
   for (let i = 0; i < N_SAMPLES; i++) {
     const team = shuffle(heroes).slice(0, TEAM_SIZE);
     const roles = assignWeightedRoles(team, weightsById);
     const multipliers = hardCarryAxisMultipliers(team);
 
-    for (const axis of AXES) {
+    for (const axis of AXES_TO_SAMPLE) {
       const rawAvg = mean(team.map((h, idx) => roleFitValue(axis, roles[idx], h.evaluation_values[axis])));
       const score = Math.round(rawAvg * (multipliers[axis] ?? 1) * 10) / 10;
       scoresByAxis[axis].push(score);
@@ -99,7 +107,7 @@ function main() {
   console.log(`Sampled ${N_SAMPLES} random 5-hero teams (weighted-role assignment).\n`);
   console.log('axis            mean   p10   p25   p50   p75   p90');
   const distributions: Record<string, number[]> = {};
-  for (const axis of AXES) {
+  for (const axis of AXES_TO_SAMPLE) {
     const sorted = [...scoresByAxis[axis]].sort((a, b) => a - b);
     distributions[axis] = sorted;
     console.log(

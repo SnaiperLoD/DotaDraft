@@ -174,6 +174,31 @@ camp_stacking = percentileRankScale(campsStackedPerMin)
 
 Подключены сразу везде, тем же путём, что `initiating`: **Battle Engine** (`AXES`, 11→13 осей), **Evaluation Engine** (`createAxisAnalyzer`, вес по умолчанию 0.05 — намеренно НЕ повышен только потому, что ось валидирована реальными данными, это отдельное решение по тюнингу весов, не бандл с добавлением оси), **role-fit не тронут** — ни одна роль пока не сопоставлена этим осям, нет данных, какая роль должна получать буст. Клиентский UI снова не потребовал правок (полностью динамический рендеринг breakdown).
 
+### `resource_efficiency` — новая ось (2026-08-05, по запросу пользователя), Evaluation Engine-only
+
+```
+resource_efficiency = percentileRankScale(damagePerNetworthShare)
+
+damagePerNetworthShare = AVG_по_матчам(hero_damage / (own_net_worth / team_net_worth))
+```
+
+Идея пользователя: оценивать не сырой урон/мин (`teamfight`), а урон **относительно того, какую долю командного нетворса герой на себя оттянул** — герой, наносящий сопоставимый урон меньшей ценой (в фарме), эффективнее, чем герой, которому для того же урона нужен больший приоритет.
+
+Источник данных — новый Explorer-фетч (`server/scripts/fetch-damage-networth-share-data.ts`, `server/data/damage-networth-share-data.json`): `net_worth` — реальное поле `player_matches` (обнаружено через `/api/schema`), командный нетворс считается self-join'ом `player_matches` на себя по `match_id` + стороне (`player_slot < 128` = Radiant/Dire). Усредняется **по матчу** (`AVG` внутри SQL-запроса), а не как отношение сумм — иначе агрегация была бы смещена. Валидировано на выборке из 8 героев перед полным сбором (Zeus/Pudge — высокий эффективный урон при низком фарм-приоритете; Terrorblade/Juggernaut — сопоставимый сырой урон, но "куплен" большой долей нетворса, эффективность заметно ниже), затем прогнано на все 127 (Batrider не прошёл первый проход из-за HTTP 429 от OpenDota, дозапрошен точечно).
+
+Полная выборка (окно ~150M match_id, MIN_GAMES=15) подтвердила паттерн: топ — Techies, Ember Spirit, Zeus, Hoodwink, Venomancer, Clockwerk, Rubick (нюкеры/дизейблеры с низким фарм-приоритетом); дно — Chen, Io, Dazzle, Oracle, Bounty Hunter, Lycan, Meepo, Anti-Mage, Naga Siren (либо чистые саппорты почти без личного урона, либо фарм-хищники, чей урон приходит только при большом фарм-приоритете).
+
+**Deliberately Evaluation Engine-only** — в отличие от `skirmish_rate`/`camp_stacking`, эта ось НЕ проверена простой корреляцией с реальным `winRate` перед подключением (только точечная проверка на здравый смысл по горстке героев), поэтому:
+- НЕ добавлена в Battle Engine (`AXES` в `battle-resolution.ts`, `axis-weights.json`) — не участвует в расчёте win probability;
+- НЕ добавлена в `hard-carry.ts`'s `NON_SCALING_AXES` / `utility-stacking.ts`'s `UTILITY_AXES` / `role-fit.ts`'s `ROLE_AXES` — не участвует в hard-carry penalty, utility-stacking discount или role-fit boost;
+- НЕ добавлена в `WEIGHTS` (`evaluation.service.ts`) — не двигает Total Score, только своя строка в breakdown (то же обращение, что у `counter`).
+
+Percentile-распределение (для процентильной плашки и narrative-брекета) всё же посчитано — `compute-axis-percentiles.ts` сэмплирует эту ось отдельным списком (`AXES_TO_SAMPLE = [...AXES, 'resource_efficiency']`), не трогая настоящий Battle Engine `AXES`, специально чтобы избежать риска: у `axisWeightForPhase()` в `battle-resolution.ts` дефолт для отсутствующего в `axis-weights.json` ключа — **вес 1** (не 0!), так что просто добавить ось в `AXES` без явного веса 0 в `axis-weights.json` тихо утащило бы неоткалиброванный сигнал в реальный расчёт win probability на полную силу — сознательно этого избежали, оставив ось полностью вне Battle Engine.
+
+Требует TypeScript-типизации `resource_efficiency` во всех местах, где `HeroEvaluationValues` тотален по ключам (`AXIS_LABEL` в `battle-resolution.ts` — просто заглушка-лейбл, `describeAxis()` никогда с этим ключом не вызывается; тестовые фикстуры `hero-factory.ts`/`custom-tags.spec.ts`).
+
+Кандидат на будущее (если сигнал понравится пользователю на практике): прогнать через тот же процесс валидации, что `skirmish_rate`/`camp_stacking` — простая корреляция с реальным `winRate`, и только потом подключать в Battle Engine/role-fit — см. `10-tech-debt-backlog.md`.
+
 ### Известные артефакты данных
 
 Meepo: `control` 9/10 и `durability` 10/10 выглядят завышенными — вероятно, артефакт того, что OpenDota агрегирует `stuns`/`damage_taken` в одну строку игрока, а у Meepo фактически несколько юнитов-клонов на поле одновременно. Не исправлено, честно зафиксировано здесь.
@@ -182,7 +207,7 @@ Necrophos: `saving` 6.3/10 остаётся завышенным несмотр�
 
 Общий паттерн, встретившийся трижды в разных осях за эту сессию: реальная OpenDota-метрика может быть "слепой зоной" для целого класса способностей (`stuns` не видит сайленсы/слоу, `hero_healing_per_min` не видит спасение без прямого лечения) **или** контаминированной сигналом другой природы (`hero_healing_per_min` считает самолечение). Стоит держать в уме при добавлении новых осей на реальных данных — сначала проверять на заведомо "неподходящих" героях (как уже описано для `mobility`/`map_control` выше), не доверять глазами топу рейтинга.
 
-Перезапуск полного цикла: `npm run fetch-hero-meta` → `npx ts-node scripts/research-tempo-metric-v3.ts` → `npx ts-node scripts/research-tempo-mobility-data.ts` → `npx ts-node scripts/fetch-control-durability-vision-data.ts` → (обновить `hero-constants.json` через `/api/constants/heroes`) → `npx ts-node scripts/import-ability-tagging.ts` → `npx ts-node scripts/aggregate-ability-tags.ts` → `npm run calibrate-evaluation-values` → `npm run seed`. Не гонять все Explorer-скрипты подряд без пауз — общий rate-limit OpenDota ловится быстро (см. `11-operational-notes.md`).
+Перезапуск полного цикла: `npm run fetch-hero-meta` → `npx ts-node scripts/research-tempo-metric-v3.ts` → `npx ts-node scripts/research-tempo-mobility-data.ts` → `npx ts-node scripts/fetch-control-durability-vision-data.ts` → `npx ts-node scripts/fetch-deaths-camps-data.ts` → `npx ts-node scripts/fetch-damage-networth-share-data.ts` → (обновить `hero-constants.json` через `/api/constants/heroes`) → `npx ts-node scripts/import-ability-tagging.ts` → `npx ts-node scripts/aggregate-ability-tags.ts` → `npm run calibrate-evaluation-values` → `npm run seed`. Не гонять все Explorer-скрипты подряд без пауз — общий rate-limit OpenDota ловится быстро (см. `11-operational-notes.md`). **`npm run seed` — не опционально**: `calibrate-evaluation-values.ts` пишет только в `heroes.json`, сервер читает герои из SQLite (`Hero` таблица) — без ресида новая/изменённая ось будет `NaN` в рантайме несмотря на корректные данные в файле (наступили на это при добавлении `resource_efficiency`, см. выше).
 
 ## Data File
 

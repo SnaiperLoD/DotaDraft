@@ -15,6 +15,7 @@ export const DEFAULT_EVALUATION_VALUES: HeroEvaluationValues = {
   initiating: 3,
   skirmish_rate: 3,
   camp_stacking: 3,
+  resource_efficiency: 3,
 };
 
 // Shared Hero builder for tests — every field defaults to an inert value

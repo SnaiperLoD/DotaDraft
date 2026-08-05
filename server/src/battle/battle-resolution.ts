@@ -374,6 +374,11 @@ export const AXIS_LABEL: Record<keyof HeroEvaluationValues, string> = {
   initiating: 'initiation potential',
   skirmish_rate: 'skirmish rate',
   camp_stacking: 'camp stacking',
+  // Not in AXES below (Evaluation Engine-only axis, see
+  // calibrate-evaluation-values.ts) — describeAxis() never actually gets
+  // called with this key today. Entry exists only because AXIS_LABEL's
+  // type is total over HeroEvaluationValues.
+  resource_efficiency: 'resource efficiency',
 };
 
 function describeAxis(axis: keyof HeroEvaluationValues, favorsA: boolean): string {

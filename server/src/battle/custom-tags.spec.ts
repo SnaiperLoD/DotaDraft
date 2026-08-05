@@ -86,7 +86,7 @@ describe('blessingEffectsFor', () => {
 
 describe('Two Heads Better', () => {
   function heroWithAxes(id: number, name: string, overrides: Record<string, number>) {
-    return makeHero({ id, name, evaluation_values: { teamfight: 5, tempo: 5, scaling: 5, mobility: 5, objectives: 5, control: 5, durability: 5, burst: 5, map_control: 5, saving: 5, initiating: 5, skirmish_rate: 5, camp_stacking: 5, ...overrides } });
+    return makeHero({ id, name, evaluation_values: { teamfight: 5, tempo: 5, scaling: 5, mobility: 5, objectives: 5, control: 5, durability: 5, burst: 5, map_control: 5, saving: 5, initiating: 5, skirmish_rate: 5, camp_stacking: 5, resource_efficiency: 5, ...overrides } });
   }
 
   it('doubles a solo tagged hero\'s own weakest axis', () => {

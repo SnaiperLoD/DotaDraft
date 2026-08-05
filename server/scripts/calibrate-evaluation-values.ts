@@ -40,6 +40,14 @@ import {
 //                 is a support/utility action done FOR an ally's farm, not a measure of the hero's own farm need.
 //                 A carry who farms efficiently alone (e.g. Phantom Lancer) scores near-zero here despite being
 //                 maximally farm-dependent — this axis does not capture "needs time to scale," nothing currently does.
+//   resource_efficiency <- damage per team-networth-share (server/scripts/fetch-damage-networth-share-data.ts),
+//                 rank-scaled — added 2026-08-05 following user research request. Per-match hero_damage divided by
+//                 (own net_worth / team net_worth), averaged per-match then ranked. Distinct from teamfight
+//                 (hero_damage_per_min): rewards damage that didn't need much of the team's economy to produce
+//                 (Techies, Zeus, Ember Spirit score high) over damage "bought" with a large farm share (Anti-Mage,
+//                 Naga Siren, Lycan score low despite real threat once ahead). Evaluation Engine-only for now — not
+//                 wired into Battle Engine's AXES/axis-weights.json, unlike skirmish_rate/camp_stacking, which were
+//                 validated against real winRate correlation before being wired in; this hasn't had that pass yet.
 //
 // The hand-tagged mobility/saving/control_strength inputs come from
 // server/data/ability-tagging.csv (manual, per-ability, 0-10) via
@@ -67,6 +75,7 @@ const WEIGHTS_PATH = path.join(__dirname, '..', 'data', 'map-control-weights.jso
 const ABILITY_TAG_AGGREGATES_PATH = path.join(__dirname, '..', 'data', 'ability-tag-aggregates.json');
 const ABILITY_TAG_WEIGHTS_PATH = path.join(__dirname, '..', 'data', 'ability-tag-weights.json');
 const DEATHS_CAMPS_PATH = path.join(__dirname, '..', 'data', 'deaths-camps-data.json');
+const DAMAGE_NETWORTH_SHARE_PATH = path.join(__dirname, '..', 'data', 'damage-networth-share-data.json');
 
 interface RawHero {
   id: number;
@@ -140,6 +149,11 @@ interface DeathsCampsEntry {
   campsStackedPerMin: number | null;
 }
 
+interface DamageNetworthShareEntry {
+  heroId: number;
+  damagePerNetworthShare: number | null;
+}
+
 interface AbilityTagWeights {
   extremityExponents: {
     mobility: number;
@@ -172,6 +186,7 @@ function main() {
   const abilityTagByHeroId = byHeroId<AbilityTagAggregate>(ABILITY_TAG_AGGREGATES_PATH);
   const tagWeights: AbilityTagWeights = JSON.parse(fs.readFileSync(ABILITY_TAG_WEIGHTS_PATH, 'utf-8'));
   const deathsCampsByHeroId = byHeroId<DeathsCampsEntry>(DEATHS_CAMPS_PATH);
+  const damageNetworthShareByHeroId = byHeroId<DamageNetworthShareEntry>(DAMAGE_NETWORTH_SHARE_PATH);
 
   const constantsRaw: Record<string, HeroConstant> = JSON.parse(
     fs.readFileSync(HERO_CONSTANTS_PATH, 'utf-8'),
@@ -366,6 +381,11 @@ function main() {
   const campsStackedRaw = heroes.map((h) => deathsCampsByHeroId.get(h.id)?.campsStackedPerMin ?? null);
   const campStackingScores = percentileRankScale(campsStackedRaw);
 
+  const damagePerNetworthShareRaw = heroes.map(
+    (h) => damageNetworthShareByHeroId.get(h.id)?.damagePerNetworthShare ?? null,
+  );
+  const resourceEfficiencyScores = percentileRankScale(damagePerNetworthShareRaw);
+
   // mobility: real move-speed extremity + hand-tagged mobility abilities +
   // item-purchase signal above. The hand-tagged input used to be a single
   // coarse per-hero tier (apply-ability-tags.ts, 0/3/6/10 buckets); it's now
@@ -446,6 +466,7 @@ function main() {
     initiating: 0,
     skirmishRate: 0,
     campStacking: 0,
+    resourceEfficiency: 0,
     fallback: 0,
   };
 
@@ -501,6 +522,7 @@ function main() {
     setOrFallback('initiating', initiatingScores[i], 'initiating');
     setOrFallback('skirmish_rate', skirmishRateScores[i], 'skirmishRate');
     setOrFallback('camp_stacking', campStackingScores[i], 'campStacking');
+    setOrFallback('resource_efficiency', resourceEfficiencyScores[i], 'resourceEfficiency');
   });
 
   fs.writeFileSync(HEROES_PATH, JSON.stringify(heroes, null, 2) + '\n');

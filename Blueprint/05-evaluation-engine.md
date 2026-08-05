@@ -34,9 +34,10 @@ Breakdown:
 - Objectives
 - Skirmish Rate
 - Camp Stacking
+- Resource Efficiency
 - Pro Similarity
 
-Burst/Control/Durability добавлены вместе с Role-fit модификатором (см. ниже) — были откалиброваны в `evaluation_values` с самого начала (`server/scripts/calibrate-evaluation-values.ts`), но не выведены как отдельные строки breakdown до того, как Role-fit понадобилось их бустить для Carry/Mid/Offlane. Initiating добавлена тем же путём позже. Skirmish Rate/Camp Stacking — переименованы из aggression/farm_priority (`10-tech-debt-backlog.md`, self-play outlier investigation) после уточнения, что они реально измеряют (deaths_per_min+инвертированный last_hits_per_min и camps_stacked_per_min соответственно) — см. `09-hero-knowledge-base.md`.
+Burst/Control/Durability добавлены вместе с Role-fit модификатором (см. ниже) — были откалиброваны в `evaluation_values` с самого начала (`server/scripts/calibrate-evaluation-values.ts`), но не выведены как отдельные строки breakdown до того, как Role-fit понадобилось их бустить для Carry/Mid/Offlane. Initiating добавлена тем же путём позже. Skirmish Rate/Camp Stacking — переименованы из aggression/farm_priority (`10-tech-debt-backlog.md`, self-play outlier investigation) после уточнения, что они реально измеряют (deaths_per_min+инвертированный last_hits_per_min и camps_stacked_per_min соответственно) — см. `09-hero-knowledge-base.md`. Resource Efficiency — новая ось (2026-08-05, по запросу пользователя): damage per team-networth-share вместо сырого урона/мин, см. `09-hero-knowledge-base.md` и weights ниже.
 
 ## Initial Weights
 
@@ -54,6 +55,7 @@ Burst/Control/Durability добавлены вместе с Role-fit модиф�
 - Initiating: 5%
 - Skirmish Rate: 5%
 - Camp Stacking: 5%
+- Resource Efficiency: **0% (informational only, same treatment as Counter)** — damage per team-networth-share (`server/scripts/fetch-damage-networth-share-data.ts`): a hero's `hero_damage` divided by their share of the team's `net_worth`, averaged per-match then rank-scaled. Distinct from Teamfight's raw `hero_damage_per_min`: rewards damage that didn't need much of the team's economy to produce (Techies/Zeus/Ember Spirit score high) over damage "bought" with a large farm share (Anti-Mage/Naga Siren/Lycan score low). Added 2026-08-05 following a user research request. Deliberately excluded from Total Score and from Battle Engine's `AXES`/`axis-weights.json` — unlike Skirmish Rate/Camp Stacking, this hasn't been validated against real winRate correlation yet, only sanity-checked on a handful of heroes. Shown as its own breakdown row and counts toward Strengths/Weaknesses ranking (percentile-based, see `compute-axis-percentiles.ts`), same as every other axis — just doesn't move the Total Score number. Revisit once/if it gets that validation pass (`10-tech-debt-backlog.md`).
 - Pro Similarity: 5%
 
 ## Analyzer System

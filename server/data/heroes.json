@@ -33,7 +33,8 @@
       "saving": 3.3,
       "initiating": 1.5,
       "skirmish_rate": 0.8,
-      "camp_stacking": 1.8
+      "camp_stacking": 1.8,
+      "resource_efficiency": 0.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10,
@@ -74,7 +75,8 @@
       "saving": 3.3,
       "initiating": 4.1,
       "skirmish_rate": 5.4,
-      "camp_stacking": 5.9
+      "camp_stacking": 5.9,
+      "resource_efficiency": 6.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -115,7 +117,8 @@
       "saving": 3.5,
       "initiating": 3.8,
       "skirmish_rate": 9,
-      "camp_stacking": 5.2
+      "camp_stacking": 5.2,
+      "resource_efficiency": 5.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -156,7 +159,8 @@
       "saving": 3.3,
       "initiating": 2.4,
       "skirmish_rate": 6.5,
-      "camp_stacking": 5.8
+      "camp_stacking": 5.8,
+      "resource_efficiency": 5
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0,
@@ -196,7 +200,8 @@
       "saving": 3.3,
       "initiating": 2.1,
       "skirmish_rate": 7.5,
-      "camp_stacking": 7.9
+      "camp_stacking": 7.9,
+      "resource_efficiency": 3.9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -235,7 +240,8 @@
       "saving": 3.3,
       "initiating": 1.3,
       "skirmish_rate": 2.6,
-      "camp_stacking": 7.2
+      "camp_stacking": 7.2,
+      "resource_efficiency": 4.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -276,7 +282,8 @@
       "saving": 3.4,
       "initiating": 6.7,
       "skirmish_rate": 6.8,
-      "camp_stacking": 3.5
+      "camp_stacking": 3.5,
+      "resource_efficiency": 6.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -315,7 +322,8 @@
       "saving": 6.3,
       "initiating": 3.2,
       "skirmish_rate": 1.6,
-      "camp_stacking": 3.3
+      "camp_stacking": 3.3,
+      "resource_efficiency": 1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -357,7 +365,8 @@
       "saving": 3.6,
       "initiating": 3.3,
       "skirmish_rate": 3.3,
-      "camp_stacking": 7.3
+      "camp_stacking": 7.3,
+      "resource_efficiency": 6.9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -399,7 +408,8 @@
       "saving": 5.8,
       "initiating": 3,
       "skirmish_rate": 2.6,
-      "camp_stacking": 3.1
+      "camp_stacking": 3.1,
+      "resource_efficiency": 1.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10,
@@ -437,7 +447,8 @@
       "saving": 3.4,
       "initiating": 2.3,
       "skirmish_rate": 3.1,
-      "camp_stacking": 7
+      "camp_stacking": 7,
+      "resource_efficiency": 4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -475,7 +486,8 @@
       "saving": 3.3,
       "initiating": 0.9,
       "skirmish_rate": 1.4,
-      "camp_stacking": 0.2
+      "camp_stacking": 0.2,
+      "resource_efficiency": 2.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -516,7 +528,8 @@
       "saving": 3.3,
       "initiating": 4.6,
       "skirmish_rate": 1.7,
-      "camp_stacking": 2.7
+      "camp_stacking": 2.7,
+      "resource_efficiency": 8.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 6,
@@ -557,7 +570,8 @@
       "saving": 3.7,
       "initiating": 4.5,
       "skirmish_rate": 6.5,
-      "camp_stacking": 0.6
+      "camp_stacking": 0.6,
+      "resource_efficiency": 4.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -598,7 +612,8 @@
       "saving": 3.4,
       "initiating": 2,
       "skirmish_rate": 6.9,
-      "camp_stacking": 5.3
+      "camp_stacking": 5.3,
+      "resource_efficiency": 6.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -640,7 +655,8 @@
       "saving": 3.3,
       "initiating": 5.6,
       "skirmish_rate": 3.9,
-      "camp_stacking": 4.5
+      "camp_stacking": 4.5,
+      "resource_efficiency": 8.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 6,
@@ -682,7 +698,8 @@
       "saving": 3.3,
       "initiating": 3.7,
       "skirmish_rate": 0.8,
-      "camp_stacking": 3.2
+      "camp_stacking": 3.2,
+      "resource_efficiency": 7.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 6,
@@ -724,7 +741,8 @@
       "saving": 3.5,
       "initiating": 3.1,
       "skirmish_rate": 2.1,
-      "camp_stacking": 3.6
+      "camp_stacking": 3.6,
+      "resource_efficiency": 1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -768,7 +786,8 @@
       "saving": 3.3,
       "initiating": 5.1,
       "skirmish_rate": 5.1,
-      "camp_stacking": 3.8
+      "camp_stacking": 3.8,
+      "resource_efficiency": 5.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -810,7 +829,8 @@
       "saving": 3.8,
       "initiating": 4.4,
       "skirmish_rate": 5,
-      "camp_stacking": 8.8
+      "camp_stacking": 8.8,
+      "resource_efficiency": 3.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -852,7 +872,8 @@
       "saving": 3.4,
       "initiating": 4.5,
       "skirmish_rate": 1.5,
-      "camp_stacking": 6.7
+      "camp_stacking": 6.7,
+      "resource_efficiency": 7.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 6,
@@ -891,7 +912,8 @@
       "saving": 3.3,
       "initiating": 4.9,
       "skirmish_rate": 3.8,
-      "camp_stacking": 9
+      "camp_stacking": 9,
+      "resource_efficiency": 9.8
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0,
@@ -934,7 +956,8 @@
       "saving": 3.6,
       "initiating": 6.4,
       "skirmish_rate": 4.8,
-      "camp_stacking": 3.7
+      "camp_stacking": 3.7,
+      "resource_efficiency": 4.9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -974,7 +997,8 @@
       "saving": 3.3,
       "initiating": 2.5,
       "skirmish_rate": 5.4,
-      "camp_stacking": 9.7
+      "camp_stacking": 9.7,
+      "resource_efficiency": 4.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1015,7 +1039,8 @@
       "saving": 3.4,
       "initiating": 4.8,
       "skirmish_rate": 9,
-      "camp_stacking": 9
+      "camp_stacking": 9,
+      "resource_efficiency": 3.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1057,7 +1082,8 @@
       "saving": 3.3,
       "initiating": 3.9,
       "skirmish_rate": 7.4,
-      "camp_stacking": 7.1
+      "camp_stacking": 7.1,
+      "resource_efficiency": 1.6
     },
     "vision_ability_tier": 1,
     "mobility_ability_tier": 0,
@@ -1099,7 +1125,8 @@
       "saving": 3.3,
       "initiating": 5.7,
       "skirmish_rate": 4.5,
-      "camp_stacking": 1.3
+      "camp_stacking": 1.3,
+      "resource_efficiency": 1.5
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0,
@@ -1140,7 +1167,8 @@
       "saving": 3.4,
       "initiating": 5.3,
       "skirmish_rate": 2.5,
-      "camp_stacking": 2.2
+      "camp_stacking": 2.2,
+      "resource_efficiency": 3.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1180,7 +1208,8 @@
       "saving": 6.5,
       "initiating": 3.1,
       "skirmish_rate": 9.7,
-      "camp_stacking": 5
+      "camp_stacking": 5,
+      "resource_efficiency": 8.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1219,7 +1248,8 @@
       "saving": 3.6,
       "initiating": 4.1,
       "skirmish_rate": 8.1,
-      "camp_stacking": 6.1
+      "camp_stacking": 6.1,
+      "resource_efficiency": 8.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1258,7 +1288,8 @@
       "saving": 3.4,
       "initiating": 2.2,
       "skirmish_rate": 7.2,
-      "camp_stacking": 0
+      "camp_stacking": 0,
+      "resource_efficiency": 6.7
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0,
@@ -1298,7 +1329,8 @@
       "saving": 3.3,
       "initiating": 4.6,
       "skirmish_rate": 6,
-      "camp_stacking": 4
+      "camp_stacking": 4,
+      "resource_efficiency": 7.5
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
@@ -1338,7 +1370,8 @@
       "saving": 6.1,
       "initiating": 4.1,
       "skirmish_rate": 3.2,
-      "camp_stacking": 6.4
+      "camp_stacking": 6.4,
+      "resource_efficiency": 7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1376,7 +1409,8 @@
       "saving": 3.4,
       "initiating": 3.8,
       "skirmish_rate": 6.5,
-      "camp_stacking": 7.9
+      "camp_stacking": 7.9,
+      "resource_efficiency": 5.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1417,7 +1451,8 @@
       "saving": 6.3,
       "initiating": 3.1,
       "skirmish_rate": 3.5,
-      "camp_stacking": 7.5
+      "camp_stacking": 7.5,
+      "resource_efficiency": 7.9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1457,7 +1492,8 @@
       "saving": 6.6,
       "initiating": 4.6,
       "skirmish_rate": 5.6,
-      "camp_stacking": 8.3
+      "camp_stacking": 8.3,
+      "resource_efficiency": 5.9
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
@@ -1499,7 +1535,8 @@
       "saving": 3.4,
       "initiating": 5.6,
       "skirmish_rate": 1.5,
-      "camp_stacking": 7.6
+      "camp_stacking": 7.6,
+      "resource_efficiency": 3.3
     },
     "vision_ability_tier": 6,
     "mobility_ability_tier": 0,
@@ -1539,7 +1576,8 @@
       "saving": 3.4,
       "initiating": 4.9,
       "skirmish_rate": 2.9,
-      "camp_stacking": 4.8
+      "camp_stacking": 4.8,
+      "resource_efficiency": 9.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10,
@@ -1581,7 +1619,8 @@
       "saving": 5.8,
       "initiating": 3.5,
       "skirmish_rate": 5.5,
-      "camp_stacking": 7.5
+      "camp_stacking": 7.5,
+      "resource_efficiency": 9.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1623,7 +1662,8 @@
       "saving": 3.4,
       "initiating": 4.9,
       "skirmish_rate": 3.2,
-      "camp_stacking": 1.9
+      "camp_stacking": 1.9,
+      "resource_efficiency": 1.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1664,7 +1704,8 @@
       "saving": 3.5,
       "initiating": 5.2,
       "skirmish_rate": 3.1,
-      "camp_stacking": 1.1
+      "camp_stacking": 1.1,
+      "resource_efficiency": 2.9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1705,7 +1746,8 @@
       "saving": 3.4,
       "initiating": 3.9,
       "skirmish_rate": 3.6,
-      "camp_stacking": 4.3
+      "camp_stacking": 4.3,
+      "resource_efficiency": 5.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1743,7 +1785,8 @@
       "saving": 3.3,
       "initiating": 3.4,
       "skirmish_rate": 5.5,
-      "camp_stacking": 0.4
+      "camp_stacking": 0.4,
+      "resource_efficiency": 0.9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1782,7 +1825,8 @@
       "saving": 6.6,
       "initiating": 2.7,
       "skirmish_rate": 5.9,
-      "camp_stacking": 8.9
+      "camp_stacking": 8.9,
+      "resource_efficiency": 8.9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1821,7 +1865,8 @@
       "saving": 3.3,
       "initiating": 5.4,
       "skirmish_rate": 2.3,
-      "camp_stacking": 6.3
+      "camp_stacking": 6.3,
+      "resource_efficiency": 1.9
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0,
@@ -1862,7 +1907,8 @@
       "saving": 3.4,
       "initiating": 4.4,
       "skirmish_rate": 6.8,
-      "camp_stacking": 5.1
+      "camp_stacking": 5.1,
+      "resource_efficiency": 7.9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1901,7 +1947,8 @@
       "saving": 3.4,
       "initiating": 3.7,
       "skirmish_rate": 1.8,
-      "camp_stacking": 6.5
+      "camp_stacking": 6.5,
+      "resource_efficiency": 3.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1943,7 +1990,8 @@
       "saving": 3.4,
       "initiating": 5.5,
       "skirmish_rate": 4,
-      "camp_stacking": 3.7
+      "camp_stacking": 3.7,
+      "resource_efficiency": 2.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -1983,7 +2031,8 @@
       "saving": 7.8,
       "initiating": 4.6,
       "skirmish_rate": 7.7,
-      "camp_stacking": 6.8
+      "camp_stacking": 6.8,
+      "resource_efficiency": 0.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2024,7 +2073,8 @@
       "saving": 3.7,
       "initiating": 8.1,
       "skirmish_rate": 7.4,
-      "camp_stacking": 4.6
+      "camp_stacking": 4.6,
+      "resource_efficiency": 9.6
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0,
@@ -2066,7 +2116,8 @@
       "saving": 3.4,
       "initiating": 5.3,
       "skirmish_rate": 6.1,
-      "camp_stacking": 6.9
+      "camp_stacking": 6.9,
+      "resource_efficiency": 9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2106,7 +2157,8 @@
       "saving": 3.5,
       "initiating": 5.5,
       "skirmish_rate": 6.3,
-      "camp_stacking": 5.4
+      "camp_stacking": 5.4,
+      "resource_efficiency": 7.2
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 10,
@@ -2147,7 +2199,8 @@
       "saving": 6.1,
       "initiating": 5.2,
       "skirmish_rate": 2.6,
-      "camp_stacking": 4.4
+      "camp_stacking": 4.4,
+      "resource_efficiency": 3.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2187,7 +2240,8 @@
       "saving": 6.1,
       "initiating": 6.9,
       "skirmish_rate": 1.3,
-      "camp_stacking": 6.3
+      "camp_stacking": 6.3,
+      "resource_efficiency": 7.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2227,7 +2281,8 @@
       "saving": 3.3,
       "initiating": 3.6,
       "skirmish_rate": 6.5,
-      "camp_stacking": 3.9
+      "camp_stacking": 3.9,
+      "resource_efficiency": 8.3
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0,
@@ -2266,7 +2321,8 @@
       "saving": 8.5,
       "initiating": 2.3,
       "skirmish_rate": 7.2,
-      "camp_stacking": 1.2
+      "camp_stacking": 1.2,
+      "resource_efficiency": 0.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2306,7 +2362,8 @@
       "saving": 6.3,
       "initiating": 4.9,
       "skirmish_rate": 5.1,
-      "camp_stacking": 7.4
+      "camp_stacking": 7.4,
+      "resource_efficiency": 4.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2345,7 +2402,8 @@
       "saving": 3.4,
       "initiating": 5.6,
       "skirmish_rate": 7.1,
-      "camp_stacking": 4.1
+      "camp_stacking": 4.1,
+      "resource_efficiency": 6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2387,7 +2445,8 @@
       "saving": 3.4,
       "initiating": 6,
       "skirmish_rate": 4.1,
-      "camp_stacking": 0.8
+      "camp_stacking": 0.8,
+      "resource_efficiency": 3.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2427,7 +2486,8 @@
       "saving": 3.3,
       "initiating": 4,
       "skirmish_rate": 5,
-      "camp_stacking": 0.6
+      "camp_stacking": 0.6,
+      "resource_efficiency": 0.7
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
@@ -2466,7 +2526,8 @@
       "saving": 3.5,
       "initiating": 5.8,
       "skirmish_rate": 9.2,
-      "camp_stacking": 0.1
+      "camp_stacking": 0.1,
+      "resource_efficiency": 0.3
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0,
@@ -2504,7 +2565,8 @@
       "saving": 3.5,
       "initiating": 4.4,
       "skirmish_rate": 5.8,
-      "camp_stacking": 0.9
+      "camp_stacking": 0.9,
+      "resource_efficiency": 4.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10,
@@ -2546,7 +2608,8 @@
       "saving": 3.5,
       "initiating": 5.3,
       "skirmish_rate": 7.2,
-      "camp_stacking": 5.5
+      "camp_stacking": 5.5,
+      "resource_efficiency": 5.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2586,7 +2649,8 @@
       "saving": 3.5,
       "initiating": 7.7,
       "skirmish_rate": 7.8,
-      "camp_stacking": 9.8
+      "camp_stacking": 9.8,
+      "resource_efficiency": 7.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2625,7 +2689,8 @@
       "saving": 7,
       "initiating": 3,
       "skirmish_rate": 4.4,
-      "camp_stacking": 9.6
+      "camp_stacking": 9.6,
+      "resource_efficiency": 0
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
@@ -2665,7 +2730,8 @@
       "saving": 3.3,
       "initiating": 5,
       "skirmish_rate": 4.4,
-      "camp_stacking": 4.8
+      "camp_stacking": 4.8,
+      "resource_efficiency": 9.2
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0,
@@ -2705,7 +2771,8 @@
       "saving": 3.4,
       "initiating": 4.3,
       "skirmish_rate": 8.3,
-      "camp_stacking": 9.3
+      "camp_stacking": 9.3,
+      "resource_efficiency": 5.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2747,7 +2814,8 @@
       "saving": 3.4,
       "initiating": 6,
       "skirmish_rate": 3.9,
-      "camp_stacking": 6.2
+      "camp_stacking": 6.2,
+      "resource_efficiency": 3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2787,7 +2855,8 @@
       "saving": 3.3,
       "initiating": 5.3,
       "skirmish_rate": 4.9,
-      "camp_stacking": 1.3
+      "camp_stacking": 1.3,
+      "resource_efficiency": 2.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2829,7 +2898,8 @@
       "saving": 3.5,
       "initiating": 7.3,
       "skirmish_rate": 6.9,
-      "camp_stacking": 2.5
+      "camp_stacking": 2.5,
+      "resource_efficiency": 4.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10,
@@ -2869,7 +2939,8 @@
       "saving": 3.3,
       "initiating": 4.3,
       "skirmish_rate": 7.5,
-      "camp_stacking": 8.3
+      "camp_stacking": 8.3,
+      "resource_efficiency": 6.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2912,7 +2983,8 @@
       "saving": 3.5,
       "initiating": 4.4,
       "skirmish_rate": 3.4,
-      "camp_stacking": 10
+      "camp_stacking": 10,
+      "resource_efficiency": 1.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -2955,7 +3027,8 @@
       "saving": 3.5,
       "initiating": 8.3,
       "skirmish_rate": 6.9,
-      "camp_stacking": 4.4
+      "camp_stacking": 4.4,
+      "resource_efficiency": 8.3
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
@@ -2997,7 +3070,8 @@
       "saving": 3.6,
       "initiating": 4.1,
       "skirmish_rate": 6.7,
-      "camp_stacking": 8
+      "camp_stacking": 8,
+      "resource_efficiency": 4.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3037,7 +3111,8 @@
       "saving": 3.6,
       "initiating": 4.4,
       "skirmish_rate": 7.6,
-      "camp_stacking": 1.4
+      "camp_stacking": 1.4,
+      "resource_efficiency": 5.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3077,7 +3152,8 @@
       "saving": 3.5,
       "initiating": 5,
       "skirmish_rate": 1,
-      "camp_stacking": 1.6
+      "camp_stacking": 1.6,
+      "resource_efficiency": 0.4
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
@@ -3119,7 +3195,8 @@
       "saving": 3.4,
       "initiating": 5.9,
       "skirmish_rate": 2.8,
-      "camp_stacking": 1.7
+      "camp_stacking": 1.7,
+      "resource_efficiency": 2.9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3160,7 +3237,8 @@
       "saving": 6.7,
       "initiating": 5.9,
       "skirmish_rate": 7.3,
-      "camp_stacking": 9.8
+      "camp_stacking": 9.8,
+      "resource_efficiency": 6.7
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0,
@@ -3199,7 +3277,8 @@
       "saving": 3.4,
       "initiating": 5.3,
       "skirmish_rate": 0.9,
-      "camp_stacking": 8.7
+      "camp_stacking": 8.7,
+      "resource_efficiency": 2.4
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
@@ -3240,7 +3319,8 @@
       "saving": 3.3,
       "initiating": 4.5,
       "skirmish_rate": 4.9,
-      "camp_stacking": 0.2
+      "camp_stacking": 0.2,
+      "resource_efficiency": 2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3283,7 +3363,8 @@
       "saving": 3.4,
       "initiating": 6.5,
       "skirmish_rate": 4.2,
-      "camp_stacking": 9.1
+      "camp_stacking": 9.1,
+      "resource_efficiency": 0.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3325,7 +3406,8 @@
       "saving": 6.5,
       "initiating": 7.3,
       "skirmish_rate": 7.3,
-      "camp_stacking": 2.3
+      "camp_stacking": 2.3,
+      "resource_efficiency": 1.1
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0,
@@ -3366,7 +3448,8 @@
       "saving": 3.6,
       "initiating": 4.4,
       "skirmish_rate": 5.8,
-      "camp_stacking": 2.6
+      "camp_stacking": 2.6,
+      "resource_efficiency": 1.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3406,7 +3489,8 @@
       "saving": 6.5,
       "initiating": 4.4,
       "skirmish_rate": 5.3,
-      "camp_stacking": 2.9
+      "camp_stacking": 2.9,
+      "resource_efficiency": 2.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3446,7 +3530,8 @@
       "saving": 6,
       "initiating": 6.4,
       "skirmish_rate": 5.2,
-      "camp_stacking": 8.6
+      "camp_stacking": 8.6,
+      "resource_efficiency": 9.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3487,7 +3572,8 @@
       "saving": 3.4,
       "initiating": 6.2,
       "skirmish_rate": 9.3,
-      "camp_stacking": 8.1
+      "camp_stacking": 8.1,
+      "resource_efficiency": 3.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3528,7 +3614,8 @@
       "saving": 3.4,
       "initiating": 6.4,
       "skirmish_rate": 7.4,
-      "camp_stacking": 2.9
+      "camp_stacking": 2.9,
+      "resource_efficiency": 9.3
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0,
@@ -3571,7 +3658,8 @@
       "saving": 3.6,
       "initiating": 5.1,
       "skirmish_rate": 0.4,
-      "camp_stacking": 6.6
+      "camp_stacking": 6.6,
+      "resource_efficiency": 0.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3611,7 +3699,8 @@
       "saving": 7,
       "initiating": 4.5,
       "skirmish_rate": 0.5,
-      "camp_stacking": 9.9
+      "camp_stacking": 9.9,
+      "resource_efficiency": 4.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3649,7 +3738,8 @@
       "saving": 7.3,
       "initiating": 4.2,
       "skirmish_rate": 8.4,
-      "camp_stacking": 9.5
+      "camp_stacking": 9.5,
+      "resource_efficiency": 0.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3690,7 +3780,8 @@
       "saving": 5.7,
       "initiating": 5.4,
       "skirmish_rate": 6.3,
-      "camp_stacking": 0.5
+      "camp_stacking": 0.5,
+      "resource_efficiency": 4
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
@@ -3731,7 +3822,8 @@
       "saving": 3.6,
       "initiating": 6.5,
       "skirmish_rate": 5,
-      "camp_stacking": 0.7
+      "camp_stacking": 0.7,
+      "resource_efficiency": 2.5
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0,
@@ -3770,7 +3862,8 @@
       "saving": 3.5,
       "initiating": 4.6,
       "skirmish_rate": 0.7,
-      "camp_stacking": 9.2
+      "camp_stacking": 9.2,
+      "resource_efficiency": 2.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3810,7 +3903,8 @@
       "saving": 3.3,
       "initiating": 2.3,
       "skirmish_rate": 5.9,
-      "camp_stacking": 3
+      "camp_stacking": 3,
+      "resource_efficiency": 1.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3852,7 +3946,8 @@
       "saving": 4,
       "initiating": 7.2,
       "skirmish_rate": 2.1,
-      "camp_stacking": 1.7
+      "camp_stacking": 1.7,
+      "resource_efficiency": 2.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3893,7 +3988,8 @@
       "saving": 3.3,
       "initiating": 9,
       "skirmish_rate": 7,
-      "camp_stacking": 4.9
+      "camp_stacking": 4.9,
+      "resource_efficiency": 2.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3933,7 +4029,8 @@
       "saving": 3.3,
       "initiating": 5.3,
       "skirmish_rate": 4.4,
-      "camp_stacking": 3.3
+      "camp_stacking": 3.3,
+      "resource_efficiency": 5.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -3973,7 +4070,8 @@
       "saving": 3.3,
       "initiating": 5,
       "skirmish_rate": 6.3,
-      "camp_stacking": 5.6
+      "camp_stacking": 5.6,
+      "resource_efficiency": 6.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4013,7 +4111,8 @@
       "saving": 4,
       "initiating": 9.9,
       "skirmish_rate": 8.3,
-      "camp_stacking": 2.5
+      "camp_stacking": 2.5,
+      "resource_efficiency": 5.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4053,7 +4152,8 @@
       "saving": 3.4,
       "initiating": 3.4,
       "skirmish_rate": 7.4,
-      "camp_stacking": 7.8
+      "camp_stacking": 7.8,
+      "resource_efficiency": 8.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4092,7 +4192,8 @@
       "saving": 7,
       "initiating": 5,
       "skirmish_rate": 6.7,
-      "camp_stacking": 2.8
+      "camp_stacking": 2.8,
+      "resource_efficiency": 4.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4133,7 +4234,8 @@
       "saving": 3.3,
       "initiating": 5.3,
       "skirmish_rate": 9.4,
-      "camp_stacking": 7.7
+      "camp_stacking": 7.7,
+      "resource_efficiency": 8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4175,7 +4277,8 @@
       "saving": 6.2,
       "initiating": 5.7,
       "skirmish_rate": 6.5,
-      "camp_stacking": 1
+      "camp_stacking": 1,
+      "resource_efficiency": 7.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4214,7 +4317,8 @@
       "saving": 3.5,
       "initiating": 5.2,
       "skirmish_rate": 5.4,
-      "camp_stacking": 8.4
+      "camp_stacking": 8.4,
+      "resource_efficiency": 10
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4256,7 +4360,8 @@
       "saving": 3.3,
       "initiating": 5.7,
       "skirmish_rate": 1.9,
-      "camp_stacking": 2
+      "camp_stacking": 2,
+      "resource_efficiency": 9.9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10,
@@ -4298,7 +4403,8 @@
       "saving": 5.9,
       "initiating": 9,
       "skirmish_rate": 2.8,
-      "camp_stacking": 2.4
+      "camp_stacking": 2.4,
+      "resource_efficiency": 9.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 6,
@@ -4340,7 +4446,8 @@
       "saving": 3.5,
       "initiating": 4.6,
       "skirmish_rate": 2.2,
-      "camp_stacking": 5.6
+      "camp_stacking": 5.6,
+      "resource_efficiency": 6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4379,7 +4486,8 @@
       "saving": 3.6,
       "initiating": 4.7,
       "skirmish_rate": 1.1,
-      "camp_stacking": 4.2
+      "camp_stacking": 4.2,
+      "resource_efficiency": 1.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4421,7 +4529,8 @@
       "saving": 6.1,
       "initiating": 5.1,
       "skirmish_rate": 4.3,
-      "camp_stacking": 9.4
+      "camp_stacking": 9.4,
+      "resource_efficiency": 9.4
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4462,7 +4571,8 @@
       "saving": 10,
       "initiating": 4,
       "skirmish_rate": 8.5,
-      "camp_stacking": 7.1
+      "camp_stacking": 7.1,
+      "resource_efficiency": 0.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4502,7 +4612,8 @@
       "saving": 6.5,
       "initiating": 5.9,
       "skirmish_rate": 6.7,
-      "camp_stacking": 5.7
+      "camp_stacking": 5.7,
+      "resource_efficiency": 9
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4541,7 +4652,8 @@
       "saving": 3.5,
       "initiating": 4.9,
       "skirmish_rate": 6.2,
-      "camp_stacking": 4
+      "camp_stacking": 4,
+      "resource_efficiency": 2.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4581,7 +4693,8 @@
       "saving": 3.3,
       "initiating": 6.8,
       "skirmish_rate": 6.5,
-      "camp_stacking": 2.1
+      "camp_stacking": 2.1,
+      "resource_efficiency": 6.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4622,7 +4735,8 @@
       "saving": 3.4,
       "initiating": 6.8,
       "skirmish_rate": 8.4,
-      "camp_stacking": 6
+      "camp_stacking": 6,
+      "resource_efficiency": 8.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4665,7 +4779,8 @@
       "saving": 3.3,
       "initiating": 7.6,
       "skirmish_rate": 0.9,
-      "camp_stacking": 2.1
+      "camp_stacking": 2.1,
+      "resource_efficiency": 5.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4705,7 +4820,8 @@
       "saving": 5.8,
       "initiating": 7.8,
       "skirmish_rate": 7.4,
-      "camp_stacking": 9.4
+      "camp_stacking": 9.4,
+      "resource_efficiency": 6.5
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4746,7 +4862,8 @@
       "saving": 3.3,
       "initiating": 7.7,
       "skirmish_rate": 4.7,
-      "camp_stacking": 8.5
+      "camp_stacking": 8.5,
+      "resource_efficiency": 9.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4787,7 +4904,8 @@
       "saving": 3.3,
       "initiating": 6.6,
       "skirmish_rate": 4.8,
-      "camp_stacking": 0.3
+      "camp_stacking": 0.3,
+      "resource_efficiency": 7.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 6,
@@ -4828,7 +4946,8 @@
       "saving": 6.1,
       "initiating": 7.2,
       "skirmish_rate": 3.5,
-      "camp_stacking": 6
+      "camp_stacking": 6,
+      "resource_efficiency": 8.1
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4870,7 +4989,8 @@
       "saving": 3.4,
       "initiating": 7.1,
       "skirmish_rate": 5.6,
-      "camp_stacking": 1.5
+      "camp_stacking": 1.5,
+      "resource_efficiency": 3.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4911,7 +5031,8 @@
       "saving": 3.7,
       "initiating": 6,
       "skirmish_rate": 7.3,
-      "camp_stacking": 8.7
+      "camp_stacking": 8.7,
+      "resource_efficiency": 8.6
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
@@ -4950,7 +5071,8 @@
       "saving": 6.4,
       "initiating": 5.4,
       "skirmish_rate": 2.6,
-      "camp_stacking": 5.2
+      "camp_stacking": 5.2,
+      "resource_efficiency": 4.7
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -4992,7 +5114,8 @@
       "saving": 6.2,
       "initiating": 5.9,
       "skirmish_rate": 5.1,
-      "camp_stacking": 1
+      "camp_stacking": 1,
+      "resource_efficiency": 3.2
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -5032,7 +5155,8 @@
       "saving": 3.4,
       "initiating": 9.2,
       "skirmish_rate": 4.6,
-      "camp_stacking": 3.4
+      "camp_stacking": 3.4,
+      "resource_efficiency": 7.3
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -5071,7 +5195,8 @@
       "saving": 3.5,
       "initiating": 5.5,
       "skirmish_rate": 3.3,
-      "camp_stacking": 8.2
+      "camp_stacking": 8.2,
+      "resource_efficiency": 7.7
     },
     "vision_ability_tier": 2,
     "mobility_ability_tier": 0,
@@ -5110,7 +5235,8 @@
       "saving": 3.3,
       "initiating": 6.4,
       "skirmish_rate": 3.9,
-      "camp_stacking": 4.7
+      "camp_stacking": 4.7,
+      "resource_efficiency": 6.6
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
@@ -5150,7 +5276,8 @@
       "saving": 7.6,
       "initiating": 4.6,
       "skirmish_rate": 5.3,
-      "camp_stacking": 6.7
+      "camp_stacking": 6.7,
+      "resource_efficiency": 1.8
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,

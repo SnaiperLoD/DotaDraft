@@ -27,6 +27,7 @@ const SUMMARY_KEYS = [
   'initiating',
   'skirmish_rate',
   'camp_stacking',
+  'resource_efficiency',
   'proSimilarity',
 ];
 
@@ -81,6 +82,14 @@ const BASE_ANALYZERS: Analyzer[] = [
   // underlying data or Battle Engine.
   createAxisAnalyzer('saving', 'Saving'),
   createAxisAnalyzer('objectives', 'Objectives'),
+  // Damage per team-networth-share (Blueprint/10-tech-debt-backlog.md,
+  // user research request 2026-08-05) — distinct from Damage Output
+  // (teamfight, raw hero_damage_per_min): rewards damage that didn't need
+  // much of the team's economy to produce. Evaluation Engine-only — not in
+  // Battle Engine's AXES/axis-weights.json, so it doesn't affect Total
+  // Score's role-fit/hard-carry/utility-stacking modifiers or the Battle
+  // Engine's win-probability calc at all, only this breakdown row.
+  createAxisAnalyzer('resource_efficiency', 'Resource Efficiency'),
 ];
 
 // Initial Weights from Blueprint/05-evaluation-engine.md, plus `initiating`
@@ -123,6 +132,12 @@ const WEIGHTS: Record<string, number> = {
   skirmish_rate: 0.05,
   camp_stacking: 0.05,
   proSimilarity: 0.05,
+  // resource_efficiency deliberately absent, same treatment as `counter`
+  // above — shown as an informational breakdown/strengths-weaknesses item
+  // only, doesn't move Total Score. Unlike skirmish_rate/camp_stacking,
+  // this axis hasn't been validated against real winRate yet (see
+  // BASE_ANALYZERS comment) — that's a prerequisite this project applies
+  // before an axis gets scoring weight, not just before it's calibrated.
 };
 
 // Mirrors EvaluationPanel.tsx's percentileLabel() exactly (same 30/70
