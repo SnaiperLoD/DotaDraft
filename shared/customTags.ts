@@ -212,6 +212,50 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
     description: "Mirana and Muerta, reunited. Both on the team: +3% personal map control each.",
     heroNames: ['Mirana', 'Muerta'],
   },
+  // Self-play outlier investigation, round 2 (Blueprint/10-tech-debt-backlog.md,
+  // "Self-play без real-winRate заглушки") — Unseen/Army of Clones/Mass
+  // Buffer/Prone To Burst target the specific heroes whose in-system
+  // favoredRate diverged >=10pp from real OpenDota winRate with the
+  // real-winRate blend disabled, grouped by the unmodeled mechanic behind
+  // each divergence (invisibility, illusions, team-wide amplification,
+  // burst-fragility). Statstealer (above) extended separately for Undying —
+  // same tag, not a new one.
+  {
+    name: 'Unseen',
+    rarity: 'rare',
+    visible: true,
+    revealable: false,
+    description:
+      'Personal invisibility — a real strength no axis measures. +6% personal power, +8% personal map control, active even solo. 2+ on the team: -durability/-teamfight each, scaling with stack count (too many pick-off specialists, not enough frontline).',
+    heroNames: ['Riki', 'Weaver', 'Clinkz', 'Bounty Hunter', 'Nyx Assassin'],
+  },
+  {
+    name: 'Army of Clones',
+    rarity: 'rare',
+    visible: true,
+    revealable: false,
+    description:
+      'Illusions/clones — extra bodies for damage, split-push, and vision no axis measures. +6% personal power, +8% personal map control, active even solo. 2+ on the team: -durability/-teamfight each, scaling with stack count (the real body is easier to pick apart the more the team leans on illusions).',
+    heroNames: ['Phantom Lancer', 'Terrorblade', 'Naga Siren'],
+  },
+  {
+    name: 'Mass Buffer',
+    rarity: 'uncommon',
+    visible: true,
+    revealable: false,
+    description:
+      "Team-wide damage amplification (auras/debuffs) that Battle Engine's real-data-only synergy signal mostly misses. +3% team teamfight/burst, active even solo; +1% more per additional Mass Buffer hero on the team.",
+    heroNames: ['Vengeful Spirit', 'Mirana', 'Luna', 'Drow Ranger'],
+  },
+  {
+    name: 'Prone To Burst',
+    rarity: 'uncommon',
+    visible: true,
+    revealable: false,
+    description:
+      "Vulnerable to burst damage despite looking sturdy on paper. -8% personal power when the opposing team's raw Burst average is high.",
+    heroNames: ['Huskar', 'Phoenix', 'Enchantress', 'Necrophos', 'Monkey King'],
+  },
 ];
 
 export function heroNameSetForTag(tagName: string): Set<string> {

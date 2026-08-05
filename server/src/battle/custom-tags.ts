@@ -151,6 +151,54 @@ const OLD_RIVALS_ENEMY_POWER_PENALTY = 0.95;
 const REUNION = heroNameSetForTag('Reunion');
 const REUNION_MAP_CONTROL_BUFF = 1.03;
 
+// Statstealer solo bonus (2026-08-05, self-play round 2) — the existing
+// 2+ gate above structurally starves a lone Statstealer (most commonly
+// Undying, who has no other Statstealer regularly drafted alongside him) of
+// any bonus at all in a typical draft. Smaller than the 2+ payoff so
+// stacking is still meaningfully rewarded, not flattened.
+const STATSTEALER_SOLO_BUFF = 1.02;
+
+// Unseen — permanent-invisibility heroes (Riki/Weaver/Clinkz/Bounty Hunter/
+// Nyx Assassin). Solo-active personal power + map_control buff (invisibility
+// is a real strength no axis measures); 2+ on the team trades frontline
+// presence for a stack of pick-off specialists, scaling penalty by count —
+// same keyed-by-count shape as hardCarryStackPenalty/utilityStackPenalty.
+const UNSEEN = heroNameSetForTag('Unseen');
+const UNSEEN_POWER_BUFF = 1.06;
+const UNSEEN_MAP_CONTROL_BUFF = 1.08;
+const STEALTH_STACK_PENALTY: Record<string, number> = { '2': 0.95, '3': 0.9, '4': 0.85, '5': 0.8 };
+
+// Army of Clones — illusion/clone heroes (Phantom Lancer/Terrorblade/Naga
+// Siren). Same shape as Unseen (personal power + map_control solo-active,
+// stacking durability/teamfight penalty at 2+) — illusions are extra bodies
+// for damage/vision no axis measures, but the real body gets easier to pick
+// off the more the team leans on clones instead of a genuine frontline.
+const ARMY_OF_CLONES = heroNameSetForTag('Army of Clones');
+const ARMY_OF_CLONES_POWER_BUFF = 1.06;
+const ARMY_OF_CLONES_MAP_CONTROL_BUFF = 1.08;
+
+// Mass Buffer — team-wide amplification heroes (Vengeful Spirit/Mirana/Luna/
+// Drow Ranger) whose real value (auras/debuffs that amplify allies) mostly
+// falls outside Battle Engine's real-data-only synergy signal (no archetype-
+// tag fallback the way Evaluation Engine's Synergy Analyzer has). Team-wide
+// teamfight/burst buff, solo-active, +1% per additional carrier — applied
+// ONCE at the combined magnitude, not multiplied per carrier, so it scales
+// with count rather than compounding.
+const MASS_BUFFER = heroNameSetForTag('Mass Buffer');
+const MASS_BUFFER_BASE_BUFF = 0.03;
+const MASS_BUFFER_PER_EXTRA = 0.01;
+
+// Prone To Burst — heroes that look sturdy on paper (self-sustain/big HP
+// pool) but are actually fragile once a burst-heavy opponent gets a clean
+// window (Huskar/Phoenix/Enchantress/Necrophos/Monkey King). Personal power
+// debuff conditioned on the OPPONENT's raw burst average, not the caster's
+// own team — a new effect shape (see curseEffectsOnOpponent-adjacent
+// reasoning), implemented in blessingEffectsFor since it's still "this
+// hero's own vulnerability," just read against external context.
+const PRONE_TO_BURST = heroNameSetForTag('Prone To Burst');
+const PRONE_TO_BURST_OPPONENT_BURST_THRESHOLD = 6.5; // population mean ~5.16, sd ~1.34 (Q1, simulate-self-play.ts)
+const PRONE_TO_BURST_PENALTY = 0.92;
+
 // "Core" for Agility Crusher's -5% (non-agility cores) clause — a hero
 // whose most-played presumed position isn't Support. No data at all
 // defaults to true (conservative: the curse still applies) rather than
@@ -175,9 +223,16 @@ function weakestOwnAxis(hero: Hero): Axis {
 // with no tagEffects) — passed in by the caller so The Fundamentals can
 // rank "weakest axis" without creating a feedback loop against its own
 // output.
+// opponentRawAxisAverages: the OTHER team's own un-tagged axis averages —
+// optional (defaults to {}, so existing call sites/tests without opponent
+// context just never trigger opponent-conditional tags like Prone To Burst)
+// since assessBattle() already computes both sides' rawAxisAverages before
+// either blessingEffectsFor() call (battle-resolution.ts), so this is just
+// threading an already-available value through, not new architecture.
 export function blessingEffectsFor(
   team: Hero[],
   rawAxisAverages: Partial<Record<Axis, number>>,
+  opponentRawAxisAverages: Partial<Record<Axis, number>> = {},
 ): CustomTagEffects {
   const effects = emptyTagEffects();
   const names = new Set(team.map((h) => h.name));
@@ -189,10 +244,73 @@ export function blessingEffectsFor(
     }
   }
 
-  // Statstealer: 2+ tagged heroes on the team -> each of them +5%.
+  // Statstealer: 2+ tagged heroes on the team -> each of them +5%. A lone
+  // Statstealer still gets a smaller +2% (2026-08-05, self-play round 2) —
+  // the 2+ gate alone structurally starved solo carriers (Undying most
+  // commonly) of any bonus at all, since a second Statstealer is rarely
+  // drafted alongside them.
   const statstealers = team.filter((h) => STATSTEALER.has(h.name));
-  if (!isTagDisabled('Statstealer') && statstealers.length >= STATSTEALER_MIN_COUNT) {
-    for (const h of statstealers) mulHeroPower(effects, h.id, 1.05);
+  if (!isTagDisabled('Statstealer') && statstealers.length >= 1) {
+    const buff = statstealers.length >= STATSTEALER_MIN_COUNT ? 1.05 : STATSTEALER_SOLO_BUFF;
+    for (const h of statstealers) mulHeroPower(effects, h.id, buff);
+  }
+
+  // Unseen: solo-active personal power + map_control buff for every
+  // permanent-invisibility carrier. 2+ on the team: each takes a
+  // durability/teamfight penalty, keyed by stack count (too many pick-off
+  // specialists trade away frontline presence and sustained fight power).
+  const unseenHeroes = isTagDisabled('Unseen') ? [] : team.filter((h) => UNSEEN.has(h.name));
+  for (const h of unseenHeroes) {
+    mulHeroPower(effects, h.id, UNSEEN_POWER_BUFF);
+    mulHeroAxis(effects, h.id, 'map_control', UNSEEN_MAP_CONTROL_BUFF);
+  }
+  if (unseenHeroes.length >= 2) {
+    const penalty = STEALTH_STACK_PENALTY[String(unseenHeroes.length)] ?? STEALTH_STACK_PENALTY['5'];
+    for (const h of unseenHeroes) {
+      mulHeroAxis(effects, h.id, 'durability', penalty);
+      mulHeroAxis(effects, h.id, 'teamfight', penalty);
+    }
+  }
+
+  // Army of Clones: same shape as Unseen, separate roster (illusion/clone
+  // heroes) — see the tag comment above for the reasoning.
+  const cloneHeroes = isTagDisabled('Army of Clones') ? [] : team.filter((h) => ARMY_OF_CLONES.has(h.name));
+  for (const h of cloneHeroes) {
+    mulHeroPower(effects, h.id, ARMY_OF_CLONES_POWER_BUFF);
+    mulHeroAxis(effects, h.id, 'map_control', ARMY_OF_CLONES_MAP_CONTROL_BUFF);
+  }
+  if (cloneHeroes.length >= 2) {
+    const penalty = STEALTH_STACK_PENALTY[String(cloneHeroes.length)] ?? STEALTH_STACK_PENALTY['5'];
+    for (const h of cloneHeroes) {
+      mulHeroAxis(effects, h.id, 'durability', penalty);
+      mulHeroAxis(effects, h.id, 'teamfight', penalty);
+    }
+  }
+
+  // Mass Buffer: team-wide teamfight/burst buff, solo-active, magnitude
+  // grows +1% per additional carrier — applied once at the combined
+  // magnitude (not once per carrier) so it scales with count rather than
+  // compounding multiplicatively.
+  const massBufferCount = isTagDisabled('Mass Buffer')
+    ? 0
+    : team.filter((h) => MASS_BUFFER.has(h.name)).length;
+  if (massBufferCount >= 1) {
+    const magnitude = 1 + MASS_BUFFER_BASE_BUFF + MASS_BUFFER_PER_EXTRA * (massBufferCount - 1);
+    mulAxis(effects, 'teamfight', magnitude);
+    mulAxis(effects, 'burst', magnitude);
+  }
+
+  // Prone To Burst: personal power debuff, active only when the OPPONENT's
+  // raw burst average clears the threshold — see the tag comment above for
+  // why this reads external (opponent) context instead of the caster's own
+  // team, unlike every other tag in this function.
+  if (!isTagDisabled('Prone To Burst')) {
+    const opponentBurst = opponentRawAxisAverages.burst ?? 0;
+    if (opponentBurst > PRONE_TO_BURST_OPPONENT_BURST_THRESHOLD) {
+      for (const h of team) {
+        if (PRONE_TO_BURST.has(h.name)) mulHeroPower(effects, h.id, PRONE_TO_BURST_PENALTY);
+      }
+    }
   }
 
   // The Fundamentals: tiered by count, boosts that many of the team's own

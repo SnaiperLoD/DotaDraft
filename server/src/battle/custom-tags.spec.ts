@@ -24,10 +24,10 @@ describe('blessingEffectsFor', () => {
   });
 
   describe('Statstealer', () => {
-    it('does nothing with only 1 tagged hero', () => {
-      const silencer = makeHero({ id: 1, name: 'Silencer' });
-      const effects = blessingEffectsFor([silencer], {});
-      expect(effects.heroPowerMultiplier.size).toBe(0);
+    it('buffs a solo tagged hero by 2%', () => {
+      const undying = makeHero({ id: 1, name: 'Undying' });
+      const effects = blessingEffectsFor([undying], {});
+      expect(effects.heroPowerMultiplier.get(undying.id)).toBeCloseTo(1.02);
     });
 
     it('buffs every tagged hero once 2+ are on the team', () => {
@@ -275,6 +275,126 @@ describe('Reunion', () => {
     const effects = blessingEffectsFor([mirana, muerta], {});
     expect(effects.heroAxisMultiplier.get(mirana.id)?.map_control).toBeCloseTo(1.03);
     expect(effects.heroAxisMultiplier.get(muerta.id)?.map_control).toBeCloseTo(1.03);
+  });
+});
+
+describe('Unseen', () => {
+  it('buffs a solo carrier\'s personal power and map control, no team-count gate', () => {
+    const riki = makeHero({ id: 1, name: 'Riki' });
+    const effects = blessingEffectsFor([riki], {});
+    expect(effects.heroPowerMultiplier.get(riki.id)).toBeCloseTo(1.06);
+    expect(effects.heroAxisMultiplier.get(riki.id)?.map_control).toBeCloseTo(1.08);
+    expect(effects.heroAxisMultiplier.get(riki.id)?.durability).toBeUndefined();
+  });
+
+  it('does nothing for an untagged hero', () => {
+    const sniper = makeHero({ id: 1, name: 'Sniper' });
+    const effects = blessingEffectsFor([sniper], {});
+    expect(effects.heroPowerMultiplier.has(sniper.id)).toBe(false);
+  });
+
+  it('applies a durability/teamfight penalty once 2+ are on the team', () => {
+    const riki = makeHero({ id: 1, name: 'Riki' });
+    const weaver = makeHero({ id: 2, name: 'Weaver' });
+    const effects = blessingEffectsFor([riki, weaver], {});
+    for (const h of [riki, weaver]) {
+      expect(effects.heroPowerMultiplier.get(h.id)).toBeCloseTo(1.06);
+      expect(effects.heroAxisMultiplier.get(h.id)?.durability).toBeCloseTo(0.95);
+      expect(effects.heroAxisMultiplier.get(h.id)?.teamfight).toBeCloseTo(0.95);
+    }
+  });
+
+  it('scales the penalty up with a bigger stack', () => {
+    const riki = makeHero({ id: 1, name: 'Riki' });
+    const weaver = makeHero({ id: 2, name: 'Weaver' });
+    const clinkz = makeHero({ id: 3, name: 'Clinkz' });
+    const effects = blessingEffectsFor([riki, weaver, clinkz], {});
+    expect(effects.heroAxisMultiplier.get(riki.id)?.durability).toBeCloseTo(0.9);
+  });
+});
+
+describe('Army of Clones', () => {
+  it('buffs a solo carrier\'s personal power and map control, no team-count gate', () => {
+    const pl = makeHero({ id: 1, name: 'Phantom Lancer' });
+    const effects = blessingEffectsFor([pl], {});
+    expect(effects.heroPowerMultiplier.get(pl.id)).toBeCloseTo(1.06);
+    expect(effects.heroAxisMultiplier.get(pl.id)?.map_control).toBeCloseTo(1.08);
+  });
+
+  it('applies a durability/teamfight penalty once 2+ are on the team', () => {
+    const pl = makeHero({ id: 1, name: 'Phantom Lancer' });
+    const tb = makeHero({ id: 2, name: 'Terrorblade' });
+    const effects = blessingEffectsFor([pl, tb], {});
+    for (const h of [pl, tb]) {
+      expect(effects.heroAxisMultiplier.get(h.id)?.durability).toBeCloseTo(0.95);
+      expect(effects.heroAxisMultiplier.get(h.id)?.teamfight).toBeCloseTo(0.95);
+    }
+  });
+
+  it('does not cross-stack with Unseen (separate rosters)', () => {
+    const pl = makeHero({ id: 1, name: 'Phantom Lancer' });
+    const riki = makeHero({ id: 2, name: 'Riki' });
+    const effects = blessingEffectsFor([pl, riki], {});
+    expect(effects.heroAxisMultiplier.get(pl.id)?.durability).toBeUndefined();
+    expect(effects.heroAxisMultiplier.get(riki.id)?.durability).toBeUndefined();
+  });
+});
+
+describe('Mass Buffer', () => {
+  it('gives a solo carrier a 3% team teamfight/burst buff', () => {
+    const vs = makeHero({ id: 1, name: 'Vengeful Spirit' });
+    const other = makeHero({ id: 2, name: 'Sniper' });
+    const effects = blessingEffectsFor([vs, other], {});
+    expect(effects.axisMultiplier.teamfight).toBeCloseTo(1.03);
+    expect(effects.axisMultiplier.burst).toBeCloseTo(1.03);
+  });
+
+  it('does nothing for a team with no Mass Buffer hero', () => {
+    const sniper = makeHero({ id: 1, name: 'Sniper' });
+    const effects = blessingEffectsFor([sniper], {});
+    expect(effects.axisMultiplier.teamfight).toBeUndefined();
+  });
+
+  it('adds 1% per additional carrier rather than compounding per-hero', () => {
+    const vs = makeHero({ id: 1, name: 'Vengeful Spirit' });
+    const mirana = makeHero({ id: 2, name: 'Mirana' });
+    const effects = blessingEffectsFor([vs, mirana], {});
+    expect(effects.axisMultiplier.teamfight).toBeCloseTo(1.04);
+    expect(effects.axisMultiplier.burst).toBeCloseTo(1.04);
+  });
+
+  it('keeps scaling with a third carrier', () => {
+    const vs = makeHero({ id: 1, name: 'Vengeful Spirit' });
+    const mirana = makeHero({ id: 2, name: 'Mirana' });
+    const luna = makeHero({ id: 3, name: 'Luna' });
+    const effects = blessingEffectsFor([vs, mirana, luna], {});
+    expect(effects.axisMultiplier.teamfight).toBeCloseTo(1.05);
+  });
+});
+
+describe('Prone To Burst', () => {
+  it('does nothing when the opponent context is not provided', () => {
+    const huskar = makeHero({ id: 1, name: 'Huskar' });
+    const effects = blessingEffectsFor([huskar], {});
+    expect(effects.heroPowerMultiplier.has(huskar.id)).toBe(false);
+  });
+
+  it('does nothing when the opponent\'s raw burst average is at or below the threshold', () => {
+    const huskar = makeHero({ id: 1, name: 'Huskar' });
+    const effects = blessingEffectsFor([huskar], {}, { burst: 6.5 });
+    expect(effects.heroPowerMultiplier.has(huskar.id)).toBe(false);
+  });
+
+  it('debuffs a carrier by 8% when the opponent\'s raw burst average is above the threshold', () => {
+    const huskar = makeHero({ id: 1, name: 'Huskar' });
+    const effects = blessingEffectsFor([huskar], {}, { burst: 7 });
+    expect(effects.heroPowerMultiplier.get(huskar.id)).toBeCloseTo(0.92);
+  });
+
+  it('does not debuff an untagged hero even against a high-burst opponent', () => {
+    const sniper = makeHero({ id: 1, name: 'Sniper' });
+    const effects = blessingEffectsFor([sniper], {}, { burst: 9 });
+    expect(effects.heroPowerMultiplier.has(sniper.id)).toBe(false);
   });
 });
 

@@ -586,14 +586,14 @@ export function assessBattle(
   // from the penalty (and gets its own +10% boost instead), which isn't
   // expressible as a single scalar applied to the already-blended power.
   const tagEffectsA = mergeTagEffects(
-    blessingEffectsFor(heroesA, rawAxisAveragesA),
+    blessingEffectsFor(heroesA, rawAxisAveragesA, rawAxisAveragesB),
     curseEffectsOnOpponent(heroesB, heroesA),
     { ...emptyTagEffects(), axisMultiplier: hardCarryAxisMultipliers(heroesA) },
     { ...emptyTagEffects(), heroAxisMultiplier: utilityStackHeroAxisMultipliers(heroesA) },
     { ...emptyTagEffects(), heroPowerMultiplier: manualPowerHeroMultipliers(heroesA) },
   );
   const tagEffectsB = mergeTagEffects(
-    blessingEffectsFor(heroesB, rawAxisAveragesB),
+    blessingEffectsFor(heroesB, rawAxisAveragesB, rawAxisAveragesA),
     curseEffectsOnOpponent(heroesA, heroesB),
     { ...emptyTagEffects(), axisMultiplier: hardCarryAxisMultipliers(heroesB) },
     { ...emptyTagEffects(), heroAxisMultiplier: utilityStackHeroAxisMultipliers(heroesB) },
