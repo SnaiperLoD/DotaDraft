@@ -73,7 +73,7 @@
       "burst": 8.7,
       "map_control": 1.3,
       "saving": 3.3,
-      "initiating": 4.1,
+      "initiating": 4,
       "skirmish_rate": 5.4,
       "camp_stacking": 5.9,
       "resource_efficiency": 6.8
@@ -157,7 +157,7 @@
       "burst": 8.9,
       "map_control": 7.9,
       "saving": 3.3,
-      "initiating": 2.4,
+      "initiating": 2.3,
       "skirmish_rate": 6.5,
       "camp_stacking": 5.8,
       "resource_efficiency": 5
@@ -198,7 +198,7 @@
       "burst": 1.4,
       "map_control": 4,
       "saving": 3.3,
-      "initiating": 2.1,
+      "initiating": 2,
       "skirmish_rate": 7.5,
       "camp_stacking": 7.9,
       "resource_efficiency": 3.9
@@ -406,7 +406,7 @@
       "burst": 5.6,
       "map_control": 0.5,
       "saving": 5.8,
-      "initiating": 3,
+      "initiating": 2.9,
       "skirmish_rate": 2.6,
       "camp_stacking": 3.1,
       "resource_efficiency": 1.7
@@ -696,7 +696,7 @@
       "burst": 8.6,
       "map_control": 2.8,
       "saving": 3.3,
-      "initiating": 3.7,
+      "initiating": 5.3,
       "skirmish_rate": 0.8,
       "camp_stacking": 3.2,
       "resource_efficiency": 7.6
@@ -739,7 +739,7 @@
       "burst": 7.7,
       "map_control": 1.4,
       "saving": 3.5,
-      "initiating": 3.1,
+      "initiating": 3,
       "skirmish_rate": 2.1,
       "camp_stacking": 3.6,
       "resource_efficiency": 1
@@ -995,7 +995,7 @@
       "burst": 9.5,
       "map_control": 4,
       "saving": 3.3,
-      "initiating": 2.5,
+      "initiating": 2.4,
       "skirmish_rate": 5.4,
       "camp_stacking": 9.7,
       "resource_efficiency": 4.8
@@ -1080,7 +1080,7 @@
       "burst": 0.5,
       "map_control": 5.6,
       "saving": 3.3,
-      "initiating": 3.9,
+      "initiating": 3.8,
       "skirmish_rate": 7.4,
       "camp_stacking": 7.1,
       "resource_efficiency": 1.6
@@ -1368,7 +1368,7 @@
       "burst": 7.6,
       "map_control": 5,
       "saving": 6.1,
-      "initiating": 4.1,
+      "initiating": 4,
       "skirmish_rate": 3.2,
       "camp_stacking": 6.4,
       "resource_efficiency": 7
@@ -1449,7 +1449,7 @@
       "burst": 9.6,
       "map_control": 1.5,
       "saving": 6.3,
-      "initiating": 3.1,
+      "initiating": 3,
       "skirmish_rate": 3.5,
       "camp_stacking": 7.5,
       "resource_efficiency": 7.9
@@ -2687,7 +2687,7 @@
       "burst": 0,
       "map_control": 9.4,
       "saving": 7,
-      "initiating": 3,
+      "initiating": 2.9,
       "skirmish_rate": 4.4,
       "camp_stacking": 9.6,
       "resource_efficiency": 0
@@ -3404,7 +3404,7 @@
       "burst": 0.2,
       "map_control": 9.5,
       "saving": 6.5,
-      "initiating": 7.3,
+      "initiating": 7.2,
       "skirmish_rate": 7.3,
       "camp_stacking": 2.3,
       "resource_efficiency": 1.1
@@ -3820,7 +3820,7 @@
       "burst": 8.4,
       "map_control": 9.8,
       "saving": 3.6,
-      "initiating": 6.5,
+      "initiating": 6.4,
       "skirmish_rate": 5,
       "camp_stacking": 0.7,
       "resource_efficiency": 2.5
@@ -4150,7 +4150,7 @@
       "burst": 5.7,
       "map_control": 7.1,
       "saving": 3.4,
-      "initiating": 3.4,
+      "initiating": 3.3,
       "skirmish_rate": 7.4,
       "camp_stacking": 7.8,
       "resource_efficiency": 8.7
@@ -4944,7 +4944,7 @@
       "burst": 7.5,
       "map_control": 6.3,
       "saving": 6.1,
-      "initiating": 7.2,
+      "initiating": 7.1,
       "skirmish_rate": 3.5,
       "camp_stacking": 6,
       "resource_efficiency": 8.1
@@ -5153,7 +5153,7 @@
       "burst": 4,
       "map_control": 4.4,
       "saving": 3.4,
-      "initiating": 9.2,
+      "initiating": 9.1,
       "skirmish_rate": 4.6,
       "camp_stacking": 3.4,
       "resource_efficiency": 7.3

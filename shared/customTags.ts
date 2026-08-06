@@ -246,7 +246,7 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
     visible: true,
     revealable: false,
     description:
-      'Team-wide damage amplification (auras/debuffs). +3% team teamfight/burst, active even solo; +1% more per additional Mass Buffer hero on the team.',
+      'Team-wide damage amplification (auras/debuffs). Each Mass Buffer hero adds to team teamfight/burst, active even solo — and the per-hero contribution itself grows with stack size (+3% solo, +4% each at 2, +5% each at 3...), so the total scales faster than linearly.',
     heroNames: ['Vengeful Spirit', 'Mirana', 'Luna', 'Drow Ranger'],
   },
   {

@@ -180,10 +180,16 @@ const ARMY_OF_CLONES_MAP_CONTROL_BUFF = 1.08;
 // Mass Buffer — team-wide amplification heroes (Vengeful Spirit/Mirana/Luna/
 // Drow Ranger) whose real value (auras/debuffs that amplify allies) mostly
 // falls outside Battle Engine's real-data-only synergy signal (no archetype-
-// tag fallback the way Evaluation Engine's Synergy Analyzer has). Team-wide
-// teamfight/burst buff, solo-active, +1% per additional carrier — applied
-// ONCE at the combined magnitude, not multiplied per carrier, so it scales
-// with count rather than compounding.
+// tag fallback the way Evaluation Engine's Synergy Analyzer has). Each Mass
+// Buffer hero individually contributes a per-hero buff to team teamfight/
+// burst, and that per-hero contribution itself grows with stack count
+// (+3% solo, +4% each at 2, +5% each at 3, ...) — the total team effect is
+// the per-hero magnitude summed across every carrier (count × per-hero),
+// not the per-hero magnitude applied once for the whole team. Corrected
+// 2026-08-06 (Blueprint/10-tech-debt-backlog.md) — the original
+// implementation applied the per-hero magnitude once team-wide instead of
+// once per carrier, so 1/2/3/4 carriers gave 1.03/1.04/1.05/1.06 instead of
+// the intended 1.03/1.08/1.15/1.24.
 const MASS_BUFFER = heroNameSetForTag('Mass Buffer');
 const MASS_BUFFER_BASE_BUFF = 0.03;
 const MASS_BUFFER_PER_EXTRA = 0.01;
@@ -287,15 +293,17 @@ export function blessingEffectsFor(
     }
   }
 
-  // Mass Buffer: team-wide teamfight/burst buff, solo-active, magnitude
-  // grows +1% per additional carrier — applied once at the combined
-  // magnitude (not once per carrier) so it scales with count rather than
-  // compounding multiplicatively.
+  // Mass Buffer: team-wide teamfight/burst buff. Per-hero magnitude grows
+  // with stack count (+3% solo, +4% each at 2, +5% each at 3, ...), and
+  // EACH carrier contributes that per-hero magnitude — summed across all
+  // carriers, not applied once for the whole team. 1/2/3/4 carriers ->
+  // 1.03/1.08/1.15/1.24.
   const massBufferCount = isTagDisabled('Mass Buffer')
     ? 0
     : team.filter((h) => MASS_BUFFER.has(h.name)).length;
   if (massBufferCount >= 1) {
-    const magnitude = 1 + MASS_BUFFER_BASE_BUFF + MASS_BUFFER_PER_EXTRA * (massBufferCount - 1);
+    const perHeroBuff = MASS_BUFFER_BASE_BUFF + MASS_BUFFER_PER_EXTRA * (massBufferCount - 1);
+    const magnitude = 1 + perHeroBuff * massBufferCount;
     mulAxis(effects, 'teamfight', magnitude);
     mulAxis(effects, 'burst', magnitude);
   }

@@ -355,12 +355,15 @@ describe('Mass Buffer', () => {
     expect(effects.axisMultiplier.teamfight).toBeUndefined();
   });
 
-  it('adds 1% per additional carrier rather than compounding per-hero', () => {
+  it('sums the grown per-hero magnitude across both carriers, not one flat team-wide bump', () => {
     const vs = makeHero({ id: 1, name: 'Vengeful Spirit' });
     const mirana = makeHero({ id: 2, name: 'Mirana' });
     const effects = blessingEffectsFor([vs, mirana], {});
-    expect(effects.axisMultiplier.teamfight).toBeCloseTo(1.04);
-    expect(effects.axisMultiplier.burst).toBeCloseTo(1.04);
+    // per-hero buff at count=2 is 4% (0.03 + 0.01), contributed by BOTH
+    // carriers: 1 + 0.04*2 = 1.08 (not 1.04 — that was the bug this fixes,
+    // see custom-tags.ts comment).
+    expect(effects.axisMultiplier.teamfight).toBeCloseTo(1.08);
+    expect(effects.axisMultiplier.burst).toBeCloseTo(1.08);
   });
 
   it('keeps scaling with a third carrier', () => {
@@ -368,7 +371,18 @@ describe('Mass Buffer', () => {
     const mirana = makeHero({ id: 2, name: 'Mirana' });
     const luna = makeHero({ id: 3, name: 'Luna' });
     const effects = blessingEffectsFor([vs, mirana, luna], {});
-    expect(effects.axisMultiplier.teamfight).toBeCloseTo(1.05);
+    // per-hero buff at count=3 is 5%, times 3 carriers: 1 + 0.05*3 = 1.15.
+    expect(effects.axisMultiplier.teamfight).toBeCloseTo(1.15);
+  });
+
+  it('keeps scaling with a fourth carrier', () => {
+    const vs = makeHero({ id: 1, name: 'Vengeful Spirit' });
+    const mirana = makeHero({ id: 2, name: 'Mirana' });
+    const luna = makeHero({ id: 3, name: 'Luna' });
+    const drow = makeHero({ id: 4, name: 'Drow Ranger' });
+    const effects = blessingEffectsFor([vs, mirana, luna, drow], {});
+    // per-hero buff at count=4 is 6%, times 4 carriers: 1 + 0.06*4 = 1.24.
+    expect(effects.axisMultiplier.teamfight).toBeCloseTo(1.24);
   });
 });
 

@@ -6292,7 +6292,8 @@
         ],
         "iconUrl": "/ability-icons/storm_spirit_electric_vortex.png",
         "categoryScores": {
-          "control_strength": 4
+          "control_strength": 4,
+          "initiating": 5
         }
       },
       {
@@ -6342,7 +6343,8 @@
         ],
         "iconUrl": "/ability-icons/storm_spirit_overload.png",
         "categoryScores": {
-          "control_strength": 1
+          "control_strength": 1,
+          "initiating": 3
         }
       },
       {
