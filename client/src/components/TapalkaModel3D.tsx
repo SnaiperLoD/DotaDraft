@@ -21,13 +21,36 @@ import { heroPortraitUrl } from '../utils/heroIcon';
 // playing them would need a from-scratch SMD parser plus unverified bone
 // mapping onto this skeleton (flagged in TapalkaWidget.tsx's own comment as
 // out of scope for a UI pass). This renders the model in its baked rest
-// pose instead, with a continuous slow turntable rotation standing in for
-// "alive" motion, plus a faster spin-up during the click "drink" sequence —
-// genuinely 3D, just not skeletally animated.
+// pose instead, with a gentle idle wobble standing in for "alive" motion,
+// plus a faster full spin during the click "drink" sequence — genuinely 3D,
+// just not skeletally animated.
+//
+// The bind pose itself isn't a neutral T-pose — the weapon (a long
+// staff-like flail, rigged to the right wrist) hangs straight down at the
+// model's front-facing angle (rotation.y=0), reading as centered between
+// the legs from head-on (Blueprint/10-tech-debt-backlog.md, "Тапалка —
+// 3D-модель стоит в некрасивой позе", direct user report). Reposing it by
+// rotating the arm/weapon bones was tried and rejected — this skeleton's
+// skinning doesn't tolerate an isolated joint rotation cleanly (the mesh
+// visibly tore/ballooned even at a small angle on the shoulder bone,
+// screenshotted via a temporary WebGL readPixels capture during
+// development) — safe to assume the same for any other single bone in this
+// chain without much more investigation than a UI pass warrants. Fixed
+// instead by never resting (or wobbling into) the bad viewing angle:
+// REST_ROTATION_Y offsets the model to a facing where the weapon reads as
+// held at the character's side rather than centered (checked visually
+// across the 100-150° range, all acceptable); IDLE_WOBBLE_* keeps the idle
+// motion within that same safe arc instead of doing a full turntable that
+// would cycle back through 0° every rotation. The brief full-speed spin on
+// click (DRINK_SPIN_RADIANS_PER_SEC) can still pass through the bad angle,
+// but it's fast and momentary rather than a resting pose, same tradeoff the
+// backlog accepted as fine.
 const MODEL_URL = '/models/brewmaster/brewmaster.gltf';
 const FALLBACK_HERO_ID = 78; // Brewmaster — used only if the 3D asset fails to load.
 
-const IDLE_SPIN_RADIANS_PER_SEC = 0.35;
+const REST_ROTATION_Y = (130 * Math.PI) / 180;
+const IDLE_WOBBLE_AMPLITUDE_RADIANS = (18 * Math.PI) / 180;
+const IDLE_WOBBLE_RADIANS_PER_SEC = 0.5;
 const DRINK_SPIN_RADIANS_PER_SEC = 4.5;
 
 interface Props {
@@ -86,11 +109,13 @@ export default function TapalkaModel3D({ drinking, width, height }: Props) {
         // extended at odd angles, see TapalkaModel3D module comment) — pull
         // back further than a tightly-fit "radius" would need for a
         // standing pose, so a raised arm/extended leg doesn't clip the
-        // frame edges as the turntable rotates through every angle.
+        // frame edges across the idle wobble's range or the drink click's
+        // full spin.
         const radius = Math.max(size.x, size.y, size.z) / 2 || 1;
         camera.position.set(0, size.y * 0.05, radius * 3.6);
         camera.lookAt(0, 0, 0);
 
+        model.rotation.y = REST_ROTATION_Y;
         scene.add(model);
       },
       undefined,
@@ -100,12 +125,17 @@ export default function TapalkaModel3D({ drinking, width, height }: Props) {
     );
 
     const clock = new THREE.Clock();
+    let elapsed = 0;
     const animate = () => {
       frameId = requestAnimationFrame(animate);
       const delta = clock.getDelta();
+      elapsed += delta;
       if (model) {
-        const speed = drinkingRef.current ? DRINK_SPIN_RADIANS_PER_SEC : IDLE_SPIN_RADIANS_PER_SEC;
-        model.rotation.y += speed * delta;
+        if (drinkingRef.current) {
+          model.rotation.y += DRINK_SPIN_RADIANS_PER_SEC * delta;
+        } else {
+          model.rotation.y = REST_ROTATION_Y + IDLE_WOBBLE_AMPLITUDE_RADIANS * Math.sin(elapsed * IDLE_WOBBLE_RADIANS_PER_SEC);
+        }
       }
       renderer.render(scene, camera);
     };
