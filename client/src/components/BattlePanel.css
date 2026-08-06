@@ -143,6 +143,7 @@
   width: 130px;
   height: 81px;
   object-fit: cover;
+  object-position: center top;
   border-radius: 4px;
   border: 1px solid var(--bronze-dim);
   display: block;

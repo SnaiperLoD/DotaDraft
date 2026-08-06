@@ -111,6 +111,8 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
       'Enigma',
       'Winter Wyvern',
       'Disruptor',
+      'Warlock',
+      'Sand King',
     ],
   },
   {

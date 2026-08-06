@@ -23,6 +23,9 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Same top-crop fix as HeroPool.css — source portraits aren't
+     consistently framed, some heads sit right at the top edge. */
+  object-position: center top;
 }
 
 .role-assignment-card .role-tint {
