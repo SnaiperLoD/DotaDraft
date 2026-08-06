@@ -66,24 +66,39 @@ export class OpponentPoolService {
   // (not true) for every pro-sourced row, whose submitterToken is NULL —
   // so it would silently exclude the entire pro tier along with the
   // caller's own draft. The explicit OR keeps NULL rows in.
-  async pullRandom(excludeSubmitterToken?: string): Promise<PooledDraftSummary> {
+  //
+  // excludeHeroIds (Blueprint/10-tech-debt-backlog.md, "Механизм против
+  // совпадения героев с оппонентом", by direct user request, full exclusion
+  // on ANY overlap): a real Dota draft can never share a hero with its
+  // opponent (both sides draw from the same 127-hero pool without repeats)
+  // — the pool previously had no such check. Filtered in application code,
+  // not SQL: `heroIds` is a JSON column on both SQLite (dev) and Postgres
+  // (prod), and the pool is small enough (~100-ish rows) that loading
+  // candidate rows into memory to filter is simpler than two JSON-query
+  // dialects. Same fallback shape as excludingOwn above — if excluding every
+  // overlapping draft would leave nothing to pull from, fall back to
+  // allowing overlap rather than failing Battle Mode outright.
+  async pullRandom(excludeSubmitterToken?: string, excludeHeroIds: number[] = []): Promise<PooledDraftSummary> {
     return this.runPoolQuery(async () => {
       const excludingOwn = excludeSubmitterToken
         ? { OR: [{ submitterToken: null }, { NOT: { submitterToken: excludeSubmitterToken } }] }
         : {};
 
-      let count = await this.pool.pooledDraft.count({ where: excludingOwn });
-      let where = excludingOwn;
-      if (count === 0) {
-        count = await this.pool.pooledDraft.count();
-        where = {};
+      let rows = await this.pool.pooledDraft.findMany({ where: excludingOwn });
+      if (rows.length === 0) {
+        rows = await this.pool.pooledDraft.findMany({ where: {} });
       }
-      if (count === 0) {
+      if (rows.length === 0) {
         throw new NotFoundException('Opponent Pool is empty — no opponent available yet');
       }
 
-      const skip = Math.floor(Math.random() * count);
-      const [row] = await this.pool.pooledDraft.findMany({ where, skip, take: 1 });
+      if (excludeHeroIds.length > 0) {
+        const excludeSet = new Set(excludeHeroIds);
+        const noOverlap = rows.filter((r) => !(r.heroIds as number[]).some((id) => excludeSet.has(id)));
+        if (noOverlap.length > 0) rows = noOverlap;
+      }
+
+      const row = rows[Math.floor(Math.random() * rows.length)];
 
       return {
         id: row.id,

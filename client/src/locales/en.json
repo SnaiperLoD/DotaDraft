@@ -42,8 +42,6 @@
   "roleAssignment": {
     "heading": "Assign Roles",
     "selectRole": "Select role",
-    "taken": "(taken)",
-    "error": "Each role must be assigned to a different hero.",
     "confirm": "Confirm Roles"
   },
   "roles": {

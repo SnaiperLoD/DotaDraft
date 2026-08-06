@@ -25,7 +25,10 @@ export class BattleService {
 
     const teamA: BattlePick[] = draft.heroes.map((h) => ({ hero: h.hero, assignedRole: h.assignedRole }));
 
-    const opponent = await this.opponentPoolService.pullRandom(submitterToken);
+    const opponent = await this.opponentPoolService.pullRandom(
+      submitterToken,
+      draft.heroes.map((h) => h.heroId),
+    );
     const opponentHeroes = await this.heroService.findByIds(opponent.heroIds);
     // heroRoles is null for pool rows committed before role-fit reached
     // Battle Engine (see opponent-pool schema) — those heroes just get no

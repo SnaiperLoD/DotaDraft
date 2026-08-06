@@ -17,9 +17,26 @@ export default function RoleAssignment({ heroes, onSubmit, submitting }: Props) 
   const [roleByHero, setRoleByHero] = useState<Record<number, string>>({});
 
   const allAssigned = heroes.every((h) => roleByHero[h.heroId]);
-  const assignedRoles = Object.values(roleByHero);
-  const rolesAreUnique = new Set(assignedRoles).size === assignedRoles.length;
-  const canSubmit = allAssigned && rolesAreUnique;
+  const canSubmit = allAssigned;
+
+  // Picking a role already held by another hero steals it — the previous
+  // holder goes back to unassigned rather than the pick being blocked
+  // (Blueprint/10-tech-debt-backlog.md, "RoleAssignment: 'перещёлкивание'
+  // роли", by direct user request). Selecting a role is itself how you
+  // reassign it now, so there's no "taken" state left to disable against —
+  // and since every change routes through this function, roleByHero's
+  // values are unique by construction, not just checked after the fact.
+  const handleRoleChange = (heroId: number, role: string) => {
+    setRoleByHero((prev) => {
+      const next = { ...prev };
+      const previousHolderId = Object.keys(next).find(
+        (id) => Number(id) !== heroId && next[Number(id)] === role,
+      );
+      if (previousHolderId) delete next[Number(previousHolderId)];
+      next[heroId] = role;
+      return next;
+    });
+  };
 
   const handleSubmit = () => {
     onSubmit(heroes.map((h) => ({ heroId: h.heroId, role: roleByHero[h.heroId] })));
@@ -41,26 +58,21 @@ export default function RoleAssignment({ heroes, onSubmit, submitting }: Props) 
             <select
               className="role-select"
               value={roleByHero[h.heroId] ?? ''}
-              onChange={(e) => setRoleByHero((prev) => ({ ...prev, [h.heroId]: e.target.value }))}
+              onChange={(e) => handleRoleChange(h.heroId, e.target.value)}
               required
             >
               <option value="" disabled>
                 {t('roleAssignment.selectRole')}
               </option>
-              {ROLES.map((role) => {
-                const takenByOther = assignedRoles.includes(role) && roleByHero[h.heroId] !== role;
-                return (
-                  <option key={role} value={role} disabled={takenByOther}>
-                    {t(`roles.${role}`)}
-                    {takenByOther ? ` ${t('roleAssignment.taken')}` : ''}
-                  </option>
-                );
-              })}
+              {ROLES.map((role) => (
+                <option key={role} value={role}>
+                  {t(`roles.${role}`)}
+                </option>
+              ))}
             </select>
           </div>
         ))}
       </div>
-      {allAssigned && !rolesAreUnique && <p className="role-assignment-error">{t('roleAssignment.error')}</p>}
       <button className="btn btn-primary" onClick={handleSubmit} disabled={!canSubmit || submitting}>
         {t('roleAssignment.confirm')}
       </button>

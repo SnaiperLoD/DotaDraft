@@ -31,4 +31,56 @@ describe('activeCustomTagsForTeam', () => {
     const active = activeCustomTagsForTeam(['Sniper', 'Lion', 'Rubick', 'Bloodseeker', 'Axe']);
     expect(active).toEqual([]);
   });
+
+  // Blueprint/10-tech-debt-backlog.md, "Active Combos: динамический текст
+  // магнитуды для count-based тегов" — by direct user request, found while
+  // investigating the Mass Buffer bug: the static description explained the
+  // formula but never showed the actual number for a given draft.
+  describe('dynamic description text for count-dependent tags', () => {
+    it('substitutes the actual per-hero and combined Mass Buffer magnitude for 1 carrier', () => {
+      const active = activeCustomTagsForTeam(['Vengeful Spirit', 'Sniper', 'Lion', 'Rubick', 'Axe']);
+      const massBuffer = active.find((t) => t.name === 'Mass Buffer')!;
+      expect(massBuffer.description).toContain('1 Mass Buffer hero');
+      expect(massBuffer.description).toContain('+3% team teamfight/burst each');
+      expect(massBuffer.description).toContain('+3% combined');
+    });
+
+    it('substitutes the grown per-hero and combined Mass Buffer magnitude for 3 carriers', () => {
+      const active = activeCustomTagsForTeam(['Vengeful Spirit', 'Mirana', 'Luna', 'Rubick', 'Axe']);
+      const massBuffer = active.find((t) => t.name === 'Mass Buffer')!;
+      expect(massBuffer.description).toContain('3 Mass Buffer heroes');
+      expect(massBuffer.description).toContain('+5% team teamfight/burst each');
+      expect(massBuffer.description).toContain('+15% combined');
+    });
+
+    it('omits the stacking-penalty clause for a solo Unseen carrier', () => {
+      const active = activeCustomTagsForTeam(['Riki', 'Sniper', 'Lion', 'Rubick', 'Axe']);
+      const unseen = active.find((t) => t.name === 'Unseen')!;
+      expect(unseen.description).not.toMatch(/durability\/teamfight/);
+    });
+
+    it('adds the count-scaled stacking penalty once 2+ Unseen heroes are on the team', () => {
+      const active = activeCustomTagsForTeam(['Riki', 'Weaver', 'Lion', 'Rubick', 'Axe']);
+      const unseen = active.find((t) => t.name === 'Unseen')!;
+      expect(unseen.description).toContain('2 on this team: -5% durability/teamfight each');
+    });
+
+    it('scales the Army of Clones stacking penalty text with a 3rd carrier', () => {
+      const active = activeCustomTagsForTeam(['Phantom Lancer', 'Terrorblade', 'Naga Siren', 'Rubick', 'Axe']);
+      const armyOfClones = active.find((t) => t.name === 'Army of Clones')!;
+      expect(armyOfClones.description).toContain('3 on this team: -10% durability/teamfight each');
+    });
+
+    // No solo-carrier test here: Statstealer is revealable with
+    // minCountToReveal=2 (shared/customTags.ts), so a lone carrier never
+    // clears activeCustomTagsForTeam's reveal gate in the first place —
+    // describeActiveTag's solo-case text exists for correctness (it
+    // matches the real +2% solo Battle Engine bonus) but isn't reachable
+    // through this specific entry point, only the 2+ case is.
+    it('describes the Statstealer 2+ case with the actual carrier count', () => {
+      const active = activeCustomTagsForTeam(['Silencer', 'Slark', 'Pudge', 'Rubick', 'Sniper']);
+      const statstealer = active.find((t) => t.name === 'Statstealer')!;
+      expect(statstealer.description).toContain('3 on this team');
+    });
+  });
 });

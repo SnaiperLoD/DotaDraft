@@ -87,9 +87,3 @@
   font-style: italic;
 }
 
-.role-assignment-error {
-  color: var(--danger);
-  font-family: var(--font-ui);
-  font-size: 13px;
-  margin: -8px 0 16px;
-}

@@ -5,7 +5,6 @@ function makeMockPool() {
   return {
     pooledDraft: {
       create: jest.fn(),
-      count: jest.fn(),
       findMany: jest.fn(),
       update: jest.fn(),
     },
@@ -103,7 +102,7 @@ describe('OpponentPoolService.commit', () => {
 describe('OpponentPoolService.pullRandom', () => {
   it('throws NotFoundException when the pool is entirely empty', async () => {
     const pool = makeMockPool();
-    pool.pooledDraft.count.mockResolvedValue(0);
+    pool.pooledDraft.findMany.mockResolvedValue([]);
     const service = new OpponentPoolService(pool as any, {} as any);
 
     await expect(service.pullRandom('token')).rejects.toThrow('Opponent Pool is empty');
@@ -111,21 +110,21 @@ describe('OpponentPoolService.pullRandom', () => {
 
   it('falls back to the unrestricted pool when excluding the caller leaves nothing', async () => {
     const pool = makeMockPool();
-    pool.pooledDraft.count.mockResolvedValueOnce(0).mockResolvedValueOnce(1);
-    pool.pooledDraft.findMany.mockResolvedValue([
-      { id: 'p1', source: 'player', heroIds: [1, 2, 3, 4, 5], teamName: null, leagueName: null },
-    ]);
+    pool.pooledDraft.findMany
+      .mockResolvedValueOnce([])
+      .mockResolvedValueOnce([
+        { id: 'p1', source: 'player', heroIds: [1, 2, 3, 4, 5], teamName: null, leagueName: null },
+      ]);
     const service = new OpponentPoolService(pool as any, {} as any);
 
     const result = await service.pullRandom('token');
 
-    expect(pool.pooledDraft.findMany).toHaveBeenCalledWith(expect.objectContaining({ where: {} }));
+    expect(pool.pooledDraft.findMany).toHaveBeenLastCalledWith({ where: {} });
     expect(result.id).toBe('p1');
   });
 
   it('queries with an OR-null exclusion clause, not a bare NOT (regression: NOT alone silently excludes NULL rows in SQL)', async () => {
     const pool = makeMockPool();
-    pool.pooledDraft.count.mockResolvedValue(5);
     pool.pooledDraft.findMany.mockResolvedValue([
       { id: 'p1', source: 'pro', heroIds: [1, 2, 3, 4, 5], teamName: 'Team A', leagueName: null },
     ]);
@@ -133,10 +132,48 @@ describe('OpponentPoolService.pullRandom', () => {
 
     await service.pullRandom('my-token');
 
-    const whereArg = pool.pooledDraft.count.mock.calls[0][0].where;
+    const whereArg = pool.pooledDraft.findMany.mock.calls[0][0].where;
     expect(whereArg).toEqual({
       OR: [{ submitterToken: null }, { NOT: { submitterToken: 'my-token' } }],
     });
+  });
+
+  it('excludes any pool row that shares even one hero with the caller-supplied draft', async () => {
+    const pool = makeMockPool();
+    pool.pooledDraft.findMany.mockResolvedValue([
+      { id: 'overlap', source: 'pro', heroIds: [1, 6, 7, 8, 9], teamName: null, leagueName: null },
+      { id: 'clean', source: 'pro', heroIds: [10, 11, 12, 13, 14], teamName: null, leagueName: null },
+    ]);
+    const service = new OpponentPoolService(pool as any, {} as any);
+
+    for (let i = 0; i < 10; i++) {
+      const result = await service.pullRandom(undefined, [1, 2, 3, 4, 5]);
+      expect(result.id).toBe('clean');
+    }
+  });
+
+  it('falls back to allowing overlap when excluding it would leave nothing to pull from', async () => {
+    const pool = makeMockPool();
+    pool.pooledDraft.findMany.mockResolvedValue([
+      { id: 'only-row', source: 'pro', heroIds: [1, 2, 3, 4, 5], teamName: null, leagueName: null },
+    ]);
+    const service = new OpponentPoolService(pool as any, {} as any);
+
+    const result = await service.pullRandom(undefined, [1, 2, 3, 4, 5]);
+
+    expect(result.id).toBe('only-row');
+  });
+
+  it('does not filter by hero overlap when excludeHeroIds is omitted', async () => {
+    const pool = makeMockPool();
+    pool.pooledDraft.findMany.mockResolvedValue([
+      { id: 'p1', source: 'pro', heroIds: [1, 2, 3, 4, 5], teamName: null, leagueName: null },
+    ]);
+    const service = new OpponentPoolService(pool as any, {} as any);
+
+    const result = await service.pullRandom();
+
+    expect(result.id).toBe('p1');
   });
 });
 

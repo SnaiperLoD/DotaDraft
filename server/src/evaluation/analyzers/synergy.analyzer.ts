@@ -122,6 +122,27 @@ function bestRealSynergyPair(
   return best;
 }
 
+// Symmetric to bestRealSynergyPair — by direct user request
+// (Blueprint/10-tech-debt-backlog.md, "Показать худшую синергию в Synergy
+// (Evaluation)"): the panel already surfaced the team's strongest real-data
+// pairing but not its weakest, even though the same co-pick data trivially
+// supports both directions.
+function worstRealSynergyPair(
+  heroes: Hero[],
+  lookup: SynergyLookup,
+): { heroA: Hero; heroB: Hero; delta: number } | null {
+  let worst: { heroA: Hero; heroB: Hero; delta: number } | null = null;
+  for (let i = 0; i < heroes.length; i++) {
+    for (let j = i + 1; j < heroes.length; j++) {
+      const delta = realSynergyDelta(heroes[i], heroes[j], lookup);
+      if (delta !== null && (!worst || delta < worst.delta)) {
+        worst = { heroA: heroes[i], heroB: heroes[j], delta };
+      }
+    }
+  }
+  return worst;
+}
+
 // Real co-pick win rate (Blueprint/06-battle-engine.md's data, already used
 // by Battle Engine) as an equal signal alongside the hand-authored tag
 // pairs, per the Milestone-6-adjacent design agreed for this analyzer —
@@ -163,6 +184,16 @@ export function createSynergyAnalyzer(lookup: SynergyLookup): Analyzer {
         );
       }
 
+      const worstPair = worstRealSynergyPair(heroes, lookup);
+      if (worstPair && worstPair.delta <= -REAL_SYNERGY_SIGNIFICANCE) {
+        const penalty = Math.min(3, Math.abs(worstPair.delta) * 15);
+        score -= penalty;
+        explanation.push(
+          `${worstPair.heroA.name} + ${worstPair.heroB.name} have a weak real win rate together — ` +
+            `underperforming what their individual strength alone would predict.`,
+        );
+      }
+
       const highMobilityHeroes = heroes.filter((h) => h.evaluation_values.mobility >= 5);
       if (highMobilityHeroes.length >= 2) {
         score += 1;
@@ -181,7 +212,10 @@ export function createSynergyAnalyzer(lookup: SynergyLookup): Analyzer {
         explanation.push('No strong hero-to-hero synergies detected in this composition.');
       }
 
-      const finalScore = Math.min(10, Math.round(score * 10) / 10);
+      // Floor added alongside the worst-pair penalty above — score had no
+      // lower bound before because nothing in this analyzer could push it
+      // below 0 (every other term is additive-only).
+      const finalScore = Math.max(0, Math.min(10, Math.round(score * 10) / 10));
       explanation.push(SYNERGY_NARRATIVE[scoreBracket(finalScore)]);
 
       // Not axis-based (no evaluation_values score) — no percentile

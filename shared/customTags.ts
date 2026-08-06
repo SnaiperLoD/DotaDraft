@@ -260,6 +260,58 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
   },
 ];
 
+// Dynamic description text for count-dependent tags (Blueprint/10-tech-
+// debt-backlog.md, "Active Combos: динамический текст магнитуды для
+// count-based тегов", by direct user request — found while investigating
+// the Mass Buffer bug: the static description explained the FORMULA but
+// never substituted the actual number for a given draft, which read as if
+// the effect wasn't scaling even when it correctly was). Scoped to the
+// three tags whose effect is a genuine count-dependent numeric formula
+// (Mass Buffer, Unseen, Army of Clones) plus Statstealer, whose static text
+// omitted the solo case entirely. Every other tag's magnitude is fixed
+// regardless of carrier count, so its static `description` already says
+// the whole story.
+//
+// The specific per-hero/per-count numbers below are hand-duplicated from
+// server/src/battle/custom-tags.ts's real magnitudes, same as this file's
+// static descriptions already do in prose (e.g. Unseen's "+6%/+8%" text
+// already hand-matches UNSEEN_POWER_BUFF/UNSEEN_MAP_CONTROL_BUFF) — not a
+// new boundary crossing, just the count-aware version of duplication this
+// file already does. If those constants change, this needs updating by
+// hand too (same maintenance cost the static text already carries).
+const MASS_BUFFER_BASE_PCT = 3;
+const MASS_BUFFER_PER_EXTRA_PCT = 1;
+const STEALTH_STACK_PENALTY_PCT: Record<number, number> = { 2: 5, 3: 10, 4: 15, 5: 20 };
+
+function describeActiveTag(def: CustomTagDefinition, heroNames: string[]): string {
+  const count = heroNames.filter((n) => def.heroNames.includes(n)).length;
+
+  if (def.name === 'Mass Buffer') {
+    const perHeroPct = MASS_BUFFER_BASE_PCT + MASS_BUFFER_PER_EXTRA_PCT * (count - 1);
+    const totalPct = perHeroPct * count;
+    return (
+      `Team-wide damage amplification (auras/debuffs). ${count} Mass Buffer hero${count === 1 ? '' : 'es'} on this team: ` +
+      `+${perHeroPct}% team teamfight/burst each, +${totalPct}% combined.`
+    );
+  }
+
+  if (def.name === 'Unseen' || def.name === 'Army of Clones') {
+    const flavor = def.name === 'Unseen' ? 'Personal invisibility' : 'Illusions/clones';
+    const base = `${flavor} — a real strength no axis measures. +6% personal power, +8% personal map control, active even solo.`;
+    if (count < 2) return base;
+    const penaltyPct = STEALTH_STACK_PENALTY_PCT[Math.min(count, 5)] ?? STEALTH_STACK_PENALTY_PCT[5];
+    return `${base} ${count} on this team: -${penaltyPct}% durability/teamfight each.`;
+  }
+
+  if (def.name === 'Statstealer') {
+    return count >= 2
+      ? `+5% final power to every Statstealer-tagged hero — ${count} on this team.`
+      : '+2% final power, active even solo (rises to +5% each once a 2nd Statstealer joins the team).';
+  }
+
+  return def.description;
+}
+
 export function heroNameSetForTag(tagName: string): Set<string> {
   const def = CUSTOM_TAG_DEFINITIONS.find((t) => t.name === tagName);
   return new Set(def?.heroNames ?? []);
@@ -280,7 +332,10 @@ export function activeCustomTagsForTeam(heroNames: string[]): CustomTagDefinitio
     const carriers = heroNames.filter((n) => def.heroNames.includes(n)).length;
     if (carriers === 0) continue;
     if (def.visible || (def.revealable && carriers >= (def.minCountToReveal ?? 1))) {
-      active.push(def);
+      // description resolved per-team (describeActiveTag above) rather than
+      // the static def.description — count-dependent tags substitute the
+      // actual magnitude for THIS team instead of restating the formula.
+      active.push({ ...def, description: describeActiveTag(def, heroNames) });
     }
   }
   return active;

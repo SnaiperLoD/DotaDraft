@@ -99,7 +99,13 @@ describe('createSynergyAnalyzer (real win-rate data blending)', () => {
     };
 
     const result = createSynergyAnalyzer(underperforming).analyze(picks([setup, enabler]));
-    expect(result.score).toBe(1.3); // 2.5 * 0.5 = 1.25, rounded to 1 decimal
+    // Tag rule dampened: 2.5 * 0.5 = 1.25. This -5pp delta ALSO clears the
+    // worst-pair significance bar (-3pp) since it's the only pair in a
+    // 2-hero picks list — both mechanisms fire on the same pair, by design
+    // (the same way a strong positive delta can both confirm a tag rule AND
+    // earn the separate best-pair bonus): penalty = min(3, 0.05*15) = 0.75.
+    // 1.25 - 0.75 = 0.5.
+    expect(result.score).toBe(0.5);
     expect(result.explanation[0]).toMatch(/underperforms expectations/i);
   });
 
@@ -147,5 +153,76 @@ describe('createSynergyAnalyzer (real win-rate data blending)', () => {
 
     const result = createSynergyAnalyzer(weakSignal).analyze(picks([heroA, heroB]));
     expect(result.score).toBe(0);
+  });
+
+  // Symmetric to "rewards a real-data-only synergy pair" above — Blueprint/
+  // 10-tech-debt-backlog.md, "Показать худшую синергию в Synergy", by
+  // direct user request.
+  it('penalizes a real-data-only worst synergy pair with no matching tags at all', () => {
+    const heroA = makeHero({ id: 1, name: 'Axe' });
+    const heroB = makeHero({ id: 2, name: 'Sven' });
+
+    const weakRealSynergy: SynergyLookup = {
+      getWinRate: (id) => (id === 1 || id === 2 ? 0.5 : null),
+      // Expected 0.5, actual 0.4 -> -10pp, well past the -3pp significance bar.
+      getSynergyWinRate: (a, b) => ([a, b].sort().join() === '1,2' ? 0.4 : null),
+    };
+
+    const result = createSynergyAnalyzer(weakRealSynergy).analyze(picks([heroA, heroB]));
+    expect(result.score).toBe(0); // floored — nothing else contributes positively here
+    expect(result.explanation[0]).toContain('Axe');
+    expect(result.explanation[0]).toContain('Sven');
+    expect(result.explanation[0]).toMatch(/weak real win rate/i);
+  });
+
+  it('ignores a small negative real-data delta as noise (below the significance threshold)', () => {
+    const heroA = makeHero({ id: 1, name: 'Axe' });
+    const heroB = makeHero({ id: 2, name: 'Sven' });
+
+    const mildSignal: SynergyLookup = {
+      getWinRate: (id) => (id === 1 || id === 2 ? 0.5 : null),
+      // -1pp — short of the -3pp significance bar.
+      getSynergyWinRate: (a, b) => ([a, b].sort().join() === '1,2' ? 0.49 : null),
+    };
+
+    const result = createSynergyAnalyzer(mildSignal).analyze(picks([heroA, heroB]));
+    expect(result.score).toBe(0);
+    expect(result.explanation.some((line) => /weak real win rate/i.test(line))).toBe(false);
+  });
+
+  it('floors the final score at 0 rather than going negative', () => {
+    const heroA = makeHero({ id: 1, name: 'Axe' });
+    const heroB = makeHero({ id: 2, name: 'Sven' });
+
+    const stronglyNegative: SynergyLookup = {
+      getWinRate: (id) => (id === 1 || id === 2 ? 0.5 : null),
+      // Expected 0.5, actual 0.2 -> -30pp, magnitude far past the *15/min(3,..) cap.
+      getSynergyWinRate: (a, b) => ([a, b].sort().join() === '1,2' ? 0.2 : null),
+    };
+
+    const result = createSynergyAnalyzer(stronglyNegative).analyze(picks([heroA, heroB]));
+    expect(result.score).toBe(0);
+  });
+
+  it('applies both the best-pair bonus and worst-pair penalty when different pairs qualify for each', () => {
+    const strong1 = makeHero({ id: 1, name: 'A' });
+    const strong2 = makeHero({ id: 2, name: 'B' });
+    const weak1 = makeHero({ id: 3, name: 'C' });
+    const weak2 = makeHero({ id: 4, name: 'D' });
+
+    const mixedSignal: SynergyLookup = {
+      getWinRate: () => 0.5,
+      getSynergyWinRate: (a, b) => {
+        const key = [a, b].sort().join();
+        if (key === '1,2') return 0.6; // +10pp -> best pair
+        if (key === '3,4') return 0.4; // -10pp -> worst pair
+        return null;
+      },
+    };
+
+    const result = createSynergyAnalyzer(mixedSignal).analyze(picks([strong1, strong2, weak1, weak2]));
+    // +3 (capped bonus) - 3 (capped penalty) = 0, but both lines should still be present.
+    expect(result.explanation.some((line) => /strong real win rate/i.test(line))).toBe(true);
+    expect(result.explanation.some((line) => /weak real win rate/i.test(line))).toBe(true);
   });
 });
