@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { api } from '../api/client';
 import type { EvaluationResult } from 'shared';
@@ -11,6 +11,30 @@ import './EvaluationPanel.css';
 interface Props {
   draftId: string;
   heroes: DraftHeroView[];
+}
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// Server narrative is plain English prose (Blueprint's i18n scoping —
+// server-side text isn't translated/marked-up, see score-narrative.ts) —
+// this finds hero names client-side rather than needing the server to
+// return structured segments. Scoped to just this draft's 5 heroes (not
+// the full 127-hero roster): every narrative sentence in Evaluation talks
+// about "this team," never an opponent, so that's the complete set of
+// names that could appear. Longest-first in the alternation so e.g. a
+// hypothetical "Storm" wouldn't shadow "Storm Spirit" (no such collision
+// exists in the current roster, but the ordering costs nothing and avoids
+// relying on that staying true).
+function boldHeroNames(text: string, heroNames: string[]) {
+  if (heroNames.length === 0) return text;
+  const pattern = new RegExp(
+    `(${[...heroNames].sort((a, b) => b.length - a.length).map(escapeRegExp).join('|')})`,
+    'g',
+  );
+  const parts = text.split(pattern);
+  return parts.map((part, i) => (heroNames.includes(part) ? <strong key={i}>{part}</strong> : <Fragment key={i}>{part}</Fragment>));
 }
 
 // Same 30/70 split as the server's percentileBracket() (score-narrative.ts)
@@ -79,6 +103,7 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
   }
 
   const badges = detectBadges(heroes.map((h) => h.hero));
+  const heroNames = heroes.map((h) => h.hero.name);
 
   return (
     <div className="evaluation-panel">
@@ -89,16 +114,31 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
         <StarRating score={result.totalScore} />
       </h3>
 
-      <p className="evaluation-gameplan">{result.summary.gameplan}</p>
+      <p className="evaluation-gameplan">{boldHeroNames(result.summary.gameplan, heroNames)}</p>
+      {result.campStackingNote && <p className="evaluation-note">{boldHeroNames(result.campStackingNote, heroNames)}</p>}
 
       <TopContributorHighlight breakdown={result.breakdown} heroes={heroes} />
+
+      {result.customTags.length > 0 && (
+        <div className="panel evaluation-combos">
+          <div className="evaluation-combos-heading">{t('evaluation.activeCombos')}</div>
+          <ul>
+            {result.customTags.map((tag) => (
+              <li key={tag.name}>
+                <span className={`hero-tag-badge rarity-${tag.rarity}`}>{tag.name}</span>
+                <span className="evaluation-combos-description">{tag.description}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <div className="evaluation-summary">
         <div className="evaluation-summary-col">
           <div className="evaluation-summary-heading">{t('evaluation.strengths')}</div>
           <ul>
             {result.summary.strengths.map((line, i) => (
-              <li key={i}>{line}</li>
+              <li key={i}>{boldHeroNames(line, heroNames)}</li>
             ))}
           </ul>
         </div>
@@ -106,7 +146,7 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
           <div className="evaluation-summary-heading">{t('evaluation.weaknesses')}</div>
           <ul>
             {result.summary.weaknesses.map((line, i) => (
-              <li key={i}>{line}</li>
+              <li key={i}>{boldHeroNames(line, heroNames)}</li>
             ))}
           </ul>
         </div>
@@ -128,7 +168,7 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
             </div>
             <ul>
               {item.explanation.map((line, i) => (
-                <li key={i}>{line}</li>
+                <li key={i}>{boldHeroNames(line, heroNames)}</li>
               ))}
             </ul>
             {item.matchUrl && (

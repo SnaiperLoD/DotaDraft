@@ -77,7 +77,8 @@
     "weaknesses": "Weaknesses",
     "notAvailable": "N/A",
     "viewMatch": "View match on OpenDota →",
-    "topContributorHeading": "Top {{axis}} Contributor"
+    "topContributorHeading": "Top {{axis}} Contributor",
+    "activeCombos": "Active Combos"
   },
   "commitToPool": {
     "committing": "Committing…",

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { heroPortraitUrl } from '../utils/heroIcon';
 import './TapalkaWidget.css';
@@ -6,28 +6,32 @@ import './TapalkaWidget.css';
 // Blueprint/10-tech-debt-backlog.md, "Тапалка" — pure tactile/engagement
 // filler for the draft-thinking wait, no gameplay effect and no reward
 // (Monetization rule, Blueprint/00-project-overview.md: no real
-// upgrades/currency from clicking). By explicit user decision, this uses
-// Brewmaster's real static portrait (already in the app's asset set) with
-// a CSS animation on click, rather than an original non-Dota mascot or a
-// full 3D model — legal/IP risk from Valve's non-commercial fan-content
-// terms is explicitly accepted for now, deferred to when ad monetization
-// actually goes live (see Blueprint/10-tech-debt-backlog.md for the
-// research that flagged this).
+// upgrades/currency from clicking). By explicit user decision, this renders
+// a real 3D Brewmaster model (TapalkaModel3D.tsx, three.js + a glTF mirrored
+// from pissang/dota2hero) rather than an original non-Dota mascot — same
+// accepted legal/IP risk as the rest of the project's Dota assets (Valve's
+// fan-content terms are strictly non-commercial, conflicts with ad
+// monetization once that goes live, explicitly deferred by the user, see
+// Blueprint/10-tech-debt-backlog.md).
 //
-// A real animated-model pass was investigated for this exact widget
-// (Blueprint/10-tech-debt-backlog.md, "Анимированные портреты / 3D-модели")
-// — a public glTF source exists (pissang/dota2hero), but its animations
-// ship as raw Source-engine .smd files, not glTF-embedded clips, so
-// playing them needs a from-scratch SMD parser plus bone-mapping onto the
-// glTF skeleton with no guarantee the rig lines up — a multi-session spike,
-// not a same-pass UI fix. This is a richer CSS-only animation instead:
-// continuous idle sway (the widget no longer looks frozen at rest) plus a
-// multi-stage "drink" sequence on click (chug tilt, a tankard that tips and
-// pours, rising foam bubbles, a warm glow pulse).
+// No skeletal animation on the model (see TapalkaModel3D.tsx's own comment
+// for why — the source's animations are raw .smd files, not glTF clips).
+// The 3D component's continuous turntable rotation is the idle "alive" cue;
+// this component layers a CSS "drink" sequence on top on click (mug that
+// tips and pours, rising foam bubbles, a warm glow pulse, a punchy bounce on
+// the model's own container) — the 3D model itself reacts by spinning
+// faster for that window (passed down via the `drinking` prop).
+// React.lazy-loaded: the three.js chunk (~600KB) has no reason to block
+// first paint on every other route, or even this one — the static portrait
+// (old asset, still in the bundle) covers the gap until it's ready.
 // Click counter is session-only (component state) — no localStorage, no
 // server call, resets on reload by design.
 const BREWMASTER_ID = 78;
 const DRINK_ANIMATION_MS = 900;
+const MODEL_WIDTH = 150;
+const MODEL_HEIGHT = 150;
+
+const TapalkaModel3D = lazy(() => import('./TapalkaModel3D'));
 
 // A handful of Brewmaster's own real in-game lines (Blueprint/10-tech-debt-backlog.md
 // research pass) — always shown in English regardless of the UI language,
@@ -81,14 +85,20 @@ export default function TapalkaWidget() {
       <button type="button" className="tapalka-button" onClick={handleClick} aria-label={t('tapalka.heading')}>
         {voiceLine && <span className="tapalka-speech-bubble">{voiceLine}</span>}
         <span className={`tapalka-glow${drinking ? ' tapalka-glow--active' : ''}`} aria-hidden="true" />
-        <span className="tapalka-portrait-wrap">
-          <img
-            src={heroPortraitUrl(BREWMASTER_ID)}
-            alt="Brewmaster"
-            width={120}
-            height={75}
-            className={`tapalka-portrait${drinking ? ' tapalka-portrait--drinking' : ''}`}
-          />
+        <span className={`tapalka-portrait-wrap${drinking ? ' tapalka-portrait-wrap--drinking' : ''}`}>
+          <Suspense
+            fallback={
+              <img
+                src={heroPortraitUrl(BREWMASTER_ID)}
+                alt="Brewmaster"
+                width={MODEL_WIDTH}
+                height={MODEL_HEIGHT}
+                className="tapalka-portrait"
+              />
+            }
+          >
+            <TapalkaModel3D drinking={drinking} width={MODEL_WIDTH} height={MODEL_HEIGHT} />
+          </Suspense>
           {drinking && (
             <span key={drinkKey} className="tapalka-mug" aria-hidden="true">
               <svg viewBox="0 0 24 24" width="26" height="26">

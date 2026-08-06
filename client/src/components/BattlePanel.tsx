@@ -132,9 +132,9 @@ export default function BattlePanel({ draftId, heroes }: Props) {
       {error && <p className="error-text">{error}</p>}
 
       {result && !loading && (
-        <div className="battle-result">
+        <div className={`battle-result battle-result--${result.resolvedOutcome === 'Win' ? 'win' : 'lose'}`}>
           <ScreenFlash outcome={result.resolvedOutcome} flashKey={battleCount} />
-          <p className="battle-outcome">
+          <p className={`battle-outcome battle-outcome--${result.resolvedOutcome === 'Win' ? 'win' : 'lose'}`}>
             {result.resolvedOutcome === 'Win' ? t('battle.victory') : t('battle.defeat')} —{' '}
             {t('battle.confidence', { tier: t(`battle.tier.${result.confidenceTier}`) })}
           </p>

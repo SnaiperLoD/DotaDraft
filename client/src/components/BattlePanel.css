@@ -10,14 +10,40 @@
 
 .battle-result {
   margin-top: 8px;
+  padding: 14px 16px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+}
+
+/* Persistent win/lose read on the result itself — ScreenFlash (rendered
+   inside this block) already does a big transient flash, but it fades
+   over 2.2s and leaves the result area looking outcome-neutral. This is
+   the "still there after the flash" signal, same green/red vocabulary as
+   the synergy-best/worst hero-card highlight (HeroPool.css) so win/lose
+   reads consistently with the rest of the app, not a one-off color pick. */
+.battle-result--win {
+  background: linear-gradient(180deg, rgba(76, 175, 106, 0.12), transparent 70%);
+  border-color: rgba(76, 175, 106, 0.35);
+}
+
+.battle-result--lose {
+  background: linear-gradient(180deg, rgba(200, 90, 74, 0.14), transparent 70%);
+  border-color: rgba(200, 90, 74, 0.4);
 }
 
 .battle-outcome {
   font-family: var(--font-display);
   font-size: 22px;
   font-weight: 700;
-  color: var(--gold);
   margin: 0 0 4px;
+}
+
+.battle-outcome--win {
+  color: #4caf6a;
+}
+
+.battle-outcome--lose {
+  color: var(--danger);
 }
 
 .battle-vs {

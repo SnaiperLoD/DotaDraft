@@ -34,4 +34,15 @@ export interface EvaluationResult {
   totalScore: number;
   breakdown: AnalyzerResult[];
   summary: EvaluationSummary;
+  // Custom Tags active for this draft (shared/customTags.ts's
+  // activeCustomTagsForTeam) — always-visible tags plus revealable ones
+  // whose reveal condition the team's own composition already clears.
+  // Evaluation-Engine-only display; doesn't move totalScore (Custom Tags
+  // stay a Battle Engine mechanic, see Core Rules Separation).
+  customTags: { name: string; rarity: string; description: string }[];
+  // camp_stacking's axis card was removed from `breakdown` (2026-08-06, by
+  // user request — see Blueprint/10-tech-debt-backlog.md) in favor of a
+  // single note, present only when the team's camp_stacking percentile
+  // clears 70 — null otherwise, including whenever it's just unremarkable.
+  campStackingNote: string | null;
 }

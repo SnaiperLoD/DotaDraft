@@ -9,9 +9,10 @@ import { createProSimilarityAnalyzer } from './analyzers/pro-similarity.analyzer
 import { percentileBracket } from './score-narrative';
 import type { Analyzer, DraftPick } from './analyzer.interface';
 import type { EvaluationResult, EvaluationSummary, AnalyzerResult } from 'shared';
+import { activeCustomTagsForTeam } from 'shared';
 
-// Categories eligible for the strengths/weaknesses summary. map_control
-// deliberately absent — see BASE_ANALYZERS below.
+// Categories eligible for the strengths/weaknesses summary. map_control and
+// camp_stacking deliberately absent — see BASE_ANALYZERS below.
 const SUMMARY_KEYS = [
   'synergy',
   'counter',
@@ -26,10 +27,15 @@ const SUMMARY_KEYS = [
   'objectives',
   'initiating',
   'skirmish_rate',
-  'camp_stacking',
   'resource_efficiency',
   'proSimilarity',
 ];
+
+// camp_stacking's percentile threshold for the standalone note (evaluate()
+// below) — same 70 the rest of the app already uses for "top X%" framing
+// (score-narrative.ts's percentileBracket, EvaluationPanel.tsx's
+// percentileLabel).
+const CAMP_STACKING_NOTE_THRESHOLD = 70;
 
 // Order matches Blueprint/05-evaluation-engine.md's Output breakdown list.
 // Synergy and Pro Similarity are built per-evaluate() call since both
@@ -67,7 +73,14 @@ const BASE_ANALYZERS: Analyzer[] = [
   createAxisAnalyzer('durability', 'Durability'),
   createAxisAnalyzer('initiating', 'Initiating'),
   createAxisAnalyzer('skirmish_rate', 'Skirmish Rate'),
-  createAxisAnalyzer('camp_stacking', 'Camp Stacking'),
+  // camp_stacking deliberately NOT in this list — 2026-08-06, by explicit
+  // user request. Not the same treatment as map_control below (that one's
+  // a "weak signal, hide it" call) — camp_stacking is real-data-validated
+  // and stays fully weighted; it just doesn't earn a full breakdown card
+  // for every draft. Still computed (see evaluate()'s campStackingNote)
+  // and surfaced as a single sentence when the team's percentile clears
+  // CAMP_STACKING_NOTE_THRESHOLD, same narrative text the card used to
+  // show, just not promoted to a whole category when it isn't notable.
   createAxisAnalyzer('mobility', 'Mobility'),
   // map_control deliberately NOT in this list — 2026-08-03, by explicit
   // user request. Blueprint/10-tech-debt-backlog.md: this axis's real-data
@@ -130,7 +143,9 @@ const WEIGHTS: Record<string, number> = {
   // real-data-validated; that's a separate tuning decision for later, not
   // bundled into "add the axis" (Blueprint/10-tech-debt-backlog.md).
   skirmish_rate: 0.05,
-  camp_stacking: 0.05,
+  // camp_stacking entry intentionally removed (not just zeroed) — see
+  // BASE_ANALYZERS above, the axis isn't in breakdown at all anymore, so
+  // it can't contribute to weightedTotal() either.
   proSimilarity: 0.05,
   // resource_efficiency deliberately absent, same treatment as `counter`
   // above — shown as an informational breakdown/strengths-weaknesses item
@@ -187,7 +202,39 @@ export class EvaluationService {
 
     const totalScore = this.weightedTotal(breakdown);
     const summary = this.buildSummary(breakdown);
-    const result: EvaluationResult = { draftId, totalScore, breakdown, summary };
+
+    // camp_stacking: computed the same way as any other axis card, just
+    // not added to `breakdown` — only surfaces as a note when it's
+    // actually notable (percentile > threshold), per user request (see
+    // BASE_ANALYZERS comment above for why this axis specifically gets
+    // this treatment rather than being dropped like map_control).
+    const campStackingResult = createAxisAnalyzer('camp_stacking', 'Camp Stacking').analyze(picks);
+    const campStackingNote =
+      campStackingResult.percentile !== null && campStackingResult.percentile > CAMP_STACKING_NOTE_THRESHOLD
+        ? campStackingResult.explanation[campStackingResult.explanation.length - 1]
+        : null;
+
+    // Custom Tags active for this exact 5-hero team (shared/customTags.ts)
+    // — Blueprint/10-tech-debt-backlog.md, "Новая категория Custom Tags в
+    // Evaluation breakdown". Reads the same neutral/shared tag roster the
+    // client already uses for hero-card badges, not server/src/battle's
+    // numeric magnitudes (Core Rules Separation — Evaluation Engine stays
+    // independent of Battle Engine's actual math, this only surfaces
+    // WHICH combos are active and what they do, not a computed value).
+    const customTags = activeCustomTagsForTeam(picks.map((p) => p.hero.name)).map((t) => ({
+      name: t.name,
+      rarity: t.rarity,
+      description: t.description,
+    }));
+
+    const result: EvaluationResult = {
+      draftId,
+      totalScore,
+      breakdown,
+      summary,
+      customTags,
+      campStackingNote,
+    };
 
     // Persisted for History (Blueprint/10-tech-debt-backlog.md, "Сохранять
     // в истории результаты боёв") — best-effort, not on the critical path:

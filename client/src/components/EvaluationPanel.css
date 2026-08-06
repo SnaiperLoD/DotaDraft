@@ -37,7 +37,7 @@
 }
 
 .evaluation-gameplan {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.65;
   color: var(--ink);
   background: rgba(255, 255, 255, 0.03);
@@ -45,6 +45,76 @@
   border-radius: 8px;
   padding: 12px 14px;
   margin: 12px 0 20px;
+}
+
+/* camp_stacking's standalone note (Blueprint/10-tech-debt-backlog.md,
+   "Camp Stacking: убрать как отдельную категорию") — same narrative
+   sentence the axis card used to show, just demoted to a single line
+   rather than a full breakdown category, and only rendered when the
+   server decides it's actually notable (percentile > 70). Lighter than
+   .evaluation-gameplan (no border/background) so it doesn't compete with
+   the gameplan paragraph for attention right above it. */
+.evaluation-note {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-muted);
+  margin: -12px 0 20px;
+}
+
+/* Active Combos (Blueprint/10-tech-debt-backlog.md, "Новая категория
+   Custom Tags") — reuses .hero-tag-badge/.rarity-* from HeroTagBadges.css
+   rather than redefining the same rarity-color system here; that file is
+   already globally loaded (Vite bundles all CSS into one stylesheet
+   regardless of which component imports it, same reasoning documented in
+   LegendPanel.css for reusing .percentile-pill). Description shown as
+   real body text here, not just a badge hover-tooltip — this is the one
+   place a player sees what a combo actually does, not just that it's
+   active. */
+.evaluation-combos {
+  padding: 14px 18px;
+  margin-bottom: 20px;
+}
+
+.evaluation-combos-heading {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  margin-bottom: 12px;
+}
+
+.evaluation-combos ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.evaluation-combos li {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+}
+
+/* Bigger than the default .hero-tag-badge (HeroTagBadges.css, 9px — sized
+   for a tiny overlay on a hero-card portrait) — scoped to this section
+   only, not a global size bump, since the hero-card badges elsewhere stay
+   small on purpose. */
+.evaluation-combos .hero-tag-badge {
+  font-size: 12px;
+  padding: 4px 9px;
+}
+
+.evaluation-combos-description {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-muted);
+  flex: 1;
+  min-width: 200px;
 }
 
 .evaluation-summary {
@@ -77,9 +147,17 @@
 }
 
 .evaluation-summary-col li {
-  font-size: 14px;
+  font-size: 15.5px;
   line-height: 1.5;
   color: var(--ink-muted);
+}
+
+.evaluation-summary-col li strong,
+.evaluation-item li strong,
+.evaluation-gameplan strong,
+.evaluation-note strong {
+  font-weight: 700;
+  color: var(--ink);
 }
 
 .evaluation-breakdown {
@@ -148,7 +226,7 @@
 }
 
 .evaluation-item li {
-  font-size: 14.5px;
+  font-size: 16px;
   line-height: 1.55;
   color: var(--ink-muted);
 }

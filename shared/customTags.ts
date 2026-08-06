@@ -244,7 +244,7 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
     visible: true,
     revealable: false,
     description:
-      "Team-wide damage amplification (auras/debuffs) that Battle Engine's real-data-only synergy signal mostly misses. +3% team teamfight/burst, active even solo; +1% more per additional Mass Buffer hero on the team.",
+      'Team-wide damage amplification (auras/debuffs). +3% team teamfight/burst, active even solo; +1% more per additional Mass Buffer hero on the team.',
     heroNames: ['Vengeful Spirit', 'Mirana', 'Luna', 'Drow Ranger'],
   },
   {
@@ -261,6 +261,27 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
 export function heroNameSetForTag(tagName: string): Set<string> {
   const def = CUSTOM_TAG_DEFINITIONS.find((t) => t.name === tagName);
   return new Set(def?.heroNames ?? []);
+}
+
+// Team-level view of the same visibility rule visibleTagsFor() (client
+// customTags.ts) applies per-hero: a tag counts as "active for this draft"
+// if it's always-visible on ANY teammate, or revealable and the team's own
+// count of carriers already clears its minCountToReveal — same reveal
+// condition, just read once for the whole 5-hero team instead of once per
+// hero-card. De-duplicated (a tag with 3 carriers only appears once, not
+// 3 times) — this is what Evaluation Engine's "active combos" summary
+// reads (evaluation.service.ts), so a team either shows a tag or doesn't,
+// it doesn't matter how many copies triggered it.
+export function activeCustomTagsForTeam(heroNames: string[]): CustomTagDefinition[] {
+  const active: CustomTagDefinition[] = [];
+  for (const def of CUSTOM_TAG_DEFINITIONS) {
+    const carriers = heroNames.filter((n) => def.heroNames.includes(n)).length;
+    if (carriers === 0) continue;
+    if (def.visible || (def.revealable && carriers >= (def.minCountToReveal ?? 1))) {
+      active.push(def);
+    }
+  }
+  return active;
 }
 
 // Per-hero view of the same definitions, for badge rendering.

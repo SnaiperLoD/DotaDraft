@@ -1,6 +1,18 @@
 .top-contributor {
   padding: 14px 18px;
   margin: 4px 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Multiple cards now (one per top-3 breakdown item by percentile, see
+   TopContributorHighlight.tsx) — separated by a hairline rather than
+   nested panels, so it still reads as one cohesive block, not 3 stacked
+   boxes. */
+.top-contributor-card + .top-contributor-card {
+  padding-top: 16px;
+  border-top: 1px solid var(--bronze-dim);
 }
 
 .top-contributor-heading {

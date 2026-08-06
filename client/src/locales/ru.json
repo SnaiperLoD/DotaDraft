@@ -77,7 +77,8 @@
     "weaknesses": "Слабые стороны",
     "notAvailable": "Н/Д",
     "viewMatch": "Матч на OpenDota →",
-    "topContributorHeading": "Топ-контрибьютор: {{axis}}"
+    "topContributorHeading": "Топ-контрибьютор: {{axis}}",
+    "activeCombos": "Активные комбо"
   },
   "commitToPool": {
     "committing": "Отправляем…",

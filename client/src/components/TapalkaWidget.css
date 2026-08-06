@@ -22,35 +22,53 @@
   border-radius: 4px;
 }
 
-/* Idle sway — the widget no longer looks like a frozen screenshot even
-   before the first click. Small enough (±1.5deg, 1.5% scale) to read as
-   "breathing," not distracting next to the draft UI it sits beside. */
+/* The model itself provides idle motion now (TapalkaModel3D.tsx's
+   continuous turntable rotation) — this wrapper just adds a gentle
+   vertical float on top (no rotate/scale, that would fight the 3D spin
+   visually) so it still reads as "alive" while the three.js chunk is
+   loading and the Suspense fallback (static portrait) is showing. */
 .tapalka-portrait-wrap {
   position: relative;
   display: inline-block;
-  transform-origin: 50% 100%;
-  animation: tapalka-idle-sway 3.4s ease-in-out infinite;
+  animation: tapalka-idle-float 3.4s ease-in-out infinite;
 }
 
 .tapalka-button:hover .tapalka-portrait-wrap {
   animation-play-state: paused;
 }
 
-@keyframes tapalka-idle-sway {
+@keyframes tapalka-idle-float {
   0%,
   100% {
-    transform: rotate(-1deg) scale(1);
+    transform: translateY(0);
   }
   50% {
-    transform: rotate(1.2deg) scale(1.015);
+    transform: translateY(-4px);
   }
+}
+
+.tapalka-model3d {
+  display: block;
+  border-radius: 4px;
+  border: 1px solid var(--bronze-dim);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  transition: border-color 0.18s ease;
+}
+
+.tapalka-model3d canvas {
+  display: block;
+}
+
+.tapalka-button:hover .tapalka-model3d {
+  border-color: var(--gold);
 }
 
 .tapalka-portrait {
   display: block;
   border-radius: 4px;
   border: 1px solid var(--bronze-dim);
-  transform-origin: 70% 100%;
   position: relative;
   z-index: 1;
 }
@@ -59,32 +77,29 @@
   border-color: var(--gold);
 }
 
-/* Click sequence — a bigger "chug" than the old single swing: leans back
-   for the drink, a squash-stretch bounce on the catch, settles. Timing
+/* Click sequence — the 3D model spins up on its own (drinking prop), this
+   layers a squash-stretch punch on its container for extra impact. Timing
    (900ms) matches DRINK_ANIMATION_MS in the component, which is also when
    the mug/bubbles unmount. */
-.tapalka-portrait--drinking {
-  animation: tapalka-chug 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+.tapalka-portrait-wrap--drinking {
+  animation: tapalka-idle-float 3.4s ease-in-out infinite, tapalka-chug-punch 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@keyframes tapalka-chug {
+@keyframes tapalka-chug-punch {
   0% {
-    transform: rotate(0deg) scale(1);
+    transform: scale(1);
   }
-  20% {
-    transform: rotate(-16deg) scale(1.05);
+  30% {
+    transform: scale(1.08) translateY(-2px);
   }
-  45% {
-    transform: rotate(-20deg) scale(1.07);
+  55% {
+    transform: scale(0.96);
   }
-  65% {
-    transform: rotate(10deg) scale(0.97);
-  }
-  82% {
-    transform: rotate(-4deg) scale(1.03);
+  80% {
+    transform: scale(1.03);
   }
   100% {
-    transform: rotate(0deg) scale(1);
+    transform: scale(1);
   }
 }
 
@@ -123,8 +138,8 @@
    beat, then tips back and fades. Pure CSS/SVG, no image asset. */
 .tapalka-mug {
   position: absolute;
-  right: 6px;
-  bottom: 14px;
+  right: 10px;
+  bottom: 55px;
   z-index: 2;
   transform-origin: 80% 90%;
   filter: drop-shadow(0 2px 3px var(--shadow-deep));
@@ -170,7 +185,7 @@
    also set inline so they fan out instead of stacking. */
 .tapalka-bubble {
   position: absolute;
-  bottom: 20px;
+  bottom: 60px;
   width: 5px;
   height: 5px;
   border-radius: 50%;
@@ -230,10 +245,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tapalka-portrait-wrap {
+  .tapalka-portrait-wrap,
+  .tapalka-portrait-wrap--drinking {
     animation: none;
   }
-  .tapalka-portrait--drinking,
   .tapalka-glow--active,
   .tapalka-mug,
   .tapalka-bubble {
