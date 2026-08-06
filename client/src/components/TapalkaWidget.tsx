@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { heroPortraitUrl } from '../utils/heroIcon';
 import './TapalkaWidget.css';
@@ -8,13 +8,26 @@ import './TapalkaWidget.css';
 // (Monetization rule, Blueprint/00-project-overview.md: no real
 // upgrades/currency from clicking). By explicit user decision, this uses
 // Brewmaster's real static portrait (already in the app's asset set) with
-// a CSS swing on click, rather than an original non-Dota mascot — legal/IP
-// risk from Valve's non-commercial fan-content terms is explicitly
-// accepted for now, deferred to when ad monetization actually goes live
-// (see Blueprint/10-tech-debt-backlog.md for the research that flagged
-// this). Click counter is session-only (component state) — no
-// localStorage, no server call, resets on reload by design.
+// a CSS animation on click, rather than an original non-Dota mascot or a
+// full 3D model — legal/IP risk from Valve's non-commercial fan-content
+// terms is explicitly accepted for now, deferred to when ad monetization
+// actually goes live (see Blueprint/10-tech-debt-backlog.md for the
+// research that flagged this).
+//
+// A real animated-model pass was investigated for this exact widget
+// (Blueprint/10-tech-debt-backlog.md, "Анимированные портреты / 3D-модели")
+// — a public glTF source exists (pissang/dota2hero), but its animations
+// ship as raw Source-engine .smd files, not glTF-embedded clips, so
+// playing them needs a from-scratch SMD parser plus bone-mapping onto the
+// glTF skeleton with no guarantee the rig lines up — a multi-session spike,
+// not a same-pass UI fix. This is a richer CSS-only animation instead:
+// continuous idle sway (the widget no longer looks frozen at rest) plus a
+// multi-stage "drink" sequence on click (chug tilt, a tankard that tips and
+// pours, rising foam bubbles, a warm glow pulse).
+// Click counter is session-only (component state) — no localStorage, no
+// server call, resets on reload by design.
 const BREWMASTER_ID = 78;
+const DRINK_ANIMATION_MS = 900;
 
 // A handful of Brewmaster's own real in-game lines (Blueprint/10-tech-debt-backlog.md
 // research pass) — always shown in English regardless of the UI language,
@@ -34,16 +47,27 @@ const VOICE_LINES = [
 
 const VOICE_LINE_CHANCE = 0.01;
 const VOICE_LINE_DISPLAY_MS = 3000;
+const BUBBLE_COUNT = 6;
 
 export default function TapalkaWidget() {
   const { t } = useTranslation();
   const [clicks, setClicks] = useState(0);
-  const [swingKey, setSwingKey] = useState(0);
+  const [drinkKey, setDrinkKey] = useState(0);
+  const [drinking, setDrinking] = useState(false);
   const [voiceLine, setVoiceLine] = useState<string | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  }, []);
 
   const handleClick = () => {
     setClicks((c) => c + 1);
-    setSwingKey((k) => k + 1);
+    setDrinkKey((k) => k + 1);
+    setDrinking(true);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => setDrinking(false), DRINK_ANIMATION_MS);
+
     if (Math.random() < VOICE_LINE_CHANCE) {
       const line = VOICE_LINES[Math.floor(Math.random() * VOICE_LINES.length)];
       setVoiceLine(line);
@@ -56,7 +80,47 @@ export default function TapalkaWidget() {
       <div className="tapalka-heading">{t('tapalka.heading')}</div>
       <button type="button" className="tapalka-button" onClick={handleClick} aria-label={t('tapalka.heading')}>
         {voiceLine && <span className="tapalka-speech-bubble">{voiceLine}</span>}
-        <img key={swingKey} src={heroPortraitUrl(BREWMASTER_ID)} alt="Brewmaster" width={120} height={75} className="tapalka-portrait" />
+        <span className={`tapalka-glow${drinking ? ' tapalka-glow--active' : ''}`} aria-hidden="true" />
+        <span className="tapalka-portrait-wrap">
+          <img
+            src={heroPortraitUrl(BREWMASTER_ID)}
+            alt="Brewmaster"
+            width={120}
+            height={75}
+            className={`tapalka-portrait${drinking ? ' tapalka-portrait--drinking' : ''}`}
+          />
+          {drinking && (
+            <span key={drinkKey} className="tapalka-mug" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="26" height="26">
+                <path
+                  d="M5 8h11v9a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V8Z"
+                  fill="var(--gold-bright)"
+                  stroke="var(--bronze)"
+                  strokeWidth="1.2"
+                />
+                <path
+                  d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16"
+                  fill="none"
+                  stroke="var(--bronze)"
+                  strokeWidth="1.4"
+                />
+                <path d="M6 8h9" stroke="var(--gold)" strokeWidth="1.2" />
+              </svg>
+              <span className="tapalka-mug-foam" />
+            </span>
+          )}
+          {drinking &&
+            Array.from({ length: BUBBLE_COUNT }, (_, i) => (
+              <span
+                key={`${drinkKey}-bubble-${i}`}
+                className="tapalka-bubble"
+                style={{
+                  left: `${18 + i * 12 + (i % 2 === 0 ? -4 : 4)}%`,
+                  animationDelay: `${i * 60}ms`,
+                }}
+              />
+            ))}
+        </span>
       </button>
       <div className="tapalka-count">{t('tapalka.clicks', { count: clicks })}</div>
     </div>

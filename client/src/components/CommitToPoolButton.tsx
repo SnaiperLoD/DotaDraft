@@ -31,6 +31,7 @@ export default function CommitToPoolButton({ draftId }: Props) {
   return (
     <div>
       <button className="btn btn-secondary" onClick={() => void handleCommit()} disabled={status === 'loading'}>
+        {status === 'loading' && <span className="btn-spinner" aria-hidden="true" />}
         {status === 'loading' ? t('commitToPool.committing') : t('commitToPool.commit')}
       </button>
       {status === 'error' && <p className="error-text">{error}</p>}

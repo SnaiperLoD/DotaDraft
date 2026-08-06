@@ -70,6 +70,7 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
     return (
       <div className="evaluation-panel">
         <button className="btn btn-primary" onClick={() => void handleEvaluate()} disabled={loading}>
+          {loading && <span className="btn-spinner" aria-hidden="true" />}
           {loading ? t('evaluation.evaluating') : t('evaluation.evaluateDraft')}
         </button>
         {error && <p className="error-text">{error}</p>}

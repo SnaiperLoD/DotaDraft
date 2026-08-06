@@ -22,30 +22,175 @@
   border-radius: 4px;
 }
 
+/* Idle sway — the widget no longer looks like a frozen screenshot even
+   before the first click. Small enough (±1.5deg, 1.5% scale) to read as
+   "breathing," not distracting next to the draft UI it sits beside. */
+.tapalka-portrait-wrap {
+  position: relative;
+  display: inline-block;
+  transform-origin: 50% 100%;
+  animation: tapalka-idle-sway 3.4s ease-in-out infinite;
+}
+
+.tapalka-button:hover .tapalka-portrait-wrap {
+  animation-play-state: paused;
+}
+
+@keyframes tapalka-idle-sway {
+  0%,
+  100% {
+    transform: rotate(-1deg) scale(1);
+  }
+  50% {
+    transform: rotate(1.2deg) scale(1.015);
+  }
+}
+
 .tapalka-portrait {
   display: block;
   border-radius: 4px;
   border: 1px solid var(--bronze-dim);
   transform-origin: 70% 100%;
-  animation: tapalka-swing 0.4s ease-out;
+  position: relative;
+  z-index: 1;
 }
 
 .tapalka-button:hover .tapalka-portrait {
   border-color: var(--gold);
 }
 
-@keyframes tapalka-swing {
+/* Click sequence — a bigger "chug" than the old single swing: leans back
+   for the drink, a squash-stretch bounce on the catch, settles. Timing
+   (900ms) matches DRINK_ANIMATION_MS in the component, which is also when
+   the mug/bubbles unmount. */
+.tapalka-portrait--drinking {
+  animation: tapalka-chug 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes tapalka-chug {
   0% {
     transform: rotate(0deg) scale(1);
   }
-  30% {
-    transform: rotate(-14deg) scale(1.04);
+  20% {
+    transform: rotate(-16deg) scale(1.05);
   }
-  60% {
-    transform: rotate(8deg) scale(1.02);
+  45% {
+    transform: rotate(-20deg) scale(1.07);
+  }
+  65% {
+    transform: rotate(10deg) scale(0.97);
+  }
+  82% {
+    transform: rotate(-4deg) scale(1.03);
   }
   100% {
     transform: rotate(0deg) scale(1);
+  }
+}
+
+/* Warm pulse behind the portrait on click — same "punch" idiom as
+   ScreenFlash's win/lose flash, scaled way down for a small widget. */
+.tapalka-glow {
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--gold-bright) 0%, transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.tapalka-glow--active {
+  animation: tapalka-glow-pulse 0.9s ease-out;
+}
+
+@keyframes tapalka-glow-pulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  25% {
+    opacity: 0.55;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.25);
+  }
+}
+
+/* Tankard — rises into view near the mouth, tips up to "pour," holds a
+   beat, then tips back and fades. Pure CSS/SVG, no image asset. */
+.tapalka-mug {
+  position: absolute;
+  right: 6px;
+  bottom: 14px;
+  z-index: 2;
+  transform-origin: 80% 90%;
+  filter: drop-shadow(0 2px 3px var(--shadow-deep));
+  animation: tapalka-mug-pour 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes tapalka-mug-pour {
+  0% {
+    opacity: 0;
+    transform: translateY(6px) rotate(0deg) scale(0.6);
+  }
+  22% {
+    opacity: 1;
+    transform: translateY(-6px) rotate(-55deg) scale(1);
+  }
+  55% {
+    opacity: 1;
+    transform: translateY(-8px) rotate(-65deg) scale(1);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(-4px) rotate(-10deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(4px) rotate(0deg) scale(0.8);
+  }
+}
+
+.tapalka-mug-foam {
+  position: absolute;
+  top: -3px;
+  left: 3px;
+  width: 8px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ink);
+  opacity: 0.85;
+}
+
+/* Foam bubbles rising off the tankard while it pours — staggered via
+   animation-delay set inline per bubble (component), horizontal position
+   also set inline so they fan out instead of stacking. */
+.tapalka-bubble {
+  position: absolute;
+  bottom: 20px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold-bright);
+  opacity: 0;
+  z-index: 2;
+  animation: tapalka-bubble-rise 0.7s ease-out both;
+}
+
+@keyframes tapalka-bubble-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.6);
+  }
+  30% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-28px) scale(1);
   }
 }
 
@@ -82,4 +227,16 @@
   transform: translateX(-50%);
   border: 6px solid transparent;
   border-top-color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tapalka-portrait-wrap {
+    animation: none;
+  }
+  .tapalka-portrait--drinking,
+  .tapalka-glow--active,
+  .tapalka-mug,
+  .tapalka-bubble {
+    animation: none;
+  }
 }

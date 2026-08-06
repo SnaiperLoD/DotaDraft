@@ -110,6 +110,35 @@ select {
   border-color: var(--gold);
 }
 
+/* Inline loading spinner for buttons mid-request (Evaluate Draft, Enter
+   Battle, etc.) — replaces the old text-only "Evaluating..." label with a
+   visible cue, not just a word change. currentColor so it matches whichever
+   button variant it's dropped into without its own color variable. */
+.btn-spinner {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 8px;
+  vertical-align: -1px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  opacity: 0.85;
+  animation: btn-spin 0.7s linear infinite;
+}
+
+@keyframes btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-spinner {
+    animation-duration: 1.6s;
+  }
+}
+
 /* ---------- panel ---------- */
 
 .panel {
