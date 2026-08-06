@@ -1,3 +1,5 @@
+import type { Hero } from 'shared';
+
 // Role-fit modifier (Blueprint/10-tech-debt-backlog.md, "Оценка героя не
 // учитывает назначенную роль"): when a hero is assigned a role, axes that
 // role cares about get a boost IF the hero is already strong on them — this
@@ -111,4 +113,24 @@ export function roleFitValue(
 export function isRoleFitAxis(axisKey: string, assignedRole: string | null): boolean {
   if (!assignedRole) return false;
   return ROLE_AXES[assignedRole]?.includes(axisKey) ?? false;
+}
+
+// Support-miscast penalty (Blueprint/10-tech-debt-backlog.md, 2026-08-06, by
+// direct user request): a hero who essentially never plays Support in real
+// games (presumed_positions' Support share below SUPPORT_MISCAST_THRESHOLD)
+// but gets assigned Hard/Soft Support anyway takes a flat penalty across
+// EVERY stat, not just the axes ROLE_AXES cares about — unlike the
+// boost/dampen above, this isn't about rewarding or forgiving a specific
+// axis, it's "the model doesn't know how to play this hero out of position
+// at all." Personal (per-hero), not team-wide, unlike hard-carry stacking.
+const SUPPORT_MISCAST_THRESHOLD = 0.05;
+const SUPPORT_MISCAST_PENALTY = 0.9; // -10%
+
+export function supportMiscastMultiplier(hero: Hero, assignedRole: string | null): number {
+  if (assignedRole !== 'Hard Support' && assignedRole !== 'Soft Support') return 1;
+  // Optional chaining: heroes.json-only Hero objects (scripts that bypass
+  // HeroService/SQLite) don't carry presumed_positions — see the identical
+  // comment in common/hard-carry.ts's isHardCarry().
+  const supportShare = hero.presumed_positions?.find((p) => p.position === 'Support')?.share ?? 0;
+  return supportShare < SUPPORT_MISCAST_THRESHOLD ? SUPPORT_MISCAST_PENALTY : 1;
 }

@@ -7,11 +7,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.58
-        },
-        {
-          "position": "Mid",
-          "share": 0.309
+          "share": 0.909
         }
       ],
       "winRate": 0.4929432937610508,
@@ -1054,11 +1050,7 @@
       "positions": [
         {
           "position": "Offlane",
-          "share": 0.528
-        },
-        {
-          "position": "Mid",
-          "share": 0.254
+          "share": 0.908
         }
       ],
       "winRate": 0.5124661675676083,
@@ -3144,11 +3136,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.653
-        },
-        {
-          "position": "Mid",
-          "share": 0.347
+          "share": 1
         }
       ],
       "winRate": 0.5148933562147585,
@@ -5204,11 +5192,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.616
-        },
-        {
-          "position": "Mid",
-          "share": 0.264
+          "share": 1
         }
       ],
       "winRate": 0.5178042927044377,
@@ -6251,11 +6235,11 @@
       "positions": [
         {
           "position": "Offlane",
-          "share": 0.333
+          "share": 0.426
         },
         {
           "position": "Mid",
-          "share": 0.3
+          "share": 0.374
         }
       ],
       "winRate": 0.5092876793306504,
@@ -7298,11 +7282,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.607
-        },
-        {
-          "position": "Mid",
-          "share": 0.257
+          "share": 1
         }
       ],
       "winRate": 0.52070231978989,
@@ -9383,11 +9363,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.601
-        },
-        {
-          "position": "Mid",
-          "share": 0.27
+          "share": 1
         }
       ],
       "winRate": 0.4730570680998515,
@@ -10430,11 +10406,11 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.616
+          "share": 0.556
         },
         {
           "position": "Mid",
-          "share": 0.302
+          "share": 0.444
         }
       ],
       "winRate": 0.4825330756652297,
@@ -11477,7 +11453,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.579
+          "share": 1
         }
       ],
       "winRate": 0.5268026398932809,
@@ -12520,11 +12496,7 @@
       "positions": [
         {
           "position": "Mid",
-          "share": 0.535
-        },
-        {
-          "position": "Offlane",
-          "share": 0.286
+          "share": 1
         }
       ],
       "winRate": 0.490197147765386,
@@ -14609,16 +14581,12 @@
       "heroId": 15,
       "positions": [
         {
-          "position": "Mid",
-          "share": 0.405
-        },
-        {
           "position": "Carry",
-          "share": 0.323
+          "share": 0.439
         },
         {
           "position": "Offlane",
-          "share": 0.272
+          "share": 0.404
         }
       ],
       "winRate": 0.4998945243046138,
@@ -15660,12 +15628,12 @@
       "heroId": 16,
       "positions": [
         {
-          "position": "Offlane",
-          "share": 0.503
+          "position": "Mid",
+          "share": 0.693
         },
         {
-          "position": "Mid",
-          "share": 0.382
+          "position": "Offlane",
+          "share": 0.307
         }
       ],
       "winRate": 0.4651494759166361,
@@ -16708,11 +16676,7 @@
       "positions": [
         {
           "position": "Mid",
-          "share": 0.509
-        },
-        {
-          "position": "Offlane",
-          "share": 0.301
+          "share": 0.979
         }
       ],
       "winRate": 0.4764522437760981,
@@ -17755,11 +17719,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.63
-        },
-        {
-          "position": "Mid",
-          "share": 0.273
+          "share": 1
         }
       ],
       "winRate": 0.5064395195225829,
@@ -18802,11 +18762,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.463
-        },
-        {
-          "position": "Mid",
-          "share": 0.321
+          "share": 0.67
         }
       ],
       "winRate": 0.4496717065237034,
@@ -20895,8 +20851,12 @@
           "share": 0.42
         },
         {
+          "position": "Offlane",
+          "share": 0.27
+        },
+        {
           "position": "Carry",
-          "share": 0.254
+          "share": 0.259
         }
       ],
       "winRate": 0.49053651547713306,
@@ -22981,16 +22941,12 @@
       "heroId": 23,
       "positions": [
         {
-          "position": "Carry",
-          "share": 0.35
-        },
-        {
           "position": "Mid",
-          "share": 0.331
+          "share": 0.496
         },
         {
           "position": "Offlane",
-          "share": 0.319
+          "share": 0.463
         }
       ],
       "winRate": 0.4948667633592128,
@@ -24032,12 +23988,8 @@
       "heroId": 25,
       "positions": [
         {
-          "position": "Carry",
-          "share": 0.526
-        },
-        {
           "position": "Mid",
-          "share": 0.31
+          "share": 0.886
         }
       ],
       "winRate": 0.5092323422682893,
@@ -26459,7 +26411,7 @@
       "positions": [
         {
           "position": "Offlane",
-          "share": 0.722
+          "share": 0.727
         }
       ],
       "winRate": 0.49236399604352127,
@@ -27502,11 +27454,7 @@
       "positions": [
         {
           "position": "Offlane",
-          "share": 0.565
-        },
-        {
-          "position": "Mid",
-          "share": 0.297
+          "share": 0.964
         }
       ],
       "winRate": 0.49461987930649126,
@@ -30634,12 +30582,12 @@
       "heroId": 32,
       "positions": [
         {
-          "position": "Offlane",
-          "share": 0.432
+          "position": "Mid",
+          "share": 0.688
         },
         {
-          "position": "Mid",
-          "share": 0.383
+          "position": "Carry",
+          "share": 0.312
         }
       ],
       "winRate": 0.5168640867572539,
@@ -31677,11 +31625,7 @@
       "positions": [
         {
           "position": "Offlane",
-          "share": 0.583
-        },
-        {
-          "position": "Mid",
-          "share": 0.283
+          "share": 0.867
         }
       ],
       "winRate": 0.5337154573838483,
@@ -32723,12 +32667,8 @@
       "heroId": 34,
       "positions": [
         {
-          "position": "Carry",
-          "share": 0.558
-        },
-        {
           "position": "Mid",
-          "share": 0.442
+          "share": 1
         }
       ],
       "winRate": 0.4891511989279503,
@@ -33770,12 +33710,12 @@
       "heroId": 35,
       "positions": [
         {
-          "position": "Carry",
-          "share": 0.522
+          "position": "Mid",
+          "share": 0.75
         },
         {
-          "position": "Mid",
-          "share": 0.314
+          "position": "Carry",
+          "share": 0.25
         }
       ],
       "winRate": 0.48719490659870374,
@@ -34817,12 +34757,12 @@
       "heroId": 36,
       "positions": [
         {
-          "position": "Carry",
-          "share": 0.614
+          "position": "Mid",
+          "share": 0.421
         },
         {
-          "position": "Mid",
-          "share": 0.285
+          "position": "Carry",
+          "share": 0.389
         }
       ],
       "winRate": 0.5083950808526752,
@@ -36907,12 +36847,12 @@
       "heroId": 38,
       "positions": [
         {
-          "position": "Mid",
-          "share": 0.403
+          "position": "Offlane",
+          "share": 0.529
         },
         {
-          "position": "Carry",
-          "share": 0.367
+          "position": "Mid",
+          "share": 0.293
         }
       ],
       "winRate": 0.4457240645668563,
@@ -37955,11 +37895,7 @@
       "positions": [
         {
           "position": "Mid",
-          "share": 0.459
-        },
-        {
-          "position": "Carry",
-          "share": 0.293
+          "share": 0.9
         }
       ],
       "winRate": 0.4612262363225136,
@@ -40045,11 +39981,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.484
-        },
-        {
-          "position": "Mid",
-          "share": 0.302
+          "share": 1
         }
       ],
       "winRate": 0.4999716480961697,
@@ -41091,16 +41023,12 @@
       "heroId": 42,
       "positions": [
         {
-          "position": "Mid",
-          "share": 0.352
-        },
-        {
           "position": "Carry",
-          "share": 0.333
+          "share": 0.518
         },
         {
           "position": "Offlane",
-          "share": 0.315
+          "share": 0.482
         }
       ],
       "winRate": 0.5310583153347732,
@@ -42142,12 +42070,12 @@
       "heroId": 43,
       "positions": [
         {
-          "position": "Offlane",
-          "share": 0.45
+          "position": "Mid",
+          "share": 0.547
         },
         {
-          "position": "Mid",
-          "share": 0.39
+          "position": "Offlane",
+          "share": 0.453
         }
       ],
       "winRate": 0.4742440584669171,
@@ -43190,11 +43118,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.488
-        },
-        {
-          "position": "Mid",
-          "share": 0.284
+          "share": 1
         }
       ],
       "winRate": 0.4907520841425882,
@@ -45280,7 +45204,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.707
+          "share": 0.797
         }
       ],
       "winRate": 0.46802993257760983,
@@ -46323,11 +46247,11 @@
       "positions": [
         {
           "position": "Mid",
-          "share": 0.421
+          "share": 0.669
         },
         {
           "position": "Offlane",
-          "share": 0.414
+          "share": 0.254
         }
       ],
       "winRate": 0.48839993296142886,
@@ -47370,7 +47294,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.754
+          "share": 1
         }
       ],
       "winRate": 0.4928058061874303,
@@ -48412,16 +48336,12 @@
       "heroId": 49,
       "positions": [
         {
-          "position": "Mid",
-          "share": 0.389
+          "position": "Carry",
+          "share": 0.457
         },
         {
           "position": "Offlane",
-          "share": 0.318
-        },
-        {
-          "position": "Carry",
-          "share": 0.294
+          "share": 0.313
         }
       ],
       "winRate": 0.4810038340885326,
@@ -51550,11 +51470,7 @@
       "positions": [
         {
           "position": "Mid",
-          "share": 0.442
-        },
-        {
-          "position": "Carry",
-          "share": 0.308
+          "share": 0.768
         }
       ],
       "winRate": 0.500575296108291,
@@ -51890,7 +51806,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.518
+          "share": 0.357
         }
       ],
       "winRate": 0.43274360125729683,
@@ -52933,11 +52849,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.52
-        },
-        {
-          "position": "Mid",
-          "share": 0.311
+          "share": 1
         }
       ],
       "winRate": 0.5256424612283747,
@@ -53980,11 +53892,7 @@
       "positions": [
         {
           "position": "Offlane",
-          "share": 0.511
-        },
-        {
-          "position": "Mid",
-          "share": 0.342
+          "share": 1
         }
       ],
       "winRate": 0.5000598635111945,
@@ -55027,11 +54935,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.489
-        },
-        {
-          "position": "Mid",
-          "share": 0.329
+          "share": 0.883
         }
       ],
       "winRate": 0.506896551724138,
@@ -56074,7 +55978,7 @@
       "positions": [
         {
           "position": "Offlane",
-          "share": 0.507
+          "share": 0.481
         },
         {
           "position": "Support",
@@ -58163,12 +58067,8 @@
       "heroId": 59,
       "positions": [
         {
-          "position": "Offlane",
-          "share": 0.419
-        },
-        {
           "position": "Mid",
-          "share": 0.358
+          "share": 0.818
         }
       ],
       "winRate": 0.4608013142283472,
@@ -59211,7 +59111,7 @@
       "positions": [
         {
           "position": "Offlane",
-          "share": 0.629
+          "share": 0.871
         }
       ],
       "winRate": 0.5400566536770114,
@@ -60249,11 +60149,15 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.667
+          "share": 0.394
         },
         {
           "position": "Mid",
-          "share": 0.333
+          "share": 0.338
+        },
+        {
+          "position": "Offlane",
+          "share": 0.268
         }
       ],
       "winRate": 0.5068181818181818,
@@ -62329,11 +62233,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.484
-        },
-        {
-          "position": "Mid",
-          "share": 0.283
+          "share": 0.765
         }
       ],
       "winRate": 0.47129384513567174,
@@ -64419,7 +64319,7 @@
       "positions": [
         {
           "position": "Offlane",
-          "share": 0.478
+          "share": 0.477
         },
         {
           "position": "Support",
@@ -66504,11 +66404,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.462
-        },
-        {
-          "position": "Mid",
-          "share": 0.333
+          "share": 1
         }
       ],
       "winRate": 0.534635608504585,
@@ -68584,15 +68480,7 @@
       "positions": [
         {
           "position": "Offlane",
-          "share": 0.357
-        },
-        {
-          "position": "Mid",
-          "share": 0.356
-        },
-        {
-          "position": "Carry",
-          "share": 0.288
+          "share": 0.838
         }
       ],
       "winRate": 0.48231198756007915,
@@ -69635,11 +69523,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.53
-        },
-        {
-          "position": "Mid",
-          "share": 0.313
+          "share": 1
         }
       ],
       "winRate": 0.48066824718055523,
@@ -71725,7 +71609,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.647
+          "share": 1
         }
       ],
       "winRate": 0.4261193663871316,
@@ -72768,7 +72652,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.822
+          "share": 0.805
         }
       ],
       "winRate": 0.4602784050692642,
@@ -73811,11 +73695,7 @@
       "positions": [
         {
           "position": "Mid",
-          "share": 0.406
-        },
-        {
-          "position": "Offlane",
-          "share": 0.277
+          "share": 0.861
         }
       ],
       "winRate": 0.523038504913807,
@@ -75901,15 +75781,7 @@
       "positions": [
         {
           "position": "Mid",
-          "share": 0.37
-        },
-        {
-          "position": "Carry",
-          "share": 0.324
-        },
-        {
-          "position": "Offlane",
-          "share": 0.306
+          "share": 1
         }
       ],
       "winRate": 0.501056098521462,
@@ -76951,12 +76823,8 @@
       "heroId": 77,
       "positions": [
         {
-          "position": "Mid",
-          "share": 0.494
-        },
-        {
           "position": "Offlane",
-          "share": 0.293
+          "share": 1
         }
       ],
       "winRate": 0.5219915692356637,
@@ -77999,11 +77867,7 @@
       "positions": [
         {
           "position": "Offlane",
-          "share": 0.512
-        },
-        {
-          "position": "Mid",
-          "share": 0.371
+          "share": 0.917
         }
       ],
       "winRate": 0.5175251880232723,
@@ -80089,7 +79953,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.673
+          "share": 0.834
         }
       ],
       "winRate": 0.4911325057005321,
@@ -81132,11 +80996,11 @@
       "positions": [
         {
           "position": "Offlane",
-          "share": 0.425
+          "share": 0.599
         },
         {
-          "position": "Mid",
-          "share": 0.35
+          "position": "Carry",
+          "share": 0.401
         }
       ],
       "winRate": 0.4992248062015504,
@@ -82178,12 +82042,12 @@
       "heroId": 82,
       "positions": [
         {
-          "position": "Carry",
-          "share": 0.575
+          "position": "Mid",
+          "share": 0.674
         },
         {
-          "position": "Mid",
-          "share": 0.269
+          "position": "Carry",
+          "share": 0.326
         }
       ],
       "winRate": 0.5201431374812421,
@@ -92613,11 +92477,7 @@
       "positions": [
         {
           "position": "Offlane",
-          "share": 0.732
-        },
-        {
-          "position": "Mid",
-          "share": 0.268
+          "share": 1
         }
       ],
       "winRate": 0.5401346923917001,
@@ -93649,16 +93509,8 @@
       "heroId": 93,
       "positions": [
         {
-          "position": "Mid",
-          "share": 0.406
-        },
-        {
           "position": "Carry",
-          "share": 0.305
-        },
-        {
-          "position": "Offlane",
-          "share": 0.289
+          "share": 0.928
         }
       ],
       "winRate": 0.4974120536889201,
@@ -94701,7 +94553,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.868
+          "share": 1
         }
       ],
       "winRate": 0.4877121262537434,
@@ -95744,11 +95596,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.505
-        },
-        {
-          "position": "Mid",
-          "share": 0.319
+          "share": 1
         }
       ],
       "winRate": 0.49433869379717754,
@@ -96715,7 +96563,7 @@
       "positions": [
         {
           "position": "Offlane",
-          "share": 0.621
+          "share": 0.929
         }
       ],
       "winRate": 0.5023285997862269,
@@ -97758,7 +97606,7 @@
       "positions": [
         {
           "position": "Offlane",
-          "share": 0.458
+          "share": 0.52
         }
       ],
       "winRate": 0.49840011293320474,
@@ -98800,16 +98648,8 @@
       "heroId": 98,
       "positions": [
         {
-          "position": "Mid",
-          "share": 0.398
-        },
-        {
-          "position": "Carry",
-          "share": 0.309
-        },
-        {
           "position": "Offlane",
-          "share": 0.293
+          "share": 0.906
         }
       ],
       "winRate": 0.4346555826631728,
@@ -99851,16 +99691,8 @@
       "heroId": 99,
       "positions": [
         {
-          "position": "Mid",
-          "share": 0.39
-        },
-        {
           "position": "Offlane",
-          "share": 0.341
-        },
-        {
-          "position": "Carry",
-          "share": 0.27
+          "share": 0.863
         }
       ],
       "winRate": 0.4521237157080818,
@@ -102989,15 +102821,11 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.295
+          "share": 0.458
         },
         {
           "position": "Offlane",
-          "share": 0.281
-        },
-        {
-          "position": "Mid",
-          "share": 0.266
+          "share": 0.384
         }
       ],
       "winRate": 0.5154890032756201,
@@ -105022,7 +104850,7 @@
       "positions": [
         {
           "position": "Offlane",
-          "share": 0.623
+          "share": 0.939
         }
       ],
       "winRate": 0.5193779196972385,
@@ -107108,11 +106936,7 @@
       "positions": [
         {
           "position": "Mid",
-          "share": 0.477
-        },
-        {
-          "position": "Offlane",
-          "share": 0.367
+          "share": 0.957
         }
       ],
       "winRate": 0.5085245009364945,
@@ -108158,8 +107982,8 @@
           "share": 0.4
         },
         {
-          "position": "Offlane",
-          "share": 0.361
+          "position": "Mid",
+          "share": 0.383
         }
       ],
       "winRate": 0.5199968770128628,
@@ -109202,11 +109026,7 @@
       "positions": [
         {
           "position": "Offlane",
-          "share": 0.649
-        },
-        {
-          "position": "Mid",
-          "share": 0.297
+          "share": 1
         }
       ],
       "winRate": 0.4865021499345672,
@@ -110249,7 +110069,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.783
+          "share": 1
         }
       ],
       "winRate": 0.48341536486197306,
@@ -114420,7 +114240,7 @@
       "heroId": 113,
       "positions": [
         {
-          "position": "Carry",
+          "position": "Mid",
           "share": 1
         }
       ],
@@ -115444,15 +115264,11 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.352
+          "share": 0.661
         },
         {
           "position": "Mid",
-          "share": 0.336
-        },
-        {
-          "position": "Offlane",
-          "share": 0.269
+          "share": 0.253
         }
       ],
       "winRate": 0.4548432605628751,
@@ -117537,12 +117353,12 @@
       "heroId": 120,
       "positions": [
         {
-          "position": "Offlane",
-          "share": 0.443
+          "position": "Mid",
+          "share": 0.619
         },
         {
-          "position": "Mid",
-          "share": 0.417
+          "position": "Offlane",
+          "share": 0.381
         }
       ],
       "winRate": 0.46221565731166914,
@@ -120671,11 +120487,7 @@
       "positions": [
         {
           "position": "Mid",
-          "share": 0.449
-        },
-        {
-          "position": "Offlane",
-          "share": 0.436
+          "share": 0.917
         }
       ],
       "winRate": 0.4944056253316823,
@@ -122761,7 +122573,7 @@
       "positions": [
         {
           "position": "Offlane",
-          "share": 0.65
+          "share": 0.933
         }
       ],
       "winRate": 0.46550772062583085,
@@ -124847,11 +124659,7 @@
       "positions": [
         {
           "position": "Offlane",
-          "share": 0.427
-        },
-        {
-          "position": "Mid",
-          "share": 0.411
+          "share": 0.92
         }
       ],
       "winRate": 0.5169470860765667,
@@ -126937,11 +126745,11 @@
       "positions": [
         {
           "position": "Offlane",
-          "share": 0.635
+          "share": 0.735
         },
         {
           "position": "Mid",
-          "share": 0.31
+          "share": 0.265
         }
       ],
       "winRate": 0.504090648776896,
@@ -127984,7 +127792,7 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.622
+          "share": 0.742
         }
       ],
       "winRate": 0.4556062273942444,
@@ -129027,11 +128835,11 @@
       "positions": [
         {
           "position": "Carry",
-          "share": 0.525
+          "share": 0.731
         },
         {
           "position": "Mid",
-          "share": 0.309
+          "share": 0.269
         }
       ],
       "winRate": 0.44718517644281836,
@@ -130074,7 +129882,7 @@
       "positions": [
         {
           "position": "Offlane",
-          "share": 0.454
+          "share": 0.577
         },
         {
           "position": "Support",

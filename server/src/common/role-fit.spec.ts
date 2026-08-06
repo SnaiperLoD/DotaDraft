@@ -1,4 +1,5 @@
-import { roleFitValue, isRoleFitAxis } from './role-fit';
+import { roleFitValue, isRoleFitAxis, supportMiscastMultiplier } from './role-fit';
+import { makeHero } from '../test-utils/hero-factory';
 
 describe('roleFitValue', () => {
   it('returns the raw value unchanged when no role is assigned', () => {
@@ -81,5 +82,49 @@ describe('isRoleFitAxis', () => {
   it('returns true only for axes relevant to the given role', () => {
     expect(isRoleFitAxis('scaling', 'Carry')).toBe(true);
     expect(isRoleFitAxis('saving', 'Carry')).toBe(false);
+  });
+});
+
+describe('supportMiscastMultiplier', () => {
+  const neverSupports = makeHero({
+    id: 1,
+    name: 'Anti-Mage',
+    presumed_positions: [{ position: 'Carry', share: 0.9 }],
+  });
+  const sometimesSupports = makeHero({
+    id: 2,
+    name: 'Ogre Magi',
+    presumed_positions: [
+      { position: 'Support', share: 0.4 },
+      { position: 'Offlane', share: 0.6 },
+    ],
+  });
+
+  it('penalizes a hero with under-threshold Support share when assigned Hard Support', () => {
+    expect(supportMiscastMultiplier(neverSupports, 'Hard Support')).toBeCloseTo(0.9);
+  });
+
+  it('penalizes a hero with under-threshold Support share when assigned Soft Support', () => {
+    expect(supportMiscastMultiplier(neverSupports, 'Soft Support')).toBeCloseTo(0.9);
+  });
+
+  it('does not penalize when Support share clears the threshold', () => {
+    expect(supportMiscastMultiplier(sometimesSupports, 'Hard Support')).toBe(1);
+  });
+
+  it('does not penalize a hero with no Support entry at all when not assigned Support', () => {
+    expect(supportMiscastMultiplier(neverSupports, 'Carry')).toBe(1);
+    expect(supportMiscastMultiplier(neverSupports, null)).toBe(1);
+  });
+
+  it('treats a missing Support entry as 0% share (below threshold)', () => {
+    const noSupportEntry = makeHero({ id: 3, name: 'Sniper', presumed_positions: [{ position: 'Mid', share: 1 }] });
+    expect(supportMiscastMultiplier(noSupportEntry, 'Hard Support')).toBeCloseTo(0.9);
+  });
+
+  it('treats a Hero object missing presumed_positions entirely as 0% share', () => {
+    const bare = makeHero({ id: 4, name: 'Sven' });
+    delete (bare as { presumed_positions?: unknown }).presumed_positions;
+    expect(supportMiscastMultiplier(bare, 'Soft Support')).toBeCloseTo(0.9);
   });
 });

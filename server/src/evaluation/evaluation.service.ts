@@ -7,6 +7,7 @@ import { counterAnalyzer } from './analyzers/counter.analyzer';
 import { createAxisAnalyzer } from './analyzers/axis.analyzer';
 import { createProSimilarityAnalyzer } from './analyzers/pro-similarity.analyzer';
 import { percentileBracket } from './score-narrative';
+import { percentileFor } from './axis-percentiles';
 import type { Analyzer, DraftPick } from './analyzer.interface';
 import type { EvaluationResult, EvaluationSummary, AnalyzerResult } from 'shared';
 import { activeCustomTagsForTeam } from 'shared';
@@ -321,6 +322,25 @@ export class EvaluationService {
     return `${winConditionLine} ${strengthLine} ${weaknessLine}`;
   }
 
+  // By direct user request (2026-08-06, Blueprint/10-tech-debt-backlog.md,
+  // "Оценка драфта — сравнение с другими драфтами, не средневзвешенное по
+  // осям"): a straight weighted average of ~12 already-somewhat-independent
+  // 0-10 axis scores regresses hard toward the middle by the same logic a
+  // sum of independent random variables does — a 100k-draft simulation
+  // found totalScore clustering tightly around 4.9 (sd 0.73), never once
+  // reaching above 7.2 or below 2.1 in 100,000 random drafts, out of a
+  // nominal 0-10 scale. The raw weighted average below (`rawTotal`) is now
+  // only an intermediate value — the number actually returned is
+  // `rawTotal`'s PERCENTILE against `axis-percentile-distributions.json`'s
+  // `totalScore` reference population (10,000 random drafts scored the
+  // same way, computed by `compute-axis-percentiles.ts`), the same
+  // population-relative treatment every individual axis's breakdown
+  // percentile already got — just applied one more time on top of the
+  // combined score instead of stopping at the per-axis level. This
+  // guarantees the displayed score is uniformly spread across the full
+  // range for the population of possible drafts, by construction of a
+  // percentile transform, rather than however narrow the underlying
+  // weighted-average happens to cluster.
   private weightedTotal(breakdown: AnalyzerResult[]): number {
     const weighable = breakdown.filter((b) => b.key in WEIGHTS);
     const available = weighable.filter((b) => b.score !== null);
@@ -330,11 +350,17 @@ export class EvaluationService {
 
     // Redistribute weight from unavailable analyzers (e.g. Pro Similarity before
     // Milestone 3) proportionally across the ones that did produce a score.
-    const total = available.reduce(
+    const rawTotal = available.reduce(
       (sum, b) => sum + (b.score as number) * (WEIGHTS[b.key] / availableWeight),
       0,
     );
+    const rawRounded = Math.round(rawTotal * 10) / 10;
 
-    return Math.round(total * 10) / 10;
+    // Fallback to the raw weighted average if the reference distribution is
+    // missing 'totalScore' for some reason (e.g. a stale
+    // axis-percentile-distributions.json from before this feature) —
+    // degrades to the old behavior rather than crashing or returning null.
+    const percentile = percentileFor('totalScore', rawRounded);
+    return percentile !== null ? Math.round(percentile) / 10 : rawRounded;
   }
 }

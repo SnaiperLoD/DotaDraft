@@ -2,7 +2,7 @@ import type { HeroEvaluationValues } from 'shared';
 import type { Analyzer, DraftPick } from '../analyzer.interface';
 import { AXIS_NARRATIVE, percentileBracket, type NarrativeContext } from '../score-narrative';
 import { percentileFor } from '../axis-percentiles';
-import { roleFitValue } from '../../common/role-fit';
+import { roleFitValue, supportMiscastMultiplier } from '../../common/role-fit';
 import { hardCarryPenalty, hardCarryAxisMultipliers, isHardCarry } from '../../common/hard-carry';
 import { utilityStackAxisMultipliers, utilityStackBreadth } from '../../common/utility-stacking';
 
@@ -35,7 +35,12 @@ export function createAxisAnalyzer(key: AxisKey, label: string): Analyzer {
         // player to not be worth new note infrastructure just to say it
         // once. The discount itself still applies to `value` below.
         const utilityMult = utilityStackAxisMultipliers(p.hero)[key] ?? 1;
-        const value = Math.round(roleFitAdjusted * utilityMult * 10) / 10;
+        // Support-miscast penalty (common/role-fit.ts) — flat -10% across
+        // every axis when a hero who essentially never plays Support in
+        // real games gets assigned Hard/Soft Support here. 1 (no-op) for
+        // every other role/hero.
+        const miscastMult = supportMiscastMultiplier(p.hero, p.assignedRole);
+        const value = Math.round(roleFitAdjusted * utilityMult * miscastMult * 10) / 10;
         return {
           hero: p.hero,
           value,

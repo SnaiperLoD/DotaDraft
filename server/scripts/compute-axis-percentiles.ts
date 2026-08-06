@@ -1,18 +1,35 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { AXES } from '../src/battle/battle-resolution';
-import { roleFitValue } from '../src/common/role-fit';
-import { hardCarryAxisMultipliers } from '../src/common/hard-carry';
+import { createAxisAnalyzer } from '../src/evaluation/analyzers/axis.analyzer';
+import { createSynergyAnalyzer } from '../src/evaluation/analyzers/synergy.analyzer';
+import { HeroMetaService } from '../src/hero-meta/hero-meta.service';
 import { ROLES } from 'shared';
 import type { Hero, HeroEvaluationValues } from 'shared';
+import type { DraftPick } from '../src/evaluation/analyzer.interface';
 
 // Percentile calibration for Evaluation's "where does this draft rank"
 // display (self-play outlier investigation follow-up, Blueprint/
 // 10-tech-debt-backlog.md). Draws N random 5-hero teams, scores each axis
-// EXACTLY the way axis.analyzer.ts does (role-fit + hard-carry
-// axisMultiplier, same rounding) so the resulting distribution is an
-// apples-to-apples population to rank a real evaluation against — not just
-// an informal "what's average" probe like check-axis-distribution.ts.
+// through the REAL createAxisAnalyzer() (2026-08-06 rewrite — the previous
+// version hand-reimplemented roleFitValue+hardCarryAxisMultipliers only,
+// silently missing utility-stacking discount and the support-miscast
+// penalty added the same session; using the actual analyzer means this
+// distribution can never drift from what a real Evaluation call computes
+// again) so the resulting distribution is an apples-to-apples population to
+// rank a real evaluation against — not just an informal "what's average"
+// probe like check-axis-distribution.ts.
+//
+// Also computes `totalScore`'s raw (pre-percentile-transform) value in the
+// same pass and stores its distribution under the `totalScore` key
+// alongside the per-axis ones — evaluation.service.ts's weightedTotal()
+// looks this up via the same percentileFor() used for axis percentiles, to
+// re-spread the headline 0-10 score across the full range instead of the
+// tight weighted-average clustering found in the "Оценка драфта" backlog
+// entry below. WEIGHTS here must stay in sync with evaluation.service.ts
+// by hand (that file doesn't export it) — same trade-off already accepted
+// for BASE_ANALYZERS/WEIGHTS duplication in this project's other
+// self-play/calibration scripts.
 const HEROES_PATH = path.join(__dirname, '..', 'data', 'heroes.json');
 const HERO_META_PATH = path.join(__dirname, '..', 'data', 'hero-meta.json');
 const OUTPUT_PATH = path.join(__dirname, '..', 'data', 'axis-percentile-distributions.json');
@@ -27,6 +44,25 @@ const TEAM_SIZE = 5;
 // a percentile distribution for axis.analyzer.ts's percentileFor() to rank
 // against — this loop is agnostic to what each axis feeds into.
 const AXES_TO_SAMPLE: (keyof HeroEvaluationValues)[] = [...AXES, 'resource_efficiency'];
+
+// Copied from evaluation.service.ts's WEIGHTS (not exported there) —
+// proSimilarity omitted (needs ProMatchService/DB, not just hero-meta.json)
+// and its weight redistributed across the rest, same mechanism
+// weightedTotal() itself uses when an analyzer is genuinely unavailable.
+const WEIGHTS: Record<string, number> = {
+  synergy: 0.3,
+  teamfight: 0.06,
+  tempo: 0.15,
+  scaling: 0.03,
+  objectives: 0.03,
+  burst: 0.015,
+  control: 0.05,
+  durability: 0.015,
+  mobility: 0.05,
+  saving: 0.05,
+  initiating: 0.05,
+  skirmish_rate: 0.05,
+};
 
 function shuffle<T>(arr: readonly T[]): T[] {
   const a = [...arr];
@@ -83,6 +119,14 @@ function percentileOf(sorted: number[], p: number): number {
   return sorted[idx];
 }
 
+function weightedTotal(scoresByKey: Record<string, number | null>): number {
+  const entries = Object.entries(WEIGHTS).filter(([key]) => scoresByKey[key] != null);
+  const availableWeight = entries.reduce((sum, [key]) => sum + WEIGHTS[key], 0);
+  if (availableWeight === 0) return 0;
+  const total = entries.reduce((sum, [key, weight]) => sum + (scoresByKey[key] as number) * (weight / availableWeight), 0);
+  return Math.round(total * 10) / 10;
+}
+
 function main() {
   const heroes: Hero[] = JSON.parse(fs.readFileSync(HEROES_PATH, 'utf-8'));
   const { heroes: rawMetaEntries }: { heroes: any[] } = JSON.parse(fs.readFileSync(HERO_META_PATH, 'utf-8'));
@@ -90,24 +134,33 @@ function main() {
   for (const h of heroes) h.presumed_positions = (positionsById.get(h.id) ?? []) as Hero['presumed_positions'];
   const weightsById = new Map(heroes.map((h) => [h.id, roleWeights(positionsById.get(h.id) ?? [])]));
 
-  const scoresByAxis: Record<string, number[]> = Object.fromEntries(AXES_TO_SAMPLE.map((a) => [a, []]));
+  const heroMeta = new HeroMetaService();
+  const synergyAnalyzer = createSynergyAnalyzer(heroMeta);
+  const axisAnalyzers = new Map(AXES_TO_SAMPLE.map((axis) => [axis, createAxisAnalyzer(axis, axis)]));
+
+  const SAMPLE_KEYS = [...AXES_TO_SAMPLE, 'totalScore'] as const;
+  const scoresByAxis: Record<string, number[]> = Object.fromEntries(SAMPLE_KEYS.map((a) => [a, []]));
 
   for (let i = 0; i < N_SAMPLES; i++) {
     const team = shuffle(heroes).slice(0, TEAM_SIZE);
     const roles = assignWeightedRoles(team, weightsById);
-    const multipliers = hardCarryAxisMultipliers(team);
+    const picks: DraftPick[] = team.map((h, idx) => ({ hero: h, assignedRole: roles[idx] }));
 
+    const scoresByKey: Record<string, number | null> = {};
     for (const axis of AXES_TO_SAMPLE) {
-      const rawAvg = mean(team.map((h, idx) => roleFitValue(axis, roles[idx], h.evaluation_values[axis])));
-      const score = Math.round(rawAvg * (multipliers[axis] ?? 1) * 10) / 10;
-      scoresByAxis[axis].push(score);
+      const score = axisAnalyzers.get(axis)!.analyze(picks).score;
+      scoresByAxis[axis].push(score as number);
+      scoresByKey[axis] = score;
     }
+    scoresByKey.synergy = synergyAnalyzer.analyze(picks).score;
+
+    scoresByAxis.totalScore.push(weightedTotal(scoresByKey));
   }
 
   console.log(`Sampled ${N_SAMPLES} random 5-hero teams (weighted-role assignment).\n`);
   console.log('axis            mean   p10   p25   p50   p75   p90');
   const distributions: Record<string, number[]> = {};
-  for (const axis of AXES_TO_SAMPLE) {
+  for (const axis of SAMPLE_KEYS) {
     const sorted = [...scoresByAxis[axis]].sort((a, b) => a - b);
     distributions[axis] = sorted;
     console.log(
