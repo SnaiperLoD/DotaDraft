@@ -1,0 +1,3177 @@
+[
+  {
+    "heroId": 1,
+    "name": "Anti-Mage",
+    "Carry": {
+      "share": 0.898,
+      "games": 177,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.086,
+      "games": 17,
+      "pass": true
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 2,
+    "name": "Axe",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.917,
+      "games": 911,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.072,
+      "games": 71,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 3,
+    "name": "Bane",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.992,
+      "games": 511,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 4,
+    "name": "Bloodseeker",
+    "Carry": {
+      "share": 0.895,
+      "games": 51,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 5,
+    "name": "Crystal Maiden",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.986,
+      "games": 484,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 6,
+    "name": "Drow Ranger",
+    "Carry": {
+      "share": 0.981,
+      "games": 623,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 7,
+    "name": "Earthshaker",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.497,
+      "games": 78,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.261,
+      "games": 41,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.236,
+      "games": 37,
+      "pass": true
+    },
+    "passCount": 3
+  },
+  {
+    "heroId": 8,
+    "name": "Juggernaut",
+    "Carry": {
+      "share": 1,
+      "games": 277,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 9,
+    "name": "Mirana",
+    "Carry": {
+      "share": 0.082,
+      "games": 23,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.06,
+      "games": 17,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.843,
+      "games": 237,
+      "pass": true
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 10,
+    "name": "Morphling",
+    "Carry": {
+      "share": 0.965,
+      "games": 195,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 11,
+    "name": "Shadow Fiend",
+    "Carry": {
+      "share": 0.577,
+      "games": 916,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.42,
+      "games": 667,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 12,
+    "name": "Phantom Lancer",
+    "Carry": {
+      "share": 0.996,
+      "games": 260,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 13,
+    "name": "Puck",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.998,
+      "games": 831,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 14,
+    "name": "Pudge",
+    "Carry": {
+      "share": 0.055,
+      "games": 42,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.176,
+      "games": 133,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.213,
+      "games": 161,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.556,
+      "games": 421,
+      "pass": true
+    },
+    "passCount": 3
+  },
+  {
+    "heroId": 15,
+    "name": "Razor",
+    "Carry": {
+      "share": 0.426,
+      "games": 184,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.155,
+      "games": 67,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.407,
+      "games": 176,
+      "pass": true
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 3
+  },
+  {
+    "heroId": 16,
+    "name": "Sand King",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.704,
+      "games": 300,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.284,
+      "games": 121,
+      "pass": true
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 17,
+    "name": "Storm Spirit",
+    "Carry": {
+      "share": 0.02,
+      "games": 20,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.979,
+      "games": 995,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 18,
+    "name": "Sven",
+    "Carry": {
+      "share": 0.984,
+      "games": 246,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 19,
+    "name": "Tiny",
+    "Carry": {
+      "share": 0.705,
+      "games": 910,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.178,
+      "games": 229,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.037,
+      "games": 48,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.08,
+      "games": 103,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 20,
+    "name": "Vengeful Spirit",
+    "Carry": {
+      "share": 0.204,
+      "games": 72,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.051,
+      "games": 18,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.734,
+      "games": 259,
+      "pass": true
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 21,
+    "name": "Windranger",
+    "Carry": {
+      "share": 0.396,
+      "games": 369,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.079,
+      "games": 74,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.116,
+      "games": 108,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.408,
+      "games": 380,
+      "pass": true
+    },
+    "passCount": 3
+  },
+  {
+    "heroId": 22,
+    "name": "Zeus",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.359,
+      "games": 232,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.054,
+      "games": 35,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.577,
+      "games": 373,
+      "pass": true
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 23,
+    "name": "Kunkka",
+    "Carry": {
+      "share": 0.042,
+      "games": 18,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.498,
+      "games": 215,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.447,
+      "games": 193,
+      "pass": true
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 25,
+    "name": "Lina",
+    "Carry": {
+      "share": 0.095,
+      "games": 64,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.868,
+      "games": 584,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.034,
+      "games": 23,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 26,
+    "name": "Lion",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.045,
+      "games": 68,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.948,
+      "games": 1428,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 27,
+    "name": "Shadow Shaman",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.975,
+      "games": 696,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 28,
+    "name": "Slardar",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.239,
+      "games": 246,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.703,
+      "games": 723,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.052,
+      "games": 54,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 29,
+    "name": "Tidehunter",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.943,
+      "games": 1183,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.043,
+      "games": 54,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 30,
+    "name": "Witch Doctor",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.975,
+      "games": 358,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 31,
+    "name": "Lich",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.988,
+      "games": 1005,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 32,
+    "name": "Riki",
+    "Carry": {
+      "share": 0.27,
+      "games": 24,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.596,
+      "games": 53,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 33,
+    "name": "Enigma",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.791,
+      "games": 125,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.146,
+      "games": 23,
+      "pass": true
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 34,
+    "name": "Tinker",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.924,
+      "games": 121,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 35,
+    "name": "Sniper",
+    "Carry": {
+      "share": 0.245,
+      "games": 145,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.743,
+      "games": 440,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 36,
+    "name": "Necrophos",
+    "Carry": {
+      "share": 0.388,
+      "games": 228,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.418,
+      "games": 246,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.192,
+      "games": 113,
+      "pass": true
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 3
+  },
+  {
+    "heroId": 37,
+    "name": "Warlock",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.965,
+      "games": 524,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 38,
+    "name": "Beastmaster",
+    "Carry": {
+      "share": 0.17,
+      "games": 157,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.286,
+      "games": 265,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.538,
+      "games": 498,
+      "pass": true
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 3
+  },
+  {
+    "heroId": 39,
+    "name": "Queen of Pain",
+    "Carry": {
+      "share": 0.037,
+      "games": 40,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.912,
+      "games": 986,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.033,
+      "games": 36,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.018,
+      "games": 19,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 40,
+    "name": "Venomancer",
+    "Carry": {
+      "share": 0.035,
+      "games": 20,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.05,
+      "games": 29,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.902,
+      "games": 522,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 41,
+    "name": "Faceless Void",
+    "Carry": {
+      "share": 0.957,
+      "games": 472,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 42,
+    "name": "Wraith King",
+    "Carry": {
+      "share": 0.516,
+      "games": 144,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.47,
+      "games": 131,
+      "pass": true
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 43,
+    "name": "Death Prophet",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.517,
+      "games": 140,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.41,
+      "games": 111,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.063,
+      "games": 17,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 44,
+    "name": "Phantom Assassin",
+    "Carry": {
+      "share": 0.964,
+      "games": 163,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 45,
+    "name": "Pugna",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.883,
+      "games": 91,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 46,
+    "name": "Templar Assassin",
+    "Carry": {
+      "share": 0.806,
+      "games": 429,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.188,
+      "games": 100,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 47,
+    "name": "Viper",
+    "Carry": {
+      "share": 0.071,
+      "games": 36,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.676,
+      "games": 345,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.237,
+      "games": 121,
+      "pass": true
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 48,
+    "name": "Luna",
+    "Carry": {
+      "share": 0.996,
+      "games": 1022,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 49,
+    "name": "Dragon Knight",
+    "Carry": {
+      "share": 0.447,
+      "games": 140,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.236,
+      "games": 74,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.307,
+      "games": 96,
+      "pass": true
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 3
+  },
+  {
+    "heroId": 50,
+    "name": "Dazzle",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.962,
+      "games": 177,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 51,
+    "name": "Clockwerk",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.026,
+      "games": 22,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.963,
+      "games": 804,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 52,
+    "name": "Leshrac",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.822,
+      "games": 180,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.068,
+      "games": 15,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 53,
+    "name": "Nature's Prophet",
+    "Carry": {
+      "share": 0.386,
+      "games": 173,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.259,
+      "games": 116,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.174,
+      "games": 78,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.181,
+      "games": 81,
+      "pass": true
+    },
+    "passCount": 4
+  },
+  {
+    "heroId": 54,
+    "name": "Lifestealer",
+    "Carry": {
+      "share": 0.986,
+      "games": 726,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 55,
+    "name": "Dark Seer",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.956,
+      "games": 237,
+      "pass": true
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 56,
+    "name": "Clinkz",
+    "Carry": {
+      "share": 0.88,
+      "games": 293,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.102,
+      "games": 34,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 57,
+    "name": "Omniknight",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.505,
+      "games": 50,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.374,
+      "games": 37,
+      "pass": true
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 58,
+    "name": "Enchantress",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.963,
+      "games": 553,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 59,
+    "name": "Huskar",
+    "Carry": {
+      "share": 0.09,
+      "games": 26,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.797,
+      "games": 231,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.055,
+      "games": 16,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.059,
+      "games": 17,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 60,
+    "name": "Night Stalker",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.081,
+      "games": 36,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.857,
+      "games": 383,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.049,
+      "games": 22,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 61,
+    "name": "Broodmother",
+    "Carry": {
+      "share": 0.43,
+      "games": 34,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.316,
+      "games": 25,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.253,
+      "games": 20,
+      "pass": true
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 3
+  },
+  {
+    "heroId": 62,
+    "name": "Bounty Hunter",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.874,
+      "games": 104,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 63,
+    "name": "Weaver",
+    "Carry": {
+      "share": 0.801,
+      "games": 293,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.153,
+      "games": 56,
+      "pass": true
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 64,
+    "name": "Jakiro",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.977,
+      "games": 814,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 65,
+    "name": "Batrider",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.124,
+      "games": 73,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.533,
+      "games": 315,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.328,
+      "games": 194,
+      "pass": true
+    },
+    "passCount": 3
+  },
+  {
+    "heroId": 66,
+    "name": "Chen",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.971,
+      "games": 133,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 67,
+    "name": "Spectre",
+    "Carry": {
+      "share": 0.973,
+      "games": 143,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 68,
+    "name": "Ancient Apparition",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.958,
+      "games": 160,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 69,
+    "name": "Doom",
+    "Carry": {
+      "share": 0.159,
+      "games": 164,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.813,
+      "games": 839,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.015,
+      "games": 15,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 70,
+    "name": "Ursa",
+    "Carry": {
+      "share": 0.981,
+      "games": 569,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 71,
+    "name": "Spirit Breaker",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.03,
+      "games": 28,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.18,
+      "games": 166,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.782,
+      "games": 720,
+      "pass": true
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 72,
+    "name": "Gyrocopter",
+    "Carry": {
+      "share": 0.957,
+      "games": 268,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 73,
+    "name": "Alchemist",
+    "Carry": {
+      "share": 0.808,
+      "games": 510,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.078,
+      "games": 49,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.081,
+      "games": 51,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.033,
+      "games": 21,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 74,
+    "name": "Invoker",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.937,
+      "games": 799,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.059,
+      "games": 50,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 75,
+    "name": "Silencer",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.023,
+      "games": 16,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.966,
+      "games": 678,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 76,
+    "name": "Outworld Destroyer",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.974,
+      "games": 113,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 77,
+    "name": "Lycan",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.902,
+      "games": 175,
+      "pass": true
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 78,
+    "name": "Brewmaster",
+    "Carry": {
+      "share": 0.058,
+      "games": 17,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.894,
+      "games": 261,
+      "pass": true
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 79,
+    "name": "Shadow Demon",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.048,
+      "games": 29,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.942,
+      "games": 568,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 80,
+    "name": "Lone Druid",
+    "Carry": {
+      "share": 0.832,
+      "games": 322,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.088,
+      "games": 34,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.049,
+      "games": 19,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 81,
+    "name": "Chaos Knight",
+    "Carry": {
+      "share": 0.388,
+      "games": 93,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.575,
+      "games": 138,
+      "pass": true
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 82,
+    "name": "Meepo",
+    "Carry": {
+      "share": 0.324,
+      "games": 45,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.647,
+      "games": 90,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 83,
+    "name": "Treant Protector",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.993,
+      "games": 602,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 84,
+    "name": "Ogre Magi",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.118,
+      "games": 80,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.855,
+      "games": 580,
+      "pass": true
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 85,
+    "name": "Undying",
+    "Carry": {
+      "share": 0.053,
+      "games": 26,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.233,
+      "games": 113,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.708,
+      "games": 344,
+      "pass": true
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 86,
+    "name": "Rubick",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.118,
+      "games": 314,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.026,
+      "games": 70,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.852,
+      "games": 2266,
+      "pass": true
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 87,
+    "name": "Disruptor",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.992,
+      "games": 964,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 88,
+    "name": "Nyx Assassin",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.089,
+      "games": 38,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.893,
+      "games": 383,
+      "pass": true
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 89,
+    "name": "Naga Siren",
+    "Carry": {
+      "share": 0.928,
+      "games": 103,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 90,
+    "name": "Keeper of the Light",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.393,
+      "games": 241,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.585,
+      "games": 359,
+      "pass": true
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 91,
+    "name": "Io",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.928,
+      "games": 257,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 92,
+    "name": "Visage",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.681,
+      "games": 62,
+      "pass": true
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 93,
+    "name": "Slark",
+    "Carry": {
+      "share": 0.88,
+      "games": 302,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.085,
+      "games": 29,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 94,
+    "name": "Medusa",
+    "Carry": {
+      "share": 0.995,
+      "games": 187,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 95,
+    "name": "Troll Warlord",
+    "Carry": {
+      "share": 0.989,
+      "games": 185,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 96,
+    "name": "Centaur Warrunner",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.911,
+      "games": 564,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.061,
+      "games": 38,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 97,
+    "name": "Magnus",
+    "Carry": {
+      "share": 0.086,
+      "games": 23,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.214,
+      "games": 57,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.53,
+      "games": 141,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.169,
+      "games": 45,
+      "pass": true
+    },
+    "passCount": 4
+  },
+  {
+    "heroId": 98,
+    "name": "Timbersaw",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.091,
+      "games": 49,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.897,
+      "games": 481,
+      "pass": true
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 99,
+    "name": "Bristleback",
+    "Carry": {
+      "share": 0.116,
+      "games": 88,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.024,
+      "games": 18,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.854,
+      "games": 648,
+      "pass": true
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 100,
+    "name": "Tusk",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.025,
+      "games": 33,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.969,
+      "games": 1295,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 101,
+    "name": "Skywrath Mage",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.067,
+      "games": 43,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.916,
+      "games": 592,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 102,
+    "name": "Abaddon",
+    "Carry": {
+      "share": 0.396,
+      "games": 63,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.384,
+      "games": 61,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.22,
+      "games": 35,
+      "pass": true
+    },
+    "passCount": 3
+  },
+  {
+    "heroId": 103,
+    "name": "Elder Titan",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.7,
+      "games": 28,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 104,
+    "name": "Legion Commander",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.881,
+      "games": 273,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.068,
+      "games": 21,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 105,
+    "name": "Techies",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.057,
+      "games": 42,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.039,
+      "games": 29,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.899,
+      "games": 661,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 106,
+    "name": "Ember Spirit",
+    "Carry": {
+      "share": 0.023,
+      "games": 29,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.962,
+      "games": 1222,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.012,
+      "games": 15,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 107,
+    "name": "Earth Spirit",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.638,
+      "games": 254,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.324,
+      "games": 129,
+      "pass": true
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 108,
+    "name": "Underlord",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.967,
+      "games": 645,
+      "pass": true
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 109,
+    "name": "Terrorblade",
+    "Carry": {
+      "share": 0.981,
+      "games": 456,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 110,
+    "name": "Phoenix",
+    "Carry": {
+      "share": 0.016,
+      "games": 22,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.026,
+      "games": 36,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.153,
+      "games": 215,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.806,
+      "games": 1133,
+      "pass": true
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 111,
+    "name": "Oracle",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.989,
+      "games": 179,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 112,
+    "name": "Winter Wyvern",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.981,
+      "games": 557,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 113,
+    "name": "Arc Warden",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.845,
+      "games": 49,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 114,
+    "name": "Monkey King",
+    "Carry": {
+      "share": 0.666,
+      "games": 515,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.272,
+      "games": 210,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.025,
+      "games": 19,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.038,
+      "games": 29,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 119,
+    "name": "Dark Willow",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.027,
+      "games": 15,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.964,
+      "games": 542,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 120,
+    "name": "Pangolier",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.623,
+      "games": 958,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.369,
+      "games": 567,
+      "pass": true
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 121,
+    "name": "Grimstroke",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.038,
+      "games": 21,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.948,
+      "games": 530,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 123,
+    "name": "Hoodwink",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.016,
+      "games": 29,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.014,
+      "games": 24,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.964,
+      "games": 1705,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 126,
+    "name": "Void Spirit",
+    "Carry": {
+      "share": 0.041,
+      "games": 33,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.919,
+      "games": 746,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.03,
+      "games": 24,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 128,
+    "name": "Snapfire",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.33,
+      "games": 396,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.137,
+      "games": 165,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.525,
+      "games": 630,
+      "pass": true
+    },
+    "passCount": 3
+  },
+  {
+    "heroId": 129,
+    "name": "Mars",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.028,
+      "games": 20,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.924,
+      "games": 666,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.043,
+      "games": 31,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 131,
+    "name": "Ringmaster",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.98,
+      "games": 736,
+      "pass": true
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 135,
+    "name": "Dawnbreaker",
+    "Carry": {
+      "share": 0.021,
+      "games": 19,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.018,
+      "games": 16,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.93,
+      "games": 823,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.031,
+      "games": 27,
+      "pass": false
+    },
+    "passCount": 1
+  },
+  {
+    "heroId": 136,
+    "name": "Marci",
+    "Carry": {
+      "share": 0.088,
+      "games": 26,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.078,
+      "games": 23,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.078,
+      "games": 23,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.756,
+      "games": 223,
+      "pass": true
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 137,
+    "name": "Primal Beast",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.276,
+      "games": 97,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0.702,
+      "games": 247,
+      "pass": true
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 138,
+    "name": "Muerta",
+    "Carry": {
+      "share": 0.822,
+      "games": 556,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.038,
+      "games": 26,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0.133,
+      "games": 90,
+      "pass": true
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 145,
+    "name": "Kez",
+    "Carry": {
+      "share": 0.729,
+      "games": 494,
+      "pass": true
+    },
+    "Mid": {
+      "share": 0.257,
+      "games": 174,
+      "pass": true
+    },
+    "Offlane": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Support": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "passCount": 2
+  },
+  {
+    "heroId": 155,
+    "name": "Largo",
+    "Carry": {
+      "share": 0,
+      "games": 0,
+      "pass": false
+    },
+    "Mid": {
+      "share": 0.079,
+      "games": 41,
+      "pass": false
+    },
+    "Offlane": {
+      "share": 0.671,
+      "games": 348,
+      "pass": true
+    },
+    "Support": {
+      "share": 0.243,
+      "games": 126,
+      "pass": true
+    },
+    "passCount": 2
+  }
+]

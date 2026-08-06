@@ -1,0 +1,3679 @@
+[
+  {
+    "heroId": 1,
+    "name": "Anti-Mage",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 177,
+        "winDuration": 2032.4019607843138,
+        "lossDuration": 2104,
+        "gapSeconds": 72,
+        "wrShort": 0.364,
+        "wrMid": 0.598,
+        "wrLong": 0.559,
+        "earlyKillsPerGame": 4.88
+      },
+      {
+        "position": "Offlane",
+        "games": 17,
+        "winDuration": 1796.6,
+        "lossDuration": 1859.75,
+        "gapSeconds": 63,
+        "wrShort": 0,
+        "wrMid": 0.333,
+        "wrLong": 0,
+        "earlyKillsPerGame": 5.29
+      }
+    ]
+  },
+  {
+    "heroId": 2,
+    "name": "Axe",
+    "buckets": [
+      {
+        "position": "Offlane",
+        "games": 911,
+        "winDuration": 2157.8947368421054,
+        "lossDuration": 2165.9587155963304,
+        "gapSeconds": 8,
+        "wrShort": 0.519,
+        "wrMid": 0.519,
+        "wrLong": 0.528,
+        "earlyKillsPerGame": 5.92
+      },
+      {
+        "position": "Support",
+        "games": 71,
+        "winDuration": 2716.1935483870966,
+        "lossDuration": 2463.2,
+        "gapSeconds": -253,
+        "wrShort": 0.2,
+        "wrMid": 0.469,
+        "wrLong": 0.441,
+        "earlyKillsPerGame": 3.89
+      }
+    ]
+  },
+  {
+    "heroId": 3,
+    "name": "Bane",
+    "buckets": [
+      {
+        "position": "Support",
+        "games": 511,
+        "winDuration": 2352.6279069767443,
+        "lossDuration": 2407.4238095238097,
+        "gapSeconds": 55,
+        "wrShort": 0.739,
+        "wrMid": 0.568,
+        "wrLong": 0.58,
+        "earlyKillsPerGame": 2.06
+      }
+    ]
+  },
+  {
+    "heroId": 4,
+    "name": "Bloodseeker",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 51,
+        "winDuration": 2059.095238095238,
+        "lossDuration": 2058.4666666666667,
+        "gapSeconds": -1,
+        "wrShort": 0.556,
+        "wrMid": 0.308,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 5.12
+      }
+    ]
+  },
+  {
+    "heroId": 5,
+    "name": "Crystal Maiden",
+    "buckets": [
+      {
+        "position": "Support",
+        "games": 484,
+        "winDuration": 1895.1302521008404,
+        "lossDuration": 1904.8861788617887,
+        "gapSeconds": 10,
+        "wrShort": 0.657,
+        "wrMid": 0.48,
+        "wrLong": 0.469,
+        "earlyKillsPerGame": 2
+      }
+    ]
+  },
+  {
+    "heroId": 6,
+    "name": "Drow Ranger",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 623,
+        "winDuration": 2238.1619047619047,
+        "lossDuration": 2304.737012987013,
+        "gapSeconds": 67,
+        "wrShort": 0.593,
+        "wrMid": 0.501,
+        "wrLong": 0.489,
+        "earlyKillsPerGame": 4.39
+      }
+    ]
+  },
+  {
+    "heroId": 7,
+    "name": "Earthshaker",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 78,
+        "winDuration": 2130.9189189189187,
+        "lossDuration": 2188.439024390244,
+        "gapSeconds": 58,
+        "wrShort": 0.6,
+        "wrMid": 0.479,
+        "wrLong": 0.44,
+        "earlyKillsPerGame": 5.77
+      },
+      {
+        "position": "Offlane",
+        "games": 41,
+        "winDuration": 2021.35,
+        "lossDuration": 2019.5714285714287,
+        "gapSeconds": -2,
+        "wrShort": 0.667,
+        "wrMid": 0.452,
+        "wrLong": 0.571,
+        "earlyKillsPerGame": 4.66
+      },
+      {
+        "position": "Support",
+        "games": 37,
+        "winDuration": 2562.3125,
+        "lossDuration": 2219.1428571428573,
+        "gapSeconds": -343,
+        "wrShort": 0.333,
+        "wrMid": 0.278,
+        "wrLong": 0.625,
+        "earlyKillsPerGame": 2.05
+      }
+    ]
+  },
+  {
+    "heroId": 8,
+    "name": "Juggernaut",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 277,
+        "winDuration": 2008.3896103896104,
+        "lossDuration": 2035.8048780487804,
+        "gapSeconds": 27,
+        "wrShort": 0.364,
+        "wrMid": 0.603,
+        "wrLong": 0.464,
+        "earlyKillsPerGame": 3.82
+      }
+    ]
+  },
+  {
+    "heroId": 9,
+    "name": "Mirana",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 23,
+        "winDuration": 1893.6666666666667,
+        "lossDuration": 2072.0714285714284,
+        "gapSeconds": 178,
+        "wrShort": 1,
+        "wrMid": 0.389,
+        "wrLong": 0.25,
+        "earlyKillsPerGame": 5.57
+      },
+      {
+        "position": "Mid",
+        "games": 17,
+        "winDuration": 2207.1111111111113,
+        "lossDuration": 2135.375,
+        "gapSeconds": -72,
+        "wrShort": 1,
+        "wrMid": 0.364,
+        "wrLong": 0.8,
+        "earlyKillsPerGame": 5.12
+      },
+      {
+        "position": "Support",
+        "games": 237,
+        "winDuration": 2344.246031746032,
+        "lossDuration": 2261.7297297297296,
+        "gapSeconds": -83,
+        "wrShort": 0.417,
+        "wrMid": 0.511,
+        "wrLong": 0.58,
+        "earlyKillsPerGame": 3.11
+      }
+    ]
+  },
+  {
+    "heroId": 10,
+    "name": "Morphling",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 195,
+        "winDuration": 2087.0602409638554,
+        "lossDuration": 2037.875,
+        "gapSeconds": -49,
+        "wrShort": 0.421,
+        "wrMid": 0.42,
+        "wrLong": 0.447,
+        "earlyKillsPerGame": 3.61
+      }
+    ]
+  },
+  {
+    "heroId": 11,
+    "name": "Shadow Fiend",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 916,
+        "winDuration": 2059.266094420601,
+        "lossDuration": 2187.0422222222223,
+        "gapSeconds": 128,
+        "wrShort": 0.675,
+        "wrMid": 0.507,
+        "wrLong": 0.452,
+        "earlyKillsPerGame": 4.95
+      },
+      {
+        "position": "Mid",
+        "games": 667,
+        "winDuration": 1864.5728476821191,
+        "lossDuration": 1883.8986301369864,
+        "gapSeconds": 19,
+        "wrShort": 0.415,
+        "wrMid": 0.457,
+        "wrLong": 0.438,
+        "earlyKillsPerGame": 5.92
+      }
+    ]
+  },
+  {
+    "heroId": 12,
+    "name": "Phantom Lancer",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 260,
+        "winDuration": 2159.4108527131784,
+        "lossDuration": 2097.9236641221373,
+        "gapSeconds": -61,
+        "wrShort": 0.286,
+        "wrMid": 0.533,
+        "wrLong": 0.492,
+        "earlyKillsPerGame": 3.36
+      }
+    ]
+  },
+  {
+    "heroId": 13,
+    "name": "Puck",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 831,
+        "winDuration": 2374.050343249428,
+        "lossDuration": 2324.8223350253807,
+        "gapSeconds": -49,
+        "wrShort": 0.593,
+        "wrMid": 0.5,
+        "wrLong": 0.545,
+        "earlyKillsPerGame": 4.54
+      }
+    ]
+  },
+  {
+    "heroId": 14,
+    "name": "Pudge",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 42,
+        "winDuration": 1899.75,
+        "lossDuration": 1935.7142857142858,
+        "gapSeconds": 36,
+        "wrShort": 0.778,
+        "wrMid": 0.615,
+        "wrLong": 0.714,
+        "earlyKillsPerGame": 6.33
+      },
+      {
+        "position": "Mid",
+        "games": 133,
+        "winDuration": 2007.0285714285715,
+        "lossDuration": 1988.2063492063492,
+        "gapSeconds": -19,
+        "wrShort": 0.25,
+        "wrMid": 0.547,
+        "wrLong": 0.526,
+        "earlyKillsPerGame": 6.13
+      },
+      {
+        "position": "Offlane",
+        "games": 161,
+        "winDuration": 1970.0666666666666,
+        "lossDuration": 1971.3488372093022,
+        "gapSeconds": 1,
+        "wrShort": 0.222,
+        "wrMid": 0.496,
+        "wrLong": 0.381,
+        "earlyKillsPerGame": 5.64
+      },
+      {
+        "position": "Support",
+        "games": 421,
+        "winDuration": 1957.7846153846153,
+        "lossDuration": 1921.3849557522124,
+        "gapSeconds": -36,
+        "wrShort": 0.4,
+        "wrMid": 0.469,
+        "wrLong": 0.471,
+        "earlyKillsPerGame": 3.11
+      }
+    ]
+  },
+  {
+    "heroId": 15,
+    "name": "Razor",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 184,
+        "winDuration": 2063.974358974359,
+        "lossDuration": 2046.867924528302,
+        "gapSeconds": -17,
+        "wrShort": 0.313,
+        "wrMid": 0.446,
+        "wrLong": 0.404,
+        "earlyKillsPerGame": 5.85
+      },
+      {
+        "position": "Mid",
+        "games": 67,
+        "winDuration": 2195.25,
+        "lossDuration": 2194.6666666666665,
+        "gapSeconds": -1,
+        "wrShort": 0.444,
+        "wrMid": 0.4,
+        "wrLong": 0.435,
+        "earlyKillsPerGame": 5.13
+      },
+      {
+        "position": "Offlane",
+        "games": 176,
+        "winDuration": 2034.5116279069769,
+        "lossDuration": 2039.6888888888889,
+        "gapSeconds": 5,
+        "wrShort": 0.5,
+        "wrMid": 0.512,
+        "wrLong": 0.4,
+        "earlyKillsPerGame": 5.35
+      }
+    ]
+  },
+  {
+    "heroId": 16,
+    "name": "Sand King",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 300,
+        "winDuration": 2326.4718309859154,
+        "lossDuration": 2373.9430379746836,
+        "gapSeconds": 47,
+        "wrShort": 0.583,
+        "wrMid": 0.465,
+        "wrLong": 0.474,
+        "earlyKillsPerGame": 4.36
+      },
+      {
+        "position": "Offlane",
+        "games": 121,
+        "winDuration": 2091.3653846153848,
+        "lossDuration": 2057.159420289855,
+        "gapSeconds": -34,
+        "wrShort": 0.462,
+        "wrMid": 0.421,
+        "wrLong": 0.438,
+        "earlyKillsPerGame": 4.27
+      }
+    ]
+  },
+  {
+    "heroId": 17,
+    "name": "Storm Spirit",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 20,
+        "winDuration": 2071.375,
+        "lossDuration": 2102.1666666666665,
+        "gapSeconds": 31,
+        "wrShort": 0,
+        "wrMid": 0.583,
+        "wrLong": 0.2,
+        "earlyKillsPerGame": 5.65
+      },
+      {
+        "position": "Mid",
+        "games": 995,
+        "winDuration": 2317.2233400402415,
+        "lossDuration": 2235.7670682730923,
+        "gapSeconds": -81,
+        "wrShort": 0.53,
+        "wrMid": 0.472,
+        "wrLong": 0.535,
+        "earlyKillsPerGame": 5.27
+      }
+    ]
+  },
+  {
+    "heroId": 18,
+    "name": "Sven",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 246,
+        "winDuration": 1915.8991596638655,
+        "lossDuration": 1943.8740157480315,
+        "gapSeconds": 28,
+        "wrShort": 0.409,
+        "wrMid": 0.503,
+        "wrLong": 0.424,
+        "earlyKillsPerGame": 4.33
+      }
+    ]
+  },
+  {
+    "heroId": 19,
+    "name": "Tiny",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 910,
+        "winDuration": 2246.877729257642,
+        "lossDuration": 2337.152654867257,
+        "gapSeconds": 90,
+        "wrShort": 0.471,
+        "wrMid": 0.547,
+        "wrLong": 0.446,
+        "earlyKillsPerGame": 4.25
+      },
+      {
+        "position": "Mid",
+        "games": 229,
+        "winDuration": 2053.535714285714,
+        "lossDuration": 2180.1452991452993,
+        "gapSeconds": 127,
+        "wrShort": 0.619,
+        "wrMid": 0.513,
+        "wrLong": 0.375,
+        "earlyKillsPerGame": 5.15
+      },
+      {
+        "position": "Offlane",
+        "games": 48,
+        "winDuration": 2032.8333333333333,
+        "lossDuration": 1932,
+        "gapSeconds": -101,
+        "wrShort": 0.429,
+        "wrMid": 0.516,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 5.63
+      },
+      {
+        "position": "Support",
+        "games": 103,
+        "winDuration": 1874.0454545454545,
+        "lossDuration": 2071.0508474576272,
+        "gapSeconds": 197,
+        "wrShort": 0.529,
+        "wrMid": 0.413,
+        "wrLong": 0.391,
+        "earlyKillsPerGame": 2.62
+      }
+    ]
+  },
+  {
+    "heroId": 20,
+    "name": "Vengeful Spirit",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 72,
+        "winDuration": 2501.030303030303,
+        "lossDuration": 2243.871794871795,
+        "gapSeconds": -257,
+        "wrShort": 0.167,
+        "wrMid": 0.475,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 3.46
+      },
+      {
+        "position": "Offlane",
+        "games": 18,
+        "winDuration": 2057.375,
+        "lossDuration": 2159.7,
+        "gapSeconds": 102,
+        "wrShort": 0.5,
+        "wrMid": 0.545,
+        "wrLong": 0.2,
+        "earlyKillsPerGame": 3.67
+      },
+      {
+        "position": "Support",
+        "games": 259,
+        "winDuration": 1939.1503759398497,
+        "lossDuration": 1941.8253968253969,
+        "gapSeconds": 3,
+        "wrShort": 0.462,
+        "wrMid": 0.525,
+        "wrLong": 0.483,
+        "earlyKillsPerGame": 1.54
+      }
+    ]
+  },
+  {
+    "heroId": 21,
+    "name": "Windranger",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 369,
+        "winDuration": 2483.296875,
+        "lossDuration": 2486.0790960451977,
+        "gapSeconds": 3,
+        "wrShort": 0.538,
+        "wrMid": 0.537,
+        "wrLong": 0.503,
+        "earlyKillsPerGame": 5.05
+      },
+      {
+        "position": "Mid",
+        "games": 74,
+        "winDuration": 2220.527777777778,
+        "lossDuration": 2134.0789473684213,
+        "gapSeconds": -86,
+        "wrShort": 0.333,
+        "wrMid": 0.526,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 5.36
+      },
+      {
+        "position": "Offlane",
+        "games": 108,
+        "winDuration": 1801.5384615384614,
+        "lossDuration": 1870.1785714285713,
+        "gapSeconds": 69,
+        "wrShort": 0.4,
+        "wrMid": 0.484,
+        "wrLong": 0.571,
+        "earlyKillsPerGame": 5.97
+      },
+      {
+        "position": "Support",
+        "games": 380,
+        "winDuration": 2257.508287292818,
+        "lossDuration": 2247.884422110553,
+        "gapSeconds": -10,
+        "wrShort": 0.462,
+        "wrMid": 0.491,
+        "wrLong": 0.455,
+        "earlyKillsPerGame": 3.35
+      }
+    ]
+  },
+  {
+    "heroId": 22,
+    "name": "Zeus",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 232,
+        "winDuration": 2122.481818181818,
+        "lossDuration": 2042.9262295081967,
+        "gapSeconds": -80,
+        "wrShort": 0.364,
+        "wrMid": 0.506,
+        "wrLong": 0.413,
+        "earlyKillsPerGame": 4.81
+      },
+      {
+        "position": "Offlane",
+        "games": 35,
+        "winDuration": 2604.6666666666665,
+        "lossDuration": 2217.2727272727275,
+        "gapSeconds": -387,
+        "wrShort": null,
+        "wrMid": 0.5,
+        "wrLong": 0.882,
+        "earlyKillsPerGame": 5.31
+      },
+      {
+        "position": "Support",
+        "games": 373,
+        "winDuration": 1915.9147727272727,
+        "lossDuration": 1865.8527918781726,
+        "gapSeconds": -50,
+        "wrShort": 0.541,
+        "wrMid": 0.437,
+        "wrLong": 0.651,
+        "earlyKillsPerGame": 2.86
+      }
+    ]
+  },
+  {
+    "heroId": 23,
+    "name": "Kunkka",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 18,
+        "winDuration": 2033.25,
+        "lossDuration": 2000,
+        "gapSeconds": -33,
+        "wrShort": 0.333,
+        "wrMid": 0.5,
+        "wrLong": 0.4,
+        "earlyKillsPerGame": 4.61
+      },
+      {
+        "position": "Mid",
+        "games": 215,
+        "winDuration": 2210.788990825688,
+        "lossDuration": 2170.0188679245284,
+        "gapSeconds": -41,
+        "wrShort": 0.429,
+        "wrMid": 0.497,
+        "wrLong": 0.554,
+        "earlyKillsPerGame": 4.87
+      },
+      {
+        "position": "Offlane",
+        "games": 193,
+        "winDuration": 2077.936936936937,
+        "lossDuration": 2069,
+        "gapSeconds": -9,
+        "wrShort": 0.538,
+        "wrMid": 0.597,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 4.19
+      }
+    ]
+  },
+  {
+    "heroId": 25,
+    "name": "Lina",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 64,
+        "winDuration": 2318.3225806451615,
+        "lossDuration": 2350.5757575757575,
+        "gapSeconds": 32,
+        "wrShort": 0.5,
+        "wrMid": 0.429,
+        "wrLong": 0.556,
+        "earlyKillsPerGame": 4.25
+      },
+      {
+        "position": "Mid",
+        "games": 584,
+        "winDuration": 1970.9172661870505,
+        "lossDuration": 1932.6143790849674,
+        "gapSeconds": -38,
+        "wrShort": 0.392,
+        "wrMid": 0.492,
+        "wrLong": 0.442,
+        "earlyKillsPerGame": 5.93
+      },
+      {
+        "position": "Support",
+        "games": 23,
+        "winDuration": 2043.8461538461538,
+        "lossDuration": 2327.4,
+        "gapSeconds": 284,
+        "wrShort": 1,
+        "wrMid": 0.538,
+        "wrLong": 0.429,
+        "earlyKillsPerGame": 3.87
+      }
+    ]
+  },
+  {
+    "heroId": 26,
+    "name": "Lion",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 68,
+        "winDuration": 1951.3214285714287,
+        "lossDuration": 1923.3,
+        "gapSeconds": -28,
+        "wrShort": 0.25,
+        "wrMid": 0.457,
+        "wrLong": 0.4,
+        "earlyKillsPerGame": 4.69
+      },
+      {
+        "position": "Support",
+        "games": 1428,
+        "winDuration": 2120.82123655914,
+        "lossDuration": 2089.4941520467837,
+        "gapSeconds": -31,
+        "wrShort": 0.434,
+        "wrMid": 0.531,
+        "wrLong": 0.523,
+        "earlyKillsPerGame": 2.44
+      }
+    ]
+  },
+  {
+    "heroId": 27,
+    "name": "Shadow Shaman",
+    "buckets": [
+      {
+        "position": "Support",
+        "games": 696,
+        "winDuration": 1978.3520710059172,
+        "lossDuration": 1946.4217877094973,
+        "gapSeconds": -32,
+        "wrShort": 0.314,
+        "wrMid": 0.514,
+        "wrLong": 0.456,
+        "earlyKillsPerGame": 1.98
+      }
+    ]
+  },
+  {
+    "heroId": 28,
+    "name": "Slardar",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 246,
+        "winDuration": 2254.1567164179105,
+        "lossDuration": 2285.464285714286,
+        "gapSeconds": 31,
+        "wrShort": 0.484,
+        "wrMid": 0.557,
+        "wrLong": 0.548,
+        "earlyKillsPerGame": 4.54
+      },
+      {
+        "position": "Offlane",
+        "games": 723,
+        "winDuration": 2163.7874659400545,
+        "lossDuration": 2153.205056179775,
+        "gapSeconds": -11,
+        "wrShort": 0.547,
+        "wrMid": 0.504,
+        "wrLong": 0.502,
+        "earlyKillsPerGame": 3.83
+      },
+      {
+        "position": "Support",
+        "games": 54,
+        "winDuration": 2379.8695652173915,
+        "lossDuration": 2396.9032258064517,
+        "gapSeconds": 17,
+        "wrShort": 0,
+        "wrMid": 0.536,
+        "wrLong": 0.381,
+        "earlyKillsPerGame": 2.63
+      }
+    ]
+  },
+  {
+    "heroId": 29,
+    "name": "Tidehunter",
+    "buckets": [
+      {
+        "position": "Offlane",
+        "games": 1183,
+        "winDuration": 2130.757042253521,
+        "lossDuration": 2172.808130081301,
+        "gapSeconds": 42,
+        "wrShort": 0.478,
+        "wrMid": 0.488,
+        "wrLong": 0.464,
+        "earlyKillsPerGame": 3.21
+      },
+      {
+        "position": "Support",
+        "games": 54,
+        "winDuration": 2402.862068965517,
+        "lossDuration": 1927.28,
+        "gapSeconds": -476,
+        "wrShort": 0.455,
+        "wrMid": 0.519,
+        "wrLong": 0.625,
+        "earlyKillsPerGame": 2.91
+      }
+    ]
+  },
+  {
+    "heroId": 30,
+    "name": "Witch Doctor",
+    "buckets": [
+      {
+        "position": "Support",
+        "games": 358,
+        "winDuration": 2098.191489361702,
+        "lossDuration": 2116.6117647058823,
+        "gapSeconds": 18,
+        "wrShort": 0.412,
+        "wrMid": 0.562,
+        "wrLong": 0.472,
+        "earlyKillsPerGame": 3.74
+      }
+    ]
+  },
+  {
+    "heroId": 31,
+    "name": "Lich",
+    "buckets": [
+      {
+        "position": "Support",
+        "games": 1005,
+        "winDuration": 2207.4225352112676,
+        "lossDuration": 2134.9055118110236,
+        "gapSeconds": -73,
+        "wrShort": 0.377,
+        "wrMid": 0.49,
+        "wrLong": 0.539,
+        "earlyKillsPerGame": 2.41
+      }
+    ]
+  },
+  {
+    "heroId": 32,
+    "name": "Riki",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 24,
+        "winDuration": 2019.7272727272727,
+        "lossDuration": 1983.076923076923,
+        "gapSeconds": -37,
+        "wrShort": 0.333,
+        "wrMid": 0.529,
+        "wrLong": 0.25,
+        "earlyKillsPerGame": 7.38
+      },
+      {
+        "position": "Mid",
+        "games": 53,
+        "winDuration": 2142.4761904761904,
+        "lossDuration": 2018.0625,
+        "gapSeconds": -124,
+        "wrShort": 0.5,
+        "wrMid": 0.341,
+        "wrLong": 0.6,
+        "earlyKillsPerGame": 7.21
+      }
+    ]
+  },
+  {
+    "heroId": 33,
+    "name": "Enigma",
+    "buckets": [
+      {
+        "position": "Offlane",
+        "games": 125,
+        "winDuration": 2292.375,
+        "lossDuration": 2543.488888888889,
+        "gapSeconds": 251,
+        "wrShort": 1,
+        "wrMid": 0.689,
+        "wrLong": 0.544,
+        "earlyKillsPerGame": 3.77
+      },
+      {
+        "position": "Support",
+        "games": 23,
+        "winDuration": 2284,
+        "lossDuration": 1926.8461538461538,
+        "gapSeconds": -357,
+        "wrShort": 0,
+        "wrMid": 0.389,
+        "wrLong": 0.75,
+        "earlyKillsPerGame": 2.96
+      }
+    ]
+  },
+  {
+    "heroId": 34,
+    "name": "Tinker",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 121,
+        "winDuration": 2155.653846153846,
+        "lossDuration": 2039.840579710145,
+        "gapSeconds": -116,
+        "wrShort": 0.231,
+        "wrMid": 0.45,
+        "wrLong": 0.464,
+        "earlyKillsPerGame": 4.03
+      }
+    ]
+  },
+  {
+    "heroId": 35,
+    "name": "Sniper",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 145,
+        "winDuration": 1804.3529411764705,
+        "lossDuration": 1854,
+        "gapSeconds": 50,
+        "wrShort": 0.889,
+        "wrMid": 0.576,
+        "wrLong": 0.25,
+        "earlyKillsPerGame": 5.65
+      },
+      {
+        "position": "Mid",
+        "games": 440,
+        "winDuration": 1943.9911504424779,
+        "lossDuration": 1943.0794392523364,
+        "gapSeconds": -1,
+        "wrShort": 0.488,
+        "wrMid": 0.516,
+        "wrLong": 0.519,
+        "earlyKillsPerGame": 6.15
+      }
+    ]
+  },
+  {
+    "heroId": 36,
+    "name": "Necrophos",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 228,
+        "winDuration": 2267.4521739130437,
+        "lossDuration": 2442.619469026549,
+        "gapSeconds": 175,
+        "wrShort": 0.667,
+        "wrMid": 0.504,
+        "wrLong": 0.471,
+        "earlyKillsPerGame": 5.46
+      },
+      {
+        "position": "Mid",
+        "games": 246,
+        "winDuration": 2203.8333333333335,
+        "lossDuration": 2058.253968253968,
+        "gapSeconds": -146,
+        "wrShort": 0.45,
+        "wrMid": 0.47,
+        "wrLong": 0.552,
+        "earlyKillsPerGame": 5.72
+      },
+      {
+        "position": "Offlane",
+        "games": 113,
+        "winDuration": 2137.3214285714284,
+        "lossDuration": 2210.0526315789475,
+        "gapSeconds": 73,
+        "wrShort": 0.778,
+        "wrMid": 0.457,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 5.38
+      }
+    ]
+  },
+  {
+    "heroId": 37,
+    "name": "Warlock",
+    "buckets": [
+      {
+        "position": "Support",
+        "games": 524,
+        "winDuration": 1993.349019607843,
+        "lossDuration": 2019.8773234200744,
+        "gapSeconds": 27,
+        "wrShort": 0.568,
+        "wrMid": 0.481,
+        "wrLong": 0.478,
+        "earlyKillsPerGame": 2.04
+      }
+    ]
+  },
+  {
+    "heroId": 38,
+    "name": "Beastmaster",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 157,
+        "winDuration": 2090.931506849315,
+        "lossDuration": 2264.6071428571427,
+        "gapSeconds": 174,
+        "wrShort": 0.625,
+        "wrMid": 0.484,
+        "wrLong": 0.37,
+        "earlyKillsPerGame": 4.96
+      },
+      {
+        "position": "Mid",
+        "games": 265,
+        "winDuration": 2167.969465648855,
+        "lossDuration": 2199.8432835820895,
+        "gapSeconds": 32,
+        "wrShort": 0.55,
+        "wrMid": 0.463,
+        "wrLong": 0.541,
+        "earlyKillsPerGame": 5.19
+      },
+      {
+        "position": "Offlane",
+        "games": 498,
+        "winDuration": 2131.102661596958,
+        "lossDuration": 2267.131914893617,
+        "gapSeconds": 136,
+        "wrShort": 0.754,
+        "wrMid": 0.507,
+        "wrLong": 0.479,
+        "earlyKillsPerGame": 4.34
+      }
+    ]
+  },
+  {
+    "heroId": 39,
+    "name": "Queen of Pain",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 40,
+        "winDuration": 2210.823529411765,
+        "lossDuration": 2177.391304347826,
+        "gapSeconds": -33,
+        "wrShort": 0,
+        "wrMid": 0.417,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 5.03
+      },
+      {
+        "position": "Mid",
+        "games": 986,
+        "winDuration": 2213.8895705521472,
+        "lossDuration": 2167.3038229376257,
+        "gapSeconds": -47,
+        "wrShort": 0.368,
+        "wrMid": 0.509,
+        "wrLong": 0.508,
+        "earlyKillsPerGame": 5.82
+      },
+      {
+        "position": "Offlane",
+        "games": 36,
+        "winDuration": 1894.0555555555557,
+        "lossDuration": 2001.1666666666667,
+        "gapSeconds": 107,
+        "wrShort": 1,
+        "wrMid": 0.464,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 5.42
+      },
+      {
+        "position": "Support",
+        "games": 19,
+        "winDuration": 2117.8571428571427,
+        "lossDuration": 2051.25,
+        "gapSeconds": -67,
+        "wrShort": 0,
+        "wrMid": 0.357,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 4.53
+      }
+    ]
+  },
+  {
+    "heroId": 40,
+    "name": "Venomancer",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 20,
+        "winDuration": 2051,
+        "lossDuration": 2197.8888888888887,
+        "gapSeconds": 147,
+        "wrShort": 0.667,
+        "wrMid": 0.5,
+        "wrLong": 0.571,
+        "earlyKillsPerGame": 3.85
+      },
+      {
+        "position": "Offlane",
+        "games": 29,
+        "winDuration": 1894.6666666666667,
+        "lossDuration": 1988.2142857142858,
+        "gapSeconds": 94,
+        "wrShort": 0.333,
+        "wrMid": 0.619,
+        "wrLong": 0.2,
+        "earlyKillsPerGame": 4.97
+      },
+      {
+        "position": "Support",
+        "games": 522,
+        "winDuration": 2221.657992565056,
+        "lossDuration": 2263.2727272727275,
+        "gapSeconds": 42,
+        "wrShort": 0.549,
+        "wrMid": 0.519,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 2.43
+      }
+    ]
+  },
+  {
+    "heroId": 41,
+    "name": "Faceless Void",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 472,
+        "winDuration": 2238.315789473684,
+        "lossDuration": 2111.590163934426,
+        "gapSeconds": -127,
+        "wrShort": 0.361,
+        "wrMid": 0.46,
+        "wrLong": 0.559,
+        "earlyKillsPerGame": 3.61
+      }
+    ]
+  },
+  {
+    "heroId": 42,
+    "name": "Wraith King",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 144,
+        "winDuration": 1892.6818181818182,
+        "lossDuration": 2034.4871794871794,
+        "gapSeconds": 142,
+        "wrShort": 0.6,
+        "wrMid": 0.478,
+        "wrLong": 0.263,
+        "earlyKillsPerGame": 4.51
+      },
+      {
+        "position": "Offlane",
+        "games": 131,
+        "winDuration": 1838.8285714285714,
+        "lossDuration": 1831,
+        "gapSeconds": -8,
+        "wrShort": 0.444,
+        "wrMid": 0.534,
+        "wrLong": 0.667,
+        "earlyKillsPerGame": 4.99
+      }
+    ]
+  },
+  {
+    "heroId": 43,
+    "name": "Death Prophet",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 140,
+        "winDuration": 2158.032786885246,
+        "lossDuration": 2196.3291139240505,
+        "gapSeconds": 38,
+        "wrShort": 0.231,
+        "wrMid": 0.5,
+        "wrLong": 0.396,
+        "earlyKillsPerGame": 5.25
+      },
+      {
+        "position": "Offlane",
+        "games": 111,
+        "winDuration": 1945.1555555555556,
+        "lossDuration": 1992.2727272727273,
+        "gapSeconds": 47,
+        "wrShort": 0.462,
+        "wrMid": 0.423,
+        "wrLong": 0.3,
+        "earlyKillsPerGame": 5.1
+      },
+      {
+        "position": "Support",
+        "games": 17,
+        "winDuration": 2149.4166666666665,
+        "lossDuration": 2495.2,
+        "gapSeconds": 346,
+        "wrShort": 1,
+        "wrMid": 0.714,
+        "wrLong": 0.625,
+        "earlyKillsPerGame": 3.65
+      }
+    ]
+  },
+  {
+    "heroId": 44,
+    "name": "Phantom Assassin",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 163,
+        "winDuration": 1870.9130434782608,
+        "lossDuration": 1939.7978723404256,
+        "gapSeconds": 69,
+        "wrShort": 0.188,
+        "wrMid": 0.488,
+        "wrLong": 0.227,
+        "earlyKillsPerGame": 4.29
+      }
+    ]
+  },
+  {
+    "heroId": 45,
+    "name": "Pugna",
+    "buckets": [
+      {
+        "position": "Support",
+        "games": 91,
+        "winDuration": 2028.936170212766,
+        "lossDuration": 2261.25,
+        "gapSeconds": 232,
+        "wrShort": 0.667,
+        "wrMid": 0.536,
+        "wrLong": 0.423,
+        "earlyKillsPerGame": 2.6
+      }
+    ]
+  },
+  {
+    "heroId": 46,
+    "name": "Templar Assassin",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 429,
+        "winDuration": 2035.2248803827752,
+        "lossDuration": 2026.9136363636364,
+        "gapSeconds": -8,
+        "wrShort": 0.541,
+        "wrMid": 0.476,
+        "wrLong": 0.506,
+        "earlyKillsPerGame": 4.19
+      },
+      {
+        "position": "Mid",
+        "games": 100,
+        "winDuration": 1761.0943396226414,
+        "lossDuration": 1813.4255319148936,
+        "gapSeconds": 52,
+        "wrShort": 0.667,
+        "wrMid": 0.523,
+        "wrLong": 0.4,
+        "earlyKillsPerGame": 6.05
+      }
+    ]
+  },
+  {
+    "heroId": 47,
+    "name": "Viper",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 36,
+        "winDuration": 2008.7368421052631,
+        "lossDuration": 2225.6470588235293,
+        "gapSeconds": 217,
+        "wrShort": 0.6,
+        "wrMid": 0.6,
+        "wrLong": 0.364,
+        "earlyKillsPerGame": 6.81
+      },
+      {
+        "position": "Mid",
+        "games": 345,
+        "winDuration": 2153.4619883040937,
+        "lossDuration": 2300.8505747126437,
+        "gapSeconds": 147,
+        "wrShort": 0.483,
+        "wrMid": 0.545,
+        "wrLong": 0.412,
+        "earlyKillsPerGame": 5.26
+      },
+      {
+        "position": "Offlane",
+        "games": 121,
+        "winDuration": 2300.309090909091,
+        "lossDuration": 2470.121212121212,
+        "gapSeconds": 170,
+        "wrShort": 0.538,
+        "wrMid": 0.455,
+        "wrLong": 0.434,
+        "earlyKillsPerGame": 4.48
+      }
+    ]
+  },
+  {
+    "heroId": 48,
+    "name": "Luna",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 1022,
+        "winDuration": 2031.3811475409836,
+        "lossDuration": 2073.187265917603,
+        "gapSeconds": 42,
+        "wrShort": 0.429,
+        "wrMid": 0.491,
+        "wrLong": 0.447,
+        "earlyKillsPerGame": 3.76
+      }
+    ]
+  },
+  {
+    "heroId": 49,
+    "name": "Dragon Knight",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 140,
+        "winDuration": 1937.4246575342465,
+        "lossDuration": 1981.910447761194,
+        "gapSeconds": 44,
+        "wrShort": 0.692,
+        "wrMid": 0.491,
+        "wrLong": 0.571,
+        "earlyKillsPerGame": 3.91
+      },
+      {
+        "position": "Mid",
+        "games": 74,
+        "winDuration": 1970,
+        "lossDuration": 1937.4,
+        "gapSeconds": -33,
+        "wrShort": 0.4,
+        "wrMid": 0.542,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 5.24
+      },
+      {
+        "position": "Offlane",
+        "games": 96,
+        "winDuration": 1816.0444444444445,
+        "lossDuration": 1845.1176470588234,
+        "gapSeconds": 29,
+        "wrShort": 0.2,
+        "wrMid": 0.489,
+        "wrLong": 0.333,
+        "earlyKillsPerGame": 4.7
+      }
+    ]
+  },
+  {
+    "heroId": 50,
+    "name": "Dazzle",
+    "buckets": [
+      {
+        "position": "Support",
+        "games": 177,
+        "winDuration": 2088.728260869565,
+        "lossDuration": 2126.6470588235293,
+        "gapSeconds": 38,
+        "wrShort": 0.556,
+        "wrMid": 0.556,
+        "wrLong": 0.431,
+        "earlyKillsPerGame": 1.6
+      }
+    ]
+  },
+  {
+    "heroId": 51,
+    "name": "Clockwerk",
+    "buckets": [
+      {
+        "position": "Offlane",
+        "games": 22,
+        "winDuration": 1620.75,
+        "lossDuration": 1770.4,
+        "gapSeconds": 150,
+        "wrShort": 0.667,
+        "wrMid": 0.533,
+        "wrLong": 0,
+        "earlyKillsPerGame": 4.18
+      },
+      {
+        "position": "Support",
+        "games": 804,
+        "winDuration": 2316.6784037558687,
+        "lossDuration": 2420.335978835979,
+        "gapSeconds": 104,
+        "wrShort": 0.635,
+        "wrMid": 0.537,
+        "wrLong": 0.503,
+        "earlyKillsPerGame": 1.88
+      }
+    ]
+  },
+  {
+    "heroId": 52,
+    "name": "Leshrac",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 180,
+        "winDuration": 2196.3763440860216,
+        "lossDuration": 2099.5402298850577,
+        "gapSeconds": -97,
+        "wrShort": 0.35,
+        "wrMid": 0.5,
+        "wrLong": 0.603,
+        "earlyKillsPerGame": 5.53
+      },
+      {
+        "position": "Support",
+        "games": 15,
+        "winDuration": 2319,
+        "lossDuration": 2034.857142857143,
+        "gapSeconds": -284,
+        "wrShort": 0,
+        "wrMid": 0.571,
+        "wrLong": 0.667,
+        "earlyKillsPerGame": 3
+      }
+    ]
+  },
+  {
+    "heroId": 53,
+    "name": "Nature's Prophet",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 173,
+        "winDuration": 2203.1505376344085,
+        "lossDuration": 2403.825,
+        "gapSeconds": 201,
+        "wrShort": 0.818,
+        "wrMid": 0.543,
+        "wrLong": 0.485,
+        "earlyKillsPerGame": 5.43
+      },
+      {
+        "position": "Mid",
+        "games": 116,
+        "winDuration": 2081.7368421052633,
+        "lossDuration": 2005.9322033898304,
+        "gapSeconds": -76,
+        "wrShort": 0.636,
+        "wrMid": 0.444,
+        "wrLong": 0.583,
+        "earlyKillsPerGame": 6.97
+      },
+      {
+        "position": "Offlane",
+        "games": 78,
+        "winDuration": 1964.047619047619,
+        "lossDuration": 1977.8333333333333,
+        "gapSeconds": 14,
+        "wrShort": 0.2,
+        "wrMid": 0.581,
+        "wrLong": 0.455,
+        "earlyKillsPerGame": 5
+      },
+      {
+        "position": "Support",
+        "games": 81,
+        "winDuration": 1863.4,
+        "lossDuration": 2072.6585365853657,
+        "gapSeconds": 209,
+        "wrShort": 0.778,
+        "wrMid": 0.492,
+        "wrLong": 0.273,
+        "earlyKillsPerGame": 3.11
+      }
+    ]
+  },
+  {
+    "heroId": 54,
+    "name": "Lifestealer",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 726,
+        "winDuration": 2213.809248554913,
+        "lossDuration": 2097.2631578947367,
+        "gapSeconds": -117,
+        "wrShort": 0.458,
+        "wrMid": 0.465,
+        "wrLong": 0.507,
+        "earlyKillsPerGame": 3.74
+      }
+    ]
+  },
+  {
+    "heroId": 55,
+    "name": "Dark Seer",
+    "buckets": [
+      {
+        "position": "Offlane",
+        "games": 237,
+        "winDuration": 2429.817391304348,
+        "lossDuration": 2251.598360655738,
+        "gapSeconds": -178,
+        "wrShort": 0.4,
+        "wrMid": 0.463,
+        "wrLong": 0.532,
+        "earlyKillsPerGame": 3.07
+      }
+    ]
+  },
+  {
+    "heroId": 56,
+    "name": "Clinkz",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 293,
+        "winDuration": 2217.181818181818,
+        "lossDuration": 2203.2086330935253,
+        "gapSeconds": -14,
+        "wrShort": 0.261,
+        "wrMid": 0.551,
+        "wrLong": 0.543,
+        "earlyKillsPerGame": 5.12
+      },
+      {
+        "position": "Mid",
+        "games": 34,
+        "winDuration": 1975.6,
+        "lossDuration": 1861.7894736842106,
+        "gapSeconds": -114,
+        "wrShort": 0.5,
+        "wrMid": 0.407,
+        "wrLong": 0.6,
+        "earlyKillsPerGame": 7.59
+      }
+    ]
+  },
+  {
+    "heroId": 57,
+    "name": "Omniknight",
+    "buckets": [
+      {
+        "position": "Offlane",
+        "games": 50,
+        "winDuration": 2149.923076923077,
+        "lossDuration": 2058.5,
+        "gapSeconds": -91,
+        "wrShort": 0.25,
+        "wrMid": 0.531,
+        "wrLong": 0.571,
+        "earlyKillsPerGame": 4.16
+      },
+      {
+        "position": "Support",
+        "games": 37,
+        "winDuration": 2314.8888888888887,
+        "lossDuration": 2310.6315789473683,
+        "gapSeconds": -4,
+        "wrShort": 1,
+        "wrMid": 0.353,
+        "wrLong": 0.556,
+        "earlyKillsPerGame": 1.76
+      }
+    ]
+  },
+  {
+    "heroId": 58,
+    "name": "Enchantress",
+    "buckets": [
+      {
+        "position": "Support",
+        "games": 553,
+        "winDuration": 2258.6326530612246,
+        "lossDuration": 2281.131274131274,
+        "gapSeconds": 22,
+        "wrShort": 0.731,
+        "wrMid": 0.483,
+        "wrLong": 0.55,
+        "earlyKillsPerGame": 1.89
+      }
+    ]
+  },
+  {
+    "heroId": 59,
+    "name": "Huskar",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 26,
+        "winDuration": 2028.5714285714287,
+        "lossDuration": 2051.5,
+        "gapSeconds": 23,
+        "wrShort": 1,
+        "wrMid": 0.526,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 5.69
+      },
+      {
+        "position": "Mid",
+        "games": 231,
+        "winDuration": 1966.4621848739496,
+        "lossDuration": 2134.4553571428573,
+        "gapSeconds": 168,
+        "wrShort": 0.618,
+        "wrMid": 0.528,
+        "wrLong": 0.418,
+        "earlyKillsPerGame": 6.48
+      },
+      {
+        "position": "Offlane",
+        "games": 16,
+        "winDuration": 1759.6666666666667,
+        "lossDuration": 1904.4285714285713,
+        "gapSeconds": 145,
+        "wrShort": 0.5,
+        "wrMid": 0.667,
+        "wrLong": 0,
+        "earlyKillsPerGame": 6.06
+      },
+      {
+        "position": "Support",
+        "games": 17,
+        "winDuration": 2096.6,
+        "lossDuration": 2240.714285714286,
+        "gapSeconds": 144,
+        "wrShort": 1,
+        "wrMid": 0.5,
+        "wrLong": 0.667,
+        "earlyKillsPerGame": 3.12
+      }
+    ]
+  },
+  {
+    "heroId": 60,
+    "name": "Night Stalker",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 36,
+        "winDuration": 2336.6666666666665,
+        "lossDuration": 2296.6,
+        "gapSeconds": -40,
+        "wrShort": 1,
+        "wrMid": 0.5,
+        "wrLong": 0.625,
+        "earlyKillsPerGame": 5.44
+      },
+      {
+        "position": "Offlane",
+        "games": 383,
+        "winDuration": 2149.775956284153,
+        "lossDuration": 2119.085,
+        "gapSeconds": -31,
+        "wrShort": 0.515,
+        "wrMid": 0.453,
+        "wrLong": 0.523,
+        "earlyKillsPerGame": 5.54
+      },
+      {
+        "position": "Support",
+        "games": 22,
+        "winDuration": 2271.090909090909,
+        "lossDuration": 2306.5454545454545,
+        "gapSeconds": 35,
+        "wrShort": 0.5,
+        "wrMid": 0.583,
+        "wrLong": 0.375,
+        "earlyKillsPerGame": 3.91
+      }
+    ]
+  },
+  {
+    "heroId": 61,
+    "name": "Broodmother",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 34,
+        "winDuration": 1914.4,
+        "lossDuration": 2237.4210526315787,
+        "gapSeconds": 323,
+        "wrShort": 0.75,
+        "wrMid": 0.476,
+        "wrLong": 0.222,
+        "earlyKillsPerGame": 4.59
+      },
+      {
+        "position": "Mid",
+        "games": 25,
+        "winDuration": 1847.2727272727273,
+        "lossDuration": 1746.2857142857142,
+        "gapSeconds": -101,
+        "wrShort": 0.4,
+        "wrMid": 0.421,
+        "wrLong": 1,
+        "earlyKillsPerGame": 4.68
+      },
+      {
+        "position": "Offlane",
+        "games": 20,
+        "winDuration": 1955.4545454545455,
+        "lossDuration": 1608.2222222222222,
+        "gapSeconds": -347,
+        "wrShort": 0.5,
+        "wrMid": 0.529,
+        "wrLong": 1,
+        "earlyKillsPerGame": 5.45
+      }
+    ]
+  },
+  {
+    "heroId": 62,
+    "name": "Bounty Hunter",
+    "buckets": [
+      {
+        "position": "Support",
+        "games": 104,
+        "winDuration": 2106.4262295081967,
+        "lossDuration": 2169.953488372093,
+        "gapSeconds": 64,
+        "wrShort": 0.667,
+        "wrMid": 0.585,
+        "wrLong": 0.567,
+        "earlyKillsPerGame": 2.63
+      }
+    ]
+  },
+  {
+    "heroId": 63,
+    "name": "Weaver",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 293,
+        "winDuration": 2100.2916666666665,
+        "lossDuration": 2163.9710982658958,
+        "gapSeconds": 64,
+        "wrShort": 0.346,
+        "wrMid": 0.429,
+        "wrLong": 0.391,
+        "earlyKillsPerGame": 5.3
+      },
+      {
+        "position": "Support",
+        "games": 56,
+        "winDuration": 2106.5652173913045,
+        "lossDuration": 1954.8181818181818,
+        "gapSeconds": -152,
+        "wrShort": 0.75,
+        "wrMid": 0.333,
+        "wrLong": 0.714,
+        "earlyKillsPerGame": 4.77
+      }
+    ]
+  },
+  {
+    "heroId": 64,
+    "name": "Jakiro",
+    "buckets": [
+      {
+        "position": "Support",
+        "games": 814,
+        "winDuration": 2129.927272727273,
+        "lossDuration": 2041.0839160839162,
+        "gapSeconds": -89,
+        "wrShort": 0.351,
+        "wrMid": 0.484,
+        "wrLong": 0.492,
+        "earlyKillsPerGame": 2.23
+      }
+    ]
+  },
+  {
+    "heroId": 65,
+    "name": "Batrider",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 73,
+        "winDuration": 2173.311111111111,
+        "lossDuration": 2258.785714285714,
+        "gapSeconds": 85,
+        "wrShort": 0.5,
+        "wrMid": 0.659,
+        "wrLong": 0.56,
+        "earlyKillsPerGame": 6.38
+      },
+      {
+        "position": "Offlane",
+        "games": 315,
+        "winDuration": 2238.7165775401068,
+        "lossDuration": 2248.734375,
+        "gapSeconds": 10,
+        "wrShort": 0.708,
+        "wrMid": 0.575,
+        "wrLong": 0.6,
+        "earlyKillsPerGame": 4.6
+      },
+      {
+        "position": "Support",
+        "games": 194,
+        "winDuration": 2227.4166666666665,
+        "lossDuration": 2249.3979591836733,
+        "gapSeconds": 22,
+        "wrShort": 0.5,
+        "wrMid": 0.474,
+        "wrLong": 0.529,
+        "earlyKillsPerGame": 3.35
+      }
+    ]
+  },
+  {
+    "heroId": 66,
+    "name": "Chen",
+    "buckets": [
+      {
+        "position": "Support",
+        "games": 133,
+        "winDuration": 2139.525,
+        "lossDuration": 2212.490566037736,
+        "gapSeconds": 73,
+        "wrShort": 0.714,
+        "wrMid": 0.598,
+        "wrLong": 0.568,
+        "earlyKillsPerGame": 1.77
+      }
+    ]
+  },
+  {
+    "heroId": 67,
+    "name": "Spectre",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 143,
+        "winDuration": 2335.09375,
+        "lossDuration": 2102.9113924050635,
+        "gapSeconds": -232,
+        "wrShort": 0.176,
+        "wrMid": 0.434,
+        "wrLong": 0.56,
+        "earlyKillsPerGame": 4.11
+      }
+    ]
+  },
+  {
+    "heroId": 68,
+    "name": "Ancient Apparition",
+    "buckets": [
+      {
+        "position": "Support",
+        "games": 160,
+        "winDuration": 2295.194805194805,
+        "lossDuration": 2160.6867469879517,
+        "gapSeconds": -135,
+        "wrShort": 0.308,
+        "wrMid": 0.453,
+        "wrLong": 0.61,
+        "earlyKillsPerGame": 2.62
+      }
+    ]
+  },
+  {
+    "heroId": 69,
+    "name": "Doom",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 164,
+        "winDuration": 2411.6867469879517,
+        "lossDuration": 2314.061728395062,
+        "gapSeconds": -98,
+        "wrShort": 0.625,
+        "wrMid": 0.427,
+        "wrLong": 0.581,
+        "earlyKillsPerGame": 4.21
+      },
+      {
+        "position": "Offlane",
+        "games": 839,
+        "winDuration": 2226.014989293362,
+        "lossDuration": 2215.7849462365593,
+        "gapSeconds": -10,
+        "wrShort": 0.529,
+        "wrMid": 0.549,
+        "wrLong": 0.578,
+        "earlyKillsPerGame": 4
+      },
+      {
+        "position": "Support",
+        "games": 15,
+        "winDuration": 2668.8,
+        "lossDuration": 2319.7,
+        "gapSeconds": -349,
+        "wrShort": null,
+        "wrMid": 0.286,
+        "wrLong": 0.375,
+        "earlyKillsPerGame": 2.93
+      }
+    ]
+  },
+  {
+    "heroId": 70,
+    "name": "Ursa",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 569,
+        "winDuration": 2171.6299212598424,
+        "lossDuration": 2061.8920634920637,
+        "gapSeconds": -110,
+        "wrShort": 0.333,
+        "wrMid": 0.435,
+        "wrLong": 0.507,
+        "earlyKillsPerGame": 4.98
+      }
+    ]
+  },
+  {
+    "heroId": 71,
+    "name": "Spirit Breaker",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 28,
+        "winDuration": 2139.1875,
+        "lossDuration": 1974.6666666666667,
+        "gapSeconds": -165,
+        "wrShort": null,
+        "wrMid": 0.522,
+        "wrLong": 0.8,
+        "earlyKillsPerGame": 5.71
+      },
+      {
+        "position": "Offlane",
+        "games": 166,
+        "winDuration": 1886.5529411764705,
+        "lossDuration": 1874.0864197530864,
+        "gapSeconds": -12,
+        "wrShort": 0.417,
+        "wrMid": 0.532,
+        "wrLong": 0.4,
+        "earlyKillsPerGame": 4.9
+      },
+      {
+        "position": "Support",
+        "games": 720,
+        "winDuration": 1986.4484679665738,
+        "lossDuration": 2002.415512465374,
+        "gapSeconds": 16,
+        "wrShort": 0.562,
+        "wrMid": 0.496,
+        "wrLong": 0.472,
+        "earlyKillsPerGame": 3.34
+      }
+    ]
+  },
+  {
+    "heroId": 72,
+    "name": "Gyrocopter",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 268,
+        "winDuration": 2157.8130081300815,
+        "lossDuration": 2055.731034482759,
+        "gapSeconds": -102,
+        "wrShort": 0.346,
+        "wrMid": 0.491,
+        "wrLong": 0.423,
+        "earlyKillsPerGame": 3.41
+      }
+    ]
+  },
+  {
+    "heroId": 73,
+    "name": "Alchemist",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 510,
+        "winDuration": 2275.9892086330933,
+        "lossDuration": 2185.4956896551726,
+        "gapSeconds": -90,
+        "wrShort": 0.5,
+        "wrMid": 0.523,
+        "wrLong": 0.594,
+        "earlyKillsPerGame": 2.75
+      },
+      {
+        "position": "Mid",
+        "games": 49,
+        "winDuration": 1941.142857142857,
+        "lossDuration": 1768.3333333333333,
+        "gapSeconds": -173,
+        "wrShort": 0.429,
+        "wrMid": 0.564,
+        "wrLong": 1,
+        "earlyKillsPerGame": 3.04
+      },
+      {
+        "position": "Offlane",
+        "games": 51,
+        "winDuration": 2113.1666666666665,
+        "lossDuration": 2173.703703703704,
+        "gapSeconds": 61,
+        "wrShort": 0.25,
+        "wrMid": 0.5,
+        "wrLong": 0.455,
+        "earlyKillsPerGame": 2.14
+      },
+      {
+        "position": "Support",
+        "games": 21,
+        "winDuration": 2139.5454545454545,
+        "lossDuration": 1818.3,
+        "gapSeconds": -321,
+        "wrShort": 1,
+        "wrMid": 0.375,
+        "wrLong": 1,
+        "earlyKillsPerGame": 1.14
+      }
+    ]
+  },
+  {
+    "heroId": 74,
+    "name": "Invoker",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 799,
+        "winDuration": 2201.0592592592593,
+        "lossDuration": 2084.5532994923856,
+        "gapSeconds": -117,
+        "wrShort": 0.373,
+        "wrMid": 0.485,
+        "wrLong": 0.603,
+        "earlyKillsPerGame": 5.52
+      },
+      {
+        "position": "Support",
+        "games": 50,
+        "winDuration": 2081.655172413793,
+        "lossDuration": 1961.2857142857142,
+        "gapSeconds": -120,
+        "wrShort": 0.75,
+        "wrMid": 0.5,
+        "wrLong": 0.875,
+        "earlyKillsPerGame": 3.96
+      }
+    ]
+  },
+  {
+    "heroId": 75,
+    "name": "Silencer",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 16,
+        "winDuration": 2109.090909090909,
+        "lossDuration": 1542.6,
+        "gapSeconds": -566,
+        "wrShort": 0,
+        "wrMid": 0.727,
+        "wrLong": 1,
+        "earlyKillsPerGame": 3.88
+      },
+      {
+        "position": "Support",
+        "games": 678,
+        "winDuration": 2197.611464968153,
+        "lossDuration": 2185.739010989011,
+        "gapSeconds": -12,
+        "wrShort": 0.443,
+        "wrMid": 0.465,
+        "wrLong": 0.465,
+        "earlyKillsPerGame": 2.55
+      }
+    ]
+  },
+  {
+    "heroId": 76,
+    "name": "Outworld Destroyer",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 113,
+        "winDuration": 2037.9636363636364,
+        "lossDuration": 1999.2241379310344,
+        "gapSeconds": -39,
+        "wrShort": 0.375,
+        "wrMid": 0.506,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 5.99
+      }
+    ]
+  },
+  {
+    "heroId": 77,
+    "name": "Lycan",
+    "buckets": [
+      {
+        "position": "Offlane",
+        "games": 175,
+        "winDuration": 2122.4285714285716,
+        "lossDuration": 2379.8311688311687,
+        "gapSeconds": 257,
+        "wrShort": 0.737,
+        "wrMid": 0.574,
+        "wrLong": 0.484,
+        "earlyKillsPerGame": 4.02
+      }
+    ]
+  },
+  {
+    "heroId": 78,
+    "name": "Brewmaster",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 17,
+        "winDuration": 2341.9,
+        "lossDuration": 2352,
+        "gapSeconds": 10,
+        "wrShort": null,
+        "wrMid": 0.636,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 4.06
+      },
+      {
+        "position": "Offlane",
+        "games": 261,
+        "winDuration": 2301.3884297520663,
+        "lossDuration": 2259.7214285714285,
+        "gapSeconds": -42,
+        "wrShort": 0.476,
+        "wrMid": 0.457,
+        "wrLong": 0.471,
+        "earlyKillsPerGame": 3.2
+      }
+    ]
+  },
+  {
+    "heroId": 79,
+    "name": "Shadow Demon",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 29,
+        "winDuration": 2456.7,
+        "lossDuration": 2162.7894736842104,
+        "gapSeconds": -294,
+        "wrShort": 0.2,
+        "wrMid": 0.111,
+        "wrLong": 0.533,
+        "earlyKillsPerGame": 3.03
+      },
+      {
+        "position": "Support",
+        "games": 568,
+        "winDuration": 2170.14453125,
+        "lossDuration": 2142.269230769231,
+        "gapSeconds": -28,
+        "wrShort": 0.382,
+        "wrMid": 0.459,
+        "wrLong": 0.457,
+        "earlyKillsPerGame": 2.68
+      }
+    ]
+  },
+  {
+    "heroId": 80,
+    "name": "Lone Druid",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 322,
+        "winDuration": 2404.1778846153848,
+        "lossDuration": 2205.9561403508774,
+        "gapSeconds": -198,
+        "wrShort": 0.625,
+        "wrMid": 0.606,
+        "wrLong": 0.7,
+        "earlyKillsPerGame": 3.44
+      },
+      {
+        "position": "Mid",
+        "games": 34,
+        "winDuration": 2064.4,
+        "lossDuration": 1885.5,
+        "gapSeconds": -179,
+        "wrShort": 0.5,
+        "wrMid": 0.571,
+        "wrLong": 0.75,
+        "earlyKillsPerGame": 3.41
+      },
+      {
+        "position": "Offlane",
+        "games": 19,
+        "winDuration": 1842,
+        "lossDuration": 2024,
+        "gapSeconds": 182,
+        "wrShort": 0.833,
+        "wrMid": 0.6,
+        "wrLong": 0.667,
+        "earlyKillsPerGame": 3.58
+      }
+    ]
+  },
+  {
+    "heroId": 81,
+    "name": "Chaos Knight",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 93,
+        "winDuration": 1870.775,
+        "lossDuration": 1893.4150943396226,
+        "gapSeconds": 23,
+        "wrShort": 0.429,
+        "wrMid": 0.436,
+        "wrLong": 0.375,
+        "earlyKillsPerGame": 5.23
+      },
+      {
+        "position": "Offlane",
+        "games": 138,
+        "winDuration": 1876.1142857142856,
+        "lossDuration": 1842.4117647058824,
+        "gapSeconds": -34,
+        "wrShort": 0.556,
+        "wrMid": 0.496,
+        "wrLong": 0.667,
+        "earlyKillsPerGame": 5.92
+      }
+    ]
+  },
+  {
+    "heroId": 82,
+    "name": "Meepo",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 45,
+        "winDuration": 1928.4285714285713,
+        "lossDuration": 2624.9166666666665,
+        "gapSeconds": 696,
+        "wrShort": 0.8,
+        "wrMid": 0.6,
+        "wrLong": 0.133,
+        "earlyKillsPerGame": 3.67
+      },
+      {
+        "position": "Mid",
+        "games": 90,
+        "winDuration": 1842.95,
+        "lossDuration": 1920.48,
+        "gapSeconds": 78,
+        "wrShort": 0.727,
+        "wrMid": 0.423,
+        "wrLong": 0.25,
+        "earlyKillsPerGame": 5.04
+      }
+    ]
+  },
+  {
+    "heroId": 83,
+    "name": "Treant Protector",
+    "buckets": [
+      {
+        "position": "Support",
+        "games": 602,
+        "winDuration": 2266.982558139535,
+        "lossDuration": 2383.0813953488373,
+        "gapSeconds": 116,
+        "wrShort": 0.674,
+        "wrMid": 0.583,
+        "wrLong": 0.539,
+        "earlyKillsPerGame": 1.39
+      }
+    ]
+  },
+  {
+    "heroId": 84,
+    "name": "Ogre Magi",
+    "buckets": [
+      {
+        "position": "Offlane",
+        "games": 80,
+        "winDuration": 1785.1521739130435,
+        "lossDuration": 1827.1470588235295,
+        "gapSeconds": 42,
+        "wrShort": 0.25,
+        "wrMid": 0.595,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 4.15
+      },
+      {
+        "position": "Support",
+        "games": 580,
+        "winDuration": 1890.8967971530249,
+        "lossDuration": 1857.6688963210702,
+        "gapSeconds": -33,
+        "wrShort": 0.469,
+        "wrMid": 0.479,
+        "wrLong": 0.571,
+        "earlyKillsPerGame": 1.34
+      }
+    ]
+  },
+  {
+    "heroId": 85,
+    "name": "Undying",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 26,
+        "winDuration": 2419.3333333333335,
+        "lossDuration": 2019.142857142857,
+        "gapSeconds": -400,
+        "wrShort": 0.333,
+        "wrMid": 0.385,
+        "wrLong": 0.6,
+        "earlyKillsPerGame": 5.58
+      },
+      {
+        "position": "Offlane",
+        "games": 113,
+        "winDuration": 2329.403846153846,
+        "lossDuration": 2430.590163934426,
+        "gapSeconds": 101,
+        "wrShort": 0.25,
+        "wrMid": 0.536,
+        "wrLong": 0.396,
+        "earlyKillsPerGame": 4.42
+      },
+      {
+        "position": "Support",
+        "games": 344,
+        "winDuration": 2312.974193548387,
+        "lossDuration": 2154.904761904762,
+        "gapSeconds": -158,
+        "wrShort": 0.379,
+        "wrMid": 0.428,
+        "wrLong": 0.509,
+        "earlyKillsPerGame": 3.21
+      }
+    ]
+  },
+  {
+    "heroId": 86,
+    "name": "Rubick",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 314,
+        "winDuration": 1901.3855421686746,
+        "lossDuration": 1995.6148648648648,
+        "gapSeconds": 94,
+        "wrShort": 0.545,
+        "wrMid": 0.544,
+        "wrLong": 0.432,
+        "earlyKillsPerGame": 5.74
+      },
+      {
+        "position": "Offlane",
+        "games": 70,
+        "winDuration": 2071.325,
+        "lossDuration": 2111.4,
+        "gapSeconds": 40,
+        "wrShort": 0.25,
+        "wrMid": 0.64,
+        "wrLong": 0.438,
+        "earlyKillsPerGame": 5.94
+      },
+      {
+        "position": "Support",
+        "games": 2266,
+        "winDuration": 2185.4103690685415,
+        "lossDuration": 2198.692375886525,
+        "gapSeconds": 13,
+        "wrShort": 0.558,
+        "wrMid": 0.485,
+        "wrLong": 0.521,
+        "earlyKillsPerGame": 2.84
+      }
+    ]
+  },
+  {
+    "heroId": 87,
+    "name": "Disruptor",
+    "buckets": [
+      {
+        "position": "Support",
+        "games": 964,
+        "winDuration": 2040.0131004366813,
+        "lossDuration": 2026.697628458498,
+        "gapSeconds": -13,
+        "wrShort": 0.438,
+        "wrMid": 0.483,
+        "wrLong": 0.463,
+        "earlyKillsPerGame": 1.99
+      }
+    ]
+  },
+  {
+    "heroId": 88,
+    "name": "Nyx Assassin",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 38,
+        "winDuration": 2302.625,
+        "lossDuration": 2098.9285714285716,
+        "gapSeconds": -204,
+        "wrShort": 0.5,
+        "wrMid": 0.591,
+        "wrLong": 0.714,
+        "earlyKillsPerGame": 5.42
+      },
+      {
+        "position": "Support",
+        "games": 383,
+        "winDuration": 2225.49765258216,
+        "lossDuration": 2191.9529411764706,
+        "gapSeconds": -34,
+        "wrShort": 0.517,
+        "wrMid": 0.554,
+        "wrLong": 0.57,
+        "earlyKillsPerGame": 2.89
+      }
+    ]
+  },
+  {
+    "heroId": 89,
+    "name": "Naga Siren",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 103,
+        "winDuration": 2196.508474576271,
+        "lossDuration": 2198.7727272727275,
+        "gapSeconds": 2,
+        "wrShort": 0.571,
+        "wrMid": 0.571,
+        "wrLong": 0.576,
+        "earlyKillsPerGame": 2.62
+      }
+    ]
+  },
+  {
+    "heroId": 90,
+    "name": "Keeper of the Light",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 241,
+        "winDuration": 2120.021126760563,
+        "lossDuration": 2401.4848484848485,
+        "gapSeconds": 281,
+        "wrShort": 0.833,
+        "wrMid": 0.619,
+        "wrLong": 0.47,
+        "earlyKillsPerGame": 5.25
+      },
+      {
+        "position": "Support",
+        "games": 359,
+        "winDuration": 2179.388625592417,
+        "lossDuration": 2416.2635135135133,
+        "gapSeconds": 237,
+        "wrShort": 0.697,
+        "wrMid": 0.665,
+        "wrLong": 0.461,
+        "earlyKillsPerGame": 1.69
+      }
+    ]
+  },
+  {
+    "heroId": 91,
+    "name": "Io",
+    "buckets": [
+      {
+        "position": "Support",
+        "games": 257,
+        "winDuration": 1985.6866666666667,
+        "lossDuration": 2048.728971962617,
+        "gapSeconds": 63,
+        "wrShort": 0.676,
+        "wrMid": 0.587,
+        "wrLong": 0.509,
+        "earlyKillsPerGame": 1.68
+      }
+    ]
+  },
+  {
+    "heroId": 92,
+    "name": "Visage",
+    "buckets": [
+      {
+        "position": "Offlane",
+        "games": 62,
+        "winDuration": 1978.7222222222222,
+        "lossDuration": 2148.1153846153848,
+        "gapSeconds": 169,
+        "wrShort": 0.556,
+        "wrMid": 0.605,
+        "wrLong": 0.533,
+        "earlyKillsPerGame": 5.31
+      }
+    ]
+  },
+  {
+    "heroId": 93,
+    "name": "Slark",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 302,
+        "winDuration": 2100.9615384615386,
+        "lossDuration": 2014.1712328767123,
+        "gapSeconds": -87,
+        "wrShort": 0.639,
+        "wrMid": 0.464,
+        "wrLong": 0.627,
+        "earlyKillsPerGame": 5.44
+      },
+      {
+        "position": "Mid",
+        "games": 29,
+        "winDuration": 2265.3333333333335,
+        "lossDuration": 1918,
+        "gapSeconds": -347,
+        "wrShort": 0.25,
+        "wrMid": 0.467,
+        "wrLong": 0.7,
+        "earlyKillsPerGame": 5.83
+      }
+    ]
+  },
+  {
+    "heroId": 94,
+    "name": "Medusa",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 187,
+        "winDuration": 2322.9054054054054,
+        "lossDuration": 2127.1061946902655,
+        "gapSeconds": -196,
+        "wrShort": 0.111,
+        "wrMid": 0.366,
+        "wrLong": 0.509,
+        "earlyKillsPerGame": 2.11
+      }
+    ]
+  },
+  {
+    "heroId": 95,
+    "name": "Troll Warlord",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 185,
+        "winDuration": 1974.4947368421053,
+        "lossDuration": 2004.6444444444444,
+        "gapSeconds": 30,
+        "wrShort": 0.667,
+        "wrMid": 0.483,
+        "wrLong": 0.6,
+        "earlyKillsPerGame": 4.32
+      }
+    ]
+  },
+  {
+    "heroId": 96,
+    "name": "Centaur Warrunner",
+    "buckets": [
+      {
+        "position": "Offlane",
+        "games": 564,
+        "winDuration": 2233.839285714286,
+        "lossDuration": 2191.200704225352,
+        "gapSeconds": -43,
+        "wrShort": 0.469,
+        "wrMid": 0.483,
+        "wrLong": 0.527,
+        "earlyKillsPerGame": 2.4
+      },
+      {
+        "position": "Support",
+        "games": 38,
+        "winDuration": 2293.4210526315787,
+        "lossDuration": 2278,
+        "gapSeconds": -15,
+        "wrShort": null,
+        "wrMid": 0.542,
+        "wrLong": 0.429,
+        "earlyKillsPerGame": 1.84
+      }
+    ]
+  },
+  {
+    "heroId": 97,
+    "name": "Magnus",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 23,
+        "winDuration": 2388.9333333333334,
+        "lossDuration": 2331,
+        "gapSeconds": -58,
+        "wrShort": 0.333,
+        "wrMid": 0.727,
+        "wrLong": 0.667,
+        "earlyKillsPerGame": 3.91
+      },
+      {
+        "position": "Mid",
+        "games": 57,
+        "winDuration": 2061.64,
+        "lossDuration": 1959.03125,
+        "gapSeconds": -103,
+        "wrShort": 0,
+        "wrMid": 0.475,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 4.33
+      },
+      {
+        "position": "Offlane",
+        "games": 141,
+        "winDuration": 2160.478260869565,
+        "lossDuration": 2146.722222222222,
+        "gapSeconds": -14,
+        "wrShort": 0.143,
+        "wrMid": 0.566,
+        "wrLong": 0.455,
+        "earlyKillsPerGame": 3.91
+      },
+      {
+        "position": "Support",
+        "games": 45,
+        "winDuration": 2107.2608695652175,
+        "lossDuration": 1994.8636363636363,
+        "gapSeconds": -112,
+        "wrShort": 0.4,
+        "wrMid": 0.517,
+        "wrLong": 0.545,
+        "earlyKillsPerGame": 2.53
+      }
+    ]
+  },
+  {
+    "heroId": 98,
+    "name": "Timbersaw",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 49,
+        "winDuration": 2162.3684210526317,
+        "lossDuration": 2073.9,
+        "gapSeconds": -88,
+        "wrShort": 0.5,
+        "wrMid": 0.375,
+        "wrLong": 0.385,
+        "earlyKillsPerGame": 5.86
+      },
+      {
+        "position": "Offlane",
+        "games": 481,
+        "winDuration": 2344.7,
+        "lossDuration": 2159.0788381742736,
+        "gapSeconds": -186,
+        "wrShort": 0.349,
+        "wrMid": 0.478,
+        "wrLong": 0.575,
+        "earlyKillsPerGame": 4.01
+      }
+    ]
+  },
+  {
+    "heroId": 99,
+    "name": "Bristleback",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 88,
+        "winDuration": 2326.714285714286,
+        "lossDuration": 2219,
+        "gapSeconds": -108,
+        "wrShort": 0,
+        "wrMid": 0.449,
+        "wrLong": 0.382,
+        "earlyKillsPerGame": 3.73
+      },
+      {
+        "position": "Mid",
+        "games": 18,
+        "winDuration": 2124.222222222222,
+        "lossDuration": 2173.222222222222,
+        "gapSeconds": 49,
+        "wrShort": null,
+        "wrMid": 0.5,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 3.5
+      },
+      {
+        "position": "Offlane",
+        "games": 648,
+        "winDuration": 2110.0508474576272,
+        "lossDuration": 2116.456090651558,
+        "gapSeconds": 6,
+        "wrShort": 0.444,
+        "wrMid": 0.446,
+        "wrLong": 0.482,
+        "earlyKillsPerGame": 3.77
+      }
+    ]
+  },
+  {
+    "heroId": 100,
+    "name": "Tusk",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 33,
+        "winDuration": 2182.4117647058824,
+        "lossDuration": 2116.625,
+        "gapSeconds": -66,
+        "wrShort": 0.333,
+        "wrMid": 0.55,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 4.09
+      },
+      {
+        "position": "Support",
+        "games": 1295,
+        "winDuration": 2155.3519637462236,
+        "lossDuration": 2232.657187993681,
+        "gapSeconds": 77,
+        "wrShort": 0.541,
+        "wrMid": 0.524,
+        "wrLong": 0.48,
+        "earlyKillsPerGame": 2.49
+      }
+    ]
+  },
+  {
+    "heroId": 101,
+    "name": "Skywrath Mage",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 43,
+        "winDuration": 2273.125,
+        "lossDuration": 1985.037037037037,
+        "gapSeconds": -288,
+        "wrShort": 0.333,
+        "wrMid": 0.333,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 5.05
+      },
+      {
+        "position": "Support",
+        "games": 592,
+        "winDuration": 2076.8901098901097,
+        "lossDuration": 2021.1755485893416,
+        "gapSeconds": -56,
+        "wrShort": 0.392,
+        "wrMid": 0.469,
+        "wrLong": 0.463,
+        "earlyKillsPerGame": 4.12
+      }
+    ]
+  },
+  {
+    "heroId": 102,
+    "name": "Abaddon",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 63,
+        "winDuration": 2449.0384615384614,
+        "lossDuration": 2235.5945945945946,
+        "gapSeconds": -213,
+        "wrShort": 0.25,
+        "wrMid": 0.357,
+        "wrLong": 0.484,
+        "earlyKillsPerGame": 3.21
+      },
+      {
+        "position": "Offlane",
+        "games": 61,
+        "winDuration": 1871.4571428571428,
+        "lossDuration": 1841.7307692307693,
+        "gapSeconds": -30,
+        "wrShort": 0.5,
+        "wrMid": 0.58,
+        "wrLong": 0.571,
+        "earlyKillsPerGame": 5
+      },
+      {
+        "position": "Support",
+        "games": 35,
+        "winDuration": 2517.125,
+        "lossDuration": 2300.315789473684,
+        "gapSeconds": -217,
+        "wrShort": 0,
+        "wrMid": 0.5,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 1.57
+      }
+    ]
+  },
+  {
+    "heroId": 103,
+    "name": "Elder Titan",
+    "buckets": [
+      {
+        "position": "Support",
+        "games": 28,
+        "winDuration": 2147.5833333333335,
+        "lossDuration": 2126.1875,
+        "gapSeconds": -21,
+        "wrShort": 0.75,
+        "wrMid": 0.25,
+        "wrLong": 0.625,
+        "earlyKillsPerGame": 2.61
+      }
+    ]
+  },
+  {
+    "heroId": 104,
+    "name": "Legion Commander",
+    "buckets": [
+      {
+        "position": "Offlane",
+        "games": 273,
+        "winDuration": 2030.3521126760563,
+        "lossDuration": 1971.9389312977098,
+        "gapSeconds": -58,
+        "wrShort": 0.318,
+        "wrMid": 0.527,
+        "wrLong": 0.58,
+        "earlyKillsPerGame": 5.26
+      },
+      {
+        "position": "Support",
+        "games": 21,
+        "winDuration": 2372.3333333333335,
+        "lossDuration": 2768.75,
+        "gapSeconds": 396,
+        "wrShort": null,
+        "wrMid": 0.364,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 2.52
+      }
+    ]
+  },
+  {
+    "heroId": 105,
+    "name": "Techies",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 42,
+        "winDuration": 1930.9545454545455,
+        "lossDuration": 2294.05,
+        "gapSeconds": 363,
+        "wrShort": 0.5,
+        "wrMid": 0.64,
+        "wrLong": 0.222,
+        "earlyKillsPerGame": 5.36
+      },
+      {
+        "position": "Offlane",
+        "games": 29,
+        "winDuration": 2314.6153846153848,
+        "lossDuration": 2687.9375,
+        "gapSeconds": 373,
+        "wrShort": null,
+        "wrMid": 0.471,
+        "wrLong": 0.417,
+        "earlyKillsPerGame": 5.03
+      },
+      {
+        "position": "Support",
+        "games": 661,
+        "winDuration": 2289.9141104294476,
+        "lossDuration": 2363.949253731343,
+        "gapSeconds": 74,
+        "wrShort": 0.61,
+        "wrMid": 0.494,
+        "wrLong": 0.466,
+        "earlyKillsPerGame": 2.87
+      }
+    ]
+  },
+  {
+    "heroId": 106,
+    "name": "Ember Spirit",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 29,
+        "winDuration": 2101.705882352941,
+        "lossDuration": 1799.4166666666667,
+        "gapSeconds": -302,
+        "wrShort": null,
+        "wrMid": 0.5,
+        "wrLong": 1,
+        "earlyKillsPerGame": 7.38
+      },
+      {
+        "position": "Mid",
+        "games": 1222,
+        "winDuration": 2241.0856697819313,
+        "lossDuration": 2375.636206896552,
+        "gapSeconds": 135,
+        "wrShort": 0.654,
+        "wrMid": 0.532,
+        "wrLong": 0.489,
+        "earlyKillsPerGame": 5.75
+      },
+      {
+        "position": "Offlane",
+        "games": 15,
+        "winDuration": 2201.8,
+        "lossDuration": 2143.3,
+        "gapSeconds": -58,
+        "wrShort": 0.5,
+        "wrMid": 0.222,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 5.33
+      }
+    ]
+  },
+  {
+    "heroId": 107,
+    "name": "Earth Spirit",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 254,
+        "winDuration": 2350.068181818182,
+        "lossDuration": 2456.6147540983607,
+        "gapSeconds": 107,
+        "wrShort": 0.818,
+        "wrMid": 0.508,
+        "wrLong": 0.504,
+        "earlyKillsPerGame": 5.13
+      },
+      {
+        "position": "Support",
+        "games": 129,
+        "winDuration": 2132.169014084507,
+        "lossDuration": 2003.0689655172414,
+        "gapSeconds": -129,
+        "wrShort": 0.667,
+        "wrMid": 0.505,
+        "wrLong": 0.654,
+        "earlyKillsPerGame": 2.98
+      }
+    ]
+  },
+  {
+    "heroId": 108,
+    "name": "Underlord",
+    "buckets": [
+      {
+        "position": "Offlane",
+        "games": 645,
+        "winDuration": 2383.1925925925925,
+        "lossDuration": 2320.4266666666667,
+        "gapSeconds": -63,
+        "wrShort": 0.306,
+        "wrMid": 0.426,
+        "wrLong": 0.43,
+        "earlyKillsPerGame": 2.77
+      }
+    ]
+  },
+  {
+    "heroId": 109,
+    "name": "Terrorblade",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 456,
+        "winDuration": 2198.5864978902955,
+        "lossDuration": 2264.077625570776,
+        "gapSeconds": 65,
+        "wrShort": 0.553,
+        "wrMid": 0.538,
+        "wrLong": 0.481,
+        "earlyKillsPerGame": 3.01
+      }
+    ]
+  },
+  {
+    "heroId": 110,
+    "name": "Phoenix",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 22,
+        "winDuration": 2398.866666666667,
+        "lossDuration": 2031.5714285714287,
+        "gapSeconds": -367,
+        "wrShort": 1,
+        "wrMid": 0.533,
+        "wrLong": 1,
+        "earlyKillsPerGame": 5.23
+      },
+      {
+        "position": "Mid",
+        "games": 36,
+        "winDuration": 1935.3529411764705,
+        "lossDuration": 2190.0526315789475,
+        "gapSeconds": 255,
+        "wrShort": 0.5,
+        "wrMid": 0.52,
+        "wrLong": 0.286,
+        "earlyKillsPerGame": 5.64
+      },
+      {
+        "position": "Offlane",
+        "games": 215,
+        "winDuration": 1986.5481481481481,
+        "lossDuration": 2101.05,
+        "gapSeconds": 115,
+        "wrShort": 0.684,
+        "wrMid": 0.654,
+        "wrLong": 0.486,
+        "earlyKillsPerGame": 6.05
+      },
+      {
+        "position": "Support",
+        "games": 1133,
+        "winDuration": 2252.610455311973,
+        "lossDuration": 2283.233333333333,
+        "gapSeconds": 31,
+        "wrShort": 0.488,
+        "wrMid": 0.536,
+        "wrLong": 0.512,
+        "earlyKillsPerGame": 2.98
+      }
+    ]
+  },
+  {
+    "heroId": 111,
+    "name": "Oracle",
+    "buckets": [
+      {
+        "position": "Support",
+        "games": 179,
+        "winDuration": 2225.0459770114944,
+        "lossDuration": 2231.7065217391305,
+        "gapSeconds": 7,
+        "wrShort": 0.5,
+        "wrMid": 0.471,
+        "wrLong": 0.508,
+        "earlyKillsPerGame": 2.45
+      }
+    ]
+  },
+  {
+    "heroId": 119,
+    "name": "Dark Willow",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 15,
+        "winDuration": 2421.75,
+        "lossDuration": 2424.285714285714,
+        "gapSeconds": 3,
+        "wrShort": 1,
+        "wrMid": 0.429,
+        "wrLong": 0.571,
+        "earlyKillsPerGame": 4.4
+      },
+      {
+        "position": "Support",
+        "games": 542,
+        "winDuration": 2312.713692946058,
+        "lossDuration": 2280.594684385382,
+        "gapSeconds": -32,
+        "wrShort": 0.349,
+        "wrMid": 0.431,
+        "wrLong": 0.485,
+        "earlyKillsPerGame": 3.44
+      }
+    ]
+  },
+  {
+    "heroId": 120,
+    "name": "Pangolier",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 958,
+        "winDuration": 2215.458158995816,
+        "lossDuration": 2261.6041666666665,
+        "gapSeconds": 46,
+        "wrShort": 0.544,
+        "wrMid": 0.521,
+        "wrLong": 0.452,
+        "earlyKillsPerGame": 5.02
+      },
+      {
+        "position": "Offlane",
+        "games": 567,
+        "winDuration": 2157.542857142857,
+        "lossDuration": 2211.076655052265,
+        "gapSeconds": 54,
+        "wrShort": 0.553,
+        "wrMid": 0.501,
+        "wrLong": 0.463,
+        "earlyKillsPerGame": 3.66
+      }
+    ]
+  },
+  {
+    "heroId": 121,
+    "name": "Grimstroke",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 21,
+        "winDuration": 2219.846153846154,
+        "lossDuration": 2416.375,
+        "gapSeconds": 197,
+        "wrShort": 0,
+        "wrMid": 0.75,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 3.67
+      },
+      {
+        "position": "Support",
+        "games": 530,
+        "winDuration": 2212.85393258427,
+        "lossDuration": 2183.1596958174905,
+        "gapSeconds": -30,
+        "wrShort": 0.487,
+        "wrMid": 0.497,
+        "wrLong": 0.521,
+        "earlyKillsPerGame": 2.63
+      }
+    ]
+  },
+  {
+    "heroId": 123,
+    "name": "Hoodwink",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 29,
+        "winDuration": 2321.294117647059,
+        "lossDuration": 2116.0833333333335,
+        "gapSeconds": -205,
+        "wrShort": 0.667,
+        "wrMid": 0.471,
+        "wrLong": 0.778,
+        "earlyKillsPerGame": 3.48
+      },
+      {
+        "position": "Offlane",
+        "games": 24,
+        "winDuration": 1741.25,
+        "lossDuration": 1893.375,
+        "gapSeconds": 152,
+        "wrShort": 0.333,
+        "wrMid": 0.333,
+        "wrLong": 0.333,
+        "earlyKillsPerGame": 5.38
+      },
+      {
+        "position": "Support",
+        "games": 1705,
+        "winDuration": 2326.2247706422017,
+        "lossDuration": 2384.376950780312,
+        "gapSeconds": 58,
+        "wrShort": 0.619,
+        "wrMid": 0.517,
+        "wrLong": 0.485,
+        "earlyKillsPerGame": 3.28
+      }
+    ]
+  },
+  {
+    "heroId": 126,
+    "name": "Void Spirit",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 33,
+        "winDuration": 2113.823529411765,
+        "lossDuration": 2080.5625,
+        "gapSeconds": -33,
+        "wrShort": 0.333,
+        "wrMid": 0.591,
+        "wrLong": 0.375,
+        "earlyKillsPerGame": 5.88
+      },
+      {
+        "position": "Mid",
+        "games": 746,
+        "winDuration": 2283.515243902439,
+        "lossDuration": 2281.244019138756,
+        "gapSeconds": -2,
+        "wrShort": 0.361,
+        "wrMid": 0.446,
+        "wrLong": 0.448,
+        "earlyKillsPerGame": 5.53
+      },
+      {
+        "position": "Offlane",
+        "games": 24,
+        "winDuration": 1948.888888888889,
+        "lossDuration": 1906.4666666666667,
+        "gapSeconds": -42,
+        "wrShort": 0.333,
+        "wrMid": 0.412,
+        "wrLong": 0.25,
+        "earlyKillsPerGame": 5.92
+      }
+    ]
+  },
+  {
+    "heroId": 128,
+    "name": "Snapfire",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 396,
+        "winDuration": 2149.279475982533,
+        "lossDuration": 2303.4191616766466,
+        "gapSeconds": 154,
+        "wrShort": 0.615,
+        "wrMid": 0.63,
+        "wrLong": 0.472,
+        "earlyKillsPerGame": 7.17
+      },
+      {
+        "position": "Offlane",
+        "games": 165,
+        "winDuration": 2307.421686746988,
+        "lossDuration": 2273.060975609756,
+        "gapSeconds": -34,
+        "wrShort": 0.429,
+        "wrMid": 0.541,
+        "wrLong": 0.453,
+        "earlyKillsPerGame": 5.97
+      },
+      {
+        "position": "Support",
+        "games": 630,
+        "winDuration": 2075.4070512820513,
+        "lossDuration": 2020.751572327044,
+        "gapSeconds": -55,
+        "wrShort": 0.387,
+        "wrMid": 0.5,
+        "wrLong": 0.528,
+        "earlyKillsPerGame": 3.31
+      }
+    ]
+  },
+  {
+    "heroId": 129,
+    "name": "Mars",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 20,
+        "winDuration": 2431.1111111111113,
+        "lossDuration": 1989.090909090909,
+        "gapSeconds": -442,
+        "wrShort": 0.25,
+        "wrMid": 0.444,
+        "wrLong": 0.571,
+        "earlyKillsPerGame": 3.9
+      },
+      {
+        "position": "Offlane",
+        "games": 666,
+        "winDuration": 2135.5798045602605,
+        "lossDuration": 2074.108635097493,
+        "gapSeconds": -61,
+        "wrShort": 0.447,
+        "wrMid": 0.444,
+        "wrLong": 0.516,
+        "earlyKillsPerGame": 3.76
+      },
+      {
+        "position": "Support",
+        "games": 31,
+        "winDuration": 2374.714285714286,
+        "lossDuration": 2107.0588235294117,
+        "gapSeconds": -268,
+        "wrShort": 0,
+        "wrMid": 0.444,
+        "wrLong": 0.6,
+        "earlyKillsPerGame": 2.32
+      }
+    ]
+  },
+  {
+    "heroId": 131,
+    "name": "Ringmaster",
+    "buckets": [
+      {
+        "position": "Support",
+        "games": 736,
+        "winDuration": 2376.689024390244,
+        "lossDuration": 2293.1642156862745,
+        "gapSeconds": -84,
+        "wrShort": 0.411,
+        "wrMid": 0.437,
+        "wrLong": 0.465,
+        "earlyKillsPerGame": 2.66
+      }
+    ]
+  },
+  {
+    "heroId": 135,
+    "name": "Dawnbreaker",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 19,
+        "winDuration": 2031.909090909091,
+        "lossDuration": 2432.375,
+        "gapSeconds": 400,
+        "wrShort": 1,
+        "wrMid": 0.583,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 4.84
+      },
+      {
+        "position": "Mid",
+        "games": 16,
+        "winDuration": 2096.5,
+        "lossDuration": 2131.2,
+        "gapSeconds": 35,
+        "wrShort": 0.333,
+        "wrMid": 0.5,
+        "wrLong": 0.2,
+        "earlyKillsPerGame": 5.75
+      },
+      {
+        "position": "Offlane",
+        "games": 823,
+        "winDuration": 2178.59595959596,
+        "lossDuration": 2189.688524590164,
+        "gapSeconds": 11,
+        "wrShort": 0.522,
+        "wrMid": 0.482,
+        "wrLong": 0.466,
+        "earlyKillsPerGame": 4.47
+      },
+      {
+        "position": "Support",
+        "games": 27,
+        "winDuration": 2136,
+        "lossDuration": 2435.5,
+        "gapSeconds": 300,
+        "wrShort": 0.8,
+        "wrMid": 0.417,
+        "wrLong": 0.4,
+        "earlyKillsPerGame": 2.7
+      }
+    ]
+  },
+  {
+    "heroId": 136,
+    "name": "Marci",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 26,
+        "winDuration": 2016.0588235294117,
+        "lossDuration": 1849.2222222222222,
+        "gapSeconds": -167,
+        "wrShort": 0.667,
+        "wrMid": 0.6,
+        "wrLong": 1,
+        "earlyKillsPerGame": 6.35
+      },
+      {
+        "position": "Mid",
+        "games": 23,
+        "winDuration": 1819.5555555555557,
+        "lossDuration": 2360.785714285714,
+        "gapSeconds": 541,
+        "wrShort": 0.667,
+        "wrMid": 0.462,
+        "wrLong": 0.143,
+        "earlyKillsPerGame": 6.04
+      },
+      {
+        "position": "Offlane",
+        "games": 23,
+        "winDuration": 2092.4545454545455,
+        "lossDuration": 2515.25,
+        "gapSeconds": 423,
+        "wrShort": 1,
+        "wrMid": 0.538,
+        "wrLong": 0.333,
+        "earlyKillsPerGame": 5.91
+      },
+      {
+        "position": "Support",
+        "games": 223,
+        "winDuration": 2049.294117647059,
+        "lossDuration": 2055.5123966942147,
+        "gapSeconds": 6,
+        "wrShort": 0.409,
+        "wrMid": 0.469,
+        "wrLong": 0.448,
+        "earlyKillsPerGame": 3.13
+      }
+    ]
+  },
+  {
+    "heroId": 137,
+    "name": "Primal Beast",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 97,
+        "winDuration": 2382.470588235294,
+        "lossDuration": 2127.195652173913,
+        "gapSeconds": -255,
+        "wrShort": 0.4,
+        "wrMid": 0.472,
+        "wrLong": 0.647,
+        "earlyKillsPerGame": 5.52
+      },
+      {
+        "position": "Offlane",
+        "games": 247,
+        "winDuration": 2347.4065040650407,
+        "lossDuration": 2239.6290322580644,
+        "gapSeconds": -108,
+        "wrShort": 0.556,
+        "wrMid": 0.462,
+        "wrLong": 0.548,
+        "earlyKillsPerGame": 4.04
+      }
+    ]
+  },
+  {
+    "heroId": 138,
+    "name": "Muerta",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 556,
+        "winDuration": 2319.1423611111113,
+        "lossDuration": 2309.686567164179,
+        "gapSeconds": -9,
+        "wrShort": 0.529,
+        "wrMid": 0.493,
+        "wrLong": 0.547,
+        "earlyKillsPerGame": 3.72
+      },
+      {
+        "position": "Mid",
+        "games": 26,
+        "winDuration": 1808.5,
+        "lossDuration": 2098.25,
+        "gapSeconds": 290,
+        "wrShort": 0.333,
+        "wrMid": 0.684,
+        "wrLong": 0,
+        "earlyKillsPerGame": 5.35
+      },
+      {
+        "position": "Support",
+        "games": 90,
+        "winDuration": 2446.5882352941176,
+        "lossDuration": 2350.964285714286,
+        "gapSeconds": -96,
+        "wrShort": 0,
+        "wrMid": 0.395,
+        "wrLong": 0.395,
+        "earlyKillsPerGame": 2.42
+      }
+    ]
+  },
+  {
+    "heroId": 145,
+    "name": "Kez",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 494,
+        "winDuration": 2281.131086142322,
+        "lossDuration": 2386.7973568281936,
+        "gapSeconds": 106,
+        "wrShort": 0.717,
+        "wrMid": 0.54,
+        "wrLong": 0.5,
+        "earlyKillsPerGame": 4.34
+      },
+      {
+        "position": "Mid",
+        "games": 174,
+        "winDuration": 2094.1157894736843,
+        "lossDuration": 2076.9367088607596,
+        "gapSeconds": -17,
+        "wrShort": 0.8,
+        "wrMid": 0.504,
+        "wrLong": 0.588,
+        "earlyKillsPerGame": 6.02
+      }
+    ]
+  },
+  {
+    "heroId": 155,
+    "name": "Largo",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 41,
+        "winDuration": 2247.1,
+        "lossDuration": 2204.7619047619046,
+        "gapSeconds": -42,
+        "wrShort": 0.5,
+        "wrMid": 0.455,
+        "wrLong": 0.533,
+        "earlyKillsPerGame": 5.17
+      },
+      {
+        "position": "Offlane",
+        "games": 348,
+        "winDuration": 2429.5,
+        "lossDuration": 2419.6176470588234,
+        "gapSeconds": -10,
+        "wrShort": 0.35,
+        "wrMid": 0.512,
+        "wrLong": 0.531,
+        "earlyKillsPerGame": 2.53
+      },
+      {
+        "position": "Support",
+        "games": 126,
+        "winDuration": 2240.8529411764707,
+        "lossDuration": 2250.293103448276,
+        "gapSeconds": 9,
+        "wrShort": 0.5,
+        "wrMid": 0.532,
+        "wrLong": 0.561,
+        "earlyKillsPerGame": 1.63
+      }
+    ]
+  },
+  {
+    "heroId": 112,
+    "name": "Winter Wyvern",
+    "buckets": [
+      {
+        "position": "Support",
+        "games": 557,
+        "winDuration": 2139.377697841727,
+        "lossDuration": 2332.569892473118,
+        "gapSeconds": 193,
+        "wrShort": 0.529,
+        "wrMid": 0.564,
+        "wrLong": 0.392,
+        "earlyKillsPerGame": 1.87
+      }
+    ]
+  },
+  {
+    "heroId": 113,
+    "name": "Arc Warden",
+    "buckets": [
+      {
+        "position": "Mid",
+        "games": 49,
+        "winDuration": 2064.3703703703704,
+        "lossDuration": 1777.6818181818182,
+        "gapSeconds": -287,
+        "wrShort": 0,
+        "wrMid": 0.579,
+        "wrLong": 0.714,
+        "earlyKillsPerGame": 5.43
+      }
+    ]
+  },
+  {
+    "heroId": 114,
+    "name": "Monkey King",
+    "buckets": [
+      {
+        "position": "Carry",
+        "games": 515,
+        "winDuration": 2202.86013986014,
+        "lossDuration": 2247.3842794759826,
+        "gapSeconds": 45,
+        "wrShort": 0.673,
+        "wrMid": 0.533,
+        "wrLong": 0.557,
+        "earlyKillsPerGame": 5.27
+      },
+      {
+        "position": "Mid",
+        "games": 210,
+        "winDuration": 2209.9326923076924,
+        "lossDuration": 2180.7264150943397,
+        "gapSeconds": -29,
+        "wrShort": 0.652,
+        "wrMid": 0.431,
+        "wrLong": 0.563,
+        "earlyKillsPerGame": 6.22
+      },
+      {
+        "position": "Offlane",
+        "games": 19,
+        "winDuration": 1870.125,
+        "lossDuration": 2473.5454545454545,
+        "gapSeconds": 603,
+        "wrShort": 0.5,
+        "wrMid": 0.545,
+        "wrLong": 0.167,
+        "earlyKillsPerGame": 5.42
+      },
+      {
+        "position": "Support",
+        "games": 29,
+        "winDuration": 1906.8823529411766,
+        "lossDuration": 1985.5,
+        "gapSeconds": 79,
+        "wrShort": 0.5,
+        "wrMid": 0.652,
+        "wrLong": 0.25,
+        "earlyKillsPerGame": 3.03
+      }
+    ]
+  }
+]

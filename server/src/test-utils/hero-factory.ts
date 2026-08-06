@@ -1,4 +1,4 @@
-import type { Hero, HeroEvaluationValues } from 'shared';
+import type { Hero, HeroEvaluationValues, PresumedPosition, RoleEvaluationEntry } from 'shared';
 import type { DraftPick } from '../evaluation/analyzer.interface';
 
 export const DEFAULT_EVALUATION_VALUES: HeroEvaluationValues = {
@@ -18,6 +18,17 @@ export const DEFAULT_EVALUATION_VALUES: HeroEvaluationValues = {
   resource_efficiency: 3,
 };
 
+// no_info for every role by default — tests that don't care about
+// role-specific values (the vast majority) resolve straight through to
+// evaluation_values via resolveEvaluationValues(), same as any real hero
+// without enough per-role match data.
+const DEFAULT_EVALUATION_VALUES_BY_ROLE: Record<PresumedPosition, RoleEvaluationEntry> = {
+  Carry: { no_info: true },
+  Mid: { no_info: true },
+  Offlane: { no_info: true },
+  Support: { no_info: true },
+};
+
 // Shared Hero builder for tests — every field defaults to an inert value
 // (empty tags, flat 3s on every axis) so a test only has to specify the
 // fields it actually cares about.
@@ -30,6 +41,7 @@ export function makeHero(overrides: Partial<Hero> & { id: number; name: string }
     synergy_tags: [],
     counter_tags: [],
     evaluation_values: { ...DEFAULT_EVALUATION_VALUES },
+    evaluation_values_by_role: { ...DEFAULT_EVALUATION_VALUES_BY_ROLE },
     presumed_positions: [],
     ...overrides,
   };

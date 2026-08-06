@@ -1,4 +1,25 @@
-import type { Hero } from 'shared';
+import type { Hero, HeroEvaluationValues, PresumedPosition } from 'shared';
+import { hasRoleEvaluationData, resolveEvaluationValues } from 'shared';
+
+// EXPERIMENTAL integration with Hero.evaluation_values_by_role (Blueprint/
+// 12-next-session-priorities.md item 6, 2026-08-06): roleAwareAxisValue()
+// below is the regression-test wiring requested by the user — real per-role
+// data replaces the heuristic boost/dampen ONLY for (hero, role) pairs with
+// enough match data (hasRoleEvaluationData); everything else (the 308/508
+// no_info pairs) keeps going through the EXACT old mechanism (roleFitValue on
+// the aggregate) as a temporary fallback, unchanged. This was deliberately
+// NOT done the moment evaluation_values_by_role existed — BOOST_WEIGHT/
+// DAMPEN_WEIGHT/UTILITY_BREADTH_GATE/SUPPORT_MISCAST_THRESHOLD below are all
+// tuned against aggregate-based behavior (see comments throughout this file
+// for the specific heroes each was calibrated against), and blindly stacking
+// real per-role data with the SAME heuristic boost risked double-counting the
+// role-fit effect. Whether that risk is real (and whether real data alone
+// beats the heuristic) is exactly what the self-play regression this wiring
+// enables is meant to answer — see simulate-self-play.ts's Bonus-3 r-value
+// and per-hero favoredRate/realWinRate table, before vs after this function
+// existed (self-play-simulation-output-BEFORE-nocrutch.json is the pre-change
+// snapshot). Not yet a settled "this is definitely better" — a live
+// experiment result to read alongside the regression, not proof on its own.
 
 // Role-fit modifier (Blueprint/10-tech-debt-backlog.md, "Оценка героя не
 // учитывает назначенную роль"): when a hero is assigned a role, axes that
@@ -133,4 +154,34 @@ export function supportMiscastMultiplier(hero: Hero, assignedRole: string | null
   // comment in common/hard-carry.ts's isHardCarry().
   const supportShare = hero.presumed_positions?.find((p) => p.position === 'Support')?.share ?? 0;
   return supportShare < SUPPORT_MISCAST_THRESHOLD ? SUPPORT_MISCAST_PENALTY : 1;
+}
+
+// Battle Engine's 5-way assignedRole ('Hard Support'/'Soft Support' split)
+// down to the 4-way PresumedPosition evaluation_values_by_role is keyed by
+// (research-role-classification-final.ts never distinguished the two —
+// GPM-rank's own bottom-2 split was already shown unreliable for that
+// specific distinction, same class of problem as Carry/Mid). Both support
+// roles read the same 'Support' per-role data.
+function mapAssignedRoleToPresumedPosition(assignedRole: string | null): PresumedPosition | null {
+  if (assignedRole === 'Carry' || assignedRole === 'Mid' || assignedRole === 'Offlane') return assignedRole;
+  if (assignedRole === 'Hard Support' || assignedRole === 'Soft Support') return 'Support';
+  return null;
+}
+
+// The experimental entry point (see the file-header comment above): returns
+// the axis value a pick should contribute, preferring real per-role data over
+// the heuristic boost/dampen when it exists for this (hero, role).
+export function roleAwareAxisValue(
+  axisKey: keyof HeroEvaluationValues,
+  hero: Hero,
+  assignedRole: string | null,
+  utilityStackBreadth = 0,
+): number {
+  const position = mapAssignedRoleToPresumedPosition(assignedRole);
+  if (position && hasRoleEvaluationData(hero, position)) {
+    return resolveEvaluationValues(hero, position)[axisKey];
+  }
+  // Old mechanism, unchanged — temporary fallback for no_info (hero, role)
+  // pairs per the user's explicit instruction.
+  return roleFitValue(axisKey, assignedRole, hero.evaluation_values[axisKey], utilityStackBreadth);
 }

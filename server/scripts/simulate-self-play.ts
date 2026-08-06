@@ -11,7 +11,7 @@ import {
   type AdvantageDirection,
   type ConfidenceTier,
 } from '../src/battle/battle-resolution';
-import { roleFitValue } from '../src/common/role-fit';
+import { roleAwareAxisValue } from '../src/common/role-fit';
 import { HeroMetaService } from '../src/hero-meta/hero-meta.service';
 import { ROLES } from 'shared';
 import type { Hero } from 'shared';
@@ -154,7 +154,7 @@ function assignWeightedRoles(heroes: Hero[], weightsById: Map<number, Record<str
 }
 
 function heroContribution(hero: Hero, role: string | null): number {
-  return AXES.reduce((sum, axis) => sum + roleFitValue(axis, role, hero.evaluation_values[axis]), 0) / AXES.length;
+  return AXES.reduce((sum, axis) => sum + roleAwareAxisValue(axis, hero, role), 0) / AXES.length;
 }
 
 function pairKey(a: string, b: string): string {
@@ -230,6 +230,21 @@ interface HeroStats {
   realWinRate: number | null;
 }
 
+// Per-(hero, assignedRole) breakdown — added for the miscast-fallback check
+// requested after the roleAwareAxisValue regression (Blueprint/12-next-
+// session-priorities.md item 6): does the OLD-mechanism fallback (used when
+// evaluation_values_by_role is no_info for the assigned role) hold up
+// specifically for Carry/Mid-only heroes forced into Hard/Soft Support, where
+// they have zero real per-role data at all?
+interface RoleStats {
+  heroId: number;
+  name: string;
+  assignedRole: string;
+  appearances: number;
+  favoredCount: number;
+  evenCount: number;
+}
+
 interface MatchRecord {
   diff: number;
   advantageDirection: AdvantageDirection;
@@ -265,6 +280,18 @@ function main() {
       { heroId: h.id, name: h.name, appearances: 0, favoredCount: 0, evenCount: 0, contributionSum: 0, realWinRate: winRateById.get(h.id) ?? null },
     ]),
   );
+  const roleStats = new Map<string, RoleStats>();
+  function trackRole(hero: Hero, assignedRole: string | null, favored: boolean, even: boolean) {
+    if (!assignedRole) return;
+    const key = `${hero.id}_${assignedRole}`;
+    if (!roleStats.has(key)) {
+      roleStats.set(key, { heroId: hero.id, name: hero.name, assignedRole, appearances: 0, favoredCount: 0, evenCount: 0 });
+    }
+    const s = roleStats.get(key)!;
+    s.appearances++;
+    if (even) s.evenCount++;
+    else if (favored) s.favoredCount++;
+  }
 
   // Q1
   const axisTeamSamples: Record<string, number[]> = Object.fromEntries(AXES.map((a) => [a, [] as number[]]));
@@ -350,15 +377,21 @@ function main() {
       const stats = heroStats.get(p.hero.id)!;
       stats.appearances++;
       stats.contributionSum += heroContribution(p.hero, p.assignedRole);
-      if (assessment.advantageDirection === 'Even') stats.evenCount++;
-      else if (assessment.advantageDirection === 'A') stats.favoredCount++;
+      const even = assessment.advantageDirection === 'Even';
+      const favored = assessment.advantageDirection === 'A';
+      if (even) stats.evenCount++;
+      else if (favored) stats.favoredCount++;
+      trackRole(p.hero, p.assignedRole, favored, even);
     }
     for (const p of teamB) {
       const stats = heroStats.get(p.hero.id)!;
       stats.appearances++;
       stats.contributionSum += heroContribution(p.hero, p.assignedRole);
-      if (assessment.advantageDirection === 'Even') stats.evenCount++;
-      else if (assessment.advantageDirection === 'B') stats.favoredCount++;
+      const even = assessment.advantageDirection === 'Even';
+      const favored = assessment.advantageDirection === 'B';
+      if (even) stats.evenCount++;
+      else if (favored) stats.favoredCount++;
+      trackRole(p.hero, p.assignedRole, favored, even);
     }
 
     // Q4: record + leaderboards
@@ -532,6 +565,62 @@ function main() {
   for (const h of heroTable.slice(0, 10)) {
     console.log(
       `  ${h.name}: favoredRate=${(h.favoredRate * 100).toFixed(1)}% real=${h.realWinRate === null ? 'n/a' : (h.realWinRate * 100).toFixed(1) + '%'} divergence=${h.divergenceFromReal === null ? 'n/a' : ((h.divergenceFromReal ?? 0) * 100).toFixed(1) + 'pp'}`,
+    );
+  }
+
+  // ---------- Carry/Mid-only heroes forced into Support with no real data ----------
+  // (requested after the roleAwareAxisValue regression — do these fallback
+  // picks, which still go through the OLD roleFitValue mechanism inside
+  // roleAwareAxisValue since evaluation_values_by_role.Support is no_info for
+  // them, hold up any differently than before?)
+  const thresholdPath = path.join(__dirname, '..', 'data', 'research-role-threshold-coverage.json');
+  if (fs.existsSync(thresholdPath)) {
+    interface ThresholdEntry {
+      heroId: number;
+      name: string;
+      Carry: { pass: boolean };
+      Mid: { pass: boolean };
+      Support: { pass: boolean };
+    }
+    const thresholds: ThresholdEntry[] = JSON.parse(fs.readFileSync(thresholdPath, 'utf-8'));
+    const carryMidNoSupport = thresholds.filter((t) => !t.Support.pass && (t.Carry.pass || t.Mid.pass));
+    const targetIds = new Set(carryMidNoSupport.map((t) => t.heroId));
+
+    const rows: { name: string; role: string; appearances: number; favoredRate: number; realWinRate: number | null }[] = [];
+    for (const s of roleStats.values()) {
+      if (!targetIds.has(s.heroId)) continue;
+      if (s.assignedRole !== 'Hard Support' && s.assignedRole !== 'Soft Support') continue;
+      const nonEven = s.appearances - s.evenCount;
+      rows.push({
+        name: s.name,
+        role: s.assignedRole,
+        appearances: s.appearances,
+        favoredRate: nonEven === 0 ? 0.5 : s.favoredCount / nonEven,
+        realWinRate: winRateById.get(s.heroId) ?? null,
+      });
+    }
+    rows.sort((a, b) => b.favoredRate - a.favoredRate);
+
+    console.log(
+      `\n=== Carry/Mid-only heroes (no real Support data, n=${carryMidNoSupport.length}) forced into Hard/Soft Support ===`,
+    );
+    console.log('  (favoredRate here uses the OLD roleFitValue fallback — evaluation_values_by_role.Support is no_info for all of these)');
+    const favRates = rows.map((r) => r.favoredRate);
+    const realRates = rows.map((r) => r.realWinRate ?? 0.5);
+    console.log(`  n=${rows.length} (hero,role) rows, avg appearances/row=${mean(rows.map((r) => r.appearances)).toFixed(0)}`);
+    console.log(`  avg favoredRate=${(mean(favRates) * 100).toFixed(1)}%  avg real (whole-hero) winRate=${(mean(realRates) * 100).toFixed(1)}%`);
+    console.log(`  favoredRate vs real winRate, r=${(pearson(favRates, realRates) ?? NaN).toFixed(3)}`);
+    console.log('  top 15 most "overrated when miscast into Support":');
+    rows.slice(0, 15).forEach((r) =>
+      console.log(
+        `    ${r.name} (${r.role}): favoredRate=${(r.favoredRate * 100).toFixed(1)}% real(whole-hero)=${r.realWinRate === null ? 'n/a' : (r.realWinRate * 100).toFixed(1) + '%'} n=${r.appearances}`,
+      ),
+    );
+    console.log('  bottom 15 (most "underrated"/correctly-penalized when miscast):');
+    rows.slice(-15).reverse().forEach((r) =>
+      console.log(
+        `    ${r.name} (${r.role}): favoredRate=${(r.favoredRate * 100).toFixed(1)}% real(whole-hero)=${r.realWinRate === null ? 'n/a' : (r.realWinRate * 100).toFixed(1) + '%'} n=${r.appearances}`,
+      ),
     );
   }
 }

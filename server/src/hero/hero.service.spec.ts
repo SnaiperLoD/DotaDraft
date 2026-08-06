@@ -13,6 +13,7 @@ function rawRow(hero: Hero) {
     synergyTags: JSON.stringify(hero.synergy_tags),
     counterTags: JSON.stringify(hero.counter_tags),
     evaluationValues: JSON.stringify(hero.evaluation_values),
+    evaluationValuesByRole: JSON.stringify(hero.evaluation_values_by_role),
     presumedPositions: JSON.stringify(hero.presumed_positions),
   };
 }

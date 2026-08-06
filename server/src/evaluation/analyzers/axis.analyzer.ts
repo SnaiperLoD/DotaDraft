@@ -2,7 +2,7 @@ import type { HeroEvaluationValues } from 'shared';
 import type { Analyzer, DraftPick } from '../analyzer.interface';
 import { AXIS_NARRATIVE, percentileBracket, type NarrativeContext } from '../score-narrative';
 import { percentileFor } from '../axis-percentiles';
-import { roleFitValue, supportMiscastMultiplier } from '../../common/role-fit';
+import { roleAwareAxisValue, supportMiscastMultiplier } from '../../common/role-fit';
 import { hardCarryPenalty, hardCarryAxisMultipliers, isHardCarry } from '../../common/hard-carry';
 import { utilityStackAxisMultipliers, utilityStackBreadth } from '../../common/utility-stacking';
 
@@ -19,7 +19,7 @@ export function createAxisAnalyzer(key: AxisKey, label: string): Analyzer {
 
       const values = picks.map((p) => {
         const raw = p.hero.evaluation_values[key];
-        const roleFitAdjusted = roleFitValue(key, p.assignedRole, raw, utilityStackBreadth(p.hero));
+        const roleFitAdjusted = roleAwareAxisValue(key, p.hero, p.assignedRole, utilityStackBreadth(p.hero));
         // Same utility-stacking discount as Battle Engine's overallPower
         // (common/utility-stacking.ts) — per-hero, not per-team like
         // hard-carry below, since it's a property of each hero's own kit

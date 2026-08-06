@@ -13,6 +13,7 @@ interface RawHero {
   synergy_tags: string[];
   counter_tags: string[];
   evaluation_values: Record<string, number>;
+  evaluation_values_by_role?: Record<string, unknown>;
 }
 
 interface HeroMetaEntry {
@@ -105,6 +106,7 @@ async function seed() {
 
   for (const hero of raw) {
     const presumedPositions = JSON.stringify(positionsByHeroId.get(hero.id) ?? []);
+    const evaluationValuesByRole = JSON.stringify(hero.evaluation_values_by_role ?? {});
 
     await prisma.hero.upsert({
       where: { id: hero.id },
@@ -117,6 +119,7 @@ async function seed() {
         synergyTags: JSON.stringify(hero.synergy_tags),
         counterTags: JSON.stringify(hero.counter_tags),
         evaluationValues: JSON.stringify(hero.evaluation_values),
+        evaluationValuesByRole,
         presumedPositions,
       },
       create: {
@@ -129,6 +132,7 @@ async function seed() {
         synergyTags: JSON.stringify(hero.synergy_tags),
         counterTags: JSON.stringify(hero.counter_tags),
         evaluationValues: JSON.stringify(hero.evaluation_values),
+        evaluationValuesByRole,
         presumedPositions,
       },
     });

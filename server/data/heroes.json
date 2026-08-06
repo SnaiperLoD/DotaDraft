@@ -38,7 +38,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10,
-    "mobility_items_tier": 1.1
+    "mobility_items_tier": 1.1,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 3.9,
+        "burst": 8.2,
+        "scaling": 9.4,
+        "objectives": 9.1,
+        "durability": 7.2,
+        "tempo": 5.4,
+        "control": 3.3,
+        "mobility": 4.1,
+        "map_control": 0.3,
+        "saving": 4.7,
+        "initiating": 1.5,
+        "skirmish_rate": 2.2,
+        "camp_stacking": 1.6,
+        "resource_efficiency": 0.3
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 3.9,
+        "burst": 8.2,
+        "scaling": 9.4,
+        "objectives": 9.1,
+        "durability": 7.2,
+        "tempo": 6.1,
+        "control": 2.6,
+        "mobility": 4.1,
+        "map_control": 0.2,
+        "saving": 4.3,
+        "initiating": 1.5,
+        "skirmish_rate": 2.3,
+        "camp_stacking": 3,
+        "resource_efficiency": 0.2
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 2,
@@ -80,7 +120,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.9
+    "mobility_items_tier": 3.9,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 7.6,
+        "burst": 8.7,
+        "scaling": 5.2,
+        "objectives": 3.3,
+        "durability": 5.8,
+        "tempo": 5.7,
+        "control": 6.3,
+        "mobility": 4.6,
+        "map_control": 2,
+        "saving": 4.2,
+        "initiating": 4,
+        "skirmish_rate": 5.7,
+        "camp_stacking": 8.1,
+        "resource_efficiency": 7.7
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 3,
@@ -122,7 +189,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.4
+    "mobility_items_tier": 2.4,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 0.7,
+        "burst": 1.1,
+        "scaling": 1,
+        "objectives": 1.1,
+        "durability": 2.5,
+        "tempo": 6.2,
+        "control": 7.6,
+        "mobility": 4.1,
+        "map_control": 8.6,
+        "saving": 4.4,
+        "initiating": 3.8,
+        "skirmish_rate": 7.2,
+        "camp_stacking": 4.5,
+        "resource_efficiency": 4.7
+      }
+    }
   },
   {
     "id": 4,
@@ -164,7 +258,34 @@
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.6
+    "mobility_items_tier": 1.6,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 7.9,
+        "burst": 8.9,
+        "scaling": 6.4,
+        "objectives": 7.8,
+        "durability": 7.9,
+        "tempo": 6,
+        "control": 3.1,
+        "mobility": 4.8,
+        "map_control": 8.7,
+        "saving": 5.2,
+        "initiating": 2.3,
+        "skirmish_rate": 5.6,
+        "camp_stacking": 6.3,
+        "resource_efficiency": 4
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 5,
@@ -205,7 +326,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.4
+    "mobility_items_tier": 2.4,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 1.4,
+        "burst": 1.4,
+        "scaling": 1.3,
+        "objectives": 1.3,
+        "durability": 1.3,
+        "tempo": 5.7,
+        "control": 7,
+        "mobility": 3.2,
+        "map_control": 3,
+        "saving": 4,
+        "initiating": 2,
+        "skirmish_rate": 9.5,
+        "camp_stacking": 6.8,
+        "resource_efficiency": 2.9
+      }
+    }
   },
   {
     "id": 6,
@@ -245,7 +393,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.3
+    "mobility_items_tier": 1.3,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 7.9,
+        "burst": 8.3,
+        "scaling": 6.1,
+        "objectives": 9.7,
+        "durability": 4.4,
+        "tempo": 7,
+        "control": 2.3,
+        "mobility": 4.4,
+        "map_control": 2,
+        "saving": 5.2,
+        "initiating": 1.3,
+        "skirmish_rate": 3,
+        "camp_stacking": 7.7,
+        "resource_efficiency": 4.7
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 7,
@@ -287,7 +462,60 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.7
+    "mobility_items_tier": 3.7,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 5.5,
+        "burst": 3.7,
+        "scaling": 6.1,
+        "objectives": 3.7,
+        "durability": 4.1,
+        "tempo": 7.7,
+        "control": 9.3,
+        "mobility": 5.5,
+        "map_control": 3,
+        "saving": 4.3,
+        "initiating": 6.7,
+        "skirmish_rate": 5.1,
+        "camp_stacking": 4.6,
+        "resource_efficiency": 5.5
+      },
+      "Offlane": {
+        "teamfight": 5.5,
+        "burst": 3.7,
+        "scaling": 6.1,
+        "objectives": 3.7,
+        "durability": 4.1,
+        "tempo": 5.6,
+        "control": 9.2,
+        "mobility": 5.5,
+        "map_control": 6.1,
+        "saving": 3.7,
+        "initiating": 6.7,
+        "skirmish_rate": 3.5,
+        "camp_stacking": 3.7,
+        "resource_efficiency": 5.4
+      },
+      "Support": {
+        "teamfight": 5.5,
+        "burst": 3.7,
+        "scaling": 6.1,
+        "objectives": 3.7,
+        "durability": 4.1,
+        "tempo": 0.9,
+        "control": 9.2,
+        "mobility": 5.5,
+        "map_control": 1.6,
+        "saving": 5.1,
+        "initiating": 6.7,
+        "skirmish_rate": 5.2,
+        "camp_stacking": 3.8,
+        "resource_efficiency": 5.9
+      }
+    }
   },
   {
     "id": 8,
@@ -327,7 +555,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.3
+    "mobility_items_tier": 2.3,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 7.1,
+        "burst": 8.5,
+        "scaling": 8.9,
+        "objectives": 9.9,
+        "durability": 6.6,
+        "tempo": 3.9,
+        "control": 1.2,
+        "mobility": 3.8,
+        "map_control": 1.1,
+        "saving": 6.4,
+        "initiating": 3.2,
+        "skirmish_rate": 3.5,
+        "camp_stacking": 3.2,
+        "resource_efficiency": 1.3
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 9,
@@ -370,7 +625,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.6
+    "mobility_items_tier": 1.6,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 2.5,
+        "burst": 3.4,
+        "scaling": 5.1,
+        "objectives": 3.7,
+        "durability": 3.2,
+        "tempo": 9.3,
+        "control": 4.4,
+        "mobility": 5.1,
+        "map_control": 0.5,
+        "saving": 4.1,
+        "initiating": 3.3,
+        "skirmish_rate": 7.7,
+        "camp_stacking": 3.5,
+        "resource_efficiency": 5.9
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 2.5,
+        "burst": 3.4,
+        "scaling": 5.1,
+        "objectives": 3.7,
+        "durability": 3.2,
+        "tempo": 2.6,
+        "control": 4.5,
+        "mobility": 5.1,
+        "map_control": 3.7,
+        "saving": 5.9,
+        "initiating": 3.3,
+        "skirmish_rate": 4.6,
+        "camp_stacking": 7.4,
+        "resource_efficiency": 6.2
+      }
+    }
   },
   {
     "id": 10,
@@ -413,7 +708,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10,
-    "mobility_items_tier": 1
+    "mobility_items_tier": 1,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 3.6,
+        "burst": 5.6,
+        "scaling": 7.1,
+        "objectives": 8.8,
+        "durability": 6.1,
+        "tempo": 3.5,
+        "control": 4.3,
+        "mobility": 4.6,
+        "map_control": 2.5,
+        "saving": 5.8,
+        "initiating": 2.9,
+        "skirmish_rate": 2.8,
+        "camp_stacking": 3.3,
+        "resource_efficiency": 1
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 11,
@@ -452,7 +774,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.2
+    "mobility_items_tier": 2.2,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 8.7,
+        "burst": 9.4,
+        "scaling": 6.1,
+        "objectives": 8.4,
+        "durability": 5.4,
+        "tempo": 7.9,
+        "control": 3.8,
+        "mobility": 4.2,
+        "map_control": 0.7,
+        "saving": 4.7,
+        "initiating": 2.3,
+        "skirmish_rate": 2.9,
+        "camp_stacking": 6,
+        "resource_efficiency": 3.8
+      },
+      "Mid": {
+        "teamfight": 8.7,
+        "burst": 9.4,
+        "scaling": 6.1,
+        "objectives": 8.4,
+        "durability": 5.4,
+        "tempo": 6.5,
+        "control": 3.3,
+        "mobility": 4.2,
+        "map_control": 1.3,
+        "saving": 4.7,
+        "initiating": 2.3,
+        "skirmish_rate": 3.2,
+        "camp_stacking": 8.1,
+        "resource_efficiency": 1.8
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 12,
@@ -491,7 +853,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 0.5
+    "mobility_items_tier": 0.5,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 6.2,
+        "burst": 7.4,
+        "scaling": 9.2,
+        "objectives": 9,
+        "durability": 6.7,
+        "tempo": 2.2,
+        "control": 1.7,
+        "mobility": 4.9,
+        "map_control": 0.8,
+        "saving": 3.5,
+        "initiating": 0.9,
+        "skirmish_rate": 2.1,
+        "camp_stacking": 0.3,
+        "resource_efficiency": 3.4
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 13,
@@ -533,7 +922,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 6,
-    "mobility_items_tier": 3.8
+    "mobility_items_tier": 3.8,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 8.6,
+        "burst": 7.3,
+        "scaling": 5.4,
+        "objectives": 5.3,
+        "durability": 8.5,
+        "tempo": 4.7,
+        "control": 4.1,
+        "mobility": 5.2,
+        "map_control": 2.1,
+        "saving": 4.4,
+        "initiating": 4.6,
+        "skirmish_rate": 1.2,
+        "camp_stacking": 3.4,
+        "resource_efficiency": 8.4
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 14,
@@ -575,7 +991,60 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.9
+    "mobility_items_tier": 2.9,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 3,
+        "burst": 4.5,
+        "scaling": 3.9,
+        "objectives": 2,
+        "durability": 5.9,
+        "tempo": 4.8,
+        "control": 6.6,
+        "mobility": 3,
+        "map_control": 1.8,
+        "saving": 4.3,
+        "initiating": 4.5,
+        "skirmish_rate": 7.8,
+        "camp_stacking": 0.7,
+        "resource_efficiency": 6.3
+      },
+      "Offlane": {
+        "teamfight": 3,
+        "burst": 4.5,
+        "scaling": 3.9,
+        "objectives": 2,
+        "durability": 5.9,
+        "tempo": 4.7,
+        "control": 6.6,
+        "mobility": 3,
+        "map_control": 2.2,
+        "saving": 4.1,
+        "initiating": 4.5,
+        "skirmish_rate": 7.4,
+        "camp_stacking": 2.3,
+        "resource_efficiency": 5.8
+      },
+      "Support": {
+        "teamfight": 3,
+        "burst": 4.5,
+        "scaling": 3.9,
+        "objectives": 2,
+        "durability": 5.9,
+        "tempo": 3.6,
+        "control": 6.7,
+        "mobility": 3,
+        "map_control": 0.2,
+        "saving": 4.4,
+        "initiating": 4.5,
+        "skirmish_rate": 9.3,
+        "camp_stacking": 0.7,
+        "resource_efficiency": 3.2
+      }
+    }
   },
   {
     "id": 15,
@@ -617,7 +1086,60 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.4
+    "mobility_items_tier": 1.4,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 9.2,
+        "burst": 8.8,
+        "scaling": 5.8,
+        "objectives": 6.5,
+        "durability": 4.7,
+        "tempo": 4.9,
+        "control": 1.5,
+        "mobility": 2.7,
+        "map_control": 0,
+        "saving": 4.8,
+        "initiating": 2,
+        "skirmish_rate": 6.6,
+        "camp_stacking": 7.5,
+        "resource_efficiency": 7.3
+      },
+      "Mid": {
+        "teamfight": 9.2,
+        "burst": 8.8,
+        "scaling": 5.8,
+        "objectives": 6.5,
+        "durability": 4.7,
+        "tempo": 5.5,
+        "control": 1.5,
+        "mobility": 2.7,
+        "map_control": 0.7,
+        "saving": 5.7,
+        "initiating": 2,
+        "skirmish_rate": 4.4,
+        "camp_stacking": 5.8,
+        "resource_efficiency": 7.3
+      },
+      "Offlane": {
+        "teamfight": 9.2,
+        "burst": 8.8,
+        "scaling": 5.8,
+        "objectives": 6.5,
+        "durability": 4.7,
+        "tempo": 6.3,
+        "control": 1.6,
+        "mobility": 2.7,
+        "map_control": 0,
+        "saving": 5.8,
+        "initiating": 2,
+        "skirmish_rate": 4.8,
+        "camp_stacking": 6.6,
+        "resource_efficiency": 7.3
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 16,
@@ -660,7 +1182,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 6,
-    "mobility_items_tier": 4
+    "mobility_items_tier": 4,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 7.5,
+        "burst": 4.4,
+        "scaling": 4.8,
+        "objectives": 1.7,
+        "durability": 4.5,
+        "tempo": 6.1,
+        "control": 5.8,
+        "mobility": 6.2,
+        "map_control": 4.1,
+        "saving": 4.7,
+        "initiating": 5.6,
+        "skirmish_rate": 3.7,
+        "camp_stacking": 5.4,
+        "resource_efficiency": 8.2
+      },
+      "Offlane": {
+        "teamfight": 7.5,
+        "burst": 4.4,
+        "scaling": 4.8,
+        "objectives": 1.7,
+        "durability": 4.5,
+        "tempo": 4.3,
+        "control": 5.4,
+        "mobility": 6.2,
+        "map_control": 6.2,
+        "saving": 4,
+        "initiating": 5.6,
+        "skirmish_rate": 6.5,
+        "camp_stacking": 6.1,
+        "resource_efficiency": 6.9
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 17,
@@ -703,7 +1265,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 6,
-    "mobility_items_tier": 1.5
+    "mobility_items_tier": 1.5,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 6.3,
+        "burst": 8.6,
+        "scaling": 7.3,
+        "objectives": 4.6,
+        "durability": 7.1,
+        "tempo": 4.8,
+        "control": 4.4,
+        "mobility": 5.6,
+        "map_control": 1.9,
+        "saving": 5.5,
+        "initiating": 5.3,
+        "skirmish_rate": 1.5,
+        "camp_stacking": 3.7,
+        "resource_efficiency": 5.8
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 18,
@@ -746,7 +1335,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.5
+    "mobility_items_tier": 3.5,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 6.8,
+        "burst": 7.7,
+        "scaling": 7.8,
+        "objectives": 8.6,
+        "durability": 7.3,
+        "tempo": 5.3,
+        "control": 5.2,
+        "mobility": 6.5,
+        "map_control": 2.6,
+        "saving": 3.9,
+        "initiating": 3,
+        "skirmish_rate": 3.4,
+        "camp_stacking": 4.2,
+        "resource_efficiency": 1.2
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 19,
@@ -791,7 +1407,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.8
+    "mobility_items_tier": 2.8,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 5.6,
+        "burst": 4.7,
+        "scaling": 4.8,
+        "objectives": 6,
+        "durability": 7.7,
+        "tempo": 6.2,
+        "control": 5.6,
+        "mobility": 2.7,
+        "map_control": 0.2,
+        "saving": 4.6,
+        "initiating": 5.1,
+        "skirmish_rate": 2.2,
+        "camp_stacking": 3.7,
+        "resource_efficiency": 5.9
+      },
+      "Mid": {
+        "teamfight": 5.6,
+        "burst": 4.7,
+        "scaling": 4.8,
+        "objectives": 6,
+        "durability": 7.7,
+        "tempo": 7.5,
+        "control": 5.6,
+        "mobility": 2.7,
+        "map_control": 0.8,
+        "saving": 4.5,
+        "initiating": 5.1,
+        "skirmish_rate": 3.9,
+        "camp_stacking": 2.8,
+        "resource_efficiency": 5.1
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 20,
@@ -834,7 +1490,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 0.7
+    "mobility_items_tier": 0.7,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 2.1,
+        "burst": 3.1,
+        "scaling": 4.8,
+        "objectives": 4.7,
+        "durability": 2.3,
+        "tempo": 1.1,
+        "control": 5.5,
+        "mobility": 3.9,
+        "map_control": 1.3,
+        "saving": 5.9,
+        "initiating": 4.4,
+        "skirmish_rate": 7.3,
+        "camp_stacking": 4.8,
+        "resource_efficiency": 7.6
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 2.1,
+        "burst": 3.1,
+        "scaling": 4.8,
+        "objectives": 4.7,
+        "durability": 2.3,
+        "tempo": 3.8,
+        "control": 4.6,
+        "mobility": 3.9,
+        "map_control": 1.4,
+        "saving": 5.9,
+        "initiating": 4.4,
+        "skirmish_rate": 9.4,
+        "camp_stacking": 8.6,
+        "resource_efficiency": 1.1
+      }
+    }
   },
   {
     "id": 21,
@@ -877,7 +1573,60 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 6,
-    "mobility_items_tier": 2.3
+    "mobility_items_tier": 2.3,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 4.8,
+        "burst": 6.7,
+        "scaling": 4.8,
+        "objectives": 6.7,
+        "durability": 4.4,
+        "tempo": 5.8,
+        "control": 5.8,
+        "mobility": 5,
+        "map_control": 4.1,
+        "saving": 4,
+        "initiating": 4.5,
+        "skirmish_rate": 2,
+        "camp_stacking": 6.8,
+        "resource_efficiency": 7.9
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 4.8,
+        "burst": 6.7,
+        "scaling": 4.8,
+        "objectives": 6.7,
+        "durability": 4.4,
+        "tempo": 5.8,
+        "control": 5.1,
+        "mobility": 5,
+        "map_control": 4.7,
+        "saving": 3.7,
+        "initiating": 4.5,
+        "skirmish_rate": 4.6,
+        "camp_stacking": 4.6,
+        "resource_efficiency": 4.1
+      },
+      "Support": {
+        "teamfight": 4.8,
+        "burst": 6.7,
+        "scaling": 4.8,
+        "objectives": 6.7,
+        "durability": 4.4,
+        "tempo": 5.1,
+        "control": 6,
+        "mobility": 5,
+        "map_control": 2.4,
+        "saving": 5.3,
+        "initiating": 4.5,
+        "skirmish_rate": 5.2,
+        "camp_stacking": 7.5,
+        "resource_efficiency": 6.6
+      }
+    }
   },
   {
     "id": 22,
@@ -917,7 +1666,47 @@
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.3
+    "mobility_items_tier": 1.3,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 9.9,
+        "burst": 6,
+        "scaling": 6.1,
+        "objectives": 1,
+        "durability": 2.9,
+        "tempo": 4.2,
+        "control": 4.2,
+        "mobility": 5,
+        "map_control": 9.6,
+        "saving": 4,
+        "initiating": 4.9,
+        "skirmish_rate": 3.9,
+        "camp_stacking": 7.8,
+        "resource_efficiency": 9.8
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 9.9,
+        "burst": 6,
+        "scaling": 6.1,
+        "objectives": 1,
+        "durability": 2.9,
+        "tempo": 3.1,
+        "control": 3.7,
+        "mobility": 5,
+        "map_control": 9,
+        "saving": 3.7,
+        "initiating": 4.9,
+        "skirmish_rate": 7,
+        "camp_stacking": 8.8,
+        "resource_efficiency": 9.2
+      }
+    }
   },
   {
     "id": 23,
@@ -961,7 +1750,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.6
+    "mobility_items_tier": 1.6,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 6.6,
+        "burst": 3.7,
+        "scaling": 6.6,
+        "objectives": 4.1,
+        "durability": 7.2,
+        "tempo": 4,
+        "control": 7.4,
+        "mobility": 4.6,
+        "map_control": 1,
+        "saving": 4.8,
+        "initiating": 6.4,
+        "skirmish_rate": 1.8,
+        "camp_stacking": 3.9,
+        "resource_efficiency": 4.6
+      },
+      "Offlane": {
+        "teamfight": 6.6,
+        "burst": 3.7,
+        "scaling": 6.6,
+        "objectives": 4.1,
+        "durability": 7.2,
+        "tempo": 4.9,
+        "control": 7.4,
+        "mobility": 4.6,
+        "map_control": 0.8,
+        "saving": 4.7,
+        "initiating": 6.4,
+        "skirmish_rate": 1.6,
+        "camp_stacking": 5.4,
+        "resource_efficiency": 5.3
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 25,
@@ -1002,7 +1831,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2
+    "mobility_items_tier": 2,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 9,
+        "burst": 9.5,
+        "scaling": 6.7,
+        "objectives": 7.9,
+        "durability": 3.8,
+        "tempo": 4.9,
+        "control": 5.5,
+        "mobility": 5.6,
+        "map_control": 6.2,
+        "saving": 4,
+        "initiating": 2.4,
+        "skirmish_rate": 2.8,
+        "camp_stacking": 9.3,
+        "resource_efficiency": 6.4
+      },
+      "Mid": {
+        "teamfight": 9,
+        "burst": 9.5,
+        "scaling": 6.7,
+        "objectives": 7.9,
+        "durability": 3.8,
+        "tempo": 5.8,
+        "control": 5.1,
+        "mobility": 5.6,
+        "map_control": 3.2,
+        "saving": 4.1,
+        "initiating": 2.4,
+        "skirmish_rate": 2.6,
+        "camp_stacking": 8.8,
+        "resource_efficiency": 1.9
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 26,
@@ -1044,7 +1913,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.6
+    "mobility_items_tier": 3.6,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 0.6,
+        "burst": 3.6,
+        "scaling": 3.8,
+        "objectives": 0.8,
+        "durability": 1.5,
+        "tempo": 3.1,
+        "control": 8,
+        "mobility": 3.6,
+        "map_control": 1.9,
+        "saving": 3.9,
+        "initiating": 4.8,
+        "skirmish_rate": 9,
+        "camp_stacking": 8.1,
+        "resource_efficiency": 2.2
+      }
+    }
   },
   {
     "id": 27,
@@ -1087,7 +1983,34 @@
     },
     "vision_ability_tier": 1,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.4
+    "mobility_items_tier": 3.4,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 0.8,
+        "burst": 0.5,
+        "scaling": 3.8,
+        "objectives": 6.9,
+        "durability": 1.7,
+        "tempo": 2.4,
+        "control": 7.9,
+        "mobility": 3.3,
+        "map_control": 3.4,
+        "saving": 3.7,
+        "initiating": 3.8,
+        "skirmish_rate": 8.8,
+        "camp_stacking": 5.9,
+        "resource_efficiency": 1.4
+      }
+    }
   },
   {
     "id": 28,
@@ -1130,7 +2053,47 @@
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.9
+    "mobility_items_tier": 3.9,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 2.2,
+        "burst": 4.4,
+        "scaling": 4.6,
+        "objectives": 4.4,
+        "durability": 7,
+        "tempo": 5.1,
+        "control": 6.2,
+        "mobility": 5.9,
+        "map_control": 5.5,
+        "saving": 4.7,
+        "initiating": 5.7,
+        "skirmish_rate": 3.1,
+        "camp_stacking": 1.3,
+        "resource_efficiency": 1.5
+      },
+      "Offlane": {
+        "teamfight": 2.2,
+        "burst": 4.4,
+        "scaling": 4.6,
+        "objectives": 4.4,
+        "durability": 7,
+        "tempo": 4.5,
+        "control": 5.8,
+        "mobility": 5.9,
+        "map_control": 5.6,
+        "saving": 3.8,
+        "initiating": 5.7,
+        "skirmish_rate": 4.2,
+        "camp_stacking": 2.5,
+        "resource_efficiency": 0.9
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 29,
@@ -1172,7 +2135,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.3
+    "mobility_items_tier": 3.3,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 4,
+        "burst": 1.7,
+        "scaling": 4.4,
+        "objectives": 4.3,
+        "durability": 7.2,
+        "tempo": 4.9,
+        "control": 7,
+        "mobility": 3.9,
+        "map_control": 0.3,
+        "saving": 5.9,
+        "initiating": 5.3,
+        "skirmish_rate": 2.8,
+        "camp_stacking": 3.7,
+        "resource_efficiency": 3.6
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 30,
@@ -1213,7 +2203,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.2
+    "mobility_items_tier": 2.2,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 3.4,
+        "burst": 5.2,
+        "scaling": 4,
+        "objectives": 1.2,
+        "durability": 1.7,
+        "tempo": 5.1,
+        "control": 4.9,
+        "mobility": 3.8,
+        "map_control": 4.7,
+        "saving": 6.3,
+        "initiating": 3.1,
+        "skirmish_rate": 9.5,
+        "camp_stacking": 3.9,
+        "resource_efficiency": 7
+      }
+    }
   },
   {
     "id": 31,
@@ -1253,7 +2270,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.5
+    "mobility_items_tier": 2.5,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 2.7,
+        "burst": 2.7,
+        "scaling": 4.4,
+        "objectives": 0.4,
+        "durability": 1.4,
+        "tempo": 2.1,
+        "control": 4.9,
+        "mobility": 3.5,
+        "map_control": 5.5,
+        "saving": 4.4,
+        "initiating": 4.1,
+        "skirmish_rate": 9,
+        "camp_stacking": 5.2,
+        "resource_efficiency": 7.2
+      }
+    }
   },
   {
     "id": 32,
@@ -1293,7 +2337,47 @@
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 0.6
+    "mobility_items_tier": 0.6,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 6.7,
+        "burst": 9.8,
+        "scaling": 6.7,
+        "objectives": 4.5,
+        "durability": 3.5,
+        "tempo": 6.4,
+        "control": 3,
+        "mobility": 7.5,
+        "map_control": 7.4,
+        "saving": 3.9,
+        "initiating": 2.2,
+        "skirmish_rate": 7.2,
+        "camp_stacking": 0,
+        "resource_efficiency": 5.7
+      },
+      "Mid": {
+        "teamfight": 6.7,
+        "burst": 9.8,
+        "scaling": 6.7,
+        "objectives": 4.5,
+        "durability": 3.5,
+        "tempo": 4.7,
+        "control": 2.4,
+        "mobility": 7.5,
+        "map_control": 8.8,
+        "saving": 5,
+        "initiating": 2.2,
+        "skirmish_rate": 7,
+        "camp_stacking": 0,
+        "resource_efficiency": 3.8
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 33,
@@ -1334,7 +2418,47 @@
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.8
+    "mobility_items_tier": 3.8,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 5.1,
+        "burst": 1.3,
+        "scaling": 1.4,
+        "objectives": 5.2,
+        "durability": 4.9,
+        "tempo": 7.6,
+        "control": 6,
+        "mobility": 3.8,
+        "map_control": 8.4,
+        "saving": 5.3,
+        "initiating": 4.6,
+        "skirmish_rate": 2.7,
+        "camp_stacking": 5.9,
+        "resource_efficiency": 8
+      },
+      "Support": {
+        "teamfight": 5.1,
+        "burst": 1.3,
+        "scaling": 1.4,
+        "objectives": 5.2,
+        "durability": 4.9,
+        "tempo": 1,
+        "control": 5.7,
+        "mobility": 3.8,
+        "map_control": 3.8,
+        "saving": 5,
+        "initiating": 4.6,
+        "skirmish_rate": 7.9,
+        "camp_stacking": 3.3,
+        "resource_efficiency": 6.5
+      }
+    }
   },
   {
     "id": 34,
@@ -1375,7 +2499,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.9
+    "mobility_items_tier": 3.9,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 9,
+        "burst": 7.6,
+        "scaling": 9.6,
+        "objectives": 0,
+        "durability": 5,
+        "tempo": 2.3,
+        "control": 4.3,
+        "mobility": 6.8,
+        "map_control": 4.7,
+        "saving": 6.3,
+        "initiating": 4,
+        "skirmish_rate": 2.7,
+        "camp_stacking": 7,
+        "resource_efficiency": 4.3
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 35,
@@ -1414,7 +2565,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.2
+    "mobility_items_tier": 1.2,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 9.7,
+        "burst": 9,
+        "scaling": 5.6,
+        "objectives": 7.3,
+        "durability": 3.3,
+        "tempo": 8.5,
+        "control": 3.2,
+        "mobility": 3.9,
+        "map_control": 3.3,
+        "saving": 4.9,
+        "initiating": 3.8,
+        "skirmish_rate": 6.3,
+        "camp_stacking": 8,
+        "resource_efficiency": 4.8
+      },
+      "Mid": {
+        "teamfight": 9.7,
+        "burst": 9,
+        "scaling": 5.6,
+        "objectives": 7.3,
+        "durability": 3.3,
+        "tempo": 6.5,
+        "control": 3.3,
+        "mobility": 3.9,
+        "map_control": 4.4,
+        "saving": 3.8,
+        "initiating": 3.8,
+        "skirmish_rate": 3.3,
+        "camp_stacking": 7.9,
+        "resource_efficiency": 3.1
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 36,
@@ -1456,7 +2647,60 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2
+    "mobility_items_tier": 2,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 9.8,
+        "burst": 9.6,
+        "scaling": 6.3,
+        "objectives": 5.6,
+        "durability": 8.1,
+        "tempo": 8.5,
+        "control": 4.6,
+        "mobility": 3.8,
+        "map_control": 2.8,
+        "saving": 6.3,
+        "initiating": 3,
+        "skirmish_rate": 1.4,
+        "camp_stacking": 8.5,
+        "resource_efficiency": 8.5
+      },
+      "Mid": {
+        "teamfight": 9.8,
+        "burst": 9.6,
+        "scaling": 6.3,
+        "objectives": 5.6,
+        "durability": 8.1,
+        "tempo": 3.9,
+        "control": 4.2,
+        "mobility": 3.8,
+        "map_control": 1.3,
+        "saving": 6.4,
+        "initiating": 3,
+        "skirmish_rate": 1.9,
+        "camp_stacking": 7.2,
+        "resource_efficiency": 7.5
+      },
+      "Offlane": {
+        "teamfight": 9.8,
+        "burst": 9.6,
+        "scaling": 6.3,
+        "objectives": 5.6,
+        "durability": 8.1,
+        "tempo": 7.8,
+        "control": 3.7,
+        "mobility": 3.8,
+        "map_control": 1.5,
+        "saving": 6.4,
+        "initiating": 3,
+        "skirmish_rate": 3.1,
+        "camp_stacking": 7.8,
+        "resource_efficiency": 8.3
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 37,
@@ -1497,7 +2741,34 @@
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 0.8
+    "mobility_items_tier": 0.8,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 3.7,
+        "burst": 0.6,
+        "scaling": 1.7,
+        "objectives": 6,
+        "durability": 1.8,
+        "tempo": 5.2,
+        "control": 3.9,
+        "mobility": 3.6,
+        "map_control": 8.7,
+        "saving": 6.6,
+        "initiating": 4.6,
+        "skirmish_rate": 6.6,
+        "camp_stacking": 7.2,
+        "resource_efficiency": 6.3
+      }
+    }
   },
   {
     "id": 38,
@@ -1540,7 +2811,60 @@
     },
     "vision_ability_tier": 6,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.4
+    "mobility_items_tier": 3.4,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 6.7,
+        "burst": 6.3,
+        "scaling": 4.6,
+        "objectives": 7,
+        "durability": 6.5,
+        "tempo": 8.2,
+        "control": 6.6,
+        "mobility": 5.7,
+        "map_control": 9.2,
+        "saving": 3.8,
+        "initiating": 5.6,
+        "skirmish_rate": 2.5,
+        "camp_stacking": 8.7,
+        "resource_efficiency": 5
+      },
+      "Mid": {
+        "teamfight": 6.7,
+        "burst": 6.3,
+        "scaling": 4.6,
+        "objectives": 7,
+        "durability": 6.5,
+        "tempo": 6,
+        "control": 6.1,
+        "mobility": 5.7,
+        "map_control": 9,
+        "saving": 4.6,
+        "initiating": 5.6,
+        "skirmish_rate": 1.6,
+        "camp_stacking": 8.2,
+        "resource_efficiency": 2.9
+      },
+      "Offlane": {
+        "teamfight": 6.7,
+        "burst": 6.3,
+        "scaling": 4.6,
+        "objectives": 7,
+        "durability": 6.5,
+        "tempo": 7.4,
+        "control": 6.1,
+        "mobility": 5.7,
+        "map_control": 8.7,
+        "saving": 4.8,
+        "initiating": 5.6,
+        "skirmish_rate": 1.8,
+        "camp_stacking": 8.7,
+        "resource_efficiency": 2.7
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 39,
@@ -1581,7 +2905,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10,
-    "mobility_items_tier": 1.2
+    "mobility_items_tier": 1.2,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 9.3,
+        "burst": 7.9,
+        "scaling": 7.5,
+        "objectives": 4.8,
+        "durability": 7.8,
+        "tempo": 4.8,
+        "control": 2.2,
+        "mobility": 5.5,
+        "map_control": 2.4,
+        "saving": 4.7,
+        "initiating": 4.9,
+        "skirmish_rate": 1.7,
+        "camp_stacking": 5.2,
+        "resource_efficiency": 9.2
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 40,
@@ -1624,7 +2975,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.6
+    "mobility_items_tier": 1.6,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 6.4,
+        "burst": 1.6,
+        "scaling": 2.3,
+        "objectives": 3.8,
+        "durability": 2,
+        "tempo": 5.5,
+        "control": 3.1,
+        "mobility": 4.1,
+        "map_control": 4,
+        "saving": 5.5,
+        "initiating": 3.5,
+        "skirmish_rate": 7.2,
+        "camp_stacking": 6,
+        "resource_efficiency": 9.6
+      }
+    }
   },
   {
     "id": 41,
@@ -1667,7 +3045,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 0.3
+    "mobility_items_tier": 0.3,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 3.7,
+        "burst": 6,
+        "scaling": 8.9,
+        "objectives": 8,
+        "durability": 7.1,
+        "tempo": 2,
+        "control": 6,
+        "mobility": 5.2,
+        "map_control": 4.8,
+        "saving": 4.5,
+        "initiating": 4.9,
+        "skirmish_rate": 4.4,
+        "camp_stacking": 1.8,
+        "resource_efficiency": 1.8
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 42,
@@ -1709,7 +3114,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3
+    "mobility_items_tier": 3,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 8.7,
+        "burst": 6.3,
+        "scaling": 5.6,
+        "objectives": 8.9,
+        "durability": 8.3,
+        "tempo": 7.9,
+        "control": 5.9,
+        "mobility": 4.9,
+        "map_control": 1,
+        "saving": 5.2,
+        "initiating": 5.2,
+        "skirmish_rate": 6.2,
+        "camp_stacking": 2.3,
+        "resource_efficiency": 5.4
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 8.7,
+        "burst": 6.3,
+        "scaling": 5.6,
+        "objectives": 8.9,
+        "durability": 8.3,
+        "tempo": 3.6,
+        "control": 4.9,
+        "mobility": 4.9,
+        "map_control": 0.5,
+        "saving": 5.2,
+        "initiating": 5.2,
+        "skirmish_rate": 4.6,
+        "camp_stacking": 1.3,
+        "resource_efficiency": 3.1
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 43,
@@ -1751,7 +3196,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.1
+    "mobility_items_tier": 2.1,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 8.8,
+        "burst": 7.8,
+        "scaling": 5,
+        "objectives": 8.2,
+        "durability": 6.6,
+        "tempo": 5,
+        "control": 3.9,
+        "mobility": 3.3,
+        "map_control": 1.1,
+        "saving": 5.6,
+        "initiating": 3.9,
+        "skirmish_rate": 3.1,
+        "camp_stacking": 4.5,
+        "resource_efficiency": 4.4
+      },
+      "Offlane": {
+        "teamfight": 8.8,
+        "burst": 7.8,
+        "scaling": 5,
+        "objectives": 8.2,
+        "durability": 6.6,
+        "tempo": 7,
+        "control": 3.2,
+        "mobility": 3.3,
+        "map_control": 2.8,
+        "saving": 5.4,
+        "initiating": 3.9,
+        "skirmish_rate": 5.9,
+        "camp_stacking": 6.1,
+        "resource_efficiency": 5.9
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 44,
@@ -1790,7 +3275,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 0.4
+    "mobility_items_tier": 0.4,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 8.2,
+        "burst": 9.8,
+        "scaling": 8.8,
+        "objectives": 7.9,
+        "durability": 3.7,
+        "tempo": 5.7,
+        "control": 2.5,
+        "mobility": 6.2,
+        "map_control": 3,
+        "saving": 4,
+        "initiating": 3.4,
+        "skirmish_rate": 5.9,
+        "camp_stacking": 0.5,
+        "resource_efficiency": 0.8
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 45,
@@ -1830,7 +3342,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.7
+    "mobility_items_tier": 1.7,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 7,
+        "burst": 3.3,
+        "scaling": 1.5,
+        "objectives": 8.1,
+        "durability": 2.7,
+        "tempo": 7.4,
+        "control": 2.4,
+        "mobility": 4.9,
+        "map_control": 4.8,
+        "saving": 6.5,
+        "initiating": 2.7,
+        "skirmish_rate": 6.9,
+        "camp_stacking": 6.7,
+        "resource_efficiency": 8.5
+      }
+    }
   },
   {
     "id": 46,
@@ -1870,7 +3409,47 @@
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.5
+    "mobility_items_tier": 3.5,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 6,
+        "burst": 7.2,
+        "scaling": 7,
+        "objectives": 8.3,
+        "durability": 4.4,
+        "tempo": 5,
+        "control": 2.9,
+        "mobility": 6.6,
+        "map_control": 7,
+        "saving": 3.4,
+        "initiating": 5.4,
+        "skirmish_rate": 2.7,
+        "camp_stacking": 5,
+        "resource_efficiency": 2.8
+      },
+      "Mid": {
+        "teamfight": 6,
+        "burst": 7.2,
+        "scaling": 7,
+        "objectives": 8.3,
+        "durability": 4.4,
+        "tempo": 8.3,
+        "control": 2.1,
+        "mobility": 6.6,
+        "map_control": 7.9,
+        "saving": 3.7,
+        "initiating": 5.4,
+        "skirmish_rate": 1.5,
+        "camp_stacking": 9.1,
+        "resource_efficiency": 0.6
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 47,
@@ -1912,7 +3491,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.9
+    "mobility_items_tier": 1.9,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 8.4,
+        "burst": 8.7,
+        "scaling": 4.4,
+        "objectives": 6.8,
+        "durability": 4.8,
+        "tempo": 7.1,
+        "control": 3.5,
+        "mobility": 3.2,
+        "map_control": 1.5,
+        "saving": 4.3,
+        "initiating": 4.4,
+        "skirmish_rate": 3.5,
+        "camp_stacking": 6.1,
+        "resource_efficiency": 6.4
+      },
+      "Offlane": {
+        "teamfight": 8.4,
+        "burst": 8.7,
+        "scaling": 4.4,
+        "objectives": 6.8,
+        "durability": 4.8,
+        "tempo": 7.4,
+        "control": 3.1,
+        "mobility": 3.2,
+        "map_control": 1.7,
+        "saving": 5.2,
+        "initiating": 4.4,
+        "skirmish_rate": 6,
+        "camp_stacking": 7,
+        "resource_efficiency": 8.8
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 48,
@@ -1952,7 +3571,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.4
+    "mobility_items_tier": 1.4,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 8.1,
+        "burst": 7.1,
+        "scaling": 7.8,
+        "objectives": 10,
+        "durability": 5.5,
+        "tempo": 5.1,
+        "control": 4.1,
+        "mobility": 4.8,
+        "map_control": 3.6,
+        "saving": 4.2,
+        "initiating": 3.7,
+        "skirmish_rate": 3.2,
+        "camp_stacking": 7.3,
+        "resource_efficiency": 3.3
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 49,
@@ -1995,7 +3641,60 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.2
+    "mobility_items_tier": 3.2,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 5.2,
+        "burst": 4.1,
+        "scaling": 5.1,
+        "objectives": 7.7,
+        "durability": 8.2,
+        "tempo": 6.4,
+        "control": 6.3,
+        "mobility": 4.4,
+        "map_control": 1.5,
+        "saving": 4.2,
+        "initiating": 5.5,
+        "skirmish_rate": 5.1,
+        "camp_stacking": 4.3,
+        "resource_efficiency": 2.2
+      },
+      "Mid": {
+        "teamfight": 5.2,
+        "burst": 4.1,
+        "scaling": 5.1,
+        "objectives": 7.7,
+        "durability": 8.2,
+        "tempo": 4.8,
+        "control": 6.1,
+        "mobility": 4.4,
+        "map_control": 1.6,
+        "saving": 3.5,
+        "initiating": 5.5,
+        "skirmish_rate": 3.7,
+        "camp_stacking": 6.4,
+        "resource_efficiency": 1.7
+      },
+      "Offlane": {
+        "teamfight": 5.2,
+        "burst": 4.1,
+        "scaling": 5.1,
+        "objectives": 7.7,
+        "durability": 8.2,
+        "tempo": 4.5,
+        "control": 5.9,
+        "mobility": 4.4,
+        "map_control": 0.7,
+        "saving": 3.9,
+        "initiating": 5.5,
+        "skirmish_rate": 5.2,
+        "camp_stacking": 0.8,
+        "resource_efficiency": 1
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 50,
@@ -2036,7 +3735,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2
+    "mobility_items_tier": 2,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 0.2,
+        "burst": 0.2,
+        "scaling": 1.5,
+        "objectives": 1.6,
+        "durability": 3.6,
+        "tempo": 5.4,
+        "control": 3.8,
+        "mobility": 3.9,
+        "map_control": 4.9,
+        "saving": 7.7,
+        "initiating": 4.6,
+        "skirmish_rate": 6.7,
+        "camp_stacking": 5.7,
+        "resource_efficiency": 0.4
+      }
+    }
   },
   {
     "id": 51,
@@ -2078,7 +3804,34 @@
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.2
+    "mobility_items_tier": 2.2,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 3.8,
+        "burst": 0.9,
+        "scaling": 1.2,
+        "objectives": 0.2,
+        "durability": 3.4,
+        "tempo": 6.1,
+        "control": 7.1,
+        "mobility": 6,
+        "map_control": 9.7,
+        "saving": 5,
+        "initiating": 8.1,
+        "skirmish_rate": 6.8,
+        "camp_stacking": 4.1,
+        "resource_efficiency": 9.5
+      }
+    }
   },
   {
     "id": 52,
@@ -2121,7 +3874,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.1
+    "mobility_items_tier": 3.1,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 9.1,
+        "burst": 6.6,
+        "scaling": 8,
+        "objectives": 8.5,
+        "durability": 4.5,
+        "tempo": 3.4,
+        "control": 5.6,
+        "mobility": 5,
+        "map_control": 3.7,
+        "saving": 5.6,
+        "initiating": 5.3,
+        "skirmish_rate": 4.5,
+        "camp_stacking": 6.7,
+        "resource_efficiency": 8.6
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 53,
@@ -2162,7 +3942,73 @@
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 10,
-    "mobility_items_tier": 0.6
+    "mobility_items_tier": 0.6,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 7.5,
+        "burst": 5.8,
+        "scaling": 4,
+        "objectives": 8.3,
+        "durability": 3.4,
+        "tempo": 8.8,
+        "control": 3.8,
+        "mobility": 10,
+        "map_control": 9.8,
+        "saving": 5.7,
+        "initiating": 5.5,
+        "skirmish_rate": 2.2,
+        "camp_stacking": 6.6,
+        "resource_efficiency": 8.2
+      },
+      "Mid": {
+        "teamfight": 7.5,
+        "burst": 5.8,
+        "scaling": 4,
+        "objectives": 8.3,
+        "durability": 3.4,
+        "tempo": 6.1,
+        "control": 3.6,
+        "mobility": 10,
+        "map_control": 9.8,
+        "saving": 5.6,
+        "initiating": 5.5,
+        "skirmish_rate": 3.4,
+        "camp_stacking": 4.8,
+        "resource_efficiency": 5.2
+      },
+      "Offlane": {
+        "teamfight": 7.5,
+        "burst": 5.8,
+        "scaling": 4,
+        "objectives": 8.3,
+        "durability": 3.4,
+        "tempo": 4,
+        "control": 3.6,
+        "mobility": 10,
+        "map_control": 9.9,
+        "saving": 5.3,
+        "initiating": 5.5,
+        "skirmish_rate": 5,
+        "camp_stacking": 5.6,
+        "resource_efficiency": 5.1
+      },
+      "Support": {
+        "teamfight": 7.5,
+        "burst": 5.8,
+        "scaling": 4,
+        "objectives": 8.3,
+        "durability": 3.4,
+        "tempo": 8.1,
+        "control": 3.6,
+        "mobility": 10,
+        "map_control": 9.5,
+        "saving": 5.1,
+        "initiating": 5.5,
+        "skirmish_rate": 7.1,
+        "camp_stacking": 6.4,
+        "resource_efficiency": 5.2
+      }
+    }
   },
   {
     "id": 54,
@@ -2204,7 +4050,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 0.5
+    "mobility_items_tier": 0.5,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 7.3,
+        "burst": 6.5,
+        "scaling": 8,
+        "objectives": 9,
+        "durability": 8.9,
+        "tempo": 2.8,
+        "control": 3.4,
+        "mobility": 5,
+        "map_control": 2.1,
+        "saving": 6.2,
+        "initiating": 5.2,
+        "skirmish_rate": 3,
+        "camp_stacking": 4.5,
+        "resource_efficiency": 4.3
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 55,
@@ -2245,7 +4118,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3
+    "mobility_items_tier": 3,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 5.2,
+        "burst": 2.6,
+        "scaling": 5.1,
+        "objectives": 3.1,
+        "durability": 6.3,
+        "tempo": 1.7,
+        "control": 4.7,
+        "mobility": 5.3,
+        "map_control": 6.6,
+        "saving": 6.2,
+        "initiating": 6.9,
+        "skirmish_rate": 1.7,
+        "camp_stacking": 8.5,
+        "resource_efficiency": 8.2
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 56,
@@ -2286,7 +4186,47 @@
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.4
+    "mobility_items_tier": 1.4,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 9.4,
+        "burst": 9.7,
+        "scaling": 7.9,
+        "objectives": 9.4,
+        "durability": 4.6,
+        "tempo": 3.9,
+        "control": 1.3,
+        "mobility": 5.1,
+        "map_control": 6.6,
+        "saving": 3.8,
+        "initiating": 3.6,
+        "skirmish_rate": 6,
+        "camp_stacking": 3.8,
+        "resource_efficiency": 8.4
+      },
+      "Mid": {
+        "teamfight": 9.4,
+        "burst": 9.7,
+        "scaling": 7.9,
+        "objectives": 9.4,
+        "durability": 4.6,
+        "tempo": 5,
+        "control": 1.2,
+        "mobility": 5.1,
+        "map_control": 6.9,
+        "saving": 3.4,
+        "initiating": 3.6,
+        "skirmish_rate": 6,
+        "camp_stacking": 3,
+        "resource_efficiency": 5
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 57,
@@ -2326,7 +4266,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.4
+    "mobility_items_tier": 2.4,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 0.4,
+        "burst": 0.7,
+        "scaling": 4.9,
+        "objectives": 2.5,
+        "durability": 5.9,
+        "tempo": 1.6,
+        "control": 1.4,
+        "mobility": 4.5,
+        "map_control": 3.3,
+        "saving": 8.5,
+        "initiating": 2.3,
+        "skirmish_rate": 6,
+        "camp_stacking": 0.9,
+        "resource_efficiency": 3.8
+      },
+      "Support": {
+        "teamfight": 0.4,
+        "burst": 0.7,
+        "scaling": 4.9,
+        "objectives": 2.5,
+        "durability": 5.9,
+        "tempo": 5.6,
+        "control": 1.3,
+        "mobility": 4.5,
+        "map_control": 6.5,
+        "saving": 8.5,
+        "initiating": 2.3,
+        "skirmish_rate": 5.9,
+        "camp_stacking": 1.6,
+        "resource_efficiency": 0.3
+      }
+    }
   },
   {
     "id": 58,
@@ -2367,7 +4347,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 0.8
+    "mobility_items_tier": 0.8,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 1.3,
+        "burst": 3.5,
+        "scaling": 1.6,
+        "objectives": 5.2,
+        "durability": 3.9,
+        "tempo": 5.8,
+        "control": 3.8,
+        "mobility": 6,
+        "map_control": 8.1,
+        "saving": 6.1,
+        "initiating": 4.9,
+        "skirmish_rate": 5,
+        "camp_stacking": 6.1,
+        "resource_efficiency": 3
+      }
+    }
   },
   {
     "id": 59,
@@ -2407,7 +4414,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.7
+    "mobility_items_tier": 2.7,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 7.7,
+        "burst": 9.1,
+        "scaling": 2.8,
+        "objectives": 6.1,
+        "durability": 8.6,
+        "tempo": 7.7,
+        "control": 4.2,
+        "mobility": 3.5,
+        "map_control": 5.9,
+        "saving": 3.5,
+        "initiating": 5.6,
+        "skirmish_rate": 7.7,
+        "camp_stacking": 4.7,
+        "resource_efficiency": 8
+      },
+      "Mid": {
+        "teamfight": 7.7,
+        "burst": 9.1,
+        "scaling": 2.8,
+        "objectives": 6.1,
+        "durability": 8.6,
+        "tempo": 8.8,
+        "control": 3.6,
+        "mobility": 3.5,
+        "map_control": 2.2,
+        "saving": 3.6,
+        "initiating": 5.6,
+        "skirmish_rate": 5.8,
+        "camp_stacking": 4.3,
+        "resource_efficiency": 3.5
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 60,
@@ -2450,7 +4497,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.3
+    "mobility_items_tier": 3.3,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 4.1,
+        "burst": 8.1,
+        "scaling": 5.3,
+        "objectives": 6.6,
+        "durability": 6.8,
+        "tempo": 6.9,
+        "control": 3.5,
+        "mobility": 6.6,
+        "map_control": 3.3,
+        "saving": 4.2,
+        "initiating": 6,
+        "skirmish_rate": 5.1,
+        "camp_stacking": 2.7,
+        "resource_efficiency": 3.2
+      },
+      "Offlane": {
+        "teamfight": 4.1,
+        "burst": 8.1,
+        "scaling": 5.3,
+        "objectives": 6.6,
+        "durability": 6.8,
+        "tempo": 4.8,
+        "control": 3.3,
+        "mobility": 6.6,
+        "map_control": 3.5,
+        "saving": 4.3,
+        "initiating": 6,
+        "skirmish_rate": 4.7,
+        "camp_stacking": 2,
+        "resource_efficiency": 3.4
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 61,
@@ -2491,7 +4578,60 @@
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1
+    "mobility_items_tier": 1,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 4.4,
+        "burst": 8,
+        "scaling": 6,
+        "objectives": 9.8,
+        "durability": 7.4,
+        "tempo": 8.6,
+        "control": 1.6,
+        "mobility": 6.2,
+        "map_control": 9.5,
+        "saving": 3.4,
+        "initiating": 4,
+        "skirmish_rate": 1.1,
+        "camp_stacking": 2,
+        "resource_efficiency": 0.5
+      },
+      "Mid": {
+        "teamfight": 4.4,
+        "burst": 8,
+        "scaling": 6,
+        "objectives": 9.8,
+        "durability": 7.4,
+        "tempo": 2.1,
+        "control": 1.3,
+        "mobility": 6.2,
+        "map_control": 9.5,
+        "saving": 3.4,
+        "initiating": 4,
+        "skirmish_rate": 4.9,
+        "camp_stacking": 0.4,
+        "resource_efficiency": 0.5
+      },
+      "Offlane": {
+        "teamfight": 4.4,
+        "burst": 8,
+        "scaling": 6,
+        "objectives": 9.8,
+        "durability": 7.4,
+        "tempo": 2.3,
+        "control": 1.3,
+        "mobility": 6.2,
+        "map_control": 9.4,
+        "saving": 3.4,
+        "initiating": 4,
+        "skirmish_rate": 4,
+        "camp_stacking": 0.1,
+        "resource_efficiency": 1.7
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 62,
@@ -2531,7 +4671,34 @@
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1
+    "mobility_items_tier": 1,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 0.6,
+        "burst": 1.8,
+        "scaling": 2.3,
+        "objectives": 1.7,
+        "durability": 2.6,
+        "tempo": 6.1,
+        "control": 4.5,
+        "mobility": 6.3,
+        "map_control": 9.8,
+        "saving": 5.4,
+        "initiating": 5.8,
+        "skirmish_rate": 8.9,
+        "camp_stacking": 0.2,
+        "resource_efficiency": 0.7
+      }
+    }
   },
   {
     "id": 63,
@@ -2570,7 +4737,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10,
-    "mobility_items_tier": 0.4
+    "mobility_items_tier": 0.4,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 5.4,
+        "burst": 6.7,
+        "scaling": 6.1,
+        "objectives": 7.1,
+        "durability": 6.1,
+        "tempo": 6.2,
+        "control": 1.4,
+        "mobility": 4.9,
+        "map_control": 4.4,
+        "saving": 5.1,
+        "initiating": 4.4,
+        "skirmish_rate": 3.5,
+        "camp_stacking": 0.8,
+        "resource_efficiency": 4.9
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 5.4,
+        "burst": 6.7,
+        "scaling": 6.1,
+        "objectives": 7.1,
+        "durability": 6.1,
+        "tempo": 4.2,
+        "control": 2.2,
+        "mobility": 4.9,
+        "map_control": 2.7,
+        "saving": 5.1,
+        "initiating": 4.4,
+        "skirmish_rate": 6.3,
+        "camp_stacking": 1.2,
+        "resource_efficiency": 5.4
+      }
+    }
   },
   {
     "id": 64,
@@ -2613,7 +4820,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.3
+    "mobility_items_tier": 1.3,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 1.7,
+        "burst": 0.8,
+        "scaling": 3.7,
+        "objectives": 5.5,
+        "durability": 2,
+        "tempo": 2,
+        "control": 6.4,
+        "mobility": 3.3,
+        "map_control": 5.8,
+        "saving": 5.2,
+        "initiating": 5.3,
+        "skirmish_rate": 8.6,
+        "camp_stacking": 4.9,
+        "resource_efficiency": 5.5
+      }
+    }
   },
   {
     "id": 65,
@@ -2654,7 +4888,60 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.6
+    "mobility_items_tier": 3.6,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 2.1,
+        "burst": 2.5,
+        "scaling": 2.7,
+        "objectives": 1.8,
+        "durability": 5.3,
+        "tempo": 7.1,
+        "control": 7.3,
+        "mobility": 5.9,
+        "map_control": 5.7,
+        "saving": 4.6,
+        "initiating": 7.7,
+        "skirmish_rate": 5.6,
+        "camp_stacking": 9.3,
+        "resource_efficiency": 8.1
+      },
+      "Offlane": {
+        "teamfight": 2.1,
+        "burst": 2.5,
+        "scaling": 2.7,
+        "objectives": 1.8,
+        "durability": 5.3,
+        "tempo": 6.1,
+        "control": 7.1,
+        "mobility": 5.9,
+        "map_control": 6.9,
+        "saving": 4.6,
+        "initiating": 7.7,
+        "skirmish_rate": 3.3,
+        "camp_stacking": 9.7,
+        "resource_efficiency": 7.8
+      },
+      "Support": {
+        "teamfight": 2.1,
+        "burst": 2.5,
+        "scaling": 2.7,
+        "objectives": 1.8,
+        "durability": 5.3,
+        "tempo": 5.4,
+        "control": 6.6,
+        "mobility": 5.9,
+        "map_control": 5.1,
+        "saving": 4.1,
+        "initiating": 7.7,
+        "skirmish_rate": 6.4,
+        "camp_stacking": 9.7,
+        "resource_efficiency": 6.7
+      }
+    }
   },
   {
     "id": 66,
@@ -2694,7 +4981,34 @@
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1
+    "mobility_items_tier": 1,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 0.1,
+        "burst": 0,
+        "scaling": 0.4,
+        "objectives": 4.9,
+        "durability": 2.9,
+        "tempo": 6.1,
+        "control": 2.8,
+        "mobility": 5,
+        "map_control": 9.1,
+        "saving": 6.9,
+        "initiating": 2.9,
+        "skirmish_rate": 4.8,
+        "camp_stacking": 9.2,
+        "resource_efficiency": 0
+      }
+    }
   },
   {
     "id": 67,
@@ -2735,7 +5049,34 @@
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 0.6
+    "mobility_items_tier": 0.6,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 10,
+        "burst": 9.4,
+        "scaling": 9.6,
+        "objectives": 7.5,
+        "durability": 4.6,
+        "tempo": 1.5,
+        "control": 2.5,
+        "mobility": 5.9,
+        "map_control": 9.7,
+        "saving": 5.3,
+        "initiating": 5,
+        "skirmish_rate": 5.8,
+        "camp_stacking": 6.5,
+        "resource_efficiency": 9.1
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 68,
@@ -2776,7 +5117,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.8
+    "mobility_items_tier": 1.8,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 1.5,
+        "burst": 2.1,
+        "scaling": 4.6,
+        "objectives": 0.7,
+        "durability": 1.4,
+        "tempo": 1.6,
+        "control": 4.9,
+        "mobility": 3.2,
+        "map_control": 5.9,
+        "saving": 4.4,
+        "initiating": 4.3,
+        "skirmish_rate": 7.9,
+        "camp_stacking": 8.2,
+        "resource_efficiency": 4.4
+      }
+    }
   },
   {
     "id": 69,
@@ -2819,7 +5187,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.3
+    "mobility_items_tier": 3.3,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 3.1,
+        "burst": 3.8,
+        "scaling": 6,
+        "objectives": 2.8,
+        "durability": 6.2,
+        "tempo": 4.3,
+        "control": 5.6,
+        "mobility": 4.5,
+        "map_control": 6.1,
+        "saving": 4.4,
+        "initiating": 6,
+        "skirmish_rate": 4,
+        "camp_stacking": 8.3,
+        "resource_efficiency": 3.8
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 3.1,
+        "burst": 3.8,
+        "scaling": 6,
+        "objectives": 2.8,
+        "durability": 6.2,
+        "tempo": 3.7,
+        "control": 4.9,
+        "mobility": 4.5,
+        "map_control": 1.8,
+        "saving": 4.4,
+        "initiating": 6,
+        "skirmish_rate": 4.9,
+        "camp_stacking": 8,
+        "resource_efficiency": 2.8
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 70,
@@ -2860,7 +5268,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.8
+    "mobility_items_tier": 3.8,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 7.8,
+        "burst": 10,
+        "scaling": 8.7,
+        "objectives": 6.7,
+        "durability": 6.3,
+        "tempo": 3.3,
+        "control": 3.4,
+        "mobility": 5,
+        "map_control": 2.3,
+        "saving": 5.1,
+        "initiating": 5.3,
+        "skirmish_rate": 5,
+        "camp_stacking": 1.5,
+        "resource_efficiency": 2.6
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 71,
@@ -2903,7 +5338,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10,
-    "mobility_items_tier": 0.2
+    "mobility_items_tier": 0.2,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 2.9,
+        "burst": 4.6,
+        "scaling": 3.4,
+        "objectives": 2.1,
+        "durability": 3.1,
+        "tempo": 4.8,
+        "control": 7.7,
+        "mobility": 8.5,
+        "map_control": 7.7,
+        "saving": 4,
+        "initiating": 7.3,
+        "skirmish_rate": 7.4,
+        "camp_stacking": 1.8,
+        "resource_efficiency": 1.2
+      },
+      "Support": {
+        "teamfight": 2.9,
+        "burst": 4.6,
+        "scaling": 3.4,
+        "objectives": 2.1,
+        "durability": 3.1,
+        "tempo": 5.9,
+        "control": 7.3,
+        "mobility": 8.5,
+        "map_control": 4.1,
+        "saving": 4.3,
+        "initiating": 7.3,
+        "skirmish_rate": 9.1,
+        "camp_stacking": 2.4,
+        "resource_efficiency": 4.1
+      }
+    }
   },
   {
     "id": 72,
@@ -2944,7 +5419,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.3
+    "mobility_items_tier": 1.3,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 7.1,
+        "burst": 5.1,
+        "scaling": 5.3,
+        "objectives": 4,
+        "durability": 5.9,
+        "tempo": 2.5,
+        "control": 4.9,
+        "mobility": 4.9,
+        "map_control": 4.9,
+        "saving": 4.4,
+        "initiating": 4.3,
+        "skirmish_rate": 3.7,
+        "camp_stacking": 8.8,
+        "resource_efficiency": 6.1
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 73,
@@ -2988,7 +5490,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.2
+    "mobility_items_tier": 3.2,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 1.1,
+        "burst": 0.6,
+        "scaling": 7.9,
+        "objectives": 4,
+        "durability": 8.3,
+        "tempo": 2.3,
+        "control": 6.3,
+        "mobility": 3.8,
+        "map_control": 5.6,
+        "saving": 4.4,
+        "initiating": 4.4,
+        "skirmish_rate": 2.3,
+        "camp_stacking": 9.8,
+        "resource_efficiency": 1.9
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 1.1,
+        "burst": 0.6,
+        "scaling": 7.9,
+        "objectives": 4,
+        "durability": 8.3,
+        "tempo": 3.4,
+        "control": 5.8,
+        "mobility": 3.8,
+        "map_control": 5,
+        "saving": 4.2,
+        "initiating": 4.4,
+        "skirmish_rate": 3.8,
+        "camp_stacking": 9.5,
+        "resource_efficiency": 2.9
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 74,
@@ -3032,7 +5574,34 @@
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2
+    "mobility_items_tier": 2,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 8,
+        "burst": 7,
+        "scaling": 7.3,
+        "objectives": 7.4,
+        "durability": 4.1,
+        "tempo": 3.3,
+        "control": 8.5,
+        "mobility": 6.3,
+        "map_control": 9.3,
+        "saving": 4.1,
+        "initiating": 8.3,
+        "skirmish_rate": 4.3,
+        "camp_stacking": 4.9,
+        "resource_efficiency": 6.9
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 75,
@@ -3075,7 +5644,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 0.6
+    "mobility_items_tier": 0.6,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 2,
+        "burst": 3.2,
+        "scaling": 3.4,
+        "objectives": 3.5,
+        "durability": 1.9,
+        "tempo": 4.2,
+        "control": 3.3,
+        "mobility": 3.6,
+        "map_control": 6.7,
+        "saving": 4.8,
+        "initiating": 4.1,
+        "skirmish_rate": 7.7,
+        "camp_stacking": 7.1,
+        "resource_efficiency": 3.3
+      }
+    }
   },
   {
     "id": 76,
@@ -3116,7 +5712,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.7
+    "mobility_items_tier": 2.7,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 8.9,
+        "burst": 9.9,
+        "scaling": 7.5,
+        "objectives": 5.9,
+        "durability": 4,
+        "tempo": 5.2,
+        "control": 6.8,
+        "mobility": 4.5,
+        "map_control": 4.3,
+        "saving": 3.9,
+        "initiating": 4.4,
+        "skirmish_rate": 5.8,
+        "camp_stacking": 1.8,
+        "resource_efficiency": 3.7
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 77,
@@ -3157,7 +5780,34 @@
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.8
+    "mobility_items_tier": 1.8,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 2.9,
+        "burst": 5.2,
+        "scaling": 3.7,
+        "objectives": 9.6,
+        "durability": 8.3,
+        "tempo": 7.6,
+        "control": 2.9,
+        "mobility": 7.6,
+        "map_control": 8.9,
+        "saving": 5.8,
+        "initiating": 5,
+        "skirmish_rate": 1.4,
+        "camp_stacking": 3.3,
+        "resource_efficiency": 0.4
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 78,
@@ -3200,7 +5850,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3
+    "mobility_items_tier": 3,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 4.5,
+        "burst": 4.2,
+        "scaling": 5.2,
+        "objectives": 6.4,
+        "durability": 6.2,
+        "tempo": 3.2,
+        "control": 6.5,
+        "mobility": 6.2,
+        "map_control": 5.1,
+        "saving": 5.2,
+        "initiating": 5.9,
+        "skirmish_rate": 3,
+        "camp_stacking": 3.5,
+        "resource_efficiency": 1.9
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 79,
@@ -3242,7 +5919,34 @@
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.9
+    "mobility_items_tier": 2.9,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 1.7,
+        "burst": 2.3,
+        "scaling": 3.4,
+        "objectives": 1,
+        "durability": 2.2,
+        "tempo": 3.5,
+        "control": 5.4,
+        "mobility": 3.5,
+        "map_control": 7.7,
+        "saving": 6.4,
+        "initiating": 5.9,
+        "skirmish_rate": 6.8,
+        "camp_stacking": 9.5,
+        "resource_efficiency": 5.8
+      }
+    }
   },
   {
     "id": 80,
@@ -3282,7 +5986,47 @@
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.4
+    "mobility_items_tier": 1.4,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 4.2,
+        "burst": 4,
+        "scaling": 5.9,
+        "objectives": 9.5,
+        "durability": 8,
+        "tempo": 2.1,
+        "control": 7.6,
+        "mobility": 5.9,
+        "map_control": 9.3,
+        "saving": 5.3,
+        "initiating": 5.3,
+        "skirmish_rate": 0.3,
+        "camp_stacking": 9.1,
+        "resource_efficiency": 3
+      },
+      "Mid": {
+        "teamfight": 4.2,
+        "burst": 4,
+        "scaling": 5.9,
+        "objectives": 9.5,
+        "durability": 8,
+        "tempo": 1.7,
+        "control": 7.2,
+        "mobility": 5.9,
+        "map_control": 9.1,
+        "saving": 5.1,
+        "initiating": 5.3,
+        "skirmish_rate": 1,
+        "camp_stacking": 5.1,
+        "resource_efficiency": 0.3
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 81,
@@ -3324,7 +6068,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.8
+    "mobility_items_tier": 2.8,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 5.3,
+        "burst": 8.3,
+        "scaling": 5.6,
+        "objectives": 7.5,
+        "durability": 8.4,
+        "tempo": 6.2,
+        "control": 5.5,
+        "mobility": 5.3,
+        "map_control": 4.6,
+        "saving": 3.6,
+        "initiating": 4.5,
+        "skirmish_rate": 7.3,
+        "camp_stacking": 1.1,
+        "resource_efficiency": 2.1
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 5.3,
+        "burst": 8.3,
+        "scaling": 5.6,
+        "objectives": 7.5,
+        "durability": 8.4,
+        "tempo": 4.4,
+        "control": 4.6,
+        "mobility": 5.3,
+        "map_control": 1,
+        "saving": 3.5,
+        "initiating": 4.5,
+        "skirmish_rate": 5.8,
+        "camp_stacking": 0.3,
+        "resource_efficiency": 1.5
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 82,
@@ -3368,7 +6152,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.5
+    "mobility_items_tier": 2.5,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 3.3,
+        "burst": 7.5,
+        "scaling": 4.7,
+        "objectives": 8.7,
+        "durability": 8.7,
+        "tempo": 8.1,
+        "control": 6.7,
+        "mobility": 6.6,
+        "map_control": 7.5,
+        "saving": 5.7,
+        "initiating": 6.5,
+        "skirmish_rate": 0.9,
+        "camp_stacking": 9.6,
+        "resource_efficiency": 0.6
+      },
+      "Mid": {
+        "teamfight": 3.3,
+        "burst": 7.5,
+        "scaling": 4.7,
+        "objectives": 8.7,
+        "durability": 8.7,
+        "tempo": 7.6,
+        "control": 6.4,
+        "mobility": 6.6,
+        "map_control": 3.8,
+        "saving": 3.6,
+        "initiating": 6.5,
+        "skirmish_rate": 4.2,
+        "camp_stacking": 7.6,
+        "resource_efficiency": 0.2
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 83,
@@ -3411,7 +6235,34 @@
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.2
+    "mobility_items_tier": 3.2,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 0.3,
+        "burst": 0.2,
+        "scaling": 0.7,
+        "objectives": 0.9,
+        "durability": 3.4,
+        "tempo": 6,
+        "control": 7.1,
+        "mobility": 6.3,
+        "map_control": 9.3,
+        "saving": 6.2,
+        "initiating": 7.2,
+        "skirmish_rate": 6,
+        "camp_stacking": 1.8,
+        "resource_efficiency": 1
+      }
+    }
   },
   {
     "id": 84,
@@ -3453,7 +6304,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.5
+    "mobility_items_tier": 1.5,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 3.5,
+        "burst": 1.5,
+        "scaling": 5.5,
+        "objectives": 3.2,
+        "durability": 2.8,
+        "tempo": 3.7,
+        "control": 7.4,
+        "mobility": 3.3,
+        "map_control": 5.7,
+        "saving": 5,
+        "initiating": 4.4,
+        "skirmish_rate": 7.5,
+        "camp_stacking": 1.3,
+        "resource_efficiency": 0.7
+      },
+      "Support": {
+        "teamfight": 3.5,
+        "burst": 1.5,
+        "scaling": 5.5,
+        "objectives": 3.2,
+        "durability": 2.8,
+        "tempo": 2.4,
+        "control": 5.6,
+        "mobility": 3.3,
+        "map_control": 2.8,
+        "saving": 5,
+        "initiating": 4.4,
+        "skirmish_rate": 9.1,
+        "camp_stacking": 2,
+        "resource_efficiency": 1.6
+      }
+    }
   },
   {
     "id": 85,
@@ -3494,7 +6385,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.1
+    "mobility_items_tier": 2.1,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 1.3,
+        "burst": 4.8,
+        "scaling": 4.3,
+        "objectives": 3.4,
+        "durability": 4.2,
+        "tempo": 4.9,
+        "control": 3,
+        "mobility": 3.8,
+        "map_control": 4.2,
+        "saving": 6.6,
+        "initiating": 4.4,
+        "skirmish_rate": 5.8,
+        "camp_stacking": 4.7,
+        "resource_efficiency": 2
+      },
+      "Support": {
+        "teamfight": 1.3,
+        "burst": 4.8,
+        "scaling": 4.3,
+        "objectives": 3.4,
+        "durability": 4.2,
+        "tempo": 2.6,
+        "control": 2.9,
+        "mobility": 3.8,
+        "map_control": 7,
+        "saving": 6.3,
+        "initiating": 4.4,
+        "skirmish_rate": 8.3,
+        "camp_stacking": 3.4,
+        "resource_efficiency": 1.8
+      }
+    }
   },
   {
     "id": 86,
@@ -3535,7 +6466,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.1
+    "mobility_items_tier": 3.1,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 3.3,
+        "burst": 2.4,
+        "scaling": 3,
+        "objectives": 1.9,
+        "durability": 2.5,
+        "tempo": 7.5,
+        "control": 8.1,
+        "mobility": 3.5,
+        "map_control": 4.6,
+        "saving": 6.4,
+        "initiating": 6.4,
+        "skirmish_rate": 6.3,
+        "camp_stacking": 9.4,
+        "resource_efficiency": 4.7
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 3.3,
+        "burst": 2.4,
+        "scaling": 3,
+        "objectives": 1.9,
+        "durability": 2.5,
+        "tempo": 5.2,
+        "control": 7.9,
+        "mobility": 3.5,
+        "map_control": 3.3,
+        "saving": 5.7,
+        "initiating": 6.4,
+        "skirmish_rate": 5.8,
+        "camp_stacking": 7.6,
+        "resource_efficiency": 8.4
+      }
+    }
   },
   {
     "id": 87,
@@ -3577,7 +6548,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.6
+    "mobility_items_tier": 2.6,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 0.9,
+        "burst": 0.4,
+        "scaling": 2.5,
+        "objectives": 0.1,
+        "durability": 1.4,
+        "tempo": 3.8,
+        "control": 4.5,
+        "mobility": 3.6,
+        "map_control": 6,
+        "saving": 4.5,
+        "initiating": 6.2,
+        "skirmish_rate": 9,
+        "camp_stacking": 6.9,
+        "resource_efficiency": 4.2
+      }
+    }
   },
   {
     "id": 88,
@@ -3619,7 +6617,47 @@
     },
     "vision_ability_tier": 3,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.4
+    "mobility_items_tier": 2.4,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 4.7,
+        "burst": 5.6,
+        "scaling": 4,
+        "objectives": 0.6,
+        "durability": 2.7,
+        "tempo": 2.9,
+        "control": 8.1,
+        "mobility": 6.2,
+        "map_control": 9.3,
+        "saving": 5,
+        "initiating": 6.4,
+        "skirmish_rate": 8.1,
+        "camp_stacking": 3.1,
+        "resource_efficiency": 9.3
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 4.7,
+        "burst": 5.6,
+        "scaling": 4,
+        "objectives": 0.6,
+        "durability": 2.7,
+        "tempo": 3.7,
+        "control": 8,
+        "mobility": 6.2,
+        "map_control": 7.8,
+        "saving": 4.4,
+        "initiating": 6.4,
+        "skirmish_rate": 8.9,
+        "camp_stacking": 2.7,
+        "resource_efficiency": 8.9
+      }
+    }
   },
   {
     "id": 89,
@@ -3663,7 +6701,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.8
+    "mobility_items_tier": 1.8,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 2.5,
+        "burst": 2.5,
+        "scaling": 6.5,
+        "objectives": 7.1,
+        "durability": 7.4,
+        "tempo": 4,
+        "control": 6.8,
+        "mobility": 6.2,
+        "map_control": 5.1,
+        "saving": 4.5,
+        "initiating": 5.1,
+        "skirmish_rate": 0.1,
+        "camp_stacking": 5.8,
+        "resource_efficiency": 0.9
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 90,
@@ -3704,7 +6769,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.9
+    "mobility_items_tier": 1.9,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 6.1,
+        "burst": 3.9,
+        "scaling": 3,
+        "objectives": 2.3,
+        "durability": 4,
+        "tempo": 8.4,
+        "control": 3.9,
+        "mobility": 6.6,
+        "map_control": 7.4,
+        "saving": 7,
+        "initiating": 4.5,
+        "skirmish_rate": 1.7,
+        "camp_stacking": 8.5,
+        "resource_efficiency": 2.6
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 6.1,
+        "burst": 3.9,
+        "scaling": 3,
+        "objectives": 2.3,
+        "durability": 4,
+        "tempo": 6.9,
+        "control": 3.3,
+        "mobility": 6.6,
+        "map_control": 6.2,
+        "saving": 6.9,
+        "initiating": 4.5,
+        "skirmish_rate": 4.6,
+        "camp_stacking": 9.9,
+        "resource_efficiency": 2.6
+      }
+    }
   },
   {
     "id": 91,
@@ -3743,7 +6848,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 0.3
+    "mobility_items_tier": 0.3,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 0,
+        "burst": 0.1,
+        "scaling": 0.7,
+        "objectives": 3.3,
+        "durability": 4.3,
+        "tempo": 6,
+        "control": 1.1,
+        "mobility": 8.3,
+        "map_control": 7.2,
+        "saving": 7.3,
+        "initiating": 4.2,
+        "skirmish_rate": 5.6,
+        "camp_stacking": 8.9,
+        "resource_efficiency": 0.1
+      }
+    }
   },
   {
     "id": 92,
@@ -3785,7 +6917,34 @@
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.2
+    "mobility_items_tier": 1.2,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 4.4,
+        "burst": 6.8,
+        "scaling": 2.9,
+        "objectives": 9.4,
+        "durability": 4.2,
+        "tempo": 7.3,
+        "control": 5.2,
+        "mobility": 5.9,
+        "map_control": 8.2,
+        "saving": 5.8,
+        "initiating": 5.4,
+        "skirmish_rate": 5.4,
+        "camp_stacking": 2.7,
+        "resource_efficiency": 4.3
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 93,
@@ -3827,7 +6986,47 @@
     },
     "vision_ability_tier": 10,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 0.9
+    "mobility_items_tier": 0.9,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 4,
+        "burst": 8.4,
+        "scaling": 6.2,
+        "objectives": 7.2,
+        "durability": 7.7,
+        "tempo": 5.1,
+        "control": 3,
+        "mobility": 6.8,
+        "map_control": 10,
+        "saving": 4.6,
+        "initiating": 6.4,
+        "skirmish_rate": 6.5,
+        "camp_stacking": 1.3,
+        "resource_efficiency": 2.4
+      },
+      "Mid": {
+        "teamfight": 4,
+        "burst": 8.4,
+        "scaling": 6.2,
+        "objectives": 7.2,
+        "durability": 7.7,
+        "tempo": 2.5,
+        "control": 2.7,
+        "mobility": 6.8,
+        "map_control": 9.9,
+        "saving": 3.8,
+        "initiating": 6.4,
+        "skirmish_rate": 5.2,
+        "camp_stacking": 0.1,
+        "resource_efficiency": 2
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 94,
@@ -3867,7 +7066,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.5
+    "mobility_items_tier": 1.5,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 6.3,
+        "burst": 3.3,
+        "scaling": 9.7,
+        "objectives": 9.3,
+        "durability": 2.5,
+        "tempo": 0.8,
+        "control": 6.5,
+        "mobility": 2.8,
+        "map_control": 5.2,
+        "saving": 4.5,
+        "initiating": 4.6,
+        "skirmish_rate": 1.3,
+        "camp_stacking": 9,
+        "resource_efficiency": 3.6
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 95,
@@ -3908,7 +7134,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.5
+    "mobility_items_tier": 1.5,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 5.9,
+        "burst": 6.9,
+        "scaling": 5.8,
+        "objectives": 9.2,
+        "durability": 5.6,
+        "tempo": 6,
+        "control": 6.5,
+        "mobility": 4.2,
+        "map_control": 1.8,
+        "saving": 4.9,
+        "initiating": 2.3,
+        "skirmish_rate": 5.2,
+        "camp_stacking": 3,
+        "resource_efficiency": 1.5
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 96,
@@ -3951,7 +7204,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.7
+    "mobility_items_tier": 3.7,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 4.3,
+        "burst": 2.2,
+        "scaling": 6,
+        "objectives": 5.6,
+        "durability": 8.6,
+        "tempo": 2.5,
+        "control": 6.1,
+        "mobility": 4.6,
+        "map_control": 3.8,
+        "saving": 4.8,
+        "initiating": 7.2,
+        "skirmish_rate": 2.8,
+        "camp_stacking": 4.1,
+        "resource_efficiency": 2.5
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 97,
@@ -3993,7 +7273,73 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.8
+    "mobility_items_tier": 3.8,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 1.9,
+        "burst": 2.9,
+        "scaling": 5.9,
+        "objectives": 2.4,
+        "durability": 5.3,
+        "tempo": 2.5,
+        "control": 8.9,
+        "mobility": 4.2,
+        "map_control": 6.7,
+        "saving": 4.7,
+        "initiating": 9,
+        "skirmish_rate": 1.8,
+        "camp_stacking": 7.1,
+        "resource_efficiency": 3.1
+      },
+      "Mid": {
+        "teamfight": 1.9,
+        "burst": 2.9,
+        "scaling": 5.9,
+        "objectives": 2.4,
+        "durability": 5.3,
+        "tempo": 2,
+        "control": 8.8,
+        "mobility": 4.2,
+        "map_control": 4.9,
+        "saving": 5.3,
+        "initiating": 9,
+        "skirmish_rate": 6.4,
+        "camp_stacking": 5.5,
+        "resource_efficiency": 0.9
+      },
+      "Offlane": {
+        "teamfight": 1.9,
+        "burst": 2.9,
+        "scaling": 5.9,
+        "objectives": 2.4,
+        "durability": 5.3,
+        "tempo": 2.2,
+        "control": 8.9,
+        "mobility": 4.2,
+        "map_control": 3.7,
+        "saving": 4.4,
+        "initiating": 9,
+        "skirmish_rate": 4.3,
+        "camp_stacking": 5.1,
+        "resource_efficiency": 1.4
+      },
+      "Support": {
+        "teamfight": 1.9,
+        "burst": 2.9,
+        "scaling": 5.9,
+        "objectives": 2.4,
+        "durability": 5.3,
+        "tempo": 2,
+        "control": 8.8,
+        "mobility": 4.2,
+        "map_control": 2.2,
+        "saving": 4.1,
+        "initiating": 9,
+        "skirmish_rate": 7.4,
+        "camp_stacking": 4.6,
+        "resource_efficiency": 1.9
+      }
+    }
   },
   {
     "id": 98,
@@ -4034,7 +7380,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.6
+    "mobility_items_tier": 2.6,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 6.5,
+        "burst": 5.9,
+        "scaling": 7.1,
+        "objectives": 2.9,
+        "durability": 8,
+        "tempo": 5.8,
+        "control": 3.2,
+        "mobility": 4.4,
+        "map_control": 2.7,
+        "saving": 4.3,
+        "initiating": 5.3,
+        "skirmish_rate": 5.1,
+        "camp_stacking": 3.3,
+        "resource_efficiency": 3.4
+      },
+      "Offlane": {
+        "teamfight": 6.5,
+        "burst": 5.9,
+        "scaling": 7.1,
+        "objectives": 2.9,
+        "durability": 8,
+        "tempo": 1.5,
+        "control": 2.9,
+        "mobility": 4.4,
+        "map_control": 3,
+        "saving": 3.9,
+        "initiating": 5.3,
+        "skirmish_rate": 1.5,
+        "camp_stacking": 5.2,
+        "resource_efficiency": 6.4
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 99,
@@ -4075,7 +7461,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 0.9
+    "mobility_items_tier": 0.9,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 9.5,
+        "burst": 4.9,
+        "scaling": 6.2,
+        "objectives": 6.3,
+        "durability": 8.6,
+        "tempo": 1.8,
+        "control": 3.2,
+        "mobility": 5,
+        "map_control": 3.8,
+        "saving": 3.5,
+        "initiating": 5,
+        "skirmish_rate": 5,
+        "camp_stacking": 7.4,
+        "resource_efficiency": 7.8
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 9.5,
+        "burst": 4.9,
+        "scaling": 6.2,
+        "objectives": 6.3,
+        "durability": 8.6,
+        "tempo": 4,
+        "control": 2.4,
+        "mobility": 5,
+        "map_control": 2.5,
+        "saving": 4,
+        "initiating": 5,
+        "skirmish_rate": 3.4,
+        "camp_stacking": 7.1,
+        "resource_efficiency": 7.1
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 100,
@@ -4116,7 +7542,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.6
+    "mobility_items_tier": 3.6,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 1,
+        "burst": 2,
+        "scaling": 2,
+        "objectives": 0.5,
+        "durability": 3,
+        "tempo": 5.9,
+        "control": 7.2,
+        "mobility": 5.1,
+        "map_control": 6.9,
+        "saving": 5,
+        "initiating": 9.9,
+        "skirmish_rate": 8.7,
+        "camp_stacking": 2.3,
+        "resource_efficiency": 3.8
+      }
+    }
   },
   {
     "id": 101,
@@ -4157,7 +7610,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2
+    "mobility_items_tier": 2,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 5.7,
+        "burst": 5.7,
+        "scaling": 4.3,
+        "objectives": 1.4,
+        "durability": 1.6,
+        "tempo": 3.7,
+        "control": 3.6,
+        "mobility": 5.2,
+        "map_control": 3.8,
+        "saving": 4,
+        "initiating": 3.3,
+        "skirmish_rate": 8,
+        "camp_stacking": 6.5,
+        "resource_efficiency": 8.3
+      }
+    }
   },
   {
     "id": 102,
@@ -4197,7 +7677,60 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.5
+    "mobility_items_tier": 2.5,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 1,
+        "burst": 1.3,
+        "scaling": 5.5,
+        "objectives": 3.9,
+        "durability": 5.9,
+        "tempo": 1.4,
+        "control": 3.3,
+        "mobility": 4.9,
+        "map_control": 7.7,
+        "saving": 6.9,
+        "initiating": 5,
+        "skirmish_rate": 2.6,
+        "camp_stacking": 5.1,
+        "resource_efficiency": 7
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 1,
+        "burst": 1.3,
+        "scaling": 5.5,
+        "objectives": 3.9,
+        "durability": 5.9,
+        "tempo": 4,
+        "control": 1.7,
+        "mobility": 4.9,
+        "map_control": 1.2,
+        "saving": 6.8,
+        "initiating": 5,
+        "skirmish_rate": 3.7,
+        "camp_stacking": 0.6,
+        "resource_efficiency": 2.4
+      },
+      "Support": {
+        "teamfight": 1,
+        "burst": 1.3,
+        "scaling": 5.5,
+        "objectives": 3.9,
+        "durability": 5.9,
+        "tempo": 0.7,
+        "control": 1.8,
+        "mobility": 4.9,
+        "map_control": 7.3,
+        "saving": 7.2,
+        "initiating": 5,
+        "skirmish_rate": 6,
+        "camp_stacking": 2.1,
+        "resource_efficiency": 1.5
+      }
+    }
   },
   {
     "id": 103,
@@ -4239,7 +7772,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.4
+    "mobility_items_tier": 1.4,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 2.4,
+        "burst": 1.9,
+        "scaling": 1.6,
+        "objectives": 2.9,
+        "durability": 3.5,
+        "tempo": 4.9,
+        "control": 6.8,
+        "mobility": 4.8,
+        "map_control": 8.5,
+        "saving": 4.5,
+        "initiating": 5.3,
+        "skirmish_rate": 7.9,
+        "camp_stacking": 8.4,
+        "resource_efficiency": 4.8
+      }
+    }
   },
   {
     "id": 104,
@@ -4282,7 +7842,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 4
+    "mobility_items_tier": 4,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 6.9,
+        "burst": 7.1,
+        "scaling": 6.8,
+        "objectives": 6.2,
+        "durability": 5,
+        "tempo": 2.6,
+        "control": 5.2,
+        "mobility": 5.5,
+        "map_control": 3.2,
+        "saving": 6.3,
+        "initiating": 5.7,
+        "skirmish_rate": 7.2,
+        "camp_stacking": 1.5,
+        "resource_efficiency": 7.6
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 105,
@@ -4322,7 +7909,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.4
+    "mobility_items_tier": 1.4,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 9.4,
+        "burst": 4.3,
+        "scaling": 2.2,
+        "objectives": 2.7,
+        "durability": 2.8,
+        "tempo": 6.8,
+        "control": 4.4,
+        "mobility": 5.1,
+        "map_control": 6.6,
+        "saving": 5.5,
+        "initiating": 5.2,
+        "skirmish_rate": 6.8,
+        "camp_stacking": 7.7,
+        "resource_efficiency": 9.9
+      }
+    }
   },
   {
     "id": 106,
@@ -4365,7 +7979,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 10,
-    "mobility_items_tier": 1.7
+    "mobility_items_tier": 1.7,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 9.8,
+        "burst": 9,
+        "scaling": 5.2,
+        "objectives": 4.8,
+        "durability": 7.3,
+        "tempo": 8,
+        "control": 6.7,
+        "mobility": 7,
+        "map_control": 5.9,
+        "saving": 5.2,
+        "initiating": 5.7,
+        "skirmish_rate": 2.7,
+        "camp_stacking": 2.1,
+        "resource_efficiency": 9.6
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 107,
@@ -4408,7 +8049,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 6,
-    "mobility_items_tier": 2.1
+    "mobility_items_tier": 2.1,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 4.9,
+        "burst": 5,
+        "scaling": 2.2,
+        "objectives": 2.5,
+        "durability": 5.1,
+        "tempo": 7.7,
+        "control": 5.5,
+        "mobility": 6.3,
+        "map_control": 5.8,
+        "saving": 5.8,
+        "initiating": 9,
+        "skirmish_rate": 3.4,
+        "camp_stacking": 1.5,
+        "resource_efficiency": 9.5
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 4.9,
+        "burst": 5,
+        "scaling": 2.2,
+        "objectives": 2.5,
+        "durability": 5.1,
+        "tempo": 3.7,
+        "control": 5.2,
+        "mobility": 6.3,
+        "map_control": 5.2,
+        "saving": 5.3,
+        "initiating": 9,
+        "skirmish_rate": 6.3,
+        "camp_stacking": 3.5,
+        "resource_efficiency": 5.7
+      }
+    }
   },
   {
     "id": 108,
@@ -4451,7 +8132,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.2
+    "mobility_items_tier": 1.2,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 4.6,
+        "burst": 2.1,
+        "scaling": 5.9,
+        "objectives": 5,
+        "durability": 6.9,
+        "tempo": 2,
+        "control": 7.5,
+        "mobility": 5.2,
+        "map_control": 6.7,
+        "saving": 5.7,
+        "initiating": 4.6,
+        "skirmish_rate": 2.8,
+        "camp_stacking": 7.6,
+        "resource_efficiency": 6.6
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 109,
@@ -4491,7 +8199,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.2
+    "mobility_items_tier": 1.2,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 4.8,
+        "burst": 5.5,
+        "scaling": 5.9,
+        "objectives": 9.8,
+        "durability": 8,
+        "tempo": 5.7,
+        "control": 3.2,
+        "mobility": 5.2,
+        "map_control": 5.4,
+        "saving": 5.3,
+        "initiating": 4.7,
+        "skirmish_rate": 0.9,
+        "camp_stacking": 4,
+        "resource_efficiency": 1.7
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 110,
@@ -4534,7 +8269,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.8
+    "mobility_items_tier": 1.8,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 8.3,
+        "burst": 4.8,
+        "scaling": 4,
+        "objectives": 2.6,
+        "durability": 6.5,
+        "tempo": 8.5,
+        "control": 5,
+        "mobility": 4.2,
+        "map_control": 7.2,
+        "saving": 6.3,
+        "initiating": 5.1,
+        "skirmish_rate": 5.9,
+        "camp_stacking": 8.3,
+        "resource_efficiency": 9.3
+      },
+      "Support": {
+        "teamfight": 8.3,
+        "burst": 4.8,
+        "scaling": 4,
+        "objectives": 2.6,
+        "durability": 6.5,
+        "tempo": 5.3,
+        "control": 4.6,
+        "mobility": 4.2,
+        "map_control": 8,
+        "saving": 6,
+        "initiating": 5.1,
+        "skirmish_rate": 5.3,
+        "camp_stacking": 9,
+        "resource_efficiency": 9.1
+      }
+    }
   },
   {
     "id": 111,
@@ -4576,7 +8351,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.8
+    "mobility_items_tier": 2.8,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 0.2,
+        "burst": 1,
+        "scaling": 1.9,
+        "objectives": 0.3,
+        "durability": 2.1,
+        "tempo": 4.5,
+        "control": 5.8,
+        "mobility": 3.8,
+        "map_control": 8.4,
+        "saving": 10,
+        "initiating": 4,
+        "skirmish_rate": 6.7,
+        "camp_stacking": 5.4,
+        "resource_efficiency": 0.8
+      }
+    }
   },
   {
     "id": 112,
@@ -4617,7 +8419,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.2
+    "mobility_items_tier": 3.2,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 2.6,
+        "burst": 1.2,
+        "scaling": 1.5,
+        "objectives": 1.5,
+        "durability": 2.3,
+        "tempo": 6.3,
+        "control": 5.4,
+        "mobility": 4.5,
+        "map_control": 8.8,
+        "saving": 6.3,
+        "initiating": 5.9,
+        "skirmish_rate": 6.6,
+        "camp_stacking": 5,
+        "resource_efficiency": 8
+      }
+    }
   },
   {
     "id": 113,
@@ -4657,7 +8486,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2
+    "mobility_items_tier": 2,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 9.6,
+        "burst": 9.3,
+        "scaling": 9.2,
+        "objectives": 8.7,
+        "durability": 6,
+        "tempo": 2,
+        "control": 3.1,
+        "mobility": 6.3,
+        "map_control": 6.5,
+        "saving": 3.8,
+        "initiating": 4.9,
+        "skirmish_rate": 4.3,
+        "camp_stacking": 2.2,
+        "resource_efficiency": 1.1
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 114,
@@ -4698,7 +8554,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 0.5
+    "mobility_items_tier": 0.5,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 6,
+        "burst": 6.1,
+        "scaling": 4.7,
+        "objectives": 5.8,
+        "durability": 5.4,
+        "tempo": 7.4,
+        "control": 5.7,
+        "mobility": 7.8,
+        "map_control": 8.5,
+        "saving": 4.3,
+        "initiating": 6.8,
+        "skirmish_rate": 5.1,
+        "camp_stacking": 2.7,
+        "resource_efficiency": 6.3
+      },
+      "Mid": {
+        "teamfight": 6,
+        "burst": 6.1,
+        "scaling": 4.7,
+        "objectives": 5.8,
+        "durability": 5.4,
+        "tempo": 6.6,
+        "control": 5.3,
+        "mobility": 7.8,
+        "map_control": 6.6,
+        "saving": 4.1,
+        "initiating": 6.8,
+        "skirmish_rate": 5.8,
+        "camp_stacking": 0.9,
+        "resource_efficiency": 6.7
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 119,
@@ -4740,7 +8636,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.7
+    "mobility_items_tier": 2.7,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 1.6,
+        "burst": 2.9,
+        "scaling": 1,
+        "objectives": 2.2,
+        "durability": 2.4,
+        "tempo": 3.6,
+        "control": 9.6,
+        "mobility": 3.8,
+        "map_control": 5.3,
+        "saving": 4.7,
+        "initiating": 6.8,
+        "skirmish_rate": 7.1,
+        "camp_stacking": 5.3,
+        "resource_efficiency": 7.6
+      }
+    }
   },
   {
     "id": 120,
@@ -4784,7 +8707,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.4
+    "mobility_items_tier": 3.4,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 5.8,
+        "burst": 5.4,
+        "scaling": 5.2,
+        "objectives": 4.2,
+        "durability": 5.6,
+        "tempo": 6.3,
+        "control": 6.2,
+        "mobility": 8.2,
+        "map_control": 8,
+        "saving": 4.9,
+        "initiating": 7.6,
+        "skirmish_rate": 2.4,
+        "camp_stacking": 1.9,
+        "resource_efficiency": 4.1
+      },
+      "Offlane": {
+        "teamfight": 5.8,
+        "burst": 5.4,
+        "scaling": 5.2,
+        "objectives": 4.2,
+        "durability": 5.6,
+        "tempo": 5.6,
+        "control": 5.6,
+        "mobility": 8.2,
+        "map_control": 8.1,
+        "saving": 4.6,
+        "initiating": 7.6,
+        "skirmish_rate": 2.3,
+        "camp_stacking": 4.2,
+        "resource_efficiency": 4.4
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 121,
@@ -4825,7 +8788,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3
+    "mobility_items_tier": 3,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 1.2,
+        "burst": 1.7,
+        "scaling": 3.3,
+        "objectives": 1.3,
+        "durability": 1.9,
+        "tempo": 3.9,
+        "control": 5.8,
+        "mobility": 3.8,
+        "map_control": 6.2,
+        "saving": 5.3,
+        "initiating": 7.8,
+        "skirmish_rate": 6.6,
+        "camp_stacking": 8.5,
+        "resource_efficiency": 5
+      }
+    }
   },
   {
     "id": 123,
@@ -4867,7 +8857,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2
+    "mobility_items_tier": 2,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 2.3,
+        "burst": 3,
+        "scaling": 1.9,
+        "objectives": 2.1,
+        "durability": 2.6,
+        "tempo": 6.7,
+        "control": 6.7,
+        "mobility": 5.7,
+        "map_control": 7.4,
+        "saving": 5.1,
+        "initiating": 7.7,
+        "skirmish_rate": 5,
+        "camp_stacking": 7.8,
+        "resource_efficiency": 9.4
+      }
+    }
   },
   {
     "id": 126,
@@ -4909,7 +8926,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 6,
-    "mobility_items_tier": 1.6
+    "mobility_items_tier": 1.6,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 7.4,
+        "burst": 7.9,
+        "scaling": 6.8,
+        "objectives": 5.1,
+        "durability": 6,
+        "tempo": 5.6,
+        "control": 3.8,
+        "mobility": 6.2,
+        "map_control": 6.8,
+        "saving": 5.4,
+        "initiating": 6.6,
+        "skirmish_rate": 3.7,
+        "camp_stacking": 0.6,
+        "resource_efficiency": 6.1
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 128,
@@ -4951,7 +8995,60 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.8
+    "mobility_items_tier": 2.8,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 7.2,
+        "burst": 7.5,
+        "scaling": 5.2,
+        "objectives": 4.4,
+        "durability": 3.7,
+        "tempo": 8.5,
+        "control": 5.8,
+        "mobility": 3.9,
+        "map_control": 5.4,
+        "saving": 6.3,
+        "initiating": 7.1,
+        "skirmish_rate": 2.7,
+        "camp_stacking": 5.7,
+        "resource_efficiency": 8.3
+      },
+      "Offlane": {
+        "teamfight": 7.2,
+        "burst": 7.5,
+        "scaling": 5.2,
+        "objectives": 4.4,
+        "durability": 3.7,
+        "tempo": 5,
+        "control": 4.8,
+        "mobility": 3.9,
+        "map_control": 7.4,
+        "saving": 6,
+        "initiating": 7.1,
+        "skirmish_rate": 3,
+        "camp_stacking": 7.3,
+        "resource_efficiency": 9.2
+      },
+      "Support": {
+        "teamfight": 7.2,
+        "burst": 7.5,
+        "scaling": 5.2,
+        "objectives": 4.4,
+        "durability": 3.7,
+        "tempo": 3.1,
+        "control": 4.5,
+        "mobility": 3.9,
+        "map_control": 5.6,
+        "saving": 5.9,
+        "initiating": 7.1,
+        "skirmish_rate": 7.1,
+        "camp_stacking": 5.6,
+        "resource_efficiency": 6.1
+      }
+    }
   },
   {
     "id": 129,
@@ -4994,7 +9091,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.6
+    "mobility_items_tier": 3.6,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 3.2,
+        "burst": 2.8,
+        "scaling": 5,
+        "objectives": 3.6,
+        "durability": 6.5,
+        "tempo": 2.5,
+        "control": 8.3,
+        "mobility": 4.4,
+        "map_control": 4.5,
+        "saving": 5.5,
+        "initiating": 7.1,
+        "skirmish_rate": 5.9,
+        "camp_stacking": 2.8,
+        "resource_efficiency": 3.3
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 131,
@@ -5036,7 +9160,34 @@
     },
     "vision_ability_tier": 5,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.6
+    "mobility_items_tier": 2.6,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 1.8,
+        "burst": 1,
+        "scaling": 3.5,
+        "objectives": 0.2,
+        "durability": 2,
+        "tempo": 3.1,
+        "control": 6.6,
+        "mobility": 4.5,
+        "map_control": 9.4,
+        "saving": 5.1,
+        "initiating": 6,
+        "skirmish_rate": 6.4,
+        "camp_stacking": 7.9,
+        "resource_efficiency": 7.3
+      }
+    }
   },
   {
     "id": 135,
@@ -5076,7 +9227,34 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.7
+    "mobility_items_tier": 1.7,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 5.6,
+        "burst": 5.3,
+        "scaling": 4.8,
+        "objectives": 5.7,
+        "durability": 7.4,
+        "tempo": 5.7,
+        "control": 4.4,
+        "mobility": 7,
+        "map_control": 7.6,
+        "saving": 6.6,
+        "initiating": 5.4,
+        "skirmish_rate": 3.1,
+        "camp_stacking": 7.5,
+        "resource_efficiency": 5.6
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 136,
@@ -5119,7 +9297,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.8
+    "mobility_items_tier": 1.8,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 2.8,
+        "burst": 6.4,
+        "scaling": 4.1,
+        "objectives": 5.4,
+        "durability": 3.2,
+        "tempo": 3.4,
+        "control": 6.3,
+        "mobility": 5.6,
+        "map_control": 8.9,
+        "saving": 6.2,
+        "initiating": 5.9,
+        "skirmish_rate": 6.8,
+        "camp_stacking": 0.2,
+        "resource_efficiency": 2.7
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 2.8,
+        "burst": 6.4,
+        "scaling": 4.1,
+        "objectives": 5.4,
+        "durability": 3.2,
+        "tempo": 4.7,
+        "control": 5.7,
+        "mobility": 5.6,
+        "map_control": 7.6,
+        "saving": 5.8,
+        "initiating": 5.9,
+        "skirmish_rate": 8.9,
+        "camp_stacking": 1.4,
+        "resource_efficiency": 2.1
+      }
+    }
   },
   {
     "id": 137,
@@ -5160,7 +9378,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 3.5
+    "mobility_items_tier": 3.5,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "teamfight": 5,
+        "burst": 4,
+        "scaling": 5.5,
+        "objectives": 3,
+        "durability": 7.1,
+        "tempo": 2.7,
+        "control": 7.6,
+        "mobility": 5.5,
+        "map_control": 5.1,
+        "saving": 4.8,
+        "initiating": 9.1,
+        "skirmish_rate": 5.4,
+        "camp_stacking": 3.6,
+        "resource_efficiency": 7.2
+      },
+      "Offlane": {
+        "teamfight": 5,
+        "burst": 4,
+        "scaling": 5.5,
+        "objectives": 3,
+        "durability": 7.1,
+        "tempo": 3.3,
+        "control": 7.6,
+        "mobility": 5.5,
+        "map_control": 5.4,
+        "saving": 4.1,
+        "initiating": 9.1,
+        "skirmish_rate": 3.8,
+        "camp_stacking": 5.7,
+        "resource_efficiency": 7.4
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 138,
@@ -5200,7 +9458,47 @@
     },
     "vision_ability_tier": 2,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.9
+    "mobility_items_tier": 1.9,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 8.3,
+        "burst": 6.2,
+        "scaling": 7,
+        "objectives": 7.6,
+        "durability": 5.1,
+        "tempo": 4.1,
+        "control": 5.5,
+        "mobility": 3.6,
+        "map_control": 8,
+        "saving": 3.8,
+        "initiating": 5.5,
+        "skirmish_rate": 2.5,
+        "camp_stacking": 8.2,
+        "resource_efficiency": 7.5
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "teamfight": 8.3,
+        "burst": 6.2,
+        "scaling": 7,
+        "objectives": 7.6,
+        "durability": 5.1,
+        "tempo": 1.5,
+        "control": 6.6,
+        "mobility": 3.6,
+        "map_control": 4.4,
+        "saving": 4.1,
+        "initiating": 5.5,
+        "skirmish_rate": 4.9,
+        "camp_stacking": 9.3,
+        "resource_efficiency": 8.8
+      }
+    }
   },
   {
     "id": 145,
@@ -5240,7 +9538,47 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 2.2
+    "mobility_items_tier": 2.2,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "teamfight": 8.5,
+        "burst": 9.2,
+        "scaling": 5.4,
+        "objectives": 6.3,
+        "durability": 7.5,
+        "tempo": 7.5,
+        "control": 4.4,
+        "mobility": 6.3,
+        "map_control": 6.9,
+        "saving": 4.9,
+        "initiating": 6.4,
+        "skirmish_rate": 1.7,
+        "camp_stacking": 5.6,
+        "resource_efficiency": 6.6
+      },
+      "Mid": {
+        "teamfight": 8.5,
+        "burst": 9.2,
+        "scaling": 5.4,
+        "objectives": 6.3,
+        "durability": 7.5,
+        "tempo": 7.3,
+        "control": 4.4,
+        "mobility": 6.3,
+        "map_control": 7.3,
+        "saving": 5.1,
+        "initiating": 6.4,
+        "skirmish_rate": 4.6,
+        "camp_stacking": 2.4,
+        "resource_efficiency": 6.6
+      },
+      "Offlane": {
+        "no_info": true
+      },
+      "Support": {
+        "no_info": true
+      }
+    }
   },
   {
     "id": 155,
@@ -5281,6 +9619,46 @@
     },
     "vision_ability_tier": 0,
     "mobility_ability_tier": 0,
-    "mobility_items_tier": 1.7
+    "mobility_items_tier": 1.7,
+    "evaluation_values_by_role": {
+      "Carry": {
+        "no_info": true
+      },
+      "Mid": {
+        "no_info": true
+      },
+      "Offlane": {
+        "teamfight": 0.5,
+        "burst": 0.3,
+        "scaling": 4.1,
+        "objectives": 0.6,
+        "durability": 7.6,
+        "tempo": 2.5,
+        "control": 4.1,
+        "mobility": 3.3,
+        "map_control": 4,
+        "saving": 7.6,
+        "initiating": 4.6,
+        "skirmish_rate": 2.1,
+        "camp_stacking": 8.9,
+        "resource_efficiency": 2.2
+      },
+      "Support": {
+        "teamfight": 0.5,
+        "burst": 0.3,
+        "scaling": 4.1,
+        "objectives": 0.6,
+        "durability": 7.6,
+        "tempo": 3.5,
+        "control": 3.8,
+        "mobility": 3.3,
+        "map_control": 4.5,
+        "saving": 7.4,
+        "initiating": 4.6,
+        "skirmish_rate": 5.4,
+        "camp_stacking": 4.8,
+        "resource_efficiency": 0.5
+      }
+    }
   }
 ]

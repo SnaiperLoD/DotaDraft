@@ -28,6 +28,18 @@ export interface HeroPositionShare {
   share: number;
 }
 
+// Marker for a (hero, role) combination without enough real match data to
+// trust a role-specific recalibration (Blueprint/12-next-session-priorities.md
+// item 6) — the >8%-of-hero's-total-games threshold, computed in
+// calibrate-role-evaluation-values.ts. What a consumer does when it hits
+// no_info is a separate, still-open fallback-policy question; the type only
+// records that the data doesn't exist yet, not what to do about it.
+export interface RoleNoInfo {
+  no_info: true;
+}
+
+export type RoleEvaluationEntry = HeroEvaluationValues | RoleNoInfo;
+
 export interface Hero {
   id: number;
   name: string;
@@ -37,7 +49,19 @@ export interface Hero {
   tags: string[];
   synergy_tags: string[];
   counter_tags: string[];
+  // Hero-level aggregate across all roles — unchanged calculation
+  // (calibrate-evaluation-values.ts). Kept alongside evaluation_values_by_role
+  // (not replaced by it) specifically to serve as the fallback value for any
+  // role marked no_info there, since the real fallback POLICY for those roles
+  // is still an open decision — see resolveEvaluationValues in
+  // shared/utils/evaluationValues.ts.
   evaluation_values: HeroEvaluationValues;
+  // Per-role recalibration where enough real data exists (calibrate-role-
+  // evaluation-values.ts) — always has all 4 PresumedPosition keys, each
+  // either real per-role values or { no_info: true }. Read this through
+  // resolveEvaluationValues(), not directly, so the no_info fallback stays in
+  // one place.
+  evaluation_values_by_role: Record<PresumedPosition, RoleEvaluationEntry>;
   presumed_positions: HeroPositionShare[];
 }
 

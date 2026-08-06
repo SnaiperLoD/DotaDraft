@@ -52,6 +52,52 @@ export function percentileRankScaleByGroup(
   return result;
 }
 
+// Two-step version of percentileRankScaleByGroup (Blueprint/12-next-session-
+// priorities.md item 6, role-conditional axis values): plain within-group
+// ranking always centers a group's mean at ~5 by construction, regardless of
+// how that group's raw values actually sit relative to the whole population.
+// For role-split axes this erases real, useful cross-role signal — e.g. a
+// Support's damage/min genuinely sits near the bottom of the WHOLE roster
+// (rank ~1/10 globally), but ranking Supports only against each other alone
+// pushes even a middling Support toward ~5/10, which reads as "average
+// damage" to any downstream consumer that doesn't know the score came from a
+// role-restricted comparison. Confirmed by self-play regression: swapping to
+// plain percentileRankScaleByGroup measurably WORSENED the model's
+// favoredRate-vs-real-winRate correlation (0.085 -> 0.032, no-crutch test).
+//
+// Fix: rank within the group for relative order (who's the better/worse
+// Support), then rescale that 0-10 rank onto the [min, max] GLOBAL
+// (whole-population) score actually occupied by that group's own members —
+// so a Support's ceiling stays capped near wherever the best real-data
+// Support actually lands globally (rarely near 10, since even a
+// damage-heavy Support rarely out-damages a core), not reset to a fresh 10.
+export function anchoredGroupScale(values: (number | null)[], groups: (string | null)[]): (number | null)[] {
+  const globalScores = percentileRankScale(values);
+  const groupScores = percentileRankScaleByGroup(values, groups);
+
+  const ranges = new Map<string, { min: number; max: number }>();
+  values.forEach((_, index) => {
+    const g = globalScores[index];
+    if (g === null) return;
+    const key = groups[index] ?? '__ungrouped__';
+    const r = ranges.get(key) ?? { min: Infinity, max: -Infinity };
+    r.min = Math.min(r.min, g);
+    r.max = Math.max(r.max, g);
+    ranges.set(key, r);
+  });
+
+  return values.map((_, index) => {
+    const groupScore = groupScores[index];
+    if (groupScore === null) return null;
+    const key = groups[index] ?? '__ungrouped__';
+    const range = ranges.get(key);
+    if (!range) return groupScore;
+    const span = range.max - range.min;
+    if (span === 0) return range.min;
+    return Math.round((range.min + (groupScore / 10) * span) * 10) / 10;
+  });
+}
+
 export function medianBenchmarkValue(
   percentiles: { percentile: number; value: number }[] | null | undefined,
 ): number | null {

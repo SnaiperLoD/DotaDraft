@@ -6,4 +6,5 @@ export * from './types/battle';
 export * from './constants/roles';
 export * from './constants/ability-categories';
 export * from './utils/heroPosition';
+export * from './utils/evaluationValues';
 export * from './customTags';

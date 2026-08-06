@@ -63,6 +63,7 @@ export class HeroService {
       synergy_tags: JSON.parse(row.synergyTags),
       counter_tags: JSON.parse(row.counterTags),
       evaluation_values: JSON.parse(row.evaluationValues),
+      evaluation_values_by_role: JSON.parse(row.evaluationValuesByRole ?? '{}'),
       presumed_positions: JSON.parse(row.presumedPositions ?? '[]'),
     };
   }
