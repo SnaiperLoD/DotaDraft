@@ -168,8 +168,9 @@ describe('resolveBattle', () => {
     // already-close one (same "amplifies rather than adds" shape as the
     // matchup-edge test above). This scenario combines a small non-role
     // edge (hero1's teamfight) with a role-appropriate assignment (hero2
-    // as Offlane, whose 3 role-fit axes — durability/control/initiating)
-    // so together — not individually — they cross the threshold.
+    // as Offlane, whose 3 role-fit axes — map_control/initiating/mobility,
+    // round 3 of the role-fit derivation, common/role-fit.ts) so together —
+    // not individually — they cross the threshold.
     it('tips an already-close matchup, combined with another small edge, toward the role-appropriate side', () => {
       // hero1's tempo=10 gives team A a real pre-role edge — under the
       // advantageDirection threshold on its own, with margin on both sides
@@ -177,9 +178,9 @@ describe('resolveBattle', () => {
       // not a hairline value. Uses tempo (2026-07-25, axis composite fix) —
       // not teamfight, which is now weighted too low on its own to provide
       // this kind of edge — and not one of hero2's Offlane role-fit axes
-      // (durability/control/initiating) below, so the two edges stay
+      // (map_control/initiating/mobility) below, so the two edges stay
       // independent. hero2 is otherwise matched with its opposite number
-      // (8.5 durability/control/initiating both sides) — no difference
+      // (8.5 map_control/initiating/mobility both sides) — no difference
       // until role-fit enters.
       // Filler IDs start at 9001/9011, not 3/8 — real hero IDs top out
       // around 160, and server/data/manual-power-overrides.json (keyed by
@@ -189,12 +190,12 @@ describe('resolveBattle', () => {
       // did exactly that once already).
       const teamAUnassigned: BattlePick[] = [
         { hero: hero(1, 'A1', { tempo: 10 }), assignedRole: null },
-        { hero: hero(2, 'A2', { durability: 8.5, control: 8.5, initiating: 8.5 }), assignedRole: null },
+        { hero: hero(2, 'A2', { map_control: 8.5, initiating: 8.5, mobility: 8.5 }), assignedRole: null },
         ...team(3, {}, 9001),
       ];
       const teamB: BattlePick[] = [
         { hero: hero(6, 'B1'), assignedRole: null },
-        { hero: hero(7, 'B2', { durability: 8.5, control: 8.5, initiating: 8.5 }), assignedRole: null },
+        { hero: hero(7, 'B2', { map_control: 8.5, initiating: 8.5, mobility: 8.5 }), assignedRole: null },
         ...team(3, {}, 9011),
       ];
       const closeButEven = resolveBattle(teamAUnassigned, teamB, noData, () => 0.4);
@@ -214,10 +215,10 @@ describe('resolveBattle', () => {
 
     it('does not boost when the hero is already below the role-fit baseline', () => {
       const belowBaseline: BattlePick[] = [
-        { hero: hero(1, 'A', { scaling: 3 }), assignedRole: 'Carry' },
+        { hero: hero(1, 'A', { control: 3 }), assignedRole: 'Carry' },
         ...team(4, {}, 2),
       ];
-      const sameNoRole: BattlePick[] = [{ hero: hero(6, 'B', { scaling: 3 }), assignedRole: null }, ...team(4, {}, 7)];
+      const sameNoRole: BattlePick[] = [{ hero: hero(6, 'B', { control: 3 }), assignedRole: null }, ...team(4, {}, 7)];
 
       const result = resolveBattle(belowBaseline, sameNoRole, noData, () => 0.4);
       expect(result.advantageDirection).toBe('Even');

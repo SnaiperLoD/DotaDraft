@@ -31,33 +31,44 @@ import { hasRoleEvaluationData, resolveEvaluationValues } from 'shared';
 // they stay independent of each other (Core Rules Separation) by both
 // depending on this neutral module instead of one depending on the other.
 //
-// The role -> axes map and BOOST_WEIGHT below are a manual heuristic, not a
-// statistically fitted result. Two rounds of real data were tried
-// (Blueprint/10-tech-debt-backlog.md has the full account): lane_role/
-// is_roaming position buckets (research-role-fit-data.ts) couldn't even
-// represent Support as a natural role, and per-match GPM-rank position
-// buckets (research-role-fit-gpm-rank.ts) covered all 5 roles but produced
-// correlations between each role's candidate axes and real win-rate delta
-// that were all statistically indistinguishable from zero at the available
-// sample size (n=17-37 per role, |r|<0.2 throughout). The map below matches
-// the direction those weak correlations pointed in (Carry/Hard Support
-// positive, Mid/Offlane/Soft Support slightly negative but not
-// significant) — treated as "not contradicted strongly enough to abandon",
-// same honesty category as the hand-authored hero tags.
-// `initiating` (Blueprint/09-hero-knowledge-base.md) was calibrated but
-// left unmapped here until this session — Offlane is the candidate the
-// backlog itself flagged (10-tech-debt-backlog.md, "Будущая ось
-// Initiating") as the most "initiator" slot of the five, so it's added
-// there rather than split across roles without any data to justify a
-// different split. Re-derives the theoretical max-contribution finding
-// below (still ~0.13, unchanged) since adding one more touched axis
-// alongside one more total axis (10→11) keeps the same ratio.
+// Third round, 2026-08-06 (Blueprint/12-next-session-priorities.md item 6
+// follow-up) — superseded the two prior attempts described below. Uses
+// evaluation_values_by_role's real per-role axis values (only exist post-
+// anchoring/zscore-fix, hence why this wasn't tried until now) correlated
+// against REAL per-role win rate minus each hero's overall win rate
+// (research-role-classification-final-output.json vs hero-meta.json),
+// restricted to heroes with real data in >=2 roles — a pure specialist's
+// delta is close to 0 by construction (their one role IS ~their overall
+// average), which was diluting the signal on a first pass before this
+// restriction. n=25-38 per role, a real jump from the prior attempt's
+// n=17-37 at |r|<0.2: |r| here ranges 0.32-0.63 for the axes kept below.
+// Only positive-correlation axes are usable — roleFitValue only boosts (a
+// negative-correlation axis has no "reward being low" mechanism, that would
+// be new scope). Several axes flip sign or drop out entirely vs the old map
+// (scaling/burst come out NEGATIVE almost everywhere, durability negative
+// for Offlane, saving barely positive for Support at r=0.14) — kept for the
+// record below since a future investigation might explain why, but not
+// carried into ROLE_AXES since the boost mechanism can't use a negative
+// signal anyway. `initiating` and `control` recur as strong positive
+// predictors for 3 of 4 roles; `tempo` dominates Support (r=0.63, by far
+// the single strongest finding of this pass) displacing saving/control from
+// the old map entirely. Hard/Soft Support get the same axes — the 4-way
+// classifier (research-role-classification-final.ts) never distinguished
+// them, same reason roleAwareAxisValue's role-mapping collapses both to
+// PresumedPosition's single 'Support'.
+//
+// Old (2 rounds, both retired): lane_role/is_roaming position buckets
+// (research-role-fit-data.ts) couldn't even represent Support as a natural
+// role; per-match GPM-rank position buckets (research-role-fit-gpm-rank.ts)
+// covered all 5 roles but produced correlations indistinguishable from zero
+// at n=17-37, |r|<0.2 throughout — the map built from that pass is the one
+// this replaces.
 const ROLE_AXES: Record<string, string[]> = {
-  Carry: ['scaling', 'burst'],
-  Mid: ['tempo', 'burst'],
-  Offlane: ['durability', 'control', 'initiating'],
-  'Hard Support': ['saving', 'map_control'],
-  'Soft Support': ['saving', 'control'],
+  Carry: ['control', 'initiating'],
+  Mid: ['initiating', 'control'],
+  Offlane: ['map_control', 'initiating', 'mobility'],
+  'Hard Support': ['tempo', 'camp_stacking', 'mobility', 'map_control'],
+  'Soft Support': ['tempo', 'camp_stacking', 'mobility', 'map_control'],
 };
 
 const BASELINE = 5;

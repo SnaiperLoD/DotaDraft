@@ -113,6 +113,18 @@ export function medianBenchmarkValue(
 // controls how aggressively the tails get amplified relative to the middle
 // of the pack — this is the "low weight, growing toward extreme cases"
 // behavior requested for base move_speed in Map Control.
+//
+// Normalizes the positive and negative tails SEPARATELY (each side divided
+// by its own max |adjusted z|), not by one shared max across both — found
+// via the Nyx Assassin saving-tag investigation (Blueprint/12-next-session-
+// priorities.md item 6): for a right-skewed distribution (most heroes at 0,
+// a handful of specialists with a huge sum — Oracle=31 vs a mean of ~4.3 for
+// the saving ability-tag), the positive tail's extreme z-score dominated the
+// single shared normalizer, compressing every zero/near-zero hero toward the
+// 5-ish midpoint instead of a true floor (e.g. a hero with ZERO saving-
+// tagged abilities scored 4.7/10, barely below center). Splitting the
+// normalizer per side means an outlier on one side no longer flattens the
+// other side's real spread.
 export function zScoreExtremityScale(values: (number | null)[], exponent: number): (number | null)[] {
   const present = values.filter((v): v is number => v !== null);
   if (present.length < 2) return values.map((v) => (v === null ? null : 5));
@@ -126,12 +138,16 @@ export function zScoreExtremityScale(values: (number | null)[], exponent: number
     const z = (v - mean) / stdDev;
     return Math.sign(z) * Math.abs(z) ** exponent;
   };
-  const maxAdjusted = Math.max(...present.map((v) => Math.abs(adjusted(v))));
-  if (maxAdjusted === 0) return values.map((v) => (v === null ? null : 5));
+  const adjustedPresent = present.map(adjusted);
+  const maxPos = Math.max(0, ...adjustedPresent.filter((a) => a > 0));
+  const maxNegAbs = Math.max(0, ...adjustedPresent.filter((a) => a < 0).map((a) => Math.abs(a)));
+  if (maxPos === 0 && maxNegAbs === 0) return values.map((v) => (v === null ? null : 5));
 
   return values.map((v) => {
     if (v === null) return null;
-    const score = 5 + (adjusted(v) / maxAdjusted) * 5;
+    const a = adjusted(v);
+    const denom = a >= 0 ? maxPos : maxNegAbs;
+    const score = denom === 0 ? 5 : 5 + (a / denom) * 5;
     return Math.round(Math.max(0, Math.min(10, score)) * 10) / 10;
   });
 }

@@ -3,7 +3,7 @@ import { makeHero } from '../test-utils/hero-factory';
 
 describe('roleFitValue', () => {
   it('returns the raw value unchanged when no role is assigned', () => {
-    expect(roleFitValue('scaling', null, 8)).toBe(8);
+    expect(roleFitValue('control', null, 8)).toBe(8);
   });
 
   it('returns the raw value unchanged when the role has no relevant axes for this key', () => {
@@ -11,38 +11,43 @@ describe('roleFitValue', () => {
   });
 
   it('returns the raw value unchanged when the hero is at or below the baseline (5)', () => {
-    expect(roleFitValue('scaling', 'Carry', 5)).toBe(5);
-    expect(roleFitValue('scaling', 'Carry', 3)).toBe(3);
+    expect(roleFitValue('control', 'Carry', 5)).toBe(5);
+    expect(roleFitValue('control', 'Carry', 3)).toBe(3);
   });
 
   it('boosts a relevant axis proportionally to how far above baseline it already is', () => {
     // 8 is 3 above baseline (5); boost = 0.3 * 3 = 0.9 -> 8.9
-    expect(roleFitValue('scaling', 'Carry', 8)).toBe(8.9);
+    expect(roleFitValue('control', 'Carry', 8)).toBe(8.9);
   });
 
   it('caps the boosted value at 10', () => {
-    expect(roleFitValue('scaling', 'Carry', 10)).toBe(10);
+    expect(roleFitValue('control', 'Carry', 10)).toBe(10);
   });
 
   it('applies to both axes mapped for a role', () => {
-    expect(roleFitValue('scaling', 'Carry', 9)).toBeGreaterThan(9);
-    expect(roleFitValue('burst', 'Carry', 9)).toBeGreaterThan(9);
+    expect(roleFitValue('control', 'Carry', 9)).toBeGreaterThan(9);
+    expect(roleFitValue('initiating', 'Carry', 9)).toBeGreaterThan(9);
   });
 
-  it('boosts initiating for Offlane alongside durability/control', () => {
+  it('boosts initiating for Offlane alongside map_control/mobility, not for a role outside its map', () => {
     expect(roleFitValue('initiating', 'Offlane', 8)).toBeGreaterThan(8);
-    expect(roleFitValue('initiating', 'Carry', 8)).toBe(8);
+    // Support's round-3 map (control/initiating correlate with Carry/Mid/
+    // Offlane specifically, not Support — see role-fit.ts's header comment)
+    expect(roleFitValue('initiating', 'Hard Support', 8)).toBe(8);
   });
 
-  it('applies distinct axes for Hard Support vs Soft Support', () => {
+  it('applies the SAME axes to Hard Support and Soft Support (round 3 — the 4-way classifier never distinguished them)', () => {
+    expect(roleFitValue('tempo', 'Hard Support', 8)).toBeGreaterThan(8);
+    expect(roleFitValue('tempo', 'Soft Support', 8)).toBeGreaterThan(8);
     expect(roleFitValue('map_control', 'Hard Support', 8)).toBeGreaterThan(8);
-    expect(roleFitValue('map_control', 'Soft Support', 8)).toBe(8);
-    expect(roleFitValue('control', 'Soft Support', 8)).toBeGreaterThan(8);
-    expect(roleFitValue('control', 'Hard Support', 8)).toBe(8);
+    expect(roleFitValue('map_control', 'Soft Support', 8)).toBeGreaterThan(8);
+    // saving/control were the old map's Support axes — no longer relevant per round 3's data.
+    expect(roleFitValue('saving', 'Hard Support', 8)).toBe(8);
+    expect(roleFitValue('control', 'Soft Support', 8)).toBe(8);
   });
 
   it('does not boost an unrecognized role string', () => {
-    expect(roleFitValue('scaling', 'Jungle', 9)).toBe(9);
+    expect(roleFitValue('control', 'Jungle', 9)).toBe(9);
   });
 
   it('dampens a below-baseline durability/objectives value for Hard/Soft Support', () => {
@@ -80,7 +85,7 @@ describe('isRoleFitAxis', () => {
   });
 
   it('returns true only for axes relevant to the given role', () => {
-    expect(isRoleFitAxis('scaling', 'Carry')).toBe(true);
+    expect(isRoleFitAxis('control', 'Carry')).toBe(true);
     expect(isRoleFitAxis('saving', 'Carry')).toBe(false);
   });
 });
