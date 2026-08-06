@@ -77,7 +77,7 @@ describe('createAxisAnalyzer', () => {
     expect(result.explanation.some((line) => line.includes('role-fit'))).toBe(false);
   });
 
-  it('applies the hard-carry stacking penalty (3+ threshold) and mentions it, matching Battle Engine', () => {
+  it('applies the hard-carry stacking penalty (3+ threshold) without explaining it on non-scaling axes', () => {
     const analyzer = createAxisAnalyzer('teamfight', 'Teamfight');
     const twoStacked = [
       hardCarryHero(1, 'HC1', 'teamfight', 6),
@@ -101,8 +101,12 @@ describe('createAxisAnalyzer', () => {
     expect(belowThreshold.score).toBe(6);
     expect(belowThreshold.explanation.some((line) => line.includes('hard-carry'))).toBe(false);
     // 3 hard-carries = -5% (server/data/axis-weights.json hardCarryStackPenalty)
+    // — still applies to the score, just no longer explained on a
+    // non-scaling axis (Blueprint/10-tech-debt-backlog.md, "Дублирующаяся
+    // строка про hard-carry stacking" — used to repeat verbatim across
+    // ~11 of the 13 axes at once).
     expect(withPenalty.score).toBeCloseTo(6 * 0.95, 5);
-    expect(withPenalty.explanation.some((line) => line.includes('hard-carry'))).toBe(true);
+    expect(withPenalty.explanation.some((line) => line.includes('hard-carry'))).toBe(false);
   });
 
   it('exempts scaling from the penalty and boosts it instead, once 3+ hard-carries are drafted', () => {

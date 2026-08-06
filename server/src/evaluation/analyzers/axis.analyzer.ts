@@ -25,7 +25,15 @@ export function createAxisAnalyzer(key: AxisKey, label: string): Analyzer {
         // hard-carry below, since it's a property of each hero's own kit
         // (control/initiating/mobility/saving/skirmish_rate/map_control
         // all high at once). Returns 1 for every axis outside that set, so
-        // this is a no-op for the other 7 axes.
+        // this is a no-op for the other 7 axes. The explanatory aside for
+        // this used to be pushed onto every one of those 6 axes' own
+        // explanation array — since a hero's discount is basically always
+        // live on several of them at once, that meant the identical
+        // sentence repeating verbatim across most of the breakdown grid.
+        // Removed by user request (2026-08-06, Blueprint/10-tech-debt-backlog.md)
+        // rather than relocated to a single note — low enough value to the
+        // player to not be worth new note infrastructure just to say it
+        // once. The discount itself still applies to `value` below.
         const utilityMult = utilityStackAxisMultipliers(p.hero)[key] ?? 1;
         const value = Math.round(roleFitAdjusted * utilityMult * 10) / 10;
         return {
@@ -33,7 +41,6 @@ export function createAxisAnalyzer(key: AxisKey, label: string): Analyzer {
           value,
           assignedRole: p.assignedRole,
           boosted: roleFitAdjusted > raw,
-          utilityDiscounted: utilityMult < 1,
         };
       });
       const average = values.reduce((sum, v) => sum + v.value, 0) / values.length;
@@ -78,21 +85,19 @@ export function createAxisAnalyzer(key: AxisKey, label: string): Analyzer {
         );
       }
 
-      if (penalty > 0) {
+      // Scaling's boost aside is unique to this one card (scaling is the
+      // only axis using this branch) so it's kept — the non-scaling
+      // "penalty applied" aside used to run on every other axis whenever
+      // penalty > 0 (hard-carry stacking hits ~11 of the 13 axes at once),
+      // repeating the identical sentence across most of the breakdown grid
+      // the same way the utility-stacking aside did. Removed by user
+      // request (2026-08-06, Blueprint/10-tech-debt-backlog.md), same
+      // treatment as that one — the penalty itself still applies to
+      // `score` above regardless.
+      if (penalty > 0 && key === 'scaling') {
         const hardCarryCount = picks.filter((p) => isHardCarry(p.hero)).length;
         explanation.push(
-          key === 'scaling'
-            ? `This draft stacks ${hardCarryCount} hard-carry (Carry/Mid-dominant) heroes — built for a long game, so a ${Math.round((multiplier - 1) * 100)}% boost is applied here instead of the usual stacking penalty.`
-            : `This draft stacks ${hardCarryCount} hard-carry (Carry/Mid-dominant) heroes, diluting focus — a ${Math.round(penalty * 100)}% penalty is applied here.`,
-        );
-      }
-
-      const utilityDiscounted = values.filter((v) => v.utilityDiscounted);
-      if (utilityDiscounted.length > 0) {
-        explanation.push(
-          `${utilityDiscounted.map((v) => v.hero.name).join(', ')} ` +
-            `${utilityDiscounted.length === 1 ? 'stacks' : 'stack'} several overlapping utility strengths at once — ` +
-            `${utilityDiscounted.length === 1 ? 'its' : 'their'} contribution here is discounted rather than counted at full value.`,
+          `This draft stacks ${hardCarryCount} hard-carry (Carry/Mid-dominant) heroes — built for a long game, so a ${Math.round((multiplier - 1) * 100)}% boost is applied here instead of the usual stacking penalty.`,
         );
       }
 
