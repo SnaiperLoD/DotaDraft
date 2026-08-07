@@ -1,6 +1,7 @@
 import {
   percentileRankScale,
   percentileRankScaleByGroup,
+  anchoredGroupScale,
   medianBenchmarkValue,
   zScoreExtremityScale,
   weightedBlend,
@@ -65,6 +66,50 @@ describe('percentileRankScaleByGroup', () => {
   });
 });
 
+// Composes percentileRankScale + percentileRankScaleByGroup (both tested
+// above) with a rescale step — previously untested entirely, unlike its two
+// building blocks. Expected values below were cross-checked against an
+// independent reference implementation of the same formula, not hand-typed.
+describe('anchoredGroupScale', () => {
+  it("rescales each group's within-group rank onto the GLOBAL score range that group actually occupies, instead of resetting every group to its own fresh 0-10", () => {
+    const values = [10, 20, 30, 40, 90, 91, 92];
+    const groups = ['Support', 'Support', 'Support', 'Support', 'Core', 'Core', 'Core'];
+    const result = anchoredGroupScale(values, groups);
+
+    // Plain within-group ranking (percentileRankScaleByGroup) would give the
+    // best Support a fresh 10 and the worst Core a fresh 0 — anchoring caps
+    // them at the global scores their own group actually occupies instead.
+    expect(result[3]).toBeCloseTo(5, 1); // best Support: capped at its real global score, not 10
+    expect(result[3]).not.toBeCloseTo(10, 1);
+    expect(result[4]).toBeCloseTo(6.7, 1); // worst Core: its real global score, not 0
+    expect(result[4]).not.toBeCloseTo(0, 1);
+
+    // The population-wide extremes still anchor to the population extremes.
+    expect(result[0]).toBeCloseTo(0, 1); // worst Support overall
+    expect(result[6]).toBeCloseTo(10, 1); // best Core overall
+    // A mid-ranked member of each group lands off both the group-only and
+    // the raw-global value, confirming the rescale actually ran (not just
+    // passing one of its two inputs through unchanged).
+    expect(result[2]).toBeCloseTo(3.4, 1);
+  });
+
+  it("anchors a single-member group directly to its own global score (span=0), not a group-relative midpoint", () => {
+    const values = [10, 20, 30];
+    const groups = ['A', 'A', 'B']; // B has exactly one member
+    const result = anchoredGroupScale(values, groups);
+    // B's plain within-group score would be 5 (the single-value fallback in
+    // percentileRankScale) — anchoring instead uses its real global score.
+    expect(result[2]).toBe(10);
+  });
+
+  it('buckets null-group entries together and anchors them the same way as a named group', () => {
+    const values = [10, 20, 100, 200];
+    const groups = ['A', 'A', null, null];
+    const result = anchoredGroupScale(values, groups);
+    expect(result).toEqual([0, 3.3, 6.7, 10]);
+  });
+});
+
 describe('medianBenchmarkValue', () => {
   it('returns the value at the 0.5 percentile', () => {
     const percentiles = [
@@ -118,6 +163,28 @@ describe('zScoreExtremityScale', () => {
 
   it('returns 5 for every value when there is no variance', () => {
     expect(zScoreExtremityScale([300, 300, 300], 1.6)).toEqual([5, 5, 5]);
+  });
+
+  it('returns 5 (not NaN/a crash) when fewer than 2 real values are present to compute a spread from', () => {
+    expect(zScoreExtremityScale([300], 1.6)).toEqual([5]);
+    expect(zScoreExtremityScale([null, null], 1.6)).toEqual([null, null]);
+    expect(zScoreExtremityScale([300, null], 1.6)).toEqual([5, null]);
+  });
+
+  it('normalizes each tail by its OWN max, not the other tail\'s — an asymmetric spread must not borrow the wrong denominator', () => {
+    // exponent=1 keeps adjusted values equal to plain z-scores. Below-mean:
+    // 1,4,6,7 (max |z|≈1.14); above-mean: 9,20 (max z≈2.03) — deliberately
+    // asymmetric, so picking the wrong tail's max (or the wrong arithmetic
+    // operator) changes the result. Values cross-checked against an
+    // independent reference implementation of the same formula.
+    const result = zScoreExtremityScale([1, 4, 6, 7, 9, 20], 1);
+    // value=1 is the extreme of its own (negative) tail -> ratio -1 -> floor.
+    expect(result[0]).toBeCloseTo(0, 1);
+    // value=9 is mildly above average. Normalizing by the (larger) positive
+    // tail's own max keeps it modest; borrowing the negative tail's smaller
+    // max, or multiplying instead of dividing by the denominator, would both
+    // push this well past 5.5.
+    expect(result[4]).toBeCloseTo(5.5, 1);
   });
 });
 

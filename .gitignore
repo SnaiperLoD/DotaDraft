@@ -4,6 +4,10 @@ build/
 server/generated/
 database/dev.db
 database/dev.db-journal
+database/test.db
+database/test.db-journal
+server/reports/
+server/.stryker-tmp/
 *.log
 .env
 .DS_Store

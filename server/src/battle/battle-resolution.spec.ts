@@ -1,6 +1,16 @@
-import { resolveBattle, assessBattle, type MatchupLookup, type BattlePick } from './battle-resolution';
+import {
+  resolveBattle,
+  assessBattle,
+  bestSynergyPair,
+  bestMatchupEdge,
+  AXIS_LABEL,
+  AXES,
+  type MatchupLookup,
+  type BattlePick,
+} from './battle-resolution';
 import type { Hero, HeroEvaluationValues } from 'shared';
 import { makeHero, DEFAULT_EVALUATION_VALUES } from '../test-utils/hero-factory';
+import axisWeightsConfig from '../../data/axis-weights.json';
 
 function hero(id: number, name: string, axisOverrides: Partial<HeroEvaluationValues> = {}): Hero {
   return makeHero({ id, name, evaluation_values: { ...DEFAULT_EVALUATION_VALUES, ...axisOverrides } });
@@ -31,6 +41,13 @@ describe('resolveBattle', () => {
     expect(result.confidenceTier).toBe('Low');
     expect(result.advantages).toEqual([]);
     expect(result.disadvantages).toEqual([]);
+    // Exact wording for the 'Even' branch of buildExplanation — identical axis
+    // values on both sides mean every axisDelta is exactly 0, so the sort is
+    // stable and topAxisDelta is AXES[0] ('teamfight'), with delta>0 false.
+    expect(result.explanation).toEqual([
+      'This is a close matchup with no clear favorite (Low confidence) — a deficit in damage output for your draft was the closest thing to an edge.',
+      'Your draft came out on top in what was essentially a coin flip.',
+    ]);
   });
 
   // Axis weights (server/data/axis-weights.json) get retuned frequently as
@@ -85,6 +102,22 @@ describe('resolveBattle', () => {
     expect(result.confidenceTier).toBe('High');
     expect(result.resolvedOutcome).toBe('Win');
     expect(result.advantages.length).toBeGreaterThan(0);
+    // Only the (favoredIsA=true, userWon=true) branch of the closingLine
+    // ternary is reachable when !isUpset (the other favoredIsA=true branch
+    // requires userWon=false, which is the isUpset path instead) — exact
+    // text pins that reachable branch.
+    expect(result.explanation[1]).toBe('That advantage held up.');
+  });
+
+  it('says the favorite\'s edge "held up" when the opponent (not the user) is correctly favored and wins', () => {
+    // Mirror of the above for favoredIsA=false — the only reachable
+    // (favoredIsA=false, userWon=false) branch of the same ternary.
+    const weakTeam = team(5, {}, 1);
+    const strongOpponent = dominantTeam(6);
+    const result = resolveBattle(weakTeam, strongOpponent, noData, () => 0.5);
+    expect(result.advantageDirection).toBe('B');
+    expect(result.resolvedOutcome).toBe('Lose');
+    expect(result.explanation[1]).toBe('That edge held up here.');
   });
 
   it('produces an upset explanation (not "the model was wrong") when the underdog wins', () => {
@@ -115,6 +148,18 @@ describe('resolveBattle', () => {
     const text = result.explanation.join(' ');
     expect(text).toContain('Hero6');
     expect(text).toContain('Hero1');
+  });
+
+  it("cites the underdog's own strongest axis in the upset explanation when no real matchup/synergy data exists at all", () => {
+    const strongTeam = moderateEdgeTeam();
+    const weakTeam: BattlePick[] = [
+      { hero: hero(6, 'Underdog', { saving: 9 }), assignedRole: null },
+      ...team(4, {}, 7),
+    ];
+    const result = resolveBattle(strongTeam, weakTeam, noData, () => 0.99);
+    expect(result.resolvedOutcome).toBe('Lose');
+    const text = result.explanation.join(' ');
+    expect(text).toContain('actually led in ally saving power despite trailing on the overall picture');
   });
 
   describe('High confidence (deterministic absent an explained mechanic)', () => {
@@ -363,5 +408,182 @@ describe('resolveBattle', () => {
       expect(result.resolvedOutcome).toBe('Win');
       expect(result.explanation.some((line) => line.includes('Invoker'))).toBe(false);
     });
+
+    // Mirror of the two tests above with the roles reversed: here the
+    // UNDERDOG (team A, favoredIsA=false so advantageDirection='B') has the
+    // High Skill hero, exercising pullTowardCoinflip's p<0.5 branch (basePWinA=0
+    // pulled UP toward 0.5) and highSkillSwingHero's favoredIsA=false path —
+    // neither reachable from the favorite-has-High-Skill tests above.
+    it('flips the outcome when the underdog (not the favorite) has a High Skill hero, pulling their own low win chance up', () => {
+      const strongOpponent = dominantTeam(6);
+      const weakTeamWithHighSkill: BattlePick[] = [pick(hero(1, 'Invoker')), ...team(4, {}, 2)];
+
+      // basePWinA=0 (B favored, High tier), shifted pWinA=min(0.5, 0+0.05)=0.05 -> 0.02 lands in the swing zone.
+      const result = resolveBattle(weakTeamWithHighSkill, strongOpponent, noData, () => 0.02);
+      expect(result.advantageDirection).toBe('B');
+      expect(result.resolvedOutcome).toBe('Win');
+      expect(result.explanation.some((line) => line.includes('Invoker'))).toBe(true);
+    });
+  });
+
+  describe('bestSynergyPair (exported)', () => {
+    it('returns null when no pair has real synergy data', () => {
+      const t = [hero(1, 'A'), hero(2, 'B'), hero(3, 'C')];
+      expect(bestSynergyPair(t, noData)).toBeNull();
+    });
+
+    it('returns the single highest-winRate pair among several, ignoring pairs with no data', () => {
+      const t = [hero(1, 'A'), hero(2, 'B'), hero(3, 'C')];
+      const lookup: MatchupLookup = {
+        getMatchupWinRate: () => null,
+        getSynergyWinRate: (a, b) => {
+          const key = [a, b].sort((x, y) => x - y).join('-');
+          if (key === '1-2') return 0.6;
+          if (key === '1-3') return 0.8;
+          return null; // 2-3 deliberately has no data
+        },
+        getWinRate: () => null,
+      };
+      expect(bestSynergyPair(t, lookup)).toEqual({ heroA: 'A', heroB: 'C', winRate: 0.8 });
+    });
+  });
+
+  describe('bestMatchupEdge (exported)', () => {
+    it('returns null when no team-vs-opponent pair has real matchup data', () => {
+      expect(bestMatchupEdge([hero(1, 'A')], [hero(6, 'X')], noData)).toBeNull();
+    });
+
+    it('returns the single highest-winRate matchup among several team x opponent pairs', () => {
+      const t = [hero(1, 'A'), hero(2, 'B')];
+      const o = [hero(6, 'X'), hero(7, 'Y')];
+      const lookup: MatchupLookup = {
+        getMatchupWinRate: (h, opp) => {
+          if (h === 1 && opp === 6) return 0.55;
+          if (h === 1 && opp === 7) return 0.9;
+          if (h === 2 && opp === 6) return 0.7;
+          return null; // 2-vs-7 deliberately has no data
+        },
+        getSynergyWinRate: () => null,
+        getWinRate: () => null,
+      };
+      expect(bestMatchupEdge(t, o, lookup)).toEqual({ hero: 'A', vs: 'Y', winRate: 0.9 });
+    });
+  });
+
+  describe('winningHighlights (via resolveBattle, since topMatchupEdges/topSynergyPairs are private)', () => {
+    it('combines a matchup and a synergy highlight for the winning side, ordered by winRate descending', () => {
+      const strongTeam = dominantTeam(); // ids 1-5
+      const weakTeam = team(5, {}, 6); // ids 6-10
+      const lookup: MatchupLookup = {
+        getMatchupWinRate: (h, opp) => (h === 1 && opp === 6 ? 0.7 : null),
+        getSynergyWinRate: (a, b) => ((a === 2 && b === 3) || (a === 3 && b === 2) ? 0.9 : null),
+        getWinRate: () => null,
+      };
+      const result = resolveBattle(strongTeam, weakTeam, lookup, () => 0.1); // A wins at High confidence
+      expect(result.resolvedOutcome).toBe('Win');
+      expect(result.winningHighlights).toEqual([
+        'The Hero2 + Hero3 combination gave your draft a real, data-backed edge.',
+        "Hero1's matchup into Hero6 worked in your draft's favor.",
+      ]);
+    });
+
+    it('excludes a matchup exactly at the 0.5 threshold (only real edges count, not coinflips)', () => {
+      const strongTeam = dominantTeam();
+      const weakTeam = team(5, {}, 6);
+      const lookup: MatchupLookup = {
+        getMatchupWinRate: (h, opp) => (h === 1 && opp === 6 ? 0.5 : null),
+        getSynergyWinRate: () => null,
+        getWinRate: () => null,
+      };
+      const result = resolveBattle(strongTeam, weakTeam, lookup, () => 0.1);
+      expect(result.winningHighlights).toEqual([]);
+    });
+
+    it('limits highlights to 3 even when more real edges exist', () => {
+      const strongTeam = dominantTeam(); // ids 1-5
+      const weakTeam = team(5, {}, 6); // ids 6-10
+      const lookup: MatchupLookup = {
+        getMatchupWinRate: (h, opp) => (h >= 1 && h <= 5 && opp >= 6 && opp <= 10 ? 0.6 : null),
+        getSynergyWinRate: () => null,
+        getWinRate: () => null,
+      };
+      const result = resolveBattle(strongTeam, weakTeam, lookup, () => 0.1);
+      expect(result.winningHighlights).toHaveLength(3);
+    });
+  });
+
+  // These target the Non-Linearity Rule's multiplicative power formula
+  // (powerA/powerB in assessBattle) directly and precisely — the qualitative
+  // advantageDirection/resolvedOutcome checks elsewhere in this file don't
+  // distinguish "multiply by the clamped factor" from "divide by it" or
+  // "add it," which is exactly what several mutants exploited. Both sides
+  // start from an IDENTICAL base team (same axis values, only differing by
+  // filler hero id) so taggedPowerA===taggedPowerB cancels out of the ratio,
+  // leaving powerA/powerB equal to exactly the clamped multiplier under test.
+  describe('Non-Linearity Rule: exact multiplicative formula', () => {
+    it('synergy bonus multiplies only the side with the synergy pair, by exactly clamp(1 + bonus*2)', () => {
+      const teamA = team(5, {}, 9001); // 9001-9005
+      const teamB = team(5, {}, 9011); // 9011-9015
+      const lookup: MatchupLookup = {
+        getMatchupWinRate: () => null,
+        getSynergyWinRate: (a, b) => ((a === 9001 && b === 9002) || (a === 9002 && b === 9001) ? 0.7 : null),
+        getWinRate: () => null,
+      };
+      const { powerA, powerB } = assessBattle(teamA, teamB, lookup);
+      expect(powerA / powerB).toBeCloseTo(1.4, 10); // clamp(1 + 0.2*2, 0.3, 1.7) = 1.4
+    });
+
+    it('matchup edge multiplies the two sides in OPPOSITE directions, by exactly clamp(1 +/- edge*3)', () => {
+      const teamA = team(5, {}, 9001);
+      const teamB = team(5, {}, 9011);
+      const lookup: MatchupLookup = {
+        getMatchupWinRate: (h, opp) => (h === 9001 && opp === 9011 ? 0.6 : null),
+        getSynergyWinRate: () => null,
+        getWinRate: () => null,
+      };
+      const { powerA, powerB } = assessBattle(teamA, teamB, lookup);
+      // clamp(1 + 0.1*3, 0.3, 1.7) / clamp(1 - 0.1*3, 0.3, 1.7) = 1.3 / 0.7
+      expect(powerA / powerB).toBeCloseTo(1.3 / 0.7, 10);
+    });
+
+    it('real winRate edge multiplies only the side with real data, by exactly clamp(1 + edge*realWinRateWeight)', () => {
+      const teamA = team(5, {}, 9001);
+      const teamB = team(5, {}, 9011);
+      const lookup: MatchupLookup = {
+        getMatchupWinRate: () => null,
+        getSynergyWinRate: () => null,
+        getWinRate: (heroId) => (heroId >= 9001 && heroId <= 9005 ? 0.6 : null),
+      };
+      const { powerA, powerB } = assessBattle(teamA, teamB, lookup);
+      const expected = Math.min(1.3, Math.max(0.7, 1 + 0.1 * axisWeightsConfig.realWinRateWeight));
+      expect(powerA / powerB).toBeCloseTo(expected, 10);
+    });
+  });
+
+  describe('axisDeltas', () => {
+    it('map_control never contributes, since its blended phase weight is 0 in every phase', () => {
+      const teamA: BattlePick[] = [{ hero: hero(9001, 'A', { map_control: 10 }), assignedRole: null }, ...team(4, {}, 9002)];
+      const teamB: BattlePick[] = [{ hero: hero(9011, 'B', { map_control: 0 }), assignedRole: null }, ...team(4, {}, 9012)];
+      const { axisDeltas } = assessBattle(teamA, teamB, noData);
+      expect(axisDeltas.find((d) => d.axis === 'map_control')!.delta).toBe(0);
+    });
+
+    it('is sorted by absolute delta magnitude, largest first', () => {
+      const teamA: BattlePick[] = [{ hero: hero(9001, 'A', { tempo: 9, saving: 6 }), assignedRole: null }, ...team(4, {}, 9002)];
+      const teamB = team(5, {}, 9011);
+      const { axisDeltas } = assessBattle(teamA, teamB, noData);
+      const magnitudes = axisDeltas.map((d) => Math.abs(d.delta));
+      for (let i = 1; i < magnitudes.length; i++) {
+        expect(magnitudes[i]).toBeLessThanOrEqual(magnitudes[i - 1]);
+      }
+    });
+  });
+
+  it('AXIS_LABEL has a distinct, non-empty display label for every axis used in AXES', () => {
+    for (const axis of AXES) {
+      expect(AXIS_LABEL[axis]).toEqual(expect.stringMatching(/\S/));
+    }
+    const labels = AXES.map((axis) => AXIS_LABEL[axis]);
+    expect(new Set(labels).size).toBe(labels.length);
   });
 });

@@ -1,5 +1,6 @@
-import { roleFitValue, isRoleFitAxis, supportMiscastMultiplier } from './role-fit';
-import { makeHero } from '../test-utils/hero-factory';
+import { roleFitValue, isRoleFitAxis, supportMiscastMultiplier, roleAwareAxisValue } from './role-fit';
+import { makeHero, DEFAULT_EVALUATION_VALUES } from '../test-utils/hero-factory';
+import type { Hero, PresumedPosition } from 'shared';
 
 describe('roleFitValue', () => {
   it('returns the raw value unchanged when no role is assigned', () => {
@@ -77,6 +78,41 @@ describe('roleFitValue', () => {
   it('still dampens at exactly the gate boundary (breadth=2)', () => {
     expect(roleFitValue('durability', 'Hard Support', 0.6, 2)).toBe(1.9);
   });
+
+  // ROLE_AXES maps every axis per role, but the existing tests above only
+  // ever exercised ONE axis for Mid and ONE of the 4 axes for Offlane/Support
+  // — Mid was never tested with an explicit 'Mid' role at all (it happens to
+  // share the exact axis set with Carry, so nothing forced a distinction).
+  it('boosts both control and initiating for Mid (same axis set as Carry, but must be verified under its own role string)', () => {
+    expect(roleFitValue('control', 'Mid', 8)).toBeGreaterThan(8);
+    expect(roleFitValue('initiating', 'Mid', 8)).toBeGreaterThan(8);
+  });
+
+  it('boosts all 3 Offlane axes: map_control, initiating, mobility', () => {
+    expect(roleFitValue('map_control', 'Offlane', 8)).toBeGreaterThan(8);
+    expect(roleFitValue('initiating', 'Offlane', 8)).toBeGreaterThan(8);
+    expect(roleFitValue('mobility', 'Offlane', 8)).toBeGreaterThan(8);
+  });
+
+  it('boosts all 4 Hard/Soft Support axes: tempo, camp_stacking, mobility, map_control', () => {
+    for (const role of ['Hard Support', 'Soft Support']) {
+      expect(roleFitValue('tempo', role, 8)).toBeGreaterThan(8);
+      expect(roleFitValue('camp_stacking', role, 8)).toBeGreaterThan(8);
+      expect(roleFitValue('mobility', role, 8)).toBeGreaterThan(8);
+      expect(roleFitValue('map_control', role, 8)).toBeGreaterThan(8);
+    }
+  });
+
+  // Same gap for IRRELEVANT_AXIS_DAMPEN: the earlier dampen test only ever
+  // paired durability with Hard Support and objectives with Soft Support —
+  // the cross combos (durability+Soft Support, objectives+Hard Support)
+  // were never independently checked.
+  it('dampens BOTH durability and objectives for BOTH Hard and Soft Support', () => {
+    for (const role of ['Hard Support', 'Soft Support']) {
+      expect(roleFitValue('durability', role, 0.6)).toBe(1.9);
+      expect(roleFitValue('objectives', role, 0.6)).toBe(1.9);
+    }
+  });
 });
 
 describe('isRoleFitAxis', () => {
@@ -87,6 +123,10 @@ describe('isRoleFitAxis', () => {
   it('returns true only for axes relevant to the given role', () => {
     expect(isRoleFitAxis('control', 'Carry')).toBe(true);
     expect(isRoleFitAxis('saving', 'Carry')).toBe(false);
+  });
+
+  it('returns false (not a throw) for a role string with no ROLE_AXES entry at all', () => {
+    expect(isRoleFitAxis('control', 'Jungle')).toBe(false);
   });
 });
 
@@ -131,5 +171,79 @@ describe('supportMiscastMultiplier', () => {
     const bare = makeHero({ id: 4, name: 'Sven' });
     delete (bare as { presumed_positions?: unknown }).presumed_positions;
     expect(supportMiscastMultiplier(bare, 'Soft Support')).toBeCloseTo(0.9);
+  });
+
+  it('does not penalize at exactly the miscast threshold (0.05) — the cutoff is strictly-below, not at-or-below', () => {
+    const atThreshold = makeHero({
+      id: 5,
+      name: 'AtThreshold',
+      presumed_positions: [{ position: 'Support', share: 0.05 }],
+    });
+    expect(supportMiscastMultiplier(atThreshold, 'Hard Support')).toBe(1);
+  });
+});
+
+// roleAwareAxisValue is the module's actual exported entry point (used by
+// Battle Engine and axis.analyzer.ts) — everything above tests roleFitValue
+// directly, but makeHero's default evaluation_values_by_role is all
+// no_info (see test-utils/hero-factory.ts), so no existing test anywhere in
+// the suite ever exercised roleAwareAxisValue's real-per-role-data branch or
+// its private mapAssignedRoleToPresumedPosition helper.
+describe('roleAwareAxisValue', () => {
+  // Aggregate control (2) is deliberately different from the per-role value
+  // (9) so a test can tell which one the function actually returned.
+  function heroWithRealRoleData(position: PresumedPosition): Hero {
+    return makeHero({
+      id: 1,
+      name: 'X',
+      evaluation_values: { ...DEFAULT_EVALUATION_VALUES, control: 2 },
+      evaluation_values_by_role: {
+        Carry: { no_info: true },
+        Mid: { no_info: true },
+        Offlane: { no_info: true },
+        Support: { no_info: true },
+        [position]: { ...DEFAULT_EVALUATION_VALUES, control: 9 },
+      },
+    });
+  }
+
+  it('prefers real per-role data over the aggregate/heuristic fallback when it exists, for Carry/Mid/Offlane', () => {
+    expect(roleAwareAxisValue('control', heroWithRealRoleData('Carry'), 'Carry')).toBe(9);
+    expect(roleAwareAxisValue('control', heroWithRealRoleData('Mid'), 'Mid')).toBe(9);
+    expect(roleAwareAxisValue('control', heroWithRealRoleData('Offlane'), 'Offlane')).toBe(9);
+  });
+
+  it('maps BOTH Hard Support and Soft Support to the same real Support per-role data', () => {
+    const hero = heroWithRealRoleData('Support');
+    expect(roleAwareAxisValue('control', hero, 'Hard Support')).toBe(9);
+    expect(roleAwareAxisValue('control', hero, 'Soft Support')).toBe(9);
+  });
+
+  it('falls back to the old aggregate + heuristic-boost mechanism when no real per-role data exists (no_info)', () => {
+    // makeHero defaults every role to no_info.
+    const hero = makeHero({ id: 2, name: 'Y', evaluation_values: { ...DEFAULT_EVALUATION_VALUES, control: 8 } });
+    // roleFitValue's own boost formula: 8 is 3 above baseline(5) -> +0.9 -> 8.9.
+    expect(roleAwareAxisValue('control', hero, 'Carry')).toBe(8.9);
+  });
+
+  it('falls back to the aggregate unchanged when assignedRole is null (no position to look up)', () => {
+    const hero = makeHero({ id: 3, name: 'Z', evaluation_values: { ...DEFAULT_EVALUATION_VALUES, control: 8 } });
+    expect(roleAwareAxisValue('control', hero, null)).toBe(8);
+  });
+
+  it('falls back to the aggregate unchanged for an unrecognized role string (maps to no position)', () => {
+    const hero = makeHero({ id: 4, name: 'W', evaluation_values: { ...DEFAULT_EVALUATION_VALUES, control: 8 } });
+    expect(roleAwareAxisValue('control', hero, 'Jungle')).toBe(8);
+  });
+
+  it('does not map null or an unrecognized role to Support, even when the hero HAS real Support-role data', () => {
+    // Distinguishes "correctly resolves to no position" from "happens to
+    // fall back to the aggregate anyway because this hero has no real data
+    // for ANY role" (the two tests above can't tell those apart on their
+    // own) — this hero has real Support data, so an incorrect Support
+    // mapping would visibly return 9 instead of the aggregate's 2.
+    const hero = heroWithRealRoleData('Support');
+    expect(roleAwareAxisValue('control', hero, null)).toBe(2);
+    expect(roleAwareAxisValue('control', hero, 'Jungle')).toBe(2);
   });
 });

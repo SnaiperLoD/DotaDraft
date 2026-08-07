@@ -6,7 +6,7 @@ const HERO_POOL: Hero[] = Array.from({ length: 10 }, (_, i) => makeHero({ id: i 
 
 function makeFakeHeroService() {
   return {
-    randomPool: jest.fn(async (excludeIds: number[], size: number) =>
+    randomPool: jest.fn(async (excludeIds: number[], size: number, _seed: number) =>
       HERO_POOL.filter((h) => !excludeIds.includes(h.id)).slice(0, size),
     ),
     findByIds: jest.fn(async (ids: number[]) => HERO_POOL.filter((h) => ids.includes(h.id))),
@@ -76,6 +76,9 @@ function makeFakePrisma() {
       }),
     },
     $transaction: jest.fn(async (ops: Promise<unknown>[]) => Promise.all(ops)),
+    battleResult: {
+      create: jest.fn(async ({ data }: any) => data),
+    },
   };
 }
 
@@ -118,6 +121,11 @@ describe('DraftService', () => {
   });
 
   describe('pick()', () => {
+    it('throws NotFoundException for an unknown draft', async () => {
+      const { service } = makeService();
+      await expect(service.pick('nonexistent', 1)).rejects.toThrow('Draft not found');
+    });
+
     it('rejects a hero not in the current pool', async () => {
       const { service } = makeService();
       const draft = await service.start();
@@ -150,9 +158,26 @@ describe('DraftService', () => {
       const excludeArg = heroService.randomPool.mock.calls[1][0];
       expect(excludeArg).toContain(firstPick);
     });
+
+    it("derives each round's pool seed as draft.seed + pickOrder (the deterministic replay chain)", async () => {
+      const { service, heroService } = makeService();
+      let draft = await service.start();
+      const startSeed = heroService.randomPool.mock.calls[0][2];
+
+      draft = await service.pick(draft.id, draft.pool[0].id);
+      expect(heroService.randomPool.mock.calls[1][2]).toBe(startSeed + 1);
+
+      draft = await service.pick(draft.id, draft.pool[0].id);
+      expect(heroService.randomPool.mock.calls[2][2]).toBe(startSeed + 2);
+    });
   });
 
   describe('reroll()', () => {
+    it('throws NotFoundException for an unknown draft', async () => {
+      const { service } = makeService();
+      await expect(service.reroll('nonexistent')).rejects.toThrow('Draft not found');
+    });
+
     it('starts with 1 reroll available', async () => {
       const { service } = makeService();
       const draft = await service.start();
@@ -190,9 +215,27 @@ describe('DraftService', () => {
       const draft = await playToRoleAssignment(service);
       await expect(service.reroll(draft.id)).rejects.toThrow('Draft is not in picking phase');
     });
+
+    it('derives the new seed as Math.floor(Math.random() * 2**31), not some other formula', async () => {
+      const { service, heroService } = makeService();
+      const draft = await service.start();
+      const randomSpy = jest.spyOn(Math, 'random').mockReturnValue(0.25);
+      try {
+        await service.reroll(draft.id);
+      } finally {
+        randomSpy.mockRestore();
+      }
+      const rerollSeed = heroService.randomPool.mock.calls.at(-1)![2];
+      expect(rerollSeed).toBe(Math.floor(0.25 * 2 ** 31));
+    });
   });
 
   describe('assignRoles()', () => {
+    it('throws NotFoundException for an unknown draft', async () => {
+      const { service } = makeService();
+      await expect(service.assignRoles('nonexistent', [])).rejects.toThrow('Draft not found');
+    });
+
     it('rejects assigning roles before all 5 heroes are picked', async () => {
       const { service } = makeService();
       const draft = await service.start();
@@ -256,6 +299,88 @@ describe('DraftService', () => {
       await expect(service.assignRoles(draft.id, assignments)).rejects.toThrow(
         'Each role must be assigned to exactly one hero',
       );
+    });
+  });
+
+  // getEvaluationScore/saveEvaluationResult back History's "most recent
+  // evaluation" snapshot (Blueprint/10-tech-debt-backlog.md) — previously
+  // untested entirely, unlike start/pick/reroll/assignRoles above.
+  describe('getEvaluationScore() / saveEvaluationResult()', () => {
+    it('returns null for a draft that does not exist', async () => {
+      const { service } = makeService();
+      expect(await service.getEvaluationScore('nonexistent')).toBeNull();
+    });
+
+    it('returns null for a draft that has never had an evaluation saved', async () => {
+      const { service } = makeService();
+      const draft = await service.start();
+      expect(await service.getEvaluationScore(draft.id)).toBeNull();
+    });
+
+    it('returns the saved totalScore after saveEvaluationResult()', async () => {
+      const { service } = makeService();
+      const draft = await service.start();
+      await service.saveEvaluationResult(draft.id, JSON.stringify({ totalScore: 7.5 }));
+      expect(await service.getEvaluationScore(draft.id)).toBe(7.5);
+    });
+
+    it('overwrites the previous evaluation on a second save rather than versioning it', async () => {
+      const { service } = makeService();
+      const draft = await service.start();
+      await service.saveEvaluationResult(draft.id, JSON.stringify({ totalScore: 3 }));
+      await service.saveEvaluationResult(draft.id, JSON.stringify({ totalScore: 8.2 }));
+      expect(await service.getEvaluationScore(draft.id)).toBe(8.2);
+    });
+  });
+
+  // saveBattleResult persists one row per Battle Mode fight for History's
+  // expandable battle list — also previously untested entirely.
+  describe('saveBattleResult()', () => {
+    it('creates a battleResult row with the draftId and every field passed through, JSON-stringifying opponentHeroIds', async () => {
+      const { service, prisma } = makeService();
+      const draft = await service.start();
+
+      await service.saveBattleResult(draft.id, {
+        resolvedOutcome: 'Win',
+        advantageDirection: 'A',
+        confidenceTier: 'High',
+        opponentSource: 'pro',
+        opponentTeamName: 'Team Secret',
+        opponentLeagueName: 'The International',
+        opponentHeroIds: [1, 2, 3, 4, 5],
+      });
+
+      expect(prisma.battleResult.create).toHaveBeenCalledWith({
+        data: {
+          draftId: draft.id,
+          resolvedOutcome: 'Win',
+          advantageDirection: 'A',
+          confidenceTier: 'High',
+          opponentSource: 'pro',
+          opponentTeamName: 'Team Secret',
+          opponentLeagueName: 'The International',
+          opponentHeroIds: '[1,2,3,4,5]',
+        },
+      });
+    });
+
+    it('passes through null opponentTeamName/opponentLeagueName unchanged (player-sourced opponents)', async () => {
+      const { service, prisma } = makeService();
+      const draft = await service.start();
+
+      await service.saveBattleResult(draft.id, {
+        resolvedOutcome: 'Lose',
+        advantageDirection: 'B',
+        confidenceTier: 'Low',
+        opponentSource: 'player',
+        opponentTeamName: null,
+        opponentLeagueName: null,
+        opponentHeroIds: [6, 7, 8, 9, 10],
+      });
+
+      const call = (prisma.battleResult.create as jest.Mock).mock.calls[0][0];
+      expect(call.data.opponentTeamName).toBeNull();
+      expect(call.data.opponentLeagueName).toBeNull();
     });
   });
 });
