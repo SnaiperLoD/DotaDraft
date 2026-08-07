@@ -73,18 +73,20 @@ Output:
 
 ## Role-fit Modifier
 
-Реализовано (`server/src/common/role-fit.ts`, общий модуль для Evaluation и Battle Engine — см. Core Rules Separation в `01-core-rules.md`, применяется внутри `createAxisAnalyzer`): при назначении роли герою бустятся значения существующих осей, релевантных этой роли, но только если герой уже выше базовой линии (5/10) на этой оси — модификатор усиливает уже сильную сторону, не спасает плохую подгонку. Буст пропорционален превышению над базовой линией (вес 0.15): `effectiveValue = min(10, rawValue + 0.15 × (rawValue − 5))`.
+Реализовано (`server/src/common/role-fit.ts`, общий модуль для Evaluation и Battle Engine — см. Core Rules Separation в `01-core-rules.md`, применяется внутри `createAxisAnalyzer`): при назначении роли герою бустятся значения существующих осей, релевантных этой роли, но только если герой уже выше базовой линии (5/10) на этой оси — модификатор усиливает уже сильную сторону, не спасает плохую подгонку. Буст пропорционален превышению над базовой линией (вес **0.3**, поднят с изначальных 0.15 — см. `10-tech-debt-backlog.md`): `effectiveValue = min(10, rawValue + 0.3 × (rawValue − 5))`.
 
-Карта осей по ролям:
-- Carry → `scaling`, `burst`
-- Mid → `tempo`, `burst`
-- Offlane → `durability`, `control`, `initiating`
-- Hard Support → `saving`, `map_control`
-- Soft Support → `saving`, `control`
+**Карта осей по ролям (round 3, 2026-08-06) — впервые построена на реальных данных, а не вручную:**
+- Carry → `control`, `initiating`
+- Mid → `initiating`, `control`
+- Offlane → `map_control`, `initiating`, `mobility`
+- Hard Support → `tempo`, `camp_stacking`, `mobility`, `map_control`
+- Soft Support → `tempo`, `camp_stacking`, `mobility`, `map_control`
 
-**Веса и карта осей — ручная эвристика, не откалиброванный факт.** Два захода на калибровку через реальные данные (полное описание — `10-tech-debt-backlog.md`): позиционные бакеты по `lane_role`/`is_roaming` не смогли представить Support как natural role вообще (саппорты, стоящие в лейне без роуминга, попадают в Carry/Offlane bucket); бакеты по per-match GPM-рангу внутри команды (`server/scripts/research-role-fit-gpm-rank.ts`) дали все 5 ролей, но корреляция между кандидатными осями роли и реальной win-rate delta оказалась статистически неотличима от нуля при доступном n (17-37 героев на роль, |r|<0.2 везде). Карта выше сохраняет то же направление, что эти слабые корреляции указывали (Carry/Hard Support положительно, Mid/Offlane/Soft Support слабо отрицательно, но не значимо) — не опровергнута данными достаточно сильно, чтобы отказаться, но и не подтверждена.
+Построена корреляцией `evaluation_values_by_role`'s реальных per-role значений против (реальный per-role winRate минус общий winRate героя), только по героям с реальными данными в ≥2 ролях (n=25-38 на роль, |r| до 0.63 — предыдущая попытка давала n=17-37, |r|<0.2 везде, см. историю ниже). Несколько осей поменяли знак относительно старой ручной карты (`scaling`/`burst` вышли отрицательными почти везде, `durability` — отрицательной для Offlane) — не перенесены в карту, поскольку `roleFitValue()` умеет только бустить, нет механизма "награда за низкое значение". `tempo` — самый сильный найденный предиктор (Support, r=0.63), полностью вытеснил `saving`/`control` из старой карты. Hard/Soft Support получили одинаковые оси — 4-бакетный ролевой классификатор (`research-role-classification-final.ts`) их не различает.
 
-Область применения: `common/role-fit.ts` — общий модуль, тот же `roleFitValue()` используется и Battle Engine (`battle-resolution.ts`'s `axisAverage()`), не только Evaluation.
+**Это работает только для `no_info`-пар (без реальных per-role данных).** Начиная с этой же сессии, `roleAwareAxisValue()` (`common/role-fit.ts`) — экспериментальный слой поверх `roleFitValue()`: если для (герой, роль) есть реальные данные в `evaluation_values_by_role`, используется напрямую ОНО, эта эвристика не применяется вообще. `roleFitValue()`/карта выше остаются только временным фоллбэком для 308 из 508 пар без реальных данных — см. `12-next-session-priorities.md` и историю ниже про две предыдущие (отставленные) попытки калибровки карты.
+
+Область применения: `common/role-fit.ts` — общий модуль, тот же `roleFitValue()`/`roleAwareAxisValue()` используются и Battle Engine (`battle-resolution.ts`'s `axisAverage()`), не только Evaluation.
 
 ## Hard-Carry Stacking Penalty
 

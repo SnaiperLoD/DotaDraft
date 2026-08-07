@@ -81,3 +81,18 @@ Adding a new axis to `HeroEvaluationValues` and wiring it into an Analyzer/Battl
 ## Prisma + SQLite has no native `Json` field type
 
 The SQLite connector rejects `Json` as a Prisma field type (`"can't be of type Json. The current connector does not support the Json type"`). Store arrays/objects as `String` columns and `JSON.stringify`/`JSON.parse` manually at the application boundary (see `hero.service.ts`, `draft.service.ts`).
+
+---
+
+## `simulate-self-play.ts` can't toggle `realWinRateWeight` mid-run — it must be patched on disk before the process starts
+
+`battle-resolution.ts` reads `server/data/axis-weights.json` into a top-level `const` once, at module import time. Any self-play/regression script that statically imports from `battle-resolution.ts` (as `simulate-self-play.ts` does) locks in whatever `realWinRateWeight` was on disk at process start — there is no way to flip it between runs from inside the script, even across multiple in-process seeded runs of a multi-run driver. Getting a non-circular read (a hero's real OpenDota winRate isn't fed back into their own score as a multiplier, which trivially inflates the favoredRate-vs-realWinRate correlation) requires patching `axis-weights.json` to `realWinRateWeight: 0` on disk **before** invoking the script, then restoring the original after:
+
+```bash
+cp data/axis-weights.json data/axis-weights.json.bak
+node -e "const fs=require('fs');const w=JSON.parse(fs.readFileSync('data/axis-weights.json'));w.realWinRateWeight=0;fs.writeFileSync('data/axis-weights.json',JSON.stringify(w,null,2)+'\n')"
+npx ts-node scripts/simulate-self-play.ts
+cp data/axis-weights.json.bak data/axis-weights.json && rm data/axis-weights.json.bak
+```
+
+Forgetting this doesn't error — it silently produces an inflated, meaningless r (observed: ≈0.42 with the crutch active vs the honest ≈0.19-0.21 without it, same calibration). Already happened once (2026-08-06, the first 300k×5-seed×2-mode run after the seeded/multi-run driver was built) — the mistake is easy to repeat specifically because the new driver made running the script feel like a fire-and-forget command, which the manual axis-weights.json dance doesn't fit into.
