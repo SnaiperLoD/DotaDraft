@@ -38,5 +38,12 @@ export interface BattleResultResponse {
   // матчапам" — top real matchup/synergy pairs for whichever side actually
   // won this battle, narrative sentences only (see battle-resolution.ts).
   winningHighlights: string[];
+  // Shutdown (common/shutdown.ts) — hero ids on EITHER side (mine or the
+  // opponent's) uniformly countered by all 5 heroes on the other draft.
+  // Client marks the matching portrait regardless of which side it belongs
+  // to; shutdownNotes are separate narrative lines already phrased from the
+  // calling player's own perspective.
+  shutdownHeroIds: number[];
+  shutdownNotes: string[];
   opponent: BattleOpponent;
 }

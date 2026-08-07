@@ -137,6 +137,7 @@
   width: 130px;
   text-align: center;
   flex-shrink: 0;
+  position: relative;
 }
 
 .portrait-card img {
@@ -147,6 +148,33 @@
   border-radius: 4px;
   border: 1px solid var(--bronze-dim);
   display: block;
+}
+
+/* Shutdown (common/shutdown.ts) — a hero countered by all 5 heroes on the
+   opposing draft. Cracked-glass overlay + desaturation on the portrait
+   only, no change to the row layout or caption. Rare by design (see
+   SHUTDOWN_WINRATE_MARGIN), so this should read as a dramatic one-off, not
+   a routine state. */
+.portrait-card--shutdown img {
+  filter: saturate(0.45) brightness(0.8);
+  border-color: var(--danger);
+}
+
+.portrait-card--shutdown::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 130px;
+  height: 81px;
+  pointer-events: none;
+  background: var(--danger);
+  opacity: 0.85;
+  clip-path: polygon(38% 0%, 41% 20%, 32% 28%, 44% 44%, 34% 56%, 48% 100%, 52% 100%, 42% 58%, 56% 46%, 44% 30%, 55% 22%, 50% 0%);
+}
+
+.battle-list-block--shutdown .battle-list-heading {
+  color: var(--danger);
 }
 
 .portrait-card .name {

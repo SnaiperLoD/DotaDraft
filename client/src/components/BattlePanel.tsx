@@ -27,6 +27,7 @@ function PortraitCard({
   name,
   caption,
   translateCaption = true,
+  isShutdown = false,
 }: {
   heroId: number;
   name: string;
@@ -35,10 +36,14 @@ function PortraitCard({
   // opponent side's caption (when present) is a real player's OpenDota
   // name — display verbatim, never run through the roles.* dictionary.
   translateCaption?: boolean;
+  // Shutdown (common/shutdown.ts) — cracked-portrait visual only, on
+  // whichever side this hero is being rendered on. See BattlePanel.css
+  // .portrait-card--shutdown.
+  isShutdown?: boolean;
 }) {
   const { t } = useTranslation();
   return (
-    <div className="portrait-card">
+    <div className={`portrait-card${isShutdown ? ' portrait-card--shutdown' : ''}`}>
       <img src={heroPortraitUrl(heroId)} alt={name} width={130} height={81} />
       <div className="name">{name}</div>
       {caption && <div className="caption">{translateCaption ? t(`roles.${caption}`) : caption}</div>}
@@ -61,10 +66,12 @@ function FaceOff({
   myHeroes,
   opponentHeroes,
   collisionKey,
+  shutdownHeroIds,
 }: {
   myHeroes: DraftHeroView[];
   opponentHeroes: BattleOpponentHero[];
   collisionKey: number;
+  shutdownHeroIds: number[];
 }) {
   const roleOrder = ROLES as readonly string[];
   const sortedMine = myHeroes
@@ -75,13 +82,26 @@ function FaceOff({
     <div className="faceoff" key={collisionKey}>
       <div className="faceoff-row faceoff-row--mine">
         {sortedMine.map((h) => (
-          <PortraitCard key={h.heroId} heroId={h.heroId} name={h.hero.name} caption={h.assignedRole} />
+          <PortraitCard
+            key={h.heroId}
+            heroId={h.heroId}
+            name={h.hero.name}
+            caption={h.assignedRole}
+            isShutdown={shutdownHeroIds.includes(h.heroId)}
+          />
         ))}
       </div>
       <div className="faceoff-divider">VS</div>
       <div className="faceoff-row faceoff-row--opponent">
         {opponentHeroes.map((h) => (
-          <PortraitCard key={h.heroId} heroId={h.heroId} name={h.heroName} caption={h.playerName} translateCaption={false} />
+          <PortraitCard
+            key={h.heroId}
+            heroId={h.heroId}
+            name={h.heroName}
+            caption={h.playerName}
+            translateCaption={false}
+            isShutdown={shutdownHeroIds.includes(h.heroId)}
+          />
         ))}
       </div>
     </div>
@@ -161,7 +181,23 @@ export default function BattlePanel({ draftId, heroes }: Props) {
             )}
           </p>
 
-          <FaceOff myHeroes={heroes} opponentHeroes={result.opponent.heroes} collisionKey={battleCount} />
+          <FaceOff
+            myHeroes={heroes}
+            opponentHeroes={result.opponent.heroes}
+            collisionKey={battleCount}
+            shutdownHeroIds={result.shutdownHeroIds}
+          />
+
+          {result.shutdownNotes.length > 0 && (
+            <div className="battle-list-block battle-list-block--shutdown">
+              <div className="battle-list-heading">{t('battle.shutdown')}</div>
+              <ul>
+                {result.shutdownNotes.map((n, i) => (
+                  <li key={i}>{n}</li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {result.winningHighlights.length > 0 && (
             <div className="battle-list-block">

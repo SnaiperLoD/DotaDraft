@@ -83,6 +83,8 @@ export class BattleService {
       disadvantages: result.disadvantages,
       explanation: result.explanation,
       winningHighlights: result.winningHighlights,
+      shutdownHeroIds: result.shutdownHeroIds,
+      shutdownNotes: result.shutdownNotes,
       opponent: {
         source: opponent.source,
         heroes: teamBAligned.map((h) => ({

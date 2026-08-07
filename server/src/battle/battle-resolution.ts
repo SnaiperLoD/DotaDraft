@@ -5,6 +5,7 @@ import { roleAwareAxisValue, supportMiscastMultiplier } from '../common/role-fit
 import { hardCarryAxisMultipliers, isHardCarry } from '../common/hard-carry';
 import { utilityStackAxisMultipliers, utilityStackBreadth } from '../common/utility-stacking';
 import { manualPowerMultiplier } from '../common/manual-power-overrides';
+import { shutdownHeroes, shutdownHeroMultipliers } from '../common/shutdown';
 import {
   type CustomTagEffects,
   blessingEffectsFor,
@@ -44,6 +45,13 @@ export interface BattleResult {
   disadvantages: string[];
   explanation: string[];
   winningHighlights: string[];
+  // Shutdown (common/shutdown.ts) — hero ids on EITHER side flagged this
+  // battle, for the client to mark on portraits regardless of which side
+  // they're rendering. shutdownNotes are separate narrative lines (not
+  // folded into `explanation`), one per shutdown hero, phrased from the
+  // calling player's own perspective ("Your X" vs "Opponent's X").
+  shutdownHeroIds: number[];
+  shutdownNotes: string[];
 }
 
 export const AXES: (keyof HeroEvaluationValues)[] = [
@@ -513,6 +521,11 @@ export interface BattleAssessment {
   rawDiff: number;
   rawAdvantageDirection: AdvantageDirection;
   axisDeltas: { axis: keyof HeroEvaluationValues; delta: number }[];
+  // Shutdown (common/shutdown.ts) — heroes on each side uniformly countered
+  // by all 5 opponents (every real matchup winRate at least 1.5pp below
+  // their own overall winRate). Rare by design.
+  shutdownHeroesA: Hero[];
+  shutdownHeroesB: Hero[];
 }
 
 // Per-hero final power multiplier (manual-power-overrides.ts) — every axis
@@ -582,6 +595,12 @@ export function assessBattle(
   const rawAxisAveragesB = Object.fromEntries(
     AXES.map((axis) => [axis, axisAverage(teamB, axis)]),
   ) as Partial<Record<keyof HeroEvaluationValues, number>>;
+  // Shutdown (common/shutdown.ts) — computed before tagEffects so its
+  // personal power penalty can merge into the same heroPowerMultiplier map
+  // as manual-power-overrides.ts below, one mechanism, not two.
+  const shutdownHeroesA = shutdownHeroes(heroesA, heroesB, lookup);
+  const shutdownHeroesB = shutdownHeroes(heroesB, heroesA, lookup);
+
   // Hard-carry stacking (common/hard-carry.ts) folded into the same
   // per-axis-multiplier mechanism as Custom Tags, rather than the flat
   // whole-power scalar this used to be — scaling is deliberately exempt
@@ -593,6 +612,7 @@ export function assessBattle(
     { ...emptyTagEffects(), axisMultiplier: hardCarryAxisMultipliers(heroesA) },
     { ...emptyTagEffects(), heroAxisMultiplier: utilityStackHeroAxisMultipliers(heroesA) },
     { ...emptyTagEffects(), heroPowerMultiplier: manualPowerHeroMultipliers(heroesA) },
+    { ...emptyTagEffects(), heroPowerMultiplier: shutdownHeroMultipliers(shutdownHeroesA) },
   );
   const tagEffectsB = mergeTagEffects(
     blessingEffectsFor(heroesB, rawAxisAveragesB, rawAxisAveragesA),
@@ -600,6 +620,7 @@ export function assessBattle(
     { ...emptyTagEffects(), axisMultiplier: hardCarryAxisMultipliers(heroesB) },
     { ...emptyTagEffects(), heroAxisMultiplier: utilityStackHeroAxisMultipliers(heroesB) },
     { ...emptyTagEffects(), heroPowerMultiplier: manualPowerHeroMultipliers(heroesB) },
+    { ...emptyTagEffects(), heroPowerMultiplier: shutdownHeroMultipliers(shutdownHeroesB) },
   );
   const taggedPowerA = blendedOverallPower(teamA, tagEffectsA);
   const taggedPowerB = blendedOverallPower(teamB, tagEffectsB);
@@ -653,6 +674,8 @@ export function assessBattle(
     rawDiff,
     rawAdvantageDirection,
     axisDeltas,
+    shutdownHeroesA,
+    shutdownHeroesB,
   };
 }
 
@@ -674,7 +697,25 @@ export function resolveBattle(
 ): BattleResult {
   const heroesA = teamA.map((p) => p.hero);
   const heroesB = teamB.map((p) => p.hero);
-  const { confidenceTier, advantageDirection, axisDeltas } = assessBattle(teamA, teamB, lookup);
+  const { confidenceTier, advantageDirection, axisDeltas, shutdownHeroesA, shutdownHeroesB } = assessBattle(
+    teamA,
+    teamB,
+    lookup,
+  );
+
+  // Shutdown notes — phrased from the calling player's own perspective
+  // (teamA is always "your draft," see BattleService.fight()), independent
+  // of advantageDirection/resolvedOutcome: a hero can be countered out of
+  // the game on the winning side too, worth surfacing either way.
+  const shutdownNotes = [
+    ...shutdownHeroesA.map(
+      (h) => `Your ${h.name} is being SHUT DOWN — every hero on the opposing draft has historically beaten them (-10% power).`,
+    ),
+    ...shutdownHeroesB.map(
+      (h) => `Opponent's ${h.name} is being SHUT DOWN — every hero on your draft has historically beaten them (-10% power).`,
+    ),
+  ];
+  const shutdownHeroIds = [...shutdownHeroesA, ...shutdownHeroesB].map((h) => h.id);
 
   const favorWeight = WIN_WEIGHT_BY_TIER[confidenceTier];
   const basePWinA = advantageDirection === 'A' ? favorWeight : advantageDirection === 'B' ? 1 - favorWeight : 0.5;
@@ -758,5 +799,7 @@ export function resolveBattle(
     disadvantages,
     explanation,
     winningHighlights: highlights,
+    shutdownHeroIds,
+    shutdownNotes,
   };
 }
