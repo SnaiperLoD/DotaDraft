@@ -1,40 +1,291 @@
+/* ---------- hero ---------- */
+
 .landing-hero {
-  max-width: 640px;
-  margin: 40px auto 36px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
-  gap: 16px;
+  gap: var(--sp-7);
+  padding: var(--sp-6) 0 var(--sp-7);
+}
+
+.landing-hero-copy {
+  max-width: 30em;
+}
+
+.landing-eyebrow {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 var(--sp-3);
+  /* The tagline is a full sentence, so it wraps — a hairline on the left
+     keeps it reading as a kicker rather than as body copy set in caps. */
+  padding-left: var(--sp-3);
+  border-left: 2px solid var(--bronze);
+  line-height: 1.5;
 }
 
 .landing-title {
-  font-size: 40px;
-  margin: 0;
-  color: var(--gold);
-  text-shadow: 0 1px 0 var(--shadow-deep);
+  font-size: clamp(40px, 7vw, 62px);
+  line-height: 1;
+  margin: 0 0 var(--sp-4);
+  color: var(--ink);
+  letter-spacing: 0.02em;
 }
 
-.landing-tagline {
-  font-family: var(--font-ui);
-  font-size: 14px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  margin: 0;
+.landing-title span {
+  color: var(--gold);
+  /* Only the second half of the wordmark glows — the whole thing lit up
+     turns the headline into a light source and washes out the copy under
+     it. */
+  text-shadow: 0 0 32px color-mix(in srgb, var(--gold) 35%, transparent);
 }
 
 .landing-pitch {
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--ink);
-  margin: 0;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink-muted);
+  margin: 0 0 var(--sp-5);
 }
 
 .landing-actions {
   display: flex;
-  gap: 14px;
-  margin-top: 8px;
+  gap: var(--sp-3);
   flex-wrap: wrap;
+}
+
+.landing-facts {
+  display: flex;
+  gap: var(--sp-6);
+  margin: var(--sp-6) 0 0;
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+
+.landing-facts div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.landing-facts dt {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--gold-bright);
+}
+
+.landing-facts dd {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ---------- fanned portrait art ---------- */
+
+.landing-hero-art {
+  display: flex;
   justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.landing-fan {
+  display: flex;
+  align-items: flex-end;
+  /* The cards overlap into a fan (negative margins on the cards
+     themselves — `gap` can't be negative), the way a hand of cards does.
+     Each card's own --tilt/--lift, set per hero in the component, is what
+     turns the overlap into an arc. */
+}
+
+.landing-fan-card {
+  position: relative;
+  width: 132px;
+  height: 168px;
+  margin: 0 -22px;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  border: 1px solid var(--bronze);
+  box-shadow: var(--elev-3);
+  transform: rotate(var(--tilt)) translateY(var(--lift));
+  transform-origin: bottom center;
+  transition:
+    transform var(--dur-3) var(--ease-out),
+    box-shadow var(--dur-3) var(--ease-out),
+    border-color var(--dur-3) ease;
+  animation: fan-deal var(--dur-4) var(--ease-out) both;
+  animation-delay: var(--delay);
+}
+
+/* Later cards sit on top of earlier ones so the fan reads left-to-right;
+   the centre card is raised above both neighbours. */
+.landing-fan-card:nth-child(1) {
+  z-index: 1;
+}
+.landing-fan-card:nth-child(2) {
+  z-index: 2;
+}
+.landing-fan-card:nth-child(3) {
+  z-index: 3;
+}
+.landing-fan-card:nth-child(4) {
+  z-index: 2;
+}
+.landing-fan-card:nth-child(5) {
+  z-index: 1;
+}
+
+.landing-fan-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+/* Warm vignette over each portrait so the fan reads as one object in the
+   page's palette rather than five unrelated screenshots. */
+.landing-fan-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(21, 16, 12, 0.85), transparent 60%),
+    linear-gradient(180deg, color-mix(in srgb, var(--gold) 12%, transparent), transparent 40%);
+}
+
+.landing-fan:hover .landing-fan-card {
+  /* Spread on hover — the fan opens up and every card becomes legible. */
+  margin: 0 -10px;
+}
+
+.landing-fan-card:hover {
+  transform: rotate(var(--tilt)) translateY(calc(var(--lift) - 14px)) scale(1.05);
+  border-color: var(--gold);
+  box-shadow:
+    var(--elev-3),
+    0 0 26px color-mix(in srgb, var(--gold) 35%, transparent);
+  z-index: 4;
+}
+
+@keyframes fan-deal {
+  from {
+    opacity: 0;
+    transform: rotate(0deg) translateY(40px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(var(--tilt)) translateY(var(--lift));
+  }
+}
+
+/* ---------- how it works ---------- */
+
+.landing-steps {
+  margin-bottom: var(--sp-7);
+}
+
+.landing-steps .section-head h2 {
+  font-size: 20px;
+}
+
+.landing-step-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--sp-4);
+}
+
+.landing-step {
+  position: relative;
+  padding: var(--sp-5) var(--sp-4) var(--sp-4);
+  overflow: hidden;
+}
+
+/* Oversized ghosted numeral in the corner — carries the ordering without
+   spending a whole line of text on "Step 1". */
+.landing-step-index {
+  position: absolute;
+  top: -10px;
+  right: 6px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 62px;
+  line-height: 1;
+  color: var(--bronze);
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+.landing-step h3 {
+  font-size: 16px;
+  color: var(--gold-bright);
+  margin: 0 0 var(--sp-2);
+}
+
+.landing-step p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 900px) {
+  .landing-hero {
+    grid-template-columns: 1fr;
+    gap: var(--sp-5);
+    text-align: center;
+    padding-top: var(--sp-5);
+  }
+
+  .landing-hero-copy {
+    max-width: none;
+  }
+
+  .landing-eyebrow {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .landing-actions,
+  .landing-facts {
+    justify-content: center;
+  }
+
+  /* Art below the copy on narrow screens — the CTA should be the first
+     thing in reach, not pushed under a decorative block. */
+  .landing-hero-art {
+    order: 2;
+    min-height: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .landing-fan-card {
+    width: 96px;
+    height: 124px;
+    margin: 0 -16px;
+  }
+
+  .landing-facts {
+    gap: var(--sp-5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-fan-card {
+    animation: none;
+    transition: none;
+  }
 }

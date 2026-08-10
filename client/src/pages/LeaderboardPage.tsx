@@ -24,6 +24,13 @@ export default function LeaderboardPage() {
       .catch((err) => setError((err as Error).message));
   }, []);
 
+  const head = (
+    <div className="section-head">
+      <h2>{t('leaderboard.title')}</h2>
+      <div className="rule" />
+    </div>
+  );
+
   if (error) {
     return (
       <div className="page">
@@ -34,58 +41,86 @@ export default function LeaderboardPage() {
 
   if (!entries) {
     return (
-      <div className="page">
-        <p className="loading-text">{t('draft.loading')}</p>
+      <div className="page leaderboard-page">
+        {head}
+        <p className="leaderboard-note">{t('leaderboard.note')}</p>
+        <div className="skeleton leaderboard-skeleton" />
       </div>
     );
   }
 
   return (
     <div className="page leaderboard-page">
-      <h2>{t('leaderboard.title')}</h2>
+      {head}
       <p className="leaderboard-note">{t('leaderboard.note')}</p>
 
       {entries.length === 0 ? (
         <p className="empty-text">{t('leaderboard.empty')}</p>
       ) : (
-        <table className="leaderboard-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>{t('leaderboard.draft')}</th>
-              <th>{t('leaderboard.evaluation')}</th>
-              <th>{t('leaderboard.wins')}</th>
-              <th>{t('leaderboard.losses')}</th>
-              <th>{t('leaderboard.winRate')}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {entries.map((entry, i) => (
-              <tr key={entry.id} className={entry.submitterToken === myToken ? 'leaderboard-row-me' : undefined}>
-                <td>{i + 1}</td>
-                <td>
-                  <div className="leaderboard-draft-cell">
-                    <div className="leaderboard-draft-icons">
-                      {entry.heroIds.map((heroId) => (
-                        <img key={heroId} src={heroIconUrl(heroId)} alt="" width={24} height={24} />
-                      ))}
-                    </div>
-                    {entry.source === 'pro' && entry.teamName && (
-                      <span className="leaderboard-team-name">
-                        {entry.teamName}
-                        {entry.leagueName ? ` (${entry.leagueName})` : ''}
-                      </span>
-                    )}
-                  </div>
-                </td>
-                <td>{entry.evaluationScore !== null ? `${entry.evaluationScore}/10` : t('evaluation.notAvailable')}</td>
-                <td>{entry.wins}</td>
-                <td>{entry.losses}</td>
-                <td>{Math.round(entry.winRate * 100)}%</td>
+        <div className="leaderboard-scroll">
+          <table className="leaderboard-table">
+            <thead>
+              <tr>
+                <th className="col-rank">#</th>
+                <th>{t('leaderboard.draft')}</th>
+                <th className="col-num">{t('leaderboard.evaluation')}</th>
+                <th className="col-num">{t('leaderboard.wins')}</th>
+                <th className="col-num">{t('leaderboard.losses')}</th>
+                <th className="col-rate">{t('leaderboard.winRate')}</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {entries.map((entry, i) => (
+                <tr
+                  key={entry.id}
+                  className={entry.submitterToken === myToken ? 'leaderboard-row-me' : undefined}
+                >
+                  {/* Top three get a medal disc instead of a bare number —
+                      a leaderboard whose first rows look identical to its
+                      fortieth isn't doing its one job. */}
+                  <td className="col-rank">
+                    <span className={`leaderboard-rank${i < 3 ? ` is-medal is-medal-${i + 1}` : ''}`}>
+                      {i + 1}
+                    </span>
+                  </td>
+                  <td>
+                    <div className="leaderboard-draft-cell">
+                      <div className="leaderboard-draft-icons">
+                        {entry.heroIds.map((heroId) => (
+                          <img key={heroId} src={heroIconUrl(heroId)} alt="" width={26} height={26} />
+                        ))}
+                      </div>
+                      {entry.source === 'pro' && entry.teamName && (
+                        <span className="leaderboard-team-name">
+                          {entry.teamName}
+                          {entry.leagueName ? ` (${entry.leagueName})` : ''}
+                        </span>
+                      )}
+                    </div>
+                  </td>
+                  <td className="col-num">
+                    {entry.evaluationScore !== null
+                      ? `${entry.evaluationScore}/10`
+                      : t('evaluation.notAvailable')}
+                  </td>
+                  <td className="col-num leaderboard-wins">{entry.wins}</td>
+                  <td className="col-num leaderboard-losses">{entry.losses}</td>
+                  <td className="col-rate">
+                    <div className="leaderboard-rate">
+                      <span className="leaderboard-rate-value">{Math.round(entry.winRate * 100)}%</span>
+                      <span className="leaderboard-rate-track">
+                        <span
+                          className="leaderboard-rate-fill"
+                          style={{ width: `${Math.round(entry.winRate * 100)}%` }}
+                        />
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

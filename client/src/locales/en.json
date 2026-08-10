@@ -5,15 +5,42 @@
       "about": "About",
       "history": "History",
       "leaderboard": "Leaderboard",
-      "reportBug": "Report a Bug"
+      "reportBug": "Report a Bug",
+      "menu": "Menu"
     }
+  },
+  "theme": {
+    "toggle": "Theme: {{mode}} — click to change",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark"
   },
   "landing": {
     "title": "DotaDraft",
     "tagline": "Draft five heroes. Get honest analysis. Fight for the win.",
     "pitch": "DotaDraft is a browser strategy game built around the Dota 2 draft — pick a team, get a real evaluation of its strengths and weaknesses, then send it into Battle Mode against another player's draft or a professional lineup. No accounts, no downloads — just the draft.",
     "cta": "Start Draft",
-    "aboutLink": "How scoring works"
+    "aboutLink": "How scoring works",
+    "howItWorks": "How it works",
+    "facts": {
+      "heroes": "Heroes in the pool",
+      "picks": "Picks per draft",
+      "accounts": "Accounts needed"
+    },
+    "steps": {
+      "draft": {
+        "title": "Draft five heroes",
+        "text": "Five rounds, five candidates each. Live synergy highlighting shows which pick fits what you already have — and which one fights it."
+      },
+      "evaluate": {
+        "title": "Get an honest read",
+        "text": "Your lineup is scored on synergy, tempo, control, scaling and more, each axis ranked against ten thousand random teams so a number actually means something."
+      },
+      "battle": {
+        "title": "Send it into battle",
+        "text": "Face another player's committed draft or a professional lineup. Win or lose, with a confidence tier — never a fake precise percentage."
+      }
+    }
   },
   "about": {
     "title": "How This Works",
@@ -34,7 +61,11 @@
     "loading": "Loading…",
     "roundNumber": "Round {{round}}",
     "ofFive": "of 5",
+    "allPicked": "Draft complete",
     "poolHint": "Choose one hero to fill your next slot",
+    "pick": "Pick",
+    "synergyBest": "Best synergy",
+    "synergyWorst": "Worst synergy",
     "reroll": "Re-roll ({{count}})",
     "yourTeam": "Your Team",
     "startNewDraft": "Start New Draft"
@@ -42,7 +73,10 @@
   "roleAssignment": {
     "heading": "Assign Roles",
     "selectRole": "Select role",
-    "confirm": "Confirm Roles"
+    "confirm": "Confirm Roles",
+    "progress": "{{assigned}} of {{total}} assigned",
+    "hint": "Pick a position 1–5 for each hero. A gold dot marks positions this hero actually plays in real matches. Taking a position that's already used moves it off the other hero.",
+    "stealFrom": "{{role}} — take it from {{hero}}"
   },
   "roles": {
     "Carry": "Carry",
@@ -71,6 +105,17 @@
     "evaluating": "Evaluating…",
     "evaluateDraft": "Evaluate Draft",
     "totalScore": "Evaluation — Total Score:",
+    "totalScoreShort": "Draft score",
+    "verdict": {
+      "dire": "Dire",
+      "weak": "Shaky",
+      "even": "Even",
+      "strong": "Strong",
+      "elite": "Elite"
+    },
+    "radarTitle": "Axis profile",
+    "radarAlt": "Radar chart of this draft's percentile on each evaluation axis",
+    "radarNote": "Distance from the centre is the percentile against 10,000 random teams. The dashed ring is average.",
     "strengths": "Strengths",
     "weaknesses": "Weaknesses",
     "notAvailable": "N/A",
@@ -91,6 +136,8 @@
     "defeat": "Defeat",
     "confidence": "{{tier}} Confidence",
     "vs": "vs.",
+    "sideYours": "Your draft",
+    "sideOpponent": "Opponent",
     "proDraft": "a professional draft",
     "anotherPlayer": "another player",
     "viewMatch": "(view match on OpenDota →)",
@@ -114,7 +161,11 @@
     "notEvaluated": "Not evaluated.",
     "battleCount_one": "{{count}} battle",
     "battleCount_other": "{{count}} battles",
-    "confidenceLower": "{{tier}} confidence"
+    "confidenceLower": "{{tier}} confidence",
+    "draftCount_one": "{{count}} draft",
+    "draftCount_other": "{{count}} drafts",
+    "winShort": "W",
+    "lossShort": "L"
   },
   "adSlot": {
     "label": "Advertisement"

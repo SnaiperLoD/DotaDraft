@@ -1,26 +1,46 @@
 .about-page {
-  max-width: 680px;
+  max-width: 760px;
 }
 
 .about-intro {
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 17px;
+  line-height: 1.65;
   color: var(--ink-muted);
+  margin: 0 0 var(--sp-6);
+}
+
+.about-sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
 }
 
 .about-section {
-  margin-top: 26px;
+  padding: var(--sp-4) var(--sp-5);
+}
+
+/* "What we don't claim" is the one section that's an admission rather
+   than a feature — a blood-colored edge marks it as a different kind of
+   statement without shouting. Doubled class for specificity: .panel sets
+   the `border` shorthand, which wins over a same-specificity border-left
+   depending on stylesheet order. */
+.about-section.about-section--caveat {
+  border-left: 3px solid var(--blood-bright);
 }
 
 .about-section h3 {
-  font-size: 16px;
+  font-size: 17px;
   color: var(--gold-bright);
-  margin-bottom: 6px;
+  margin: 0 0 var(--sp-2);
 }
 
 .about-section p {
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--ink);
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--ink-muted);
   margin: 0;
+}
+
+.about-cta {
+  margin-top: var(--sp-6);
 }

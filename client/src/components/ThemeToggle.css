@@ -1,0 +1,24 @@
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--bronze-dim);
+  background: transparent;
+  color: var(--ink-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    color var(--dur-2) ease,
+    border-color var(--dur-2) ease,
+    background-color var(--dur-2) ease;
+}
+
+.theme-toggle:hover {
+  color: var(--gold-bright);
+  border-color: var(--gold);
+  background: var(--wash);
+}

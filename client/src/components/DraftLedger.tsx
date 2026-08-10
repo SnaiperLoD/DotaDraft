@@ -23,6 +23,9 @@ export default function DraftLedger({ heroes, totalSlots, title }: Props) {
   const slots = Array.from({ length: totalSlots }, (_, i) => sorted[i] ?? null);
   const pickedHeroNames = sorted.map((h) => h.hero.name);
 
+  // Stays .panel rather than .plate (base.css): RoleTooltip pops ABOVE its
+  // slot (bottom: 100% + 8px), so slot #1's tooltip overflows the top edge
+  // and .plate's clip-path would cut it off.
   return (
     <div className="panel ledger">
       <h2 className="ledger-title">{title ?? t('draftLedger.defaultTitle')}</h2>

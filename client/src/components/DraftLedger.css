@@ -39,7 +39,7 @@
 
 .ledger-slot.filled {
   border-color: var(--gold);
-  background: linear-gradient(90deg, rgba(201, 162, 39, 0.1), transparent 70%);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--gold) 10%, transparent), transparent 70%);
 }
 
 .ledger-slot.empty {

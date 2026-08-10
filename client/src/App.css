@@ -1,28 +1,71 @@
+/* Sticky command bar. The blur + translucent ground keeps the page
+   readable as it scrolls under the bar without needing an opaque strip
+   that cuts the layout in two. */
 .command-bar {
+  position: sticky;
+  top: 0;
+  z-index: 400;
+  border-bottom: 1px solid var(--bronze);
+  background: color-mix(in srgb, var(--ground) 82%, transparent);
+  backdrop-filter: blur(12px) saturate(1.2);
+  transition:
+    box-shadow var(--dur-3) ease,
+    border-color var(--dur-3) ease;
+}
+
+/* Only once something has actually scrolled under it — see SiteHeader's
+   scroll listener. */
+.command-bar--scrolled {
+  box-shadow: 0 6px 20px var(--shadow-deep);
+  border-bottom-color: var(--gold);
+}
+
+.command-bar-inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  padding: 22px 20px 18px;
-  border-bottom: 2px solid var(--bronze);
-  max-width: 1180px;
+  gap: var(--sp-5);
+  padding: var(--sp-3) var(--gutter);
+  max-width: var(--page-max);
   margin: 0 auto;
 }
 
+/* ---------- wordmark ---------- */
+
 .wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 24px;
-  letter-spacing: 0.05em;
-  color: var(--gold);
-  text-shadow: 0 1px 0 var(--shadow-deep);
-  margin: 0;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
   text-decoration: none;
+  flex-shrink: 0;
+  transition: color var(--dur-2) ease;
 }
+
+.wordmark-mark {
+  color: var(--gold);
+  flex-shrink: 0;
+  transition: transform var(--dur-4) var(--ease-out);
+}
+
+.wordmark:hover .wordmark-mark {
+  transform: rotate(90deg);
+}
+
+.wordmark-accent {
+  color: var(--gold);
+}
+
+/* ---------- primary nav ---------- */
 
 .command-nav {
   display: flex;
-  gap: 28px;
+  align-items: center;
+  gap: var(--sp-5);
+  margin-left: auto;
   font-family: var(--font-ui);
   font-size: 13px;
   letter-spacing: 0.14em;
@@ -30,26 +73,170 @@
 }
 
 .command-nav a {
+  position: relative;
   color: var(--ink-muted);
   text-decoration: none;
-  padding-bottom: 4px;
-  border-bottom: 2px solid transparent;
+  padding: 4px 0;
+  transition: color var(--dur-2) ease;
+}
+
+/* Underline grows from the centre instead of a static border, so hover
+   reads as a deliberate response rather than a color swap. */
+.command-nav a::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  bottom: 0;
+  height: 2px;
+  background: var(--gold);
   transition:
-    color 0.15s ease,
-    border-color 0.15s ease;
+    left var(--dur-2) var(--ease-out),
+    right var(--dur-2) var(--ease-out);
 }
 
 .command-nav a:hover {
   color: var(--gold-bright);
 }
 
+.command-nav a:hover::after,
+.command-nav a.active::after {
+  left: 0;
+  right: 0;
+}
+
 .command-nav a.active {
   color: var(--gold);
+}
+
+/* ---------- right-hand tools ---------- */
+
+.command-tools {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  flex-shrink: 0;
+}
+
+.nav-burger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--bronze-dim);
+  background: transparent;
+  color: var(--ink-muted);
+  cursor: pointer;
+}
+
+.nav-burger:hover {
+  color: var(--gold-bright);
   border-color: var(--gold);
 }
 
+.nav-burger-glyph {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  width: 16px;
+}
+
+.nav-burger-glyph i {
+  display: block;
+  height: 2px;
+  background: currentColor;
+  border-radius: 1px;
+  transition:
+    transform var(--dur-2) var(--ease-out),
+    opacity var(--dur-1) ease;
+}
+
+.nav-burger-glyph--open i:nth-child(1) {
+  transform: translateY(5px) rotate(45deg);
+}
+
+.nav-burger-glyph--open i:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-burger-glyph--open i:nth-child(3) {
+  transform: translateY(-5px) rotate(-45deg);
+}
+
+/* ---------- mobile ---------- */
+
+/* Five nav items plus the language and theme controls stop fitting well
+   before the usual phone breakpoint — 900px is where the row starts
+   crowding the wordmark, not where it finally overflows. */
+@media (max-width: 900px) {
+  .nav-burger {
+    display: inline-flex;
+  }
+
+  .command-bar-inner {
+    gap: var(--sp-3);
+  }
+
+  .command-tools {
+    margin-left: auto;
+  }
+
+  .command-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: var(--panel);
+    border-bottom: 1px solid var(--bronze);
+    box-shadow: var(--elev-3);
+    /* Collapsed rather than display:none so opening/closing animates.
+       visibility (not just max-height:0) is what keeps the collapsed
+       links out of the tab order — a 0-height overflow:hidden element is
+       still focusable. */
+    max-height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    transition:
+      max-height var(--dur-3) var(--ease-out),
+      visibility var(--dur-3);
+  }
+
+  .command-nav--open {
+    max-height: 60vh;
+    overflow-y: auto;
+    visibility: visible;
+  }
+
+  .command-nav a {
+    padding: 14px var(--gutter);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .command-nav a::after {
+    display: none;
+  }
+
+  .command-nav a.active {
+    background: var(--wash);
+    box-shadow: inset 3px 0 0 var(--gold);
+  }
+}
+
+/* ---------- main ---------- */
+
 .app-main {
-  padding-top: 24px;
+  padding-top: var(--sp-5);
+  /* #root is a flex column (base.css) — this is what keeps the footer at
+     the bottom of short pages instead of floating mid-screen. */
+  flex: 1;
 }
 
 /* Route-change cue — content used to snap in instantly on navigation.
@@ -74,5 +261,10 @@
 @media (prefers-reduced-motion: reduce) {
   .page-transition {
     animation: none;
+  }
+
+  .wordmark-mark,
+  .command-nav {
+    transition: none;
   }
 }

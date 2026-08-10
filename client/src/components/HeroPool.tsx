@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Hero } from 'shared';
 import { api } from '../api/client';
 import { heroPortraitUrl } from '../utils/heroIcon';
@@ -41,7 +42,10 @@ function useSynergyHighlight(pool: Hero[], pickedHeroIds: number[]) {
     const pending =
       pickedHeroIds.length === 0 || pool.length === 0
         ? Promise.resolve<{ heroId: number; score: number | null }[]>([])
-        : api.getSynergyPreview(pickedHeroIds, pool.map((h) => h.id));
+        : api.getSynergyPreview(
+            pickedHeroIds,
+            pool.map((h) => h.id),
+          );
 
     void pending.then((entries) => {
       if (cancelled) return;
@@ -76,37 +80,76 @@ function useSynergyHighlight(pool: Hero[], pickedHeroIds: number[]) {
   return { bestId, worstId };
 }
 
-export default function HeroPool({ pool, onPick, disabled, pickedHeroNames = [], pickedHeroIds = [] }: Props) {
+// Dota's primary-attribute letter, colored per attribute. The card
+// previously carried no attribute at all — it's the one hero fact players
+// read before anything else, and it costs a 20px corner.
+const ATTR_LETTER: Record<string, string> = { str: 'S', agi: 'A', int: 'I', all: 'U' };
+
+export default function HeroPool({
+  pool,
+  onPick,
+  disabled,
+  pickedHeroNames = [],
+  pickedHeroIds = [],
+}: Props) {
+  const { t } = useTranslation();
   const { bestId, worstId } = useSynergyHighlight(pool, pickedHeroIds);
 
   return (
     <div className="hero-grid">
-      {pool.map((hero) => (
-        <button
-          key={hero.id}
-          className={`hero-card ${hero.id === bestId ? 'hero-card--synergy-best' : ''} ${
-            hero.id === worstId ? 'hero-card--synergy-worst' : ''
-          }`}
-          onClick={() => onPick(hero.id)}
-          disabled={disabled}
-        >
-          <div className="portrait">
-            <img src={heroPortraitUrl(hero.id)} alt={hero.name} width={220} height={137} />
-            <div className="role-tint" style={{ background: roleTintGradient(hero) }} />
-            <HeroTagBadges tags={visibleTagsFor(hero.name, [...pickedHeroNames, hero.name])} />
-            <div className="portrait-shade">
-              <div className="hero-name">{hero.name}</div>
-            </div>
-          </div>
-          <div className="card-body">
-            {hero.roles.slice(0, 3).map((role) => (
-              <span key={role} className="pill">
-                {role}
+      {pool.map((hero) => {
+        const isBest = hero.id === bestId;
+        const isWorst = hero.id === worstId;
+        return (
+          <button
+            key={hero.id}
+            className={`hero-card hero-card--attr-${hero.primary_attribute}${
+              isBest ? ' hero-card--synergy-best' : ''
+            }${isWorst ? ' hero-card--synergy-worst' : ''}`}
+            onClick={() => onPick(hero.id)}
+            disabled={disabled}
+          >
+            <div className="portrait">
+              <img src={heroPortraitUrl(hero.id)} alt={hero.name} width={220} height={137} />
+              <div className="role-tint" style={{ background: roleTintGradient(hero) }} />
+              <span
+                className={`hero-attr hero-attr--${hero.primary_attribute}`}
+                title={hero.primary_attribute}
+              >
+                {ATTR_LETTER[hero.primary_attribute] ?? '?'}
               </span>
-            ))}
-          </div>
-        </button>
-      ))}
+              <HeroTagBadges tags={visibleTagsFor(hero.name, [...pickedHeroNames, hero.name])} />
+
+              {/* The border color already flagged these two cards, but only
+                  the Legend explained what the color meant. The label says
+                  it on the card itself. */}
+              {(isBest || isWorst) && (
+                <span className={`hero-synergy-flag hero-synergy-flag--${isBest ? 'best' : 'worst'}`}>
+                  {t(isBest ? 'draft.synergyBest' : 'draft.synergyWorst')}
+                </span>
+              )}
+
+              <div className="portrait-shade">
+                <div className="hero-name">{hero.name}</div>
+              </div>
+
+              {/* Hover/focus affordance — the whole card was already a
+                  button, but nothing on it said so until the cursor
+                  changed. */}
+              <span className="hero-pick-cue" aria-hidden="true">
+                {t('draft.pick')}
+              </span>
+            </div>
+            <div className="card-body">
+              {hero.roles.slice(0, 3).map((role) => (
+                <span key={role} className="pill">
+                  {role}
+                </span>
+              ))}
+            </div>
+          </button>
+        );
+      })}
     </div>
   );
 }

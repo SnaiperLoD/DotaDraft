@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { HeroService } from '../hero/hero.service';
-import { ROLES, type Hero } from 'shared';
+import { ROLES, type DraftPoolResponse, type Hero } from 'shared';
 
 const POOL_SIZE = 5;
 const ROUNDS = 5;
@@ -62,17 +62,52 @@ export class DraftService {
     };
   }
 
-  async start(): Promise<DraftStateView> {
+  // Round 1's pool, generated and deliberately NOT persisted. Replaces the
+  // old start(), which wrote a Draft row the moment the page opened.
+  //
+  // Being side-effect-free is the point: opening (or reloading, or
+  // StrictMode double-mounting) the draft page can now call this as often
+  // as it likes and the database is untouched.
+  async generatePool(): Promise<DraftPoolResponse> {
     const seed = Math.floor(Math.random() * 2 ** 31);
     const pool = await this.heroService.randomPool([], POOL_SIZE, seed);
+    return { seed, pool };
+  }
+
+  // The Draft row is created by the FIRST PICK, not by opening the page.
+  // Under the old flow every abandoned visit left an empty draft behind:
+  // 383 of the 393 PICKING rows in the dev database had zero picks when
+  // this was changed.
+  //
+  // The row and its first DraftHero go in as one nested create, which is
+  // what actually enforces the rule rather than merely arranging for it —
+  // there is no code path anywhere that inserts a Draft without a hero.
+  //
+  // `seed` comes from the client (it's what generatePool() handed out) but
+  // is not trusted to describe the pool: the round-1 pool is recomputed
+  // from it here and the pick validated against that, the same way pick()
+  // validates against the stored pool.
+  async create(seed: number, heroId: number, rerollUsed: boolean): Promise<DraftStateView> {
+    const pool = await this.heroService.randomPool([], POOL_SIZE, seed);
+    if (!pool.some((h) => h.id === heroId)) {
+      throw new BadRequestException('Hero is not in current pool');
+    }
+
+    // Same successor-seed rule as pick()'s `draft.seed + pickOrder`, with
+    // pickOrder = 1 — round 2's pool has to come out identical either way.
+    const nextPool = (await this.heroService.randomPool([heroId], POOL_SIZE, seed + 1)).map((h) => h.id);
+
     const draft = await this.prisma.draft.create({
       data: {
         seed,
-        pool: JSON.stringify(pool.map((h) => h.id)),
+        pool: JSON.stringify(nextPool),
         status: 'PICKING',
+        rerollsRemaining: rerollUsed ? 0 : 1,
+        heroes: { create: { heroId, pickOrder: 1 } },
       },
       include: { heroes: true },
     });
+
     return this.toView(draft);
   }
 

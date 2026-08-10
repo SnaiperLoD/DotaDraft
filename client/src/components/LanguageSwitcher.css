@@ -2,9 +2,12 @@
   display: inline-flex;
   gap: 2px;
   border: 1px solid var(--bronze-dim);
-  border-radius: 3px;
+  border-radius: var(--r-sm);
   padding: 2px;
-  margin-left: -8px;
+  /* Height-matched to ThemeToggle (30px) so the two controls sit on one
+     baseline in the header instead of stepping. */
+  height: 30px;
+  align-items: stretch;
 }
 
 .language-switcher button {
@@ -16,11 +19,11 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   color: var(--ink-muted);
-  padding: 4px 9px;
-  border-radius: 2px;
+  padding: 0 9px;
+  border-radius: var(--r-xs);
   transition:
-    color 0.15s ease,
-    background-color 0.15s ease;
+    color var(--dur-2) ease,
+    background-color var(--dur-2) ease;
 }
 
 .language-switcher button:hover {

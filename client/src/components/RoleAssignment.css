@@ -1,16 +1,43 @@
+.role-assignment-progress {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+.role-assignment-hint {
+  font-size: 14px;
+  color: var(--ink-muted);
+  margin: 0 0 var(--sp-4);
+  max-width: 60ch;
+}
+
 .role-assignment-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 16px;
-  margin-bottom: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-5);
 }
 
 .role-assignment-card {
-  border-radius: 4px;
+  border-radius: var(--r-md);
   overflow: hidden;
   background: var(--panel);
   border: 1px solid var(--bronze-dim);
-  box-shadow: 0 6px 16px var(--shadow-deep);
+  box-shadow: var(--elev-2);
+  transition:
+    border-color var(--dur-2) ease,
+    box-shadow var(--dur-2) ease;
+}
+
+/* An assigned card recedes: the work left to do is the unassigned ones. */
+.role-assignment-card.is-assigned {
+  border-color: var(--gold);
+  box-shadow:
+    var(--elev-2),
+    0 0 0 1px color-mix(in srgb, var(--gold) 35%, transparent);
 }
 
 .role-assignment-card .portrait {
@@ -56,34 +83,108 @@
     0 0 8px rgba(0, 0, 0, 0.5);
 }
 
-.role-select {
-  display: block;
-  width: 100%;
-  padding: 9px 10px;
+/* ---------- position picker ---------- */
+
+/* Same primary-attribute seam as the pool cards (HeroPool.css) — the two
+   card types sit one screen apart in the same flow, so they should read as
+   the same object with a different control strip. */
+.role-assignment-card {
+  --attr: var(--bronze-dim);
+}
+
+.role-assignment-card--attr-str {
+  --attr: var(--attr-str);
+}
+.role-assignment-card--attr-agi {
+  --attr: var(--attr-agi);
+}
+.role-assignment-card--attr-int {
+  --attr: var(--attr-int);
+}
+.role-assignment-card--attr-all {
+  --attr: var(--attr-all);
+}
+
+.role-picker {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border-top: 2px solid var(--attr);
+}
+
+.role-cell {
+  position: relative;
+  padding: 10px 0;
   border: none;
-  border-top: 1px solid var(--bronze-dim);
+  border-right: 1px solid var(--line);
   background: var(--panel-raised);
-  color: var(--ink);
+  color: var(--ink-muted);
   font-family: var(--font-ui);
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
+  transition:
+    background-color var(--dur-1) ease,
+    color var(--dur-1) ease;
 }
 
-.role-select:invalid {
+.role-cell:last-child {
+  border-right: none;
+}
+
+.role-cell:hover {
+  background: var(--wash-strong);
+  color: var(--gold-bright);
+}
+
+.role-cell.is-selected {
+  background: linear-gradient(180deg, var(--blood-bright), var(--blood));
+  color: #f5e9dc;
+}
+
+/* A dot under the number where real match data says this hero actually
+   plays that position — a nudge, not a restriction; every cell stays
+   clickable. */
+.role-cell.is-recommended::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.role-cell.is-selected.is-recommended::after {
+  background: #f5e9dc;
+}
+
+/* Icon of the hero currently holding this position — clicking here takes
+   the slot from them, and this says whose slot it is before you do. */
+.role-cell-holder {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  border-radius: 2px;
+  opacity: 0.85;
+}
+
+.role-assignment-readout {
+  padding: 7px 10px;
+  border-top: 1px solid var(--line);
+  background: var(--panel);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.role-assignment-card:not(.is-assigned) .role-assignment-readout {
   color: var(--ink-faint);
 }
-
-/* Blueprint/10-tech-debt-backlog.md, "Затемнение уже выбранной роли" —
-   disabled options (role taken by another hero) need to read as muted in
-   the OPEN dropdown list, not just as unselectable. Plain CSS first
-   (color/font-style on :disabled); cross-browser support for styling
-   native <option> is inconsistent (Windows renders the popup itself in
-   some engines), so if this doesn't read clearly enough in practice, next
-   step is a custom dropdown component, not more CSS here. */
-.role-select option:disabled {
-  color: var(--ink-faint);
-  font-style: italic;
-}
-

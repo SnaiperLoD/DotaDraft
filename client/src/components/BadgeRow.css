@@ -17,17 +17,19 @@
   border: 1px solid var(--gold);
   box-shadow:
     0 4px 10px var(--shadow-deep),
-    0 0 10px rgba(201, 162, 39, 0.25);
+    0 0 10px color-mix(in srgb, var(--gold) 25%, transparent);
   color: var(--gold-bright);
   cursor: default;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .badge-square:hover {
   transform: translateY(-2px);
   box-shadow:
     0 6px 14px var(--shadow-deep),
-    0 0 16px rgba(201, 162, 39, 0.45);
+    0 0 16px color-mix(in srgb, var(--gold) 45%, transparent);
 }
 
 .badge-icon {

@@ -17,16 +17,32 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Two ambient washes (blood from the top-left, gold from the top-right)
+   plus a faint diagonal hatch that reads as hammered metal up close and as
+   nothing at all from a normal viewing distance — enough to keep large
+   empty areas from looking like flat #15100c. All three are alpha-only, so
+   they work over either theme's ground without a second declaration. */
 body {
   background-image:
-    radial-gradient(ellipse 900px 500px at 15% -10%, rgba(122, 31, 42, 0.16), transparent 60%),
-    radial-gradient(ellipse 700px 500px at 100% 0%, rgba(201, 162, 39, 0.07), transparent 55%);
+    radial-gradient(
+      ellipse 900px 500px at 15% -10%,
+      color-mix(in srgb, var(--danger) 13%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 700px 500px at 100% 0%,
+      color-mix(in srgb, var(--gold) 8%, transparent),
+      transparent 55%
+    ),
+    repeating-linear-gradient(118deg, var(--hatch) 0px, var(--hatch) 1px, transparent 1px, transparent 7px);
   background-attachment: fixed;
   min-height: 100vh;
 }
 
 #root {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 h1,
@@ -36,7 +52,7 @@ h3 {
   font-weight: 700;
   letter-spacing: 0.04em;
   color: var(--ink);
-  margin: 0 0 12px;
+  margin: 0 0 var(--sp-3);
   text-wrap: balance;
 }
 
@@ -45,7 +61,8 @@ a {
 }
 
 button,
-select {
+select,
+input {
   font-family: inherit;
   color: inherit;
 }
@@ -53,31 +70,115 @@ select {
 :focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 2px;
+  border-radius: var(--r-xs);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--gold) 30%, transparent);
+  color: var(--ink);
+}
+
+/* Scrollbars — the default light-gray Windows bar cuts a bright stripe
+   down the side of an otherwise dark page. Firefox uses the two-value
+   scrollbar-color form; WebKit/Blink the ::-webkit- pseudo-elements. */
+html {
+  scrollbar-color: var(--bronze) transparent;
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bronze-dim);
+  border-radius: var(--r-pill);
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bronze);
+  background-clip: content-box;
 }
 
 /* ---------- layout ---------- */
 
 .page {
-  max-width: 1180px;
+  max-width: var(--page-max);
   margin: 0 auto;
-  padding: 0 20px 64px;
+  padding: 0 var(--gutter) var(--sp-8);
+  width: 100%;
+}
+
+/* Title with a rule bleeding off to the right — the app's recurring
+   section header (draft round banner, page headings). */
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-5);
+}
+
+.section-head > :first-child {
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* Rhombus ornament + fading rule. Dota's own section dividers hang a small
+   diamond off the end of the line rather than running a bare 1px stroke —
+   it's the cheapest available piece of that visual language. The rule is
+   drawn as a background on an 8px-tall box so the diamond has room to sit
+   centred on it. */
+.section-head .rule {
+  flex: 1;
+  height: 8px;
+  position: relative;
+  background: linear-gradient(90deg, var(--bronze) 0%, var(--bronze) 65%, transparent 100%) left center / 100%
+    1px no-repeat;
+  opacity: 0.75;
+}
+
+.section-head .rule::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  transform: translate(-1px, -50%) rotate(45deg);
+  background: var(--gold);
 }
 
 /* ---------- buttons ---------- */
 
 .btn {
+  position: relative;
+  overflow: hidden;
   font-family: var(--font-ui);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  border-radius: 3px;
+  border-radius: var(--r-sm);
   padding: 11px 22px;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  text-decoration: none;
   transition:
-    transform 0.12s ease,
-    box-shadow 0.12s ease,
-    filter 0.12s ease;
+    transform var(--dur-1) ease,
+    box-shadow var(--dur-1) ease,
+    filter var(--dur-1) ease,
+    border-color var(--dur-1) ease,
+    background-color var(--dur-1) ease;
   border: 1px solid transparent;
 }
 
@@ -97,7 +198,60 @@ select {
 .btn-primary {
   background: linear-gradient(180deg, var(--blood-bright), var(--blood));
   color: #f5e9dc;
-  box-shadow: 0 4px 12px var(--shadow-deep);
+  border-color: color-mix(in srgb, var(--gold) 35%, transparent);
+  box-shadow:
+    var(--elev-2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.btn-primary:not(:disabled):hover {
+  border-color: var(--gold);
+  box-shadow:
+    var(--elev-3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 0 18px color-mix(in srgb, var(--danger) 35%, transparent);
+}
+
+/* Gold sweep across the primary button on hover — a single pass, not a
+   loop, so it reads as a response to the pointer rather than as an
+   attract-mode animation running forever on a static page. */
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -60%;
+  width: 45%;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    color-mix(in srgb, var(--gold-bright) 45%, transparent),
+    transparent
+  );
+  transform: skewX(-18deg);
+  opacity: 0;
+}
+
+.btn-primary:not(:disabled):hover::after {
+  animation: btn-sweep 0.65s var(--ease-out);
+}
+
+@keyframes btn-sweep {
+  from {
+    left: -60%;
+    opacity: 1;
+  }
+  to {
+    left: 115%;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary:not(:disabled):hover::after {
+    animation: none;
+  }
 }
 
 .btn-secondary {
@@ -110,6 +264,25 @@ select {
   border-color: var(--gold);
 }
 
+/* Third weight for actions that must stay available but shouldn't pull
+   the eye (reroll, "back", inline toggles) — no fill, just a hairline. */
+.btn-ghost {
+  background: transparent;
+  border-color: var(--line-strong);
+  color: var(--ink-muted);
+}
+
+.btn-ghost:not(:disabled):hover {
+  border-color: var(--gold);
+  color: var(--gold-bright);
+  background: var(--wash);
+}
+
+.btn-sm {
+  padding: 6px 14px;
+  font-size: 12px;
+}
+
 /* Inline loading spinner for buttons mid-request (Evaluate Draft, Enter
    Battle, etc.) — replaces the old text-only "Evaluating..." label with a
    visible cue, not just a word change. currentColor so it matches whichever
@@ -118,13 +291,13 @@ select {
   display: inline-block;
   width: 12px;
   height: 12px;
-  margin-right: 8px;
   vertical-align: -1px;
   border: 2px solid currentColor;
   border-right-color: transparent;
   border-radius: 50%;
   opacity: 0.85;
   animation: btn-spin 0.7s linear infinite;
+  flex-shrink: 0;
 }
 
 @keyframes btn-spin {
@@ -133,19 +306,98 @@ select {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .btn-spinner {
-    animation-duration: 1.6s;
-  }
-}
-
 /* ---------- panel ---------- */
 
 .panel {
   background: var(--panel);
   border: 1px solid var(--bronze-dim);
-  border-radius: 4px;
-  box-shadow: 0 6px 16px var(--shadow-deep);
+  border-radius: var(--r-md);
+  box-shadow: var(--elev-2);
+  /* Top edge catches the light, like a bevelled metal plate — one line
+     that does most of the work of making a flat rectangle read as an
+     object rather than a div. */
+  background-image: linear-gradient(180deg, var(--wash), transparent 90px);
+}
+
+/* ---------- plate (chamfered surface) ---------- */
+
+/* The heavier of the app's two surface treatments: corners cut on the
+   top-left/bottom-right diagonal, the way Dota's own panels are shaped.
+   Used for the few "this is the important block" surfaces (headline
+   score, battle result, ledger, landing steps) while .panel stays on the
+   many small cards — the contrast between the two is what gives the page
+   a hierarchy instead of one uniform box style everywhere.
+ *
+ * No border and no box-shadow on purpose: clip-path clips both, so a
+ * border would simply vanish along the two diagonals. Definition comes
+ * from the silhouette itself (panel is lighter than ground in both
+ * themes) plus a drop-shadow FILTER, which — unlike box-shadow — follows
+ * the clipped shape rather than the original rectangle. */
+.plate {
+  position: relative;
+  background: var(--panel);
+  background-image: linear-gradient(180deg, var(--wash), transparent 90px);
+  clip-path: polygon(
+    var(--bevel) 0,
+    100% 0,
+    100% calc(100% - var(--bevel)),
+    calc(100% - var(--bevel)) 100%,
+    0 100%,
+    0 var(--bevel)
+  );
+  filter: drop-shadow(0 6px 14px var(--shadow-deep));
+}
+
+/* Gold hairline along each cut corner — without it the chamfer reads as a
+   rendering glitch rather than a deliberate edge. Drawn as background
+   layers (borders don't survive the clip).
+ *
+ * The offset is trigonometry, not a guess: the cut runs from (bevel, 0) to
+ * (0, bevel), so its distance from the corner measured along the 135deg
+ * gradient axis is bevel / sqrt(2) = bevel * 0.7071. Putting the stop
+ * anywhere else would leave the line either clipped away entirely or
+ * floating inside the panel. Both cuts lie on the same diagonal, so the
+ * two gradients are the same axis in opposite directions. */
+.plate::before {
+  --cut: calc(var(--bevel) * 0.7071);
+  --cut-box: calc(var(--bevel) * 2);
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+        135deg,
+        transparent calc(var(--cut) - 1.2px),
+        var(--gold) calc(var(--cut) - 1.2px) var(--cut),
+        transparent var(--cut)
+      )
+      top left / var(--cut-box) var(--cut-box) no-repeat,
+    linear-gradient(
+        -45deg,
+        transparent calc(var(--cut) - 1.2px),
+        var(--gold) calc(var(--cut) - 1.2px) var(--cut),
+        transparent var(--cut)
+      )
+      bottom right / var(--cut-box) var(--cut-box) no-repeat;
+  opacity: 0.8;
+}
+
+/* Bracket marks on the two square corners — the corner filigree Dota puts
+   on framed panels, reduced to the two strokes that actually read at this
+   size. Opt-in on top of .plate, not automatic: on a small plate they'd
+   crowd the content. */
+.plate--framed::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+  border-top: 2px solid var(--bronze);
+  border-right: 2px solid var(--bronze);
+  opacity: 0.8;
 }
 
 /* ---------- pills / chips ---------- */
@@ -159,7 +411,7 @@ select {
   text-transform: uppercase;
   color: var(--ink-muted);
   border: 1px solid var(--bronze-dim);
-  border-radius: 2px;
+  border-radius: var(--r-xs);
   padding: 3px 7px;
   line-height: 1.3;
 }
@@ -180,4 +432,43 @@ select {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ink-faint);
+}
+
+/* ---------- skeletons ---------- */
+
+/* Shape-matched placeholders for content that's still loading — a shimmer
+   in the same footprint as the real thing, so the layout doesn't jump when
+   it arrives (the old "Loading…" line collapsed to nothing and then the
+   page reflowed under the user). */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--wash-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, var(--wash-strong), transparent);
+  animation: skeleton-sweep 1.4s ease-in-out infinite;
+}
+
+@keyframes skeleton-sweep {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-spinner {
+    animation-duration: 1.6s;
+  }
+
+  .skeleton::after {
+    animation: none;
+  }
 }

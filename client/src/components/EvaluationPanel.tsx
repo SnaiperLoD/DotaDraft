@@ -5,6 +5,7 @@ import type { EvaluationResult } from 'shared';
 import type { DraftHeroView } from '../api/types';
 import { detectBadges } from '../data/badges';
 import BadgeRow from './BadgeRow';
+import AxisRadar from './AxisRadar';
 import TopContributorHighlight from './TopContributorHighlight';
 import './EvaluationPanel.css';
 
@@ -30,11 +31,33 @@ function escapeRegExp(value: string): string {
 function boldHeroNames(text: string, heroNames: string[]) {
   if (heroNames.length === 0) return text;
   const pattern = new RegExp(
-    `(${[...heroNames].sort((a, b) => b.length - a.length).map(escapeRegExp).join('|')})`,
+    `(${[...heroNames]
+      .sort((a, b) => b.length - a.length)
+      .map(escapeRegExp)
+      .join('|')})`,
     'g',
   );
   const parts = text.split(pattern);
-  return parts.map((part, i) => (heroNames.includes(part) ? <strong key={i}>{part}</strong> : <Fragment key={i}>{part}</Fragment>));
+  return parts.map((part, i) =>
+    heroNames.includes(part) ? <strong key={i}>{part}</strong> : <Fragment key={i}>{part}</Fragment>,
+  );
+}
+
+// English ordinal suffix. The label used to hardcode "th", which read as
+// "31th percentile" / "42th percentile" for roughly a fifth of all values.
+function ordinal(n: number): string {
+  const mod100 = n % 100;
+  if (mod100 >= 11 && mod100 <= 13) return `${n}th`;
+  switch (n % 10) {
+    case 1:
+      return `${n}st`;
+    case 2:
+      return `${n}nd`;
+    case 3:
+      return `${n}rd`;
+    default:
+      return `${n}th`;
+  }
 }
 
 // Same 30/70 split as the server's percentileBracket() (score-narrative.ts)
@@ -42,7 +65,7 @@ function boldHeroNames(text: string, heroNames: string[]) {
 // not scoring logic.
 function percentileLabel(percentile: number): string {
   if (percentile < 30) return `Bottom ${Math.max(1, percentile)}%`;
-  if (percentile < 70) return `${percentile}th percentile`;
+  if (percentile < 70) return `${ordinal(percentile)} percentile`;
   return `Top ${Math.max(1, 100 - percentile)}%`;
 }
 
@@ -50,6 +73,18 @@ function percentileClass(percentile: number): string {
   if (percentile < 30) return 'percentile-low';
   if (percentile < 70) return 'percentile-mid';
   return 'percentile-high';
+}
+
+// One-word read on the headline number, for the moment before anyone
+// parses the decimal. Buckets are even fifths of the 0-10 range, which is
+// meaningful because totalScore is percentile-transformed (see
+// evaluation.service.ts) rather than clustering around the middle.
+function verdictKey(score: number): string {
+  if (score < 2) return 'dire';
+  if (score < 4) return 'weak';
+  if (score < 6) return 'even';
+  if (score < 8) return 'strong';
+  return 'elite';
 }
 
 // 5-star rendering of totalScore (0-10) as a faster-to-read companion to
@@ -68,6 +103,27 @@ function StarRating({ score }: { score: number }) {
         ★★★★★
       </span>
     </span>
+  );
+}
+
+// Ring gauge for the headline score. The number alone gave no sense of
+// where it sat on the scale without reading "/10" and doing the division.
+const DIAL_R = 52;
+const DIAL_CIRCUMFERENCE = 2 * Math.PI * DIAL_R;
+
+function ScoreDial({ score }: { score: number }) {
+  const fraction = Math.max(0, Math.min(1, score / 10));
+  return (
+    <svg className="score-dial" viewBox="0 0 128 128" aria-hidden="true">
+      <circle className="score-dial-track" cx="64" cy="64" r={DIAL_R} />
+      <circle
+        className="score-dial-fill"
+        cx="64"
+        cy="64"
+        r={DIAL_R}
+        strokeDasharray={`${DIAL_CIRCUMFERENCE * fraction} ${DIAL_CIRCUMFERENCE}`}
+      />
+    </svg>
   );
 }
 
@@ -109,13 +165,56 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
     <div className="evaluation-panel">
       <BadgeRow badges={badges} />
 
-      <h3 className="evaluation-title">
-        {t('evaluation.totalScore')} <em>{result.totalScore}/10</em>
-        <StarRating score={result.totalScore} />
-      </h3>
+      <div className="plate plate--framed evaluation-hero">
+        <div className="evaluation-hero-dial">
+          <ScoreDial score={result.totalScore} />
+          <span className="evaluation-hero-value">
+            {result.totalScore}
+            <span className="evaluation-hero-max">/10</span>
+          </span>
+        </div>
+        <div className="evaluation-hero-copy">
+          <div className="evaluation-hero-label">{t('evaluation.totalScoreShort')}</div>
+          <div className="evaluation-hero-verdict">
+            {t(`evaluation.verdict.${verdictKey(result.totalScore)}`)}
+          </div>
+          <StarRating score={result.totalScore} />
+        </div>
+      </div>
 
       <p className="evaluation-gameplan">{boldHeroNames(result.summary.gameplan, heroNames)}</p>
-      {result.campStackingNote && <p className="evaluation-note">{boldHeroNames(result.campStackingNote, heroNames)}</p>}
+      {result.campStackingNote && (
+        <p className="evaluation-note">{boldHeroNames(result.campStackingNote, heroNames)}</p>
+      )}
+
+      <div className="evaluation-columns">
+        <div className="panel evaluation-radar-panel">
+          <AxisRadar breakdown={result.breakdown} />
+        </div>
+
+        <div className="evaluation-summary">
+          <div className="evaluation-summary-col">
+            <div className="evaluation-summary-heading evaluation-summary-heading--good">
+              {t('evaluation.strengths')}
+            </div>
+            <ul>
+              {result.summary.strengths.map((line, i) => (
+                <li key={i}>{boldHeroNames(line, heroNames)}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="evaluation-summary-col">
+            <div className="evaluation-summary-heading evaluation-summary-heading--bad">
+              {t('evaluation.weaknesses')}
+            </div>
+            <ul>
+              {result.summary.weaknesses.map((line, i) => (
+                <li key={i}>{boldHeroNames(line, heroNames)}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
 
       <TopContributorHighlight breakdown={result.breakdown} heroes={heroes} />
 
@@ -133,25 +232,6 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
         </div>
       )}
 
-      <div className="evaluation-summary">
-        <div className="evaluation-summary-col">
-          <div className="evaluation-summary-heading">{t('evaluation.strengths')}</div>
-          <ul>
-            {result.summary.strengths.map((line, i) => (
-              <li key={i}>{boldHeroNames(line, heroNames)}</li>
-            ))}
-          </ul>
-        </div>
-        <div className="evaluation-summary-col">
-          <div className="evaluation-summary-heading">{t('evaluation.weaknesses')}</div>
-          <ul>
-            {result.summary.weaknesses.map((line, i) => (
-              <li key={i}>{boldHeroNames(line, heroNames)}</li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
       <div className="evaluation-breakdown">
         {result.breakdown.map((item) => (
           <div key={item.key} className="panel evaluation-item">
@@ -163,9 +243,23 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
                     {percentileLabel(item.percentile)}
                   </span>
                 )}
-                <span className="score">{item.score === null ? t('evaluation.notAvailable') : `${item.score}/10`}</span>
+                <span className="score">
+                  {item.score === null ? t('evaluation.notAvailable') : `${item.score}/10`}
+                </span>
               </span>
             </div>
+
+            {/* Where this axis sits against the reference population, as a
+                bar rather than only as a pill of words. The notch is the
+                median — the eye finds "left or right of centre" faster
+                than it parses "42nd percentile". */}
+            {item.percentile !== null && (
+              <div className={`percentile-bar ${percentileClass(item.percentile)}`}>
+                <span className="percentile-bar-fill" style={{ width: `${item.percentile}%` }} />
+                <span className="percentile-bar-median" />
+              </div>
+            )}
+
             <ul>
               {item.explanation.map((line, i) => (
                 <li key={i}>{boldHeroNames(line, heroNames)}</li>

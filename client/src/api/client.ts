@@ -2,6 +2,8 @@ import type {
   Hero,
   PickRequest,
   AssignRolesRequest,
+  DraftPoolResponse,
+  CreateDraftRequest,
   HistoryEntry,
   EvaluationResult,
   CommitDraftResponse,
@@ -31,7 +33,15 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
 export const api = {
   getHeroes: () => request<Hero[]>('/heroes'),
 
-  startDraft: () => request<DraftStateView>('/draft/start', { method: 'POST' }),
+  // Round 1's pool. Writes nothing — the draft row only exists once
+  // createDraft() below lands the first pick (server: DraftService.create).
+  getDraftPool: () => request<DraftPoolResponse>('/draft/pool', { method: 'POST' }),
+
+  createDraft: (seed: number, heroId: number, rerollUsed: boolean) =>
+    request<DraftStateView>('/draft', {
+      method: 'POST',
+      body: JSON.stringify({ seed, heroId, rerollUsed } satisfies CreateDraftRequest),
+    }),
 
   getDraft: (id: string) => request<DraftStateView>(`/draft/${id}`),
 

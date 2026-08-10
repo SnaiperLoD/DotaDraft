@@ -1,33 +1,9 @@
-.round-banner {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin-bottom: 22px;
-}
-
-.round-banner h1 {
-  font-size: 22px;
-  white-space: nowrap;
-  margin: 0;
-}
-
-.round-banner h1 em {
-  font-style: normal;
-  color: var(--gold);
-}
-
-.round-banner .rule {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--bronze) 15%, var(--bronze) 85%, transparent);
-}
-
 .pool-hint-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  margin: -8px 0 18px;
+  gap: var(--sp-3);
+  margin: 0 0 var(--sp-4);
 }
 
 .pool-hint {
@@ -41,54 +17,94 @@
 
 .reroll-btn {
   flex-shrink: 0;
-  padding: 6px 14px;
-  font-size: 12px;
 }
 
 .draft-layout {
   display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: 34px;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: var(--sp-6);
   align-items: start;
+  margin-top: var(--sp-5);
 }
 
-@media (max-width: 860px) {
+@media (max-width: 900px) {
   .draft-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Sticky is actively unhelpful once the sidebar is stacked below the
+     pool — it would pin the ledger over the page as you scroll past it. */
+  .draft-sidebar {
+    position: static;
   }
 }
 
 .draft-sidebar {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: var(--sp-4);
   position: sticky;
-  top: 20px;
+  /* Clears the sticky command bar (App.css) rather than sticking under it. */
+  top: 78px;
 }
 
 .draft-error {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--sp-3);
   align-items: flex-start;
-  padding: 40px 0;
+  padding: var(--sp-5);
+  margin: var(--sp-6) 0;
+  border-color: color-mix(in srgb, var(--danger) 45%, transparent);
 }
 
-.draft-loading {
-  padding: 60px 0;
-  text-align: center;
-}
-
+/* Wider than the old 760px: Evaluation now lays the radar and the
+   strengths/weaknesses lists side by side, and the axis breakdown is a
+   two-column grid — both were single columns when 760 was chosen. */
 .completed-section {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  max-width: 720px;
+  gap: var(--sp-5);
+  max-width: 940px;
   margin: 0 auto;
 }
 
 .completed-actions {
   display: flex;
-  gap: 12px;
+  gap: var(--sp-3);
   flex-wrap: wrap;
+}
+
+/* ---------- first-load skeleton ---------- */
+
+.draft-skeleton-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-5);
+}
+
+.draft-skeleton-rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: var(--sp-2);
+  justify-items: center;
+}
+
+.draft-skeleton-node {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+}
+
+/* Matches .hero-card's real height: 137px portrait + card-body. */
+.draft-skeleton-card {
+  height: 188px;
+  border-radius: var(--r-md);
+}
+
+.draft-skeleton-panel {
+  height: 320px;
+  border-radius: var(--r-md);
 }

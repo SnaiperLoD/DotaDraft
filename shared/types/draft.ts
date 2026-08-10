@@ -1,6 +1,28 @@
 import type { EvaluationResult } from './evaluation';
+import type { Hero } from './hero';
 
 export type DraftStatus = 'PICKING' | 'ASSIGNING_ROLES' | 'COMPLETED';
+
+// Round 1's offered pool, generated without persisting anything — the
+// Draft row is not written until the first pick (see CreateDraftRequest
+// and DraftService.create). `seed` is what the client hands back to
+// identify which pool it is picking from; the server recomputes the pool
+// from it rather than trusting a client-supplied hero list.
+export interface DraftPoolResponse {
+  seed: number;
+  pool: Hero[];
+}
+
+// The first pick, which is also what creates the draft.
+export interface CreateDraftRequest {
+  seed: number;
+  heroId: number;
+  // Whether the player spent their single re-roll during round 1, i.e.
+  // before there was a row to count it on. Client-asserted by necessity —
+  // and no weaker than before in practice, since reloading the page has
+  // always produced a fresh pool with a fresh allowance.
+  rerollUsed: boolean;
+}
 
 export interface DraftHero {
   heroId: number;

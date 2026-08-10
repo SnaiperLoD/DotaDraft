@@ -36,14 +36,30 @@ function makeFakePrisma() {
   return {
     draft: {
       create: jest.fn(async ({ data }: any) => {
+        const id = 'draft-1';
         draftRow = {
-          id: 'draft-1',
+          id,
           status: data.status,
           seed: data.seed,
           pool: data.pool,
           createdAt: new Date(),
           rerollsRemaining: data.rerollsRemaining ?? 1,
         };
+        // Nested hero create — DraftService.create() writes the draft and
+        // its first hero in a single statement, which is what makes "no
+        // Draft row without a hero" an invariant rather than a convention.
+        const nested = data.heroes?.create;
+        if (nested) {
+          for (const h of Array.isArray(nested) ? nested : [nested]) {
+            heroRows.push({
+              id: nextRowId++,
+              draftId: id,
+              heroId: h.heroId,
+              assignedRole: null,
+              pickOrder: h.pickOrder,
+            });
+          }
+        }
         return withHeroes();
       }),
       findUnique: jest.fn(async ({ where }: any) => {
@@ -89,8 +105,15 @@ function makeService() {
   return { service, prisma, heroService };
 }
 
+// A draft only exists once its first pick lands (DraftService.create), so
+// everything that used to call start() now needs a pick to get an id.
+async function startDraft(service: DraftService, rerollUsed = false) {
+  const { seed, pool } = await service.generatePool();
+  return service.create(seed, pool[0].id, rerollUsed);
+}
+
 async function playToRoleAssignment(service: DraftService) {
-  let draft = await service.start();
+  let draft = await startDraft(service);
   while (draft.status === 'PICKING') {
     draft = await service.pick(draft.id, draft.pool[0].id);
   }
@@ -107,12 +130,49 @@ async function playToCompleted(service: DraftService) {
 }
 
 describe('DraftService', () => {
-  it('start() creates a draft in PICKING status with a 5-hero pool', async () => {
-    const { service } = makeService();
-    const draft = await service.start();
-    expect(draft.status).toBe('PICKING');
-    expect(draft.pool).toHaveLength(5);
-    expect(draft.heroes).toHaveLength(0);
+  describe('generatePool() / create()', () => {
+    it('generatePool() returns a 5-hero pool and a seed without touching the database', async () => {
+      const { service, prisma } = makeService();
+      const { seed, pool } = await service.generatePool();
+      expect(pool).toHaveLength(5);
+      expect(typeof seed).toBe('number');
+      expect(prisma.draft.create).not.toHaveBeenCalled();
+    });
+
+    it('create() writes the draft and its first hero in one statement', async () => {
+      const { service, prisma } = makeService();
+      await startDraft(service);
+
+      // The whole point of the change: there is no window, not even inside
+      // a single request, where a Draft row exists with no heroes.
+      expect(prisma.draft.create).toHaveBeenCalledTimes(1);
+      const data = (prisma.draft.create as jest.Mock).mock.calls[0][0].data;
+      expect(data.heroes.create).toMatchObject({ pickOrder: 1 });
+      expect(prisma.draftHero.create).not.toHaveBeenCalled();
+    });
+
+    it('create() returns a PICKING draft holding the first pick and round 2s pool', async () => {
+      const { service } = makeService();
+      const { seed, pool } = await service.generatePool();
+      const draft = await service.create(seed, pool[0].id, false);
+      expect(draft.status).toBe('PICKING');
+      expect(draft.pool).toHaveLength(5);
+      expect(draft.heroes).toHaveLength(1);
+      expect(draft.heroes[0]).toMatchObject({ heroId: pool[0].id, pickOrder: 1 });
+    });
+
+    it('create() rejects a hero that was not in the pool the seed produces', async () => {
+      const { service } = makeService();
+      const { seed, pool } = await service.generatePool();
+      const outsideId = HERO_POOL.find((h) => !pool.some((p) => p.id === h.id))!.id;
+      await expect(service.create(seed, outsideId, false)).rejects.toThrow('Hero is not in current pool');
+    });
+
+    it('create() carries a round-1 re-roll through as a spent allowance', async () => {
+      const { service } = makeService();
+      const draft = await startDraft(service, true);
+      expect(draft.rerollsRemaining).toBe(0);
+    });
   });
 
   it('getById() throws NotFoundException for an unknown draft', async () => {
@@ -128,7 +188,7 @@ describe('DraftService', () => {
 
     it('rejects a hero not in the current pool', async () => {
       const { service } = makeService();
-      const draft = await service.start();
+      const draft = await startDraft(service);
       const outsideId = HERO_POOL.find((h) => !draft.pool.some((p) => p.id === h.id))!.id;
       await expect(service.pick(draft.id, outsideId)).rejects.toThrow('Hero is not in current pool');
     });
@@ -151,24 +211,29 @@ describe('DraftService', () => {
 
     it('excludes already-picked heroes from the next pool', async () => {
       const { service, heroService } = makeService();
-      let draft = await service.start();
-      const firstPick = draft.pool[0].id;
-      draft = await service.pick(draft.id, firstPick);
+      const draft = await startDraft(service);
+      const firstPick = draft.heroes[0].heroId;
 
-      const excludeArg = heroService.randomPool.mock.calls[1][0];
+      const excludeArg = heroService.randomPool.mock.calls.at(-1)![0];
       expect(excludeArg).toContain(firstPick);
     });
 
+    // Asserted against the last call rather than a fixed index: create()
+    // makes two randomPool calls (one to re-derive round 1 and validate the
+    // pick, one for round 2), so positional indices would only be tracking
+    // that implementation detail.
     it("derives each round's pool seed as draft.seed + pickOrder (the deterministic replay chain)", async () => {
       const { service, heroService } = makeService();
-      let draft = await service.start();
-      const startSeed = heroService.randomPool.mock.calls[0][2];
+      const { seed, pool } = await service.generatePool();
+
+      let draft = await service.create(seed, pool[0].id, false);
+      expect(heroService.randomPool.mock.calls.at(-1)![2]).toBe(seed + 1);
 
       draft = await service.pick(draft.id, draft.pool[0].id);
-      expect(heroService.randomPool.mock.calls[1][2]).toBe(startSeed + 1);
+      expect(heroService.randomPool.mock.calls.at(-1)![2]).toBe(seed + 2);
 
       draft = await service.pick(draft.id, draft.pool[0].id);
-      expect(heroService.randomPool.mock.calls[2][2]).toBe(startSeed + 2);
+      expect(heroService.randomPool.mock.calls.at(-1)![2]).toBe(seed + 3);
     });
   });
 
@@ -180,13 +245,13 @@ describe('DraftService', () => {
 
     it('starts with 1 reroll available', async () => {
       const { service } = makeService();
-      const draft = await service.start();
+      const draft = await startDraft(service);
       expect(draft.rerollsRemaining).toBe(1);
     });
 
     it('replaces the current pool and decrements rerollsRemaining to 0', async () => {
       const { service } = makeService();
-      const draft = await service.start();
+      const draft = await startDraft(service);
       const result = await service.reroll(draft.id);
       expect(result.rerollsRemaining).toBe(0);
       expect(result.pool).toHaveLength(5);
@@ -194,14 +259,14 @@ describe('DraftService', () => {
 
     it('rejects a second reroll once the first is used', async () => {
       const { service } = makeService();
-      const draft = await service.start();
+      const draft = await startDraft(service);
       await service.reroll(draft.id);
       await expect(service.reroll(draft.id)).rejects.toThrow('No rerolls remaining');
     });
 
     it('excludes already-picked heroes from the rerolled pool', async () => {
       const { service, heroService } = makeService();
-      let draft = await service.start();
+      let draft = await startDraft(service);
       const firstPick = draft.pool[0].id;
       draft = await service.pick(draft.id, firstPick);
 
@@ -218,7 +283,7 @@ describe('DraftService', () => {
 
     it('derives the new seed as Math.floor(Math.random() * 2**31), not some other formula', async () => {
       const { service, heroService } = makeService();
-      const draft = await service.start();
+      const draft = await startDraft(service);
       const randomSpy = jest.spyOn(Math, 'random').mockReturnValue(0.25);
       try {
         await service.reroll(draft.id);
@@ -238,7 +303,7 @@ describe('DraftService', () => {
 
     it('rejects assigning roles before all 5 heroes are picked', async () => {
       const { service } = makeService();
-      const draft = await service.start();
+      const draft = await startDraft(service);
       await expect(service.assignRoles(draft.id, [])).rejects.toThrow(
         'Draft is not in role assignment phase',
       );
@@ -313,20 +378,20 @@ describe('DraftService', () => {
 
     it('returns null for a draft that has never had an evaluation saved', async () => {
       const { service } = makeService();
-      const draft = await service.start();
+      const draft = await startDraft(service);
       expect(await service.getEvaluationScore(draft.id)).toBeNull();
     });
 
     it('returns the saved totalScore after saveEvaluationResult()', async () => {
       const { service } = makeService();
-      const draft = await service.start();
+      const draft = await startDraft(service);
       await service.saveEvaluationResult(draft.id, JSON.stringify({ totalScore: 7.5 }));
       expect(await service.getEvaluationScore(draft.id)).toBe(7.5);
     });
 
     it('overwrites the previous evaluation on a second save rather than versioning it', async () => {
       const { service } = makeService();
-      const draft = await service.start();
+      const draft = await startDraft(service);
       await service.saveEvaluationResult(draft.id, JSON.stringify({ totalScore: 3 }));
       await service.saveEvaluationResult(draft.id, JSON.stringify({ totalScore: 8.2 }));
       expect(await service.getEvaluationScore(draft.id)).toBe(8.2);
@@ -338,7 +403,7 @@ describe('DraftService', () => {
   describe('saveBattleResult()', () => {
     it('creates a battleResult row with the draftId and every field passed through, JSON-stringifying opponentHeroIds', async () => {
       const { service, prisma } = makeService();
-      const draft = await service.start();
+      const draft = await startDraft(service);
 
       await service.saveBattleResult(draft.id, {
         resolvedOutcome: 'Win',
@@ -366,7 +431,7 @@ describe('DraftService', () => {
 
     it('passes through null opponentTeamName/opponentLeagueName unchanged (player-sourced opponents)', async () => {
       const { service, prisma } = makeService();
-      const draft = await service.start();
+      const draft = await startDraft(service);
 
       await service.saveBattleResult(draft.id, {
         resolvedOutcome: 'Lose',

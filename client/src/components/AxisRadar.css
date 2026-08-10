@@ -1,0 +1,92 @@
+.axis-radar {
+  margin: 0;
+  padding: var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.axis-radar-caption {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  align-self: flex-start;
+}
+
+.axis-radar-svg {
+  width: 100%;
+  max-width: 340px;
+  height: auto;
+  overflow: visible;
+}
+
+.axis-radar-ring {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 1;
+}
+
+/* The 50th-percentile ring is the "average draft" reference — everything
+   inside it is below par, everything outside above. Worth a stronger line
+   than the other three, which are only there for depth. */
+.axis-radar-ring--median {
+  stroke: var(--bronze);
+  stroke-dasharray: 3 3;
+}
+
+.axis-radar-spoke {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+
+.axis-radar-shape {
+  fill: color-mix(in srgb, var(--gold) 22%, transparent);
+  stroke: var(--gold);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  animation: radar-draw var(--dur-4) var(--ease-out) both;
+  transform-origin: center;
+}
+
+@keyframes radar-draw {
+  from {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.axis-radar-dot {
+  fill: var(--gold-bright);
+  stroke: var(--ground);
+  stroke-width: 1;
+}
+
+.axis-radar-label {
+  font-family: var(--font-ui);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  fill: var(--ink-faint);
+}
+
+.axis-radar-note {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--ink-faint);
+  text-align: center;
+  max-width: 34ch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .axis-radar-shape {
+    animation: none;
+  }
+}

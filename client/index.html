@@ -7,6 +7,21 @@
     <title>Dota Draft Analyzer</title>
   </head>
   <body>
+    <!-- Applies the stored theme choice before React mounts and before the
+         first paint. Without it a dark-theme user on a light-preferring OS
+         gets a full white flash on every page load, since ThemeToggle's
+         effect only runs after the first render. Inline and synchronous on
+         purpose — a module import would be too late. -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('dotadraft-theme');
+          if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+        } catch (e) {
+          /* storage disabled — fall back to the OS preference */
+        }
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

@@ -1,0 +1,113 @@
+import { useTranslation } from 'react-i18next';
+import type { AnalyzerResult } from 'shared';
+import './AxisRadar.css';
+
+// The "draft fingerprint" — every axis with a percentile, plotted on one
+// polygon. Evaluation used to present twelve axes only as a vertical stack
+// of cards, so the shape of a draft (spiky vs. round, front-loaded vs.
+// late) was something you had to reconstruct by reading fifteen numbers.
+//
+// Radius is the PERCENTILE, not the 0-10 score: scores cluster in the
+// 3.5-5.7 band for most drafts (see this file's callers — that clustering
+// is exactly why the total score got a percentile transform), which would
+// draw every team as the same near-circle. Percentiles are already
+// rank-spread against 10,000 random teams, so they fill the chart.
+interface Props {
+  breakdown: AnalyzerResult[];
+}
+
+const SIZE = 320;
+const CENTER = SIZE / 2;
+const MAX_R = 100;
+const RINGS = [25, 50, 75, 100];
+// Labels sit outside the outermost ring, expressed on the same 0-100
+// percentile scale the geometry uses.
+const LABEL_PCT = 122;
+const LINE_H = 10;
+
+function pointAt(index: number, count: number, radiusPct: number): [number, number] {
+  // Start at 12 o'clock and go clockwise.
+  const angle = (Math.PI * 2 * index) / count - Math.PI / 2;
+  const r = (Math.max(0, Math.min(100, radiusPct)) / 100) * MAX_R;
+  return [CENTER + Math.cos(angle) * r, CENTER + Math.sin(angle) * r];
+}
+
+export default function AxisRadar({ breakdown }: Props) {
+  const { t } = useTranslation();
+  // Non-axis analyzers (Synergy, Counter, Pro Similarity) carry percentile
+  // null — they aren't comparable on this scale and would distort the shape.
+  const axes = breakdown.filter((b) => b.percentile !== null);
+  if (axes.length < 3) return null;
+
+  const count = axes.length;
+  const polygon = axes.map((a, i) => pointAt(i, count, a.percentile!).join(',')).join(' ');
+
+  return (
+    <figure className="axis-radar">
+      <figcaption className="axis-radar-caption">{t('evaluation.radarTitle')}</figcaption>
+      <svg
+        viewBox={`0 0 ${SIZE} ${SIZE}`}
+        className="axis-radar-svg"
+        role="img"
+        aria-label={t('evaluation.radarAlt')}
+      >
+        {RINGS.map((ring) => (
+          <polygon
+            key={ring}
+            className={`axis-radar-ring${ring === 50 ? ' axis-radar-ring--median' : ''}`}
+            points={axes.map((_, i) => pointAt(i, count, ring).join(',')).join(' ')}
+          />
+        ))}
+
+        {axes.map((axis, i) => {
+          const [x, y] = pointAt(i, count, 100);
+          return <line key={axis.key} className="axis-radar-spoke" x1={CENTER} y1={CENTER} x2={x} y2={y} />;
+        })}
+
+        <polygon className="axis-radar-shape" points={polygon} />
+
+        {axes.map((axis, i) => {
+          const [x, y] = pointAt(i, count, axis.percentile!);
+          return (
+            <circle key={axis.key} className="axis-radar-dot" cx={x} cy={y} r={3}>
+              <title>{`${axis.label}: ${axis.percentile}`}</title>
+            </circle>
+          );
+        })}
+
+        {axes.map((axis, i) => {
+          const [x, y] = pointAt(i, count, LABEL_PCT);
+          // Anchor by which half of the circle the label sits in, so text
+          // grows away from the chart instead of over it.
+          const anchor = x < CENTER - 4 ? 'end' : x > CENTER + 4 ? 'start' : 'middle';
+          // Long labels ("Resource Efficiency", "Damage Output") get a
+          // second line rather than running into their neighbours.
+          const words = axis.label.split(' ');
+          // Vertical placement has to follow which part of the circle the
+          // label sits on. A two-line label at 12 o'clock anchored on its
+          // first line hangs down into the chart and collides with the
+          // polygon's own top vertex, which is exactly where the shape is
+          // busiest — so top labels stack upward, bottom labels downward,
+          // and side labels centre on the spoke.
+          const lines = words.length;
+          const firstDy =
+            y < CENTER - 20
+              ? -(lines - 1) * LINE_H - 2
+              : y > CENTER + 20
+                ? LINE_H
+                : (-(lines - 1) * LINE_H) / 2 + 3;
+          return (
+            <text key={axis.key} className="axis-radar-label" x={x} y={y} textAnchor={anchor}>
+              {words.map((word, w) => (
+                <tspan key={word} x={x} dy={w === 0 ? firstDy : LINE_H}>
+                  {word}
+                </tspan>
+              ))}
+            </text>
+          );
+        })}
+      </svg>
+      <p className="axis-radar-note">{t('evaluation.radarNote')}</p>
+    </figure>
+  );
+}

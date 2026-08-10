@@ -1,13 +1,30 @@
 .leaderboard-note {
   font-size: 13px;
   color: var(--ink-faint);
-  margin: -4px 0 20px;
+  margin: calc(var(--sp-3) * -1) 0 var(--sp-5);
+  max-width: 80ch;
+}
+
+.leaderboard-skeleton {
+  height: 420px;
+  border-radius: var(--r-md);
+}
+
+/* The table has six columns and a five-icon draft cell; below roughly
+   700px it has to scroll horizontally rather than crush every column.
+   Scoped to this wrapper so the page body itself never scrolls sideways. */
+.leaderboard-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--bronze-dim);
+  border-radius: var(--r-md);
+  background: var(--panel);
 }
 
 .leaderboard-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
+  min-width: 620px;
 }
 
 .leaderboard-table th {
@@ -17,22 +34,37 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-faint);
-  padding: 8px 12px;
-  border-bottom: 1px solid var(--bronze-dim);
+  padding: var(--sp-3);
+  border-bottom: 1px solid var(--bronze);
+  background: var(--panel);
+  /* Deliberately NOT position:sticky. The wrapper's overflow-x makes it a
+     scroll container, so a sticky header resolves its `top` against that
+     container's scrollport rather than the page's — it gets pushed down
+     by the offset and covers the first row instead of pinning under the
+     command bar. */
 }
 
 .leaderboard-table td {
-  padding: 9px 12px;
-  border-bottom: 1px solid var(--bronze-dim);
+  padding: var(--sp-2) var(--sp-3);
+  border-bottom: 1px solid var(--line);
   color: var(--ink);
+  vertical-align: middle;
+}
+
+.leaderboard-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.leaderboard-table tbody tr {
+  transition: background-color var(--dur-1) ease;
 }
 
 .leaderboard-table tbody tr:hover {
-  background: var(--ground-2);
+  background: var(--wash);
 }
 
 .leaderboard-row-me {
-  background: rgba(201, 162, 39, 0.12);
+  background: color-mix(in srgb, var(--gold) 12%, transparent);
 }
 
 .leaderboard-row-me td:first-child {
@@ -40,10 +72,59 @@
   font-weight: 700;
 }
 
+.col-rank {
+  width: 52px;
+}
+
+.col-num {
+  width: 84px;
+  text-align: right;
+  font-family: var(--font-ui);
+  letter-spacing: 0.04em;
+}
+
+.col-rate {
+  width: 120px;
+}
+
+/* ---------- rank ---------- */
+
+.leaderboard-rank {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-faint);
+}
+
+.leaderboard-rank.is-medal {
+  border-radius: 50%;
+  color: #1a1208;
+  font-weight: 700;
+  box-shadow: var(--elev-1);
+}
+
+.leaderboard-rank.is-medal-1 {
+  background: linear-gradient(160deg, #f3d47a, #c9a227);
+}
+
+.leaderboard-rank.is-medal-2 {
+  background: linear-gradient(160deg, #e2e2e2, #a8a8a8);
+}
+
+.leaderboard-rank.is-medal-3 {
+  background: linear-gradient(160deg, #d9975a, #a0642c);
+}
+
+/* ---------- draft cell ---------- */
+
 .leaderboard-draft-cell {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--sp-1);
 }
 
 .leaderboard-draft-icons {
@@ -52,12 +133,56 @@
 }
 
 .leaderboard-draft-icons img {
-  border-radius: 2px;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--r-xs);
   border: 1px solid var(--bronze-dim);
+  object-fit: cover;
+  display: block;
 }
 
 .leaderboard-team-name {
   font-family: var(--font-ui);
   font-size: 10px;
+  letter-spacing: 0.04em;
   color: var(--ink-faint);
+}
+
+/* ---------- win rate ---------- */
+
+.leaderboard-wins {
+  color: var(--win-bright);
+}
+
+.leaderboard-losses {
+  color: var(--danger);
+}
+
+/* A percentage next to a bar: the number is the fact, the bar is what
+   makes 100% at three battles look different from 100% at thirty. */
+.leaderboard-rate {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.leaderboard-rate-value {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.leaderboard-rate-track {
+  height: 4px;
+  border-radius: var(--r-pill);
+  background: var(--line-strong);
+  overflow: hidden;
+}
+
+.leaderboard-rate-fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--r-pill);
+  background: linear-gradient(90deg, var(--bronze), var(--gold));
 }

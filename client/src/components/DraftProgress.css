@@ -1,0 +1,183 @@
+.draft-progress {
+  margin-bottom: var(--sp-5);
+}
+
+.draft-progress-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--sp-4);
+}
+
+.draft-progress-head h1 {
+  font-size: 22px;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.draft-progress-head h1 em {
+  font-style: normal;
+  color: var(--gold);
+}
+
+.draft-progress-count {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ---------- rail ---------- */
+
+.draft-progress-rail {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: var(--sp-2);
+}
+
+.draft-progress-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+/* The connecting rail is drawn per step as a line running left from its
+   own node, rather than as one background under the row — that way each
+   segment can be colored by the state of the step it leads into (a filled
+   step lights its incoming segment gold). */
+.draft-progress-step::before {
+  content: '';
+  position: absolute;
+  top: 21px;
+  right: 50%;
+  left: -50%;
+  height: 2px;
+  background: var(--bronze-dim);
+  margin-right: 26px;
+  margin-left: 26px;
+  z-index: 0;
+}
+
+.draft-progress-step:first-child::before {
+  display: none;
+}
+
+.draft-progress-step.is-filled::before {
+  background: var(--gold);
+}
+
+.draft-progress-node {
+  position: relative;
+  z-index: 1;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--bronze-dim);
+  background: var(--ground-2);
+  overflow: hidden;
+  transition:
+    border-color var(--dur-3) ease,
+    box-shadow var(--dur-3) ease,
+    transform var(--dur-3) var(--ease-spring);
+}
+
+.draft-progress-node img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.draft-progress-number {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: var(--ink-faint);
+}
+
+.is-filled .draft-progress-node {
+  border-color: var(--gold);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--gold) 35%, transparent);
+  /* Freshly filled nodes pop once on mount — the step going from empty to
+     a hero portrait is the main feedback that a pick registered. */
+  animation: progress-node-lock var(--dur-4) var(--ease-spring);
+}
+
+@keyframes progress-node-lock {
+  0% {
+    transform: scale(0.6);
+  }
+  60% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.is-current .draft-progress-node {
+  border-color: var(--blood-bright);
+  border-style: dashed;
+  animation: progress-node-pulse 2s ease-in-out infinite;
+}
+
+.is-current .draft-progress-number {
+  color: var(--ink);
+}
+
+@keyframes progress-node-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--danger) 45%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 7px transparent;
+  }
+}
+
+.draft-progress-label {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  text-align: center;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.is-filled .draft-progress-label {
+  color: var(--ink-muted);
+}
+
+.is-current .draft-progress-label {
+  color: var(--ink);
+}
+
+@media (max-width: 560px) {
+  /* Names collide well before the nodes do — drop the labels and keep the
+     rail, which still reads as "2 of 5 done". */
+  .draft-progress-label {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .is-filled .draft-progress-node,
+  .is-current .draft-progress-node {
+    animation: none;
+  }
+}

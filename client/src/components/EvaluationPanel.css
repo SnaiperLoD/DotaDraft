@@ -1,26 +1,108 @@
 .evaluation-panel {
-  margin-top: 24px;
+  margin-top: var(--sp-5);
 }
 
-.evaluation-title {
-  font-size: 19px;
+/* ---------- headline score ---------- */
+
+.evaluation-hero {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 2px 10px;
+  gap: var(--sp-5);
+  padding: var(--sp-4) var(--sp-5);
+  margin-bottom: var(--sp-4);
 }
 
-.evaluation-title em {
-  font-style: normal;
-  color: var(--gold);
+.evaluation-hero-dial {
+  position: relative;
+  width: 104px;
+  height: 104px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+}
+
+.score-dial {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* Start the arc at 12 o'clock instead of 3. */
+  transform: rotate(-90deg);
+}
+
+.score-dial-track {
+  fill: none;
+  stroke: var(--line-strong);
+  stroke-width: 9;
+}
+
+.score-dial-fill {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 9;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--gold) 50%, transparent));
+  animation: dial-sweep var(--dur-4) var(--ease-out) both;
+}
+
+/* Sweeps up from empty on mount. Animating stroke-dasharray directly
+   would need the computed value in the keyframes; rotating a 0-length
+   clip is simpler and reads the same. */
+@keyframes dial-sweep {
+  from {
+    opacity: 0;
+    stroke-dashoffset: 120;
+  }
+  to {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}
+
+.evaluation-hero-value {
+  position: relative;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1;
+  color: var(--gold-bright);
+}
+
+.evaluation-hero-max {
+  font-size: 14px;
+  color: var(--ink-faint);
+}
+
+.evaluation-hero-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  min-width: 0;
+}
+
+.evaluation-hero-label {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.evaluation-hero-verdict {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.1;
+  color: var(--ink);
 }
 
 .star-rating {
   position: relative;
   display: inline-block;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1;
   letter-spacing: 2px;
+  align-self: flex-start;
 }
 
 .star-rating-bg {
@@ -36,15 +118,20 @@
   color: var(--gold-bright);
 }
 
+/* ---------- narrative ---------- */
+
 .evaluation-gameplan {
   font-size: 16px;
   line-height: 1.65;
   color: var(--ink);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--wash);
   border: 1px solid var(--bronze-dim);
-  border-radius: 8px;
-  padding: 12px 14px;
-  margin: 12px 0 20px;
+  /* Left rule marks this as the engine "speaking" — the one paragraph on
+     the page that's a synthesized read rather than a measured number. */
+  border-left: 3px solid var(--gold);
+  border-radius: var(--r-md);
+  padding: var(--sp-3) var(--sp-4);
+  margin: 0 0 var(--sp-5);
 }
 
 /* camp_stacking's standalone note (Blueprint/10-tech-debt-backlog.md,
@@ -58,8 +145,93 @@
   font-size: 15px;
   line-height: 1.5;
   color: var(--ink-muted);
-  margin: -12px 0 20px;
+  margin: calc(var(--sp-5) * -1 + var(--sp-2)) 0 var(--sp-5);
 }
+
+/* ---------- radar + summary ---------- */
+
+.evaluation-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+  gap: var(--sp-4);
+  align-items: start;
+  margin-bottom: var(--sp-5);
+}
+
+@media (max-width: 720px) {
+  .evaluation-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.evaluation-radar-panel {
+  padding: var(--sp-2);
+}
+
+.evaluation-summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.evaluation-summary-col {
+  min-width: 0;
+}
+
+.evaluation-summary-heading {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  margin-bottom: var(--sp-2);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+/* Strengths and weaknesses read as one undifferentiated pair of lists
+   otherwise — the swatch borrows the same green/red vocabulary the rest
+   of the app uses for good/bad. */
+.evaluation-summary-heading::before {
+  content: '';
+  width: 3px;
+  height: 12px;
+  border-radius: 1px;
+  background: currentColor;
+}
+
+.evaluation-summary-heading--good {
+  color: var(--win-bright);
+}
+
+.evaluation-summary-heading--bad {
+  color: var(--danger);
+}
+
+.evaluation-summary-col ul {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.evaluation-summary-col li {
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+
+.evaluation-summary-col li strong,
+.evaluation-item li strong,
+.evaluation-gameplan strong,
+.evaluation-note strong {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* ---------- active combos ---------- */
 
 /* Active Combos (Blueprint/10-tech-debt-backlog.md, "Новая категория
    Custom Tags") — reuses .hero-tag-badge/.rarity-* from HeroTagBadges.css
@@ -71,8 +243,8 @@
    place a player sees what a combo actually does, not just that it's
    active. */
 .evaluation-combos {
-  padding: 14px 18px;
-  margin-bottom: 20px;
+  padding: var(--sp-4) var(--sp-5);
+  margin-bottom: var(--sp-5);
 }
 
 .evaluation-combos-heading {
@@ -81,7 +253,7 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--gold-bright);
-  margin-bottom: 12px;
+  margin-bottom: var(--sp-3);
 }
 
 .evaluation-combos ul {
@@ -90,7 +262,7 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--sp-3);
 }
 
 .evaluation-combos li {
@@ -117,57 +289,16 @@
   min-width: 200px;
 }
 
-.evaluation-summary {
-  display: flex;
-  gap: 24px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-.evaluation-summary-col {
-  flex: 1;
-  min-width: 240px;
-}
-
-.evaluation-summary-heading {
-  font-family: var(--font-ui);
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gold-bright);
-  margin-bottom: 6px;
-}
-
-.evaluation-summary-col ul {
-  margin: 0;
-  padding-left: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.evaluation-summary-col li {
-  font-size: 15.5px;
-  line-height: 1.5;
-  color: var(--ink-muted);
-}
-
-.evaluation-summary-col li strong,
-.evaluation-item li strong,
-.evaluation-gameplan strong,
-.evaluation-note strong {
-  font-weight: 700;
-  color: var(--ink);
-}
+/* ---------- per-axis breakdown ---------- */
 
 .evaluation-breakdown {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--sp-3);
 }
 
 .evaluation-item {
-  padding: 14px 18px;
+  padding: var(--sp-4) var(--sp-5);
 }
 
 .evaluation-item-header {
@@ -178,16 +309,19 @@
   color: var(--ink);
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: var(--sp-2);
 }
 
 .evaluation-item-scores {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--sp-2);
 }
 
 .evaluation-item-header .score {
   color: var(--gold-bright);
+  white-space: nowrap;
 }
 
 .percentile-pill {
@@ -195,45 +329,103 @@
   font-weight: 600;
   letter-spacing: 0.04em;
   padding: 2px 7px;
-  border-radius: 10px;
+  border-radius: var(--r-pill);
   border: 1px solid transparent;
+  white-space: nowrap;
 }
 
 .percentile-pill.percentile-high {
-  color: #6fcf87;
-  border-color: rgba(111, 207, 135, 0.5);
-  background: rgba(111, 207, 135, 0.12);
+  color: var(--win-bright);
+  border-color: color-mix(in srgb, var(--win) 50%, transparent);
+  background: color-mix(in srgb, var(--win) 12%, transparent);
 }
 
 .percentile-pill.percentile-mid {
   color: var(--ink-muted);
   border-color: var(--bronze-dim);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--wash);
 }
 
 .percentile-pill.percentile-low {
   color: var(--danger);
-  border-color: rgba(200, 90, 74, 0.5);
-  background: rgba(200, 90, 74, 0.12);
+  border-color: color-mix(in srgb, var(--danger) 50%, transparent);
+  background: color-mix(in srgb, var(--danger) 12%, transparent);
+}
+
+/* ---------- percentile bar ---------- */
+
+.percentile-bar {
+  position: relative;
+  height: 5px;
+  margin-top: var(--sp-3);
+  border-radius: var(--r-pill);
+  background: var(--line-strong);
+  overflow: hidden;
+}
+
+.percentile-bar-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: var(--r-pill);
+  animation: percentile-grow var(--dur-4) var(--ease-out) both;
+  transform-origin: left center;
+}
+
+.percentile-bar.percentile-high .percentile-bar-fill {
+  background: var(--win);
+}
+
+.percentile-bar.percentile-mid .percentile-bar-fill {
+  background: var(--bronze);
+}
+
+.percentile-bar.percentile-low .percentile-bar-fill {
+  background: var(--danger);
+}
+
+/* Median tick — "is this draft above or below an average one on this
+   axis" is the question the bar exists to answer at a glance. */
+.percentile-bar-median {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-1px);
+  background: var(--ground);
+  /* Reads as a notch cut through the bar rather than a mark drawn on it,
+     which is why it's the page ground color and not a palette accent. */
+  box-shadow: 0 0 0 1px var(--wash-strong);
+}
+
+@keyframes percentile-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
 }
 
 .evaluation-item ul {
-  margin: 8px 0 0;
+  margin: var(--sp-3) 0 0;
   padding-left: 18px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--sp-1);
 }
 
 .evaluation-item li {
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.55;
   color: var(--ink-muted);
 }
 
 .evaluation-match-link {
   display: inline-block;
-  margin-top: 10px;
+  margin-top: var(--sp-3);
   font-family: var(--font-ui);
   font-size: 12px;
   letter-spacing: 0.04em;
@@ -243,4 +435,11 @@
 
 .evaluation-match-link:hover {
   text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .score-dial-fill,
+  .percentile-bar-fill {
+    animation: none;
+  }
 }

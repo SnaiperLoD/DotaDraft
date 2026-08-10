@@ -1,6 +1,6 @@
 .battle-panel {
-  margin-top: 24px;
-  padding-top: 16px;
+  margin-top: var(--sp-5);
+  padding-top: var(--sp-4);
   border-top: 2px solid var(--bronze);
 }
 
@@ -8,10 +8,14 @@
   font-size: 18px;
 }
 
+/* Do NOT give this .plate (base.css). ScreenFlash renders inside it as
+   `position: fixed; inset: 0`, and .plate's clip-path plus its drop-shadow
+   filter would both trap that fixed element inside this box — the
+   full-screen win/lose flash would shrink to the size of the result card. */
 .battle-result {
-  margin-top: 8px;
-  padding: 14px 16px;
-  border-radius: 4px;
+  margin-top: var(--sp-2);
+  padding: var(--sp-4);
+  border-radius: var(--r-md);
   border: 1px solid transparent;
 }
 
@@ -22,28 +26,86 @@
    the synergy-best/worst hero-card highlight (HeroPool.css) so win/lose
    reads consistently with the rest of the app, not a one-off color pick. */
 .battle-result--win {
-  background: linear-gradient(180deg, rgba(76, 175, 106, 0.12), transparent 70%);
-  border-color: rgba(76, 175, 106, 0.35);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--win) 12%, transparent), transparent 70%);
+  border-color: color-mix(in srgb, var(--win) 35%, transparent);
 }
 
 .battle-result--lose {
-  background: linear-gradient(180deg, rgba(200, 90, 74, 0.14), transparent 70%);
-  border-color: rgba(200, 90, 74, 0.4);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--danger) 14%, transparent), transparent 70%);
+  border-color: color-mix(in srgb, var(--danger) 40%, transparent);
+}
+
+/* ---------- verdict ---------- */
+
+.battle-verdict {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--sp-2);
 }
 
 .battle-outcome {
   font-family: var(--font-display);
-  font-size: 22px;
+  font-size: clamp(28px, 6vw, 40px);
   font-weight: 700;
-  margin: 0 0 4px;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  animation: verdict-slam var(--dur-4) var(--ease-spring) both;
 }
 
-.battle-outcome--win {
-  color: #4caf6a;
+/* Lands like a stamp rather than fading in — this is the payoff moment of
+   the whole flow, and it's competing with ScreenFlash for attention. */
+@keyframes verdict-slam {
+  0% {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.96);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
-.battle-outcome--lose {
+.battle-verdict--win .battle-outcome {
+  color: var(--win-bright);
+  text-shadow: 0 0 24px color-mix(in srgb, var(--win) 45%, transparent);
+}
+
+.battle-verdict--lose .battle-outcome {
   color: var(--danger);
+  text-shadow: 0 0 24px color-mix(in srgb, var(--danger) 40%, transparent);
+}
+
+/* Confidence is a caveat, not part of the headline — it used to be glued
+   to the outcome with an em dash, which made "Low Confidence" read as
+   part of the result rather than as a qualifier on it. */
+.battle-confidence {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--bronze-dim);
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+.battle-confidence--high {
+  border-color: var(--gold);
+  color: var(--gold-bright);
+}
+
+.battle-confidence--moderate {
+  border-color: var(--bronze);
+  color: var(--ink-muted);
 }
 
 .battle-vs {
@@ -53,7 +115,7 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-faint);
-  margin: 0 0 16px;
+  margin: 0 0 var(--sp-4);
 }
 
 .battle-match-link {
@@ -65,28 +127,35 @@
   text-decoration: underline;
 }
 
+/* ---------- faceoff ---------- */
+
 .faceoff {
-  margin: 16px 0;
+  margin: var(--sp-4) 0;
 }
 
+/* Five fixed 130px cards plus gaps overflowed the panel and wrapped to
+   4 + 1, which destroyed the one thing this layout exists for: your pick
+   in slot N sitting directly above the enemy in slot N. A five-column
+   grid keeps the columns aligned at any width and shrinks the portraits
+   instead of breaking the row. */
 .faceoff-row {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--sp-2);
+  justify-items: center;
 }
 
 /* Blueprint/10-tech-debt-backlog.md, "Анимация столкновения" — each row
    slides in from its own side and settles with a small overshoot/recoil,
    landing roughly when ScreenFlash's flash peaks (~440ms into its 2.2s
    fade, see ScreenFlash.css) rather than being precisely synced frame-by-
-   frame. First-pass draft. */
+   frame. */
 .faceoff-row--mine {
-  animation: faceoff-slide-in-left 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: faceoff-slide-in-left 0.5s var(--ease-out) both;
 }
 
 .faceoff-row--opponent {
-  animation: faceoff-slide-in-right 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: faceoff-slide-in-right 0.5s var(--ease-out) both;
 }
 
 @keyframes faceoff-slide-in-left {
@@ -119,35 +188,112 @@
 
 @media (prefers-reduced-motion: reduce) {
   .faceoff-row--mine,
-  .faceoff-row--opponent {
+  .faceoff-row--opponent,
+  .battle-outcome {
     animation: none;
   }
 }
 
+/* Rules running out from the "VS" so the two rows read as two sides of a
+   line, not as two unrelated lists stacked vertically. */
 .faceoff-divider {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin: var(--sp-3) 0;
+}
+
+.faceoff-divider::before,
+.faceoff-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--bronze), transparent);
+}
+
+.faceoff-divider span {
   font-family: var(--font-display);
   font-weight: 700;
+  font-size: 15px;
   color: var(--blood-bright);
-  letter-spacing: 0.1em;
-  margin: 10px 0;
+  letter-spacing: 0.14em;
 }
 
 .portrait-card {
-  width: 130px;
+  width: 100%;
+  max-width: 130px;
   text-align: center;
-  flex-shrink: 0;
   position: relative;
 }
 
 .portrait-card img {
-  width: 130px;
-  height: 81px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 130 / 81;
   object-fit: cover;
   object-position: center top;
-  border-radius: 4px;
-  border: 1px solid var(--bronze-dim);
+  border-radius: var(--r-sm);
+  /* Colour comes from an inherited custom property, not from a selector
+     that has to out-specify its neighbours — see the side-identity block
+     below for why that matters. */
+  border: 1px solid var(--side-tint, var(--bronze-dim));
   display: block;
+}
+
+/* ---------- side identity ---------- */
+
+/* Both rows used to be visually identical, so which one was yours came
+   only from reading the captions. Green/red is Dota's Radiant/Dire
+   duality and needs no legend.
+ *
+ * The tint travels as an inherited custom property rather than as a
+ * `border-color` declaration on a descendant selector. That is deliberate:
+ * `.faceoff-side--mine .portrait-card img` is (0,3,1) and would beat
+ * `.portrait-card--shutdown img` at (0,1,1), which silently repainted a
+ * shut-down hero's red border green the first time this was written. With
+ * a variable, the card sets --side-tint closer to the <img> than the side
+ * wrapper does, so shutdown wins by inheritance distance and no
+ * specificity tuning is needed. */
+.faceoff-side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.faceoff-side-label {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+/* Short colour bar before the label, the way Dota marks a team's side. */
+.faceoff-side-label::before {
+  content: '';
+  width: 18px;
+  height: 3px;
+  border-radius: 1px;
+  background: currentColor;
+}
+
+.faceoff-side--mine .faceoff-side-label {
+  color: var(--win-bright);
+}
+
+.faceoff-side--opponent .faceoff-side-label {
+  color: var(--danger);
+}
+
+.faceoff-side--mine {
+  --side-tint: color-mix(in srgb, var(--win) 55%, var(--bronze-dim));
+}
+
+.faceoff-side--opponent {
+  --side-tint: color-mix(in srgb, var(--danger) 55%, var(--bronze-dim));
 }
 
 /* Shutdown (common/shutdown.ts) — a hero countered by all 5 heroes on the
@@ -155,9 +301,14 @@
    only, no change to the row layout or caption. Rare by design (see
    SHUTDOWN_WINRATE_MARGIN), so this should read as a dramatic one-off, not
    a routine state. */
+/* Overrides the side tint by sitting closer to the <img> in the
+   inheritance chain than .faceoff-side does — no specificity contest. */
+.portrait-card--shutdown {
+  --side-tint: var(--danger);
+}
+
 .portrait-card--shutdown img {
   filter: saturate(0.45) brightness(0.8);
-  border-color: var(--danger);
 }
 
 .portrait-card--shutdown::before {
@@ -165,12 +316,27 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 130px;
-  height: 81px;
+  right: 0;
+  /* Matches the img's aspect-ratio box rather than a hardcoded 130x81, so
+     the crack still covers the portrait once the grid shrinks it. */
+  aspect-ratio: 130 / 81;
   pointer-events: none;
   background: var(--danger);
   opacity: 0.85;
-  clip-path: polygon(38% 0%, 41% 20%, 32% 28%, 44% 44%, 34% 56%, 48% 100%, 52% 100%, 42% 58%, 56% 46%, 44% 30%, 55% 22%, 50% 0%);
+  clip-path: polygon(
+    38% 0%,
+    41% 20%,
+    32% 28%,
+    44% 44%,
+    34% 56%,
+    48% 100%,
+    52% 100%,
+    42% 58%,
+    56% 46%,
+    44% 30%,
+    55% 22%,
+    50% 0%
+  );
 }
 
 .battle-list-block--shutdown .battle-list-heading {
@@ -181,8 +347,11 @@
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 12px;
-  margin-top: 4px;
+  margin-top: var(--sp-1);
   color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .portrait-card .caption {
@@ -191,10 +360,28 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-faint);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- factor lists ---------- */
+
+/* Deciding factors / advantages / disadvantages / explanation were four
+   stacked full-width lists; on a wide panel that's a very long column of
+   short lines. */
+.battle-lists {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--sp-4);
+  margin-top: var(--sp-4);
 }
 
 .battle-list-block {
-  margin-top: 14px;
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-md);
+  background: var(--wash);
+  border: 1px solid var(--line);
 }
 
 .battle-list-heading {
@@ -203,7 +390,15 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--gold-bright);
-  margin-bottom: 6px;
+  margin-bottom: var(--sp-2);
+}
+
+.battle-list-block--good .battle-list-heading {
+  color: var(--win-bright);
+}
+
+.battle-list-block--bad .battle-list-heading {
+  color: var(--danger);
 }
 
 .battle-list-block ul {
@@ -211,16 +406,17 @@
   padding-left: 18px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--sp-1);
 }
 
 .battle-list-block li {
-  font-size: 13px;
+  font-size: 14px;
+  line-height: 1.5;
   color: var(--ink-muted);
 }
 
 .battle-ad {
-  margin: 18px 0;
+  margin: var(--sp-5) 0;
 }
 
 .battle-count {
@@ -229,5 +425,17 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-faint);
-  margin-top: 8px;
+  margin-top: var(--sp-2);
+}
+
+/* Portraits stop being legible below roughly 70px — at that point the
+   column alignment matters less than seeing who's who. */
+@media (max-width: 520px) {
+  .portrait-card .caption {
+    display: none;
+  }
+
+  .portrait-card .name {
+    font-size: 10px;
+  }
 }

@@ -16,7 +16,10 @@
   position: absolute;
   top: 6px;
   left: 6px;
-  right: 6px;
+  /* Stops short of the right edge: the attribute chip (HeroPool.css
+     .hero-attr) occupies that corner, and a hero with two or three tags
+     would otherwise run straight under it. */
+  right: 32px;
   z-index: 2;
   pointer-events: none;
 }
@@ -31,6 +34,11 @@
   justify-content: flex-end;
 }
 
+/* Fixed dark chip + fixed light text, not the theme tokens: the default
+   placement is an overlay on a hero portrait, which is dark in both
+   themes. var(--ink) flipped dark in light mode and put dark text on this
+   dark chip — unreadable. The inline variant below, which sits on a real
+   panel instead of a portrait, is the one that follows the theme. */
 .hero-tag-badge {
   pointer-events: auto;
   font-family: var(--font-ui);
@@ -40,35 +48,41 @@
   text-transform: uppercase;
   line-height: 1.3;
   padding: 2px 6px;
-  border-radius: 2px;
+  border-radius: var(--r-xs);
   border: 1px solid transparent;
-  color: var(--ink);
+  color: #f0e7d2;
   background: rgba(21, 16, 12, 0.72);
   backdrop-filter: blur(2px);
-  text-shadow: 0 1px 2px var(--shadow-deep);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.hero-tag-row--inline .hero-tag-badge {
+  color: var(--ink);
+  background: var(--wash-strong);
+  text-shadow: none;
 }
 
 .hero-tag-badge.rarity-common {
-  border-color: #4caf6a;
-  box-shadow: 0 0 6px rgba(76, 175, 106, 0.35);
+  border-color: var(--rarity-common);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--rarity-common) 40%, transparent);
 }
 
 .hero-tag-badge.rarity-uncommon {
-  border-color: #2fb6ad;
-  box-shadow: 0 0 6px rgba(47, 182, 173, 0.4);
+  border-color: var(--rarity-uncommon);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--rarity-uncommon) 45%, transparent);
 }
 
 .hero-tag-badge.rarity-rare {
-  border-color: #3f8fd6;
-  box-shadow: 0 0 6px rgba(63, 143, 214, 0.4);
+  border-color: var(--rarity-rare);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--rarity-rare) 45%, transparent);
 }
 
 .hero-tag-badge.rarity-epic {
-  border-color: #a866d9;
-  box-shadow: 0 0 6px rgba(168, 102, 217, 0.45);
+  border-color: var(--rarity-epic);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--rarity-epic) 50%, transparent);
 }
 
 .hero-tag-badge.rarity-legendary {
-  border-color: #e08a2e;
-  box-shadow: 0 0 8px rgba(224, 138, 46, 0.55);
+  border-color: var(--rarity-legendary);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--rarity-legendary) 55%, transparent);
 }

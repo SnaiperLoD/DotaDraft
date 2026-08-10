@@ -1,12 +1,12 @@
 .hero-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: var(--sp-4);
 }
 
 .hero-card {
   position: relative;
-  border-radius: 4px;
+  border-radius: var(--r-md);
   overflow: hidden;
   background: var(--panel);
   border: 1px solid var(--bronze-dim);
@@ -15,10 +15,41 @@
   text-align: left;
   width: 100%;
   transition:
-    transform 0.18s ease,
-    border-color 0.18s ease,
-    box-shadow 0.18s ease;
-  box-shadow: 0 6px 16px var(--shadow-deep);
+    transform var(--dur-2) var(--ease-out),
+    border-color var(--dur-2) ease,
+    box-shadow var(--dur-2) ease;
+  box-shadow: var(--elev-2);
+  /* Staggered deal-in on every new pool (React remounts the grid when the
+     round advances or a re-roll lands), so a fresh five reads as dealt
+     rather than swapped. */
+  animation: hero-card-deal var(--dur-3) var(--ease-out) both;
+}
+
+.hero-card:nth-child(1) {
+  animation-delay: 0ms;
+}
+.hero-card:nth-child(2) {
+  animation-delay: 45ms;
+}
+.hero-card:nth-child(3) {
+  animation-delay: 90ms;
+}
+.hero-card:nth-child(4) {
+  animation-delay: 135ms;
+}
+.hero-card:nth-child(5) {
+  animation-delay: 180ms;
+}
+
+@keyframes hero-card-deal {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .hero-card:disabled {
@@ -31,9 +62,9 @@
   transform: translateY(-3px);
   border-color: var(--gold);
   box-shadow:
-    0 10px 24px var(--shadow-deep),
+    var(--elev-3),
     0 0 0 1px var(--gold),
-    0 0 22px rgba(201, 162, 39, 0.35);
+    0 0 22px color-mix(in srgb, var(--gold) 35%, transparent);
 }
 
 /* Live synergy highlight (Blueprint/10-tech-debt-backlog.md, "Живая
@@ -43,37 +74,37 @@
    hovered/focused) — !important on hover/focus so the highlight stays the
    dominant signal even when a highlighted card is being hovered. */
 .hero-card--synergy-best {
-  border-color: #4caf6a;
+  border-color: var(--win);
   box-shadow:
-    0 6px 16px var(--shadow-deep),
-    0 0 0 1px #4caf6a,
-    0 0 20px rgba(76, 175, 106, 0.45);
+    var(--elev-2),
+    0 0 0 1px var(--win),
+    0 0 20px color-mix(in srgb, var(--win) 45%, transparent);
 }
 
 .hero-card--synergy-best:not(:disabled):hover,
 .hero-card--synergy-best:not(:disabled):focus-visible {
-  border-color: #4caf6a !important;
+  border-color: var(--win) !important;
   box-shadow:
-    0 10px 24px var(--shadow-deep),
-    0 0 0 1px #4caf6a,
-    0 0 26px rgba(76, 175, 106, 0.6) !important;
+    var(--elev-3),
+    0 0 0 1px var(--win),
+    0 0 26px color-mix(in srgb, var(--win) 60%, transparent) !important;
 }
 
 .hero-card--synergy-worst {
   border-color: var(--danger);
   box-shadow:
-    0 6px 16px var(--shadow-deep),
+    var(--elev-2),
     0 0 0 1px var(--danger),
-    0 0 20px rgba(200, 90, 74, 0.4);
+    0 0 20px color-mix(in srgb, var(--danger) 40%, transparent);
 }
 
 .hero-card--synergy-worst:not(:disabled):hover,
 .hero-card--synergy-worst:not(:disabled):focus-visible {
   border-color: var(--danger) !important;
   box-shadow:
-    0 10px 24px var(--shadow-deep),
+    var(--elev-3),
     0 0 0 1px var(--danger),
-    0 0 26px rgba(200, 90, 74, 0.55) !important;
+    0 0 26px color-mix(in srgb, var(--danger) 55%, transparent) !important;
 }
 
 .hero-card .portrait {
@@ -126,10 +157,137 @@
     0 0 8px rgba(0, 0, 0, 0.5);
 }
 
+/* Primary-attribute accent. The pool grid was five identically bronze
+   cards; colouring the seam between portrait and body by str/agi/int/all
+   gives the row real variety and repeats a colour code Dota players
+   already read, without inventing a new one. Falls back to bronze for any
+   attribute value the roster might grow later. */
+.hero-card {
+  --attr: var(--bronze-dim);
+}
+
+.hero-card--attr-str {
+  --attr: var(--attr-str);
+}
+.hero-card--attr-agi {
+  --attr: var(--attr-agi);
+}
+.hero-card--attr-int {
+  --attr: var(--attr-int);
+}
+.hero-card--attr-all {
+  --attr: var(--attr-all);
+}
+
 .hero-card .card-body {
   padding: 10px 12px 12px;
-  border-top: 1px solid var(--bronze-dim);
+  border-top: 2px solid var(--attr);
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+}
+
+/* ---------- attribute chip ---------- */
+
+.hero-attr {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 2;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-xs);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(21, 16, 12, 0.7);
+  border: 1px solid currentColor;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+}
+
+.hero-attr--str {
+  color: var(--attr-str);
+}
+.hero-attr--agi {
+  color: var(--attr-agi);
+}
+.hero-attr--int {
+  color: var(--attr-int);
+}
+.hero-attr--all {
+  color: var(--attr-all);
+}
+
+/* ---------- synergy flag ---------- */
+
+/* Sits under the tag badges (which hug the top-left) and above the name
+   plate, on the one horizontal band of the portrait that's always empty. */
+.hero-synergy-flag {
+  position: absolute;
+  left: 6px;
+  bottom: 34px;
+  z-index: 2;
+  font-family: var(--font-ui);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: var(--r-pill);
+  border: 1px solid currentColor;
+  background: rgba(21, 16, 12, 0.78);
+  backdrop-filter: blur(2px);
+  pointer-events: none;
+}
+
+.hero-synergy-flag--best {
+  color: var(--win-bright);
+}
+
+.hero-synergy-flag--worst {
+  color: var(--danger);
+}
+
+/* ---------- pick affordance ---------- */
+
+.hero-pick-cue {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  background: rgba(12, 9, 6, 0.55);
+  backdrop-filter: blur(1px);
+  opacity: 0;
+  transition: opacity var(--dur-2) ease;
+  pointer-events: none;
+}
+
+.hero-card:not(:disabled):hover .hero-pick-cue,
+.hero-card:not(:disabled):focus-visible .hero-pick-cue {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-card {
+    animation: none;
+  }
+}
+
+/* Coarse pointers have no hover, so the cue would either never appear or
+   stick after a tap — the card is obviously tappable on touch anyway. */
+@media (hover: none) {
+  .hero-pick-cue {
+    display: none;
+  }
 }

@@ -73,6 +73,7 @@ function FaceOff({
   collisionKey: number;
   shutdownHeroIds: number[];
 }) {
+  const { t } = useTranslation();
   const roleOrder = ROLES as readonly string[];
   const sortedMine = myHeroes
     .slice()
@@ -80,29 +81,42 @@ function FaceOff({
 
   return (
     <div className="faceoff" key={collisionKey}>
-      <div className="faceoff-row faceoff-row--mine">
-        {sortedMine.map((h) => (
-          <PortraitCard
-            key={h.heroId}
-            heroId={h.heroId}
-            name={h.hero.name}
-            caption={h.assignedRole}
-            isShutdown={shutdownHeroIds.includes(h.heroId)}
-          />
-        ))}
+      {/* Green for your side, red for theirs — Dota's own Radiant/Dire
+          colour duality, which players read instantly. Deliberately NOT
+          labelled "Radiant"/"Dire": these are two drafts, neither is
+          actually on a side of the map, so borrowing the colours is fair
+          but borrowing the names would be a lie. */}
+      <div className="faceoff-side faceoff-side--mine">
+        <span className="faceoff-side-label">{t('battle.sideYours')}</span>
+        <div className="faceoff-row faceoff-row--mine">
+          {sortedMine.map((h) => (
+            <PortraitCard
+              key={h.heroId}
+              heroId={h.heroId}
+              name={h.hero.name}
+              caption={h.assignedRole}
+              isShutdown={shutdownHeroIds.includes(h.heroId)}
+            />
+          ))}
+        </div>
       </div>
-      <div className="faceoff-divider">VS</div>
-      <div className="faceoff-row faceoff-row--opponent">
-        {opponentHeroes.map((h) => (
-          <PortraitCard
-            key={h.heroId}
-            heroId={h.heroId}
-            name={h.heroName}
-            caption={h.playerName}
-            translateCaption={false}
-            isShutdown={shutdownHeroIds.includes(h.heroId)}
-          />
-        ))}
+      <div className="faceoff-divider">
+        <span>VS</span>
+      </div>
+      <div className="faceoff-side faceoff-side--opponent">
+        <div className="faceoff-row faceoff-row--opponent">
+          {opponentHeroes.map((h) => (
+            <PortraitCard
+              key={h.heroId}
+              heroId={h.heroId}
+              name={h.heroName}
+              caption={h.playerName}
+              translateCaption={false}
+              isShutdown={shutdownHeroIds.includes(h.heroId)}
+            />
+          ))}
+        </div>
+        <span className="faceoff-side-label">{t('battle.sideOpponent')}</span>
       </div>
     </div>
   );
@@ -124,7 +138,10 @@ export default function BattlePanel({ draftId, heroes }: Props) {
     setLoading(true);
     setError(null);
     try {
-      const [res] = await Promise.all([api.fightBattle(draftId, getSubmitterToken()), sleep(MIN_ROLL_DURATION_MS)]);
+      const [res] = await Promise.all([
+        api.fightBattle(draftId, getSubmitterToken()),
+        sleep(MIN_ROLL_DURATION_MS),
+      ]);
       setResult(res);
       setBattleCount((c) => c + 1);
     } catch (err) {
@@ -140,6 +157,7 @@ export default function BattlePanel({ draftId, heroes }: Props) {
 
       {!result && (
         <button className="btn btn-primary" onClick={() => void handleFight()} disabled={loading}>
+          {loading && <span className="btn-spinner" aria-hidden="true" />}
           {loading ? t('battle.findingOpponent') : t('battle.enterBattle')}
         </button>
       )}
@@ -154,10 +172,21 @@ export default function BattlePanel({ draftId, heroes }: Props) {
       {result && !loading && (
         <div className={`battle-result battle-result--${result.resolvedOutcome === 'Win' ? 'win' : 'lose'}`}>
           <ScreenFlash outcome={result.resolvedOutcome} flashKey={battleCount} />
-          <p className={`battle-outcome battle-outcome--${result.resolvedOutcome === 'Win' ? 'win' : 'lose'}`}>
-            {result.resolvedOutcome === 'Win' ? t('battle.victory') : t('battle.defeat')} —{' '}
-            {t('battle.confidence', { tier: t(`battle.tier.${result.confidenceTier}`) })}
-          </p>
+
+          {/* Outcome, confidence and opponent used to run together in one
+              sentence ("Victory — Low Confidence"), which buried the single
+              word the player actually came for. Three separate registers now:
+              the verdict, the caveat, the who. */}
+          <div
+            className={`battle-verdict battle-verdict--${result.resolvedOutcome === 'Win' ? 'win' : 'lose'}`}
+          >
+            <span className="battle-outcome">
+              {result.resolvedOutcome === 'Win' ? t('battle.victory') : t('battle.defeat')}
+            </span>
+            <span className={`battle-confidence battle-confidence--${result.confidenceTier.toLowerCase()}`}>
+              {t('battle.confidence', { tier: t(`battle.tier.${result.confidenceTier}`) })}
+            </span>
+          </div>
 
           <p className="battle-vs">
             {t('battle.vs')}{' '}
@@ -188,57 +217,59 @@ export default function BattlePanel({ draftId, heroes }: Props) {
             shutdownHeroIds={result.shutdownHeroIds}
           />
 
-          {result.shutdownNotes.length > 0 && (
-            <div className="battle-list-block battle-list-block--shutdown">
-              <div className="battle-list-heading">{t('battle.shutdown')}</div>
-              <ul>
-                {result.shutdownNotes.map((n, i) => (
-                  <li key={i}>{n}</li>
-                ))}
-              </ul>
-            </div>
-          )}
+          <div className="battle-lists">
+            {result.shutdownNotes.length > 0 && (
+              <div className="battle-list-block battle-list-block--shutdown">
+                <div className="battle-list-heading">{t('battle.shutdown')}</div>
+                <ul>
+                  {result.shutdownNotes.map((n, i) => (
+                    <li key={i}>{n}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
-          {result.winningHighlights.length > 0 && (
+            {result.winningHighlights.length > 0 && (
+              <div className="battle-list-block">
+                <div className="battle-list-heading">{t('battle.decidingFactors')}</div>
+                <ul>
+                  {result.winningHighlights.map((h, i) => (
+                    <li key={i}>{h}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {result.advantages.length > 0 && (
+              <div className="battle-list-block battle-list-block--good">
+                <div className="battle-list-heading">{t('battle.advantages')}</div>
+                <ul>
+                  {result.advantages.map((a, i) => (
+                    <li key={i}>{a}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {result.disadvantages.length > 0 && (
+              <div className="battle-list-block battle-list-block--bad">
+                <div className="battle-list-heading">{t('battle.disadvantages')}</div>
+                <ul>
+                  {result.disadvantages.map((d, i) => (
+                    <li key={i}>{d}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             <div className="battle-list-block">
-              <div className="battle-list-heading">{t('battle.decidingFactors')}</div>
+              <div className="battle-list-heading">{t('battle.explanation')}</div>
               <ul>
-                {result.winningHighlights.map((h, i) => (
-                  <li key={i}>{h}</li>
+                {result.explanation.map((line, i) => (
+                  <li key={i}>{line}</li>
                 ))}
               </ul>
             </div>
-          )}
-
-          {result.advantages.length > 0 && (
-            <div className="battle-list-block">
-              <div className="battle-list-heading">{t('battle.advantages')}</div>
-              <ul>
-                {result.advantages.map((a, i) => (
-                  <li key={i}>{a}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {result.disadvantages.length > 0 && (
-            <div className="battle-list-block">
-              <div className="battle-list-heading">{t('battle.disadvantages')}</div>
-              <ul>
-                {result.disadvantages.map((d, i) => (
-                  <li key={i}>{d}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          <div className="battle-list-block">
-            <div className="battle-list-heading">{t('battle.explanation')}</div>
-            <ul>
-              {result.explanation.map((line, i) => (
-                <li key={i}>{line}</li>
-              ))}
-            </ul>
           </div>
 
           <div className="battle-ad">
@@ -246,6 +277,7 @@ export default function BattlePanel({ draftId, heroes }: Props) {
           </div>
 
           <button className="btn btn-primary" onClick={() => void handleFight()} disabled={loading}>
+            {loading && <span className="btn-spinner" aria-hidden="true" />}
             {loading ? t('battle.findingOpponent') : t('battle.fightAgain')}
           </button>
           <p className="battle-count">{t('battle.battlesThisVisit', { count: battleCount })}</p>

@@ -134,13 +134,13 @@
 }
 
 .legend-border-swatch--best {
-  border-color: #4caf6a;
-  box-shadow: 0 0 8px rgba(76, 175, 106, 0.45);
+  border-color: var(--win);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--win) 45%, transparent);
 }
 
 .legend-border-swatch--worst {
   border-color: var(--danger);
-  box-shadow: 0 0 8px rgba(200, 90, 74, 0.4);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--danger) 40%, transparent);
 }
 
 /* Matches HeroTagBadges.css's rarity-* border colors exactly (kept in
@@ -156,23 +156,23 @@
 }
 
 .legend-rarity-swatch.rarity-common {
-  border-color: #4caf6a;
+  border-color: var(--rarity-common);
 }
 
 .legend-rarity-swatch.rarity-uncommon {
-  border-color: #2fb6ad;
+  border-color: var(--rarity-uncommon);
 }
 
 .legend-rarity-swatch.rarity-rare {
-  border-color: #3f8fd6;
+  border-color: var(--rarity-rare);
 }
 
 .legend-rarity-swatch.rarity-epic {
-  border-color: #a866d9;
+  border-color: var(--rarity-epic);
 }
 
 .legend-rarity-swatch.rarity-legendary {
-  border-color: #e08a2e;
+  border-color: var(--rarity-legendary);
 }
 
 @media (max-width: 480px) {
