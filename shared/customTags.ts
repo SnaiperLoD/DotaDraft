@@ -40,6 +40,10 @@ export const MANA_BOOSTER_BENEFICIARIES = [
   'Skywrath Mage',
   'Zeus',
   'Outworld Destroyer',
+  // Added 2026-08-10 (roster audit): Mana Shield spends mana as effective
+  // HP, which makes Medusa the single most mana-dependent hero on the
+  // roster — she was the one obvious omission from this list.
+  'Medusa',
 ];
 
 export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
@@ -74,6 +78,9 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
       'Jakiro',
       'Ancient Apparition',
       'Winter Wyvern',
+      // Added 2026-08-10 (roster audit): the only ice-themed hero that was
+      // outside the tag — Frost Blast / Frost Shield / Chain Frost.
+      'Lich',
     ],
   },
   {
@@ -113,6 +120,9 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
       'Disruptor',
       'Warlock',
       'Sand King',
+      // Added 2026-08-10 (roster audit): Echo Slam is the archetypal
+      // one-button teamfight ultimate this tag is named for.
+      'Earthshaker',
     ],
   },
   {
@@ -122,7 +132,10 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
     revealable: false,
     description:
       '+10% personal map control, active even solo. 2+ on the team: each also gets +5% teamfight and +5% burst.',
-    heroNames: ['Silencer', 'Tinker', 'Io', 'Dawnbreaker', 'Spectre', 'Zeus', "Nature's Prophet"],
+    // 'Invoker' added 2026-08-10 (roster audit): Sun Strike is global, and
+    // heroes.json's own `global_impact` tag already marked him — the custom
+    // tag was the side that disagreed with the data.
+    heroNames: ['Silencer', 'Tinker', 'Io', 'Dawnbreaker', 'Spectre', 'Zeus', "Nature's Prophet", 'Invoker'],
   },
   {
     name: 'High Skill',
@@ -161,6 +174,12 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
       'Broodmother',
       'Naga Siren',
       'Meepo',
+      // Added 2026-08-10 (roster audit): familiars are a second and third
+      // body to keep alive, and heroes.json marks Visage `summon_based`.
+      // The other four summoners the data flags (Enigma, Warlock, Chen,
+      // Ringmaster) were deliberately left out of this batch — see the
+      // audit entry in Blueprint/10-tech-debt-backlog.md.
+      'Visage',
     ],
   },
   {
@@ -211,7 +230,7 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
     visible: false,
     revealable: true,
     minCountToReveal: 2,
-    description: "Mirana and Muerta, reunited. Both on the team: +3% personal map control each.",
+    description: 'Mirana and Muerta, reunited. Both on the team: +3% personal map control each.',
     heroNames: ['Mirana', 'Muerta'],
   },
   // Self-play outlier investigation, round 2 (Blueprint/10-tech-debt-backlog.md,
@@ -238,7 +257,12 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
     revealable: false,
     description:
       'Illusions/clones — extra bodies for damage, split-push, and vision no axis measures. +6% personal power, +8% personal map control, active even solo. 2+ on the team: -durability/-teamfight each, scaling with stack count (the real body is easier to pick apart the more the team leans on illusions).',
-    heroNames: ['Phantom Lancer', 'Terrorblade', 'Naga Siren'],
+    // 'Chaos Knight' added 2026-08-10 (roster audit): Phantasm, and
+    // heroes.json's `illusion_based` already listed exactly Phantom Lancer,
+    // Chaos Knight and Terrorblade — he was the one the tag skipped.
+    // (Naga Siren carries this tag WITHOUT being `illusion_based` in the
+    // data; left as-is, flagged in the backlog rather than changed here.)
+    heroNames: ['Phantom Lancer', 'Terrorblade', 'Naga Siren', 'Chaos Knight'],
   },
   {
     name: 'Mass Buffer',
@@ -247,7 +271,12 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
     revealable: false,
     description:
       'Team-wide damage amplification (auras/debuffs). Each Mass Buffer hero adds to team teamfight/burst, active even solo — and the per-hero contribution itself grows with stack size (+3% solo, +4% each at 2, +5% each at 3...), so the total scales faster than linearly.',
-    heroNames: ['Vengeful Spirit', 'Mirana', 'Luna', 'Drow Ranger'],
+    // 'Chen' added 2026-08-10 by direct user request. Note the mismatch,
+    // accepted knowingly: this tag's effect is team teamfight/burst, i.e.
+    // DAMAGE amplification, and Chen's auras (Divine Favor, Hand of God)
+    // are sustain/defensive. He is tagged here rather than under a separate
+    // defensive-aura tag because the user chose not to introduce one.
+    heroNames: ['Vengeful Spirit', 'Mirana', 'Luna', 'Drow Ranger', 'Chen'],
   },
   {
     name: 'Prone To Burst',

@@ -1565,3 +1565,65 @@ Underperform-сторона улучшилась реально: Warlock/Troll W
 - **Название "Shutdown"** — оставлено как предложено.
 
 **Реализация:** `server/src/common/shutdown.ts` (новый модуль, `isShutdown`/`shutdownHeroes`/`shutdownHeroMultipliers`) → `battle-resolution.ts` (`assessBattle`/`resolveBattle`, `shutdownHeroIds`/`shutdownNotes`) → `shared/types/battle.ts` → `battle.service.ts` → `BattlePanel.tsx`/`.css` → `en.json`/`ru.json` (`battle.shutdown`). Юнит-тесты: `server/src/common/shutdown.spec.ts` (все 5-матчапов, дисквалификация по `null`, граница `<=`, отсутствие собственного winRate, пустой список оппонентов). Полный typecheck (`server`+`client`) и `npx jest` (232/232) пройдены чисто.
+
+### Протухшее `axis-percentile-distributions.json` — найдено и перегенерировано (2026-08-10)
+
+**Как нашли.** Пользователь посмотрел на свой драфт (Nature's Prophet / Io / Slardar / Chen / Magnus) и спросил, логично ли, что он в нижних процентах по `durability`. Арифметика была корректной (счёт 3.4 против эталона со средним 5.05 и sd 0.86 — это −1.9σ), но сама пятёрка не выглядела экстремальной: самый хилый в ней Chen с 1.7 — это лишь 27-е место из 127 по ростеру, тогда как настоящий низ (Crystal Maiden 0.1, Lich 0.2, Ancient Apparition 0.2, Disruptor 0.2, Lion 0.3) намного ниже. Среднее команды 3.38 против ростерного 3.99 — отставание всего на 0.6, а ярлык при этом стоял «bottom 3%».
+
+**Причина — эталонная популяция отстала от данных на два коммита.** `axis-percentile-distributions.json` последний раз генерировался в `c811f65` (2026-08-06 19:27). После этого `heroes.json` менялся дважды: `6ff83a7` (2026-08-07 02:13, per-role калибровка) и `8102a7e` (2026-08-07 02:55, **`zScoreExtremityScale` asymmetric normalization fix**). Второй из них и пере-центрировал оси, а распределение не пересняли — ровно тот сценарий, о котором предупреждает `12-next-session-priorities.md` («любое изменение `WEIGHTS`/`BASE_ANALYZERS`/synergy требует перезапуска `compute-axis-percentiles.ts`, иначе референсная популяция протухает»). Здесь триггером было изменение самих `evaluation_values`, а не весов — то есть список поводов для переснятия шире, чем записано в том предупреждении.
+
+**Диагностический признак, годный для повторного использования:** сравнить среднее оси по ростеру (`heroes.json`, `evaluation_values[axis]`) со средним соответствующего массива в `axis-percentile-distributions.json`. У здоровых осей разрыв небольшой (здесь −0.27…+0.19 — он и не должен быть нулевым, анализатор применяет hard-carry множители и dampen). Протухшие видно сразу: `durability` +1.06 и `saving` +1.27 против остальных двенадцати осей в узкой полосе. Косвенное подтверждение было и в живых данных — у шести последних завершённых драфтов перцентили по `durability` шли 3, 41, 8, 29, 4, 8, тогда как при корректном эталоне они должны быть примерно равномерны.
+
+**Что сделано.** Перегенерировано (`npx ts-node scripts/compute-axis-percentiles.ts`, 10000 сэмплов). После этого разрывы по всем осям укладываются в −0.36…+0.42, протухших (>0.5) не осталось. Изменения эталонных средних: `durability` 5.05 → 3.83, `saving` 4.08 → 3.23, `totalScore` 4.76 → 4.60; остальные оси сдвинулись на 0.03–0.35. Сквозная проверка на том самом драфте через реальный сервер: `durability` p3 → **p34**, нарратив сменился с «bottom 3% … Fragile and vulnerable to burst» на «close to the median … Moderate durability», `totalScore` 8.5 → 9.
+
+**Важное следствие для History:** `evaluationResult` хранится снимком (`EvaluationService.evaluate()` пишет JSON в конце), и History читает именно его. Поэтому уже сохранённые оценки НЕ пересчитываются задним числом — старые записи продолжают показывать числа, посчитанные против протухшего эталона, пока конкретный драфт не переоценят заново. Драфт из этого разбора переоценён (его снимок перезаписан), остальные 214 — нет. Отдельный вопрос, надо ли делать разовый backfill по всем сохранённым оценкам; не делалось, решения нет.
+
+### RESEARCH: `IRRELEVANT_AXIS_DAMPEN` перехватывается per-role веткой и почти не срабатывает — не начато
+
+**Обнаружено попутно к разбору выше (2026-08-10), самостоятельная проблема — перегенерация эталона её не лечит.**
+
+`IRRELEVANT_AXIS_DAMPEN` (`common/role-fit.ts`) был добавлен 2026-07-26 ровно под жалобу «у чистых кастер-саппортов структурно околонулевая живучесть читается как реальная слабость»: он частично прощает саппорту низкие `durability`/`objectives` (+30% от разрыва до базовой линии 5). Но `roleAwareAxisValue()` сначала проверяет `hasRoleEvaluationData(hero, position)` и, если данные есть, возвращает `resolveEvaluationValues(...)[axisKey]`, **не доходя до `roleFitValue()`** — а dampen живёт именно внутри `roleFitValue()`. То есть механизм срабатывает только для пар без per-role данных (308 из 508); для остальных 200 он мёртв.
+
+**Хуже того, ветка, которая его перехватывает, по `durability` не несёт никакого сигнала:** у всех 200 пар (герой, роль) с «реальными» per-role данными значение `durability` **ровно равно агрегатному** (проверено скриптом по `evaluation_values_by_role`). Проверено на живом коде для драфта из разбора выше — у всех пятерых `perRoleData=true`, `util=1`, `miscast=1`, и итоговый вклад каждого равен сырому значению: NP 2.2, Io 3.1, Slardar 5.8, Chen 1.7, Magnus 4.1. Не проверялось, справедливо ли то же самое для остальных осей — это первое, что стоит выяснить.
+
+**Почему это не «просто починить».** Сам `role-fit.ts` в шапке называет эту проводку EXPERIMENTAL и прямо предупреждает о риске двойного учёта: `BOOST_WEIGHT`/`DAMPEN_WEIGHT`/`UTILITY_BREADTH_GATE`/`SUPPORT_MISCAST_THRESHOLD` калибровались против поведения на агрегатах, и складывать их с реальными per-role данными — ровно тот риск, который эта проводка и должна была померить через self-play регрессию. Так что «пропустить dampen перед per-role веткой» — это изменение модели, а не багфикс.
+
+**Открытый вопрос сверх этого, содержательный.** `durability` считается невзвешенным средним по пятерым (`axis.analyzer.ts`), то есть HP-пул Chen весит столько же, сколько Slardar, хотя Chen в замес не заходит вообще. Ось меряет «средний бодик», а не «держит ли команда файт». Dampen — это костыль под ровно эту проблему, применённый на уровне отдельного героя; альтернатива — взвешивать вклад по роли (фронтлайн против бэклайна) на уровне самой оси. Что из двух правильнее — не решено.
+
+**Дешёвый первый шаг, прежде чем что-то трогать** (по образцу проверок из `regress-axis-weights.ts`): точечным скриптом посчитать, на скольких парах (герой, роль) per-role значения вообще отличаются от агрегатных, по каждой оси отдельно. Если окажется, что не отличаются нигде (а не только по `durability`), то вопрос вообще не про dampen, а про то, зачем нужна per-role ветка в текущем виде.
+
+### Аудит ростера на принадлежность к Custom Tags — частично применено (2026-08-10)
+
+**По запросу пользователя:** добавить Чену тег и проверить всех остальных 127 героев на принадлежность к уже существующим тегам.
+
+**Про Чена.** Пользователь попросил тег «Aura Buffer» — такого в реестре нет. Ближайший `Mass Buffer` описан как *team-wide damage amplification*, и у всех четырёх его носителей (Vengeful Spirit, Mirana, Luna, Drow Ranger) ауры бьют именно в урон. Ауры Чена (Divine Favor, Hand of God) — сустейн/защита. Предложены три варианта: новый защитный тег, расширение концепта `Mass Buffer` до «любых командных аур», либо дописать Чена как есть. **Пользователь выбрал третье** — расхождение между смыслом тега и носителем принято осознанно и помечено комментарием в `shared/customTags.ts`. Если когда-нибудь заводится отдельный защитный тег, естественная когорта под него: Chen, Omniknight, Treant Protector, Wraith King, Dazzle.
+
+**Объективная часть аудита: у трёх кастомных тегов есть прямой аналог в собственном словаре `heroes.json`** (поле `tags`), так что расхождение арбитрируется данными, а не памятью:
+
+| кастомный тег | аналог в данных | данные помечают, тег пропускал |
+| --- | --- | --- |
+| `Divided Attention` | `summon_based` | Enigma, Warlock, Chen, Visage, Ringmaster |
+| `Global` | `global_impact` | Puck, Storm Spirit, Bounty Hunter, Invoker, Keeper of the Light |
+| `Army of Clones` | `illusion_based` | Chaos Knight |
+
+Обратное расхождение (тег есть, пометки в данных нет) по `Global` — Silencer/Dawnbreaker/Spectre/Zeus — скорее неполнота данных, чем ошибка тега: Global Silence, Solar Guardian, Haunt и Thundergod's Wrath глобальны по механике. **Единственный случай, который стоит пересмотреть в обратную сторону: Naga Siren несёт `Army of Clones`, не будучи `illusion_based` в данных** (`deathball` + `late_game_scaling`). Не тронуто.
+
+**Применено в этот заход (7 правок в `shared/customTags.ts`):** `Chen` → Mass Buffer (по запросу); `Lich` → Frosty (единственный ледяной герой вне тега); `Earthshaker` → The Button (Echo Slam — архетип этого тега); `Chaos Knight` → Army of Clones (расхождение с `illusion_based`); `Visage` → Divided Attention (`summon_based`); `Invoker` → Global (`global_impact`); `Medusa` → `MANA_BOOSTER_BENEFICIARIES` (Mana Shield — самый мана-зависимый герой ростера). Battle-математика правок не потребовала: `custom-tags.ts` берёт все имена через `heroNameSetForTag()`/`MANA_BOOSTER_BENEFICIARIES`, хардкода нет. `npx jest` 291/291 чисто.
+
+**Осознанно отложено — кандидаты найдены, но не применены,** чтобы не сорвать атрибуцию в следующем self-play прогоне (см. `12-next-session-priorities.md` item 1: последний прогон дал 22 флагнутых героя против 16, причём Riki и Enchantress стали хуже от своих же тегов, а причину не удалось выделить именно из-за того, что за раз приземлилось слишком много изменений):
+
+- `Divided Attention`: Enigma, Warlock, Chen, Ringmaster (все `summon_based` по данным)
+- `Global`: Puck, Storm Spirit, Bounty Hunter, Keeper of the Light
+- `The Button`: Dark Seer, Elder Titan, Axe; слабее — Kunkka, Centaur Warrunner, Tiny
+- `Agility Crusher`: Slardar (Corrosive Haze), Dazzle (Weave), Shadow Fiend (Presence of the Dark Lord)
+- `High Skill`: Earth Spirit, Visage, Rubick — **осторожно, тег даёт −2.5% силы при 2+ носителях**
+- `Statstealer`: Legion Commander (Duel — перманентный урон); слабее — Shadow Fiend (Necromastery)
+- `Mass Buffer`: Beastmaster (Inner Beast); Slardar/Dazzle/Shadow Fiend пересекаются с `Agility Crusher` — **нужно решить, какой тег владеет снижением брони**, иначе двойной учёт
+- `Army of Clones`: Arc Warden, Meepo, Spectre — **но Arc Warden и Meepo уже несут `Divided Attention`, а оба тега дают −durability/−teamfight при 2+**, то есть двойной штраф за одну и ту же механику
+- `Unseen`: Templar Assassin, Slark, Sand King, Treant Protector; Mirana спорна (Moonlight Shadow командная, а тег про личную невидимость) — **самый рискованный тег, именно его прошлые расширения и дали дивергенцию**
+- `Tempo Monster`: Chen, Beastmaster, Enchantress, Night Stalker — **скрытый тег с −25% при командном темпе ≤ 8**
+- `Prone To Burst`: Bristleback, Timbersaw — **тег уже ухудшил Enchantress (+11.8pp → +16.0pp)**
+
+**Закрытые наборы, кандидатов нет:** `The Fundamentals`, `Two Heads Better`, `Old Rivals`, `Reunion` — лор/мем-множества, правило членства из механики не выводится.
+
+**Как повторить проверку:** словарь `tags` в `heroes.json` (`teamfight`, `pick_off`, `poke`, `early_aggression`, `late_game_scaling`, `split_push`, `lane_dominance`, `global_impact`, `summon_based`, `deathball`, `illusion_based`, `roshan_focused`) сверяется с `CUSTOM_TAG_DEFINITIONS` из `shared/dist/customTags.js` — импортировать скомпилированный модуль, а не парсить `.ts` регэкспом (многострочные массивы ломают наивный парс, на этом я один раз уже получил ложные «false» по Broodmother).
