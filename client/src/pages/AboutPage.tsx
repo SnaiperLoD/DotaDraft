@@ -29,7 +29,7 @@ export default function AboutPage() {
       </div>
 
       <div className="about-cta">
-        <Link to="/draft" className="btn btn-primary">
+        <Link to="/draft" className="btn btn-primary" viewTransition>
           {t('landing.cta')}
         </Link>
       </div>

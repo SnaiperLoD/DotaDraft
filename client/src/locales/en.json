@@ -116,6 +116,7 @@
     "radarTitle": "Axis profile",
     "radarAlt": "Radar chart of this draft's percentile on each evaluation axis",
     "radarNote": "Distance from the centre is the percentile against 10,000 random teams. The dashed ring is average.",
+    "radarReadout": "{{percentile}}th percentile against 10,000 random teams",
     "strengths": "Strengths",
     "weaknesses": "Weaknesses",
     "notAvailable": "N/A",

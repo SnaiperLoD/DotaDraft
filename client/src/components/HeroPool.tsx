@@ -85,6 +85,17 @@ function useSynergyHighlight(pool: Hero[], pickedHeroIds: number[]) {
 // read before anything else, and it costs a 20px corner.
 const ATTR_LETTER: Record<string, string> = { str: 'S', agi: 'A', int: 'I', all: 'U' };
 
+// Pointer-tracked sheen. Writes the cursor position onto the card as CSS
+// custom properties and lets HeroPool.css draw the highlight from them —
+// deliberately not React state, so sweeping the mouse across the grid
+// doesn't re-render five cards on every mousemove frame.
+function trackPointer(e: React.MouseEvent<HTMLButtonElement>) {
+  const el = e.currentTarget;
+  const r = el.getBoundingClientRect();
+  el.style.setProperty('--px', `${((e.clientX - r.left) / r.width) * 100}%`);
+  el.style.setProperty('--py', `${((e.clientY - r.top) / r.height) * 100}%`);
+}
+
 export default function HeroPool({
   pool,
   onPick,
@@ -107,6 +118,7 @@ export default function HeroPool({
               isBest ? ' hero-card--synergy-best' : ''
             }${isWorst ? ' hero-card--synergy-worst' : ''}`}
             onClick={() => onPick(hero.id)}
+            onMouseMove={trackPointer}
             disabled={disabled}
           >
             <div className="portrait">

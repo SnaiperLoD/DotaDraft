@@ -239,22 +239,69 @@
   flex: 1;
 }
 
-/* Route-change cue — content used to snap in instantly on navigation.
-   One-way fade+rise (no exit animation, no crossfade) since the old page's
-   DOM is already gone by the time this mounts, React Router doesn't keep
-   both around. */
-.page-transition {
-  animation: page-fade-in 0.35s ease-out;
+/* ---------- route transitions ---------- */
+
+/* Navigation is wrapped in document.startViewTransition by React Router
+   (the `viewTransition` prop on the NavLinks/Links), so the browser
+   cross-fades a snapshot of the old page into the new one — a real
+   transition rather than the old "new content fades in over nothing".
+ *
+ * The fallback below is deliberately inside @supports NOT: the routes are
+ * still remounted by key, so without the guard browsers that DO support
+ * view transitions would play the mount animation on top of the
+ * transition and the page would move twice. */
+@supports not (view-transition-name: none) {
+  .page-transition {
+    animation: page-fade-in 0.35s ease-out;
+  }
+
+  @keyframes page-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 
-@keyframes page-fade-in {
+/* Outgoing page leaves faster than the incoming one arrives, so the two
+   never sit at 50% opacity together long enough to read as a smear. */
+::view-transition-old(root) {
+  animation: vt-leave 160ms ease-in both;
+}
+
+::view-transition-new(root) {
+  animation: vt-enter 280ms var(--ease-out) both;
+}
+
+@keyframes vt-leave {
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes vt-enter {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(10px);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+}
+
+/* The command bar is persistent chrome, not page content — naming it
+   pulls it out of the root snapshot so it stays put instead of
+   cross-fading with the page underneath it. */
+.command-bar {
+  view-transition-name: site-header;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
   }
 }
 

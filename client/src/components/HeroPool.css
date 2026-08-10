@@ -252,6 +252,40 @@
   color: var(--danger);
 }
 
+/* ---------- pointer sheen ---------- */
+
+/* A soft highlight that follows the cursor across the portrait, the way a
+   foil card catches light when you tilt it. Position comes from --px/--py,
+   written by HeroPool.tsx's trackPointer on mousemove; the defaults keep
+   it centred (and invisible, opacity 0) before the pointer ever arrives.
+   Sits under the name plate and the pick cue, above the portrait art. */
+.hero-card .portrait::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--dur-2) ease;
+  background: radial-gradient(
+    circle 120px at var(--px, 50%) var(--py, 50%),
+    color-mix(in srgb, var(--gold-bright) 28%, transparent),
+    transparent 70%
+  );
+}
+
+.hero-card:not(:disabled):hover .portrait::after {
+  opacity: 1;
+}
+
+/* Touch devices have no pointer to track — the sheen would either never
+   appear or freeze wherever the last tap landed. */
+@media (hover: none) {
+  .hero-card .portrait::after {
+    display: none;
+  }
+}
+
 /* ---------- pick affordance ---------- */
 
 .hero-pick-cue {

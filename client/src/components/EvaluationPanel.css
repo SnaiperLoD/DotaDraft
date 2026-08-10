@@ -301,6 +301,46 @@
   padding: var(--sp-4) var(--sp-5);
 }
 
+/* Scroll-driven reveal for the breakdown grid. Fifteen cards arrive at
+   once today, which makes a long page feel like a wall; staggering them by
+   scroll position gives the section a sense of being read through.
+ *
+ * Guarded by @supports, and that guard is load-bearing, not decorative:
+ * the animation starts at opacity 0, so in a browser without
+ * animation-timeline the cards would simply never become visible. Inside
+ * the guard the timeline drives the animation, outside it nothing is
+ * declared at all and the cards render normally. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .evaluation-item {
+      /* Longhands, not the `animation:` shorthand. The shorthand defaults
+         duration to 0s, and a scroll-driven animation with a zero duration
+         collapses straight to its end state — every card rendered fully
+         visible and the reveal never ran. `auto` is what maps the
+         animation onto the timeline's range. */
+      animation-name: card-reveal;
+      animation-duration: auto;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      /* Finish well before the card reaches the middle of the screen —
+         a reveal still running when you're already reading reads as lag. */
+      animation-range: entry 0% entry 45%;
+    }
+
+    @keyframes card-reveal {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  }
+}
+
 .evaluation-item-header {
   font-family: var(--font-ui);
   font-size: 13px;

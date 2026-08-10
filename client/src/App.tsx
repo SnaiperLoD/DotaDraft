@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route, NavLink, useLocation } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Outlet, NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LandingPage from './pages/LandingPage';
 import DraftPage from './pages/DraftPage';
@@ -13,23 +13,24 @@ import LegendPanel from './components/LegendPanel';
 import { BUG_REPORT_MAILTO_HREF } from './utils/bugReport';
 import './App.css';
 
-// Keyed by pathname so React remounts this div on every route change,
-// re-triggering the CSS fade/rise-in animation (App.css's .page-transition)
-// — cheaper than a transition-group library for a one-way "content just
-// changed" cue, no exit animation needed since the old content is gone
-// immediately either way (no crossfade).
-function AppRoutes() {
+// Keyed by pathname so React remounts this div on every route change.
+// Two reasons it survives the move to view transitions: it re-triggers the
+// CSS fallback animation for browsers without the View Transitions API
+// (App.css), and it keeps each page's mount semantics identical to before —
+// DraftPage in particular expects a fresh mount per visit.
+function RootLayout() {
   const location = useLocation();
   return (
-    <div key={location.pathname} className="page-transition">
-      <Routes location={location}>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/draft" element={<DraftPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/history" element={<HistoryPage />} />
-        <Route path="/leaderboard" element={<LeaderboardPage />} />
-      </Routes>
-    </div>
+    <>
+      <SiteHeader />
+      <main className="app-main">
+        <div key={location.pathname} className="page-transition">
+          <Outlet />
+        </div>
+      </main>
+      <Footer />
+      <LegendPanel />
+    </>
   );
 }
 
@@ -77,7 +78,7 @@ function SiteHeader() {
   return (
     <header className={`command-bar${scrolled ? ' command-bar--scrolled' : ''}`}>
       <div className="command-bar-inner">
-        <NavLink to="/" className="wordmark" onClick={closeMenu} end>
+        <NavLink to="/" className="wordmark" onClick={closeMenu} viewTransition end>
           <Mark />
           <span className="wordmark-text">
             Dota<span className="wordmark-accent">Draft</span>
@@ -91,6 +92,7 @@ function SiteHeader() {
               to={item.to}
               className={({ isActive }) => (isActive ? 'active' : undefined)}
               onClick={closeMenu}
+              viewTransition
             >
               {t(item.key)}
             </NavLink>
@@ -126,15 +128,23 @@ function SiteHeader() {
   );
 }
 
+// Data router rather than <BrowserRouter>: the `viewTransition` prop on
+// Link/NavLink is driven by the data router's navigation flow and is a
+// silent no-op under the component router — clicking a nav link simply
+// never called document.startViewTransition.
+const router = createBrowserRouter([
+  {
+    element: <RootLayout />,
+    children: [
+      { path: '/', element: <LandingPage /> },
+      { path: '/draft', element: <DraftPage /> },
+      { path: '/about', element: <AboutPage /> },
+      { path: '/history', element: <HistoryPage /> },
+      { path: '/leaderboard', element: <LeaderboardPage /> },
+    ],
+  },
+]);
+
 export default function App() {
-  return (
-    <BrowserRouter>
-      <SiteHeader />
-      <main className="app-main">
-        <AppRoutes />
-      </main>
-      <Footer />
-      <LegendPanel />
-    </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 }

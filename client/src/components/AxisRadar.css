@@ -40,6 +40,51 @@
 .axis-radar-spoke {
   stroke: var(--line);
   stroke-width: 1;
+  transition:
+    stroke var(--dur-2) ease,
+    stroke-width var(--dur-2) ease;
+}
+
+.axis-radar-spoke.is-active {
+  stroke: var(--gold);
+  stroke-width: 2;
+}
+
+/* ---------- vertex interaction ---------- */
+
+/* The plot box exists so the hotspot overlay can be positioned against the
+   SVG's own square, not against the whole figure (which also holds the
+   caption and the note). */
+.axis-radar-plot {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 1;
+}
+
+.axis-radar-hotspots {
+  position: absolute;
+  inset: 0;
+}
+
+/* 24px target centred on a 3px dot — the dot is sized to read as a mark on
+   the chart, not to be aimed at. */
+.axis-radar-hotspot {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  transform: translate(-50%, -50%);
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.axis-radar-hotspot:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 0;
+  background: color-mix(in srgb, var(--gold) 18%, transparent);
 }
 
 .axis-radar-shape {
@@ -66,6 +111,14 @@
   fill: var(--gold-bright);
   stroke: var(--ground);
   stroke-width: 1;
+  transition:
+    r var(--dur-2) var(--ease-spring),
+    filter var(--dur-2) ease;
+}
+
+.axis-radar-dot.is-active {
+  r: 5.5;
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--gold-bright) 70%, transparent));
 }
 
 .axis-radar-label {
@@ -74,8 +127,15 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   fill: var(--ink-faint);
+  transition: fill var(--dur-2) ease;
 }
 
+.axis-radar-label.is-active {
+  fill: var(--gold-bright);
+}
+
+/* min-height holds the two-line legend's box so swapping in the (shorter)
+   readout doesn't make the panel jump. */
 .axis-radar-note {
   margin: 0;
   font-size: 11px;
@@ -83,6 +143,25 @@
   color: var(--ink-faint);
   text-align: center;
   max-width: 34ch;
+  min-height: 3.2em;
+}
+
+.axis-radar-readout {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.axis-radar-readout strong {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+}
+
+.axis-radar-readout span {
+  color: var(--ink-muted);
 }
 
 @media (prefers-reduced-motion: reduce) {
