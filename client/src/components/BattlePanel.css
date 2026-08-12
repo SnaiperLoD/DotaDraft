@@ -339,10 +339,19 @@
    inheritance chain than .faceoff-side does — no specificity contest. */
 .portrait-card--shutdown {
   --side-tint: var(--danger);
+  /* The strike: the whole card (portrait + its crack, which is a ::before on
+     this element so it jolts together) takes a one-shot hit the moment the
+     result renders — this now lands on the clash, after the opponent has
+     fully settled in. Rare by design, so it's allowed to be loud. */
+  animation: shutdown-jolt 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
 .portrait-card--shutdown img {
-  filter: saturate(0.45) brightness(0.8);
+  filter: saturate(0.35) brightness(0.7) contrast(1.05);
+  /* Stays "alive" after the strike: a slow red glow breathes under the
+     portrait so a shut-down hero keeps reading as flatlined, not just a
+     dimmed frame. Delayed until the jolt has landed. */
+  animation: shutdown-glow 2.4s ease-in-out 0.55s infinite;
 }
 
 .portrait-card--shutdown::before {
@@ -371,6 +380,71 @@
     55% 22%,
     50% 0%
   );
+  /* The crack cracks IN — a bright over-scaled flash that snaps down to the
+     resting fracture, so it reads as the portrait taking the hit rather than
+     a decal that was always there. */
+  transform-origin: 46% 50%;
+  animation: shutdown-crack 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes shutdown-jolt {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  14% {
+    transform: translate3d(-4px, 1px, 0) rotate(-2deg);
+  }
+  30% {
+    transform: translate3d(4px, -1px, 0) rotate(2deg);
+  }
+  46% {
+    transform: translate3d(-3px, 1px, 0) rotate(-1.2deg);
+  }
+  62% {
+    transform: translate3d(2px, 0, 0) rotate(0.7deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+}
+
+@keyframes shutdown-crack {
+  0% {
+    opacity: 0;
+    filter: brightness(3);
+    transform: scale(1.45);
+  }
+  28% {
+    opacity: 1;
+    filter: brightness(2.2);
+  }
+  100% {
+    opacity: 0.85;
+    filter: none;
+    transform: scale(1);
+  }
+}
+
+@keyframes shutdown-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px var(--danger),
+      0 0 5px color-mix(in srgb, var(--danger) 28%, transparent);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px var(--danger),
+      0 0 17px color-mix(in srgb, var(--danger) 68%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portrait-card--shutdown,
+  .portrait-card--shutdown img,
+  .portrait-card--shutdown::before {
+    animation: none;
+  }
 }
 
 .battle-list-block--shutdown .battle-list-heading {
