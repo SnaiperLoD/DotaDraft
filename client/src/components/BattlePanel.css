@@ -8,6 +8,40 @@
   font-size: 18px;
 }
 
+/* ---------- battle screen header ---------- */
+
+/* Battle Mode is its own screen (DraftPage swaps it in over the Evaluation).
+   The header carries the back affordance so returning to the Evaluation is
+   always one obvious click away, whatever state the fight is in. */
+.battle-screen-head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--sp-2);
+}
+
+.battle-screen-head h3 {
+  margin: 0;
+}
+
+.battle-back {
+  flex-shrink: 0;
+}
+
+.battle-screen-intro {
+  color: var(--ink-muted);
+  margin: 0 0 var(--sp-4);
+  max-width: 60ch;
+}
+
+/* Sibling screens under .completed-section are toggled with the `hidden`
+   attribute (kept mounted to preserve state). Guard against a stray
+   `display` from a more specific rule re-showing a hidden screen. */
+.completed-view[hidden] {
+  display: none;
+}
+
 /* Do NOT give this .plate (base.css). ScreenFlash renders inside it as
    `position: fixed; inset: 0`, and .plate's clip-path plus its drop-shadow
    filter would both trap that fixed element inside this box — the

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ScreenFlash from './ScreenFlash';
 import OpponentRollAnimation from './OpponentRollAnimation';
@@ -125,9 +125,14 @@ function FaceOff({
 interface Props {
   draftId: string;
   heroes: DraftHeroView[];
+  // Battle Mode is a separate screen (DraftPage). `active` is true only while
+  // that screen is showing; it both auto-starts the first fight on entry and
+  // keeps the roll from firing while the panel is mounted-but-hidden.
+  active?: boolean;
+  onBack?: () => void;
 }
 
-export default function BattlePanel({ draftId, heroes }: Props) {
+export default function BattlePanel({ draftId, heroes, active = true, onBack }: Props) {
   const { t } = useTranslation();
   const [result, setResult] = useState<BattleResultResponse | null>(null);
   const [loading, setLoading] = useState(false);
@@ -151,15 +156,48 @@ export default function BattlePanel({ draftId, heroes }: Props) {
     }
   };
 
+  // Auto-start the first fight when the player crosses into the battle screen,
+  // so entering Battle Mode leads straight into the roll rather than onto yet
+  // another button. Re-arms when they leave, but the `!result` guard means
+  // returning to a fought battle shows the existing result instead of
+  // silently re-rolling a new opponent.
+  const autoStartedRef = useRef(false);
+  useEffect(() => {
+    if (!active) {
+      autoStartedRef.current = false;
+      return;
+    }
+    if (!autoStartedRef.current && !result && !loading && !error) {
+      autoStartedRef.current = true;
+      void handleFight();
+    }
+    // handleFight/result/loading/error are read as a one-shot latch here; the
+    // ref is what actually guards re-entry, so this only needs to re-run when
+    // `active` flips.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active]);
+
   return (
     <div className="battle-panel">
-      <h3>{t('battle.title')}</h3>
+      <div className="battle-screen-head">
+        {onBack && (
+          <button type="button" className="btn btn-ghost btn-sm battle-back" onClick={onBack}>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+            {t('battle.backToEvaluation')}
+          </button>
+        )}
+        <h3>{t('battle.title')}</h3>
+      </div>
 
-      {!result && (
-        <button className="btn btn-primary" onClick={() => void handleFight()} disabled={loading}>
-          {loading && <span className="btn-spinner" aria-hidden="true" />}
-          {loading ? t('battle.findingOpponent') : t('battle.enterBattle')}
-        </button>
+      {!result && !loading && (
+        <>
+          <p className="battle-screen-intro">{t('battle.screenIntro')}</p>
+          <button className="btn btn-primary" onClick={() => void handleFight()} disabled={loading}>
+            {t('battle.enterBattle')}
+          </button>
+        </>
       )}
 
       {/* Shown on both the first fight and every "Fight Again" reroll —

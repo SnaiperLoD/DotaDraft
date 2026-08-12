@@ -58,6 +58,12 @@ export default function DraftPage() {
   const [draft, setDraft] = useState<DraftStateView | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Battle Mode is a separate screen, not a section stacked under the
+  // Evaluation (per user). The Evaluation subtree stays mounted underneath
+  // (hidden, not unmounted) so returning to it keeps whatever the player
+  // already generated — the score, the expanded breakdown — instead of
+  // resetting to the "Evaluate" button.
+  const [battleView, setBattleView] = useState(false);
 
   const loadPool = () => {
     api
@@ -128,6 +134,7 @@ export default function DraftPage() {
     setDraft(null);
     setPending(null);
     setError(null);
+    setBattleView(false);
     loadPool();
   };
 
@@ -226,14 +233,31 @@ export default function DraftPage() {
           draft id, so it has to be the narrowing that TypeScript follows. */}
       {draft && draft.status === 'COMPLETED' && (
         <div className="completed-section">
-          <DraftLedger heroes={draft.heroes} totalSlots={5} title={t('draft.yourTeam')} />
-          <EvaluationPanel draftId={draft.id} heroes={draft.heroes} />
-          <CommitToPoolButton draftId={draft.id} />
-          <BattlePanel draftId={draft.id} heroes={draft.heroes} />
-          <div className="completed-actions">
-            <button className="btn btn-secondary" onClick={handleRestart}>
-              {t('draft.startNewDraft')}
-            </button>
+          {/* Evaluation screen — kept mounted while the battle screen is up
+              (hidden, not unmounted) so returning preserves its state. */}
+          <div className="completed-view" hidden={battleView}>
+            <DraftLedger heroes={draft.heroes} totalSlots={5} title={t('draft.yourTeam')} />
+            <EvaluationPanel draftId={draft.id} heroes={draft.heroes} />
+            <CommitToPoolButton draftId={draft.id} />
+            <div className="completed-actions">
+              <button className="btn btn-primary" onClick={() => setBattleView(true)}>
+                {t('battle.enterBattleMode')}
+              </button>
+              <button className="btn btn-secondary" onClick={handleRestart}>
+                {t('draft.startNewDraft')}
+              </button>
+            </div>
+          </div>
+
+          {/* Battle screen. `active` drives the auto-start when the player
+              crosses over, and gates the roll from firing while hidden. */}
+          <div className="completed-view" hidden={!battleView}>
+            <BattlePanel
+              draftId={draft.id}
+              heroes={draft.heroes}
+              active={battleView}
+              onBack={() => setBattleView(false)}
+            />
           </div>
         </div>
       )}
