@@ -106,18 +106,39 @@ export default function HeroPool({
   const { t } = useTranslation();
   const { bestId, worstId } = useSynergyHighlight(pool, pickedHeroIds);
 
+  // Which card the player just committed to, so it can hold a bright
+  // "committing" state through the brief window between the click and the
+  // next pool arriving — instead of all five dimming identically the moment
+  // `disabled` goes true. Purely visual: it doesn't gate onPick and adds no
+  // latency (the pool still swaps whenever the pick resolves; this only
+  // fills that gap).
+  const [pickingId, setPickingId] = useState<number | null>(null);
+  // pickingId only means something while that hero is still in the pool — the
+  // loading window. Once the pool advances the picked hero is gone from it,
+  // so deriving the committing id from the current pool clears the state on
+  // its own: no reset effect, and the "others dimmed" branch can never dim a
+  // fresh, unpicked pool.
+  const committingId = pickingId !== null && pool.some((h) => h.id === pickingId) ? pickingId : null;
+
   return (
     <div className="hero-grid">
       {pool.map((hero) => {
         const isBest = hero.id === bestId;
         const isWorst = hero.id === worstId;
+        const isCommitting = hero.id === committingId;
+        const isFading = committingId !== null && !isCommitting;
         return (
           <button
             key={hero.id}
             className={`hero-card hero-card--attr-${hero.primary_attribute}${
               isBest ? ' hero-card--synergy-best' : ''
-            }${isWorst ? ' hero-card--synergy-worst' : ''}`}
-            onClick={() => onPick(hero.id)}
+            }${isWorst ? ' hero-card--synergy-worst' : ''}${
+              isCommitting ? ' hero-card--committing' : ''
+            }${isFading ? ' hero-card--fading' : ''}`}
+            onClick={() => {
+              setPickingId(hero.id);
+              onPick(hero.id);
+            }}
             onMouseMove={trackPointer}
             disabled={disabled}
           >

@@ -67,6 +67,75 @@
     0 0 22px color-mix(in srgb, var(--gold) 35%, transparent);
 }
 
+/* Quick press feedback — the card dips slightly on mousedown so a click
+   registers physically before the async pick even resolves. Wins over the
+   hover transform while held (later in source, equal specificity). */
+.hero-card:not(:disabled):active {
+  transform: translateY(-1px) scale(0.99);
+  transition-duration: var(--dur-1);
+}
+
+/* ---------- commit feedback ---------- */
+
+/* The card the player just clicked holds a bright, raised state through the
+   brief window between the click and the next pool arriving, instead of all
+   five dimming to :disabled at once. Driven by HeroPool.tsx's pickingId;
+   purely visual, adds no latency — the pool still swaps whenever the pick
+   resolves, this only occupies the gap. The :disabled selector is needed to
+   beat `.hero-card:disabled { opacity: .55 }` (equal specificity, later in
+   source). */
+.hero-card--committing,
+.hero-card--committing:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+.hero-card--committing {
+  z-index: 2;
+  border-color: var(--gold-bright);
+  box-shadow:
+    var(--elev-3),
+    0 0 0 1px var(--gold-bright),
+    0 0 28px color-mix(in srgb, var(--gold-bright) 55%, transparent);
+  transform: translateY(-3px) scale(1.02);
+  /* Override the nth-child deal-in delay so the commit pulse starts now, not
+     up to 180ms later depending on the card's grid position. */
+  animation: hero-card-commit var(--dur-3) var(--ease-out) both;
+  animation-delay: 0ms;
+}
+
+@keyframes hero-card-commit {
+  0% {
+    transform: translateY(-3px) scale(1);
+  }
+  45% {
+    transform: translateY(-4px) scale(1.045);
+    box-shadow:
+      var(--elev-3),
+      0 0 0 2px var(--gold-bright),
+      0 0 42px color-mix(in srgb, var(--gold-bright) 78%, transparent);
+  }
+  100% {
+    transform: translateY(-3px) scale(1.02);
+  }
+}
+
+/* The unpicked cards recede so the committed card is unmistakably the choice
+   during the handoff. Dimmed with `filter`, not `opacity`: the deal-in
+   animation runs `animation-fill-mode: both`, whose held final keyframe
+   (opacity: 1) overrides any normal opacity declaration — so an opacity dim
+   here silently does nothing. `filter` is touched by no animation on this
+   element, so it always applies. (This is also why the base
+   `.hero-card:disabled` opacity dim is a no-op while a card is filling; not
+   fixing that here to keep this change to the pick handoff.) */
+.hero-card--fading {
+  /* No transition: the pick-to-next-pool window can be shorter than a
+     transition would take, so the dim is applied instantly to guarantee it's
+     seen. The smooth motion of the handoff comes from the committed card's
+     pulse and the incoming pool's deal-in, not from fading the losers. */
+  filter: brightness(0.42) saturate(0.85);
+}
+
 /* Live synergy highlight (Blueprint/10-tech-debt-backlog.md, "Живая
    подсветка синергичного пика") — best/worst real-synergy candidate in the
    current 5-hero pool relative to the already-picked team. Own border
