@@ -136,10 +136,19 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
   const { t } = useTranslation();
   const [result, setResult] = useState<BattleResultResponse | null>(null);
   const [loading, setLoading] = useState(false);
+  // The one-by-one settle phase between the request resolving and the full
+  // faceoff appearing (OpponentRollAnimation). Distinct from `loading`: the
+  // request is already done, we're just revealing its opponent slot by slot.
+  const [revealing, setRevealing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [battleCount, setBattleCount] = useState(0);
+  // Increments at the START of each fight. The roll keys on this so a single
+  // fight's spin flows straight into its settle without remounting, while a
+  // fresh "Fight Again" gets a clean roll.
+  const [fightSeq, setFightSeq] = useState(0);
 
   const handleFight = async () => {
+    setFightSeq((s) => s + 1);
     setLoading(true);
     setError(null);
     try {
@@ -149,6 +158,9 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
       ]);
       setResult(res);
       setBattleCount((c) => c + 1);
+      // Hand off from the searching spin to the slot-by-slot settle; the full
+      // result renders once OpponentRollAnimation calls onSettled.
+      setRevealing(true);
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -167,7 +179,7 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
       autoStartedRef.current = false;
       return;
     }
-    if (!autoStartedRef.current && !result && !loading && !error) {
+    if (!autoStartedRef.current && !result && !loading && !revealing && !error) {
       autoStartedRef.current = true;
       void handleFight();
     }
@@ -191,7 +203,7 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
         <h3>{t('battle.title')}</h3>
       </div>
 
-      {!result && !loading && (
+      {!result && !loading && !revealing && (
         <>
           <p className="battle-screen-intro">{t('battle.screenIntro')}</p>
           <button className="btn btn-primary" onClick={() => void handleFight()} disabled={loading}>
@@ -200,14 +212,22 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
         </>
       )}
 
-      {/* Shown on both the first fight and every "Fight Again" reroll —
-          loading is independent of whether a previous result is still on
-          screen underneath. */}
-      {loading && <OpponentRollAnimation />}
+      {/* One roll instance spans both phases: it spins while `loading`
+          (opponentHeroes null = searching), then locks the real opponent in
+          slot by slot once `revealing` starts, and calls onSettled to reveal
+          the full result. Keyed on fightSeq so a fresh "Fight Again" restarts
+          the roll while a single fight's spin→settle stays continuous. */}
+      {(loading || revealing) && (
+        <OpponentRollAnimation
+          key={fightSeq}
+          opponentHeroes={revealing ? (result?.opponent.heroes ?? null) : null}
+          onSettled={() => setRevealing(false)}
+        />
+      )}
 
       {error && <p className="error-text">{error}</p>}
 
-      {result && !loading && (
+      {result && !loading && !revealing && (
         <div className={`battle-result battle-result--${result.resolvedOutcome === 'Win' ? 'win' : 'lose'}`}>
           <ScreenFlash outcome={result.resolvedOutcome} flashKey={battleCount} />
 
