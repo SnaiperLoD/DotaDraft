@@ -203,6 +203,25 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
       'Visage',
     ],
   },
+  // Summoning Sickness — added 2026-08-10 after the no-crutch self-play run
+  // (realWinRateWeight=0, manual power overrides empty, seeds 1-5, 300k
+  // matches each). Targets the ONE archetype that came out systematically
+  // overrated: heroes with real summoned units. Membership is the
+  // intersection of "has actual summons" and "favoredRate exceeded real
+  // winRate by >=10pp", not all summoners — Visage (-5.7pp), Broodmother
+  // (-1.7pp), Meepo (-6.1pp), Enigma, Warlock and Arc Warden summon too but
+  // are not overrated, and penalising them would push them further under.
+  // Naga Siren (+17.7pp) and Terrorblade (+11.2pp) are excluded on the other
+  // side: illusions, not summons, and already carried by Army of Clones.
+  {
+    name: 'Summoning Sickness',
+    rarity: 'rare',
+    visible: false,
+    revealable: false, // always-hidden — never rendered, calculation-only
+    description:
+      "Summoned units inflate the hero's own calibration. -30% personal power, always active. Never shown to the player.",
+    heroNames: ['Beastmaster', "Nature's Prophet", 'Chen', 'Lone Druid', 'Lycan'],
+  },
   {
     name: 'Agility Crusher',
     rarity: 'epic',

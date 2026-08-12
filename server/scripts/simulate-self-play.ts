@@ -160,10 +160,20 @@ function blendedRoleWeights(positions: { position: string; share: number }[]): R
   const w: Record<string, number> = { Carry: 0, Mid: 0, Offlane: 0, 'Soft Support': 0, 'Hard Support': 0 };
   let allocated = 0;
   for (const p of positions) {
-    if (p.position === 'Carry') { w.Carry += p.share; allocated += p.share; }
-    else if (p.position === 'Mid') { w.Mid += p.share; allocated += p.share; }
-    else if (p.position === 'Offlane') { w.Offlane += p.share; allocated += p.share; }
-    else if (p.position === 'Support') { w['Soft Support'] += p.share / 2; w['Hard Support'] += p.share / 2; allocated += p.share; }
+    if (p.position === 'Carry') {
+      w.Carry += p.share;
+      allocated += p.share;
+    } else if (p.position === 'Mid') {
+      w.Mid += p.share;
+      allocated += p.share;
+    } else if (p.position === 'Offlane') {
+      w.Offlane += p.share;
+      allocated += p.share;
+    } else if (p.position === 'Support') {
+      w['Soft Support'] += p.share / 2;
+      w['Hard Support'] += p.share / 2;
+      allocated += p.share;
+    }
   }
   const leftover = Math.max(0, 1 - allocated);
   for (const role of ROLES) w[role] += leftover / ROLES.length;
@@ -177,14 +187,20 @@ function blendedRoleWeights(positions: { position: string; share: number }[]): R
 // real data in >=1 role (confirmed via research-role-threshold-coverage.json
 // this session), so the all-zero fallback below is a safety net, not the
 // expected path.
-function strictRoleWeights(hero: Hero, positions: { position: string; share: number }[]): Record<string, number> {
+function strictRoleWeights(
+  hero: Hero,
+  positions: { position: string; share: number }[],
+): Record<string, number> {
   const w: Record<string, number> = { Carry: 0, Mid: 0, Offlane: 0, 'Soft Support': 0, 'Hard Support': 0 };
   for (const p of positions) {
     if (!hasRoleEvaluationData(hero, p.position as PresumedPosition)) continue;
     if (p.position === 'Carry') w.Carry += p.share;
     else if (p.position === 'Mid') w.Mid += p.share;
     else if (p.position === 'Offlane') w.Offlane += p.share;
-    else if (p.position === 'Support') { w['Soft Support'] += p.share / 2; w['Hard Support'] += p.share / 2; }
+    else if (p.position === 'Support') {
+      w['Soft Support'] += p.share / 2;
+      w['Hard Support'] += p.share / 2;
+    }
   }
   const total = Object.values(w).reduce((a, b) => a + b, 0);
   if (total === 0) return Object.fromEntries(ROLES.map((r) => [r, 1])); // safety net, not expected to trigger
@@ -210,7 +226,10 @@ function assignWeightedRoles(heroes: Hero[], weightsById: Map<number, Record<str
     let pick = rolesLeft.length - 1;
     for (let i = 0; i < weights.length; i++) {
       roll -= weights[i];
-      if (roll <= 0) { pick = i; break; }
+      if (roll <= 0) {
+        pick = i;
+        break;
+      }
     }
     assigned[idx] = rolesLeft[pick];
     rolesLeft.splice(pick, 1);
@@ -242,14 +261,19 @@ function synergyGamesForTeam(heroIds: number[], synergyGames: Map<string, number
   const games: number[] = [];
   for (let i = 0; i < heroIds.length; i++) {
     for (let j = i + 1; j < heroIds.length; j++) {
-      const g = synergyGames.get(`${heroIds[i]}-${heroIds[j]}`) ?? synergyGames.get(`${heroIds[j]}-${heroIds[i]}`);
+      const g =
+        synergyGames.get(`${heroIds[i]}-${heroIds[j]}`) ?? synergyGames.get(`${heroIds[j]}-${heroIds[i]}`);
       if (g !== undefined && g >= 10) games.push(g);
     }
   }
   return games;
 }
 
-function matchupGamesForTeams(teamIds: number[], opponentIds: number[], matchupGames: Map<string, number>): number[] {
+function matchupGamesForTeams(
+  teamIds: number[],
+  opponentIds: number[],
+  matchupGames: Map<string, number>,
+): number[] {
   const games: number[] = [];
   for (const a of teamIds) {
     for (const b of opponentIds) {
@@ -343,7 +367,10 @@ interface RunResult {
   }[];
 }
 
-function runSimulation(config: RunConfig): RunResult {
+// Exported so calibration sweeps can drive the same core at a reduced match
+// count instead of duplicating the harness (the file header already calls
+// this "the reusable core"). main() below is unaffected.
+export function runSimulation(config: RunConfig): RunResult {
   rng = mulberry32(config.seed);
 
   const heroes: Hero[] = JSON.parse(fs.readFileSync(HEROES_PATH, 'utf-8'));
@@ -356,7 +383,8 @@ function runSimulation(config: RunConfig): RunResult {
   // battle-resolution.ts to see real position data instead of silently
   // treating every hero as having none.
   const positionsById = new Map(rawMetaEntries.map((e) => [e.heroId, e.positions]));
-  for (const h of heroes) h.presumed_positions = (positionsById.get(h.id) ?? []) as Hero['presumed_positions'];
+  for (const h of heroes)
+    h.presumed_positions = (positionsById.get(h.id) ?? []) as Hero['presumed_positions'];
   const roleWeightsById = new Map(
     heroes.map((h) => [
       h.id,
@@ -373,7 +401,15 @@ function runSimulation(config: RunConfig): RunResult {
   const heroStats = new Map<number, HeroStats>(
     heroes.map((h) => [
       h.id,
-      { heroId: h.id, name: h.name, appearances: 0, favoredCount: 0, evenCount: 0, contributionSum: 0, realWinRate: winRateById.get(h.id) ?? null },
+      {
+        heroId: h.id,
+        name: h.name,
+        appearances: 0,
+        favoredCount: 0,
+        evenCount: 0,
+        contributionSum: 0,
+        realWinRate: winRateById.get(h.id) ?? null,
+      },
     ]),
   );
   const roleStats = new Map<string, RoleStats>();
@@ -381,7 +417,14 @@ function runSimulation(config: RunConfig): RunResult {
     if (!assignedRole) return;
     const key = `${hero.id}_${assignedRole}`;
     if (!roleStats.has(key)) {
-      roleStats.set(key, { heroId: hero.id, name: hero.name, assignedRole, appearances: 0, favoredCount: 0, evenCount: 0 });
+      roleStats.set(key, {
+        heroId: hero.id,
+        name: hero.name,
+        assignedRole,
+        appearances: 0,
+        favoredCount: 0,
+        evenCount: 0,
+      });
     }
     const s = roleStats.get(key)!;
     s.appearances++;
@@ -410,7 +453,10 @@ function runSimulation(config: RunConfig): RunResult {
   let roleFitFlips = 0;
   // Q4
   const matchRecords: MatchRecord[] = [];
-  const synergyLeaderboard = new Map<string, { heroA: string; heroB: string; winRate: number; count: number }>();
+  const synergyLeaderboard = new Map<
+    string,
+    { heroA: string; heroB: string; winRate: number; count: number }
+  >();
   const matchupLeaderboard = new Map<string, { hero: string; vs: string; winRate: number; count: number }>();
 
   const N_MATCHES = config.nMatches;
@@ -451,9 +497,19 @@ function runSimulation(config: RunConfig): RunResult {
 
     // bonus-4
     const backingGames = [
-      ...synergyGamesForTeam(heroesA.map((h) => h.id), synergyGames),
-      ...synergyGamesForTeam(heroesB.map((h) => h.id), synergyGames),
-      ...matchupGamesForTeams(heroesA.map((h) => h.id), heroesB.map((h) => h.id), matchupGames),
+      ...synergyGamesForTeam(
+        heroesA.map((h) => h.id),
+        synergyGames,
+      ),
+      ...synergyGamesForTeam(
+        heroesB.map((h) => h.id),
+        synergyGames,
+      ),
+      ...matchupGamesForTeams(
+        heroesA.map((h) => h.id),
+        heroesB.map((h) => h.id),
+        matchupGames,
+      ),
     ];
     if (backingGames.length > 0) {
       backingGamesVsDistortion.push({
@@ -528,7 +584,9 @@ function runSimulation(config: RunConfig): RunResult {
   }
 
   const heroArray = [...heroStats.values()];
-  const favoredRates = heroArray.map((h) => (h.appearances - h.evenCount === 0 ? 0.5 : h.favoredCount / (h.appearances - h.evenCount)));
+  const favoredRates = heroArray.map((h) =>
+    h.appearances - h.evenCount === 0 ? 0.5 : h.favoredCount / (h.appearances - h.evenCount),
+  );
   const avgContribution = heroArray.map((h) => h.contributionSum / h.appearances);
   const realWinRates = heroArray.map((h) => h.realWinRate ?? 0.5);
   const rContribFav = pearson(avgContribution, favoredRates);
@@ -551,10 +609,14 @@ function runSimulation(config: RunConfig): RunResult {
   const flaggedCount = withReal.filter((h) => Math.abs(h.divergenceFromReal as number) >= 0.1).length;
 
   if (config.verbose) {
-    console.log(`\n########## roleMode=${config.roleMode} seed=${config.seed} nMatches=${N_MATCHES} ##########\n`);
+    console.log(
+      `\n########## roleMode=${config.roleMode} seed=${config.seed} nMatches=${N_MATCHES} ##########\n`,
+    );
     console.log(`Self-play simulation: ${N_MATCHES} matches, ${N_MATCHES * 2} team-samples.\n`);
 
-    console.log('=== Q1: average per-axis draft result (role-fit applied, n=' + N_MATCHES * 2 + ' teams) ===');
+    console.log(
+      '=== Q1: average per-axis draft result (role-fit applied, n=' + N_MATCHES * 2 + ' teams) ===',
+    );
     console.log('  axis            mean   sd    min   max');
     for (const axis of AXES) {
       const xs = axisTeamSamples[axis];
@@ -576,47 +638,77 @@ function runSimulation(config: RunConfig): RunResult {
     }
 
     console.log('\n=== Q3: how much do synergy/counters actually move the decision? ===');
-    console.log(`  direction flips (raw overallPower-only vs final): ${directionFlips}/${N_MATCHES} (${((directionFlips / N_MATCHES) * 100).toFixed(1)}%)`);
-    console.log(`  matches with any non-zero synergy signal: ${nonZeroSynergyMatches}/${N_MATCHES} (${((nonZeroSynergyMatches / N_MATCHES) * 100).toFixed(1)}%)`);
-    console.log(`  matches with any non-zero matchup signal: ${nonZeroMatchupMatches}/${N_MATCHES} (${((nonZeroMatchupMatches / N_MATCHES) * 100).toFixed(1)}%)`);
-    console.log(`  avg |synergyBonus| when non-zero: ${synergyMagnitudes.length ? mean(synergyMagnitudes).toFixed(4) : 'n/a'} (n=${synergyMagnitudes.length})`);
-    console.log(`  avg |matchupEdge| when non-zero: ${matchupMagnitudes.length ? mean(matchupMagnitudes).toFixed(4) : 'n/a'} (n=${matchupMagnitudes.length})`);
+    console.log(
+      `  direction flips (raw overallPower-only vs final): ${directionFlips}/${N_MATCHES} (${((directionFlips / N_MATCHES) * 100).toFixed(1)}%)`,
+    );
+    console.log(
+      `  matches with any non-zero synergy signal: ${nonZeroSynergyMatches}/${N_MATCHES} (${((nonZeroSynergyMatches / N_MATCHES) * 100).toFixed(1)}%)`,
+    );
+    console.log(
+      `  matches with any non-zero matchup signal: ${nonZeroMatchupMatches}/${N_MATCHES} (${((nonZeroMatchupMatches / N_MATCHES) * 100).toFixed(1)}%)`,
+    );
+    console.log(
+      `  avg |synergyBonus| when non-zero: ${synergyMagnitudes.length ? mean(synergyMagnitudes).toFixed(4) : 'n/a'} (n=${synergyMagnitudes.length})`,
+    );
+    console.log(
+      `  avg |matchupEdge| when non-zero: ${matchupMagnitudes.length ? mean(matchupMagnitudes).toFixed(4) : 'n/a'} (n=${matchupMagnitudes.length})`,
+    );
 
     console.log('\n=== Bonus-4: does thinner backing data correlate with bigger distortion? ===');
     const bgGames = backingGamesVsDistortion.map((r) => r.avgGames);
     const bgDist = backingGamesVsDistortion.map((r) => r.distortion);
     const rBacking = pearson(bgGames, bgDist);
-    console.log(`  n=${backingGamesVsDistortion.length} matches with any qualifying (>=10 games) synergy/matchup data`);
-    console.log(`  Pearson r (avg backing games vs |diff shift from raw|): ${rBacking === null ? 'n/a' : rBacking.toFixed(3)}`);
+    console.log(
+      `  n=${backingGamesVsDistortion.length} matches with any qualifying (>=10 games) synergy/matchup data`,
+    );
+    console.log(
+      `  Pearson r (avg backing games vs |diff shift from raw|): ${rBacking === null ? 'n/a' : rBacking.toFixed(3)}`,
+    );
     const thin = backingGamesVsDistortion.filter((r2) => r2.avgGames < THIN_DATA_GAMES_THRESHOLD);
     const strong = backingGamesVsDistortion.filter((r2) => r2.avgGames >= THIN_DATA_GAMES_THRESHOLD);
-    console.log(`  thin (<${THIN_DATA_GAMES_THRESHOLD} games avg), n=${thin.length}: avg distortion=${thin.length ? mean(thin.map((x) => x.distortion)).toFixed(4) : 'n/a'}`);
-    console.log(`  strong (>=${THIN_DATA_GAMES_THRESHOLD} games avg), n=${strong.length}: avg distortion=${strong.length ? mean(strong.map((x) => x.distortion)).toFixed(4) : 'n/a'}`);
+    console.log(
+      `  thin (<${THIN_DATA_GAMES_THRESHOLD} games avg), n=${thin.length}: avg distortion=${thin.length ? mean(thin.map((x) => x.distortion)).toFixed(4) : 'n/a'}`,
+    );
+    console.log(
+      `  strong (>=${THIN_DATA_GAMES_THRESHOLD} games avg), n=${strong.length}: avg distortion=${strong.length ? mean(strong.map((x) => x.distortion)).toFixed(4) : 'n/a'}`,
+    );
 
     console.log('\n=== Bonus-1: diff distribution & tier population on unbiased random drafts ===');
     const dm = mean(diffs);
     const dsd = stdev(diffs, dm);
-    console.log(`  mean=${dm.toFixed(3)} sd=${dsd.toFixed(3)} skew=${skewness(diffs, dm, dsd).toFixed(2)} exKurt=${excessKurtosis(diffs, dm, dsd).toFixed(2)}`);
+    console.log(
+      `  mean=${dm.toFixed(3)} sd=${dsd.toFixed(3)} skew=${skewness(diffs, dm, dsd).toFixed(2)} exKurt=${excessKurtosis(diffs, dm, dsd).toFixed(2)}`,
+    );
     console.log(`  Even: ${evenMatches} (${((evenMatches / N_MATCHES) * 100).toFixed(1)}%)`);
     (['Low', 'Moderate', 'High'] as ConfidenceTier[]).forEach((t) => {
       console.log(`  ${t}: ${tierCounts[t]} (${((tierCounts[t] / N_MATCHES) * 100).toFixed(1)}%)`);
     });
 
     console.log('\n=== Bonus-2: role-fit swing rate ===');
-    console.log(`  advantageDirection changed with vs without roles: ${roleFitFlips}/${N_MATCHES} (${((roleFitFlips / N_MATCHES) * 100).toFixed(2)}%)`);
+    console.log(
+      `  advantageDirection changed with vs without roles: ${roleFitFlips}/${N_MATCHES} (${((roleFitFlips / N_MATCHES) * 100).toFixed(2)}%)`,
+    );
 
     console.log('\n=== Bonus-3 & real winRate: correlations ===');
-    console.log(`  raw strength (avg axis contribution) vs favored-rate: r=${(rContribFav ?? NaN).toFixed(3)}`);
+    console.log(
+      `  raw strength (avg axis contribution) vs favored-rate: r=${(rContribFav ?? NaN).toFixed(3)}`,
+    );
     console.log(`  favored-rate vs real OpenDota winRate: r=${(rFavReal ?? NaN).toFixed(3)}`);
 
     console.log('\n=== Bonus-5: hero-meta.json pair coverage (global, not match-sampled) ===');
     const coverage = computeGlobalPairCoverage(heroes, rawMetaEntries);
     console.log(`  total hero pairs: ${coverage.totalPairs}`);
-    console.log(`  with synergy data (>=10 games): ${coverage.synergyCovered} (${((coverage.synergyCovered / coverage.totalPairs) * 100).toFixed(1)}%)`);
-    console.log(`  with matchup data (>=10 games): ${coverage.matchupCoveredEitherDirection} (${((coverage.matchupCoveredEitherDirection / coverage.totalPairs) * 100).toFixed(1)}%)`);
+    console.log(
+      `  with synergy data (>=10 games): ${coverage.synergyCovered} (${((coverage.synergyCovered / coverage.totalPairs) * 100).toFixed(1)}%)`,
+    );
+    console.log(
+      `  with matchup data (>=10 games): ${coverage.matchupCoveredEitherDirection} (${((coverage.matchupCoveredEitherDirection / coverage.totalPairs) * 100).toFixed(1)}%)`,
+    );
 
     console.log(`\n=== Q4: top ${EXTREME_CASES_TO_KEEP} most lopsided matches (by |diff|) ===`);
-    const extremes = [...matchRecords].sort((a, b) => Math.abs(b.diff) - Math.abs(a.diff)).slice(0, EXTREME_CASES_TO_KEEP);
+    const extremes = [...matchRecords]
+      .sort((a, b) => Math.abs(b.diff) - Math.abs(a.diff))
+      .slice(0, EXTREME_CASES_TO_KEEP);
     for (const m of extremes) {
       console.log(
         `  diff=${m.diff.toFixed(2)} [${m.confidenceTier}/${m.advantageDirection}] top axis: ${m.topAxis}\n    A: ${m.teamANames.map((n, i) => `${n} (${m.teamARoles[i]})`).join(', ')}\n    B: ${m.teamBNames.map((n, i) => `${n} (${m.teamBRoles[i]})`).join(', ')}`,
@@ -624,16 +716,32 @@ function runSimulation(config: RunConfig): RunResult {
     }
 
     console.log(`\n=== Q4: top ${LEADERBOARD_SIZE} synergy pairs (by real winRate, min count 3) ===`);
-    const topSynergy = [...synergyLeaderboard.values()].filter((p) => p.count >= 3).sort((a, b) => b.winRate - a.winRate).slice(0, LEADERBOARD_SIZE);
-    for (const p of topSynergy) console.log(`  ${p.heroA} + ${p.heroB}: winRate=${(p.winRate * 100).toFixed(1)}% (best-pair-in-team ${p.count}x)`);
+    const topSynergy = [...synergyLeaderboard.values()]
+      .filter((p) => p.count >= 3)
+      .sort((a, b) => b.winRate - a.winRate)
+      .slice(0, LEADERBOARD_SIZE);
+    for (const p of topSynergy)
+      console.log(
+        `  ${p.heroA} + ${p.heroB}: winRate=${(p.winRate * 100).toFixed(1)}% (best-pair-in-team ${p.count}x)`,
+      );
 
     console.log(`\n=== Q4: top ${LEADERBOARD_SIZE} matchup edges (by real winRate, min count 3) ===`);
-    const topMatchup = [...matchupLeaderboard.values()].filter((p) => p.count >= 3).sort((a, b) => b.winRate - a.winRate).slice(0, LEADERBOARD_SIZE);
-    for (const p of topMatchup) console.log(`  ${p.hero} vs ${p.vs}: winRate=${(p.winRate * 100).toFixed(1)}% (best-edge-in-matchup ${p.count}x)`);
+    const topMatchup = [...matchupLeaderboard.values()]
+      .filter((p) => p.count >= 3)
+      .sort((a, b) => b.winRate - a.winRate)
+      .slice(0, LEADERBOARD_SIZE);
+    for (const p of topMatchup)
+      console.log(
+        `  ${p.hero} vs ${p.vs}: winRate=${(p.winRate * 100).toFixed(1)}% (best-edge-in-matchup ${p.count}x)`,
+      );
 
-    console.log('\n=== Heroes with largest favoredRate vs real winRate divergence (candidates for review) ===');
+    console.log(
+      '\n=== Heroes with largest favoredRate vs real winRate divergence (candidates for review) ===',
+    );
     for (const h of heroTable.slice(0, 10)) {
-      console.log(`  ${h.name}: favoredRate=${(h.favoredRate * 100).toFixed(1)}% real=${h.realWinRate === null ? 'n/a' : (h.realWinRate * 100).toFixed(1) + '%'} divergence=${h.divergenceFromReal === null ? 'n/a' : ((h.divergenceFromReal ?? 0) * 100).toFixed(1) + 'pp'}`);
+      console.log(
+        `  ${h.name}: favoredRate=${(h.favoredRate * 100).toFixed(1)}% real=${h.realWinRate === null ? 'n/a' : (h.realWinRate * 100).toFixed(1) + '%'} divergence=${h.divergenceFromReal === null ? 'n/a' : ((h.divergenceFromReal ?? 0) * 100).toFixed(1) + 'pp'}`,
+      );
     }
 
     // Carry/Mid-only heroes forced into Support with no real data — does the
@@ -654,7 +762,13 @@ function runSimulation(config: RunConfig): RunResult {
         const carryMidNoSupport = thresholds.filter((t) => !t.Support.pass && (t.Carry.pass || t.Mid.pass));
         const targetIds = new Set(carryMidNoSupport.map((t) => t.heroId));
 
-        const rows: { name: string; role: string; appearances: number; favoredRate: number; realWinRate: number | null }[] = [];
+        const rows: {
+          name: string;
+          role: string;
+          appearances: number;
+          favoredRate: number;
+          realWinRate: number | null;
+        }[] = [];
         for (const s of roleStats.values()) {
           if (!targetIds.has(s.heroId)) continue;
           if (s.assignedRole !== 'Hard Support' && s.assignedRole !== 'Soft Support') continue;
@@ -668,9 +782,13 @@ function runSimulation(config: RunConfig): RunResult {
           });
         }
         rows.sort((a, b) => b.favoredRate - a.favoredRate);
-        console.log(`\n=== Carry/Mid-only heroes (no real Support data, n=${carryMidNoSupport.length}) forced into Hard/Soft Support ===`);
+        console.log(
+          `\n=== Carry/Mid-only heroes (no real Support data, n=${carryMidNoSupport.length}) forced into Hard/Soft Support ===`,
+        );
         const favRates = rows.map((r) => r.favoredRate);
-        console.log(`  n=${rows.length} (hero,role) rows, avg favoredRate=${(mean(favRates) * 100).toFixed(1)}%`);
+        console.log(
+          `  n=${rows.length} (hero,role) rows, avg favoredRate=${(mean(favRates) * 100).toFixed(1)}%`,
+        );
       }
     }
   }
@@ -679,7 +797,17 @@ function runSimulation(config: RunConfig): RunResult {
     const outputPath = config.outputPath ?? path.join(OUTPUT_DIR, `self-play-simulation-output.json`);
     fs.writeFileSync(
       outputPath,
-      JSON.stringify({ generatedAt: new Date().toISOString(), seed: config.seed, roleMode: config.roleMode, nMatches: N_MATCHES, heroTable }, null, 2),
+      JSON.stringify(
+        {
+          generatedAt: new Date().toISOString(),
+          seed: config.seed,
+          roleMode: config.roleMode,
+          nMatches: N_MATCHES,
+          heroTable,
+        },
+        null,
+        2,
+      ),
     );
     if (config.verbose) console.log(`\nFull per-hero table written to ${outputPath}`);
   }
@@ -722,7 +850,9 @@ function main() {
     }
   }
 
-  console.log(`\n============================== SUMMARY (${SEEDS.length} seeds each, ${N_MATCHES} matches/run) ==============================`);
+  console.log(
+    `\n============================== SUMMARY (${SEEDS.length} seeds each, ${N_MATCHES} matches/run) ==============================`,
+  );
   for (const roleMode of ['blended', 'strict'] as const) {
     const subset = results.filter((r) => r.roleMode === roleMode);
     const rs = subset.map((r) => r.rFavReal).filter((v): v is number => v !== null);
@@ -730,16 +860,34 @@ function main() {
     const flagged = subset.map((r) => r.flaggedCount);
     const rMean = mean(rs);
     console.log(`\n  ${roleMode}:`);
-    console.log(`    r (favoredRate vs realWinRate): mean=${rMean.toFixed(3)} sd=${stdev(rs, rMean).toFixed(3)} min=${arrMin(rs).toFixed(3)} max=${arrMax(rs).toFixed(3)}`);
-    console.log(`    avg |divergence|: mean=${mean(divs).toFixed(2)}pp min=${arrMin(divs).toFixed(2)}pp max=${arrMax(divs).toFixed(2)}pp`);
-    console.log(`    flagged (>=10pp): mean=${mean(flagged).toFixed(1)} min=${arrMin(flagged)} max=${arrMax(flagged)}`);
+    console.log(
+      `    r (favoredRate vs realWinRate): mean=${rMean.toFixed(3)} sd=${stdev(rs, rMean).toFixed(3)} min=${arrMin(rs).toFixed(3)} max=${arrMax(rs).toFixed(3)}`,
+    );
+    console.log(
+      `    avg |divergence|: mean=${mean(divs).toFixed(2)}pp min=${arrMin(divs).toFixed(2)}pp max=${arrMax(divs).toFixed(2)}pp`,
+    );
+    console.log(
+      `    flagged (>=10pp): mean=${mean(flagged).toFixed(1)} min=${arrMin(flagged)} max=${arrMax(flagged)}`,
+    );
   }
 
   fs.writeFileSync(
     path.join(OUTPUT_DIR, 'self-play-multiseed-summary.json'),
-    JSON.stringify({ generatedAt: new Date().toISOString(), nMatchesPerRun: N_MATCHES, seeds: SEEDS, results }, null, 2),
+    JSON.stringify(
+      { generatedAt: new Date().toISOString(), nMatchesPerRun: N_MATCHES, seeds: SEEDS, results },
+      null,
+      2,
+    ),
   );
-  console.log(`\nFull multi-seed results written to ${path.join(OUTPUT_DIR, 'self-play-multiseed-summary.json')}`);
+  console.log(
+    `\nFull multi-seed results written to ${path.join(OUTPUT_DIR, 'self-play-multiseed-summary.json')}`,
+  );
 }
 
-main();
+// Only when run directly. Without this guard, importing runSimulation() from
+// a calibration script also fires the full 10-run driver as a side effect of
+// the import — which is exactly what happened the first time a sweep tried to
+// reuse the core.
+if (require.main === module) {
+  main();
+}

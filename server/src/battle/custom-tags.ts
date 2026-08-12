@@ -94,7 +94,18 @@ export function mergeTagEffects(...list: CustomTagEffects[]): CustomTagEffects {
 // tag/badge significance on every large test run"). Always empty when
 // committed. battle-resolution.ts's High Skill upset mechanic checks this
 // too (isTagDisabled), since that half doesn't live in this file.
-export const DISABLED_TAGS = new Set<string>([]);
+// Also settable from the environment so a calibration run doesn't have to
+// edit this file and remember to revert it (the exact failure mode the "always
+// empty when committed" note above is guarding against). Baked once at import,
+// like every other constant here:
+//   DOTADRAFT_DISABLED_TAGS="Summoning Sickness,Unseen" npx ts-node ...
+// Empty and inert unless that variable is set.
+export const DISABLED_TAGS = new Set<string>(
+  (process.env.DOTADRAFT_DISABLED_TAGS ?? '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean),
+);
 export function isTagDisabled(name: string): boolean {
   return DISABLED_TAGS.has(name);
 }
@@ -132,6 +143,39 @@ const TEMPO_MONSTER_THRESHOLD = 8;
 const TEMPO_MONSTER_BUFF = 1.03;
 const TEMPO_MONSTER_PENALTY = 0.75;
 const TEMPO_MONSTER_HARD_CARRY_PENALTY = 0.9;
+
+// Summoning Sickness — hidden, always-active, unconditional (no team-state
+// branch like Tempo Monster's tempo threshold, no reveal count). Targets the
+// summoner archetype the no-crutch self-play run found systematically
+// overrated: summoned units leak into the hero's own calibration without the
+// offsetting real weakness.
+//
+// A FLAT power debuff, not a per-axis one. The first cut of this tag debuffed
+// scaling/durability/teamfight/skirmish_rate and was measured to be far too
+// weak: a per-hero axis debuff is diluted twice, once by the 5-hero team
+// average and once by axis weights (of those four only `scaling` is a heavy
+// driver; `teamfight` is nearly inert at avg |delta| 0.39). Sweeping it found
+// that even annihilating all four axes recovered only 11.7pp of an 18pp gap:
+//   per-axis  1.00 +18.02pp  0.90 +16.97  0.80 +15.79  0.60 +13.59
+//             0.30 +10.06    0.01  +6.36  <- floor, four axes at ~zero
+// A flat power multiplier moves ~5x further per unit: -10% power bought
+// 5.37pp where -10% on those four axes bought 1.05pp. Hence this shape.
+//
+// Power sweep (80k matches/point, seed 1, blended, realWinRateWeight=0),
+// pool mean divergence and the spread across the five carriers:
+//   1.00 (off) +18.02pp   spread 13.9..21.4
+//   0.85        +9.82     spread  5.5..13.2
+//   0.75        +3.81     spread -0.4..7.1
+//   0.70        +0.73     spread -3.3..3.5   <- chosen
+//   0.65        -2.39     spread -6.3..0.3   (overshoots into under-rated)
+//
+// 0.70 is the value that actually closes the anomaly: pool mean lands within
+// a point of zero and every carrier sits inside +/-3.5pp, where before the
+// tag they ran +13.9..+21.4pp. Going deeper keeps improving the GLOBAL
+// numbers slightly (r 0.241 -> 0.251, flagged 45 -> 44 at 0.65) but does it
+// by pushing this pool negative, which just trades one anomaly for another.
+const SUMMONING_SICKNESS = heroNameSetForTag('Summoning Sickness');
+const SUMMONING_SICKNESS_PENALTY = 0.7;
 
 const STATSTEALER_MIN_COUNT = 2;
 export const HIGH_SKILL_DEBUFF_MIN_COUNT = 2;
@@ -403,6 +447,15 @@ export function blessingEffectsFor(
       if (DIVIDED_ATTENTION.has(h.name)) {
         mulHeroAxis(effects, h.id, 'durability', DIVIDED_ATTENTION_PENALTY);
         mulHeroAxis(effects, h.id, 'objectives', DIVIDED_ATTENTION_PENALTY);
+      }
+    }
+  }
+
+  // Summoning Sickness: flat power debuff on every carrier, no condition.
+  if (!isTagDisabled('Summoning Sickness')) {
+    for (const h of team) {
+      if (SUMMONING_SICKNESS.has(h.name)) {
+        mulHeroPower(effects, h.id, SUMMONING_SICKNESS_PENALTY);
       }
     }
   }

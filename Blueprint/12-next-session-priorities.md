@@ -9,6 +9,12 @@ Written at the end of the 2026-08-06 session (long one, picks up mid-session fro
 ## Open backlog items, in rough priority order
 
 ### 1. Self-play tag divergence — custom tags moved some heroes the WRONG way
+
+> **Обновление 2026-08-10.** Прогнан честный прогон (`realWinRateWeight=0`, заглушка `manual-power-overrides.json` пуста, сиды 1-5, 300k матчей, оба режима ролей) — цифры и полный разбор в `10-tech-debt-backlog.md`, «Честный прогон самоигры без заглушки». Кратко: r=0.177/0.181, **47-49 флагнутых из 127**, разброс между сидами ничтожный. Два вывода, меняющие постановку этого пункта:
+> 1. **Стратегию «изолировать и перепрогнать» можно не начинать с нуля** — режимы `blended` и `strict` дали одинаковый результат, значит per-role калибровка и мискаст-фолбэк не являются источником дивергенции, и этот слой из подозреваемых выбывает.
+> 2. **Часть тегов расходится на собственных носителях в противоположные стороны** (`Army of Clones`: Naga +17.7 / Terrorblade +11.2 против Phantom Lancer −26.8; `Unseen`: Nyx +14.2 против Riki −12.4). Единый множитель на неоднородный архетип — вероятная корневая причина, а не «слишком много изменений за прогон».
+>
+> Один архетип уже вылечен: `Summoning Sickness` (см. бэклог) свёл пятёрку переоценённых саммонеров с +13.9..+21.4pp к среднему +0.04pp на полной сетке из 10 прогонов, а по всей базе героев — r 0.177→0.244 и 48→41.6 флагнутых. Остальные кластеры (`Army of Clones`, `Unseen`, `Prone To Burst`) не тронуты и остаются главным содержанием этого пункта.
 A fresh no-crutch self-play run (100k matches, after all of today's fixes) found r=0.090 (barely better than July's -0.068) and **22 flagged heroes, up from 16**. Specific regressions: **Riki** (tag: Unseen) got worse, not better (-11.1pp → -14.1pp). **Enchantress** (tag: Prone To Burst) got worse (+11.8pp → +16.0pp). **Bounty Hunter/Nyx Assassin** (also Unseen) are now newly overrated, weren't flagged before. Too many changes landed in one run to attribute cleanly (4 tags + Storm Spirit + Mass Buffer fix + position hybrid + miscast penalty, all at once) — this needs either an isolated revert-and-rerun cycle per change, or accepting the noise and moving on. User hasn't picked a direction yet — ask before diving in, this could easily eat a whole session if done by brute-force isolation.
 
 ### 2. Pro-match pool 100 → 1000

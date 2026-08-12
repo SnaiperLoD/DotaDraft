@@ -141,6 +141,19 @@ const router = createBrowserRouter([
       { path: '/about', element: <AboutPage /> },
       { path: '/history', element: <HistoryPage /> },
       { path: '/leaderboard', element: <LeaderboardPage /> },
+      // Testing-only calibration matrix. import.meta.env.DEV is statically
+      // false in a production build, so this branch is dead code Rollup drops.
+      // The page is pulled in with a DYNAMIC import (not a static top-level
+      // one): DebugMatrixPage.tsx side-effect-imports its own CSS, and a
+      // static import of a module with side effects is kept in the bundle even
+      // when the only reference sits in a dead branch — so a static import
+      // would leak the page's CSS and its /dev/hero-matrix call into
+      // production. Behind `lazy` the whole graph lives in a chunk that dead
+      // code never reaches, so it's genuinely absent from a prod build. The
+      // server side is gated separately (app.module.ts).
+      ...(import.meta.env.DEV
+        ? [{ path: '/debug', lazy: () => import('./pages/DebugMatrixPage').then((m) => ({ Component: m.default })) }]
+        : []),
     ],
   },
 ]);

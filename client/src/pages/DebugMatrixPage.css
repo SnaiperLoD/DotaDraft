@@ -1,0 +1,253 @@
+/* Testing-only instrument panel. Deliberately outside the app's design
+   language (no plates, no Cinzel, no gold) — it should be obvious at a glance
+   that this is not product surface. Dense, monospaced, high information
+   density, one screen of truth. */
+
+.debug-page {
+  font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  font-size: 12px;
+  color: var(--ink);
+  padding: 16px 20px 48px;
+  max-width: none;
+}
+
+.debug-head h1 {
+  font-family: inherit;
+  font-size: 16px;
+  letter-spacing: 0;
+  margin: 0 0 6px;
+}
+
+.debug-warning {
+  margin: 0 0 10px;
+  padding: 6px 10px;
+  border-left: 3px solid var(--danger);
+  background: color-mix(in srgb, var(--danger) 10%, transparent);
+  color: var(--ink-muted);
+  max-width: 100ch;
+}
+
+.debug-sources {
+  margin: 0 0 14px;
+  display: grid;
+  gap: 2px;
+  color: var(--ink-faint);
+}
+
+.debug-sources > div {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.debug-sources .is-missing {
+  color: var(--danger);
+}
+
+.ds-key {
+  min-width: 11ch;
+  color: var(--gold-bright);
+}
+
+.ds-label {
+  min-width: 34ch;
+  color: var(--ink-muted);
+}
+
+.ds-meta code {
+  font: inherit;
+  color: var(--ink);
+}
+
+/* Vertical rule between column groups (real / our rates / divergences /
+   axes) — with 24 columns the eye needs the seams. */
+.group-start {
+  border-left: 1px solid var(--bronze-dim);
+}
+
+/* ---------- controls ---------- */
+
+.debug-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.debug-controls input[type='search'] {
+  font: inherit;
+  padding: 5px 8px;
+  min-width: 24ch;
+  background: var(--panel);
+  color: var(--ink);
+  border: 1px solid var(--bronze-dim);
+  border-radius: 3px;
+}
+
+.debug-controls label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink-muted);
+  cursor: pointer;
+}
+
+.debug-count {
+  margin-left: auto;
+  color: var(--ink-faint);
+}
+
+/* ---------- table ---------- */
+
+/* 21 columns at this density overflow any viewport — the wrapper scrolls in
+   both directions and the hero column pins, so a row stays identifiable while
+   reading the far-right axes. */
+.debug-scroll {
+  overflow: auto;
+  max-height: 78vh;
+  border: 1px solid var(--bronze-dim);
+  border-radius: 4px;
+}
+
+.debug-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  white-space: nowrap;
+}
+
+.debug-table th,
+.debug-table td {
+  padding: 3px 8px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  font-weight: 400;
+}
+
+.debug-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--panel-raised);
+  border-bottom: 1px solid var(--bronze);
+  color: var(--ink-muted);
+  font-size: 11px;
+}
+
+.debug-table thead th button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline dotted;
+}
+
+.debug-table thead th button:hover {
+  color: var(--gold-bright);
+}
+
+/* Hero name column pins to the left. z-index 3 on the header cell so the
+   corner stays above both the sticky row and the sticky column. */
+.sticky-col {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--panel);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 22ch;
+}
+
+thead .sticky-col {
+  z-index: 3;
+}
+
+.sticky-col img {
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.sticky-col em {
+  font-style: normal;
+  color: var(--ink-faint);
+  font-size: 10px;
+  margin-left: auto;
+}
+
+.debug-table tbody tr:hover td,
+.debug-table tbody tr:hover .sticky-col {
+  background: var(--wash-strong);
+}
+
+.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.muted {
+  color: var(--ink-faint);
+}
+
+/* Divergence colouring uses the same >=10pp threshold simulate-self-play
+   flags on, so "red here" and "flagged there" mean the same thing. */
+.is-over {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.is-under {
+  color: var(--rarity-rare);
+  font-weight: 600;
+}
+
+.is-ok {
+  color: var(--win-bright);
+}
+
+/* ---------- tags ---------- */
+
+.tag-cell {
+  max-width: 40ch;
+  white-space: normal;
+}
+
+.debug-tag {
+  display: inline-block;
+  margin: 1px 3px 1px 0;
+  padding: 1px 5px;
+  border: 1px solid var(--bronze-dim);
+  border-radius: 2px;
+  font-size: 10px;
+  color: var(--ink-muted);
+}
+
+/* Hidden tags (calculation-only, never rendered on a card) are exactly the
+   ones you can't see anywhere else in the app, so they get marked here. */
+.debug-tag.is-hidden-tag {
+  border-style: dashed;
+  border-color: var(--rarity-epic);
+  color: var(--rarity-epic);
+}
+
+.debug-tag i {
+  font-style: normal;
+  margin-left: 3px;
+}
+
+/* ---------- axis heatmap ---------- */
+
+/* --v is the axis value normalised to 0..1, set inline per cell. A faint
+   wash makes the shape of a hero readable across 14 columns without having
+   to compare numbers one at a time. */
+.axis-cell {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  background: color-mix(in srgb, var(--gold) calc(var(--v, 0) * 30%), transparent);
+}
+
+.axis-col {
+  text-align: right;
+}

@@ -86,17 +86,37 @@ describe('blessingEffectsFor', () => {
 
 describe('Two Heads Better', () => {
   function heroWithAxes(id: number, name: string, overrides: Record<string, number>) {
-    return makeHero({ id, name, evaluation_values: { teamfight: 5, tempo: 5, scaling: 5, mobility: 5, objectives: 5, control: 5, durability: 5, burst: 5, map_control: 5, saving: 5, initiating: 5, skirmish_rate: 5, camp_stacking: 5, resource_efficiency: 5, ...overrides } });
+    return makeHero({
+      id,
+      name,
+      evaluation_values: {
+        teamfight: 5,
+        tempo: 5,
+        scaling: 5,
+        mobility: 5,
+        objectives: 5,
+        control: 5,
+        durability: 5,
+        burst: 5,
+        map_control: 5,
+        saving: 5,
+        initiating: 5,
+        skirmish_rate: 5,
+        camp_stacking: 5,
+        resource_efficiency: 5,
+        ...overrides,
+      },
+    });
   }
 
-  it('doubles a solo tagged hero\'s own weakest axis', () => {
+  it("doubles a solo tagged hero's own weakest axis", () => {
     const jakiro = heroWithAxes(1, 'Jakiro', { durability: 1 });
     const effects = blessingEffectsFor([jakiro], {});
     expect(effects.heroAxisMultiplier.get(jakiro.id)?.durability).toBe(2);
     expect(effects.axisMultiplier.teamfight).toBeUndefined();
   });
 
-  it('doubles each of 2 tagged heroes\' own weakest axis independently, not team-wide', () => {
+  it("doubles each of 2 tagged heroes' own weakest axis independently, not team-wide", () => {
     const jakiro = heroWithAxes(1, 'Jakiro', { durability: 1 });
     const ogre = heroWithAxes(2, 'Ogre Magi', { burst: 0.5 });
     const effects = blessingEffectsFor([jakiro, ogre], {});
@@ -118,7 +138,7 @@ describe('Two Heads Better', () => {
 });
 
 describe('The Button', () => {
-  it('boosts a solo tagged hero\'s scaling and their late-phase power, both active with just 1', () => {
+  it("boosts a solo tagged hero's scaling and their late-phase power, both active with just 1", () => {
     const mars = makeHero({ id: 1, name: 'Mars' });
     const effects = blessingEffectsFor([mars], {});
     expect(effects.heroAxisMultiplier.get(mars.id)?.scaling).toBe(1.05);
@@ -171,16 +191,17 @@ describe('High Skill (team self-debuff half)', () => {
 });
 
 describe('Divided Attention', () => {
-  // Beastmaster/Naga Siren carry Divided Attention only, not Tempo Monster
-  // (which overlaps 5-for-8 with this roster and would otherwise contaminate
-  // these numbers with its own tempo-conditional penalty) — see the
-  // dedicated Tempo Monster describe block below for that interaction.
-  it('debuffs a solo carrier\'s durability and objectives by 10%, no team-count gate', () => {
-    const beastmaster = makeHero({ id: 1, name: 'Beastmaster' });
-    const effects = blessingEffectsFor([beastmaster], {});
-    expect(effects.heroAxisMultiplier.get(beastmaster.id)?.durability).toBeCloseTo(0.9);
-    expect(effects.heroAxisMultiplier.get(beastmaster.id)?.objectives).toBeCloseTo(0.9);
-    expect(effects.heroAxisMultiplier.get(beastmaster.id)?.teamfight).toBeUndefined();
+  // Arc Warden/Naga Siren carry Divided Attention only — not Tempo Monster
+  // (which overlaps 5-for-8 with this roster) and not Summoning Sickness
+  // (which overlaps on Beastmaster/Nature's Prophet/Lone Druid/Lycan), either
+  // of which would contaminate these numbers with its own penalty. Beastmaster
+  // used to stand here and had to move when Summoning Sickness was added.
+  it("debuffs a solo carrier's durability and objectives by 10%, no team-count gate", () => {
+    const arcWarden = makeHero({ id: 1, name: 'Arc Warden' });
+    const effects = blessingEffectsFor([arcWarden], {});
+    expect(effects.heroAxisMultiplier.get(arcWarden.id)?.durability).toBeCloseTo(0.9);
+    expect(effects.heroAxisMultiplier.get(arcWarden.id)?.objectives).toBeCloseTo(0.9);
+    expect(effects.heroAxisMultiplier.get(arcWarden.id)?.teamfight).toBeUndefined();
   });
 
   it('does nothing for an untagged hero', () => {
@@ -190,19 +211,67 @@ describe('Divided Attention', () => {
   });
 
   it('applies independently to each of multiple carriers', () => {
-    const beastmaster = makeHero({ id: 1, name: 'Beastmaster' });
+    const arcWarden = makeHero({ id: 1, name: 'Arc Warden' });
     const naga = makeHero({ id: 2, name: 'Naga Siren' });
-    const effects = blessingEffectsFor([beastmaster, naga], {});
-    expect(effects.heroAxisMultiplier.get(beastmaster.id)?.durability).toBeCloseTo(0.9);
+    const effects = blessingEffectsFor([arcWarden, naga], {});
+    expect(effects.heroAxisMultiplier.get(arcWarden.id)?.durability).toBeCloseTo(0.9);
     expect(effects.heroAxisMultiplier.get(naga.id)?.durability).toBeCloseTo(0.9);
   });
 });
 
+describe('Summoning Sickness', () => {
+  // Chen is the one carrier whose OTHER tags don't write heroPowerMultiplier:
+  // High Skill needs 2+ carriers to debuff, and Mass Buffer writes a team-wide
+  // axisMultiplier. So what lands on Chen's power here is this tag alone.
+  it('applies a flat -30% power debuff to a solo carrier, unconditionally', () => {
+    const chen = makeHero({ id: 1, name: 'Chen' });
+    const effects = blessingEffectsFor([chen], {});
+    expect(effects.heroPowerMultiplier.get(chen.id)).toBeCloseTo(0.7);
+  });
+
+  it('is a power debuff, not a per-axis one', () => {
+    // The first cut of this tag debuffed four named axes and measured far too
+    // weak to close the anomaly (see the sweep table in custom-tags.ts), so
+    // the shape changed. Nothing should land on Chen's per-axis map.
+    const chen = makeHero({ id: 1, name: 'Chen' });
+    expect(blessingEffectsFor([chen], {}).heroAxisMultiplier.get(chen.id)).toBeUndefined();
+  });
+
+  it('applies independently to each carrier on the same team', () => {
+    const chen = makeHero({ id: 1, name: 'Chen' });
+    const beastmaster = makeHero({ id: 2, name: 'Beastmaster' });
+    const effects = blessingEffectsFor([chen, beastmaster], {});
+    expect(effects.heroPowerMultiplier.get(chen.id)).toBeCloseTo(0.7);
+    expect(effects.heroPowerMultiplier.get(beastmaster.id)).toBeCloseTo(0.7);
+  });
+
+  it('does not apply to a summoner outside the pool', () => {
+    // Visage summons too but came out UNDER-rated (-5.7pp) in the no-crutch
+    // run, so he is deliberately not a carrier. Tempo above the threshold so
+    // Tempo Monster's own power branch stays off and can't mask this.
+    const visage = makeHero({ id: 1, name: 'Visage' });
+    const effects = blessingEffectsFor([visage], { tempo: 9 });
+    // Tempo Monster's +3% is the only thing on his power here, no 0.7.
+    expect(effects.heroPowerMultiplier.get(visage.id)).toBeCloseTo(1.03);
+  });
+
+  it('does nothing for an untagged hero', () => {
+    const sniper = makeHero({ id: 1, name: 'Sniper' });
+    expect(blessingEffectsFor([sniper], {}).heroPowerMultiplier.get(sniper.id)).toBeUndefined();
+  });
+});
+
 describe('Tempo Monster', () => {
-  it('gives +3% final power when the team\'s own tempo average is above 8', () => {
+  // Lycan is kept here on purpose even though he carries three overlapping
+  // tags — the stacking IS the thing worth pinning down. He is Divided
+  // Attention (durability x0.9, per-axis), Summoning Sickness (x0.7, flat
+  // power) and Tempo Monster (tempo-conditional) at once. The two power
+  // effects compose on heroPowerMultiplier; the axis effects stay separate.
+  it("gives +3% final power when the team's own tempo average is above 8", () => {
     const lycan = makeHero({ id: 1, name: 'Lycan' });
     const effects = blessingEffectsFor([lycan], { tempo: 8.5 });
-    expect(effects.heroPowerMultiplier.get(lycan.id)).toBeCloseTo(1.03);
+    // Tempo Monster +3% composed with Summoning Sickness -30%.
+    expect(effects.heroPowerMultiplier.get(lycan.id)).toBeCloseTo(1.03 * 0.7);
     expect(effects.heroAxisMultiplier.get(lycan.id)?.scaling).toBeUndefined();
   });
 
@@ -212,7 +281,9 @@ describe('Tempo Monster', () => {
     expect(effects.heroAxisMultiplier.get(lycan.id)?.scaling).toBeCloseTo(0.75);
     expect(effects.heroAxisMultiplier.get(lycan.id)?.durability).toBeCloseTo(0.75 * 0.9); // stacks with Divided Attention
     expect(effects.heroAxisMultiplier.get(lycan.id)?.map_control).toBeCloseTo(0.75);
-    expect(effects.heroPowerMultiplier.has(lycan.id)).toBe(false);
+    // Tempo Monster's power branch is off here, so his power carries only
+    // Summoning Sickness.
+    expect(effects.heroPowerMultiplier.get(lycan.id)).toBeCloseTo(0.7);
   });
 
   it('does nothing for an untagged hero regardless of team tempo', () => {
@@ -240,7 +311,11 @@ describe('Tempo Monster', () => {
       name: 'Alchemist',
       presumed_positions: [{ position: 'Carry', share: 0.8 }],
     });
-    const support = makeHero({ id: 2, name: 'Sniper', presumed_positions: [{ position: 'Support', share: 0.9 }] });
+    const support = makeHero({
+      id: 2,
+      name: 'Sniper',
+      presumed_positions: [{ position: 'Support', share: 0.9 }],
+    });
     const effects = blessingEffectsFor([aloneHardCarry, support], { tempo: 9 });
     expect(effects.heroPowerMultiplier.get(aloneHardCarry.id)).toBeCloseTo(1.03);
   });
@@ -279,7 +354,7 @@ describe('Reunion', () => {
 });
 
 describe('Unseen', () => {
-  it('buffs a solo carrier\'s personal power and map control, no team-count gate', () => {
+  it("buffs a solo carrier's personal power and map control, no team-count gate", () => {
     const riki = makeHero({ id: 1, name: 'Riki' });
     const effects = blessingEffectsFor([riki], {});
     expect(effects.heroPowerMultiplier.get(riki.id)).toBeCloseTo(1.06);
@@ -314,7 +389,7 @@ describe('Unseen', () => {
 });
 
 describe('Army of Clones', () => {
-  it('buffs a solo carrier\'s personal power and map control, no team-count gate', () => {
+  it("buffs a solo carrier's personal power and map control, no team-count gate", () => {
     const pl = makeHero({ id: 1, name: 'Phantom Lancer' });
     const effects = blessingEffectsFor([pl], {});
     expect(effects.heroPowerMultiplier.get(pl.id)).toBeCloseTo(1.06);
@@ -393,13 +468,13 @@ describe('Prone To Burst', () => {
     expect(effects.heroPowerMultiplier.has(huskar.id)).toBe(false);
   });
 
-  it('does nothing when the opponent\'s raw burst average is at or below the threshold', () => {
+  it("does nothing when the opponent's raw burst average is at or below the threshold", () => {
     const huskar = makeHero({ id: 1, name: 'Huskar' });
     const effects = blessingEffectsFor([huskar], {}, { burst: 6.5 });
     expect(effects.heroPowerMultiplier.has(huskar.id)).toBe(false);
   });
 
-  it('debuffs a carrier by 8% when the opponent\'s raw burst average is above the threshold', () => {
+  it("debuffs a carrier by 8% when the opponent's raw burst average is above the threshold", () => {
     const huskar = makeHero({ id: 1, name: 'Huskar' });
     const effects = blessingEffectsFor([huskar], {}, { burst: 7 });
     expect(effects.heroPowerMultiplier.get(huskar.id)).toBeCloseTo(0.92);
@@ -505,8 +580,16 @@ describe('curseEffectsOnOpponent', () => {
 
 describe('mergeTagEffects', () => {
   it('multiplies overlapping hero and axis effects rather than overwriting', () => {
-    const a = { ...emptyTagEffects(), heroPowerMultiplier: new Map([[1, 1.05]]), axisMultiplier: { mobility: 0.97 } };
-    const b = { ...emptyTagEffects(), heroPowerMultiplier: new Map([[1, 1.1]]), axisMultiplier: { mobility: 0.9 } };
+    const a = {
+      ...emptyTagEffects(),
+      heroPowerMultiplier: new Map([[1, 1.05]]),
+      axisMultiplier: { mobility: 0.97 },
+    };
+    const b = {
+      ...emptyTagEffects(),
+      heroPowerMultiplier: new Map([[1, 1.1]]),
+      axisMultiplier: { mobility: 0.9 },
+    };
     const merged = mergeTagEffects(a, b);
     expect(merged.heroPowerMultiplier.get(1)).toBeCloseTo(1.05 * 1.1);
     expect(merged.axisMultiplier.mobility).toBeCloseTo(0.97 * 0.9);

@@ -96,3 +96,29 @@ cp data/axis-weights.json.bak data/axis-weights.json && rm data/axis-weights.jso
 ```
 
 Forgetting this doesn't error — it silently produces an inflated, meaningless r (observed: ≈0.42 with the crutch active vs the honest ≈0.19-0.21 without it, same calibration). Already happened once (2026-08-06, the first 300k×5-seed×2-mode run after the seeded/multi-run driver was built) — the mistake is easy to repeat specifically because the new driver made running the script feel like a fire-and-forget command, which the manual axis-weights.json dance doesn't fit into.
+
+**Update (2026-08-11): for the debug datasets, use the driver instead.** `npm run build-debug-matrix` (server) does the patch/run/restore cycle for all three calibration datasets, with the restore in a `finally` so it survives a crash or Ctrl-C, and it restores whatever value the file actually had rather than a hardcoded 2. The manual recipe above is still the reference for one-off runs of other scripts.
+
+## Testing-only calibration UI: `/debug` (client) + `GET /dev/hero-matrix` (server)
+
+A dense instrument panel showing, per hero: all 14 axis values, all custom tags (including the hidden ones, which are otherwise invisible in the whole product), the real OpenDota winRate, and our simulated winRate under three configurations, each with its divergence from real:
+
+| dataset | tags | `realWinRateWeight` | reading |
+| --- | --- | --- | --- |
+| `noTags` | off | 0 | the honest model with no hand-authored layer |
+| `tags` | on | 0 | difference from `noTags` = what the tags actually do |
+| `tagsBlend` | on | 2 (production) | difference from `tags` = how much of the number is just real winRate mixed back in |
+
+**Never shipped to a player, and gated in two independent places** so that neither one alone is load-bearing: the client route is registered only under `import.meta.env.DEV`, and `DevModule` is only added to `AppModule` when `NODE_ENV !== 'production'` (the endpoint does not exist in a production server).
+
+**The client gate needs a dynamic import, not just the DEV route guard** — this bit once. `DebugMatrixPage.tsx` side-effect-imports its own CSS (`import './DebugMatrixPage.css'`), and Rollup keeps a statically-imported module that has side effects *even when the only reference to it sits in dead code* (`import.meta.env.DEV ? … : []` folds to `false`). So a top-level `import DebugMatrixPage` leaked the page's CSS and its `/dev/hero-matrix` string into `dist/` while the route itself was correctly absent. Verified by grepping the built bundle, not by trusting the guard. Two changes make the whole graph genuinely absent: the route uses the data router's `lazy: () => import(...)` so the page is a dynamic chunk dead code never reaches, and the one dev-only request calls the exported `request()` helper directly instead of a `getHeroDebugMatrix` method on the shared `api` object (a method on an always-bundled object can't be tree-shaken). Regression check: after a production `npm run build`, `grep -rF -e hero-matrix -e /dev/ -e DebugMatrix dist/` must come back empty.
+
+Regenerate the data with `npm run build-debug-matrix` in `server/` — ~3 runs of 200k matches. The page reads the files fresh on each request, so a rebuild only needs a browser refresh, not a server restart. Each dataset file records its own `config` (seed, match count, `realWinRateWeight`, disabled tags) and the page prints it next to the column, so a stale file announces itself instead of quietly being read as current.
+
+## `DOTADRAFT_DISABLED_TAGS` turns custom tags off without editing source
+
+`DISABLED_TAGS` in `custom-tags.ts` reads a comma-separated env var (empty by default). Any A/B on the tag layer — including the `noTags` dataset above — used to require editing the source and remembering to revert it, which is the same failure mode as the `axis-weights.json` dance. Names must match `CUSTOM_TAG_DEFINITIONS` exactly.
+
+## Node refuses to `spawn` a `.cmd` on Windows without `shell: true`
+
+Since the CVE-2024-27980 fix, `spawnSync('npx.cmd', ...)` fails with `status: null` and the real reason only in `result.error` — so a driver that checks just the status reports a useless "failed with exit code null". Hit this in `build-debug-matrix.ts`. The fix is to skip the shim entirely and spawn `process.execPath` with `['-r', 'ts-node/register', script]`, which also sidesteps Windows shell quoting. When spawning children, always report `result.error` too, not only `result.status`.

@@ -18,7 +18,11 @@ import type { DraftStateView } from './types';
 
 const BASE_URL = '/api';
 
-async function request<T>(path: string, options?: RequestInit): Promise<T> {
+// Exported so the testing-only DebugMatrixPage can call /dev/hero-matrix
+// without that endpoint appearing as a method on the shipped `api` object —
+// the page and its one dev-only request both live behind the lazy import in
+// App.tsx, so nothing about /dev reaches a production bundle.
+export async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, {
     headers: { 'Content-Type': 'application/json' },
     ...options,
