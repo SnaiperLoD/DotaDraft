@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { api } from '../api/client';
 import type { EvaluationResult } from 'shared';
@@ -91,15 +91,17 @@ function verdictKey(score: number): string {
 // the raw X/10 number, not a replacement (Blueprint/10-tech-debt-backlog.md,
 // "Финальная оценка драфта — 5-звёздочная система"). Supports fractional
 // fill (not just whole/half stars) via a clipped overlay — a gold star row
-// absolutely positioned over a dim one, clipped to score/10 width.
-function StarRating({ score }: { score: number }) {
-  const percent = Math.max(0, Math.min(100, (score / 10) * 100));
+// absolutely positioned over a dim one, clipped to fillPercent width. The
+// width is driven by the reveal progress so the fill grows in step with the
+// ring and the counting number; `score` stays the source for the a11y label,
+// which always states the final value regardless of animation.
+function StarRating({ score, fillPercent }: { score: number; fillPercent: number }) {
   return (
     <span className="star-rating" aria-label={`${(score / 2).toFixed(1)} out of 5 stars`}>
       <span className="star-rating-bg" aria-hidden="true">
         ★★★★★
       </span>
-      <span className="star-rating-fg" aria-hidden="true" style={{ width: `${percent}%` }}>
+      <span className="star-rating-fg" aria-hidden="true" style={{ width: `${fillPercent}%` }}>
         ★★★★★
       </span>
     </span>
@@ -108,11 +110,17 @@ function StarRating({ score }: { score: number }) {
 
 // Ring gauge for the headline score. The number alone gave no sense of
 // where it sat on the scale without reading "/10" and doing the division.
+// `fraction` is already scaled by the reveal progress, so the arc is drawn
+// by setting the visible dash length directly (0 → full) rather than by a
+// CSS keyframe. The earlier CSS version animated stroke-dashoffset by a fixed
+// 120px, which for a short arc slid the arc into place instead of growing it
+// from nothing; driving the dash length from the same progress as the number
+// keeps arc and number in exact lockstep.
 const DIAL_R = 52;
 const DIAL_CIRCUMFERENCE = 2 * Math.PI * DIAL_R;
 
-function ScoreDial({ score }: { score: number }) {
-  const fraction = Math.max(0, Math.min(1, score / 10));
+function ScoreDial({ fraction }: { fraction: number }) {
+  const shown = Math.max(0, Math.min(1, fraction));
   return (
     <svg className="score-dial" viewBox="0 0 128 128" aria-hidden="true">
       <circle className="score-dial-track" cx="64" cy="64" r={DIAL_R} />
@@ -121,9 +129,66 @@ function ScoreDial({ score }: { score: number }) {
         cx="64"
         cy="64"
         r={DIAL_R}
-        strokeDasharray={`${DIAL_CIRCUMFERENCE * fraction} ${DIAL_CIRCUMFERENCE}`}
+        strokeDasharray={`${DIAL_CIRCUMFERENCE * shown} ${DIAL_CIRCUMFERENCE}`}
       />
     </svg>
+  );
+}
+
+// One eased 0→1 progress value over `durationMs`, driven by rAF, used to
+// reveal the headline score (ring, counting number, star fill from one
+// clock so they can't drift). Honours prefers-reduced-motion by starting —
+// and staying — at 1, so reduced-motion users get the final state with no
+// animation and no counting. Lives in ScoreHeadline, which only mounts once
+// the evaluation result arrives, so the reveal fires exactly when the score
+// appears rather than while the "Evaluate" button is still showing.
+function useReveal(durationMs = 850): number {
+  const prefersReduced =
+    typeof window !== 'undefined' &&
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const [progress, setProgress] = useState(prefersReduced ? 1 : 0);
+
+  useEffect(() => {
+    if (prefersReduced) return;
+    let raf = 0;
+    const start = performance.now();
+    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / durationMs);
+      setProgress(easeOutCubic(t));
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [prefersReduced, durationMs]);
+
+  return progress;
+}
+
+function ScoreHeadline({ score }: { score: number }) {
+  const { t } = useTranslation();
+  const progress = useReveal();
+  const decimals = Number.isInteger(score) ? 0 : 1;
+  const shownValue = (score * progress).toFixed(decimals);
+  const fraction = Math.max(0, Math.min(1, score / 10)) * progress;
+  const starPercent = Math.max(0, Math.min(100, (score / 10) * 100)) * progress;
+
+  return (
+    <div className="plate plate--framed evaluation-hero">
+      <div className="evaluation-hero-dial">
+        <ScoreDial fraction={fraction} />
+        <span className="evaluation-hero-value">
+          {shownValue}
+          <span className="evaluation-hero-max">/10</span>
+        </span>
+      </div>
+      <div className="evaluation-hero-copy">
+        <div className="evaluation-hero-label">{t('evaluation.totalScoreShort')}</div>
+        <div className="evaluation-hero-verdict">{t(`evaluation.verdict.${verdictKey(score)}`)}</div>
+        <StarRating score={score} fillPercent={starPercent} />
+      </div>
+    </div>
   );
 }
 
@@ -165,22 +230,8 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
     <div className="evaluation-panel">
       <BadgeRow badges={badges} />
 
-      <div className="plate plate--framed evaluation-hero">
-        <div className="evaluation-hero-dial">
-          <ScoreDial score={result.totalScore} />
-          <span className="evaluation-hero-value">
-            {result.totalScore}
-            <span className="evaluation-hero-max">/10</span>
-          </span>
-        </div>
-        <div className="evaluation-hero-copy">
-          <div className="evaluation-hero-label">{t('evaluation.totalScoreShort')}</div>
-          <div className="evaluation-hero-verdict">
-            {t(`evaluation.verdict.${verdictKey(result.totalScore)}`)}
-          </div>
-          <StarRating score={result.totalScore} />
-        </div>
-      </div>
+      <ScoreHeadline score={result.totalScore} />
+
 
       <p className="evaluation-gameplan">{boldHeroNames(result.summary.gameplan, heroNames)}</p>
       {result.campStackingNote && (

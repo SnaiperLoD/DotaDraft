@@ -36,27 +36,17 @@
   stroke-width: 9;
 }
 
+/* The arc length is set per-frame from JS (ScoreHeadline's reveal progress),
+   so there is no CSS keyframe here — the dash array IS the animation. The
+   short transition only smooths any gap between rAF frames; the reveal runs
+   ~850ms, comfortably longer, so this never lags behind the number. */
 .score-dial-fill {
   fill: none;
   stroke: var(--gold);
   stroke-width: 9;
   stroke-linecap: round;
   filter: drop-shadow(0 0 6px color-mix(in srgb, var(--gold) 50%, transparent));
-  animation: dial-sweep var(--dur-4) var(--ease-out) both;
-}
-
-/* Sweeps up from empty on mount. Animating stroke-dasharray directly
-   would need the computed value in the keyframes; rotating a 0-length
-   clip is simpler and reads the same. */
-@keyframes dial-sweep {
-  from {
-    opacity: 0;
-    stroke-dashoffset: 120;
-  }
-  to {
-    opacity: 1;
-    stroke-dashoffset: 0;
-  }
+  transition: stroke-dasharray 60ms linear;
 }
 
 .evaluation-hero-value {
@@ -66,6 +56,10 @@
   font-size: 30px;
   line-height: 1;
   color: var(--gold-bright);
+  /* Fixed-width digits so the value doesn't jitter sideways while it counts
+     up (0.0 → 4.2) — the container is centred in the dial and a shifting
+     width would rock it left/right frame to frame. */
+  font-variant-numeric: tabular-nums;
 }
 
 .evaluation-hero-max {
@@ -478,8 +472,15 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .score-dial-fill,
   .percentile-bar-fill {
     animation: none;
+  }
+
+  /* The ring's reveal is JS-driven and already skipped when reduced motion
+     is set (useReveal starts at progress 1), so the arc is drawn at its full
+     length on the first frame — kill the smoothing transition too so there's
+     no residual ease on that first paint. */
+  .score-dial-fill {
+    transition: none;
   }
 }
