@@ -12,7 +12,7 @@ import type {
   SynergyPreviewEntry,
   TopAbility,
   AbilityCategory,
-  LeaderboardEntryView,
+  LeaderboardResponse,
 } from 'shared';
 import type { DraftStateView } from './types';
 
@@ -88,5 +88,5 @@ export const api = {
   getTopAbilities: (heroId: number, category: AbilityCategory, limit = 3) =>
     request<TopAbility[]>(`/heroes/${heroId}/top-abilities?category=${category}&limit=${limit}`),
 
-  getLeaderboard: (limit = 20) => request<LeaderboardEntryView[]>(`/leaderboard?limit=${limit}`),
+  getLeaderboard: (limit = 20) => request<LeaderboardResponse>(`/leaderboard?limit=${limit}`),
 };

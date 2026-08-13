@@ -5,6 +5,25 @@
   max-width: 80ch;
 }
 
+/* Two-part board: "Best Runs" then "Pool Opponents" stacked. */
+.leaderboard-section {
+  margin-bottom: var(--sp-6);
+}
+
+.leaderboard-subtitle {
+  font-family: var(--font-display, var(--font-ui));
+  font-size: 18px;
+  color: var(--gold-bright);
+  margin: 0 0 var(--sp-3);
+  letter-spacing: 0.02em;
+}
+
+/* The subtitle already provides the gap above each note — drop the negative
+   pull-up the standalone (single-board) layout relied on. */
+.leaderboard-section .leaderboard-note {
+  margin-top: 0;
+}
+
 .leaderboard-skeleton {
   height: 420px;
   border-radius: var(--r-md);

@@ -462,4 +462,120 @@ describe('DraftService', () => {
       expect(call.data.opponentLeagueName).toBeNull();
     });
   });
+
+  // getBestRuns backs the "Best Runs" half of the two-part leaderboard —
+  // aggregates a draftId's BattleResult rows (player-perspective outcomes)
+  // into wins/losses, gates by minFights, ranks wins-first then win rate.
+  // A purpose-built fake prisma (the shared one has no battleResult.groupBy).
+  describe('getBestRuns()', () => {
+    // grouped rows as prisma.battleResult.groupBy(by: [draftId, resolvedOutcome])
+    // would return them.
+    function makeRunService(
+      groups: { draftId: string; resolvedOutcome: string; count: number }[],
+      draftHeroes: Record<string, { heroId: number; assignedRole: string | null; pickOrder: number }[]> = {},
+      evalByDraft: Record<string, string | null> = {},
+    ) {
+      const prisma = {
+        battleResult: {
+          groupBy: jest.fn(async () =>
+            groups.map((g) => ({
+              draftId: g.draftId,
+              resolvedOutcome: g.resolvedOutcome,
+              _count: { _all: g.count },
+            })),
+          ),
+        },
+        draft: {
+          findMany: jest.fn(async ({ where }: any) => {
+            const ids: string[] = where.id.in;
+            return ids.map((id) => ({
+              id,
+              evaluationResult: evalByDraft[id] ?? null,
+              heroes: draftHeroes[id] ?? [],
+            }));
+          }),
+        },
+      };
+      const service = new DraftService(prisma as any, {} as any);
+      return { service, prisma };
+    }
+
+    it('tallies wins/losses per draft and ranks wins-first, then win rate', async () => {
+      const { service } = makeRunService([
+        { draftId: 'a', resolvedOutcome: 'Win', count: 6 },
+        { draftId: 'a', resolvedOutcome: 'Lose', count: 1 },
+        { draftId: 'b', resolvedOutcome: 'Win', count: 2 },
+        { draftId: 'b', resolvedOutcome: 'Lose', count: 3 },
+        { draftId: 'c', resolvedOutcome: 'Win', count: 2 },
+        { draftId: 'c', resolvedOutcome: 'Lose', count: 4 },
+      ]);
+      const runs = await service.getBestRuns(10, 5);
+      expect(runs.map((r) => `${r.draftId}:${r.wins}-${r.losses}`)).toEqual(['a:6-1', 'b:2-3', 'c:2-4']);
+      // b before c: equal 2 wins, b's win rate (0.4) beats c's (0.33).
+      expect(runs[1].winRate).toBeCloseTo(0.4);
+    });
+
+    it('excludes runs below minFights', async () => {
+      const { service } = makeRunService([
+        { draftId: 'short', resolvedOutcome: 'Win', count: 4 },
+        { draftId: 'long', resolvedOutcome: 'Win', count: 3 },
+        { draftId: 'long', resolvedOutcome: 'Lose', count: 2 },
+      ]);
+      const runs = await service.getBestRuns(10, 5);
+      expect(runs.map((r) => r.draftId)).toEqual(['long']);
+    });
+
+    it('honors the limit after ranking', async () => {
+      const groups = ['a', 'b', 'c'].flatMap((d, i) => [
+        { draftId: d, resolvedOutcome: 'Win', count: 5 + i },
+        { draftId: d, resolvedOutcome: 'Lose', count: 1 },
+      ]);
+      const { service } = makeRunService(groups);
+      const runs = await service.getBestRuns(2, 5);
+      expect(runs).toHaveLength(2);
+      expect(runs[0].draftId).toBe('c'); // 7 wins, highest
+    });
+
+    it('surfaces heroes in pickOrder, roles, and the parsed evaluation score', async () => {
+      const { service } = makeRunService(
+        [
+          { draftId: 'a', resolvedOutcome: 'Win', count: 3 },
+          { draftId: 'a', resolvedOutcome: 'Lose', count: 2 },
+        ],
+        {
+          a: [
+            { heroId: 20, assignedRole: 'Mid', pickOrder: 2 },
+            { heroId: 10, assignedRole: 'Carry', pickOrder: 1 },
+          ],
+        },
+        { a: JSON.stringify({ totalScore: 7.5 }) },
+      );
+      const [run] = await service.getBestRuns(10, 5);
+      expect(run.heroIds).toEqual([10, 20]); // sorted by pickOrder
+      expect(run.heroRoles).toEqual([
+        { heroId: 10, role: 'Carry' },
+        { heroId: 20, role: 'Mid' },
+      ]);
+      expect(run.evaluationScore).toBe(7.5);
+    });
+
+    it('returns a null score for an unparseable/absent evaluationResult and null roles when any is missing', async () => {
+      const { service } = makeRunService(
+        [
+          { draftId: 'a', resolvedOutcome: 'Win', count: 5 },
+        ],
+        { a: [{ heroId: 10, assignedRole: null, pickOrder: 1 }] },
+        { a: null },
+      );
+      const [run] = await service.getBestRuns(10, 5);
+      expect(run.evaluationScore).toBeNull();
+      expect(run.heroRoles).toBeNull();
+    });
+
+    it('returns an empty array when nothing clears minFights (no draft fetch)', async () => {
+      const { service, prisma } = makeRunService([{ draftId: 'a', resolvedOutcome: 'Win', count: 1 }]);
+      expect(await service.getBestRuns(10, 5)).toEqual([]);
+      expect(prisma.draft.findMany).not.toHaveBeenCalled();
+    });
+  });
 });

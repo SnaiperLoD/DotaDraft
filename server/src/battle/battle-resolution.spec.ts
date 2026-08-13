@@ -322,9 +322,17 @@ describe('resolveBattle', () => {
       // often enough that a small filler ID risks silently colliding with
       // one and breaking this test's "otherwise matched" assumption (id=5
       // did exactly that once already).
+      // hero2 carries a real Offlane presumed_position so that assigning it
+      // Offlane below exercises the role-fit boost cleanly, without the
+      // core-miscast penalty (common/role-fit.ts) firing on empty position data
+      // and cancelling the very boost this test measures.
+      const hero2: Hero = {
+        ...hero(2, 'A2', { map_control: 8.5, initiating: 8.5, mobility: 8.5 }),
+        presumed_positions: [{ position: 'Offlane', share: 0.8 }],
+      };
       const teamAUnassigned: BattlePick[] = [
         { hero: hero(1, 'A1', { tempo: 10 }), assignedRole: null },
-        { hero: hero(2, 'A2', { map_control: 8.5, initiating: 8.5, mobility: 8.5 }), assignedRole: null },
+        { hero: hero2, assignedRole: null },
         ...team(3, {}, 9001),
       ];
       const teamB: BattlePick[] = [

@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { HeroService } from '../hero/hero.service';
-import { ROLES, type DraftPoolResponse, type Hero } from 'shared';
+import { ROLES, type DraftPoolResponse, type Hero, type PooledHeroRole, type RunLeaderboardEntry } from 'shared';
 
 const POOL_SIZE = 5;
 const ROUNDS = 5;
@@ -179,6 +179,81 @@ export class DraftService {
         opponentLeagueName: result.opponentLeagueName,
         opponentHeroIds: JSON.stringify(result.opponentHeroIds),
       },
+    });
+  }
+
+  // "Best Runs" leaderboard (Blueprint/10-tech-debt-backlog.md, "Лидерборд
+  // драфтов" — two-part split): the calling-player side the pool board does
+  // NOT track. A "run" is one draft the player fought Battle Mode with in a
+  // session; its record is aggregated from that draftId's BattleResult rows
+  // (resolvedOutcome is stored from the CALLING player's perspective, see
+  // BattleService.fight()). Anonymous — keyed by draft, since Draft has no
+  // submitterToken and there's no account system.
+  //
+  // minFights gates out noisy short runs (a 1-fight 100% run isn't a "run") —
+  // set high (5) deliberately, this board is meant to reward sustained
+  // sessions, not one-offs. Ranked wins-first then win rate, same shape as the
+  // pool board's getLeaderboard(). resolvedOutcome is only ever 'Win'/'Lose'
+  // (Battle Mode always coin-flips to one, never 'Even' at this layer), so a
+  // non-'Win' row is counted as a loss.
+  async getBestRuns(limit: number, minFights: number): Promise<RunLeaderboardEntry[]> {
+    const grouped = await this.prisma.battleResult.groupBy({
+      by: ['draftId', 'resolvedOutcome'],
+      _count: { _all: true },
+    });
+
+    const tally = new Map<string, { wins: number; losses: number }>();
+    for (const g of grouped) {
+      const rec = tally.get(g.draftId) ?? { wins: 0, losses: 0 };
+      if (g.resolvedOutcome === 'Win') rec.wins += g._count._all;
+      else rec.losses += g._count._all;
+      tally.set(g.draftId, rec);
+    }
+
+    const qualifying = [...tally.entries()]
+      .map(([draftId, r]) => ({
+        draftId,
+        wins: r.wins,
+        losses: r.losses,
+        total: r.wins + r.losses,
+        winRate: r.wins / (r.wins + r.losses),
+      }))
+      .filter((r) => r.total >= minFights)
+      .sort((a, b) => b.wins - a.wins || b.winRate - a.winRate)
+      .slice(0, limit);
+
+    if (qualifying.length === 0) return [];
+
+    // Fetch draft details only for the winners (heroes + roles + eval score).
+    const drafts = await this.prisma.draft.findMany({
+      where: { id: { in: qualifying.map((r) => r.draftId) } },
+      include: { heroes: true },
+    });
+    const draftById = new Map(drafts.map((d) => [d.id, d]));
+
+    return qualifying.map((r) => {
+      const draft = draftById.get(r.draftId);
+      const heroes = (draft?.heroes ?? []).slice().sort((a, b) => a.pickOrder - b.pickOrder);
+      const heroRoles: PooledHeroRole[] | null = heroes.every((h) => h.assignedRole)
+        ? heroes.map((h) => ({ heroId: h.heroId, role: h.assignedRole as string }))
+        : null;
+      let evaluationScore: number | null = null;
+      if (draft?.evaluationResult) {
+        try {
+          evaluationScore = (JSON.parse(draft.evaluationResult) as { totalScore: number }).totalScore;
+        } catch {
+          evaluationScore = null;
+        }
+      }
+      return {
+        draftId: r.draftId,
+        heroIds: heroes.map((h) => h.heroId),
+        heroRoles,
+        evaluationScore,
+        wins: r.wins,
+        losses: r.losses,
+        winRate: r.winRate,
+      };
     });
   }
 

@@ -57,7 +57,15 @@ describe('createAxisAnalyzer', () => {
 
   it('applies a role-fit boost and mentions it when a hero is assigned a role its strong axis matches', () => {
     // `initiating` is a Carry role-fit axis; `control` was removed from Carry.
-    const carry = heroWithAxis(1, 'Anti-Mage', 'initiating', 8);
+    // A real Carry presumed_position keeps the core-miscast penalty (common/
+    // role-fit.ts) from firing — this hero genuinely plays Carry, so the test
+    // isolates the role-fit boost rather than netting it against a miscast.
+    const carry = makeHero({
+      id: 1,
+      name: 'Anti-Mage',
+      evaluation_values: { ...DEFAULT_EVALUATION_VALUES, initiating: 8 },
+      presumed_positions: [{ position: 'Carry', share: 0.9 }],
+    });
     const analyzer = createAxisAnalyzer('initiating', 'Initiating');
 
     const unassigned = analyzer.analyze(picks([carry]));

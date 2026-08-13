@@ -210,6 +210,10 @@
   },
   "leaderboard": {
     "title": "Leaderboard",
+    "runsTitle": "Best Runs",
+    "runsNote": "Your best single-session drafts, ranked by wins and win rate across the battles you fought with them.",
+    "runsEmpty": "No runs yet — draft a team and fight at least 5 battles with it in one session to make the board.",
+    "poolTitle": "Pool Opponents",
     "note": "Ranks committed drafts by how they perform as the opponent in other players' battles — not your own personal win/loss record.",
     "empty": "No drafts have been fought yet — commit one to the pool and start battling.",
     "draft": "Draft",

@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import type { Hero, HeroEvaluationValues, BattlePair, BattleMatchup } from 'shared';
-import { roleAwareAxisValue, supportMiscastMultiplier } from '../common/role-fit';
+import { roleAwareAxisValue, supportMiscastMultiplier, coreMiscastMultiplier } from '../common/role-fit';
 import { hardCarryAxisMultipliers, isHardCarry } from '../common/hard-carry';
 import { utilityStackAxisMultipliers, utilityStackBreadth } from '../common/utility-stacking';
 import { manualPowerMultiplier } from '../common/manual-power-overrides';
@@ -225,7 +225,8 @@ export function axisAverage(
     team.reduce((sum, p) => {
       const base =
         roleAwareAxisValue(axis, p.hero, p.assignedRole, utilityStackBreadth(p.hero)) *
-        supportMiscastMultiplier(p.hero, p.assignedRole);
+        supportMiscastMultiplier(p.hero, p.assignedRole) *
+        coreMiscastMultiplier(p.hero, p.assignedRole);
       const heroMult = tagEffects?.heroPowerMultiplier.get(p.hero.id) ?? 1;
       const heroAxisMult = tagEffects?.heroAxisMultiplier.get(p.hero.id)?.[axis] ?? 1;
       const phaseHeroMult = (phase && tagEffects?.phaseHeroPowerMultiplier.get(phase)?.get(p.hero.id)) ?? 1;

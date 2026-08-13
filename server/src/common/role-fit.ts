@@ -70,7 +70,12 @@ const ROLE_AXES: Record<string, string[]> = {
   // found. Kept for Mid, which is a genuine control/initiation role. The
   // broader role-fit-bonus rework is backlog item 9.
   Carry: ['initiating'],
-  Mid: ['initiating', 'control'],
+  // `tempo` added to Mid 2026-08-13 (session-2 role-fit revision, backlog item
+  // 9): the recomputed round-3 correlation (restricted to heroes with real
+  // per-role data in >=2 roles, n=38) puts tempo at r=+0.211 for Mid — a
+  // moderate but genuine positive predictor of a mid overperforming, and tempo
+  // is a fully-weighted axis in both engines (unlike map_control, see Carry).
+  Mid: ['initiating', 'control', 'tempo'],
   Offlane: ['map_control', 'initiating', 'mobility'],
   // `saving` re-added to both supports 2026-08-13 (direct user call): saving
   // allies is core to what a support does, so it should be rewarded here — and
@@ -78,21 +83,21 @@ const ROLE_AXES: Record<string, string[]> = {
   // role-fit bonus for it. (Round-3 research had dropped saving at r=0.14; the
   // user's role intent overrides that weak signal.)
   'Hard Support': ['tempo', 'camp_stacking', 'mobility', 'map_control', 'saving'],
-  // Soft Support (position 4) diverges from Hard Support 2026-08-13 (user):
-  // the roaming pos-4 also earns a role-fit bonus for skirmish_rate (they're
-  // in the fights/ganks) and resource_efficiency (more farm-hungry than a
-  // pos-5). Note the real-per-role-data path (roleAwareAxisValue) still
-  // collapses both supports to the single 'Support' bucket — this divergence
-  // only affects the heuristic fallback for no_info heroes.
-  'Soft Support': [
-    'tempo',
-    'camp_stacking',
-    'mobility',
-    'map_control',
-    'saving',
-    'skirmish_rate',
-    'resource_efficiency',
-  ],
+  // Soft Support (position 4) diverges from Hard Support: the roaming pos-4
+  // additionally earns a role-fit bonus for resource_efficiency (more
+  // farm-hungry than a pos-5). Note the real-per-role-data path
+  // (roleAwareAxisValue) still collapses both supports to the single 'Support'
+  // bucket — this divergence only affects the heuristic fallback for no_info
+  // heroes.
+  //
+  // `skirmish_rate` REMOVED 2026-08-13 (session-2 role-fit revision, backlog
+  // item 9): the recomputed round-3 correlation put skirmish_rate at r=-0.202
+  // for Support — it predicts UNDERperformance, and roleFitValue only ever
+  // boosts, so rewarding it pushed the wrong way. `resource_efficiency` kept by
+  // explicit user call despite its own near-zero r=-0.001; it's near-neutral
+  // and, being outside Battle's AXES and unweighted in Evaluation's total, its
+  // boost is cosmetic (moves only the breakdown card value, not any score).
+  'Soft Support': ['tempo', 'camp_stacking', 'mobility', 'map_control', 'saving', 'resource_efficiency'],
 };
 
 const BASELINE = 5;
@@ -171,16 +176,43 @@ export function isRoleFitAxis(axisKey: string, assignedRole: string | null): boo
   return ROLE_AXES[assignedRole]?.includes(axisKey) ?? false;
 }
 
-// Support-miscast penalty (Blueprint/10-tech-debt-backlog.md, 2026-08-06, by
-// direct user request): a hero who essentially never plays Support in real
-// games (presumed_positions' Support share below SUPPORT_MISCAST_THRESHOLD)
-// but gets assigned Hard/Soft Support anyway takes a flat penalty across
-// EVERY stat, not just the axes ROLE_AXES cares about — unlike the
-// boost/dampen above, this isn't about rewarding or forgiving a specific
-// axis, it's "the model doesn't know how to play this hero out of position
-// at all." Personal (per-hero), not team-wide, unlike hard-carry stacking.
+// Miscast penalty (Blueprint/10-tech-debt-backlog.md, 2026-08-06 support side,
+// 2026-08-13 core side, both by direct user request): a hero who essentially
+// never plays the assigned role FAMILY in real games takes a flat penalty
+// across EVERY stat, not just the axes ROLE_AXES cares about — unlike the
+// boost/dampen above, this isn't about rewarding or forgiving a specific axis,
+// it's "the model doesn't know how to play this hero out of position at all."
+// Personal (per-hero), not team-wide, unlike hard-carry stacking.
+//
+// Two symmetric directions, mutually exclusive by role (a role is either a
+// support slot or a core slot, never both), so both multipliers can be applied
+// together at a call site and at most one ever fires:
+//   - supportMiscast: a hero with ~0 real Support history forced into Hard/Soft
+//     Support. Keys on the single Support presumed_positions share.
+//   - coreMiscast: a hero with ~0 real core history (Carry+Mid+Offlane share
+//     summed) forced into Carry/Mid/Offlane. This is the fix for backlog item
+//     1 — a "4 supports + 1 carry" draft, with three pure supports jammed into
+//     core slots, previously took NO penalty for those three miscasts (only the
+//     reverse was penalized), so it scored Elite. Keyed on the COMBINED core
+//     share (not the specific assigned position) to mirror the support side's
+//     coarse single-bucket test: a real offlaner slotted at Carry genuinely
+//     plays cores and shouldn't be punished, only a hero who plays no core at
+//     all. The presumed_positions data is cleanly bimodal here — 41 heroes at
+//     exactly 0 core share, 86 at >=0.30, nothing between — so the threshold is
+//     robust anywhere in (0.05, 0.30); 0.05 is chosen to mirror the support
+//     threshold exactly.
+//
+// Both penalties are the same -10% for symmetry. NOT self-play calibrated (the
+// user chose to ship the fix before measuring — calibration debt, tracked in
+// Blueprint/10). A plausible follow-up hypothesis worth a future sweep: a pure
+// support at Carry may be a worse miscast than a carry at Hard Support (no
+// scaling/farm to fall back on), which would argue for a harsher CORE penalty
+// than the SUPPORT one — left symmetric until measured.
 const SUPPORT_MISCAST_THRESHOLD = 0.05;
 const SUPPORT_MISCAST_PENALTY = 0.9; // -10%
+const CORE_MISCAST_THRESHOLD = 0.05;
+const CORE_MISCAST_PENALTY = 0.9; // -10%
+const CORE_ROLES = ['Carry', 'Mid', 'Offlane'];
 
 export function supportMiscastMultiplier(hero: Hero, assignedRole: string | null): number {
   if (assignedRole !== 'Hard Support' && assignedRole !== 'Soft Support') return 1;
@@ -189,6 +221,16 @@ export function supportMiscastMultiplier(hero: Hero, assignedRole: string | null
   // comment in common/hard-carry.ts's isHardCarry().
   const supportShare = hero.presumed_positions?.find((p) => p.position === 'Support')?.share ?? 0;
   return supportShare < SUPPORT_MISCAST_THRESHOLD ? SUPPORT_MISCAST_PENALTY : 1;
+}
+
+export function coreMiscastMultiplier(hero: Hero, assignedRole: string | null): number {
+  if (!CORE_ROLES.includes(assignedRole ?? '')) return 1;
+  // Combined core share = every non-Support presumed position summed. Optional
+  // chaining/`?? []` for the same heroes.json-only-Hero reason as above.
+  const coreShare = (hero.presumed_positions ?? [])
+    .filter((p) => p.position !== 'Support')
+    .reduce((sum, p) => sum + p.share, 0);
+  return coreShare < CORE_MISCAST_THRESHOLD ? CORE_MISCAST_PENALTY : 1;
 }
 
 // Battle Engine's 5-way assignedRole ('Hard Support'/'Soft Support' split)

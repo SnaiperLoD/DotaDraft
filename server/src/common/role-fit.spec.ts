@@ -1,4 +1,10 @@
-import { roleFitValue, isRoleFitAxis, supportMiscastMultiplier, roleAwareAxisValue } from './role-fit';
+import {
+  roleFitValue,
+  isRoleFitAxis,
+  supportMiscastMultiplier,
+  coreMiscastMultiplier,
+  roleAwareAxisValue,
+} from './role-fit';
 import { makeHero, DEFAULT_EVALUATION_VALUES } from '../test-utils/hero-factory';
 import type { Hero, PresumedPosition } from 'shared';
 
@@ -51,11 +57,22 @@ describe('roleFitValue', () => {
     expect(roleFitValue('saving', 'Mid', 8)).toBe(8);
   });
 
-  it('boosts skirmish_rate/resource_efficiency for Soft Support (pos 4) but not Hard Support (pos 5)', () => {
-    expect(roleFitValue('skirmish_rate', 'Soft Support', 8)).toBeGreaterThan(8);
+  it('boosts resource_efficiency for Soft Support (pos 4) but not Hard Support (pos 5)', () => {
     expect(roleFitValue('resource_efficiency', 'Soft Support', 8)).toBeGreaterThan(8);
-    expect(roleFitValue('skirmish_rate', 'Hard Support', 8)).toBe(8);
     expect(roleFitValue('resource_efficiency', 'Hard Support', 8)).toBe(8);
+  });
+
+  it('no longer boosts skirmish_rate for either support (removed 2026-08-13, r=-0.202)', () => {
+    expect(roleFitValue('skirmish_rate', 'Soft Support', 8)).toBe(8);
+    expect(roleFitValue('skirmish_rate', 'Hard Support', 8)).toBe(8);
+  });
+
+  it('boosts tempo for Mid (added 2026-08-13, r=+0.211) alongside initiating/control', () => {
+    expect(roleFitValue('tempo', 'Mid', 8)).toBeGreaterThan(8);
+    expect(roleFitValue('initiating', 'Mid', 8)).toBeGreaterThan(8);
+    expect(roleFitValue('control', 'Mid', 8)).toBeGreaterThan(8);
+    // tempo stays OUT of Carry (only Mid among cores gets it).
+    expect(roleFitValue('tempo', 'Carry', 8)).toBe(8);
   });
 
   it('does not boost an unrecognized role string', () => {
@@ -192,6 +209,85 @@ describe('supportMiscastMultiplier', () => {
       presumed_positions: [{ position: 'Support', share: 0.05 }],
     });
     expect(supportMiscastMultiplier(atThreshold, 'Hard Support')).toBe(1);
+  });
+});
+
+describe('coreMiscastMultiplier', () => {
+  const pureSupport = makeHero({
+    id: 1,
+    name: 'Crystal Maiden',
+    presumed_positions: [{ position: 'Support', share: 0.99 }],
+  });
+  const flexOfflaner = makeHero({
+    id: 2,
+    name: 'Ogre Magi',
+    presumed_positions: [
+      { position: 'Support', share: 0.4 },
+      { position: 'Offlane', share: 0.6 },
+    ],
+  });
+  const pureCarry = makeHero({
+    id: 3,
+    name: 'Anti-Mage',
+    presumed_positions: [{ position: 'Carry', share: 0.9 }],
+  });
+
+  it('penalizes a pure support (zero core share) assigned any core role', () => {
+    for (const role of ['Carry', 'Mid', 'Offlane']) {
+      expect(coreMiscastMultiplier(pureSupport, role)).toBeCloseTo(0.9);
+    }
+  });
+
+  it('does not penalize when combined core share clears the threshold', () => {
+    // 0.6 Offlane share is well past 0.05, even though the hero also supports.
+    expect(coreMiscastMultiplier(flexOfflaner, 'Carry')).toBe(1);
+  });
+
+  it('does not penalize a real core hero in a core role', () => {
+    expect(coreMiscastMultiplier(pureCarry, 'Carry')).toBe(1);
+  });
+
+  it('does not penalize when the assigned role is a support role or null', () => {
+    expect(coreMiscastMultiplier(pureSupport, 'Hard Support')).toBe(1);
+    expect(coreMiscastMultiplier(pureSupport, 'Soft Support')).toBe(1);
+    expect(coreMiscastMultiplier(pureSupport, null)).toBe(1);
+  });
+
+  it('does not penalize an unrecognized (non-core) role string', () => {
+    expect(coreMiscastMultiplier(pureSupport, 'Jungle')).toBe(1);
+  });
+
+  it('treats a Hero object missing presumed_positions entirely as 0% core share (penalized)', () => {
+    const bare = makeHero({ id: 4, name: 'Bare' });
+    delete (bare as { presumed_positions?: unknown }).presumed_positions;
+    expect(coreMiscastMultiplier(bare, 'Carry')).toBeCloseTo(0.9);
+  });
+
+  it('sums multiple core positions when testing the combined share', () => {
+    // Neither core position alone clears 0.05-ish intuition, but summed (0.03 +
+    // 0.04 = 0.07) they clear the 0.05 threshold, so no penalty.
+    const spread = makeHero({
+      id: 5,
+      name: 'Spread',
+      presumed_positions: [
+        { position: 'Support', share: 0.93 },
+        { position: 'Carry', share: 0.03 },
+        { position: 'Offlane', share: 0.04 },
+      ],
+    });
+    expect(coreMiscastMultiplier(spread, 'Mid')).toBe(1);
+  });
+
+  it('does not penalize at exactly the threshold (0.05) — strictly-below, mirroring the support side', () => {
+    const atThreshold = makeHero({
+      id: 6,
+      name: 'AtThreshold',
+      presumed_positions: [
+        { position: 'Support', share: 0.95 },
+        { position: 'Carry', share: 0.05 },
+      ],
+    });
+    expect(coreMiscastMultiplier(atThreshold, 'Carry')).toBe(1);
   });
 });
 

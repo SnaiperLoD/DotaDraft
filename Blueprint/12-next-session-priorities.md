@@ -56,6 +56,95 @@ Item 1 (tag divergence) is the most consequential but needs the user to pick a s
 
 ---
 
+## Session log — 2026-08-13 (continued: pool audit + role-fit core-miscast)
+
+Two backlog items worked, not yet committed at time of writing.
+
+**Backlog item 8 (draft pool core/support spread) — audited, CLOSED, no bug.**
+New repeatable check `npm run audit-pool-coverage [numDrafts]`
+(`server/scripts/audit-pool-coverage.ts`) drives the real
+`HeroService.randomPool` + `ensureRoleCoverage` over full 5-round draft chains.
+Findings on live data: the binary guarantee (>=1 Support AND >=1 core per pool)
+holds with **0 violations across 100k pools**; live SQLite matches the data
+files (all 127 heroes have populated `presumed_positions`, no roles-tag
+fallback in use, so no stale-seed drift). The user's "feels like it isn't
+working" is explained by the guarantee being weaker than the mental model: it
+promises only >=1 of each, not a balanced split — 36.6% of pools show exactly 1
+Support, 18% show only 2 distinct primary positions. Granular gaps the
+guarantee never covered (Carry/Mid/Offlane) are small: <0.5% of drafts never
+offer a Mid or Offlane, ~0.9% can't source a standard 1C/1M/1O/2S. Not a bug;
+strengthening to positional coverage is an open design choice, not done.
+
+**Backlog item 1 (role-fit under-weight; 4-support+carry scored Elite) —
+core-miscast penalty ADDED.** `common/role-fit.ts` gains
+`coreMiscastMultiplier`, the symmetric complement to `supportMiscastMultiplier`:
+a hero with ~0 combined core share (Carry+Mid+Offlane summed) forced into a
+core slot takes a flat -10%, just as a non-support forced into Support already
+did. Threshold 0.05 (presumed_positions is cleanly bimodal — 41 heroes at
+exactly 0 core share, 86 at >=0.30, nothing between — so it's robust anywhere in
+(0.05,0.30)). Applied at both call sites (`axis.analyzer.ts`,
+`battle-resolution.ts`'s `axisAverage`) alongside the support one; the two are
+disjoint by role so at most one fires. 316/316 jest green (two pre-existing
+role-fit tests were under-specified — synthetic cores with empty
+`presumed_positions` — and got real positions). Measured on the exact
+Terrorblade(Carry)+4-support draft (two supports miscast into Mid/Offlane): the
+weighted **axis subtotal drops 4.06 -> 3.93 (-3.4%)** (Control/Skirmish -0.30,
+Tempo -0.20). Real but modest — it's -10%/miscast-hero, and the headline is
+further diluted by synergy's unchanged 0.3 weight + the percentile transform.
+CALIBRATION DEBT: the -10% is eyeballed, mirrored from the support side, NOT
+self-play calibrated. Flagged hypothesis in the code: a pure support at Carry
+may be a worse miscast than a carry at Support (no scaling/farm fallback),
+which would argue for a harsher core penalty — the lever to pull if the intent
+is to actually knock 4-support drafts out of Elite rather than just dent them.
+
+**ROLE_AXES revision (E, backlog item 9) — partial, data-driven.** Recomputed
+the round-3 role-fit correlations from scratch (evaluation_values_by_role vs
+per-role overperformance, restricted to heroes with real data in >=2 roles,
+n=25-38 — matches the methodology the role-fit.ts header cites). Applied the
+user's calls after seeing the table: **Mid gained `tempo`** (r=+0.211, a
+fully-weighted axis) and **Soft Support lost `skirmish_rate`** (r=-0.202 — a
+reward-only boost was pushing the wrong way). Two requests were flagged and NOT
+applied as-is: (a) **`map_control` -> Carry is inert** — map_control is weight 0
+in all axis-weights.json blocks AND absent from Evaluation's BASE_ANALYZERS, so
+adding it does literally nothing (same class as the "Reunion does nothing"
+finding); (b) **"boost initiating for Offlane" contradicts the data** —
+initiating is the WEAKEST kept Offlane axis (+0.148) and would need a new
+per-(role,axis) boost-weight mechanism the current single global BOOST_WEIGHT
+doesn't have; camp_stacking (+0.249) would be the data-driven pick instead. Both
+still open pending a user decision. `resource_efficiency` kept on Soft Support
+by explicit user call despite r=-0.001 (near-neutral, and its boost is cosmetic
+— outside Battle AXES, unweighted in Evaluation total). Note also `control` was
+NOT re-added to Carry despite being its strongest predictor (+0.444) — user's
+2026-08-13 removal stands. 45 role-fit / 324 total jest green.
+
+**Position-weighted scaling (D, backlog item 2) — validated, DOES NOT hold.**
+Read-only check against the 100 pro matches (roles + outcomes): a scaling
+aggregate weighted 35/25/15/12.5/12.5 by position predicts the winner NO better
+than a flat team mean (point-biserial |r| 0.026 -> 0.010, both negligible;
+directional accuracy 47% -> 43%, both sub-coin-flip), for both aggregate and
+role-specific scaling values. Caveat: n=100 is tiny and scaling is a near-zero
+predictor either way (its role-fit correlation is negative in every role), so
+the test is underpowered — but there is no signal to justify building D as
+proposed. Recommend NOT implementing without a bigger pool (backlog item 2) or a
+different framing of the scaling signal.
+
+**Leaderboard split into two parts (user feature).** The old single `/leaderboard`
+board was only the "pool opponent" half (pooled drafts ranked by their passive
+record as opponents other players pull — recordDraftOutcome/getLeaderboard,
+already built). Added the missing half: **"Best Runs"** — the calling player's
+own best single-session drafts, ranked by wins then win rate across the Battle
+Mode fights they played WITH each. Built entirely from existing data
+(`BattleResult` rows, player-perspective outcomes keyed by draftId) — no schema
+change, no new writes. `DraftService.getBestRuns(limit, minFights)` aggregates,
+gates (`RUN_MIN_FIGHTS=5`, chosen high "for the future" — only 3 qualifying runs
+in the dev DB today), ranks. `/leaderboard` now returns `{ runs, pool }`;
+`LeaderboardPage` renders two sections. Runs are anonymous (Draft has no
+submitterToken, no accounts) — identified by their five heroes. 6 new jest tests
+for getBestRuns (tally/sort/minFights/limit/roles/eval-parse), verified live in
+the browser (both boards render).
+
+---
+
 ## Session log — 2026-08-13 (long UI + calibration session)
 
 ~24 commits, all straight to master. Themes:
