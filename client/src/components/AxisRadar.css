@@ -46,7 +46,7 @@
 }
 
 .axis-radar-spoke.is-active {
-  stroke: var(--gold);
+  stroke: var(--win-bright);
   stroke-width: 2;
 }
 
@@ -82,14 +82,16 @@
 }
 
 .axis-radar-hotspot:focus-visible {
-  outline: 2px solid var(--gold);
+  outline: 2px solid var(--win-bright);
   outline-offset: 0;
-  background: color-mix(in srgb, var(--gold) 18%, transparent);
+  background: color-mix(in srgb, var(--win) 20%, transparent);
 }
 
 .axis-radar-shape {
-  fill: color-mix(in srgb, var(--gold) 22%, transparent);
-  stroke: var(--gold);
+  /* Green (not gold) so the draft's polygon reads against a gold-accented
+     panel instead of blending into it — user call. */
+  fill: color-mix(in srgb, var(--win) 26%, transparent);
+  stroke: var(--win-bright);
   stroke-width: 2;
   stroke-linejoin: round;
   animation: radar-draw var(--dur-4) var(--ease-out) both;
@@ -108,7 +110,7 @@
 }
 
 .axis-radar-dot {
-  fill: var(--gold-bright);
+  fill: var(--win-bright);
   stroke: var(--ground);
   stroke-width: 1;
   transition:
@@ -118,7 +120,7 @@
 
 .axis-radar-dot.is-active {
   r: 5.5;
-  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--gold-bright) 70%, transparent));
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--win-bright) 75%, transparent));
 }
 
 .axis-radar-label {
@@ -135,7 +137,7 @@
 }
 
 .axis-radar-label.is-active {
-  fill: var(--gold-bright);
+  fill: var(--win-bright);
 }
 
 /* min-height holds the two-line legend's box so swapping in the (shorter)
@@ -161,7 +163,7 @@
   font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--gold-bright);
+  color: var(--win-bright);
 }
 
 .axis-radar-readout span {
