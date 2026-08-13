@@ -72,8 +72,13 @@ const ROLE_AXES: Record<string, string[]> = {
   Carry: ['initiating'],
   Mid: ['initiating', 'control'],
   Offlane: ['map_control', 'initiating', 'mobility'],
-  'Hard Support': ['tempo', 'camp_stacking', 'mobility', 'map_control'],
-  'Soft Support': ['tempo', 'camp_stacking', 'mobility', 'map_control'],
+  // `saving` re-added to both supports 2026-08-13 (direct user call): saving
+  // allies is core to what a support does, so it should be rewarded here — and
+  // conversely it is deliberately NOT on Carry/Mid, which must not earn a
+  // role-fit bonus for it. (Round-3 research had dropped saving at r=0.14; the
+  // user's role intent overrides that weak signal.)
+  'Hard Support': ['tempo', 'camp_stacking', 'mobility', 'map_control', 'saving'],
+  'Soft Support': ['tempo', 'camp_stacking', 'mobility', 'map_control', 'saving'],
 };
 
 const BASELINE = 5;

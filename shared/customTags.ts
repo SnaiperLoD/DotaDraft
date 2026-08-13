@@ -194,6 +194,11 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
       'Winter Wyvern',
       'Necrophos',
       'Witch Doctor',
+      // Added 2026-08-13 (user): Sun Ray heals allies.
+      'Phoenix',
+      // Added 2026-08-13 (user): Life Drain restores health (ally-targetable
+      // with Aghanim's).
+      'Pugna',
     ],
   },
   // Gold Generator — added 2026-08-12 (user-approved research batch). Team

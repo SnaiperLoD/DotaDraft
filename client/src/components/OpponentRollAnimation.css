@@ -24,10 +24,12 @@
 
 .opponent-roll-slots {
   display: flex;
-  gap: clamp(10px, 1.6vw, 22px);
+  gap: clamp(8px, 1.6vw, 22px);
   justify-content: center;
   align-items: flex-start;
-  flex-wrap: wrap;
+  /* All five stay on ONE row (user) — they flex to share the width instead of
+     wrapping the 5th onto a second line. */
+  flex-wrap: nowrap;
   width: 100%;
 }
 
@@ -36,9 +38,12 @@
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  /* Scales with the viewport so the five slots span most of the width, with
-     sane min/max so it never gets tiny or absurdly large. */
-  width: clamp(90px, 17vw, 200px);
+  /* Share the row equally; min-width:0 lets them shrink to fit rather than
+     overflow/wrap, max-width keeps them from getting absurdly large on a wide
+     screen. */
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 200px;
 }
 
 .opponent-roll-slot {

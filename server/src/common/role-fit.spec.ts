@@ -42,9 +42,13 @@ describe('roleFitValue', () => {
     expect(roleFitValue('tempo', 'Soft Support', 8)).toBeGreaterThan(8);
     expect(roleFitValue('map_control', 'Hard Support', 8)).toBeGreaterThan(8);
     expect(roleFitValue('map_control', 'Soft Support', 8)).toBeGreaterThan(8);
-    // saving/control were the old map's Support axes — no longer relevant per round 3's data.
-    expect(roleFitValue('saving', 'Hard Support', 8)).toBe(8);
+    // saving re-added to both supports 2026-08-13 (user); control stays out.
+    expect(roleFitValue('saving', 'Hard Support', 8)).toBeGreaterThan(8);
+    expect(roleFitValue('saving', 'Soft Support', 8)).toBeGreaterThan(8);
     expect(roleFitValue('control', 'Soft Support', 8)).toBe(8);
+    // Cores must NOT get a saving role-fit bonus.
+    expect(roleFitValue('saving', 'Carry', 8)).toBe(8);
+    expect(roleFitValue('saving', 'Mid', 8)).toBe(8);
   });
 
   it('does not boost an unrecognized role string', () => {
