@@ -430,11 +430,12 @@ function describeActiveTag(def: CustomTagDefinition, heroNames: string[]): strin
 
   if (def.name === 'Healer') {
     const perHeroPct = HEALER_BASE_PCT + HEALER_PER_EXTRA_PCT * (count - 1);
+    const base = 'Sustained healing keeps the team topped up.';
+    // Solo: the per-hero and combined figures are the same number, so the
+    // "+X each, +X combined" split just repeats itself — show it once.
+    if (count === 1) return `${base} 1 Healer on this team: +${perHeroPct}% team durability.`;
     const totalPct = perHeroPct * count;
-    return (
-      `Sustained healing keeps the team topped up. ${count} Healer${count === 1 ? '' : 's'} on this team: ` +
-      `+${perHeroPct}% team durability each, +${totalPct}% combined.`
-    );
+    return `${base} ${count} Healers on this team: +${perHeroPct}% team durability each, +${totalPct}% combined.`;
   }
 
   if (def.name === 'Statstealer') {
