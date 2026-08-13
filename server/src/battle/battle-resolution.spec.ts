@@ -248,6 +248,27 @@ describe('resolveBattle', () => {
       });
     });
 
+    it("ranks by delta from the hero's baseline, not absolute win rate", () => {
+      // Reported bug: a 51% lane for a 52% hero was listed as a BEST matchup
+      // because 51% clears 50%. Relative to that hero's own 52% norm it's a
+      // worse-than-usual matchup, so it must rank as worst, not best.
+      const teamA = team(5, {}, 1);
+      const teamB = team(5, {}, 6);
+      const lookup: MatchupLookup = {
+        getSynergyWinRate: () => null,
+        getMatchupWinRate: (h, o) => {
+          if (h === 1 && o === 6) return 0.51; // > 50% but BELOW Hero1's 52% baseline
+          if (h === 2 && o === 7) return 0.58; // above Hero2's 50% baseline
+          return null;
+        },
+        getWinRate: (h) => (h === 1 ? 0.52 : h === 2 ? 0.5 : null),
+      };
+      const result = resolveBattle(teamA, teamB, lookup, () => 0.4);
+      expect(result.bestMatchups.some((m) => m.heroId === 1)).toBe(false);
+      expect(result.worstMatchups.some((m) => m.heroId === 1)).toBe(true);
+      expect(result.bestMatchups[0].heroId).toBe(2);
+    });
+
     it('returns empty rows when no real matchup data covers the heroes', () => {
       const result = resolveBattle(team(5, {}, 1), team(5, {}, 6), noData, () => 0.4);
       expect(result.bestPairs).toEqual([]);

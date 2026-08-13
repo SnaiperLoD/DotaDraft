@@ -364,25 +364,32 @@ function topSynergyPairs(team: Hero[], lookup: MatchupLookup, limit: number): Ba
   return pairs.sort((a, b) => b.winRate - a.winRate).slice(0, limit);
 }
 
-// Your team's WORST individual matchups into the opponent's heroes — the
-// mirror of topMatchupEdges, kept below 0.5 and sorted ascending (most
-// lopsided losing lane first). Surfaced to the client with the raw winRate so
-// a player can see which of their heroes is walking into a bad matchup
-// against THIS specific opponent draft (user request).
-function worstMatchupEdges(
+// Best/worst matchups for the client display, ranked by how far the hero's
+// matchup win rate sits ABOVE or BELOW its OWN overall win rate (baseWinRate),
+// not by absolute win rate. A 51% lane for a 52% hero is a worse-than-usual
+// matchup even though it clears 50%, so it must not read as a "best" one
+// (user bug: "Spirit Breaker vs Beastmaster 52% -> 51%" was listed as best).
+// Falls back to the neutral 0.5 point when the hero has no overall win rate in
+// the snapshot. Kept separate from topMatchupEdges (absolute >0.5), which
+// winningHighlights still uses for "what actually won this fight".
+function rankedMatchupsByDelta(
   team: Hero[],
   opponent: Hero[],
   lookup: MatchupLookup,
   limit: number,
+  mode: 'best' | 'worst',
 ): BattleMatchup[] {
-  const edges: BattleMatchup[] = [];
+  const rows: BattleMatchup[] = [];
   for (const h of team) {
     for (const o of opponent) {
       const wr = lookup.getMatchupWinRate(h.id, o.id);
-      if (wr !== null && wr < 0.5) edges.push(matchupRow(h, o, wr, lookup));
+      if (wr !== null) rows.push(matchupRow(h, o, wr, lookup));
     }
   }
-  return edges.sort((a, b) => a.winRate - b.winRate).slice(0, limit);
+  const delta = (r: BattleMatchup) => r.winRate - (r.baseWinRate ?? 0.5);
+  const kept = rows.filter((r) => (mode === 'best' ? delta(r) > 0 : delta(r) < 0));
+  kept.sort((a, b) => (mode === 'best' ? delta(b) - delta(a) : delta(a) - delta(b)));
+  return kept.slice(0, limit);
 }
 
 // Combines both sources into one ranked top-N (by real winRate) for the
@@ -850,8 +857,8 @@ export function resolveBattle(
   // your strongest real synergy pairs, and your best / worst individual
   // matchups into this specific opponent's heroes.
   const bestPairs = topSynergyPairs(heroesA, lookup, 3);
-  const bestMatchups = topMatchupEdges(heroesA, heroesB, lookup, 3);
-  const worstMatchups = worstMatchupEdges(heroesA, heroesB, lookup, 3);
+  const bestMatchups = rankedMatchupsByDelta(heroesA, heroesB, lookup, 3, 'best');
+  const worstMatchups = rankedMatchupsByDelta(heroesA, heroesB, lookup, 3, 'worst');
 
   return {
     resolvedOutcome,
