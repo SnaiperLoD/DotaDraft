@@ -351,7 +351,7 @@
 /* Desaturated and darkened — the hero reads as petrified/dead, and the dim
    base is what the pale-blue cracks sit against as a background layer. */
 .portrait-card--shutdown img {
-  filter: saturate(0.5) brightness(0.6) contrast(1.05);
+  filter: saturate(0.5) brightness(0.57) contrast(1.05);
 }
 
 /* Shattered-glass fracture web (procedural inline SVG, BattlePanel.tsx),
