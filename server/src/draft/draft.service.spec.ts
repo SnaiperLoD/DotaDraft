@@ -218,6 +218,20 @@ describe('DraftService', () => {
       expect(excludeArg).toContain(firstPick);
     });
 
+    it('never repeats a hero from one round in the next round\'s pool', async () => {
+      const { service } = makeService();
+      const { seed, pool: round1 } = await service.generatePool();
+      const round1Ids = round1.map((h) => h.id);
+
+      let draft = await service.create(seed, round1[0].id, false);
+      const round2Ids = draft.pool.map((h) => h.id);
+      expect(round2Ids.some((id) => round1Ids.includes(id))).toBe(false);
+
+      draft = await service.pick(draft.id, draft.pool[0].id);
+      const round3Ids = draft.pool.map((h) => h.id);
+      expect(round3Ids.some((id) => round2Ids.includes(id))).toBe(false);
+    });
+
     // Asserted against the last call rather than a fixed index: create()
     // makes two randomPool calls (one to re-derive round 1 and validate the
     // pick, one for round 2), so positional indices would only be tracking

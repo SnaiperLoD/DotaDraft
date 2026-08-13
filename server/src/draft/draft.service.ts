@@ -95,7 +95,16 @@ export class DraftService {
 
     // Same successor-seed rule as pick()'s `draft.seed + pickOrder`, with
     // pickOrder = 1 — round 2's pool has to come out identical either way.
-    const nextPool = (await this.heroService.randomPool([heroId], POOL_SIZE, seed + 1)).map((h) => h.id);
+    // Excludes the WHOLE round-1 pool, not just the picked hero, so no hero
+    // shown this round can reappear next round (user: no repeats between
+    // consecutive draft stages). The picked hero is in `pool`, so it's covered.
+    const nextPool = (
+      await this.heroService.randomPool(
+        pool.map((h) => h.id),
+        POOL_SIZE,
+        seed + 1,
+      )
+    ).map((h) => h.id);
 
     const draft = await this.prisma.draft.create({
       data: {
@@ -196,9 +205,13 @@ export class DraftService {
     const pickedIds = [...draft.heroes.map((h) => h.heroId), heroId];
     const isComplete = pickOrder === ROUNDS;
 
+    // Exclude everything picked AND the pool just shown (poolIds), so a hero
+    // offered this round can't reappear next round — no repeats between
+    // consecutive draft stages (user).
+    const excludeIds = [...new Set([...pickedIds, ...poolIds])];
     const nextPool = isComplete
       ? []
-      : (await this.heroService.randomPool(pickedIds, POOL_SIZE, draft.seed + pickOrder)).map((h) => h.id);
+      : (await this.heroService.randomPool(excludeIds, POOL_SIZE, draft.seed + pickOrder)).map((h) => h.id);
 
     const updated = await this.prisma.draft.update({
       where: { id: draftId },
