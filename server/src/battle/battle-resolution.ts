@@ -46,6 +46,13 @@ export interface BattleResult {
   disadvantages: string[];
   explanation: string[];
   winningHighlights: string[];
+  // Real-winRate rows from the CALLING player's (teamA) perspective, win or
+  // lose — best synergy pairs on your own team, and your best / worst
+  // individual matchups into this opponent's heroes. Empty when no real
+  // matchup data covers the heroes in play (e.g. tests' noData lookup).
+  bestPairs: { heroA: string; heroB: string; winRate: number }[];
+  bestMatchups: { hero: string; vs: string; winRate: number }[];
+  worstMatchups: { hero: string; vs: string; winRate: number }[];
   // Shutdown (common/shutdown.ts) — hero ids on EITHER side flagged this
   // battle, for the client to mark on portraits regardless of which side
   // they're rendering. shutdownNotes are separate narrative lines (not
@@ -341,6 +348,27 @@ function topSynergyPairs(
     }
   }
   return pairs.sort((a, b) => b.winRate - a.winRate).slice(0, limit);
+}
+
+// Your team's WORST individual matchups into the opponent's heroes — the
+// mirror of topMatchupEdges, kept below 0.5 and sorted ascending (most
+// lopsided losing lane first). Surfaced to the client with the raw winRate so
+// a player can see which of their heroes is walking into a bad matchup
+// against THIS specific opponent draft (user request).
+function worstMatchupEdges(
+  team: Hero[],
+  opponent: Hero[],
+  lookup: MatchupLookup,
+  limit: number,
+): { hero: string; vs: string; winRate: number }[] {
+  const edges: { hero: string; vs: string; winRate: number }[] = [];
+  for (const h of team) {
+    for (const o of opponent) {
+      const wr = lookup.getMatchupWinRate(h.id, o.id);
+      if (wr !== null && wr < 0.5) edges.push({ hero: h.name, vs: o.name, winRate: wr });
+    }
+  }
+  return edges.sort((a, b) => a.winRate - b.winRate).slice(0, limit);
 }
 
 // Combines both sources into one ranked top-N (by real winRate) for the
@@ -804,6 +832,13 @@ export function resolveBattle(
     winnerIsA ? 'your draft' : 'the opponent',
   );
 
+  // Always from YOUR draft's (teamA) perspective, independent of who won:
+  // your strongest real synergy pairs, and your best / worst individual
+  // matchups into this specific opponent's heroes.
+  const bestPairs = topSynergyPairs(heroesA, lookup, 3);
+  const bestMatchups = topMatchupEdges(heroesA, heroesB, lookup, 3);
+  const worstMatchups = worstMatchupEdges(heroesA, heroesB, lookup, 3);
+
   return {
     resolvedOutcome,
     advantageDirection,
@@ -812,6 +847,9 @@ export function resolveBattle(
     disadvantages,
     explanation,
     winningHighlights: highlights,
+    bestPairs,
+    bestMatchups,
+    worstMatchups,
     shutdownHeroIds,
     shutdownNotes,
   };

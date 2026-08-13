@@ -1688,3 +1688,33 @@ Underperform-сторона улучшилась реально: Warlock/Troll W
 **Готча, которую стоит помнить:** `simulate-self-play.ts` вызывал `main()` на уровне модуля, поэтому попытка переиспользовать `runSimulation()` из калибровочного скрипта запускала полный прогон на 10 заходов как побочный эффект импорта. Добавлен `require.main === module`, `runSimulation` экспортирован.
 
 **Как повторить проверку:** словарь `tags` в `heroes.json` (`teamfight`, `pick_off`, `poke`, `early_aggression`, `late_game_scaling`, `split_push`, `lane_dominance`, `global_impact`, `summon_based`, `deathball`, `illusion_based`, `roshan_focused`) сверяется с `CUSTOM_TAG_DEFINITIONS` из `shared/dist/customTags.js` — импортировать скомпилированный модуль, а не парсить `.ts` регэкспом (многострочные массивы ломают наивный парс, на этом я один раз уже получил ложные «false» по Broodmother).
+
+### Backlog thoughts from the 2026-08-12 session (user, unresearched)
+
+Four ideas the user raised in passing — recorded verbatim in intent, not yet
+investigated or implemented.
+
+**1. Edge-case drafts & how much role-fit actually moves the score.** A draft
+of four supports (Oracle, Rubick, Dazzle, Tuskar) + Terrorblade came back rated
+Elite, 9/10, which common sense says is a bad draft. Suspicion: role-fit is
+under-weighted in the total score, so a lineup that can't actually fill the
+core positions still scores as if every hero is in its best role. Research task:
+sweep deliberately broken drafts (all-support, no-support, five-carry, etc.) and
+measure how much `assignedRole` / role-fit actually shifts the final score vs how
+much it should.
+
+**2. Carry/support scaling contribution may be built backwards.** Current model
+boosts the carry's own scaling scale. The user's intuition: instead, the AXIS
+weighting should weight scaling more heavily on the core positions and less on
+supports — e.g. scaling weighted something like 35/25/15 across carry/mid/
+offlane, with the remaining ~25% split over the two supports — rather than
+buffing a carry's scaling number after the fact. Reframes scaling as a
+position-weighted team axis, not a per-hero bump.
+
+**3. `saving` axis is probably overrated — diminishing returns.** Intuition:
+once a team has a certain amount of save capacity, stacking more saves on top
+adds little real value. Model it as saturating (concave / capped) rather than
+linear, so the 3rd and 4th save don't count the same as the 1st.
+
+**4. UI: custom humorous error page (404 especially).** Draft a bespoke,
+on-brand funny error page instead of the framework default — 404 in particular.

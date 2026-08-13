@@ -27,6 +27,24 @@ export interface BattleRequest {
   submitterToken: string;
 }
 
+// Real (OpenDota) win-rate rows surfaced in the battle result, always from
+// the calling player's own draft perspective (teamA), win or lose. Unlike the
+// narrative `winningHighlights`, these carry the raw winRate so the client can
+// show the number — a deliberate exception to the file's usual "no raw
+// percentage" convention, by direct user request ("show real best pairs by
+// win rate, best/worst matchups vs the opponent's draft").
+export interface BattlePair {
+  heroA: string;
+  heroB: string;
+  winRate: number;
+}
+
+export interface BattleMatchup {
+  hero: string;
+  vs: string;
+  winRate: number;
+}
+
 export interface BattleResultResponse {
   resolvedOutcome: ResolvedOutcome;
   advantageDirection: AdvantageDirection;
@@ -34,6 +52,12 @@ export interface BattleResultResponse {
   advantages: string[];
   disadvantages: string[];
   explanation: string[];
+  // Your draft's best real synergy pairs (getSynergyWinRate), and your best /
+  // worst individual matchups into THIS opponent's heroes (getMatchupWinRate).
+  // Empty when no real matchup data is available for the heroes in play.
+  bestPairs: BattlePair[];
+  bestMatchups: BattleMatchup[];
+  worstMatchups: BattleMatchup[];
   // Blueprint/10-tech-debt-backlog.md, "Комментарии по конкретным успешным
   // матчапам" — top real matchup/synergy pairs for whichever side actually
   // won this battle, narrative sentences only (see battle-resolution.ts).

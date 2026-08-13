@@ -15,6 +15,11 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+// Real win rate as a whole percent. Battle Mode normally avoids surfacing raw
+// percentages (Accuracy Ceiling), but the matchup/pair rows exist precisely to
+// show the number, by user request — so this is the one place it's shown.
+const pct = (winRate: number) => `${Math.round(winRate * 100)}%`;
+
 // Blueprint/10-tech-debt-backlog.md, "Анимация подбора оппонента" — the
 // real API call resolves near-instantly, so without a floor the roll
 // animation would just flash and disappear rather than read as "finding an
@@ -329,6 +334,62 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
               </ul>
             </div>
           </div>
+
+          {/* Real (OpenDota) win-rate rows, always from your draft's own
+              perspective — your best synergy pairs, and your best/worst
+              individual matchups into this opponent. Only shown when real
+              data covers the heroes in play. */}
+          {((result.bestPairs ?? []).length > 0 ||
+            (result.bestMatchups ?? []).length > 0 ||
+            (result.worstMatchups ?? []).length > 0) && (
+            <div className="battle-matchups">
+              {(result.bestPairs ?? []).length > 0 && (
+                <div className="battle-matchup-col">
+                  <div className="battle-list-heading">{t('battle.bestPairs')}</div>
+                  <ul>
+                    {(result.bestPairs ?? []).map((p, i) => (
+                      <li key={i}>
+                        <span className="battle-matchup-heroes">
+                          {p.heroA} + {p.heroB}
+                        </span>
+                        <span className="battle-matchup-wr battle-matchup-wr--good">{pct(p.winRate)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {(result.bestMatchups ?? []).length > 0 && (
+                <div className="battle-matchup-col">
+                  <div className="battle-list-heading">{t('battle.bestMatchups')}</div>
+                  <ul>
+                    {(result.bestMatchups ?? []).map((m, i) => (
+                      <li key={i}>
+                        <span className="battle-matchup-heroes">
+                          {m.hero} <span className="battle-matchup-vs">{t('battle.matchupVs')}</span> {m.vs}
+                        </span>
+                        <span className="battle-matchup-wr battle-matchup-wr--good">{pct(m.winRate)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {(result.worstMatchups ?? []).length > 0 && (
+                <div className="battle-matchup-col">
+                  <div className="battle-list-heading">{t('battle.worstMatchups')}</div>
+                  <ul>
+                    {(result.worstMatchups ?? []).map((m, i) => (
+                      <li key={i}>
+                        <span className="battle-matchup-heroes">
+                          {m.hero} <span className="battle-matchup-vs">{t('battle.matchupVs')}</span> {m.vs}
+                        </span>
+                        <span className="battle-matchup-wr battle-matchup-wr--bad">{pct(m.winRate)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="battle-ad">
             <AdSlot size="leaderboard" />

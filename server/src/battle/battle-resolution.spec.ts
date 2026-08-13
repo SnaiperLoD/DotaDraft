@@ -207,6 +207,33 @@ describe('resolveBattle', () => {
     });
   });
 
+  describe('real-winRate pairs and matchups (teamA perspective)', () => {
+    it('surfaces your best synergy pair and best/worst matchups into the opponent', () => {
+      const teamA = team(5, {}, 1); // Hero1..Hero5
+      const teamB = team(5, {}, 6); // Hero6..Hero10
+      const lookup: MatchupLookup = {
+        getSynergyWinRate: (a, b) => ((a === 1 && b === 2) || (a === 2 && b === 1) ? 0.62 : null),
+        getMatchupWinRate: (h, o) => {
+          if (h === 1 && o === 6) return 0.7; // your best lane
+          if (h === 3 && o === 7) return 0.3; // your worst lane
+          return null;
+        },
+        getWinRate: () => null,
+      };
+      const result = resolveBattle(teamA, teamB, lookup, () => 0.4);
+      expect(result.bestPairs[0]).toEqual({ heroA: 'Hero1', heroB: 'Hero2', winRate: 0.62 });
+      expect(result.bestMatchups[0]).toEqual({ hero: 'Hero1', vs: 'Hero6', winRate: 0.7 });
+      expect(result.worstMatchups[0]).toEqual({ hero: 'Hero3', vs: 'Hero7', winRate: 0.3 });
+    });
+
+    it('returns empty rows when no real matchup data covers the heroes', () => {
+      const result = resolveBattle(team(5, {}, 1), team(5, {}, 6), noData, () => 0.4);
+      expect(result.bestPairs).toEqual([]);
+      expect(result.bestMatchups).toEqual([]);
+      expect(result.worstMatchups).toEqual([]);
+    });
+  });
+
   it('amplifies rather than adds: a strong counter matchup increases the effective diff beyond the raw power diff', () => {
     const teamA = team(5, { teamfight: 5 });
     const teamB = team(5, { teamfight: 5 }, 6);

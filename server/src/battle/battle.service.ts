@@ -83,6 +83,9 @@ export class BattleService {
       disadvantages: result.disadvantages,
       explanation: result.explanation,
       winningHighlights: result.winningHighlights,
+      bestPairs: result.bestPairs,
+      bestMatchups: result.bestMatchups,
+      worstMatchups: result.worstMatchups,
       shutdownHeroIds: result.shutdownHeroIds,
       shutdownNotes: result.shutdownNotes,
       opponent: {
