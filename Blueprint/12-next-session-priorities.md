@@ -53,3 +53,47 @@ User's request (2026-08-06): heroes who genuinely play both a core and a support
 ## Where to start
 
 Item 1 (tag divergence) is the most consequential but needs the user to pick a strategy (isolate-and-rerun vs. accept-the-noise) before any code — ask first. Items 3-4 (named archetypes, Win Streak) are cheap UI/product asks that just need one scoping decision each — good if the user wants quick wins. Item 2 (pro-match pool) needs one script run before a real decision. Items 5-6 are genuinely open-ended research — don't build infrastructure speculatively for either, cheap validation first.
+
+---
+
+## Session log — 2026-08-13 (long UI + calibration session)
+
+~24 commits, all straight to master. Themes:
+
+**UI / Battle Mode.** Battle Mode promoted to its own screen (enter from
+Evaluation, back button, Evaluation kept mounted so its state survives).
+Opponent roll reworked to settle the real opponent one hero at a time, then
+enlarged to ~60vh, forced onto one row, hero names bolded, page jumps to top
+on result. Evaluation headline reveal synced into one rAF count-up (ring +
+number + stars). Draft pool got pick-commit feedback. Radar enlarged, labels
+made high-contrast, polygon recoloured green. Shutdown reworked twice, landing
+on a procedural pale-blue glowing shattered-glass web.
+
+**Battle results data.** Best/worst matchups + real pairs surfaced with hero
+icons, a "real games (OpenDota)" label, and a baseline→matchup delta. Fixed a
+semantics bug: matchups now rank by delta from the hero's own baseline, not
+absolute win rate (a 51% lane for a 52% hero is now correctly "worst").
+
+**Custom tags (all user-directed, magnitudes NOT yet self-play calibrated).**
+Wired Mechanical (upset + curse immunity), Healer (team durability, scaling
+count), Gold Generator (team scaling). Expanded Global (Clockwerk, KotL, Storm,
+AA, Spirit Breaker, Underlord), Healer (Phoenix, Pugna, Dawnbreaker). Added
+All Melee / All Ranged badges (display-only). Fundamentals/Fundamentals-axis
+and Split Pushers left in backlog.
+
+**Role-fit.** Removed `control` from Carry; added `saving` to both supports
+(not cores); Soft Support (pos 4) additionally gets skirmish_rate +
+resource_efficiency. Broader role-fit rework is backlog item 9.
+
+**Draft.** No hero repeats between consecutive rounds (pool now excludes the
+whole previous pool, not just picked heroes).
+
+**CALIBRATION DEBT (important).** This session added/changed a large number of
+tag memberships, three new tag effects, two badges, and four role-fit axis
+changes — ALL with eyeballed magnitudes. None have been through a self-play
+regression yet. Next serious analytics pass should run the no-crutch harness
+(realWinRateWeight=0, manual overrides empty) and re-check divergence, the way
+Summoning Sickness was calibrated, before trusting any of these numbers.
+Backlog items 1-11 track the rest (map_control inert, badge-effects-in-math,
+percentile 100k+compact-storage, radar axis reorder, draft distribution audit,
+new draft modes).
