@@ -150,6 +150,7 @@
     "bestMatchups": "Your best matchups vs opponent",
     "worstMatchups": "Your worst matchups vs opponent",
     "matchupVs": "vs",
+    "realWinRateNote": "Win rates from real games (OpenDota) — hero's overall → into this opponent.",
     "decidingFactors": "Deciding Factors",
     "advantages": "Advantages",
     "disadvantages": "Disadvantages",

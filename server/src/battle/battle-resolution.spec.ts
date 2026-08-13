@@ -218,12 +218,34 @@ describe('resolveBattle', () => {
           if (h === 3 && o === 7) return 0.3; // your worst lane
           return null;
         },
-        getWinRate: () => null,
+        getWinRate: (h) => (h === 1 ? 0.49 : null), // Hero1's overall baseline
       };
       const result = resolveBattle(teamA, teamB, lookup, () => 0.4);
-      expect(result.bestPairs[0]).toEqual({ heroA: 'Hero1', heroB: 'Hero2', winRate: 0.62 });
-      expect(result.bestMatchups[0]).toEqual({ hero: 'Hero1', vs: 'Hero6', winRate: 0.7 });
-      expect(result.worstMatchups[0]).toEqual({ hero: 'Hero3', vs: 'Hero7', winRate: 0.3 });
+      expect(result.bestPairs[0]).toEqual({
+        heroA: 'Hero1',
+        heroAId: 1,
+        heroB: 'Hero2',
+        heroBId: 2,
+        winRate: 0.62,
+      });
+      // Carries the hero ids (for icons) and the hero's overall win rate (for
+      // the baseline -> matchup delta the client shows).
+      expect(result.bestMatchups[0]).toEqual({
+        hero: 'Hero1',
+        heroId: 1,
+        vs: 'Hero6',
+        vsId: 6,
+        winRate: 0.7,
+        baseWinRate: 0.49,
+      });
+      expect(result.worstMatchups[0]).toEqual({
+        hero: 'Hero3',
+        heroId: 3,
+        vs: 'Hero7',
+        vsId: 7,
+        winRate: 0.3,
+        baseWinRate: null,
+      });
     });
 
     it('returns empty rows when no real matchup data covers the heroes', () => {

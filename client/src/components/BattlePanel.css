@@ -525,11 +525,18 @@
 
 /* ---------- real-winRate matchup / pair rows ---------- */
 
+.battle-matchups-note {
+  margin: var(--sp-4) 0 var(--sp-2);
+  font-size: 12px;
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
 .battle-matchups {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--sp-4);
-  margin-top: var(--sp-4);
+  margin-top: var(--sp-1);
 }
 
 .battle-matchup-col {
@@ -562,6 +569,24 @@
 .battle-matchup-heroes {
   color: var(--ink);
   min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+/* Hero icon + name, so a row shows who's actually in the matchup, not just
+   text names. */
+.battle-hero-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.battle-hero-chip img {
+  border-radius: 3px;
+  flex-shrink: 0;
 }
 
 .battle-matchup-vs {
@@ -573,6 +598,15 @@
   flex-shrink: 0;
   font-variant-numeric: tabular-nums;
   font-weight: 600;
+  white-space: nowrap;
+}
+
+/* The hero's overall win rate, shown before the matchup one as the baseline
+   the "→ 60%" is a swing away from. Muted so the matchup figure stays the
+   focus. */
+.battle-matchup-base {
+  color: var(--ink-faint);
+  font-weight: 400;
 }
 
 .battle-matchup-wr--good {

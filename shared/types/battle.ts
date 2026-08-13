@@ -35,14 +35,24 @@ export interface BattleRequest {
 // win rate, best/worst matchups vs the opponent's draft").
 export interface BattlePair {
   heroA: string;
+  heroAId: number;
   heroB: string;
+  heroBId: number;
   winRate: number;
 }
 
 export interface BattleMatchup {
   hero: string;
+  heroId: number;
   vs: string;
+  vsId: number;
+  // Real matchup win rate of `hero` into `vs` (confidence-shrunk toward 0.5
+  // by sample size, HeroMetaService).
   winRate: number;
+  // `hero`'s overall real win rate, for the "baseline → matchup" delta the
+  // client shows (e.g. 49% overall → 60% into this opponent). null when the
+  // snapshot has no overall win rate for the hero.
+  baseWinRate: number | null;
 }
 
 export interface BattleResultResponse {

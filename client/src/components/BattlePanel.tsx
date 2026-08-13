@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 import ScreenFlash from './ScreenFlash';
 import OpponentRollAnimation from './OpponentRollAnimation';
 import { ROLES } from 'shared';
-import type { BattleResultResponse, BattleOpponentHero } from 'shared';
+import type { BattleResultResponse, BattleOpponentHero, BattleMatchup } from 'shared';
 import { api } from '../api/client';
 import { getSubmitterToken } from '../utils/submitterToken';
-import { heroPortraitUrl } from '../utils/heroIcon';
+import { heroPortraitUrl, heroIconUrl } from '../utils/heroIcon';
 import type { DraftHeroView } from '../api/types';
 import AdSlot from './AdSlot';
 import './BattlePanel.css';
@@ -19,6 +19,47 @@ function sleep(ms: number): Promise<void> {
 // percentages (Accuracy Ceiling), but the matchup/pair rows exist precisely to
 // show the number, by user request — so this is the one place it's shown.
 const pct = (winRate: number) => `${Math.round(winRate * 100)}%`;
+
+function HeroChip({ heroId, name }: { heroId: number; name: string }) {
+  return (
+    <span className="battle-hero-chip">
+      <img src={heroIconUrl(heroId)} alt="" width={22} height={22} loading="lazy" />
+      <span>{name}</span>
+    </span>
+  );
+}
+
+// One column of your-hero vs their-hero rows with the real win rate. `good`
+// colours the number (a matchup you win vs one you lose). Each row shows the
+// hero's overall real win rate then the matchup one — "49% → 60%" — so the
+// swing into this specific opponent is visible, not just the absolute number.
+function MatchupList({ heading, rows, good }: { heading: string; rows: BattleMatchup[]; good: boolean }) {
+  const { t } = useTranslation();
+  return (
+    <div className="battle-matchup-col">
+      <div className="battle-list-heading">{heading}</div>
+      <ul>
+        {rows.map((m, i) => (
+          <li key={i}>
+            <span className="battle-matchup-heroes">
+              <HeroChip heroId={m.heroId} name={m.hero} />
+              <span className="battle-matchup-vs">{t('battle.matchupVs')}</span>
+              <HeroChip heroId={m.vsId} name={m.vs} />
+            </span>
+            <span className="battle-matchup-wr">
+              {m.baseWinRate !== null && (
+                <span className="battle-matchup-base">{pct(m.baseWinRate)} → </span>
+              )}
+              <span className={good ? 'battle-matchup-wr--good' : 'battle-matchup-wr--bad'}>
+                {pct(m.winRate)}
+              </span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 // Blueprint/10-tech-debt-backlog.md, "Анимация подбора оппонента" — the
 // real API call resolves near-instantly, so without a floor the roll
@@ -342,53 +383,34 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
           {((result.bestPairs ?? []).length > 0 ||
             (result.bestMatchups ?? []).length > 0 ||
             (result.worstMatchups ?? []).length > 0) && (
-            <div className="battle-matchups">
-              {(result.bestPairs ?? []).length > 0 && (
-                <div className="battle-matchup-col">
-                  <div className="battle-list-heading">{t('battle.bestPairs')}</div>
-                  <ul>
-                    {(result.bestPairs ?? []).map((p, i) => (
-                      <li key={i}>
-                        <span className="battle-matchup-heroes">
-                          {p.heroA} + {p.heroB}
-                        </span>
-                        <span className="battle-matchup-wr battle-matchup-wr--good">{pct(p.winRate)}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {(result.bestMatchups ?? []).length > 0 && (
-                <div className="battle-matchup-col">
-                  <div className="battle-list-heading">{t('battle.bestMatchups')}</div>
-                  <ul>
-                    {(result.bestMatchups ?? []).map((m, i) => (
-                      <li key={i}>
-                        <span className="battle-matchup-heroes">
-                          {m.hero} <span className="battle-matchup-vs">{t('battle.matchupVs')}</span> {m.vs}
-                        </span>
-                        <span className="battle-matchup-wr battle-matchup-wr--good">{pct(m.winRate)}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {(result.worstMatchups ?? []).length > 0 && (
-                <div className="battle-matchup-col">
-                  <div className="battle-list-heading">{t('battle.worstMatchups')}</div>
-                  <ul>
-                    {(result.worstMatchups ?? []).map((m, i) => (
-                      <li key={i}>
-                        <span className="battle-matchup-heroes">
-                          {m.hero} <span className="battle-matchup-vs">{t('battle.matchupVs')}</span> {m.vs}
-                        </span>
-                        <span className="battle-matchup-wr battle-matchup-wr--bad">{pct(m.winRate)}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
+            <>
+              <p className="battle-matchups-note">{t('battle.realWinRateNote')}</p>
+              <div className="battle-matchups">
+                {(result.bestPairs ?? []).length > 0 && (
+                  <div className="battle-matchup-col">
+                    <div className="battle-list-heading">{t('battle.bestPairs')}</div>
+                    <ul>
+                      {(result.bestPairs ?? []).map((p, i) => (
+                        <li key={i}>
+                          <span className="battle-matchup-heroes">
+                            <HeroChip heroId={p.heroAId} name={p.heroA} />
+                            <span className="battle-matchup-vs">+</span>
+                            <HeroChip heroId={p.heroBId} name={p.heroB} />
+                          </span>
+                          <span className="battle-matchup-wr battle-matchup-wr--good">{pct(p.winRate)}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {(result.bestMatchups ?? []).length > 0 && (
+                  <MatchupList heading={t('battle.bestMatchups')} rows={result.bestMatchups ?? []} good />
+                )}
+                {(result.worstMatchups ?? []).length > 0 && (
+                  <MatchupList heading={t('battle.worstMatchups')} rows={result.worstMatchups ?? []} good={false} />
+                )}
+              </div>
+            </>
           )}
 
           <div className="battle-ad">

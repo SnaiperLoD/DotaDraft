@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import type { Hero, HeroEvaluationValues } from 'shared';
+import type { Hero, HeroEvaluationValues, BattlePair, BattleMatchup } from 'shared';
 import { roleAwareAxisValue, supportMiscastMultiplier } from '../common/role-fit';
 import { hardCarryAxisMultipliers, isHardCarry } from '../common/hard-carry';
 import { utilityStackAxisMultipliers, utilityStackBreadth } from '../common/utility-stacking';
@@ -50,9 +50,9 @@ export interface BattleResult {
   // lose — best synergy pairs on your own team, and your best / worst
   // individual matchups into this opponent's heroes. Empty when no real
   // matchup data covers the heroes in play (e.g. tests' noData lookup).
-  bestPairs: { heroA: string; heroB: string; winRate: number }[];
-  bestMatchups: { hero: string; vs: string; winRate: number }[];
-  worstMatchups: { hero: string; vs: string; winRate: number }[];
+  bestPairs: BattlePair[];
+  bestMatchups: BattleMatchup[];
+  worstMatchups: BattleMatchup[];
   // Shutdown (common/shutdown.ts) — hero ids on EITHER side flagged this
   // battle, for the client to mark on portraits regardless of which side
   // they're rendering. shutdownNotes are separate narrative lines (not
@@ -319,32 +319,46 @@ export function bestMatchupEdge(
 // option in an upset) — these two only collect genuinely advantageous
 // (winRate > 0.5) pairs, since the point here is "what actually worked",
 // not "the closest thing to an edge available."
+function matchupRow(h: Hero, o: Hero, winRate: number, lookup: MatchupLookup): BattleMatchup {
+  return {
+    hero: h.name,
+    heroId: h.id,
+    vs: o.name,
+    vsId: o.id,
+    winRate,
+    baseWinRate: lookup.getWinRate(h.id),
+  };
+}
+
 function topMatchupEdges(
   team: Hero[],
   opponent: Hero[],
   lookup: MatchupLookup,
   limit: number,
-): { hero: string; vs: string; winRate: number }[] {
-  const edges: { hero: string; vs: string; winRate: number }[] = [];
+): BattleMatchup[] {
+  const edges: BattleMatchup[] = [];
   for (const h of team) {
     for (const o of opponent) {
       const wr = lookup.getMatchupWinRate(h.id, o.id);
-      if (wr !== null && wr > 0.5) edges.push({ hero: h.name, vs: o.name, winRate: wr });
+      if (wr !== null && wr > 0.5) edges.push(matchupRow(h, o, wr, lookup));
     }
   }
   return edges.sort((a, b) => b.winRate - a.winRate).slice(0, limit);
 }
 
-function topSynergyPairs(
-  team: Hero[],
-  lookup: MatchupLookup,
-  limit: number,
-): { heroA: string; heroB: string; winRate: number }[] {
-  const pairs: { heroA: string; heroB: string; winRate: number }[] = [];
+function topSynergyPairs(team: Hero[], lookup: MatchupLookup, limit: number): BattlePair[] {
+  const pairs: BattlePair[] = [];
   for (let i = 0; i < team.length; i++) {
     for (let j = i + 1; j < team.length; j++) {
       const wr = lookup.getSynergyWinRate(team[i].id, team[j].id);
-      if (wr !== null && wr > 0.5) pairs.push({ heroA: team[i].name, heroB: team[j].name, winRate: wr });
+      if (wr !== null && wr > 0.5)
+        pairs.push({
+          heroA: team[i].name,
+          heroAId: team[i].id,
+          heroB: team[j].name,
+          heroBId: team[j].id,
+          winRate: wr,
+        });
     }
   }
   return pairs.sort((a, b) => b.winRate - a.winRate).slice(0, limit);
@@ -360,12 +374,12 @@ function worstMatchupEdges(
   opponent: Hero[],
   lookup: MatchupLookup,
   limit: number,
-): { hero: string; vs: string; winRate: number }[] {
-  const edges: { hero: string; vs: string; winRate: number }[] = [];
+): BattleMatchup[] {
+  const edges: BattleMatchup[] = [];
   for (const h of team) {
     for (const o of opponent) {
       const wr = lookup.getMatchupWinRate(h.id, o.id);
-      if (wr !== null && wr < 0.5) edges.push({ hero: h.name, vs: o.name, winRate: wr });
+      if (wr !== null && wr < 0.5) edges.push(matchupRow(h, o, wr, lookup));
     }
   }
   return edges.sort((a, b) => a.winRate - b.winRate).slice(0, limit);
