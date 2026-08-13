@@ -12,22 +12,22 @@ describe('roleFitValue', () => {
   });
 
   it('returns the raw value unchanged when the hero is at or below the baseline (5)', () => {
-    expect(roleFitValue('control', 'Carry', 5)).toBe(5);
-    expect(roleFitValue('control', 'Carry', 3)).toBe(3);
+    expect(roleFitValue('initiating', 'Carry', 5)).toBe(5);
+    expect(roleFitValue('initiating', 'Carry', 3)).toBe(3);
   });
 
   it('boosts a relevant axis proportionally to how far above baseline it already is', () => {
     // 8 is 3 above baseline (5); boost = 0.3 * 3 = 0.9 -> 8.9
-    expect(roleFitValue('control', 'Carry', 8)).toBe(8.9);
+    expect(roleFitValue('initiating', 'Carry', 8)).toBe(8.9);
   });
 
   it('caps the boosted value at 10', () => {
-    expect(roleFitValue('control', 'Carry', 10)).toBe(10);
+    expect(roleFitValue('initiating', 'Carry', 10)).toBe(10);
   });
 
-  it('applies to both axes mapped for a role', () => {
-    expect(roleFitValue('control', 'Carry', 9)).toBeGreaterThan(9);
+  it('boosts initiating for Carry but no longer control (control removed from Carry)', () => {
     expect(roleFitValue('initiating', 'Carry', 9)).toBeGreaterThan(9);
+    expect(roleFitValue('control', 'Carry', 9)).toBe(9);
   });
 
   it('boosts initiating for Offlane alongside map_control/mobility, not for a role outside its map', () => {
@@ -83,7 +83,7 @@ describe('roleFitValue', () => {
   // ever exercised ONE axis for Mid and ONE of the 4 axes for Offlane/Support
   // — Mid was never tested with an explicit 'Mid' role at all (it happens to
   // share the exact axis set with Carry, so nothing forced a distinction).
-  it('boosts both control and initiating for Mid (same axis set as Carry, but must be verified under its own role string)', () => {
+  it('boosts both control and initiating for Mid (control kept for Mid even though it was removed from Carry)', () => {
     expect(roleFitValue('control', 'Mid', 8)).toBeGreaterThan(8);
     expect(roleFitValue('initiating', 'Mid', 8)).toBeGreaterThan(8);
   });
@@ -121,7 +121,8 @@ describe('isRoleFitAxis', () => {
   });
 
   it('returns true only for axes relevant to the given role', () => {
-    expect(isRoleFitAxis('control', 'Carry')).toBe(true);
+    expect(isRoleFitAxis('initiating', 'Carry')).toBe(true);
+    expect(isRoleFitAxis('control', 'Carry')).toBe(false); // removed from Carry
     expect(isRoleFitAxis('saving', 'Carry')).toBe(false);
   });
 
@@ -220,10 +221,11 @@ describe('roleAwareAxisValue', () => {
   });
 
   it('falls back to the old aggregate + heuristic-boost mechanism when no real per-role data exists (no_info)', () => {
-    // makeHero defaults every role to no_info.
-    const hero = makeHero({ id: 2, name: 'Y', evaluation_values: { ...DEFAULT_EVALUATION_VALUES, control: 8 } });
+    // makeHero defaults every role to no_info. `initiating` (still a Carry
+    // role-fit axis) exercises the boost; control no longer would.
+    const hero = makeHero({ id: 2, name: 'Y', evaluation_values: { ...DEFAULT_EVALUATION_VALUES, initiating: 8 } });
     // roleFitValue's own boost formula: 8 is 3 above baseline(5) -> +0.9 -> 8.9.
-    expect(roleAwareAxisValue('control', hero, 'Carry')).toBe(8.9);
+    expect(roleAwareAxisValue('initiating', hero, 'Carry')).toBe(8.9);
   });
 
   it('falls back to the aggregate unchanged when assignedRole is null (no position to look up)', () => {

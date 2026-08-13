@@ -1739,3 +1739,33 @@ real drafts which axes a 5-melee team and a 5-ranged team actually sag/spike
 on (their real win rate and axis profiles vs mixed comps), and set the badge
 numbers — and, if badges ever get wired into battle math, the effect
 magnitudes — from that instead of the eyeballed values.
+
+**7. Reorder the radar axes by correlation so the shape is less jagged.**
+Research which axes tend to correlate / sit near each other in value across
+real drafts, then reorder the AxisRadar axis sequence so highly-correlated (and
+typically high-together) axes are adjacent. Goal: a smoother, more readable
+polygon where big values cluster instead of the current arbitrary order that
+makes every draft look spiky.
+
+**8. Draft hero distribution — verify the core/support guarantee actually works.**
+User reports it feels like the system that's supposed to guarantee a draftable
+spread of cores and supports across the pool isn't working. Audit the pool
+generation (draft.service.ts / generatePool) against the intended guarantee,
+with a repeatable check over many seeds, and fix if the distribution is off.
+
+**9. Rework role-fit bonuses in general.** Beyond the specific carry/control
+fix, the whole role-fit bonus scheme needs a pass: which axes a role should and
+shouldn't be rewarded on, and by how much. Tie in with backlog items 1 (role-fit
+weight on the total score) and 2 (position-weighted scaling axis).
+
+**10. New draft modes (future functionality).** (a) Constrained/buffed draft —
+a mode with a rule or bonus in effect, e.g. draft only Dire heroes. (b) A
+Captains-Mode-style draft where an AI drafts against the player pick by pick,
+rather than facing a pre-recorded/pooled opponent.
+
+**11. New badge: Split Pushers.** Research candidate heroes (strong split-push
+identity — e.g. Nature's Prophet, Lycan, Anti-Mage, Tinker, Phantom Lancer,
+Broodmother, Lone Druid, Terrorblade…) and a proposed effect for a Split
+Pushers achievement, in the same display-only-for-now posture as the other
+badges (client/src/data/badges.ts). Numbers to be validated the same way as
+All Melee / All Ranged (backlog item 6).

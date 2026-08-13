@@ -64,7 +64,12 @@ import { hasRoleEvaluationData, resolveEvaluationValues } from 'shared';
 // at n=17-37, |r|<0.2 throughout — the map built from that pass is the one
 // this replaces.
 const ROLE_AXES: Record<string, string[]> = {
-  Carry: ['control', 'initiating'],
+  // `control` removed from Carry 2026-08-13 (direct user call): a carry
+  // shouldn't earn a role-fit reward on control — it's not what the role is
+  // for, regardless of the weak positive correlation the round-3 research
+  // found. Kept for Mid, which is a genuine control/initiation role. The
+  // broader role-fit-bonus rework is backlog item 9.
+  Carry: ['initiating'],
   Mid: ['initiating', 'control'],
   Offlane: ['map_control', 'initiating', 'mobility'],
   'Hard Support': ['tempo', 'camp_stacking', 'mobility', 'map_control'],

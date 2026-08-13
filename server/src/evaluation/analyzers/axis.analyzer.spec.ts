@@ -56,8 +56,9 @@ describe('createAxisAnalyzer', () => {
   });
 
   it('applies a role-fit boost and mentions it when a hero is assigned a role its strong axis matches', () => {
-    const carry = heroWithAxis(1, 'Anti-Mage', 'control', 8);
-    const analyzer = createAxisAnalyzer('control', 'Control');
+    // `initiating` is a Carry role-fit axis; `control` was removed from Carry.
+    const carry = heroWithAxis(1, 'Anti-Mage', 'initiating', 8);
+    const analyzer = createAxisAnalyzer('initiating', 'Initiating');
 
     const unassigned = analyzer.analyze(picks([carry]));
     const assigned = analyzer.analyze(picks([carry], 'Carry'));
