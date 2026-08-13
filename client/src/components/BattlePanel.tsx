@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ScreenFlash from './ScreenFlash';
 import OpponentRollAnimation from './OpponentRollAnimation';
@@ -13,6 +13,59 @@ import './BattlePanel.css';
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// Procedurally generated shattered-glass web for the shutdown overlay — radial
+// fractures from an off-centre impact plus a few jittered concentric rings
+// connecting them, the way real glass shatters. Generated (seeded by heroId so
+// it's stable per hero and varies between them) rather than hand-drawn, and it
+// covers the whole portrait; BattlePanel.css gives the strokes their pale-blue
+// glow. viewBox is the portrait's 130x81.
+function mulberry32(seed: number): () => number {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function shatterPaths(heroId: number): string[] {
+  const W = 130;
+  const H = 81;
+  const rng = mulberry32(heroId * 2654435761);
+  const cx = W * (0.4 + rng() * 0.2);
+  const cy = H * (0.38 + rng() * 0.2);
+  const spokes = 11;
+  const maxR = Math.hypot(W, H) * 0.66;
+  const angles = Array.from({ length: spokes }, (_, i) => (i / spokes) * Math.PI * 2 + (rng() - 0.5) * 0.55);
+  const fmt = (p: number[]) => `${p[0].toFixed(1)} ${p[1].toFixed(1)}`;
+
+  // Radial cracks: walk out from the impact with a little angular wander.
+  const radial = angles.map((a) => {
+    const pts: number[][] = [[cx, cy]];
+    let ca = a;
+    for (let s = 1; s <= 4; s++) {
+      const r = maxR * (s / 4);
+      ca = a + (rng() - 0.5) * 0.55;
+      pts.push([cx + Math.cos(ca) * r, cy + Math.sin(ca) * r]);
+    }
+    return pts;
+  });
+  const paths = radial.map((pts) => `M${pts.map(fmt).join(' L')}`);
+
+  // Concentric rings joining adjacent radials at a few radii.
+  for (const rf of [0.32, 0.6, 0.88]) {
+    const ring = radial.map((pts) => {
+      const target = maxR * rf;
+      let best = pts[1];
+      for (const p of pts) if (Math.hypot(p[0] - cx, p[1] - cy) <= target) best = p;
+      return [best[0] + (rng() - 0.5) * W * 0.06, best[1] + (rng() - 0.5) * H * 0.06];
+    });
+    paths.push(`M${ring.map(fmt).join(' L')} Z`);
+  }
+  return paths;
 }
 
 // Real win rate as a whole percent. Battle Mode normally avoids surfacing raw
@@ -88,24 +141,21 @@ function PortraitCard({
   isShutdown?: boolean;
 }) {
   const { t } = useTranslation();
+  const cracks = useMemo(() => shatterPaths(heroId), [heroId]);
   return (
     <div className={`portrait-card${isShutdown ? ' portrait-card--shutdown' : ''}`}>
       <img src={heroPortraitUrl(heroId)} alt={name} width={130} height={81} />
-      {/* Cracked-stone overlay when this hero is shut down: fracture lines
-          that run outward from a central impact across the portrait (the
-          mains draw first, the branches after — see BattlePanel.css). */}
+      {/* Shattered-glass overlay when this hero is shut down: a pale-blue,
+          softly glowing fracture web spread across the whole portrait (procedural,
+          BattlePanel.tsx; glow + draw-in in BattlePanel.css). */}
       {isShutdown && (
         <svg className="portrait-crack" viewBox="0 0 130 81" preserveAspectRatio="none" aria-hidden="true">
           <g className="portrait-crack-lines">
-            <path d="M62 40 L56 20 L50 4" />
-            <path d="M62 40 L95 33 L118 27" />
-            <path d="M62 40 L71 65 L77 81" />
-            <path d="M62 40 L37 51 L14 60" />
-            <path d="M56 20 L42 13" />
-            <path d="M95 33 L104 49" />
-            <path d="M71 65 L86 74" />
-            <path d="M37 51 L31 34" />
+            {cracks.map((d, i) => (
+              <path key={i} d={d} />
+            ))}
           </g>
+          {/* pathLength intentionally not used — see BattlePanel.css crack-appear. */}
         </svg>
       )}
       <div className="name">{name}</div>
