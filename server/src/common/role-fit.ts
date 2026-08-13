@@ -78,7 +78,21 @@ const ROLE_AXES: Record<string, string[]> = {
   // role-fit bonus for it. (Round-3 research had dropped saving at r=0.14; the
   // user's role intent overrides that weak signal.)
   'Hard Support': ['tempo', 'camp_stacking', 'mobility', 'map_control', 'saving'],
-  'Soft Support': ['tempo', 'camp_stacking', 'mobility', 'map_control', 'saving'],
+  // Soft Support (position 4) diverges from Hard Support 2026-08-13 (user):
+  // the roaming pos-4 also earns a role-fit bonus for skirmish_rate (they're
+  // in the fights/ganks) and resource_efficiency (more farm-hungry than a
+  // pos-5). Note the real-per-role-data path (roleAwareAxisValue) still
+  // collapses both supports to the single 'Support' bucket — this divergence
+  // only affects the heuristic fallback for no_info heroes.
+  'Soft Support': [
+    'tempo',
+    'camp_stacking',
+    'mobility',
+    'map_control',
+    'saving',
+    'skirmish_rate',
+    'resource_efficiency',
+  ],
 };
 
 const BASELINE = 5;

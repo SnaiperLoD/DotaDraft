@@ -37,7 +37,7 @@ describe('roleFitValue', () => {
     expect(roleFitValue('initiating', 'Hard Support', 8)).toBe(8);
   });
 
-  it('applies the SAME axes to Hard Support and Soft Support (round 3 — the 4-way classifier never distinguished them)', () => {
+  it('boosts the shared support axes for both Hard and Soft Support', () => {
     expect(roleFitValue('tempo', 'Hard Support', 8)).toBeGreaterThan(8);
     expect(roleFitValue('tempo', 'Soft Support', 8)).toBeGreaterThan(8);
     expect(roleFitValue('map_control', 'Hard Support', 8)).toBeGreaterThan(8);
@@ -49,6 +49,13 @@ describe('roleFitValue', () => {
     // Cores must NOT get a saving role-fit bonus.
     expect(roleFitValue('saving', 'Carry', 8)).toBe(8);
     expect(roleFitValue('saving', 'Mid', 8)).toBe(8);
+  });
+
+  it('boosts skirmish_rate/resource_efficiency for Soft Support (pos 4) but not Hard Support (pos 5)', () => {
+    expect(roleFitValue('skirmish_rate', 'Soft Support', 8)).toBeGreaterThan(8);
+    expect(roleFitValue('resource_efficiency', 'Soft Support', 8)).toBeGreaterThan(8);
+    expect(roleFitValue('skirmish_rate', 'Hard Support', 8)).toBe(8);
+    expect(roleFitValue('resource_efficiency', 'Hard Support', 8)).toBe(8);
   });
 
   it('does not boost an unrecognized role string', () => {
