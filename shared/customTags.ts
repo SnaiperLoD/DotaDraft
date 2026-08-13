@@ -208,6 +208,13 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
       // Added 2026-08-13 (user): Luminosity heals allies on crit; Solar
       // Guardian heals in its area.
       'Dawnbreaker',
+      // Added 2026-08-13 session-2 (user): Press The Attack applies a strong
+      // heal-over-time (and dispel) to an ally.
+      'Legion Commander',
+      // Added 2026-08-13 session-2 (user): under Spirit Form (ult), Illuminate
+      // becomes a wave that heals allies — a real ally heal, not just Chakra
+      // Magic's mana restore.
+      'Keeper of the Light',
     ],
   },
   // Gold Generator — added 2026-08-12 (user-approved research batch). Team
@@ -353,7 +360,12 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
     revealable: false,
     description:
       'Personal invisibility — a real strength no axis measures. +6% personal power, +8% personal map control, active even solo. 2+ on the team: -durability/-teamfight each, scaling with stack count (too many pick-off specialists, not enough frontline).',
-    heroNames: ['Riki', 'Weaver', 'Clinkz', 'Bounty Hunter', 'Nyx Assassin'],
+    // 'Treant Protector' added 2026-08-13 session-2 (user): Nature's Guise
+    // grants tree-adjacent invisibility. NOTE calibration concern — Treant was
+    // already ~+17pp OVERRATED in the no-crutch self-play run, and Unseen's
+    // solo effect is +6% power, which pushes him further over. Flagged, not
+    // blocked (user call); revisit if the next self-play pass regresses on him.
+    heroNames: ['Riki', 'Weaver', 'Clinkz', 'Bounty Hunter', 'Nyx Assassin', 'Treant Protector'],
   },
   {
     name: 'Army of Clones',

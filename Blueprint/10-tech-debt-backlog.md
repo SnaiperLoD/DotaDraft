@@ -1769,3 +1769,45 @@ Broodmother, Lone Druid, Terrorblade…) and a proposed effect for a Split
 Pushers achievement, in the same display-only-for-now posture as the other
 badges (client/src/data/badges.ts). Numbers to be validated the same way as
 All Melee / All Ranged (backlog item 6).
+
+## Backlog thoughts from the 2026-08-13 session-2 (user, unresearched)
+
+**12. Creature-type tags: Void, Undead, Demon.** New lore/creature-type custom
+tags in the same family as the existing ones. Membership + effect TBD — needs a
+roster pass per type (Undead: e.g. Undying, Clinkz, Visage, Lich, Necrophos,
+Abaddon, Pugna, Death Prophet…; Demon: e.g. Shadow Fiend, Doom, Terrorblade,
+Legion Commander, Chaos Knight…; Void: Void Spirit, Faceless Void, Dark
+Willow?…). Same display-only-until-validated posture as the badges.
+
+**13. Active-jungler counter-synergy tag (Chen/Enchantress class).** User: two
+heroes whose primary early role is jungle farming compete for the same camps —
+should carry a counter-synergy penalty when stacked. First data check (done
+2026-08-13): Chen (49.2% overall) + Enchantress (48.6%) have NO co-pick synergy
+entry in hero-meta.json at all — the pair is below MIN_GAMES, i.e. they
+essentially never appear together in real high-level games, which is itself the
+signal. NEXT STEP (unstarted): research which heroes most often take the jungle
+as their PRIMARY early farm source (OpenDota lane_role = 4 / jungle share), to
+define the tag's membership before designing the penalty. presumed_positions
+only has Carry/Mid/Offlane/Support — no jungle bucket — so this needs a fresh
+fetch, same technique as research-role-fit-gpm-rank.ts.
+
+**14. Draft mode "Pure Draft" (Чистый Драфт).** A mode that disables ALL custom
+tag EFFECTS and their DISPLAY — a plain hero-data draft on the calibrated
+model alone. IMPORTANT exception: the always-hidden "mechanical crutch" tags
+that exist to fix per-hero variance/winRate calibration (Summoning Sickness,
+Tempo Monster, Agility Crusher, and any future calibration-only hidden tag)
+STAY ON — they are part of the model's correction layer, not the flavour combo
+layer this mode strips. So the toggle is "visible/revealable flavour tags off,
+calibration-only hidden tags on." New draft-mode plumbing (ties into item 10).
+
+**15. New tag "Spirits" — feasibility ASSESSED, see session log 2026-08-13.**
+Storm/Ember/Earth/Void Spirit; hidden, revealable, legendary; active at 2+;
+reveal at draft time when a 2nd Spirit is offered while one is already picked.
+Effect: amplify positive synergies (+3% synergy axis per spirit, +2% pairwise
+synergy strength). Feasible but NOT trivial — needs a new synergy-amplification
+effect dimension (synergy is not an evaluation_values axis, so the existing
+axisMultiplier can't reach it) wired into battle-resolution's synergyBonus, plus
+a decision on whether it also affects Evaluation's synergy analyzer (which does
+not currently consume tag effects at all), plus a new draft-time reveal trigger
+(reveal against the offered pool, not just the committed team). Pending build
+go-ahead.
