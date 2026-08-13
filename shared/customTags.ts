@@ -205,6 +205,9 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
       // Added 2026-08-13 (user): Life Drain restores health (ally-targetable
       // with Aghanim's).
       'Pugna',
+      // Added 2026-08-13 (user): Luminosity heals allies on crit; Solar
+      // Guardian heals in its area.
+      'Dawnbreaker',
     ],
   },
   // Gold Generator — added 2026-08-12 (user-approved research batch). Team
