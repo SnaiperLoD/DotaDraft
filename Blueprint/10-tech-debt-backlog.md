@@ -1718,3 +1718,14 @@ linear, so the 3rd and 4th save don't count the same as the 1st.
 
 **4. UI: custom humorous error page (404 especially).** Draft a bespoke,
 on-brand funny error page instead of the framework default — 404 in particular.
+
+**5. UI: `The Fundamentals` should name the axis it boosts in a given draft.**
+On the Evaluation screen (Active Combos), Fundamentals shows only the generic
+"boosts the team's weakest axis (or axes)". For a concrete draft it should say
+WHICH axis/axes it actually lifted — i.e. the resolved weakest raw axes for
+this team (1 axis at 2 carriers, 2 at 3, all 4 at 4+, per blessingEffectsFor).
+Needs the server to surface the resolved axes: the Active Combos text is
+currently the static shared `description`, so evaluation.service would compute
+the boosted axes (same weakest-axis ranking custom-tags.ts uses) and pass them
+through for the client to substitute, the way count-based tags already get
+dynamic magnitude text.
