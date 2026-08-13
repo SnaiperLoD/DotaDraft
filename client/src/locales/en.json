@@ -109,8 +109,8 @@
     "verdict": {
       "dire": "Dire",
       "weak": "Shaky",
-      "even": "Even",
-      "strong": "Strong",
+      "even": "Weak",
+      "strong": "Workable",
       "elite": "Elite"
     },
     "radarTitle": "Axis profile",

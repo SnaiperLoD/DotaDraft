@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import ScreenFlash from './ScreenFlash';
 import OpponentRollAnimation from './OpponentRollAnimation';
@@ -13,6 +13,23 @@ import './BattlePanel.css';
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function escapeRegExp(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// Bold every hero name that appears in a battle-outcome sentence (user
+// request): the portraits in the two drafts are already bold, so the write-up
+// should match. `heroNames` is both teams' heroes. Longest names first so a
+// multi-word name (e.g. "Ancient Apparition") wins over a shorter name that is
+// a substring of it before the shorter one can split it.
+function boldHeroNames(text: string, heroNames: string[]): ReactNode {
+  if (heroNames.length === 0) return text;
+  const unique = [...new Set(heroNames)].sort((a, b) => b.length - a.length);
+  const nameSet = new Set(unique);
+  const parts = text.split(new RegExp(`(${unique.map(escapeRegExp).join('|')})`, 'g'));
+  return parts.map((part, i) => (nameSet.has(part) ? <strong key={i}>{part}</strong> : part));
 }
 
 // Procedurally generated shattered-glass web for the shutdown overlay — radial
@@ -260,6 +277,14 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
   // fresh "Fight Again" gets a clean roll.
   const [fightSeq, setFightSeq] = useState(0);
 
+  // Both drafts' hero names, for bolding them in the outcome write-up (same as
+  // the portraits). Empty until a fight resolves.
+  const battleHeroNames = useMemo(
+    () =>
+      result ? [...heroes.map((h) => h.hero.name), ...result.opponent.heroes.map((h) => h.heroName)] : [],
+    [heroes, result],
+  );
+
   const handleFight = async () => {
     setFightSeq((s) => s + 1);
     setLoading(true);
@@ -399,13 +424,15 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
             shutdownHeroIds={result.shutdownHeroIds}
           />
 
+          {/* Outcome write-up: hero names bolded via boldHeroNames the same way
+              the portraits above are already bold (battleHeroNames, user request). */}
           <div className="battle-lists">
             {result.shutdownNotes.length > 0 && (
               <div className="battle-list-block battle-list-block--shutdown">
                 <div className="battle-list-heading">{t('battle.shutdown')}</div>
                 <ul>
                   {result.shutdownNotes.map((n, i) => (
-                    <li key={i}>{n}</li>
+                    <li key={i}>{boldHeroNames(n, battleHeroNames)}</li>
                   ))}
                 </ul>
               </div>
@@ -416,7 +443,7 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
                 <div className="battle-list-heading">{t('battle.decidingFactors')}</div>
                 <ul>
                   {result.winningHighlights.map((h, i) => (
-                    <li key={i}>{h}</li>
+                    <li key={i}>{boldHeroNames(h, battleHeroNames)}</li>
                   ))}
                 </ul>
               </div>
@@ -427,7 +454,7 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
                 <div className="battle-list-heading">{t('battle.advantages')}</div>
                 <ul>
                   {result.advantages.map((a, i) => (
-                    <li key={i}>{a}</li>
+                    <li key={i}>{boldHeroNames(a, battleHeroNames)}</li>
                   ))}
                 </ul>
               </div>
@@ -438,7 +465,7 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
                 <div className="battle-list-heading">{t('battle.disadvantages')}</div>
                 <ul>
                   {result.disadvantages.map((d, i) => (
-                    <li key={i}>{d}</li>
+                    <li key={i}>{boldHeroNames(d, battleHeroNames)}</li>
                   ))}
                 </ul>
               </div>
@@ -448,7 +475,7 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
               <div className="battle-list-heading">{t('battle.explanation')}</div>
               <ul>
                 {result.explanation.map((line, i) => (
-                  <li key={i}>{line}</li>
+                  <li key={i}>{boldHeroNames(line, battleHeroNames)}</li>
                 ))}
               </ul>
             </div>
