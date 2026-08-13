@@ -156,6 +156,9 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
       'Keeper of the Light',
       'Storm Spirit',
       'Ancient Apparition',
+      // Added 2026-08-13 (user): Charge of Darkness is a global-range charge
+      // across the whole map.
+      'Spirit Breaker',
     ],
   },
   // Mechanical — added 2026-08-12 (user-approved research batch). Lore theme:
