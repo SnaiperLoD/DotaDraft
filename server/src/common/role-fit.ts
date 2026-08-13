@@ -109,6 +109,20 @@ const BASELINE = 5;
 // fit, only amplify a real one.
 const BOOST_WEIGHT = 0.3;
 
+// Per-(role, axis) override of BOOST_WEIGHT — absent entries fall back to the
+// global 0.3. Offlane's `initiating` is amplified above the default 2026-08-13
+// (session-2 role-fit revision, direct user call): an offlaner's initiation
+// should weigh more heavily in its role-fit than its other axes. This is an
+// INTENT override that runs AGAINST the recomputed round-3 correlation, where
+// initiating is actually the WEAKEST of Offlane's three kept axes (r=+0.148 vs
+// map_control +0.425 / mobility +0.284) — eyeballed, not self-play calibrated
+// (calibration debt, tracked in Blueprint/10). map_control was NOT added to
+// Carry (inert — weight 0 everywhere) and camp_stacking was NOT added to
+// Offlane (user chose to strengthen initiating instead), both by explicit call.
+const ROLE_AXIS_BOOST_WEIGHT: Record<string, Record<string, number>> = {
+  Offlane: { initiating: 0.5 },
+};
+
 // Symmetric complement to ROLE_AXES/BOOST_WEIGHT above, added 2026-07-26
 // (Blueprint/10-tech-debt-backlog.md, dampened caster-support cluster):
 // axes a role isn't expected to contribute on get their below-baseline
@@ -162,7 +176,8 @@ export function roleFitValue(
   const boostAxes = ROLE_AXES[assignedRole];
   if (boostAxes?.includes(axisKey)) {
     if (rawValue <= BASELINE) return rawValue;
-    return Math.min(10, Math.round((rawValue + BOOST_WEIGHT * (rawValue - BASELINE)) * 10) / 10);
+    const weight = ROLE_AXIS_BOOST_WEIGHT[assignedRole]?.[axisKey] ?? BOOST_WEIGHT;
+    return Math.min(10, Math.round((rawValue + weight * (rawValue - BASELINE)) * 10) / 10);
   }
   const dampenAxes = IRRELEVANT_AXIS_DAMPEN[assignedRole];
   if (dampenAxes?.includes(axisKey) && rawValue < BASELINE && utilityStackBreadth <= UTILITY_BREADTH_GATE) {

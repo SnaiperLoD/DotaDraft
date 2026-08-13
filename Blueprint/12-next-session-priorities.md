@@ -110,8 +110,12 @@ adding it does literally nothing (same class as the "Reunion does nothing"
 finding); (b) **"boost initiating for Offlane" contradicts the data** —
 initiating is the WEAKEST kept Offlane axis (+0.148) and would need a new
 per-(role,axis) boost-weight mechanism the current single global BOOST_WEIGHT
-doesn't have; camp_stacking (+0.249) would be the data-driven pick instead. Both
-still open pending a user decision. `resource_efficiency` kept on Soft Support
+doesn't have; camp_stacking (+0.249) would be the data-driven pick instead.
+**Both resolved by the user afterward:** (a) map_control->Carry — ignore (not
+added); (b) implement the initiating boost anyway (intent over data), do NOT add
+camp_stacking. Done via a new `ROLE_AXIS_BOOST_WEIGHT` per-(role,axis) override
+(Offlane.initiating = 0.5 vs the global 0.3) — eyeballed, flagged as calibration
+debt in-code. `resource_efficiency` kept on Soft Support
 by explicit user call despite r=-0.001 (near-neutral, and its boost is cosmetic
 — outside Battle AXES, unweighted in Evaluation total). Note also `control` was
 NOT re-added to Carry despite being its strongest predictor (+0.444) — user's

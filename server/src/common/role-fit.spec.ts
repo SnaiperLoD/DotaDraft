@@ -122,6 +122,19 @@ describe('roleFitValue', () => {
     expect(roleFitValue('mobility', 'Offlane', 8)).toBeGreaterThan(8);
   });
 
+  it('gives Offlane initiating a STRONGER boost than the default weight (per-axis override, 2026-08-13)', () => {
+    // raw 8 is 3 above baseline. Default weight 0.3 -> 8.9; Offlane initiating
+    // uses 0.5 -> 8 + 0.5*3 = 9.5.
+    expect(roleFitValue('initiating', 'Offlane', 8)).toBe(9.5);
+    // Stronger than the same axis at the default weight (Carry also boosts
+    // initiating, but at 0.3).
+    expect(roleFitValue('initiating', 'Offlane', 8)).toBeGreaterThan(roleFitValue('initiating', 'Carry', 8));
+    // Offlane's OTHER axes still use the default weight (8 -> 8.9), so the
+    // override is scoped to initiating alone.
+    expect(roleFitValue('map_control', 'Offlane', 8)).toBe(8.9);
+    expect(roleFitValue('mobility', 'Offlane', 8)).toBe(8.9);
+  });
+
   it('boosts all 4 Hard/Soft Support axes: tempo, camp_stacking, mobility, map_control', () => {
     for (const role of ['Hard Support', 'Soft Support']) {
       expect(roleFitValue('tempo', role, 8)).toBeGreaterThan(8);
