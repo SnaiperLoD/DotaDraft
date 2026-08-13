@@ -52,6 +52,22 @@ const BADGES: Record<string, BadgeDefinition> = {
     name: 'Vision Web',
     description: '3+ heroes with strong map control — +7% map-wide vision advantage.',
   },
+  // All-one-attack-type compositions. Effect numbers are provisional (same
+  // display-only-for-now posture as every badge here) — flagged in the
+  // backlog to measure which axes 5-melee / 5-ranged drafts actually sag on
+  // and set the real values from that.
+  allMelee: {
+    id: 'allMelee',
+    name: 'All Melee',
+    description:
+      'Five melee heroes — a frontline wall that trades reach for staying power: +5% durability, -5% skirmish rate, -5% scaling.',
+  },
+  allRanged: {
+    id: 'allRanged',
+    name: 'All Ranged',
+    description:
+      'Five ranged heroes — poke and kite instead of a frontline: +5% skirmish rate, +5% control, -10% durability, -5% map control.',
+  },
 };
 
 export function detectBadges(heroes: Hero[]): ActiveBadge[] {
@@ -78,6 +94,12 @@ export function detectBadges(heroes: Hero[]): ActiveBadge[] {
 
   const vision = heroesWithAxisAtLeast(heroes, 'map_control', AXIS_THRESHOLD);
   if (vision.length >= 3) active.push({ ...BADGES.visionWeb, triggerCount: vision.length });
+
+  // A full team of one attack type — only on a complete 5-hero draft.
+  if (heroes.length === 5 && heroes.every((h) => h.attack_type === 'Melee'))
+    active.push({ ...BADGES.allMelee, triggerCount: 5 });
+  if (heroes.length === 5 && heroes.every((h) => h.attack_type === 'Ranged'))
+    active.push({ ...BADGES.allRanged, triggerCount: 5 });
 
   return active;
 }

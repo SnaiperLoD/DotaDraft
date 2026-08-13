@@ -1729,3 +1729,13 @@ currently the static shared `description`, so evaluation.service would compute
 the boosted axes (same weakest-axis ranking custom-tags.ts uses) and pass them
 through for the client to substitute, the way count-based tags already get
 dynamic magnitude text.
+
+**6. Calibrate the All Melee / All Ranged achievement numbers on real drafts.**
+Added `allMelee` / `allRanged` badges (client/src/data/badges.ts) with proposed
+effects — All Melee: +5% durability, -5% skirmish rate, -5% scaling; All
+Ranged: +5% skirmish rate, +5% control, -10% durability, -5% map control. Like
+every badge these are display-only flavour for now. Research task: measure on
+real drafts which axes a 5-melee team and a 5-ranged team actually sag/spike
+on (their real win rate and axis profiles vs mixed comps), and set the badge
+numbers — and, if badges ever get wired into battle math, the effect
+magnitudes — from that instead of the eyeballed values.
