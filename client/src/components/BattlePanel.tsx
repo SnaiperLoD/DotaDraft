@@ -302,6 +302,17 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active]);
 
+  // When the fight resolves (the settle finishes and the verdict appears),
+  // jump the page to the top so the Victory/Defeat headline is what the player
+  // lands on — the roll leaves them scrolled down (user). Keyed on battleCount
+  // so it fires once per fight, only after the reveal (not during the roll).
+  useEffect(() => {
+    if (battleCount > 0 && result && !loading && !revealing) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [revealing, battleCount]);
+
   return (
     <div className="battle-panel">
       <div className="battle-screen-head">

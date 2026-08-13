@@ -438,7 +438,7 @@
 
 .portrait-card .name {
   font-family: var(--font-body);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 12px;
   margin-top: var(--sp-1);
   color: var(--ink);
@@ -567,6 +567,7 @@
   align-items: center;
   gap: 4px;
   min-width: 0;
+  font-weight: 700;
 }
 
 .battle-hero-chip img {
