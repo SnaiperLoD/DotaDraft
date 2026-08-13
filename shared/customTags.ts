@@ -159,6 +159,9 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
       // Added 2026-08-13 (user): Charge of Darkness is a global-range charge
       // across the whole map.
       'Spirit Breaker',
+      // Added 2026-08-13 (user): Dark Rift teleports the whole team across the
+      // map — global.
+      'Underlord',
     ],
   },
   // Mechanical — added 2026-08-12 (user-approved research batch). Lore theme:
