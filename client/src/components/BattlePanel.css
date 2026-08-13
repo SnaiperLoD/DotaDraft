@@ -354,37 +354,69 @@
   animation: shutdown-glow 2.4s ease-in-out 0.55s infinite;
 }
 
-.portrait-card--shutdown::before {
-  content: '';
+/* Cracked-stone fracture network (rendered as inline SVG in the portrait,
+   BattlePanel.tsx). Sits over the img only, not the name plate. */
+.portrait-crack {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   /* Matches the img's aspect-ratio box rather than a hardcoded 130x81, so
-     the crack still covers the portrait once the grid shrinks it. */
+     the cracks still cover the portrait once the grid shrinks it. */
   aspect-ratio: 130 / 81;
+  width: 100%;
+  height: auto;
   pointer-events: none;
-  background: var(--danger);
-  opacity: 0.85;
-  clip-path: polygon(
-    38% 0%,
-    41% 20%,
-    32% 28%,
-    44% 44%,
-    34% 56%,
-    48% 100%,
-    52% 100%,
-    42% 58%,
-    56% 46%,
-    44% 30%,
-    55% 22%,
-    50% 0%
-  );
-  /* The crack cracks IN — a bright over-scaled flash that snaps down to the
-     resting fracture, so it reads as the portrait taking the hit rather than
-     a decal that was always there. */
-  transform-origin: 46% 50%;
-  animation: shutdown-crack 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  z-index: 2;
+  /* A one-pixel light offset gives every crack a chiselled stone edge. */
+  filter: drop-shadow(0.5px 0.6px 0 rgba(255, 244, 224, 0.16));
+}
+
+.portrait-crack-lines path {
+  fill: none;
+  stroke: rgba(6, 4, 2, 0.74);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* The cracks RUN across the stone: each line draws itself from the impact
+     outward via stroke-dashoffset. dasharray comfortably exceeds any single
+     crack's length so the whole line is drawn. */
+  stroke-dasharray: 150;
+  stroke-dashoffset: 150;
+  animation: crack-run 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* First four paths are the mains (they shoot out first); the last four are
+   the branches, which run off them a beat later. */
+.portrait-crack-lines path:nth-child(1) {
+  animation-delay: 0.02s;
+}
+.portrait-crack-lines path:nth-child(2) {
+  animation-delay: 0.06s;
+}
+.portrait-crack-lines path:nth-child(3) {
+  animation-delay: 0.1s;
+}
+.portrait-crack-lines path:nth-child(4) {
+  animation-delay: 0.14s;
+}
+.portrait-crack-lines path:nth-child(5) {
+  animation-delay: 0.26s;
+}
+.portrait-crack-lines path:nth-child(6) {
+  animation-delay: 0.3s;
+}
+.portrait-crack-lines path:nth-child(7) {
+  animation-delay: 0.34s;
+}
+.portrait-crack-lines path:nth-child(8) {
+  animation-delay: 0.38s;
+}
+
+@keyframes crack-run {
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
 @keyframes shutdown-jolt {
@@ -408,23 +440,6 @@
   }
 }
 
-@keyframes shutdown-crack {
-  0% {
-    opacity: 0;
-    filter: brightness(3);
-    transform: scale(1.45);
-  }
-  28% {
-    opacity: 1;
-    filter: brightness(2.2);
-  }
-  100% {
-    opacity: 0.85;
-    filter: none;
-    transform: scale(1);
-  }
-}
-
 @keyframes shutdown-glow {
   0%,
   100% {
@@ -442,8 +457,13 @@
 @media (prefers-reduced-motion: reduce) {
   .portrait-card--shutdown,
   .portrait-card--shutdown img,
-  .portrait-card--shutdown::before {
+  .portrait-crack-lines path {
     animation: none;
+  }
+  /* No run animation, so show the cracks already fully drawn rather than
+     stuck at their undrawn (invisible) dash offset. */
+  .portrait-crack-lines path {
+    stroke-dashoffset: 0;
   }
 }
 

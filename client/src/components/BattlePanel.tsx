@@ -91,6 +91,23 @@ function PortraitCard({
   return (
     <div className={`portrait-card${isShutdown ? ' portrait-card--shutdown' : ''}`}>
       <img src={heroPortraitUrl(heroId)} alt={name} width={130} height={81} />
+      {/* Cracked-stone overlay when this hero is shut down: fracture lines
+          that run outward from a central impact across the portrait (the
+          mains draw first, the branches after — see BattlePanel.css). */}
+      {isShutdown && (
+        <svg className="portrait-crack" viewBox="0 0 130 81" preserveAspectRatio="none" aria-hidden="true">
+          <g className="portrait-crack-lines">
+            <path d="M62 40 L56 20 L50 4" />
+            <path d="M62 40 L95 33 L118 27" />
+            <path d="M62 40 L71 65 L77 81" />
+            <path d="M62 40 L37 51 L14 60" />
+            <path d="M56 20 L42 13" />
+            <path d="M95 33 L104 49" />
+            <path d="M71 65 L86 74" />
+            <path d="M37 51 L31 34" />
+          </g>
+        </svg>
+      )}
       <div className="name">{name}</div>
       {caption && <div className="caption">{translateCaption ? t(`roles.${caption}`) : caption}</div>}
     </div>
