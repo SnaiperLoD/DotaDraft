@@ -67,19 +67,32 @@ describe('blessingEffectsFor', () => {
       expect(effects.axisMultiplier).toEqual({});
     });
 
+    // Uses io/ck (both Fundamentals, neither a Healer) rather than kotl — as of
+    // 2026-08-13 Keeper of the Light also carries Healer, which adds a team
+    // durability multiplier that would show up here and isn't what this test is
+    // about. The 4-hero test below still needs kotl (all four Fundamentals) and
+    // accounts for the Healer durability buff explicitly.
     it('boosts the single weakest axis by 20% with 2 tagged heroes', () => {
-      const effects = blessingEffectsFor([io, kotl], rawAxisAverages);
+      const effects = blessingEffectsFor([io, ck], rawAxisAverages);
       expect(effects.axisMultiplier).toEqual({ tempo: 1.2 });
     });
 
     it('boosts the 2 weakest axes by 20% with 3 tagged heroes (overrides the 2-tier)', () => {
-      const effects = blessingEffectsFor([io, kotl, ck], rawAxisAverages);
+      const effects = blessingEffectsFor([io, ck, enigma], rawAxisAverages);
       expect(effects.axisMultiplier).toEqual({ tempo: 1.2, mobility: 1.2 });
     });
 
     it('boosts the 4 weakest axes by 25% with 4 tagged heroes (overrides lower tiers)', () => {
       const effects = blessingEffectsFor([io, kotl, ck, enigma], rawAxisAverages);
-      expect(effects.axisMultiplier).toEqual({ tempo: 1.25, mobility: 1.25, control: 1.25, burst: 1.25 });
+      // durability 1.02 = Keeper of the Light's Healer buff (1 Healer, +2%),
+      // orthogonal to The Fundamentals' four weakest-axis boosts.
+      expect(effects.axisMultiplier).toEqual({
+        tempo: 1.25,
+        mobility: 1.25,
+        control: 1.25,
+        burst: 1.25,
+        durability: 1.02,
+      });
     });
   });
 });

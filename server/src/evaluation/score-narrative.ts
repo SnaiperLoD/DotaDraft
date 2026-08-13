@@ -1,5 +1,15 @@
 export type ScoreBracket = 'low' | 'mid' | 'high';
 
+// The axis-narrative bracket adds two EXTREME bands on top of the 3-value
+// ScoreBracket: a draft below the 10th percentile on an axis, or above the
+// 90th, gets a distinctly more critical / more emphatic description than a
+// merely low/high one (user request, 2026-08-13). Kept SEPARATE from
+// ScoreBracket on purpose — evaluation.service.ts's win-condition summary
+// branches on `tempoBracket === 'high'` etc., and must keep seeing the 3-value
+// bracket, so percentileBracket() below is unchanged and only the axis
+// narrative (axis.analyzer.ts) switches to this 5-value one.
+export type AxisBracket = 'veryLow' | 'low' | 'mid' | 'high' | 'veryHigh';
+
 // Percentile-driven, not a fixed 0-10 cutoff — "average" means "near the
 // middle of how 10000 random 5-hero teams score on this specific axis"
 // (server/data/axis-percentile-distributions.json), not a fixed number on
@@ -14,6 +24,18 @@ export function percentileBracket(percentile: number): ScoreBracket {
   return 'high';
 }
 
+// 5-value variant for axis descriptions: the extreme <10 / >90 bands read as a
+// serious weakness / defining strength (see percentileClause). The inner
+// 30/70 boundaries match percentileBracket so mid/low/high stay consistent
+// between the summary logic and the narrative.
+export function axisNarrativeBracket(percentile: number): AxisBracket {
+  if (percentile < 10) return 'veryLow';
+  if (percentile < 30) return 'low';
+  if (percentile < 70) return 'mid';
+  if (percentile < 90) return 'high';
+  return 'veryHigh';
+}
+
 export interface Contributor {
   name: string;
   value: number;
@@ -21,15 +43,25 @@ export interface Contributor {
 
 export interface NarrativeContext {
   percentile: number;
-  bracket: ScoreBracket;
+  bracket: AxisBracket;
   top: Contributor[];
 }
 
 function percentileClause(label: string, ctx: NarrativeContext): string {
   const { percentile, bracket } = ctx;
-  if (bracket === 'high') return `ranks in the top ${Math.max(1, 100 - percentile)}% of drafts for ${label.toLowerCase()}`;
-  if (bracket === 'low') return `ranks in the bottom ${Math.max(1, percentile)}% of drafts for ${label.toLowerCase()}`;
-  return `sits close to the median for ${label.toLowerCase()} (${percentile}th percentile)`;
+  const l = label.toLowerCase();
+  // The extreme bands get a deliberately stronger frame — a >90th-percentile
+  // axis is called out as a defining strength, a <10th as a serious weakness —
+  // which is what makes the whole description read more positive/critical at
+  // the tails (user request); the tactical body reused from high/low stays the
+  // same underneath.
+  if (bracket === 'veryHigh')
+    return `ranks in the top ${Math.max(1, 100 - percentile)}% of all drafts for ${l} — one of this draft's defining strengths`;
+  if (bracket === 'high') return `ranks in the top ${Math.max(1, 100 - percentile)}% of drafts for ${l}`;
+  if (bracket === 'veryLow')
+    return `ranks in the bottom ${Math.max(1, percentile)}% of all drafts for ${l} — one of this draft's most serious weaknesses`;
+  if (bracket === 'low') return `ranks in the bottom ${Math.max(1, percentile)}% of drafts for ${l}`;
+  return `sits close to the median for ${l} (${percentile}th percentile)`;
 }
 
 function contributorClause(ctx: NarrativeContext): string {
@@ -44,14 +76,19 @@ function lede(label: string, ctx: NarrativeContext): string {
 }
 
 type NarrativeFn = (ctx: NarrativeContext) => string;
-type NarrativeSet = Record<ScoreBracket, NarrativeFn>;
+// Authored with the three core brackets; the two extreme bands (veryLow/
+// veryHigh) reuse the low/high tactical body — the extra emphasis lives in
+// percentileClause's lede, not in a separate paragraph (see withExtremes).
+type BaseNarrativeSet = { low: NarrativeFn; mid: NarrativeFn; high: NarrativeFn };
+type NarrativeSet = Record<AxisBracket, NarrativeFn>;
 // Synergy/Counter aren't axis-based (no evaluation_values score, so no
 // percentile distribution from compute-axis-percentiles.ts to rank
 // against) — kept on the older flat-string-per-bracket shape rather than
-// the percentile-aware NarrativeFn the 13 axes below use.
+// the percentile-aware NarrativeFn the 13 axes below use. Still the 3-value
+// ScoreBracket (they use scoreBracket(), not the percentile axis path).
 type StaticNarrativeSet = Record<ScoreBracket, string>;
 
-export const AXIS_NARRATIVE: Record<string, NarrativeSet> = {
+const AXIS_NARRATIVE_BASE: Record<string, BaseNarrativeSet> = {
   // Labeled "Damage Output" as of 2026-07-25 (Blueprint/10-tech-debt-backlog.md,
   // "Teamfight axis misnamed") — the underlying signal is real
   // hero_damage_per_min (personal damage dealt), not overall fight-winning
@@ -133,6 +170,19 @@ export const AXIS_NARRATIVE: Record<string, NarrativeSet> = {
     low: (ctx) => `${lede('Resource efficiency', ctx)} This team's damage is expensive — it depends on a hero (or heroes) getting a large share of the team's resources first, so a slow start or contested farm hits harder here than for a more efficient draft.`,
   },
 };
+
+// veryLow/veryHigh reuse the low/high tactical advice — the tail emphasis comes
+// from percentileClause's stronger lede (a defining strength / a serious
+// weakness), so a >90th or <10th axis reads more positive/critical without a
+// separately authored paragraph per axis. Swap an entry's veryLow/veryHigh for
+// bespoke copy here if a given axis ever needs it.
+function withExtremes(set: BaseNarrativeSet): NarrativeSet {
+  return { veryLow: set.low, low: set.low, mid: set.mid, high: set.high, veryHigh: set.high };
+}
+
+export const AXIS_NARRATIVE: Record<string, NarrativeSet> = Object.fromEntries(
+  Object.entries(AXIS_NARRATIVE_BASE).map(([key, set]) => [key, withExtremes(set)]),
+);
 
 export const SYNERGY_NARRATIVE: StaticNarrativeSet = {
   high: "This is a well-connected draft — the heroes' kits actively support one another.",

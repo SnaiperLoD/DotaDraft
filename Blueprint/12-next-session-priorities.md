@@ -147,6 +147,30 @@ submitterToken, no accounts) — identified by their five heroes. 6 new jest tes
 for getBestRuns (tally/sort/minFights/limit/roles/eval-parse), verified live in
 the browser (both boards render).
 
+**Extreme axis-narrative bands (user).** Evaluation axis descriptions now get a
+distinctly more critical / more positive frame at the tails: a new 5-value
+`axisNarrativeBracket` (veryLow <10th percentile, veryHigh >=90th) drives
+AXIS_NARRATIVE, and percentileClause calls a >=90th axis "one of this draft's
+defining strengths" / a <10th "one of its most serious weaknesses". Kept SEPARATE
+from the 3-value `percentileBracket` (evaluation.service's win-condition summary
+branches on `tempoBracket === 'high'` and must keep the old bracket). Extremes
+reuse the high/low tactical body — the emphasis lives in the lede — so bespoke
+per-axis extreme copy can be added later without rework. New score-narrative.spec
+(6 tests) locks the boundaries + wording.
+
+**No-repeat matchmaking within a run (user, HARD constraint).** A player never
+faces the same opponent draft twice in one run. `DraftService.getFacedOpponentHeroSets`
+reads this run's (draftId's) BattleResult.opponentHeroIds; pullRandom takes an
+`excludeFacedHeroSets` param and hard-filters them by hero SET (order-independent).
+Unlike the hero-overlap/own-token filters it does NOT fall back to a repeat — it
+throws "No new opponents left in the pool for this run" if the pool is exhausted
+(~150 rows vs runs of a few fights, so effectively never hit). 2 new tests.
+
+Note: adding KotL to Healer broke 3 custom-tags "The Fundamentals" specs (their
+fixtures use KotL, now also a Healer → extra team-durability multiplier). Fixed:
+2/3-hero fixtures swapped to non-Healer Fundamentals heroes (Io/CK/Enigma); the
+4-hero one keeps KotL and asserts the +2% Healer durability explicitly. 333 tests.
+
 ---
 
 ## Session log — 2026-08-13 (long UI + calibration session)

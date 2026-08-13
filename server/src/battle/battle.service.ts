@@ -25,9 +25,14 @@ export class BattleService {
 
     const teamA: BattlePick[] = draft.heroes.map((h) => ({ hero: h.hero, assignedRole: h.assignedRole }));
 
+    // Opponent lineups already fought this run — a player never faces the same
+    // opponent draft twice within one run (user, hard constraint; enforced in
+    // pullRandom, which throws rather than repeating if the pool is exhausted).
+    const facedOpponents = await this.draftService.getFacedOpponentHeroSets(draftId);
     const opponent = await this.opponentPoolService.pullRandom(
       submitterToken,
       draft.heroes.map((h) => h.heroId),
+      facedOpponents,
     );
     const opponentHeroes = await this.heroService.findByIds(opponent.heroIds);
     // heroRoles is null for pool rows committed before role-fit reached

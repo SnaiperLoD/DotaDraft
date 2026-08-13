@@ -78,7 +78,21 @@ export class OpponentPoolService {
   // dialects. Same fallback shape as excludingOwn above — if excluding every
   // overlapping draft would leave nothing to pull from, fall back to
   // allowing overlap rather than failing Battle Mode outright.
-  async pullRandom(excludeSubmitterToken?: string, excludeHeroIds: number[] = []): Promise<PooledDraftSummary> {
+  // excludeFacedHeroSets (user, HARD constraint): the opponent lineups this run
+  // has already fought (DraftService.getFacedOpponentHeroSets). A player must
+  // never face the same opponent draft twice within one run — matched by the
+  // 5-hero SET (order-independent), so two pool rows with the same heroes count
+  // as the same opponent. Unlike excludeHeroIds/excludeSubmitterToken below,
+  // this filter does NOT fall back to allowing a repeat if it empties the pool:
+  // "hard" means a run that has fought every available opponent gets a clear
+  // "no new opponents" error rather than a rerun. With ~150 pool rows and runs
+  // of a handful of fights, that's effectively never hit in practice.
+  async pullRandom(
+    excludeSubmitterToken?: string,
+    excludeHeroIds: number[] = [],
+    excludeFacedHeroSets: number[][] = [],
+  ): Promise<PooledDraftSummary> {
+    const heroSetKey = (ids: number[]): string => [...ids].sort((a, b) => a - b).join(',');
     return this.runPoolQuery(async () => {
       const excludingOwn = excludeSubmitterToken
         ? { OR: [{ submitterToken: null }, { NOT: { submitterToken: excludeSubmitterToken } }] }
@@ -90,6 +104,14 @@ export class OpponentPoolService {
       }
       if (rows.length === 0) {
         throw new NotFoundException('Opponent Pool is empty — no opponent available yet');
+      }
+
+      if (excludeFacedHeroSets.length > 0) {
+        const facedKeys = new Set(excludeFacedHeroSets.map(heroSetKey));
+        rows = rows.filter((r) => !facedKeys.has(heroSetKey(r.heroIds as number[])));
+        if (rows.length === 0) {
+          throw new NotFoundException('No new opponents left in the pool for this run — every available draft has been fought.');
+        }
       }
 
       if (excludeHeroIds.length > 0) {

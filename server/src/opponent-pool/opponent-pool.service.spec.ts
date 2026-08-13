@@ -175,6 +175,33 @@ describe('OpponentPoolService.pullRandom', () => {
 
     expect(result.id).toBe('p1');
   });
+
+  it('hard-excludes an opponent already faced this run, matched by hero SET (order-independent)', async () => {
+    const pool = makeMockPool();
+    pool.pooledDraft.findMany.mockResolvedValue([
+      { id: 'faced', source: 'pro', heroIds: [1, 2, 3, 4, 5], teamName: null, leagueName: null },
+      { id: 'fresh', source: 'pro', heroIds: [10, 11, 12, 13, 14], teamName: null, leagueName: null },
+    ]);
+    const service = new OpponentPoolService(pool as any, {} as any);
+
+    // Faced set given in a DIFFERENT order than the pool row stores it.
+    for (let i = 0; i < 10; i++) {
+      const result = await service.pullRandom(undefined, [], [[5, 4, 3, 2, 1]]);
+      expect(result.id).toBe('fresh');
+    }
+  });
+
+  it('throws (hard constraint, no fallback) when every available opponent has already been faced this run', async () => {
+    const pool = makeMockPool();
+    pool.pooledDraft.findMany.mockResolvedValue([
+      { id: 'only', source: 'pro', heroIds: [1, 2, 3, 4, 5], teamName: null, leagueName: null },
+    ]);
+    const service = new OpponentPoolService(pool as any, {} as any);
+
+    await expect(service.pullRandom(undefined, [], [[1, 2, 3, 4, 5]])).rejects.toThrow(
+      'No new opponents left in the pool for this run',
+    );
+  });
 });
 
 describe('OpponentPoolService.recordDraftOutcome', () => {

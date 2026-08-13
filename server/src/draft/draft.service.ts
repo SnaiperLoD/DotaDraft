@@ -257,6 +257,20 @@ export class DraftService {
     });
   }
 
+  // Every opponent lineup this draft (= this run) has already fought, as
+  // hero-id arrays — read from its BattleResult rows' denormalized
+  // opponentHeroIds. Battle Mode uses this to guarantee a player never faces
+  // the same opponent draft twice within one run (user, hard constraint):
+  // OpponentPoolService.pullRandom filters these out. A "run" is one draftId,
+  // so scoping the query to draftId is exactly this session's history.
+  async getFacedOpponentHeroSets(draftId: string): Promise<number[][]> {
+    const rows = await this.prisma.battleResult.findMany({
+      where: { draftId },
+      select: { opponentHeroIds: true },
+    });
+    return rows.map((r) => JSON.parse(r.opponentHeroIds) as number[]);
+  }
+
   async pick(draftId: string, heroId: number): Promise<DraftStateView> {
     const draft = await this.prisma.draft.findUnique({
       where: { id: draftId },

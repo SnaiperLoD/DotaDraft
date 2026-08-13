@@ -1,6 +1,6 @@
 import type { HeroEvaluationValues } from 'shared';
 import type { Analyzer, DraftPick } from '../analyzer.interface';
-import { AXIS_NARRATIVE, percentileBracket, type NarrativeContext } from '../score-narrative';
+import { AXIS_NARRATIVE, axisNarrativeBracket, type NarrativeContext } from '../score-narrative';
 import { percentileFor } from '../axis-percentiles';
 import { roleAwareAxisValue, supportMiscastMultiplier, coreMiscastMultiplier } from '../../common/role-fit';
 import { hardCarryPenalty, hardCarryAxisMultipliers, isHardCarry } from '../../common/hard-carry';
@@ -72,7 +72,9 @@ export function createAxisAnalyzer(key: AxisKey, label: string): Analyzer {
       // old fixed 0-10 score cutoff (Blueprint/10-tech-debt-backlog.md,
       // "Percentile-based Evaluation").
       const percentile = percentileFor(key, score);
-      const bracket = percentileBracket(percentile ?? 50);
+      // 5-value bracket (adds veryLow <10 / veryHigh >90) so extreme axes get a
+      // more critical / more emphatic narrative — see score-narrative.ts.
+      const bracket = axisNarrativeBracket(percentile ?? 50);
 
       const top = [...values].sort((a, b) => b.value - a.value).slice(0, 2);
       const ctx: NarrativeContext = {
