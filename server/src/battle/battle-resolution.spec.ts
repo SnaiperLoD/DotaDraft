@@ -186,6 +186,25 @@ describe('resolveBattle', () => {
       expect(text).toContain('Invoker');
       expect(text.toLowerCase()).not.toContain('model was wrong');
     });
+
+    it('Mechanical on the board suppresses the High Skill upset pull (machines do not tilt)', () => {
+      // Same setup as the test above, but the favorite fields Clockwerk
+      // (Mechanical). The High Skill pull that would drop pWinA to 0.95 and
+      // let 0.97 upset the favorite is cancelled, so the same roll resolves
+      // for the favorite.
+      const dominantAxes = { teamfight: 10, scaling: 10, burst: 10, durability: 10, objectives: 10 };
+      const strongTeamWithMechanical: BattlePick[] = [
+        { hero: hero(1, 'Clockwerk', dominantAxes), assignedRole: null },
+        ...team(4, dominantAxes, 2),
+      ];
+      const weakTeamWithHighSkill: BattlePick[] = [
+        { hero: hero(6, 'Invoker'), assignedRole: null },
+        ...team(4, {}, 7),
+      ];
+      const result = resolveBattle(strongTeamWithMechanical, weakTeamWithHighSkill, noData, () => 0.97);
+      expect(result.confidenceTier).toBe('High');
+      expect(result.resolvedOutcome).toBe('Win');
+    });
   });
 
   it('amplifies rather than adds: a strong counter matchup increases the effective diff beyond the raw power diff', () => {

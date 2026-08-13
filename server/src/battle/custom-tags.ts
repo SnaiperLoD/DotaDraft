@@ -249,6 +249,40 @@ const PRONE_TO_BURST = heroNameSetForTag('Prone To Burst');
 const PRONE_TO_BURST_OPPONENT_BURST_THRESHOLD = 6.5; // population mean ~5.16, sd ~1.34 (Q1, simulate-self-play.ts)
 const PRONE_TO_BURST_PENALTY = 0.92;
 
+// Healer — ally-sustain heroes (2026-08-12, user-approved research batch).
+// Team durability buff, same count-growing per-hero shape as Mass Buffer
+// (+2% solo, +3% each at 2, +4% each at 3…), each carrier contributing, so
+// the combined effect is per-hero × count. Durability rather than a flat
+// power buff because what healing actually buys is survivability the
+// durability/saving axes only partly capture. Magnitude is a starting guess,
+// to be calibrated by self-play the way Summoning Sickness was.
+const HEALER = heroNameSetForTag('Healer');
+const HEALER_BASE_BUFF = 0.02;
+const HEALER_PER_EXTRA = 0.01;
+
+// Gold Generator — team-economy heroes (Bounty Hunter's Track, Alchemist's
+// Greevil's Greed + Aghanim gift). The gold they feed the TEAM isn't in their
+// personal percentiles; a richer team scales harder, so a small team scaling
+// buff per carrier, active even solo. Starting magnitude, to be calibrated.
+const GOLD_GENERATOR = heroNameSetForTag('Gold Generator');
+const GOLD_GENERATOR_PER = 0.03;
+
+// Mechanical — machines/constructs (Clockwerk/Timbersaw/Gyrocopter/Tinker).
+// "Machines don't tilt": two immunities, neither a power/axis multiplier.
+//   - Upset immunity lives in battle-resolution.ts (resolveBattle): a
+//     Mechanical hero on the board suppresses High Skill's upset pull, same
+//     as HIGH_SKILL's own upset half lives there rather than here.
+//   - Curse immunity lives here, in curseEffectsOnOpponent: a Mechanical
+//     opponent is skipped by the per-hero curses (Agility Crusher, Old
+//     Rivals). Frosty is a team-wide axis multiplier, not per-hero, so it
+//     can't be selectively exempted in the current effects model — Mechanical
+//     immunity covers the curses that target a specific hero, which are the
+//     impactful ones.
+const MECHANICAL = heroNameSetForTag('Mechanical');
+export function mechanicalHeroesOn(team: Hero[]): Hero[] {
+  return team.filter((h) => MECHANICAL.has(h.name));
+}
+
 // "Core" for Agility Crusher's -5% (non-agility cores) clause — a hero
 // whose most-played presumed position isn't Support. No data at all
 // defaults to true (conservative: the curse still applies) rather than
@@ -350,6 +384,26 @@ export function blessingEffectsFor(
     const magnitude = 1 + perHeroBuff * massBufferCount;
     mulAxis(effects, 'teamfight', magnitude);
     mulAxis(effects, 'burst', magnitude);
+  }
+
+  // Healer: team durability buff. Per-hero magnitude grows with stack count
+  // (+2% solo, +3% each at 2, +4% each at 3, …) and EACH carrier contributes
+  // it — combined = per-hero × count, exactly the Mass Buffer shape, on the
+  // durability axis.
+  const healerCount = isTagDisabled('Healer') ? 0 : team.filter((h) => HEALER.has(h.name)).length;
+  if (healerCount >= 1) {
+    const perHeroBuff = HEALER_BASE_BUFF + HEALER_PER_EXTRA * (healerCount - 1);
+    mulAxis(effects, 'durability', 1 + perHeroBuff * healerCount);
+  }
+
+  // Gold Generator: team scaling buff, active even solo, +3% per carrier —
+  // the team economy these heroes generate (Track / Greevil's Greed) buys
+  // items no personal axis reflects.
+  const goldGenCount = isTagDisabled('Gold Generator')
+    ? 0
+    : team.filter((h) => GOLD_GENERATOR.has(h.name)).length;
+  if (goldGenCount >= 1) {
+    mulAxis(effects, 'scaling', 1 + GOLD_GENERATOR_PER * goldGenCount);
   }
 
   // Prone To Burst: personal power debuff, active only when the OPPONENT's
@@ -512,6 +566,15 @@ export function blessingEffectsFor(
 export function curseEffectsOnOpponent(caster: Hero[], opponent: Hero[]): CustomTagEffects {
   const effects = emptyTagEffects();
 
+  // Mechanical ("machines don't tilt"): immune to the opponent's per-hero
+  // curses. A Mechanical opponent is skipped by Agility Crusher / Old Rivals
+  // below. Frosty is a whole-team axis multiplier (not per-hero), which the
+  // effects model can't selectively exempt — so this covers the curses that
+  // target a specific hero, which are the ones that actually bite.
+  const curseImmune = isTagDisabled('Mechanical')
+    ? new Set<number>()
+    : new Set(opponent.filter((h) => MECHANICAL.has(h.name)).map((h) => h.id));
+
   // Frosty: stacks per Frosty hero on the caster's team, -3% enemy mobility
   // per stack (multiplicative per-stack, not linear, so it can't go negative
   // no matter how many stack).
@@ -523,6 +586,7 @@ export function curseEffectsOnOpponent(caster: Hero[], opponent: Hero[]): Custom
   // (non-cores, i.e. Support-classified heroes, are exempt from the -5%).
   if (!isTagDisabled('Agility Crusher') && caster.some((h) => h.name === 'Elder Titan')) {
     for (const h of opponent) {
+      if (curseImmune.has(h.id)) continue;
       if (h.primary_attribute === 'agi') mulHeroPower(effects, h.id, 0.9);
       else if (isCore(h)) mulHeroPower(effects, h.id, 0.95);
     }
@@ -537,6 +601,7 @@ export function curseEffectsOnOpponent(caster: Hero[], opponent: Hero[]): Custom
   // on the OTHER side.
   if (!isTagDisabled('Old Rivals') && caster.some((h) => OLD_RIVALS.has(h.name))) {
     for (const h of opponent) {
+      if (curseImmune.has(h.id)) continue;
       if (OLD_RIVALS.has(h.name)) mulHeroPower(effects, h.id, OLD_RIVALS_ENEMY_POWER_PENALTY);
     }
   }

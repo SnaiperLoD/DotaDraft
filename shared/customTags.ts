@@ -135,7 +135,79 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
     // 'Invoker' added 2026-08-10 (roster audit): Sun Strike is global, and
     // heroes.json's own `global_impact` tag already marked him — the custom
     // tag was the side that disagreed with the data.
-    heroNames: ['Silencer', 'Tinker', 'Io', 'Dawnbreaker', 'Spectre', 'Zeus', "Nature's Prophet", 'Invoker'],
+    // 2026-08-12 (user-approved research batch): +Clockwerk (Rocket Flare,
+    // global scout/damage), +Keeper of the Light (Recall, global ally
+    // teleport — also `global_impact` in the data), +Storm Spirit (Ball
+    // Lightning, global mobility — also `global_impact`), +Ancient Apparition
+    // (Ice Blast, cross-map reach). No effect change: note the map_control
+    // solo buff is currently inert (map_control has weight 0 in the Battle
+    // Engine, see Blueprint/10-tech-debt-backlog.md), so these only matter for
+    // the 2+ teamfight/burst branch until Global's effect is retargeted.
+    heroNames: [
+      'Silencer',
+      'Tinker',
+      'Io',
+      'Dawnbreaker',
+      'Spectre',
+      'Zeus',
+      "Nature's Prophet",
+      'Invoker',
+      'Clockwerk',
+      'Keeper of the Light',
+      'Storm Spirit',
+      'Ancient Apparition',
+    ],
+  },
+  // Mechanical — added 2026-08-12 (user-approved research batch). Lore theme:
+  // machines/constructs. Effect "machines don't tilt": a Mechanical hero makes
+  // its side immune to High Skill upset variance (battle-resolution.ts) and
+  // immune to the opponent's per-hero curses (custom-tags.ts,
+  // curseEffectsOnOpponent). Visible flavour tag.
+  {
+    name: 'Mechanical',
+    rarity: 'uncommon',
+    visible: true,
+    revealable: false,
+    description:
+      "Machines don't tilt — immune to High Skill upset swings and to the opponent's synergy curses.",
+    heroNames: ['Clockwerk', 'Timbersaw', 'Gyrocopter', 'Tinker'],
+  },
+  // Healer — added 2026-08-12 (user-approved research batch). Ally sustain the
+  // durability/saving axes only partly capture. Team durability buff whose
+  // per-hero magnitude grows with stack count, same shape as Mass Buffer
+  // (+2% solo, +3% each at 2, +4% each at 3…), each carrier contributing.
+  {
+    name: 'Healer',
+    rarity: 'uncommon',
+    visible: true,
+    revealable: false,
+    description:
+      'Sustained healing keeps the team topped up — adds to team durability, and each Healer contributes more as the group grows.',
+    heroNames: [
+      'Dazzle',
+      'Omniknight',
+      'Oracle',
+      'Chen',
+      'Abaddon',
+      'Treant Protector',
+      'Warlock',
+      'Winter Wyvern',
+      'Necrophos',
+      'Witch Doctor',
+    ],
+  },
+  // Gold Generator — added 2026-08-12 (user-approved research batch). Team
+  // economy not captured by personal percentiles (Bounty's Track gold, Alch's
+  // Greevil's Greed + Aghanim gift). A richer team scales harder: small team
+  // scaling buff per carrier, active even solo.
+  {
+    name: 'Gold Generator',
+    rarity: 'uncommon',
+    visible: true,
+    revealable: false,
+    description:
+      'Feeds the whole team extra gold (Track / Greevil’s Greed) — a richer team scales harder. Adds to team scaling per Gold Generator.',
+    heroNames: ['Bounty Hunter', 'Alchemist'],
   },
   {
     name: 'High Skill',
@@ -329,6 +401,11 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
 // hand too (same maintenance cost the static text already carries).
 const MASS_BUFFER_BASE_PCT = 3;
 const MASS_BUFFER_PER_EXTRA_PCT = 1;
+// Healer mirrors Mass Buffer's count-growing per-hero shape, one point lower
+// at the base (+2% solo). Hand-duplicated from server HEALER_BASE_BUFF/
+// HEALER_PER_EXTRA the same way Mass Buffer's numbers are.
+const HEALER_BASE_PCT = 2;
+const HEALER_PER_EXTRA_PCT = 1;
 const STEALTH_STACK_PENALTY_PCT: Record<number, number> = { 2: 5, 3: 10, 4: 15, 5: 20 };
 
 function describeActiveTag(def: CustomTagDefinition, heroNames: string[]): string {
@@ -349,6 +426,15 @@ function describeActiveTag(def: CustomTagDefinition, heroNames: string[]): strin
     if (count < 2) return base;
     const penaltyPct = STEALTH_STACK_PENALTY_PCT[Math.min(count, 5)] ?? STEALTH_STACK_PENALTY_PCT[5];
     return `${base} ${count} on this team: -${penaltyPct}% durability/teamfight each.`;
+  }
+
+  if (def.name === 'Healer') {
+    const perHeroPct = HEALER_BASE_PCT + HEALER_PER_EXTRA_PCT * (count - 1);
+    const totalPct = perHeroPct * count;
+    return (
+      `Sustained healing keeps the team topped up. ${count} Healer${count === 1 ? '' : 's'} on this team: ` +
+      `+${perHeroPct}% team durability each, +${totalPct}% combined.`
+    );
   }
 
   if (def.name === 'Statstealer') {

@@ -174,6 +174,43 @@ describe('Global', () => {
   });
 });
 
+describe('Healer', () => {
+  it('gives a solo Healer +2% team durability', () => {
+    const dazzle = makeHero({ id: 1, name: 'Dazzle' });
+    const effects = blessingEffectsFor([dazzle], {});
+    expect(effects.axisMultiplier.durability).toBeCloseTo(1.02);
+  });
+
+  it('grows the per-hero magnitude with stack count (+3% each at 2 -> +6% combined)', () => {
+    const dazzle = makeHero({ id: 1, name: 'Dazzle' });
+    const omni = makeHero({ id: 2, name: 'Omniknight' });
+    const effects = blessingEffectsFor([dazzle, omni], {});
+    // perHero 0.03 at count 2, combined = 1 + 0.03*2.
+    expect(effects.axisMultiplier.durability).toBeCloseTo(1.06);
+  });
+
+  it('does nothing with no Healer on the team', () => {
+    const sniper = makeHero({ id: 1, name: 'Sniper' });
+    const effects = blessingEffectsFor([sniper], {});
+    expect(effects.axisMultiplier.durability).toBeUndefined();
+  });
+});
+
+describe('Gold Generator', () => {
+  it('gives a solo carrier +3% team scaling', () => {
+    const bounty = makeHero({ id: 1, name: 'Bounty Hunter' });
+    const effects = blessingEffectsFor([bounty], {});
+    expect(effects.axisMultiplier.scaling).toBeCloseTo(1.03);
+  });
+
+  it('stacks per carrier (+6% with both)', () => {
+    const bounty = makeHero({ id: 1, name: 'Bounty Hunter' });
+    const alch = makeHero({ id: 2, name: 'Alchemist' });
+    const effects = blessingEffectsFor([bounty, alch], {});
+    expect(effects.axisMultiplier.scaling).toBeCloseTo(1.06);
+  });
+});
+
 describe('High Skill (team self-debuff half)', () => {
   it('does not debuff a solo tagged hero', () => {
     const invoker = makeHero({ id: 1, name: 'Invoker' });
@@ -544,6 +581,19 @@ describe('curseEffectsOnOpponent', () => {
       });
       const effects = curseEffectsOnOpponent(caster, [strSupport]);
       expect(effects.heroPowerMultiplier.has(strSupport.id)).toBe(false);
+    });
+  });
+
+  describe('Mechanical (curse immunity)', () => {
+    it("exempts a Mechanical opponent from Agility Crusher, while a plain agi core is still cursed", () => {
+      const caster = [makeHero({ id: 1, name: 'Elder Titan' })];
+      // Tinker is Mechanical; force it agi so it WOULD be hit by the -10% if
+      // it weren't immune. Anti-Mage is the non-Mechanical control.
+      const mechAgi = makeHero({ id: 2, name: 'Tinker', primary_attribute: 'agi' });
+      const plainAgi = makeHero({ id: 3, name: 'Anti-Mage', primary_attribute: 'agi' });
+      const effects = curseEffectsOnOpponent(caster, [mechAgi, plainAgi]);
+      expect(effects.heroPowerMultiplier.has(mechAgi.id)).toBe(false);
+      expect(effects.heroPowerMultiplier.get(plainAgi.id)).toBe(0.9);
     });
   });
 

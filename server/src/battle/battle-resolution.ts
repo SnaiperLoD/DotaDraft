@@ -13,6 +13,7 @@ import {
   mergeTagEffects,
   emptyTagEffects,
   highSkillHeroesOn,
+  mechanicalHeroesOn,
   HIGH_SKILL_UPSET_SHIFT,
   isTagDisabled,
 } from './custom-tags';
@@ -727,14 +728,26 @@ export function resolveBattle(
   const highSkillDisabled = isTagDisabled('High Skill');
   const highSkillA = highSkillDisabled ? [] : highSkillHeroesOn(heroesA);
   const highSkillB = highSkillDisabled ? [] : highSkillHeroesOn(heroesB);
+  // Mechanical ("machines don't tilt", custom-tags.ts): a Mechanical hero on
+  // EITHER side removes High Skill's upset variance entirely — the steady
+  // execution keeps the result on its assessed rails. On the shared pWinA
+  // variable, protecting either team's certainty means applying no coinflip
+  // pull at all (every pull moves pWinA toward 0.5, i.e. away from whichever
+  // team it favours), so one flag gates both sources. Disabled-aware via the
+  // empty set mechanicalHeroesOn returns when the tag is off.
+  const mechanicalPresent =
+    !isTagDisabled('Mechanical') &&
+    (mechanicalHeroesOn(heroesA).length > 0 || mechanicalHeroesOn(heroesB).length > 0);
   // Pulling pWinA toward 0.5 represents "this team's own result gets less
   // certain" for EITHER side: team A's own uncertainty pulls pWinA toward
   // 0.5 directly; team B's does too, since pWinB = 1-pWinA and pulling
   // pWinB toward 0.5 is the same operation on pWinA (the function is
   // symmetric around 0.5). Both conditions can fire and stack.
   let pWinA = basePWinA;
-  if (highSkillA.length > 0) pWinA = pullTowardCoinflip(pWinA, HIGH_SKILL_UPSET_SHIFT);
-  if (highSkillB.length > 0) pWinA = pullTowardCoinflip(pWinA, HIGH_SKILL_UPSET_SHIFT);
+  if (!mechanicalPresent) {
+    if (highSkillA.length > 0) pWinA = pullTowardCoinflip(pWinA, HIGH_SKILL_UPSET_SHIFT);
+    if (highSkillB.length > 0) pWinA = pullTowardCoinflip(pWinA, HIGH_SKILL_UPSET_SHIFT);
+  }
 
   const roll = random();
   const resolvedOutcome: ResolvedOutcome = roll < pWinA ? 'Win' : 'Lose';
