@@ -146,7 +146,7 @@
 
 .evaluation-columns {
   display: grid;
-  grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
   gap: var(--sp-4);
   align-items: start;
   margin-bottom: var(--sp-5);

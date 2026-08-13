@@ -18,7 +18,7 @@
 
 .axis-radar-svg {
   width: 100%;
-  max-width: 340px;
+  max-width: 420px;
   height: auto;
   overflow: visible;
 }
@@ -58,7 +58,7 @@
 .axis-radar-plot {
   position: relative;
   width: 100%;
-  max-width: 340px;
+  max-width: 420px;
   aspect-ratio: 1;
 }
 
@@ -123,10 +123,14 @@
 
 .axis-radar-label {
   font-family: var(--font-ui);
-  font-size: 9px;
-  letter-spacing: 0.06em;
+  /* In SVG user units (viewBox is 320): bigger and darker than the old faint
+     9px, which was hard to read against the panel. Scaled up further by the
+     larger display size. */
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  fill: var(--ink-faint);
+  fill: var(--ink);
   transition: fill var(--dur-2) ease;
 }
 

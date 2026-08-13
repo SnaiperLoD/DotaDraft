@@ -24,7 +24,9 @@ const RINGS = [25, 50, 75, 100];
 // Labels sit outside the outermost ring, expressed on the same 0-100
 // percentile scale the geometry uses.
 const LABEL_PCT = 122;
-const LINE_H = 10;
+// SVG user units — line spacing for two-line labels, sized to the larger
+// label font (AxisRadar.css) so stacked words don't crowd.
+const LINE_H = 12;
 
 function pointAt(index: number, count: number, radiusPct: number): [number, number] {
   // Start at 12 o'clock and go clockwise.
