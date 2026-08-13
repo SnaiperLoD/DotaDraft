@@ -1800,6 +1800,19 @@ STAY ON — they are part of the model's correction layer, not the flavour combo
 layer this mode strips. So the toggle is "visible/revealable flavour tags off,
 calibration-only hidden tags on." New draft-mode plumbing (ties into item 10).
 
+**16. New axis "Laning Efficiency" + per-lane Battle verdict (user, research).**
+A complex lane-performance signal: how well heroes perform in the laning stage,
+both individually and specifically as a lane PAIR (e.g. a support+carry safelane
+duo, a solo mid, an offlane duo). Goal output: at the Battle stage, a per-lane
+read of which lanes the player's draft would likely WIN, which sit EVEN, and
+which LOSE against the opponent — i.e. lane matchups, not just an overall power
+diff. RESEARCH FIRST (feasibility): what real data supports it — OpenDota lane
+win rate / lane_role + laning benchmarks (last hits @10, denies, lane kills),
+and whether per-pair laning data is queryable at usable sample sizes. Likely a
+new evaluation_values axis (touches the calibrate pipeline + all downstream
+readers) PLUS a Battle-side lane-matchup computation, so scope it as research +
+a point-check before building, like the role-conditional-axis work.
+
 **15. New tag "Spirits" — feasibility ASSESSED, see session log 2026-08-13.**
 Storm/Ember/Earth/Void Spirit; hidden, revealable, legendary; active at 2+;
 reveal at draft time when a 2nd Spirit is offered while one is already picked.
