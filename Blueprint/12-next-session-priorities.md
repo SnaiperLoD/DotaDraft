@@ -171,6 +171,31 @@ fixtures use KotL, now also a Healer → extra team-durability multiplier). Fixe
 2/3-hero fixtures swapped to non-Healer Fundamentals heroes (Io/CK/Enigma); the
 4-hero one keeps KotL and asserts the +2% Healer durability explicitly. 333 tests.
 
+**Negative synergies in Evaluation (user, two parts).** (A) Game-plan conflict
+rules: a new `ANTI_SYNERGY_RULES` layer in synergy.analyzer reads the archetype
+`tags` field (not synergy_tags) and SUBTRACTS for win-condition conflicts —
+`split_push`/`deathball` × `late_game_scaling` (e.g. the user's Lycan+Medusa),
+with an explanation ("wants to end early ... needs the game to go long —
+conflicting game plans"). Deliberately a hand-authored heuristic, NOT real-data
+validated: measured the classic pairs and they have NO co-pick data at all
+(Lycan+Medusa null, like Chen+Ench) and the split_push×late_scaling pairing
+roster-wide shows a ~-0.006 mean delta (coin-flip) — so real data cannot carry
+this signal, it's the flavour/draft-literacy layer (magnitudes eyeballed,
+calibration debt). (B) The worst real-data pair is now SHOWN whenever it's
+negative at all, not only past the -0.035 significance bar (a 5000-draft check
+found the old gate fired in just 37% of drafts — why the user "didn't see bad
+pairs"); the SCORE penalty still only applies past significance, so a marginal
+pair is reported but not punished. Text "weak" -> "below-average". Reran
+compute-axis-percentiles afterward (synergy scoring feeds totalScore's percentile
+reference — operational note). 337 tests + new anti-synergy specs.
+
+Also answered a user question (no code): Battle applies OUR custom tags AND
+weights (role-fit, hard-carry, utility-stacking, manual-power, axis weights) to
+the OPPONENT draft symmetrically — resolveBattle builds tagEffectsB the same way
+as tagEffectsA. Player-vs-player and player-vs-pro are the same code path; the
+only difference is where the opponent's roles come from (pro: GPM-rank; player:
+assigned; legacy rows without roles get no role-fit but tags still apply).
+
 ---
 
 ## Session log — 2026-08-13 (long UI + calibration session)

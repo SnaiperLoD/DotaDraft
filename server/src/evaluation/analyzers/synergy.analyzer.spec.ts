@@ -172,22 +172,25 @@ describe('createSynergyAnalyzer (real win-rate data blending)', () => {
     expect(result.score).toBe(0); // floored — nothing else contributes positively here
     expect(result.explanation[0]).toContain('Axe');
     expect(result.explanation[0]).toContain('Sven');
-    expect(result.explanation[0]).toMatch(/weak real win rate/i);
+    expect(result.explanation[0]).toMatch(/below-average real win rate/i);
   });
 
-  it('ignores a small negative real-data delta as noise (below the significance threshold)', () => {
+  it('SHOWS a small negative real-data pair but does NOT penalize it below the significance threshold', () => {
+    // Changed 2026-08-13 (user: "I did not see bad pairs displayed"): a
+    // marginally-negative pair is now surfaced for the player to see, even
+    // though it's too small to move the score.
     const heroA = makeHero({ id: 1, name: 'Axe' });
     const heroB = makeHero({ id: 2, name: 'Sven' });
 
     const mildSignal: SynergyLookup = {
       getWinRate: (id) => (id === 1 || id === 2 ? 0.5 : null),
-      // -1pp — short of the -3pp significance bar.
+      // -1pp — short of the -3pp significance bar, so no score penalty, but < 0.
       getSynergyWinRate: (a, b) => ([a, b].sort().join() === '1,2' ? 0.49 : null),
     };
 
     const result = createSynergyAnalyzer(mildSignal).analyze(picks([heroA, heroB]));
-    expect(result.score).toBe(0);
-    expect(result.explanation.some((line) => /weak real win rate/i.test(line))).toBe(false);
+    expect(result.score).toBe(0); // not penalized
+    expect(result.explanation.some((line) => /below-average real win rate/i.test(line))).toBe(true);
   });
 
   it('floors the final score at 0 rather than going negative', () => {
@@ -223,6 +226,49 @@ describe('createSynergyAnalyzer (real win-rate data blending)', () => {
     const result = createSynergyAnalyzer(mixedSignal).analyze(picks([strong1, strong2, weak1, weak2]));
     // +3 (capped bonus) - 3 (capped penalty) = 0, but both lines should still be present.
     expect(result.explanation.some((line) => /strong real win rate/i.test(line))).toBe(true);
-    expect(result.explanation.some((line) => /weak real win rate/i.test(line))).toBe(true);
+    expect(result.explanation.some((line) => /below-average real win rate/i.test(line))).toBe(true);
+  });
+});
+
+describe('createSynergyAnalyzer (game-plan conflict / anti-synergy rules)', () => {
+  const noRealData: SynergyLookup = { getWinRate: () => null, getSynergyWinRate: () => null };
+
+  it('penalizes a split-push + late-scaling pair as conflicting game plans (no co-pick data needed)', () => {
+    // Lycan (split_push) + Medusa (late_game_scaling) — the user's example. These
+    // are so rarely co-drafted they have no real co-pick data, so the archetype
+    // tags carry the signal.
+    const lycan = makeHero({ id: 1, name: 'Lycan', tags: ['split_push'] });
+    const medusa = makeHero({ id: 2, name: 'Medusa', tags: ['late_game_scaling'] });
+
+    const result = createSynergyAnalyzer(noRealData).analyze(picks([lycan, medusa]));
+    expect(result.explanation.some((l) => l.includes('Lycan') && l.includes('Medusa') && /conflicting game plans/i.test(l))).toBe(
+      true,
+    );
+    // Floored at 0 (a lone conflicting pair has nothing positive to offset it).
+    expect(result.score).toBe(0);
+  });
+
+  it('penalizes a deathball + late-scaling pair as conflicting timings', () => {
+    const deathball = makeHero({ id: 1, name: 'Leshrac', tags: ['deathball'] });
+    const lateCarry = makeHero({ id: 2, name: 'Spectre', tags: ['late_game_scaling'] });
+
+    const result = createSynergyAnalyzer(noRealData).analyze(picks([deathball, lateCarry]));
+    expect(result.explanation.some((l) => /conflicting timings/i.test(l))).toBe(true);
+  });
+
+  it('does not flag a conflict when only one side of the archetype pair is present', () => {
+    const lycan = makeHero({ id: 1, name: 'Lycan', tags: ['split_push'] });
+    const other = makeHero({ id: 2, name: 'Sven', tags: ['teamfight'] });
+
+    const result = createSynergyAnalyzer(noRealData).analyze(picks([lycan, other]));
+    expect(result.explanation.some((l) => /conflicting/i.test(l))).toBe(false);
+  });
+
+  it('does not flag a single hero carrying both tags against itself', () => {
+    const both = makeHero({ id: 1, name: 'Weird', tags: ['split_push', 'late_game_scaling'] });
+    const filler = makeHero({ id: 2, name: 'Filler', tags: ['teamfight'] });
+
+    const result = createSynergyAnalyzer(noRealData).analyze(picks([both, filler]));
+    expect(result.explanation.some((l) => /conflicting/i.test(l))).toBe(false);
   });
 });

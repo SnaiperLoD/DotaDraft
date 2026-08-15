@@ -79,6 +79,57 @@ function findPair(heroes: Hero[], tagA: string, tagB: string): [Hero, Hero] | nu
   return null;
 }
 
+// Game-plan conflict rules (user 2026-08-13): unlike TAG_PAIR_RULES (which read
+// synergy_tags), these read the archetype `tags` field and SUBTRACT — two
+// heroes whose win conditions pull the game in opposite directions (an early
+// tempo/push win-condition tag vs a late-scaling one, e.g. Lycan + Medusa).
+//
+// EXPLICITLY a hand-authored heuristic layer, NOT real-data-validated: the
+// classic conflict pairs (Lycan+Medusa) are so rarely co-drafted that they have
+// no co-pick winrate at all, and the split_push×late_scaling tag pairing across
+// the whole roster shows only a near-zero mean real delta (~-0.006, coin-flip) —
+// so realSynergyDelta below cannot carry this signal, and this is the flavour/
+// draft-literacy layer instead (same posture as custom-tags). Magnitudes
+// eyeballed. May also fire on a legitimate pusher-support + late-carry combo —
+// treated as a mild note there, which is defensible ("these want different game
+// states"), not a hard error.
+interface AntiSynergyRule {
+  tagA: string;
+  tagB: string;
+  weight: number;
+  describe(a: Hero, b: Hero): string;
+}
+const ANTI_SYNERGY_RULES: AntiSynergyRule[] = [
+  {
+    tagA: 'split_push',
+    tagB: 'late_game_scaling',
+    weight: 1.5,
+    describe: (a, b) =>
+      `${a.name} (split-push/tempo) wants to press the map and end early, while ${b.name} (late-game scaling) needs the game to go long — conflicting game plans.`,
+  },
+  {
+    tagA: 'deathball',
+    tagB: 'late_game_scaling',
+    weight: 2,
+    describe: (a, b) =>
+      `${a.name} (deathball) is built to group and end fast, pulling against ${b.name} (late-game scaling), whose payoff is a farm-heavy late game — conflicting timings.`,
+  },
+];
+
+// Same shape as findPair but reads the archetype `tags` field, and requires two
+// DIFFERENT heroes (a hero that is both tagA and tagB doesn't conflict with
+// itself).
+function findArchetypePair(heroes: Hero[], tagA: string, tagB: string): [Hero, Hero] | null {
+  for (const a of heroes) {
+    if (!a.tags.includes(tagA)) continue;
+    for (const b of heroes) {
+      if (a.id === b.id) continue;
+      if (b.tags.includes(tagB)) return [a, b];
+    }
+  }
+  return null;
+}
+
 // Real co-pick win rate minus the expected rate (average of each hero's own
 // individual win rate) — positive means the pair overperforms what you'd
 // predict from their solo strength alone, negative means it underperforms.
@@ -184,12 +235,28 @@ export function createSynergyAnalyzer(lookup: SynergyLookup): Analyzer {
         );
       }
 
+      // Game-plan conflicts (archetype tags) — surfaced even when the pair has
+      // no co-pick data at all (the common case for these, see ANTI_SYNERGY_RULES).
+      for (const rule of ANTI_SYNERGY_RULES) {
+        const pair = findArchetypePair(heroes, rule.tagA, rule.tagB);
+        if (!pair) continue;
+        score -= rule.weight;
+        explanation.push(rule.describe(pair[0], pair[1]));
+      }
+
+      // Worst real-data pair: now SHOWN whenever it's genuinely negative (user:
+      // "I didn't see bad pairs displayed" — the old code only surfaced it above
+      // the -0.035 significance line, which a measured 5000-draft check found
+      // fires in just ~37% of drafts). The SCORE penalty still only applies at
+      // the significance threshold; a marginally-negative pair is reported but
+      // not punished.
       const worstPair = worstRealSynergyPair(heroes, lookup);
-      if (worstPair && worstPair.delta <= -REAL_SYNERGY_SIGNIFICANCE) {
-        const penalty = Math.min(3, Math.abs(worstPair.delta) * 15);
-        score -= penalty;
+      if (worstPair && worstPair.delta < 0) {
+        if (worstPair.delta <= -REAL_SYNERGY_SIGNIFICANCE) {
+          score -= Math.min(3, Math.abs(worstPair.delta) * 15);
+        }
         explanation.push(
-          `${worstPair.heroA.name} + ${worstPair.heroB.name} have a weak real win rate together — ` +
+          `${worstPair.heroA.name} + ${worstPair.heroB.name} have a below-average real win rate together — ` +
             `underperforming what their individual strength alone would predict.`,
         );
       }
