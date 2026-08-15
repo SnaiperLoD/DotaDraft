@@ -56,9 +56,40 @@ Item 1 (tag divergence) is the most consequential but needs the user to pick a s
 
 ---
 
-## Session log — 2026-08-13 (continued: pool audit + role-fit core-miscast)
+## Session log — 2026-08-15 (session 2: role-fit, leaderboard, tags, synergy, UI)
 
-Two backlog items worked, not yet committed at time of writing.
+Long session, all committed and pushed straight to master (last hash `216add0`
+at time of writing — check `git log` for the true tip). Dates in the individual
+entries below are labelled 2026-08-13 (continuing the prior session's header);
+the actual calendar date was 2026-08-15. Index of what landed, newest first:
+
+- **Synergy negative signals** — game-plan-conflict archetype rules
+  (split_push/deathball × late_game_scaling, e.g. Lycan+Medusa) + always-show the
+  worst real pair when negative. Reran compute-axis-percentiles.
+- **Battle question answered** (no code): our tags + weights apply to the
+  opponent draft symmetrically, player or pro.
+- **Verdict relabel**: 2★ Even→Weak/Слабо, 3–3.5★ Strong→Workable/Рабочий драфт.
+- **Bold hero names** in the Battle outcome write-up.
+- **Extreme axis-narrative bands** (veryLow <10 / veryHigh >90).
+- **No-repeat matchmaking** within a run (hard constraint).
+- **Tag fixes**: Treant→Unseen, Legion Commander + KotL→Healer; Spirit Breaker
+  Global was a stale-dist/Vite-cache issue (rebuilt, cleared).
+- **Two-part leaderboard**: added "Best Runs" (player session drafts) alongside
+  the existing pool-opponent board.
+- **ROLE_AXES revision (E)**: Mid +tempo, Soft Support −skirmish_rate, Offlane
+  initiating boost strengthened (ROLE_AXIS_BOOST_WEIGHT); map_control→Carry
+  skipped (inert). Recomputed round-3 correlations to drive it.
+- **Core-miscast penalty** (backlog item 1): symmetric −10% for a support forced
+  into a core slot.
+- **Pool coverage audit** (backlog item 8): CLOSED, no bug.
+
+Backlogged this session (see 10-tech-debt-backlog.md items 12-16): creature-type
+tags (Void/Undead/Demon), active-jungler counter-synergy + jungle-farm research,
+Pure Draft mode, Spirits tag (feasibility assessed), Laning Efficiency axis +
+per-lane Battle verdict. Position-weighted scaling (D) validated and NOT built
+(no signal on the 100-match pool).
+
+Detail entries follow (labelled 2026-08-13):
 
 **Backlog item 8 (draft pool core/support spread) — audited, CLOSED, no bug.**
 New repeatable check `npm run audit-pool-coverage [numDrafts]`
