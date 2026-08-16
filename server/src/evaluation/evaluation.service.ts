@@ -10,7 +10,10 @@ import { percentileBracket } from './score-narrative';
 import { percentileFor } from './axis-percentiles';
 import type { Analyzer, DraftPick } from './analyzer.interface';
 import type { EvaluationResult, EvaluationSummary, AnalyzerResult } from 'shared';
+import { classifyDraftArchetype } from './draft-archetype';
 import { activeCustomTagsForTeam } from 'shared';
+import { teamHasHiddenCalibrationTags } from '../common/calibration-tags';
+import { buildEvaluationScoreWeights } from '../common/axis-weights-config';
 
 // Categories eligible for the strengths/weaknesses summary. map_control and
 // camp_stacking deliberately absent — see BASE_ANALYZERS below.
@@ -31,12 +34,6 @@ const SUMMARY_KEYS = [
   'resource_efficiency',
   'proSimilarity',
 ];
-
-// camp_stacking's percentile threshold for the standalone note (evaluate()
-// below) — same 70 the rest of the app already uses for "top X%" framing
-// (score-narrative.ts's percentileBracket, EvaluationPanel.tsx's
-// percentileLabel).
-const CAMP_STACKING_NOTE_THRESHOLD = 70;
 
 // Order matches Blueprint/05-evaluation-engine.md's Output breakdown list.
 // Synergy and Pro Similarity are built per-evaluate() call since both
@@ -74,87 +71,24 @@ const BASE_ANALYZERS: Analyzer[] = [
   createAxisAnalyzer('durability', 'Durability'),
   createAxisAnalyzer('initiating', 'Initiating'),
   createAxisAnalyzer('skirmish_rate', 'Skirmish Rate'),
-  // camp_stacking deliberately NOT in this list — 2026-08-06, by explicit
-  // user request. Not the same treatment as map_control below (that one's
-  // a "weak signal, hide it" call) — camp_stacking is real-data-validated
-  // and stays fully weighted; it just doesn't earn a full breakdown card
-  // for every draft. Still computed (see evaluate()'s campStackingNote)
-  // and surfaced as a single sentence when the team's percentile clears
-  // CAMP_STACKING_NOTE_THRESHOLD, same narrative text the card used to
-  // show, just not promoted to a whole category when it isn't notable.
+  // camp_stacking deliberately NOT in this list — muted artifact (Battle
+  // weight 0, no Eval card/note). Data still calibrated into heroes.json
+  // for a possible future return.
   createAxisAnalyzer('mobility', 'Mobility'),
-  // map_control deliberately NOT in this list — 2026-08-03, by explicit
-  // user request. Blueprint/10-tech-debt-backlog.md: this axis's real-data
-  // component (vision_ability_tier) is still the old coarse per-hero tag,
-  // never migrated to the per-ability CSV pipeline the way mobility/saving/
-  // initiating/control were — the underlying signal is weak enough that
-  // showing it as a breakdown row (even at 0 weight) read as more
-  // authoritative than it is. Still computed by evaluation_values/
-  // calibrate-evaluation-values.ts and consumed by Battle Engine's AXES
-  // list (server/data/axis-weights.json, weight 0 there too) — this only
-  // removes it from Evaluation Engine's user-facing breakdown, not the
-  // underlying data or Battle Engine.
+  // map_control deliberately NOT in this list — same dead-artifact posture
+  // as camp_stacking (Battle weight 0; not shown as a strength axis).
   createAxisAnalyzer('saving', 'Saving'),
   createAxisAnalyzer('objectives', 'Objectives'),
-  // Damage per team-networth-share (Blueprint/10-tech-debt-backlog.md,
-  // user research request 2026-08-05) — distinct from Damage Output
-  // (teamfight, raw hero_damage_per_min): rewards damage that didn't need
-  // much of the team's economy to produce. Evaluation Engine-only — not in
-  // Battle Engine's AXES/axis-weights.json, so it doesn't affect Total
-  // Score's role-fit/hard-carry/utility-stacking modifiers or the Battle
-  // Engine's win-probability calc at all, only this breakdown row.
+  // Damage per team-networth-share — also in Battle AXES/axis-weights now.
   createAxisAnalyzer('resource_efficiency', 'Resource Efficiency'),
 ];
 
-// Initial Weights from Blueprint/05-evaluation-engine.md, plus `initiating`
-// at the same 0.05 given to the other minor axes (mobility/map_control/
-// saving/proSimilarity) — the blueprint's original weight list predates
-// this axis. weightedTotal() normalizes by the sum of available weights
-// rather than assuming they sum to 1, so this doesn't need to displace any
-// existing weight; it just makes every other axis's effective share
-// slightly smaller. `counter` is deliberately absent: the blueprint's
-// weight list omits it, so it's shown as an informational breakdown item
-// only and doesn't affect Total Score.
-// teamfight/scaling/objectives/burst/durability scaled by 0.3 (2026-07-25,
-// Blueprint/10-tech-debt-backlog.md, "Поворотный момент"/axis composite
-// fix) — these 5 are highly cross-correlated on real hero data (the same
-// "battle/core-impact spectrum" counted ~5 times, not 5 independent
-// signals; pairwise |r| up to 0.78, see backlog for the full matrix).
-// Combined weight target: ~0.15, matching tempo (the one other axis already
-// deliberately boosted above the 0.05 default) — the whole cluster now
-// counts for about as much as ONE well-weighted independent axis, not five.
-// Original values before scaling: teamfight 0.2, scaling 0.1, objectives
-// 0.1, burst 0.05, durability 0.05 (sum 0.5).
-const WEIGHTS: Record<string, number> = {
-  synergy: 0.3,
-  teamfight: 0.06,
-  tempo: 0.15,
-  scaling: 0.03,
-  objectives: 0.03,
-  burst: 0.015,
-  control: 0.05,
-  durability: 0.015,
-  mobility: 0.05,
-  // map_control entry intentionally removed (not just zeroed) — see
-  // BASE_ANALYZERS above, the axis isn't in breakdown at all anymore.
-  saving: 0.05,
-  initiating: 0.05,
-  // Default weight, same as every other axis when first introduced
-  // (initiating included) — deliberately NOT elevated just because they're
-  // real-data-validated; that's a separate tuning decision for later, not
-  // bundled into "add the axis" (Blueprint/10-tech-debt-backlog.md).
-  skirmish_rate: 0.05,
-  // camp_stacking entry intentionally removed (not just zeroed) — see
-  // BASE_ANALYZERS above, the axis isn't in breakdown at all anymore, so
-  // it can't contribute to weightedTotal() either.
-  proSimilarity: 0.05,
-  // resource_efficiency deliberately absent, same treatment as `counter`
-  // above — shown as an informational breakdown/strengths-weaknesses item
-  // only, doesn't move Total Score. Unlike skirmish_rate/camp_stacking,
-  // this axis hasn't been validated against real winRate yet (see
-  // BASE_ANALYZERS comment) — that's a prerequisite this project applies
-  // before an axis gets scoring weight, not just before it's calibrated.
-};
+// Mid-axis proportions come from server/data/axis-weights.json via
+// common/axis-weights-config.ts (shared skeleton with Battle mid). Synergy /
+// proSimilarity stay Evaluation-only. weightedTotal() still normalizes by
+// available weight sum. counter / map_control / camp_stacking stay out of
+// Total Score.
+const WEIGHTS: Record<string, number> = buildEvaluationScoreWeights();
 
 // Mirrors EvaluationPanel.tsx's percentileLabel() exactly (same 30/70
 // split as score-narrative.ts's percentileBracket()) — used only for the
@@ -204,29 +138,21 @@ export class EvaluationService {
     const totalScore = this.weightedTotal(breakdown);
     const summary = this.buildSummary(breakdown);
 
-    // camp_stacking: computed the same way as any other axis card, just
-    // not added to `breakdown` — only surfaces as a note when it's
-    // actually notable (percentile > threshold), per user request (see
-    // BASE_ANALYZERS comment above for why this axis specifically gets
-    // this treatment rather than being dropped like map_control).
-    const campStackingResult = createAxisAnalyzer('camp_stacking', 'Camp Stacking').analyze(picks);
-    const campStackingNote =
-      campStackingResult.percentile !== null && campStackingResult.percentile > CAMP_STACKING_NOTE_THRESHOLD
-        ? campStackingResult.explanation[campStackingResult.explanation.length - 1]
-        : null;
+    // Public tags plus revealable-hidden tags whose composition gate was
+    // reached during drafting. Permanently hidden tags never enter this
+    // collection; Battle still applies their effects normally.
+    const customTags = activeCustomTagsForTeam(picks.map((p) => p.hero.name))
+      .map((t) => ({
+        name: t.name,
+        rarity: t.rarity,
+        description: t.description,
+      }));
+    const hiddenCalibrationApplied = teamHasHiddenCalibrationTags(picks.map((p) => p.hero));
 
-    // Custom Tags active for this exact 5-hero team (shared/customTags.ts)
-    // — Blueprint/10-tech-debt-backlog.md, "Новая категория Custom Tags в
-    // Evaluation breakdown". Reads the same neutral/shared tag roster the
-    // client already uses for hero-card badges, not server/src/battle's
-    // numeric magnitudes (Core Rules Separation — Evaluation Engine stays
-    // independent of Battle Engine's actual math, this only surfaces
-    // WHICH combos are active and what they do, not a computed value).
-    const customTags = activeCustomTagsForTeam(picks.map((p) => p.hero.name)).map((t) => ({
-      name: t.name,
-      rarity: t.rarity,
-      description: t.description,
-    }));
+    const archetype = classifyDraftArchetype(
+      picks.map((p) => p.hero),
+      breakdown,
+    );
 
     const result: EvaluationResult = {
       draftId,
@@ -234,7 +160,9 @@ export class EvaluationService {
       breakdown,
       summary,
       customTags,
-      campStackingNote,
+      campStackingNote: null,
+      hiddenCalibrationApplied,
+      archetype,
     };
 
     // Persisted for History (Blueprint/10-tech-debt-backlog.md, "Сохранять

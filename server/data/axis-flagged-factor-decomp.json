@@ -1,0 +1,470 @@
+{
+  "flaggedN": 40,
+  "overN": 22,
+  "underN": 18,
+  "byPosition": {
+    "Support": 17,
+    "Carry": 9,
+    "Offlane": 8,
+    "Mid": 6
+  },
+  "byTopFactor": {
+    "F3:camp_stacking": 14,
+    "F5:control+initiating": 7,
+    "F4:map_control+mobility": 7,
+    "F6:burst+durability+objectives+scaling+skirmish_rate+teamfight": 5,
+    "F1:tempo": 5,
+    "F2:saving": 2
+  },
+  "hardCarryShareGt05": 14,
+  "meanCampOver": 4.85909090909091,
+  "meanCampUnder": 5.361111111111112,
+  "meanSkirmishOver": 4.413636363636364,
+  "meanSkirmishUnder": 6.127777777777778,
+  "tagHits": {
+    "teamfight": 32,
+    "pick_off": 14,
+    "poke": 9,
+    "late_game_scaling": 7,
+    "lane_dominance": 5,
+    "early_aggression": 5,
+    "split_push": 3,
+    "global_impact": 2,
+    "deathball": 2,
+    "illusion_based": 1,
+    "summon_based": 1
+  },
+  "top20": [
+    {
+      "name": "Phantom Lancer",
+      "divPp": -26.7,
+      "position": "Carry",
+      "combatMean": 7.46,
+      "hardCarryShare": 1,
+      "topFactor": {
+        "id": "F6",
+        "members": [
+          "burst",
+          "durability",
+          "objectives",
+          "scaling",
+          "skirmish_rate",
+          "teamfight"
+        ],
+        "score": 6.466666666666666
+      },
+      "tags": [
+        "illusion_based",
+        "split_push"
+      ],
+      "camp": 0.2,
+      "save": 0,
+      "skirmish": 1.5
+    },
+    {
+      "name": "Keeper of the Light",
+      "divPp": 23.3,
+      "position": "Support",
+      "combatMean": 3.62,
+      "hardCarryShare": 0,
+      "topFactor": {
+        "id": "F3",
+        "members": [
+          "camp_stacking"
+        ],
+        "score": 9.9
+      },
+      "tags": [
+        "poke",
+        "global_impact"
+      ],
+      "camp": 9.9,
+      "save": 7,
+      "skirmish": 0.5
+    },
+    {
+      "name": "Skywrath Mage",
+      "divPp": -21.6,
+      "position": "Support",
+      "combatMean": 3.5,
+      "hardCarryShare": 0,
+      "topFactor": {
+        "id": "F3",
+        "members": [
+          "camp_stacking"
+        ],
+        "score": 7.8
+      },
+      "tags": [
+        "poke",
+        "teamfight"
+      ],
+      "camp": 7.8,
+      "save": 1.2,
+      "skirmish": 7.4
+    },
+    {
+      "name": "Snapfire",
+      "divPp": 21.5,
+      "position": "Support",
+      "combatMean": 5.36,
+      "hardCarryShare": 0,
+      "topFactor": {
+        "id": "F5",
+        "members": [
+          "control",
+          "initiating"
+        ],
+        "score": 6.199999999999999
+      },
+      "tags": [
+        "teamfight",
+        "poke"
+      ],
+      "camp": 6,
+      "save": 6.1,
+      "skirmish": 3.5
+    },
+    {
+      "name": "Treant Protector",
+      "divPp": 21.2,
+      "position": "Support",
+      "combatMean": 1.1,
+      "hardCarryShare": 0,
+      "topFactor": {
+        "id": "F4",
+        "members": [
+          "map_control",
+          "mobility"
+        ],
+        "score": 8.3
+      },
+      "tags": [
+        "teamfight",
+        "lane_dominance"
+      ],
+      "camp": 2.3,
+      "save": 6.5,
+      "skirmish": 7.3
+    },
+    {
+      "name": "Ember Spirit",
+      "divPp": 21,
+      "position": "Mid",
+      "combatMean": 7.22,
+      "hardCarryShare": 0.96,
+      "topFactor": {
+        "id": "F1",
+        "members": [
+          "tempo"
+        ],
+        "score": 9.3
+      },
+      "tags": [
+        "pick_off",
+        "teamfight"
+      ],
+      "camp": 2,
+      "save": 0,
+      "skirmish": 2.7
+    },
+    {
+      "name": "Necrophos",
+      "divPp": 20.4,
+      "position": "Mid",
+      "combatMean": 7.64,
+      "hardCarryShare": 0.42,
+      "topFactor": {
+        "id": "F1",
+        "members": [
+          "tempo"
+        ],
+        "score": 7.5
+      },
+      "tags": [
+        "teamfight",
+        "late_game_scaling"
+      ],
+      "camp": 7.5,
+      "save": 6.3,
+      "skirmish": 1.3
+    },
+    {
+      "name": "Crystal Maiden",
+      "divPp": -20.1,
+      "position": "Support",
+      "combatMean": 1.1,
+      "hardCarryShare": 0,
+      "topFactor": {
+        "id": "F3",
+        "members": [
+          "camp_stacking"
+        ],
+        "score": 7.9
+      },
+      "tags": [
+        "teamfight",
+        "poke"
+      ],
+      "camp": 7.9,
+      "save": 0,
+      "skirmish": 7.5
+    },
+    {
+      "name": "Disruptor",
+      "divPp": -19.2,
+      "position": "Support",
+      "combatMean": 0.82,
+      "hardCarryShare": 0,
+      "topFactor": {
+        "id": "F3",
+        "members": [
+          "camp_stacking"
+        ],
+        "score": 8.1
+      },
+      "tags": [
+        "teamfight",
+        "pick_off"
+      ],
+      "camp": 8.1,
+      "save": 1.2,
+      "skirmish": 9.3
+    },
+    {
+      "name": "Shadow Shaman",
+      "divPp": -18.7,
+      "position": "Support",
+      "combatMean": 2.5,
+      "hardCarryShare": 0,
+      "topFactor": {
+        "id": "F3",
+        "members": [
+          "camp_stacking"
+        ],
+        "score": 7.1
+      },
+      "tags": [
+        "teamfight",
+        "pick_off"
+      ],
+      "camp": 7.1,
+      "save": 0,
+      "skirmish": 7.4
+    },
+    {
+      "name": "Spectre",
+      "divPp": -18.5,
+      "position": "Carry",
+      "combatMean": 8,
+      "hardCarryShare": 1,
+      "topFactor": {
+        "id": "F4",
+        "members": [
+          "map_control",
+          "mobility"
+        ],
+        "score": 8.15
+      },
+      "tags": [
+        "late_game_scaling",
+        "teamfight"
+      ],
+      "camp": 4.8,
+      "save": 0,
+      "skirmish": 4.3
+    },
+    {
+      "name": "Lich",
+      "divPp": -17.9,
+      "position": "Support",
+      "combatMean": 2.08,
+      "hardCarryShare": 0,
+      "topFactor": {
+        "id": "F3",
+        "members": [
+          "camp_stacking"
+        ],
+        "score": 6.1
+      },
+      "tags": [
+        "teamfight",
+        "poke"
+      ],
+      "camp": 6.1,
+      "save": 3.6,
+      "skirmish": 8.1
+    },
+    {
+      "name": "Naga Siren",
+      "divPp": 17.7,
+      "position": "Carry",
+      "combatMean": 4.96,
+      "hardCarryShare": 1,
+      "topFactor": {
+        "id": "F3",
+        "members": [
+          "camp_stacking"
+        ],
+        "score": 6.6
+      },
+      "tags": [
+        "deathball",
+        "late_game_scaling"
+      ],
+      "camp": 6.6,
+      "save": 3.6,
+      "skirmish": 0.4
+    },
+    {
+      "name": "Kunkka",
+      "divPp": 17.6,
+      "position": "Mid",
+      "combatMean": 5.4,
+      "hardCarryShare": 0.5,
+      "topFactor": {
+        "id": "F5",
+        "members": [
+          "control",
+          "initiating"
+        ],
+        "score": 7.1
+      },
+      "tags": [
+        "teamfight",
+        "deathball"
+      ],
+      "camp": 3.7,
+      "save": 3.6,
+      "skirmish": 2.3
+    },
+    {
+      "name": "Ancient Apparition",
+      "divPp": -17.5,
+      "position": "Support",
+      "combatMean": 1.82,
+      "hardCarryShare": 0,
+      "topFactor": {
+        "id": "F3",
+        "members": [
+          "camp_stacking"
+        ],
+        "score": 9.3
+      },
+      "tags": [
+        "teamfight",
+        "poke"
+      ],
+      "camp": 9.3,
+      "save": 1.2,
+      "skirmish": 8.3
+    },
+    {
+      "name": "Centaur Warrunner",
+      "divPp": 17.1,
+      "position": "Offlane",
+      "combatMean": 5.1,
+      "hardCarryShare": 0,
+      "topFactor": {
+        "id": "F5",
+        "members": [
+          "control",
+          "initiating"
+        ],
+        "score": 6.800000000000001
+      },
+      "tags": [
+        "teamfight",
+        "early_aggression"
+      ],
+      "camp": 1.7,
+      "save": 4,
+      "skirmish": 2.4
+    },
+    {
+      "name": "Marci",
+      "divPp": 17,
+      "position": "Support",
+      "combatMean": 4.14,
+      "hardCarryShare": 0,
+      "topFactor": {
+        "id": "F4",
+        "members": [
+          "map_control",
+          "mobility"
+        ],
+        "score": 7.45
+      },
+      "tags": [
+        "pick_off",
+        "teamfight"
+      ],
+      "camp": 1,
+      "save": 6.2,
+      "skirmish": 5.1
+    },
+    {
+      "name": "Phoenix",
+      "divPp": 16.8,
+      "position": "Support",
+      "combatMean": 5,
+      "hardCarryShare": 0,
+      "topFactor": {
+        "id": "F3",
+        "members": [
+          "camp_stacking"
+        ],
+        "score": 9.4
+      },
+      "tags": [
+        "teamfight",
+        "early_aggression"
+      ],
+      "camp": 9.4,
+      "save": 6.1,
+      "skirmish": 4.3
+    },
+    {
+      "name": "Silencer",
+      "divPp": -16.6,
+      "position": "Support",
+      "combatMean": 2.8,
+      "hardCarryShare": 0,
+      "topFactor": {
+        "id": "F3",
+        "members": [
+          "camp_stacking"
+        ],
+        "score": 8
+      },
+      "tags": [
+        "teamfight",
+        "poke"
+      ],
+      "camp": 8,
+      "save": 3.6,
+      "skirmish": 6.7
+    },
+    {
+      "name": "Batrider",
+      "divPp": 16.2,
+      "position": "Offlane",
+      "combatMean": 2.64,
+      "hardCarryShare": 0,
+      "topFactor": {
+        "id": "F3",
+        "members": [
+          "camp_stacking"
+        ],
+        "score": 9.8
+      },
+      "tags": [
+        "teamfight",
+        "pick_off"
+      ],
+      "camp": 9.8,
+      "save": 3,
+      "skirmish": 7.8
+    }
+  ]
+}

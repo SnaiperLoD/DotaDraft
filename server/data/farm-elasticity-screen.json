@@ -1,0 +1,290 @@
+{
+  "n": 127,
+  "correlations": {
+    "rElasticity_winRate": 0.066,
+    "rElasticity_RE": -0.036,
+    "rElasticity_avgNwShare": -0.319,
+    "rElasticity_axisSum": -0.182,
+    "rAvgNwShare_RE": -0.22,
+    "rElasticity_winRate_afterRE": 0.062,
+    "rElasticity_winRate_afterNwShare": 0.007,
+    "rElasticity_winRate_afterAxesInclRE": -0.002,
+    "rElasticity_divergence": -0.059,
+    "rElasticity_divergence_afterAxes": -0.014
+  },
+  "stopCriteria": {
+    "redundantWithRE": false,
+    "noSignalAfterRE": true,
+    "noDivergenceSignal": true
+  },
+  "byPos": {
+    "Carry": {
+      "n": 35,
+      "rWr": 0.022,
+      "rRe": -0.181,
+      "meanEl": 0.023
+    },
+    "Offlane": {
+      "n": 25,
+      "rWr": -0.086,
+      "rRe": 0.091,
+      "meanEl": -0.044
+    },
+    "Support": {
+      "n": 46,
+      "rWr": 0.206,
+      "rRe": -0.056,
+      "meanEl": 0.071
+    },
+    "Mid": {
+      "n": 21,
+      "rWr": 0.034,
+      "rRe": -0.164,
+      "meanEl": -0.034
+    }
+  },
+  "top15": [
+    {
+      "name": "Bounty Hunter",
+      "pos": "Support",
+      "elasticityPp": 31.82,
+      "re": 0.3,
+      "wr": 0.549,
+      "nwShare": 0.1439
+    },
+    {
+      "name": "Bane",
+      "pos": "Support",
+      "elasticityPp": 31.69,
+      "re": 5.6,
+      "wr": 0.515,
+      "nwShare": 0.102
+    },
+    {
+      "name": "Morphling",
+      "pos": "Carry",
+      "elasticityPp": 31.58,
+      "re": 1.7,
+      "wr": 0.475,
+      "nwShare": 0.2757
+    },
+    {
+      "name": "Bloodseeker",
+      "pos": "Carry",
+      "elasticityPp": 25,
+      "re": 5,
+      "wr": 0.516,
+      "nwShare": 0.2592
+    },
+    {
+      "name": "Oracle",
+      "pos": "Support",
+      "elasticityPp": 20,
+      "re": 0.2,
+      "wr": 0.519,
+      "nwShare": 0.1111
+    },
+    {
+      "name": "Enchantress",
+      "pos": "Support",
+      "elasticityPp": 19.74,
+      "re": 4.5,
+      "wr": 0.481,
+      "nwShare": 0.1348
+    },
+    {
+      "name": "Outworld Destroyer",
+      "pos": "Mid",
+      "elasticityPp": 19.7,
+      "re": 5.7,
+      "wr": 0.536,
+      "nwShare": 0.2397
+    },
+    {
+      "name": "Omniknight",
+      "pos": "Offlane",
+      "elasticityPp": 19.21,
+      "re": 0.8,
+      "wr": 0.518,
+      "nwShare": 0.1585
+    },
+    {
+      "name": "Clockwerk",
+      "pos": "Support",
+      "elasticityPp": 18.66,
+      "re": 9.6,
+      "wr": 0.496,
+      "nwShare": 0.1138
+    },
+    {
+      "name": "Treant Protector",
+      "pos": "Support",
+      "elasticityPp": 16.67,
+      "re": 1.1,
+      "wr": 0.516,
+      "nwShare": 0.1126
+    },
+    {
+      "name": "Silencer",
+      "pos": "Support",
+      "elasticityPp": 16.46,
+      "re": 4.8,
+      "wr": 0.498,
+      "nwShare": 0.1232
+    },
+    {
+      "name": "Elder Titan",
+      "pos": "Support",
+      "elasticityPp": 16.25,
+      "re": 8,
+      "wr": 0.534,
+      "nwShare": 0.1349
+    },
+    {
+      "name": "Bristleback",
+      "pos": "Offlane",
+      "elasticityPp": 16.2,
+      "re": 6.4,
+      "wr": 0.464,
+      "nwShare": 0.2428
+    },
+    {
+      "name": "Huskar",
+      "pos": "Mid",
+      "elasticityPp": 15.79,
+      "re": 6,
+      "wr": 0.463,
+      "nwShare": 0.2284
+    },
+    {
+      "name": "Sniper",
+      "pos": "Mid",
+      "elasticityPp": 15.7,
+      "re": 5.5,
+      "wr": 0.489,
+      "nwShare": 0.2636
+    }
+  ],
+  "bottom15": [
+    {
+      "name": "Largo",
+      "pos": "Offlane",
+      "elasticityPp": -23.47,
+      "re": 1.8,
+      "wr": 0.488,
+      "nwShare": 0.208
+    },
+    {
+      "name": "Riki",
+      "pos": "Mid",
+      "elasticityPp": -21.9,
+      "re": 6.7,
+      "wr": 0.523,
+      "nwShare": 0.2215
+    },
+    {
+      "name": "Lycan",
+      "pos": "Offlane",
+      "elasticityPp": -19.28,
+      "re": 0.4,
+      "wr": 0.516,
+      "nwShare": 0.2529
+    },
+    {
+      "name": "Dark Seer",
+      "pos": "Offlane",
+      "elasticityPp": -19.05,
+      "re": 7.8,
+      "wr": 0.502,
+      "nwShare": 0.2395
+    },
+    {
+      "name": "Tidehunter",
+      "pos": "Offlane",
+      "elasticityPp": -16.91,
+      "re": 3.6,
+      "wr": 0.498,
+      "nwShare": 0.2249
+    },
+    {
+      "name": "Brewmaster",
+      "pos": "Offlane",
+      "elasticityPp": -16.28,
+      "re": 2.9,
+      "wr": 0.52,
+      "nwShare": 0.2258
+    },
+    {
+      "name": "Weaver",
+      "pos": "Carry",
+      "elasticityPp": -16.13,
+      "re": 4.3,
+      "wr": 0.474,
+      "nwShare": 0.2436
+    },
+    {
+      "name": "Sand King",
+      "pos": "Mid",
+      "elasticityPp": -15.31,
+      "re": 8.5,
+      "wr": 0.474,
+      "nwShare": 0.2236
+    },
+    {
+      "name": "Primal Beast",
+      "pos": "Offlane",
+      "elasticityPp": -13.27,
+      "re": 7.3,
+      "wr": 0.506,
+      "nwShare": 0.2213
+    },
+    {
+      "name": "Queen of Pain",
+      "pos": "Mid",
+      "elasticityPp": -13.22,
+      "re": 9.1,
+      "wr": 0.47,
+      "nwShare": 0.2523
+    },
+    {
+      "name": "Wraith King",
+      "pos": "Carry",
+      "elasticityPp": -12.7,
+      "re": 2.9,
+      "wr": 0.533,
+      "nwShare": 0.2451
+    },
+    {
+      "name": "Void Spirit",
+      "pos": "Mid",
+      "elasticityPp": -11.34,
+      "re": 7.1,
+      "wr": 0.496,
+      "nwShare": 0.2321
+    },
+    {
+      "name": "Chen",
+      "pos": "Support",
+      "elasticityPp": -11.11,
+      "re": 0,
+      "wr": 0.474,
+      "nwShare": 0.1474
+    },
+    {
+      "name": "Slardar",
+      "pos": "Offlane",
+      "elasticityPp": -11.11,
+      "re": 1.5,
+      "wr": 0.496,
+      "nwShare": 0.209
+    },
+    {
+      "name": "Underlord",
+      "pos": "Offlane",
+      "elasticityPp": -11.01,
+      "re": 6,
+      "wr": 0.484,
+      "nwShare": 0.2216
+    }
+  ]
+}

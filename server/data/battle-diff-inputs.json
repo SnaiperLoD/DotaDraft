@@ -1,0 +1,7 @@
+{
+  "shrinkageK": 20,
+  "synergyCoeff": 2,
+  "matchupCoeff": 3,
+  "moderateAbsDiff": 0.5,
+  "highAbsDiff": 1.3
+}

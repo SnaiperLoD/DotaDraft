@@ -29,6 +29,20 @@ export interface EvaluationSummary {
   gameplan: string;
 }
 
+// Named draft shape for Evaluation UI (Blueprint/10 §archetypes). Id only —
+// labels are client i18n (`evaluation.archetype.*`). Display-only; no Battle math.
+export type DraftArchetypeId =
+  | 'four_plus_one'
+  | 'split_push'
+  | 'push'
+  | 'deathball'
+  | 'scaling'
+  | 'balance';
+
+export interface DraftArchetype {
+  id: DraftArchetypeId;
+}
+
 export interface EvaluationResult {
   draftId: string;
   totalScore: number;
@@ -37,12 +51,15 @@ export interface EvaluationResult {
   // Custom Tags active for this draft (shared/customTags.ts's
   // activeCustomTagsForTeam) — always-visible tags plus revealable ones
   // whose reveal condition the team's own composition already clears.
-  // Evaluation-Engine-only display; doesn't move totalScore (Custom Tags
-  // stay a Battle Engine mechanic, see Core Rules Separation).
+  // Public flavour tags plus revealable-hidden tags whose team-composition
+  // gate was reached during drafting. Permanently hidden tags stay out.
   customTags: { name: string; rarity: string; description: string }[];
-  // camp_stacking's axis card was removed from `breakdown` (2026-08-06, by
-  // user request — see Blueprint/10-tech-debt-backlog.md) in favor of a
-  // single note, present only when the team's camp_stacking percentile
-  // clears 70 — null otherwise, including whenever it's just unremarkable.
+  // Legacy field — camp_stacking muted (no UI). Always null.
   campStackingNote: string | null;
+  // Internal/backward-compatible diagnostic only; the client deliberately
+  // does not disclose hidden calibration tags in Evaluation.
+  hiddenCalibrationApplied: boolean;
+  // Dominant draft shape from axis percentiles + role structure.
+  // Optional for older History snapshots saved before this field existed.
+  archetype?: DraftArchetype;
 }

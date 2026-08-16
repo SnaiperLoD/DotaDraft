@@ -1,10 +1,30 @@
 .app-footer {
+  position: relative;
   border-top: 1px solid var(--bronze-dim);
   margin-top: 48px;
+  background: color-mix(in srgb, var(--ground-2) 65%, transparent);
+}
+
+.app-footer::before {
+  content: '';
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: -1px;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--gold) 50%, transparent) 40%,
+    color-mix(in srgb, var(--gold) 50%, transparent) 60%,
+    transparent
+  );
+  opacity: 0.65;
 }
 
 .app-footer-inner {
-  max-width: 1180px;
+  max-width: var(--page-max);
   margin: 0 auto;
   padding: 20px 20px;
   display: flex;
@@ -28,12 +48,6 @@
   font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  /* Clears the fixed-position Legend "?" button (LegendPanel.css, 36px
-     circle at right:20px/bottom:20px) — below ~1220px viewport width the
-     footer spans to the real viewport edge (no max-width margin left to
-     absorb it) and the last link sits directly under the button without
-     this. Negligible on wide screens where the footer is centered with
-     real margin well past this reserve. */
   padding-right: 56px;
 }
 

@@ -41,7 +41,11 @@ describe('HeroMetaService', () => {
     expect(service.getMatchupWinRate(1, 999)).toBeNull();
   });
 
-  it('shrinks the raw win rate toward 0.5 proportional to sample size (SHRINKAGE_K=20), instead of a hard cutoff', () => {
+  it('shrinks the raw win rate toward 0.5 proportional to sample size (K from battle-diff-inputs.json), instead of a hard cutoff', () => {
+    const actualFs = jest.requireActual<typeof fs>('fs');
+    const { shrinkageK: K } = JSON.parse(
+      actualFs.readFileSync(require('path').join(__dirname, '..', '..', 'data', 'battle-diff-inputs.json'), 'utf-8'),
+    ) as { shrinkageK: number };
     mockHeroMeta([
       {
         heroId: 1,
@@ -54,10 +58,10 @@ describe('HeroMetaService', () => {
       },
     ]);
     const service = new HeroMetaService();
-    // weight = games/(games+20); shrunk = weight*rawWr + (1-weight)*0.5
-    expect(service.getSynergyWinRate(1, 2)).toBeCloseTo((9 / 29) * (8 / 9) + (20 / 29) * 0.5, 5); // ~0.621
-    expect(service.getSynergyWinRate(1, 3)).toBeCloseTo((10 / 30) * 0.6 + (20 / 30) * 0.5, 5); // ~0.533
-    expect(service.getMatchupWinRate(1, 4)).toBeCloseTo((5 / 25) * 0.8 + (20 / 25) * 0.5, 5); // ~0.56
+    // weight = games/(games+K); shrunk = weight*rawWr + (1-weight)*0.5
+    expect(service.getSynergyWinRate(1, 2)).toBeCloseTo((9 / (9 + K)) * (8 / 9) + (K / (9 + K)) * 0.5, 5);
+    expect(service.getSynergyWinRate(1, 3)).toBeCloseTo((10 / (10 + K)) * 0.6 + (K / (10 + K)) * 0.5, 5);
+    expect(service.getMatchupWinRate(1, 4)).toBeCloseTo((5 / (5 + K)) * 0.8 + (K / (5 + K)) * 0.5, 5);
     // thinner sample (9 games) shrinks harder toward 0.5 than a thicker one (10 games) with a more extreme raw rate
     expect(Math.abs(service.getSynergyWinRate(1, 2)! - 0.5)).toBeGreaterThan(
       Math.abs(service.getSynergyWinRate(1, 3)! - 0.5),

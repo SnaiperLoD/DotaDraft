@@ -5,6 +5,10 @@
    separate semantic system (see heroRoleColor.ts) — they encode real
    position data and are not the page accent.
 
+   Light theme is cool limestone / steel (not warm parchment beige) —
+   forged metal on stone, so day mode still reads as the same product as
+   night rather than a yellow manuscript. Dark stays the original forge.
+
    Theming mechanism: `light-dark()` against the root's `color-scheme`,
    which collapses what used to be three copies of the light palette
    (:root[data-theme='light'], the prefers-color-scheme block, and the
@@ -16,81 +20,60 @@
   color-scheme: dark light;
 
   /* ---------- ground ---------- */
-  --ground: light-dark(#e9dfc6, #15100c);
-  --ground-2: light-dark(#f1e8d2, #1b1510);
-  --panel: light-dark(#fbf5e6, #211a14);
+  /* Light: cool stone (#e4e7ec family). Dark: forge charcoal. */
+  --ground: light-dark(#e4e7ec, #15100c);
+  --ground-2: light-dark(#eceff3, #1b1510);
+  --panel: light-dark(#f5f6f8, #211a14);
   --panel-raised: light-dark(#ffffff, #2c2219);
 
   /* ---------- metal ---------- */
-  --bronze: light-dark(#b08d4f, #6b4f2a);
-  --bronze-dim: light-dark(#cbb27f, #4a3820);
-  --gold: light-dark(#8a6a16, #c9a227);
-  --gold-bright: light-dark(#b8901f, #edcb6e);
+  /* Light bronze is cooler/grayer so it doesn't reintroduce beige wash. */
+  --bronze: light-dark(#7d6b4e, #6b4f2a);
+  --bronze-dim: light-dark(#9a8b72, #4a3820);
+  --gold: light-dark(#6e5a14, #c9a227);
+  --gold-bright: light-dark(#8a7218, #edcb6e);
 
   /* ---------- accent ---------- */
   --blood: light-dark(#8a2430, #7a1f2a);
   --blood-bright: #a3313f;
 
   /* ---------- text ---------- */
-  --ink: light-dark(#241d13, #ece2c9);
-  --ink-muted: light-dark(#5b4e35, #a99878);
-  --ink-faint: light-dark(#8c7c5c, #7a6d55);
+  /* Cool slate ink in light — warm brown ink was half of the "beige app" feel. */
+  --ink: light-dark(#1a1e26, #ece2c9);
+  --ink-muted: light-dark(#4a5363, #a99878);
+  --ink-faint: light-dark(#7a8494, #7a6d55);
 
   /* ---------- lines ---------- */
-  /* Hairline separators inside a panel, where --bronze-dim reads as too
-     much structure (it's a real border color, this is a divider). */
-  --line: light-dark(rgba(90, 70, 30, 0.18), rgba(236, 226, 201, 0.09));
-  --line-strong: light-dark(rgba(90, 70, 30, 0.32), rgba(236, 226, 201, 0.16));
-  /* Faint fill for "slightly raised off the panel" areas — the pattern
-     `rgba(255,255,255,0.03)` used to be written inline, which was
-     invisible in light mode (white on near-white). */
-  --wash: light-dark(rgba(60, 45, 20, 0.045), rgba(255, 255, 255, 0.035));
-  --wash-strong: light-dark(rgba(60, 45, 20, 0.08), rgba(255, 255, 255, 0.06));
-  /* Page-background hatch (base.css). Weaker than --wash in light mode:
-     the same alpha that reads as texture on a near-black ground reads as
-     visible stripes on parchment, and it collides with AdSlot's own
-     diagonal placeholder pattern. */
-  --hatch: light-dark(rgba(90, 70, 30, 0.022), rgba(255, 255, 255, 0.035));
-  --scrim: light-dark(rgba(40, 30, 12, 0.45), rgba(8, 5, 3, 0.66));
+  --line: light-dark(rgba(36, 48, 68, 0.12), rgba(236, 226, 201, 0.09));
+  --line-strong: light-dark(rgba(36, 48, 68, 0.22), rgba(236, 226, 201, 0.16));
+  --wash: light-dark(rgba(28, 36, 52, 0.04), rgba(255, 255, 255, 0.035));
+  --wash-strong: light-dark(rgba(28, 36, 52, 0.07), rgba(255, 255, 255, 0.06));
+  --hatch: light-dark(rgba(36, 48, 68, 0.028), rgba(255, 255, 255, 0.035));
+  --scrim: light-dark(rgba(20, 28, 40, 0.4), rgba(8, 5, 3, 0.66));
 
   /* ---------- outcome (win/lose) ---------- */
-  /* One vocabulary shared by Battle results, the synergy best/worst
-     hero-card highlight, Evaluation's percentile pills and History's
-     battle rows — these were four separate hardcoded hex pairs before.
-     For a translucent version of any of these, use
-     `color-mix(in srgb, var(--win) 45%, transparent)` — NOT an
-     `rgb(var(--win-rgb) / .45)` channel-triplet token, which cannot work
-     here: light-dark() only produces colors, so a triplet token would
-     substitute the literal text `light-dark(...)` into rgb() and the whole
-     declaration would be dropped (silently, falling back to black). */
-  --win: light-dark(#2f8b52, #4caf6a);
-  --win-bright: light-dark(#3aa563, #6fcf87);
+  --win: light-dark(#2a7a4a, #4caf6a);
+  --win-bright: light-dark(#32965a, #6fcf87);
   --danger: light-dark(#a33e2f, #c85a4a);
 
   /* ---------- rarity (custom tags) ---------- */
-  /* common/uncommon/rare/epic/legendary -> green/teal/blue/purple/orange,
-     per Dota's own item rarity scale. Darkened in light mode: the dark-mode
-     values are tuned against a near-black ground and wash out on parchment. */
-  --rarity-common: light-dark(#2f8b52, #4caf6a);
-  --rarity-uncommon: light-dark(#1d8a83, #2fb6ad);
-  --rarity-rare: light-dark(#2a6fae, #3f8fd6);
-  --rarity-epic: light-dark(#7f43ad, #a866d9);
-  --rarity-legendary: light-dark(#b16716, #e08a2e);
+  --rarity-common: light-dark(#2a7a4a, #4caf6a);
+  --rarity-uncommon: light-dark(#1a7a74, #2fb6ad);
+  --rarity-rare: light-dark(#2568a0, #3f8fd6);
+  --rarity-epic: light-dark(#6f3a9a, #a866d9);
+  --rarity-legendary: light-dark(#9a5a14, #e08a2e);
 
   /* ---------- hero attributes ---------- */
-  /* Dota's own primary-attribute colors (str/agi/int/universal). Same in
-     both themes — they're an external convention players already read, not
-     a palette decision, and darkening them would break the association. */
   --attr-str: #d4562f;
   --attr-agi: #5fa832;
   --attr-int: #3d8fd6;
   --attr-all: #b25fc9;
 
   /* ---------- utility ---------- */
-  --ad-slot-bg: light-dark(#e3dabf, #33302c);
-  --ad-slot-border: light-dark(#b9ab84, #5a5348);
-  --ad-slot-text: light-dark(#6b5f47, #948a78);
-  --shadow-deep: light-dark(rgba(60, 45, 20, 0.2), rgba(0, 0, 0, 0.55));
+  --shadow-deep: light-dark(rgba(20, 28, 40, 0.12), rgba(0, 0, 0, 0.55));
+
+  /* Soft panel grain (SVG noise) — applied in base.css .panel / .plate. */
+  --panel-noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
 
   /* ---------- type ---------- */
   --font-display: 'Cinzel', Georgia, serif;
@@ -108,12 +91,8 @@
   --sp-8: 64px;
 
   /* ---------- geometry ---------- */
-  /* Corner cut for .plate (base.css). Dota's own panels are chamfered
-     rather than rounded — it's the single most recognisable trait of that
-     UI, and it costs one clip-path. Deliberately kept alongside the
-     rounded .panel rather than replacing it: two surface treatments give
-     the page a hierarchy it didn't have when every box looked the same. */
   --bevel: 14px;
+  --bevel-sm: 8px;
 
   /* ---------- radius ---------- */
   --r-xs: 2px;
@@ -137,12 +116,10 @@
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* ---------- layout ---------- */
-  --page-max: 1180px;
+  --page-max: 1360px;
   --gutter: 20px;
 }
 
-/* Explicit user choice (ThemeToggle) — overrides the OS preference by
-   flipping color-scheme, which every light-dark() token above reads. */
 :root[data-theme='light'] {
   color-scheme: light;
 }

@@ -48,7 +48,7 @@
     "evaluationTitle": "Evaluation",
     "evaluationText": "Your draft gets scored on things like synergy, tempo, control, and scaling — each axis is calibrated against real win-rate data from thousands of matches, not just a hand-picked formula.",
     "battleTitle": "Battle Mode",
-    "battleText": "Your draft is compared against another draft — a real player's submission or a professional lineup — and resolved into a Win or Lose with a Confidence Tier (Low/Moderate/High), never a fake precise percentage.",
+    "battleText": "Your draft faces another lineup. The outcome uses DotaDraft axes and tags — and also real OpenDota hero win rates plus how those heroes actually perform against each other, not only in-app stats.",
     "ceilingTitle": "What we don't claim",
     "ceilingText": "A draft alone can't fully predict a real match — execution matters more than any stat sheet. We'd rather be honest about that uncertainty than pretend to false precision."
   },
@@ -68,7 +68,9 @@
     "synergyWorst": "Worst synergy",
     "reroll": "Re-roll ({{count}})",
     "yourTeam": "Your Team",
-    "startNewDraft": "Start New Draft"
+    "startNewDraft": "Start New Draft",
+    "copyDraft": "Copy draft",
+    "copied": "Copied"
   },
   "roleAssignment": {
     "heading": "Assign Roles",
@@ -113,6 +115,22 @@
       "strong": "Workable",
       "elite": "Elite"
     },
+    "archetype": {
+      "four_plus_one": "4+1",
+      "split_push": "Split-push",
+      "push": "Push",
+      "deathball": "Deathball",
+      "scaling": "Late game",
+      "balance": "Balance"
+    },
+    "archetypeHint": {
+      "four_plus_one": "One dedicated Carry, four supporting pieces",
+      "split_push": "High mobility with map pressure / split identity",
+      "push": "Strong objectives and early-mid tempo",
+      "deathball": "Group fight draft — not a mobile split plan",
+      "scaling": "Wants the late game; soft early tempo",
+      "balance": "No single dominant shape"
+    },
     "radarTitle": "Axis profile",
     "radarAlt": "Radar chart of this draft's percentile on each evaluation axis",
     "radarNote": "Distance from the centre is the percentile against 10,000 random teams. The dashed ring is average.",
@@ -122,7 +140,9 @@
     "notAvailable": "N/A",
     "viewMatch": "View match on OpenDota →",
     "topContributorHeading": "Top {{axis}} Contributor",
-    "activeCombos": "Active Combos"
+    "activeCombos": "Active Combos",
+    "combosBattleNote": "These combos do not change the Evaluation score above — they apply in Battle.",
+    "combosBattleSummary": "In Battle, active tags can buff or debuff your draft (and curse the opponent). Treat them as part of the fight, not this score."
   },
   "commitToPool": {
     "committing": "Committing…",
@@ -135,7 +155,7 @@
     "enterBattle": "Enter Battle",
     "enterBattleMode": "Enter Battle Mode",
     "backToEvaluation": "Back to Evaluation",
-    "screenIntro": "Send this draft against another player's or a professional lineup.",
+    "screenIntro": "Send this draft against another player's or a professional lineup. Battle uses DotaDraft axes and tags — and real OpenDota win rates plus how those heroes perform against each other, not only in-app stats.",
     "victory": "Victory",
     "defeat": "Defeat",
     "confidence": "{{tier}} Confidence",
@@ -146,6 +166,9 @@
     "anotherPlayer": "another player",
     "viewMatch": "(view match on OpenDota →)",
     "shutdown": "Shutdown",
+    "shutdownBlurb": "The hero underperforms their own average against every hero on the opposing draft.",
+    "shutdownNoteMine": "Your {{hero}} is in Shutdown: underperforms their own average against every hero on the opposing draft (−10% power).",
+    "shutdownNoteOpponent": "Opponent’s {{hero}} is in Shutdown: underperforms their own average against every hero on your draft (−10% power).",
     "bestPairs": "Best pairs (your draft)",
     "bestMatchups": "Your best matchups vs opponent",
     "worstMatchups": "Your worst matchups vs opponent",
@@ -155,8 +178,34 @@
     "advantages": "Advantages",
     "disadvantages": "Disadvantages",
     "explanation": "Explanation",
+    "story": {
+      "title": "How the match may have unfolded",
+      "disclaimer": "Narrative simulation for flavor. This is not a replay or a reconstruction of a real match.",
+      "early": "Opening",
+      "turning": "Turning point",
+      "finish": "Finish",
+      "yourSide": "Your draft",
+      "opponentSide": "The opponent",
+      "winningDraft": "the winning core",
+      "lanes": {
+        "safe": "Safe lane",
+        "mid": "Mid",
+        "off": "Offlane"
+      },
+      "laneWon": "{{lane}} advantage goes to {{winner}} in the matchup against {{loser}}.",
+      "laneEven": "{{lane}} stays even between {{mine}} and {{opponent}}.",
+      "openingAhead": "{{lanes}} The lane result gives {{tempo}} the first move toward the power rune and leaves {{farmer}} on the protected lane-and-jungle farming route.",
+      "openingComeback": "{{lanes}} The winning side leaves the lanes behind: {{farmer}} gives up the contested lane for the jungle, while {{tempo}} cuts the next wave and trades the opposite side of the map instead of defending the first tower.",
+      "turningAhead": "{{action}} links with {{tempo}} behind the first catapult wave, takes the outer tower and moves directly into the enemy triangle. In the fight that follows, {{matchupWinner}} gets onto {{matchupLoser}} before the counter-initiation arrives; the winner keeps the triangle, both side lanes and the next objective spawn.",
+      "turningComeback": "The opponent groups to convert the lane lead into another outer tower. {{action}} wraps behind that push under smoke, {{tempo}} closes the retreat, and {{matchupWinner}} catches {{matchupLoser}} before the fight is set. The turnaround hands over the tower, the triangle and the next objective spawn.",
+      "finishText": "{{farmer}} absorbs the side lanes and triangle until the core items are complete. {{winner}} clears Roshan under its own vision, puts the Aegis on {{farmer}} and waits for the lanes to meet the enemy high ground. {{action}} starts the siege fight, {{losingCore}} is forced into an early buyback, and the second entry ends the defence."
+    },
     "fightAgain": "Fight Again",
     "battlesThisVisit": "Battles this visit: {{count}}",
+    "winStreak": "Win streak {{count}}",
+    "loseStreak": "Loss streak {{count}}",
+    "bestWinStreak": "Best streak {{count}}",
+    "runHint": "Record for this Battle Mode run (resets on a new draft)",
     "tier": {
       "Low": "Low",
       "Moderate": "Moderate",
@@ -174,13 +223,15 @@
     "draftCount_one": "{{count}} draft",
     "draftCount_other": "{{count}} drafts",
     "winShort": "W",
-    "lossShort": "L"
-  },
-  "adSlot": {
-    "label": "Advertisement"
+    "lossShort": "L",
+    "winStreak": "{{count}}W streak"
   },
   "tapalka": {
     "heading": "Waiting Room",
+    "tournamentWatch": "Tournament watch",
+    "tiFormHeading": "Heroes setting the pace",
+    "tiFormNote": "Win leaders from {{count}} matches in the current TI snapshot. Ranked by wins, with win rate as the tie-breaker.",
+    "tiRecord": "{{wins}}–{{losses}} · {{rate}}% win rate",
     "clicks_one": "{{count}} click this visit",
     "clicks_other": "{{count}} clicks this visit"
   },

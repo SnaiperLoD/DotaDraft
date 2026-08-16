@@ -212,7 +212,16 @@ async function main() {
   };
 
   fs.writeFileSync(OUTPUT_PATH, JSON.stringify(output, null, 2));
+  const emptyPositions = results.filter((h) => !h.positions.length).length;
   console.log(`Done. Wrote ${results.length} hero meta entries to ${OUTPUT_PATH}`);
+  if (emptyPositions > 0) {
+    console.warn(
+      `  ${emptyPositions} heroes have empty positions — run npm run refetch-incomplete-hero-meta, then:`,
+    );
+  }
+  console.log(
+    'Next (required for UI role tooltips): npm run recompute-presumed-positions && npm run seed',
+  );
 }
 
 main().catch((err) => {

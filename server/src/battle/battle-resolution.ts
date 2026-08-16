@@ -17,7 +17,9 @@ import {
   HIGH_SKILL_UPSET_SHIFT,
   isTagDisabled,
 } from './custom-tags';
+import { axisWeightsConfig, type AxisWeightsConfig } from '../common/axis-weights-config';
 
+export type { AxisWeightsConfig };
 export interface MatchupLookup {
   getMatchupWinRate(heroId: number, opponentHeroId: number): number | null;
   getSynergyWinRate(heroId: number, allyHeroId: number): number | null;
@@ -55,9 +57,8 @@ export interface BattleResult {
   worstMatchups: BattleMatchup[];
   // Shutdown (common/shutdown.ts) — hero ids on EITHER side flagged this
   // battle, for the client to mark on portraits regardless of which side
-  // they're rendering. shutdownNotes are separate narrative lines (not
-  // folded into `explanation`), one per shutdown hero, phrased from the
-  // calling player's own perspective ("Your X" vs "Opponent's X").
+  // they're rendering. shutdownNotes are English narrative fallbacks; the
+  // client prefers localized copy built from shutdownHeroIds.
   shutdownHeroIds: number[];
   shutdownNotes: string[];
 }
@@ -76,6 +77,7 @@ export const AXES: (keyof HeroEvaluationValues)[] = [
   'initiating',
   'skirmish_rate',
   'camp_stacking',
+  'resource_efficiency',
 ];
 
 // Win-weight bands per Blueprint/06-battle-engine.md Resolution — the
@@ -124,35 +126,27 @@ function clamp(value: number, min: number, max: number): number {
 export type GamePhase = 'early' | 'mid' | 'late';
 const PHASES: GamePhase[] = ['early', 'mid', 'late'];
 
-interface AxisWeightsConfig {
-  axisWeights: Partial<Record<keyof HeroEvaluationValues, number>>;
-  // Per-phase overrides. Falls back to axisWeights (the "mid" baseline —
-  // this project's existing calibrated weights, unchanged) for any axis not
-  // listed for that phase. "mid" itself has no entry: it *is* axisWeights.
-  // Hand-authored from domain reasoning + the wrShort/wrMid/wrLong pattern
-  // above, same "manual heuristic, documented as such" honesty category as
-  // role-fit's ROLE_AXES (common/role-fit.ts) — not statistically fitted.
-  // map_control stays 0 in every phase (unrelated, pre-existing decision:
-  // vision_ability_tier data quality, not phase relevance).
-  phaseWeights?: Partial<Record<GamePhase, Partial<Record<keyof HeroEvaluationValues, number>>>>;
-  // Fixed assumption, NOT measured from our own data yet — approximates
-  // published average Dota 2 match-length distribution (most games land
-  // 25-40min). A real duration histogram (one more Explorer query, same
-  // pattern as research-tempo-metric-v3.ts) would let this be replaced with
-  // a measured value; flagged in Blueprint/10-tech-debt-backlog.md.
-  phaseDistribution?: Record<GamePhase, number>;
-  // Strength of the real-winRate multiplier below — 0 disables it entirely
-  // (explicit stub, Blueprint/10-tech-debt-backlog.md: flagged as a
-  // hard-to-calibrate parameter, deferred rather than risk overtuning it
-  // blind). The 30%-of-result ceiling (REAL_WIN_RATE_CAP below) is a fixed
-  // architectural breakpoint, NOT controlled by this weight — raising this
-  // past 0 later only changes how fast real winRate edge approaches that
-  // ceiling, never how far past it.
-  realWinRateWeight: number;
+const DIFF_INPUTS_PATH = path.join(__dirname, '..', '..', 'data', 'battle-diff-inputs.json');
+
+export interface DiffInputCoeffs {
+  synergyCoeff: number;
+  matchupCoeff: number;
+  moderateAbsDiff: number;
+  highAbsDiff: number;
 }
 
-const AXIS_WEIGHTS_PATH = path.join(__dirname, '..', '..', 'data', 'axis-weights.json');
-const axisWeightsConfig: AxisWeightsConfig = JSON.parse(fs.readFileSync(AXIS_WEIGHTS_PATH, 'utf-8'));
+interface BattleDiffInputsFile extends DiffInputCoeffs {
+  shrinkageK: number;
+}
+
+const battleDiffInputsFile: BattleDiffInputsFile = JSON.parse(fs.readFileSync(DIFF_INPUTS_PATH, 'utf-8'));
+
+export const DEFAULT_DIFF_INPUTS: DiffInputCoeffs = {
+  synergyCoeff: battleDiffInputsFile.synergyCoeff,
+  matchupCoeff: battleDiffInputsFile.matchupCoeff,
+  moderateAbsDiff: battleDiffInputsFile.moderateAbsDiff,
+  highAbsDiff: battleDiffInputsFile.highAbsDiff,
+};
 
 const DEFAULT_PHASE_DISTRIBUTION: Record<GamePhase, number> = { early: 1 / 3, mid: 1 / 3, late: 1 / 3 };
 const phaseDistribution: Record<GamePhase, number> = axisWeightsConfig.phaseDistribution ?? DEFAULT_PHASE_DISTRIBUTION;
@@ -611,10 +605,14 @@ function utilityStackHeroAxisMultipliers(
 // calibrate-battle-engine.ts, simulate-self-play.ts) can grade the model's
 // actual assessment against real outcomes without duplicating this logic,
 // same as resolveBattle() itself does for the live Battle Mode.
+//
+// `diffInputs` overrides are for parameter sweeps only — production /
+// resolveBattle always use DEFAULT_DIFF_INPUTS from battle-diff-inputs.json.
 export function assessBattle(
   teamA: BattlePick[],
   teamB: BattlePick[],
   lookup: MatchupLookup,
+  diffInputs: DiffInputCoeffs = DEFAULT_DIFF_INPUTS,
 ): BattleAssessment {
   const heroesA = teamA.map((p) => p.hero);
   const heroesB = teamB.map((p) => p.hero);
@@ -684,19 +682,23 @@ export function assessBattle(
   // matchup, instead of only ever scaling an existing advantage.
   const powerA =
     taggedPowerA *
-    clamp(1 + synergyBonusA * 2, 0.3, 1.7) *
-    clamp(1 + edgeA * 3, 0.3, 1.7) *
+    clamp(1 + synergyBonusA * diffInputs.synergyCoeff, 0.3, 1.7) *
+    clamp(1 + edgeA * diffInputs.matchupCoeff, 0.3, 1.7) *
     clamp(1 + winRateEdgeA * axisWeightsConfig.realWinRateWeight, 1 - REAL_WIN_RATE_CAP, 1 + REAL_WIN_RATE_CAP);
   const powerB =
     taggedPowerB *
-    clamp(1 + synergyBonusB * 2, 0.3, 1.7) *
-    clamp(1 - edgeA * 3, 0.3, 1.7) *
+    clamp(1 + synergyBonusB * diffInputs.synergyCoeff, 0.3, 1.7) *
+    clamp(1 - edgeA * diffInputs.matchupCoeff, 0.3, 1.7) *
     clamp(1 + winRateEdgeB * axisWeightsConfig.realWinRateWeight, 1 - REAL_WIN_RATE_CAP, 1 + REAL_WIN_RATE_CAP);
 
   const diff = powerA - powerB;
 
   const confidenceTier: ConfidenceTier =
-    Math.abs(diff) > 1.5 ? 'High' : Math.abs(diff) > 0.5 ? 'Moderate' : 'Low';
+    Math.abs(diff) > diffInputs.highAbsDiff
+      ? 'High'
+      : Math.abs(diff) > diffInputs.moderateAbsDiff
+        ? 'Moderate'
+        : 'Low';
   const advantageDirection: AdvantageDirection =
     diff > ADVANTAGE_THRESHOLD ? 'A' : diff < -ADVANTAGE_THRESHOLD ? 'B' : 'Even';
 
@@ -760,10 +762,12 @@ export function resolveBattle(
   // the game on the winning side too, worth surfacing either way.
   const shutdownNotes = [
     ...shutdownHeroesA.map(
-      (h) => `Your ${h.name} is being SHUT DOWN — every hero on the opposing draft has historically beaten them (-10% power).`,
+      (h) =>
+        `Your ${h.name} is in Shutdown: underperforms their own average against every hero on the opposing draft (−10% power).`,
     ),
     ...shutdownHeroesB.map(
-      (h) => `Opponent's ${h.name} is being SHUT DOWN — every hero on your draft has historically beaten them (-10% power).`,
+      (h) =>
+        `Opponent's ${h.name} is in Shutdown: underperforms their own average against every hero on your draft (−10% power).`,
     ),
   ];
   const shutdownHeroIds = [...shutdownHeroesA, ...shutdownHeroesB].map((h) => h.id);

@@ -1,7 +1,7 @@
 .hero-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: var(--sp-4);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--sp-3);
 }
 
 .hero-card {
@@ -14,15 +14,12 @@
   padding: 0;
   text-align: left;
   width: 100%;
+  box-shadow: var(--elev-2);
   transition:
     transform var(--dur-2) var(--ease-out),
     border-color var(--dur-2) ease,
-    box-shadow var(--dur-2) ease;
-  box-shadow: var(--elev-2);
-  /* Staggered deal-in on every new pool (React remounts the grid when the
-     round advances or a re-roll lands), so a fresh five reads as dealt
-     rather than swapped. */
-  animation: hero-card-deal var(--dur-3) var(--ease-out) both;
+    filter var(--dur-2) ease;
+  animation: motion-deal var(--dur-3) var(--ease-out) both;
 }
 
 .hero-card:nth-child(1) {
@@ -52,6 +49,12 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .hero-card {
+    animation: none;
+  }
+}
+
 .hero-card:disabled {
   cursor: default;
   opacity: 0.55;
@@ -61,10 +64,8 @@
 .hero-card:not(:disabled):focus-visible {
   transform: translateY(-3px);
   border-color: var(--gold);
-  box-shadow:
-    var(--elev-3),
-    0 0 0 1px var(--gold),
-    0 0 22px color-mix(in srgb, var(--gold) 35%, transparent);
+  filter: drop-shadow(0 10px 22px var(--shadow-deep))
+    drop-shadow(0 0 14px color-mix(in srgb, var(--gold) 35%, transparent));
 }
 
 /* Quick press feedback — the card dips slightly on mousedown so a click
@@ -93,10 +94,8 @@
 .hero-card--committing {
   z-index: 2;
   border-color: var(--gold-bright);
-  box-shadow:
-    var(--elev-3),
-    0 0 0 1px var(--gold-bright),
-    0 0 28px color-mix(in srgb, var(--gold-bright) 55%, transparent);
+  filter: drop-shadow(0 10px 22px var(--shadow-deep))
+    drop-shadow(0 0 18px color-mix(in srgb, var(--gold-bright) 55%, transparent));
   transform: translateY(-3px) scale(1.02);
   /* Override the nth-child deal-in delay so the commit pulse starts now, not
      up to 180ms later depending on the card's grid position. */
@@ -110,10 +109,6 @@
   }
   45% {
     transform: translateY(-4px) scale(1.045);
-    box-shadow:
-      var(--elev-3),
-      0 0 0 2px var(--gold-bright),
-      0 0 42px color-mix(in srgb, var(--gold-bright) 78%, transparent);
   }
   100% {
     transform: translateY(-3px) scale(1.02);
@@ -144,40 +139,33 @@
    dominant signal even when a highlighted card is being hovered. */
 .hero-card--synergy-best {
   border-color: var(--win);
-  box-shadow:
-    var(--elev-2),
-    0 0 0 1px var(--win),
-    0 0 20px color-mix(in srgb, var(--win) 45%, transparent);
+  filter: drop-shadow(0 6px 14px var(--shadow-deep))
+    drop-shadow(0 0 14px color-mix(in srgb, var(--win) 50%, transparent));
 }
 
 .hero-card--synergy-best:not(:disabled):hover,
 .hero-card--synergy-best:not(:disabled):focus-visible {
   border-color: var(--win) !important;
-  box-shadow:
-    var(--elev-3),
-    0 0 0 1px var(--win),
-    0 0 26px color-mix(in srgb, var(--win) 60%, transparent) !important;
+  filter: drop-shadow(0 10px 22px var(--shadow-deep))
+    drop-shadow(0 0 18px color-mix(in srgb, var(--win) 60%, transparent));
 }
 
 .hero-card--synergy-worst {
   border-color: var(--danger);
-  box-shadow:
-    var(--elev-2),
-    0 0 0 1px var(--danger),
-    0 0 20px color-mix(in srgb, var(--danger) 40%, transparent);
+  filter: drop-shadow(0 6px 14px var(--shadow-deep))
+    drop-shadow(0 0 14px color-mix(in srgb, var(--danger) 45%, transparent));
 }
 
 .hero-card--synergy-worst:not(:disabled):hover,
 .hero-card--synergy-worst:not(:disabled):focus-visible {
   border-color: var(--danger) !important;
-  box-shadow:
-    var(--elev-3),
-    0 0 0 1px var(--danger),
-    0 0 26px color-mix(in srgb, var(--danger) 55%, transparent) !important;
+  filter: drop-shadow(0 10px 22px var(--shadow-deep))
+    drop-shadow(0 0 18px color-mix(in srgb, var(--danger) 55%, transparent));
 }
 
 .hero-card .portrait {
-  height: 137px;
+  height: auto;
+  aspect-ratio: 220 / 137;
   position: relative;
 }
 
@@ -193,6 +181,29 @@
      ratio forces a vertical crop. Anchoring to the top keeps the head
      intact and crops the (less important) lower body/torso instead. */
   object-position: center top;
+}
+
+@media (max-width: 760px) {
+  .hero-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: calc(50% - var(--sp-2));
+    justify-self: center;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero-card:last-child:nth-child(odd) {
+    grid-column: auto;
+    max-width: none;
+  }
 }
 
 .hero-card .role-tint {
@@ -250,7 +261,7 @@
 
 .hero-card .card-body {
   padding: 10px 12px 12px;
-  border-top: 2px solid var(--attr);
+  border-top: 1px solid var(--line-strong);
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
@@ -263,17 +274,20 @@
   top: 6px;
   right: 6px;
   z-index: 2;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   display: grid;
   place-items: center;
-  border-radius: var(--r-xs);
+  /* Diamond pip — closer to Dota attribute glyph than a round chip. */
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  border-radius: 0;
   font-family: var(--font-ui);
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 10px;
+  font-weight: 700;
   color: #fff;
-  background: rgba(21, 16, 12, 0.7);
-  border: 1px solid currentColor;
+  background: color-mix(in srgb, currentColor 55%, #15100c);
+  border: none;
+  box-shadow: inset 0 0 0 1.5px currentColor;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
   pointer-events: none;
 }

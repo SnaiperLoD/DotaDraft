@@ -4,6 +4,7 @@ import { AXES } from '../src/battle/battle-resolution';
 import { createAxisAnalyzer } from '../src/evaluation/analyzers/axis.analyzer';
 import { createSynergyAnalyzer } from '../src/evaluation/analyzers/synergy.analyzer';
 import { HeroMetaService } from '../src/hero-meta/hero-meta.service';
+import { buildEvaluationScoreWeights } from '../src/common/axis-weights-config';
 import { ROLES } from 'shared';
 import type { Hero, HeroEvaluationValues } from 'shared';
 import type { DraftPick } from '../src/evaluation/analyzer.interface';
@@ -11,25 +12,8 @@ import type { DraftPick } from '../src/evaluation/analyzer.interface';
 // Percentile calibration for Evaluation's "where does this draft rank"
 // display (self-play outlier investigation follow-up, Blueprint/
 // 10-tech-debt-backlog.md). Draws N random 5-hero teams, scores each axis
-// through the REAL createAxisAnalyzer() (2026-08-06 rewrite — the previous
-// version hand-reimplemented roleFitValue+hardCarryAxisMultipliers only,
-// silently missing utility-stacking discount and the support-miscast
-// penalty added the same session; using the actual analyzer means this
-// distribution can never drift from what a real Evaluation call computes
-// again) so the resulting distribution is an apples-to-apples population to
-// rank a real evaluation against — not just an informal "what's average"
-// probe like check-axis-distribution.ts.
-//
-// Also computes `totalScore`'s raw (pre-percentile-transform) value in the
-// same pass and stores its distribution under the `totalScore` key
-// alongside the per-axis ones — evaluation.service.ts's weightedTotal()
-// looks this up via the same percentileFor() used for axis percentiles, to
-// re-spread the headline 0-10 score across the full range instead of the
-// tight weighted-average clustering found in the "Оценка драфта" backlog
-// entry below. WEIGHTS here must stay in sync with evaluation.service.ts
-// by hand (that file doesn't export it) — same trade-off already accepted
-// for BASE_ANALYZERS/WEIGHTS duplication in this project's other
-// self-play/calibration scripts.
+// through the REAL createAxisAnalyzer() … WEIGHTS come from
+// buildEvaluationScoreWeights() (same source as evaluation.service.ts).
 const HEROES_PATH = path.join(__dirname, '..', 'data', 'heroes.json');
 const HERO_META_PATH = path.join(__dirname, '..', 'data', 'hero-meta.json');
 const OUTPUT_PATH = path.join(__dirname, '..', 'data', 'axis-percentile-distributions.json');
@@ -37,32 +21,15 @@ const OUTPUT_PATH = path.join(__dirname, '..', 'data', 'axis-percentile-distribu
 const N_SAMPLES = 10000;
 const TEAM_SIZE = 5;
 
-// resource_efficiency isn't in Battle Engine's AXES (server/src/battle/
-// battle-resolution.ts) — it's Evaluation-Engine-only, not wired into the
-// real power/win-probability calc (see calibrate-evaluation-values.ts's
-// header comment). Sampled here anyway, alongside AXES, purely so it gets
-// a percentile distribution for axis.analyzer.ts's percentileFor() to rank
-// against — this loop is agnostic to what each axis feeds into.
-const AXES_TO_SAMPLE: (keyof HeroEvaluationValues)[] = [...AXES, 'resource_efficiency'];
+const AXES_TO_SAMPLE: (keyof HeroEvaluationValues)[] = [...AXES];
 
-// Copied from evaluation.service.ts's WEIGHTS (not exported there) —
-// proSimilarity omitted (needs ProMatchService/DB, not just hero-meta.json)
-// and its weight redistributed across the rest, same mechanism
-// weightedTotal() itself uses when an analyzer is genuinely unavailable.
-const WEIGHTS: Record<string, number> = {
-  synergy: 0.3,
-  teamfight: 0.06,
-  tempo: 0.15,
-  scaling: 0.03,
-  objectives: 0.03,
-  burst: 0.015,
-  control: 0.05,
-  durability: 0.015,
-  mobility: 0.05,
-  saving: 0.05,
-  initiating: 0.05,
-  skirmish_rate: 0.05,
-};
+// Same mid-skeleton weights as EvaluationService; proSimilarity omitted
+// (needs ProMatchService/DB) — weight redistributes across the rest.
+const WEIGHTS: Record<string, number> = (() => {
+  const w = { ...buildEvaluationScoreWeights() };
+  delete w.proSimilarity;
+  return w;
+})();
 
 function shuffle<T>(arr: readonly T[]): T[] {
   const a = [...arr];

@@ -1824,3 +1824,46 @@ a decision on whether it also affects Evaluation's synergy analyzer (which does
 not currently consume tag effects at all), plus a new draft-time reveal trigger
 (reveal against the offered pool, not just the committed team). Pending build
 go-ahead.
+
+### Axis regression / grouping iteration (2026-08-16) — read-only; weights NOT changed
+
+Serious pass after OLS path was exhausted (see «Регрессия — полный цикл» / «путь исчерпан» above). Artifacts: `server/data/axis-regression-b0.json`, `axis-structure-analysis.json`, `axis-regression-factor-map.md`, `axis-candidate-validation.json`; tooling `analyze-axis-structure.ts`, `run-axis-regression-b0.ts`, `validate-axis-candidates.ts`.
+
+**B0 (honest `realWinRateWeight=0`, 5×100k blended):** r≈**0.199±0.008**, flagged≈**41.6**/127, avg|div|≈8.06pp; pro direction **57.6%** (Low/Mod/High favored win 53.1/59.7/69.2).
+
+**Factor map (prefer hierarchical k=6):** F1 `tempo`; F2 `saving` (+partial≈0.20); F3 `camp_stacking` (partial≈**−0.25**, sign conflict with +weight); F4 `map_control`+`mobility`; F5 `control`+`initiating`; F6 combat spectrum (`burst`/`teamfight`/`scaling`/`objectives`/`durability`/`skirmish_rate`). PCA needs 6 comps for ≥80% var. Hand composites from prior session: `damage_dealing`/`pushing_power` = high within-r, ~zero winRate signal; `supporting` had low within-r — averaging diluted real `saving`.
+
+**Candidates S1/S2/S3 (nested hero→self-play→pro):** all **failed** stop criteria. S1 r→0.128, S2 r→0.143 (flagged up); S3 within-position skirmish residualization weakened r (0.171→0.104). Pro direction slightly up (~58.1%) but irrelevant without hero-r gain.
+
+**Rejected again:** dumping OLS/ridge β into production weights; equal-share inside collinear F6 (kills `skirmish_rate` budget).
+
+**Apply gate:** no `axis-weights.json` write. Recommendation = keep current weights; next upside is **new predictors** (Phase 3 backlog: personal farm-dependence, lane gold@10), not reshuffles. Awaits explicit user approve only if they insist on a weight trial anyway.
+
+### Axis weight trial applied (2026-08-16) — `T_camp0` after user approve
+
+User approved a weight trial after S1/S2/S3 failed. Refined trials (factor-map driven, not equal-share-into-skirmish):
+
+| Trial | Honest r Δ vs B0 | flagged | proDir | Pass |
+|-------|------------------|---------|--------|------|
+| **T_camp0** (`camp_stacking` mid/early/late → **0**) | **+0.028** (→0.228) | 42.0 | 57.6% | **yes** |
+| T_camp02 (→0.2) | +0.017 | 41.3 | 57.8% | yes |
+| T_combatEq | −0.003 | 42.0 | 57.7% | no |
+| T_camp0_combatEq | +0.027 | 42.3 | 57.8% | no (flagged) |
+
+**Applied then REVERTED (same session):** agent misread “trial весов — апрув” as permission to write production weights. User clarified: approve was for **running tests only**, never for writing `axis-weights.json` without an explicit apply go-ahead. File restored to `camp_stacking` 0.5 / 0.54 / 0.19. Trial results remain in `axis-weight-trials.json` / `axis-weight-trial-final.json` as offline evidence only.
+
+**Still open:** farm-dependence / lane gold@10 predictors; flagged core (~40). If applying `T_camp0` later — needs a separate explicit “пиши в axis-weights” approve.
+
+### Eval↔Battle alignment (2026-08-16, user-directed)
+
+Agreed product decisions + shipped:
+
+- Shared **mid** axis skeleton: `server/src/common/axis-weights-config.ts` loads `axis-weights.json`; Battle uses it for mid/phase; Evaluation Total Score axis weights = renormalized mid proportions (`buildEvaluationScoreWeights()`, synergy/proSimilarity stay Eval-only).
+- `camp_stacking` / `map_control` muted (weight 0, no Eval card/note).
+- `resource_efficiency` in Battle AXES (mid 0.5 / early 0.4 / late 0.55) and in Eval Total via shared skeleton.
+- Hidden balance tags (Summoning Sickness / Tempo Monster / Divided Attention) fold into Eval axis scores via `common/calibration-tags.ts`.
+- UI copy: Battle uses real WR + matchups; visible tags apply in Battle, not Eval score.
+- `axis-percentile-distributions.json` regenerated after weight wiring.
+
+
+

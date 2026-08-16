@@ -14,7 +14,7 @@ import type {
   AbilityCategory,
   LeaderboardResponse,
 } from 'shared';
-import type { DraftStateView } from './types';
+import type { DraftStateView, TiFormResponse } from './types';
 
 const BASE_URL = '/api';
 
@@ -36,6 +36,7 @@ export async function request<T>(path: string, options?: RequestInit): Promise<T
 
 export const api = {
   getHeroes: () => request<Hero[]>('/heroes'),
+  getTiForm: () => request<TiFormResponse>('/heroes/ti-form'),
 
   // Round 1's pool. Writes nothing — the draft row only exists once
   // createDraft() below lands the first pick (server: DraftService.create).

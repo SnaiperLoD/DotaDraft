@@ -1,0 +1,590 @@
+{
+  "measuredAt": "2026-08-16T04:16:43.978Z",
+  "nMatches": 100000,
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "honest": {
+    "rMean": 0.37,
+    "rStdev": 0.007,
+    "flaggedMean": 26.4,
+    "avgAbsDivergencePpMean": 6.43,
+    "perSeed": [
+      {
+        "seed": 1,
+        "rFavReal": 0.3778866339727831,
+        "avgAbsDivergencePp": 6.405118411307281,
+        "flaggedCount": 26
+      },
+      {
+        "seed": 2,
+        "rFavReal": 0.36277423666680975,
+        "avgAbsDivergencePp": 6.398353220922272,
+        "flaggedCount": 27
+      },
+      {
+        "seed": 3,
+        "rFavReal": 0.36444534786215405,
+        "avgAbsDivergencePp": 6.499833395760297,
+        "flaggedCount": 28
+      },
+      {
+        "seed": 4,
+        "rFavReal": 0.37971639664108614,
+        "avgAbsDivergencePp": 6.390074463123932,
+        "flaggedCount": 24
+      },
+      {
+        "seed": 5,
+        "rFavReal": 0.36490880928068653,
+        "avgAbsDivergencePp": 6.4471588893840766,
+        "flaggedCount": 27
+      }
+    ]
+  },
+  "b0Baseline": {
+    "rMean": 0.1994694525747318,
+    "flaggedMean": 41.6,
+    "avgAbsDivergencePpMean": 8.061485901226886
+  },
+  "deltaVsB0": {
+    "r": 0.17,
+    "flagged": -15.2,
+    "avgAbsDivPp": -1.63,
+    "note": "B0 predates camp_stacking=0 and resource_efficiency-in-Battle; global Δ mixes those with tags. Pool before/after still uses B0 seed1 hero table."
+  },
+  "pools": {
+    "Disable Battery": {
+      "before": {
+        "n": 8,
+        "meanDivPp": -18.3,
+        "flagged": 8,
+        "heroes": [
+          {
+            "name": "Skywrath Mage",
+            "divPp": -21.6
+          },
+          {
+            "name": "Crystal Maiden",
+            "divPp": -20.1
+          },
+          {
+            "name": "Disruptor",
+            "divPp": -19.2
+          },
+          {
+            "name": "Shadow Shaman",
+            "divPp": -18.7
+          },
+          {
+            "name": "Lich",
+            "divPp": -17.9
+          },
+          {
+            "name": "Ancient Apparition",
+            "divPp": -17.5
+          },
+          {
+            "name": "Silencer",
+            "divPp": -16.6
+          },
+          {
+            "name": "Dark Willow",
+            "divPp": -15.1
+          }
+        ]
+      },
+      "after": {
+        "n": 8,
+        "meanDivPp": -7.9,
+        "flagged": 4,
+        "heroes": [
+          {
+            "name": "Crystal Maiden",
+            "divPp": -15
+          },
+          {
+            "name": "Shadow Shaman",
+            "divPp": -11.6
+          },
+          {
+            "name": "Disruptor",
+            "divPp": -11.2
+          },
+          {
+            "name": "Ancient Apparition",
+            "divPp": -10.1
+          },
+          {
+            "name": "Skywrath Mage",
+            "divPp": -8.4
+          },
+          {
+            "name": "Silencer",
+            "divPp": -6.2
+          },
+          {
+            "name": "Lich",
+            "divPp": -3.1
+          },
+          {
+            "name": "Dark Willow",
+            "divPp": 2.3
+          }
+        ]
+      }
+    },
+    "Haunt Absolute": {
+      "before": {
+        "n": 1,
+        "meanDivPp": -18.5,
+        "flagged": 1,
+        "heroes": [
+          {
+            "name": "Spectre",
+            "divPp": -18.5
+          }
+        ]
+      },
+      "after": {
+        "n": 1,
+        "meanDivPp": -6.2,
+        "flagged": 0,
+        "heroes": [
+          {
+            "name": "Spectre",
+            "divPp": -6.2
+          }
+        ]
+      }
+    },
+    "Mirage Tax": {
+      "before": {
+        "n": 2,
+        "meanDivPp": 13.6,
+        "flagged": 1,
+        "heroes": [
+          {
+            "name": "Naga Siren",
+            "divPp": 17.7
+          },
+          {
+            "name": "Terrorblade",
+            "divPp": 9.6
+          }
+        ]
+      },
+      "after": {
+        "n": 2,
+        "meanDivPp": 1.7,
+        "flagged": 0,
+        "heroes": [
+          {
+            "name": "Naga Siren",
+            "divPp": 5.8
+          },
+          {
+            "name": "Terrorblade",
+            "divPp": -2.3
+          }
+        ]
+      }
+    },
+    "Paper Utility": {
+      "before": {
+        "n": 5,
+        "meanDivPp": 19.1,
+        "flagged": 5,
+        "heroes": [
+          {
+            "name": "Keeper of the Light",
+            "divPp": 23.3
+          },
+          {
+            "name": "Snapfire",
+            "divPp": 21.5
+          },
+          {
+            "name": "Treant Protector",
+            "divPp": 21.2
+          },
+          {
+            "name": "Batrider",
+            "divPp": 16.2
+          },
+          {
+            "name": "Enchantress",
+            "divPp": 13.4
+          }
+        ]
+      },
+      "after": {
+        "n": 5,
+        "meanDivPp": 3.8,
+        "flagged": 0,
+        "heroes": [
+          {
+            "name": "Snapfire",
+            "divPp": 9.6
+          },
+          {
+            "name": "Keeper of the Light",
+            "divPp": 9.2
+          },
+          {
+            "name": "Treant Protector",
+            "divPp": 7.4
+          },
+          {
+            "name": "Enchantress",
+            "divPp": -7.3
+          },
+          {
+            "name": "Batrider",
+            "divPp": 0.3
+          }
+        ]
+      }
+    },
+    "Prone To Burst": {
+      "before": {
+        "n": 5,
+        "meanDivPp": 12.4,
+        "flagged": 4,
+        "heroes": [
+          {
+            "name": "Necrophos",
+            "divPp": 20.4
+          },
+          {
+            "name": "Phoenix",
+            "divPp": 16.8
+          },
+          {
+            "name": "Monkey King",
+            "divPp": 15.1
+          },
+          {
+            "name": "Enchantress",
+            "divPp": 13.4
+          },
+          {
+            "name": "Huskar",
+            "divPp": -3.6
+          }
+        ]
+      },
+      "after": {
+        "n": 5,
+        "meanDivPp": 0.3,
+        "flagged": 0,
+        "heroes": [
+          {
+            "name": "Enchantress",
+            "divPp": -7.3
+          },
+          {
+            "name": "Necrophos",
+            "divPp": 6.7
+          },
+          {
+            "name": "Huskar",
+            "divPp": -5.5
+          },
+          {
+            "name": "Phoenix",
+            "divPp": 4.3
+          },
+          {
+            "name": "Monkey King",
+            "divPp": 3.5
+          }
+        ]
+      }
+    },
+    "Army of Clones (control)": {
+      "before": {
+        "n": 4,
+        "meanDivPp": 1.5,
+        "flagged": 2,
+        "heroes": [
+          {
+            "name": "Phantom Lancer",
+            "divPp": -26.7
+          },
+          {
+            "name": "Naga Siren",
+            "divPp": 17.7
+          },
+          {
+            "name": "Terrorblade",
+            "divPp": 9.6
+          },
+          {
+            "name": "Chaos Knight",
+            "divPp": 5.4
+          }
+        ]
+      },
+      "after": {
+        "n": 4,
+        "meanDivPp": -1.9,
+        "flagged": 1,
+        "heroes": [
+          {
+            "name": "Phantom Lancer",
+            "divPp": -18.8
+          },
+          {
+            "name": "Chaos Knight",
+            "divPp": 7.9
+          },
+          {
+            "name": "Naga Siren",
+            "divPp": 5.8
+          },
+          {
+            "name": "Terrorblade",
+            "divPp": -2.3
+          }
+        ]
+      }
+    },
+    "Raid Boss": {
+      "before": {
+        "n": 6,
+        "meanDivPp": -14.7,
+        "flagged": 5,
+        "heroes": [
+          {
+            "name": "Phantom Lancer",
+            "divPp": -26.7
+          },
+          {
+            "name": "Troll Warlord",
+            "divPp": -15.3
+          },
+          {
+            "name": "Medusa",
+            "divPp": -12.9
+          },
+          {
+            "name": "Phantom Assassin",
+            "divPp": -12.9
+          },
+          {
+            "name": "Ursa",
+            "divPp": -10.8
+          },
+          {
+            "name": "Sven",
+            "divPp": -9.6
+          }
+        ]
+      },
+      "after": {
+        "n": 6,
+        "meanDivPp": -4.8,
+        "flagged": 1,
+        "heroes": [
+          {
+            "name": "Phantom Lancer",
+            "divPp": -18.8
+          },
+          {
+            "name": "Troll Warlord",
+            "divPp": -6.8
+          },
+          {
+            "name": "Medusa",
+            "divPp": -6.4
+          },
+          {
+            "name": "Ursa",
+            "divPp": 3.1
+          },
+          {
+            "name": "Phantom Assassin",
+            "divPp": -1.5
+          },
+          {
+            "name": "Sven",
+            "divPp": 1.5
+          }
+        ]
+      }
+    },
+    "Showstopper Tax": {
+      "before": {
+        "n": 9,
+        "meanDivPp": 14.9,
+        "flagged": 9,
+        "heroes": [
+          {
+            "name": "Ember Spirit",
+            "divPp": 21
+          },
+          {
+            "name": "Kunkka",
+            "divPp": 17.6
+          },
+          {
+            "name": "Centaur Warrunner",
+            "divPp": 17.1
+          },
+          {
+            "name": "Marci",
+            "divPp": 17
+          },
+          {
+            "name": "Primal Beast",
+            "divPp": 15.6
+          },
+          {
+            "name": "Earthshaker",
+            "divPp": 13.9
+          },
+          {
+            "name": "Legion Commander",
+            "divPp": 11.6
+          },
+          {
+            "name": "Dawnbreaker",
+            "divPp": 10.6
+          },
+          {
+            "name": "Earth Spirit",
+            "divPp": 10.1
+          }
+        ]
+      },
+      "after": {
+        "n": 9,
+        "meanDivPp": 0.2,
+        "flagged": 1,
+        "heroes": [
+          {
+            "name": "Ember Spirit",
+            "divPp": 12.9
+          },
+          {
+            "name": "Dawnbreaker",
+            "divPp": -7.4
+          },
+          {
+            "name": "Legion Commander",
+            "divPp": -4
+          },
+          {
+            "name": "Earth Spirit",
+            "divPp": -2.7
+          },
+          {
+            "name": "Earthshaker",
+            "divPp": -2.5
+          },
+          {
+            "name": "Marci",
+            "divPp": 1.8
+          },
+          {
+            "name": "Kunkka",
+            "divPp": 1.6
+          },
+          {
+            "name": "Centaur Warrunner",
+            "divPp": 1
+          },
+          {
+            "name": "Primal Beast",
+            "divPp": 0.8
+          }
+        ]
+      }
+    },
+    "False Immortal": {
+      "before": {
+        "n": 3,
+        "meanDivPp": 17.4,
+        "flagged": 3,
+        "heroes": [
+          {
+            "name": "Necrophos",
+            "divPp": 20.4
+          },
+          {
+            "name": "Phoenix",
+            "divPp": 16.8
+          },
+          {
+            "name": "Monkey King",
+            "divPp": 15.1
+          }
+        ]
+      },
+      "after": {
+        "n": 3,
+        "meanDivPp": 4.8,
+        "flagged": 0,
+        "heroes": [
+          {
+            "name": "Necrophos",
+            "divPp": 6.7
+          },
+          {
+            "name": "Phoenix",
+            "divPp": 4.3
+          },
+          {
+            "name": "Monkey King",
+            "divPp": 3.5
+          }
+        ]
+      }
+    },
+    "Siege Voltage": {
+      "before": {
+        "n": 3,
+        "meanDivPp": -12.3,
+        "flagged": 2,
+        "heroes": [
+          {
+            "name": "Death Prophet",
+            "divPp": -15.5
+          },
+          {
+            "name": "Outworld Destroyer",
+            "divPp": -12.4
+          },
+          {
+            "name": "Lina",
+            "divPp": -8.9
+          }
+        ]
+      },
+      "after": {
+        "n": 3,
+        "meanDivPp": -4.7,
+        "flagged": 0,
+        "heroes": [
+          {
+            "name": "Death Prophet",
+            "divPp": -9.6
+          },
+          {
+            "name": "Lina",
+            "divPp": -3
+          },
+          {
+            "name": "Outworld Destroyer",
+            "divPp": -1.5
+          }
+        ]
+      }
+    }
+  }
+}

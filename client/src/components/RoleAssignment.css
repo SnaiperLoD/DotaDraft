@@ -16,8 +16,8 @@
 
 .role-assignment-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-  gap: var(--sp-4);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--sp-3);
   margin-bottom: var(--sp-5);
 }
 
@@ -29,19 +29,19 @@
   box-shadow: var(--elev-2);
   transition:
     border-color var(--dur-2) ease,
-    box-shadow var(--dur-2) ease;
+    filter var(--dur-2) ease;
 }
 
-/* An assigned card recedes: the work left to do is the unassigned ones. */
+/* An assigned card locks gold — remaining work is the unassigned ones. */
 .role-assignment-card.is-assigned {
   border-color: var(--gold);
-  box-shadow:
-    var(--elev-2),
-    0 0 0 1px color-mix(in srgb, var(--gold) 35%, transparent);
+  filter: drop-shadow(0 6px 14px var(--shadow-deep))
+    drop-shadow(0 0 12px color-mix(in srgb, var(--gold) 35%, transparent));
 }
 
 .role-assignment-card .portrait {
-  height: 137px;
+  height: auto;
+  aspect-ratio: 220 / 137;
   position: relative;
 }
 
@@ -85,30 +85,10 @@
 
 /* ---------- position picker ---------- */
 
-/* Same primary-attribute seam as the pool cards (HeroPool.css) — the two
-   card types sit one screen apart in the same flow, so they should read as
-   the same object with a different control strip. */
-.role-assignment-card {
-  --attr: var(--bronze-dim);
-}
-
-.role-assignment-card--attr-str {
-  --attr: var(--attr-str);
-}
-.role-assignment-card--attr-agi {
-  --attr: var(--attr-agi);
-}
-.role-assignment-card--attr-int {
-  --attr: var(--attr-int);
-}
-.role-assignment-card--attr-all {
-  --attr: var(--attr-all);
-}
-
 .role-picker {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  border-top: 2px solid var(--attr);
+  border-top: 1px solid var(--line-strong);
 }
 
 .role-cell {
@@ -187,4 +167,27 @@
 
 .role-assignment-card:not(.is-assigned) .role-assignment-readout {
   color: var(--ink-faint);
+}
+
+@media (max-width: 760px) {
+  .role-assignment-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .role-assignment-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: calc(50% - var(--sp-2));
+    justify-self: center;
+  }
+}
+
+@media (max-width: 420px) {
+  .role-assignment-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .role-assignment-card:last-child:nth-child(odd) {
+    grid-column: auto;
+    max-width: none;
+  }
 }

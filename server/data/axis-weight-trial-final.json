@@ -1,0 +1,203 @@
+{
+  "generatedAt": "2026-08-16T00:16:03.422Z",
+  "appliedTrial": "T_camp0",
+  "axisWeightsSnapshot": {
+    "axisWeights": {
+      "map_control": 0,
+      "tempo": 1.2,
+      "durability": 0.22,
+      "objectives": 0.22,
+      "saving": 1.7,
+      "burst": 0.22,
+      "teamfight": 0.27,
+      "scaling": 0.27,
+      "skirmish_rate": 1.3,
+      "camp_stacking": 0
+    },
+    "phaseWeights": {
+      "early": {
+        "map_control": 0,
+        "tempo": 1.8,
+        "initiating": 1.75,
+        "skirmish_rate": 1.45,
+        "burst": 0.42,
+        "teamfight": 0.19,
+        "objectives": 0.18,
+        "durability": 0.14,
+        "camp_stacking": 0,
+        "scaling": 0.03
+      },
+      "late": {
+        "map_control": 0,
+        "scaling": 2.2,
+        "durability": 1.685,
+        "objectives": 1.538,
+        "saving": 1.35,
+        "teamfight": 0.36,
+        "burst": 0.26,
+        "initiating": 0.4,
+        "skirmish_rate": 0.25,
+        "camp_stacking": 0,
+        "tempo": 0.15
+      }
+    },
+    "phaseDistribution": {
+      "early": 0.15,
+      "mid": 0.35,
+      "late": 0.5
+    },
+    "realWinRateWeight": 2,
+    "hardCarryShareThreshold": 0.5,
+    "hardCarryStackPenalty": {
+      "3": 0.05,
+      "4": 0.15,
+      "5": 0.3
+    },
+    "utilityStackThreshold": 7,
+    "utilityStackFreeCount": 2,
+    "utilityStackPenalty": {
+      "3": 0.08,
+      "4": 0.18,
+      "5": 0.3,
+      "6": 0.45
+    }
+  },
+  "nMatchesPerSeed": 100000,
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "honest": {
+    "perSeed": [
+      {
+        "seed": 1,
+        "rFavReal": 0.23812710730663994,
+        "avgAbsDivergencePp": 8.194026860197004,
+        "flaggedCount": 44
+      },
+      {
+        "seed": 2,
+        "rFavReal": 0.22071935421729147,
+        "avgAbsDivergencePp": 8.099933643759604,
+        "flaggedCount": 41
+      },
+      {
+        "seed": 3,
+        "rFavReal": 0.22758238547031484,
+        "avgAbsDivergencePp": 8.224400652957883,
+        "flaggedCount": 41
+      },
+      {
+        "seed": 4,
+        "rFavReal": 0.23986598439835938,
+        "avgAbsDivergencePp": 8.124923780543511,
+        "flaggedCount": 44
+      },
+      {
+        "seed": 5,
+        "rFavReal": 0.22572469612980367,
+        "avgAbsDivergencePp": 8.148978061314228,
+        "flaggedCount": 44
+      }
+    ],
+    "rMean": 0.23040390550448184,
+    "rSd": 0.007386816531907685,
+    "flaggedMean": 42.8,
+    "avgAbsDivMean": 8.158452599754446
+  },
+  "proHonest": {
+    "directionHitRatePct": "57.6",
+    "tiers": {
+      "Low": "53.0",
+      "Moderate": "59.3",
+      "High": "71.4"
+    },
+    "rawTail": [
+      "Pro matches graded: 648/764 (0 skipped — unknown hero, 116 Even)",
+      "",
+      "=== Even (no favorite) — should be close to 50/50, not a systematic bias ===",
+      "  n=116  radiant winrate=57.8%",
+      "",
+      "=== Confidence tier calibration: does the favored side actually win more as tier rises? ===",
+      "  tier       n   favored-side actual winrate   target win-weight   delta   resolvedOutcome hit-rate",
+      "  Low        287 53.0%                        53                 % -0.0pp      49.8%",
+      "  Moderate   305 59.3%                        62                 % -2.7pp      47.2%",
+      "  High       56  71.4%                        100                % -28.6pp      69.6%",
+      "",
+      "=== Overall (excluding Even) ===",
+      "  n=648",
+      "  advantageDirection hit-rate (primary calibration metric): 57.6%",
+      "  resolvedOutcome hit-rate (secondary, includes the intentional coin flip): 50.3%",
+      "",
+      "Caveat: n=764 total pro matches in the snapshot, split across Even + 3 tiers. Per-tier samples are still noisy at the High end — read overall hit-rate and Low→High monotonicity as the primary signal. hero-meta.json is a recent public snapshot, so pre-2022 TI playoffs dilute accuracy; prefer 2022+ when comparing configs (see sweep-battle-diff-inputs.ts)."
+    ]
+  },
+  "production": {
+    "perSeed": [
+      {
+        "seed": 1,
+        "rFavReal": 0.4535992597110356,
+        "avgAbsDivergencePp": 8.310277783051957,
+        "flaggedCount": 41
+      },
+      {
+        "seed": 2,
+        "rFavReal": 0.4402995096266955,
+        "avgAbsDivergencePp": 8.136327585613952,
+        "flaggedCount": 42
+      },
+      {
+        "seed": 3,
+        "rFavReal": 0.44761325569593796,
+        "avgAbsDivergencePp": 8.268008780349206,
+        "flaggedCount": 43
+      },
+      {
+        "seed": 4,
+        "rFavReal": 0.4574352139506002,
+        "avgAbsDivergencePp": 8.233625448901483,
+        "flaggedCount": 44
+      },
+      {
+        "seed": 5,
+        "rFavReal": 0.4453110056381492,
+        "avgAbsDivergencePp": 8.234764634579413,
+        "flaggedCount": 43
+      }
+    ],
+    "rMean": 0.4488516489244837,
+    "rSd": 0.006056835080741448,
+    "flaggedMean": 42.6,
+    "avgAbsDivMean": 8.236600846499202
+  },
+  "proProduction": {
+    "directionHitRatePct": "57.7",
+    "tiers": {
+      "Low": "52.8",
+      "Moderate": "58.8",
+      "High": "71.0"
+    },
+    "rawTail": [
+      "Pro matches graded: 647/764 (0 skipped — unknown hero, 117 Even)",
+      "",
+      "=== Even (no favorite) — should be close to 50/50, not a systematic bias ===",
+      "  n=117  radiant winrate=57.3%",
+      "",
+      "=== Confidence tier calibration: does the favored side actually win more as tier rises? ===",
+      "  tier       n   favored-side actual winrate   target win-weight   delta   resolvedOutcome hit-rate",
+      "  Low        267 52.8%                        53                 % -0.2pp      46.8%",
+      "  Moderate   311 58.8%                        62                 % -3.2pp      49.8%",
+      "  High       69  71.0%                        100                % -29.0pp      69.6%",
+      "",
+      "=== Overall (excluding Even) ===",
+      "  n=647",
+      "  advantageDirection hit-rate (primary calibration metric): 57.7%",
+      "  resolvedOutcome hit-rate (secondary, includes the intentional coin flip): 50.7%",
+      "",
+      "Caveat: n=764 total pro matches in the snapshot, split across Even + 3 tiers. Per-tier samples are still noisy at the High end — read overall hit-rate and Low→High monotonicity as the primary signal. hero-meta.json is a recent public snapshot, so pre-2022 TI playoffs dilute accuracy; prefer 2022+ when comparing configs (see sweep-battle-diff-inputs.ts)."
+    ]
+  }
+}

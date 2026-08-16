@@ -207,16 +207,18 @@ const STATSTEALER_SOLO_BUFF = 1.02;
 // is a real strength no axis measures); 2+ on the team trades frontline
 // presence for a stack of pick-off specialists, scaling penalty by count —
 // same keyed-by-count shape as hardCarryStackPenalty/utilityStackPenalty.
+// Treant removed 2026-08-16 → Paper Utility (was overrated + carrying a buff).
 const UNSEEN = heroNameSetForTag('Unseen');
 const UNSEEN_POWER_BUFF = 1.06;
 const UNSEEN_MAP_CONTROL_BUFF = 1.08;
 const STEALTH_STACK_PENALTY: Record<string, number> = { '2': 0.95, '3': 0.9, '4': 0.85, '5': 0.8 };
 
 // Army of Clones — illusion/clone heroes (Phantom Lancer/Terrorblade/Naga
-// Siren). Same shape as Unseen (personal power + map_control solo-active,
-// stacking durability/teamfight penalty at 2+) — illusions are extra bodies
-// for damage/vision no axis measures, but the real body gets easier to pick
-// off the more the team leans on clones instead of a genuine frontline.
+// Siren/Chaos Knight). Same shape as Unseen (personal power + map_control
+// solo-active, stacking durability/teamfight penalty at 2+) — illusions are
+// extra bodies for damage/vision no axis measures, but the real body gets
+// easier to pick off the more the team leans on clones instead of a genuine
+// frontline.
 const ARMY_OF_CLONES = heroNameSetForTag('Army of Clones');
 const ARMY_OF_CLONES_POWER_BUFF = 1.06;
 const ARMY_OF_CLONES_MAP_CONTROL_BUFF = 1.08;
@@ -245,9 +247,59 @@ const MASS_BUFFER_PER_EXTRA = 0.01;
 // own team — a new effect shape (see curseEffectsOnOpponent-adjacent
 // reasoning), implemented in blessingEffectsFor since it's still "this
 // hero's own vulnerability," just read against external context.
+// 2026-08-16 user: strengthen + lower threshold (was 6.5 / 0.87 → 5.5 / 0.80).
+// Population mean burst ~5.16 — threshold now sits just above average so the
+// debuff fires in a larger share of random self-play matchups.
 const PRONE_TO_BURST = heroNameSetForTag('Prone To Burst');
-const PRONE_TO_BURST_OPPONENT_BURST_THRESHOLD = 6.5; // population mean ~5.16, sd ~1.34 (Q1, simulate-self-play.ts)
-const PRONE_TO_BURST_PENALTY = 0.92;
+const PRONE_TO_BURST_OPPONENT_BURST_THRESHOLD = 5.5;
+const PRONE_TO_BURST_PENALTY = 0.8;
+
+// Disable Battery — under-modeled backline caster supports (B0 flagged).
+// Axes tax them via skirmish (deaths / low LH); real win condition is disable
+// + nuke from the fog. Solo-active flat power buff. Starting magnitude.
+const DISABLE_BATTERY = heroNameSetForTag('Disable Battery');
+// Was 1.10 (+10%): pool mean −18.3→−14.6, almost all still flagged.
+// Bumped 2026-08-16 user "дожми" → 1.25 (+25%). Rough linear read from the
+// first step (~3.7pp per +10%) projects another ~5–6pp toward zero; residual
+// under likely remains until a second measure.
+const DISABLE_BATTERY_BUFF = 1.25;
+
+// Haunt Absolute — Spectre's Haunt is global presence that Global's
+// map_control buff cannot express while map_control weight is 0. Flat
+// power buff instead. Starting magnitude.
+const HAUNT_ABSOLUTE = heroNameSetForTag('Haunt Absolute');
+const HAUNT_ABSOLUTE_BUFF = 1.12;
+
+// Mirage Tax — hidden. Naga/TB illusion economy inflates objectives/mobility
+// without a matching real-body contribution (opposite problem to PL). Same
+// flat-power shape as Summoning Sickness. Starting magnitude.
+const MIRAGE_TAX = heroNameSetForTag('Mirage Tax');
+const MIRAGE_TAX_PENALTY = 0.85;
+
+// Paper Utility — hidden. KotL/Snapfire/Treant/Batrider/Enchantress read
+// sky-high on utility axes that don't convert. Flat power penalty, same
+// shape as Summoning Sickness. Starting magnitude (milder than 0.70 — pool
+// is mixed with other tags).
+const PAPER_UTILITY = heroNameSetForTag('Paper Utility');
+const PAPER_UTILITY_PENALTY = 0.75;
+
+// Raid Boss — under late/space cores (post tag-batch measure). Flat power.
+const RAID_BOSS = heroNameSetForTag('Raid Boss');
+const RAID_BOSS_BUFF = 1.18;
+
+// Showstopper Tax — hidden. Overrated initiate/flashy cores. Same shape as
+// Paper Utility; magnitude matched to that pool's closer.
+const SHOWSTOPPER_TAX = heroNameSetForTag('Showstopper Tax');
+const SHOWSTOPPER_TAX_PENALTY = 0.75;
+
+// False Immortal — hidden unconditional sustain-overrate (Necro/MK/Phoenix).
+// Stacks with Prone To Burst when opponent burst clears the threshold.
+const FALSE_IMMORTAL = heroNameSetForTag('False Immortal');
+const FALSE_IMMORTAL_PENALTY = 0.82;
+
+// Siege Voltage — under mid push/nuke (DP/Lina/OD).
+const SIEGE_VOLTAGE = heroNameSetForTag('Siege Voltage');
+const SIEGE_VOLTAGE_BUFF = 1.12;
 
 // Healer — ally-sustain heroes (2026-08-12, user-approved research batch).
 // Team durability buff, same count-growing per-hero shape as Mass Buffer
@@ -339,10 +391,8 @@ export function blessingEffectsFor(
     for (const h of statstealers) mulHeroPower(effects, h.id, buff);
   }
 
-  // Unseen: solo-active personal power + map_control buff for every
-  // permanent-invisibility carrier. 2+ on the team: each takes a
-  // durability/teamfight penalty, keyed by stack count (too many pick-off
-  // specialists trade away frontline presence and sustained fight power).
+  // Unseen: uniform personal power + map_control for every carrier; 2+
+  // durability/teamfight stack penalty keyed by count.
   const unseenHeroes = isTagDisabled('Unseen') ? [] : team.filter((h) => UNSEEN.has(h.name));
   for (const h of unseenHeroes) {
     mulHeroPower(effects, h.id, UNSEEN_POWER_BUFF);
@@ -356,8 +406,7 @@ export function blessingEffectsFor(
     }
   }
 
-  // Army of Clones: same shape as Unseen, separate roster (illusion/clone
-  // heroes) — see the tag comment above for the reasoning.
+  // Army of Clones: same uniform shape as Unseen, separate roster.
   const cloneHeroes = isTagDisabled('Army of Clones') ? [] : team.filter((h) => ARMY_OF_CLONES.has(h.name));
   for (const h of cloneHeroes) {
     mulHeroPower(effects, h.id, ARMY_OF_CLONES_POWER_BUFF);
@@ -416,6 +465,63 @@ export function blessingEffectsFor(
       for (const h of team) {
         if (PRONE_TO_BURST.has(h.name)) mulHeroPower(effects, h.id, PRONE_TO_BURST_PENALTY);
       }
+    }
+  }
+
+  // Disable Battery: solo-active flat power buff for under-modeled backline
+  // caster supports.
+  if (!isTagDisabled('Disable Battery')) {
+    for (const h of team) {
+      if (DISABLE_BATTERY.has(h.name)) mulHeroPower(effects, h.id, DISABLE_BATTERY_BUFF);
+    }
+  }
+
+  // Haunt Absolute: Spectre personal power (Global's map_control path is dead).
+  if (!isTagDisabled('Haunt Absolute')) {
+    for (const h of team) {
+      if (HAUNT_ABSOLUTE.has(h.name)) mulHeroPower(effects, h.id, HAUNT_ABSOLUTE_BUFF);
+    }
+  }
+
+  // Mirage Tax: hidden flat power penalty (illusion-economy overrate).
+  if (!isTagDisabled('Mirage Tax')) {
+    for (const h of team) {
+      if (MIRAGE_TAX.has(h.name)) mulHeroPower(effects, h.id, MIRAGE_TAX_PENALTY);
+    }
+  }
+
+  // Paper Utility: hidden flat power penalty (utility-axis overrate).
+  if (!isTagDisabled('Paper Utility')) {
+    for (const h of team) {
+      if (PAPER_UTILITY.has(h.name)) mulHeroPower(effects, h.id, PAPER_UTILITY_PENALTY);
+    }
+  }
+
+  // Raid Boss: late/space cores under-rated by mid-clash resolution.
+  if (!isTagDisabled('Raid Boss')) {
+    for (const h of team) {
+      if (RAID_BOSS.has(h.name)) mulHeroPower(effects, h.id, RAID_BOSS_BUFF);
+    }
+  }
+
+  // Showstopper Tax: hidden — flashy initiate overrate.
+  if (!isTagDisabled('Showstopper Tax')) {
+    for (const h of team) {
+      if (SHOWSTOPPER_TAX.has(h.name)) mulHeroPower(effects, h.id, SHOWSTOPPER_TAX_PENALTY);
+    }
+  }
+
+  // False Immortal: hidden unconditional sustain-overrate (stacks with Prone).
+  if (!isTagDisabled('False Immortal')) {
+    for (const h of team) {
+      if (FALSE_IMMORTAL.has(h.name)) mulHeroPower(effects, h.id, FALSE_IMMORTAL_PENALTY);
+    }
+  }
+
+  // Siege Voltage: mid push/nuke under-count.
+  if (!isTagDisabled('Siege Voltage')) {
+    for (const h of team) {
+      if (SIEGE_VOLTAGE.has(h.name)) mulHeroPower(effects, h.id, SIEGE_VOLTAGE_BUFF);
     }
   }
 

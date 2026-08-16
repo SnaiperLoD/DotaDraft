@@ -10,10 +10,11 @@ describe('blessingEffectsFor', () => {
       expect(effects.heroPowerMultiplier.get(storm.id)).toBe(1.03);
     });
 
-    it('does not buff Crystal Maiden herself', () => {
+    it('does not apply Mana Booster to Crystal Maiden herself (Disable Battery still buffs her)', () => {
       const cm = makeHero({ id: 1, name: 'Crystal Maiden' });
       const effects = blessingEffectsFor([cm], {});
-      expect(effects.heroPowerMultiplier.has(cm.id)).toBe(false);
+      // Mana Booster never self-buffs CM; Disable Battery (+25%) does.
+      expect(effects.heroPowerMultiplier.get(cm.id)).toBeCloseTo(1.25);
     });
 
     it('does nothing without Crystal Maiden present', () => {
@@ -31,12 +32,13 @@ describe('blessingEffectsFor', () => {
     });
 
     it('buffs every tagged hero once 2+ are on the team', () => {
-      const silencer = makeHero({ id: 1, name: 'Silencer' });
-      const slark = makeHero({ id: 2, name: 'Slark' });
+      // Slark+Pudge — not Silencer (also Disable Battery, would compose).
+      const slark = makeHero({ id: 1, name: 'Slark' });
+      const pudge = makeHero({ id: 2, name: 'Pudge' });
       const untagged = makeHero({ id: 3, name: 'Sniper' });
-      const effects = blessingEffectsFor([silencer, slark, untagged], {});
-      expect(effects.heroPowerMultiplier.get(silencer.id)).toBe(1.05);
+      const effects = blessingEffectsFor([slark, pudge, untagged], {});
       expect(effects.heroPowerMultiplier.get(slark.id)).toBe(1.05);
+      expect(effects.heroPowerMultiplier.get(pudge.id)).toBe(1.05);
       expect(effects.heroPowerMultiplier.has(untagged.id)).toBe(false);
     });
   });
@@ -442,7 +444,8 @@ describe('Army of Clones', () => {
   it("buffs a solo carrier's personal power and map control, no team-count gate", () => {
     const pl = makeHero({ id: 1, name: 'Phantom Lancer' });
     const effects = blessingEffectsFor([pl], {});
-    expect(effects.heroPowerMultiplier.get(pl.id)).toBeCloseTo(1.06);
+    // Raid Boss (+18%) also on PL — composed with Army of Clones (+6%).
+    expect(effects.heroPowerMultiplier.get(pl.id)).toBeCloseTo(1.06 * 1.18);
     expect(effects.heroAxisMultiplier.get(pl.id)?.map_control).toBeCloseTo(1.08);
   });
 
@@ -520,20 +523,135 @@ describe('Prone To Burst', () => {
 
   it("does nothing when the opponent's raw burst average is at or below the threshold", () => {
     const huskar = makeHero({ id: 1, name: 'Huskar' });
-    const effects = blessingEffectsFor([huskar], {}, { burst: 6.5 });
+    const effects = blessingEffectsFor([huskar], {}, { burst: 5.5 });
     expect(effects.heroPowerMultiplier.has(huskar.id)).toBe(false);
   });
 
-  it("debuffs a carrier by 8% when the opponent's raw burst average is above the threshold", () => {
+  it("debuffs a carrier by 20% when the opponent's raw burst average is above the threshold", () => {
     const huskar = makeHero({ id: 1, name: 'Huskar' });
-    const effects = blessingEffectsFor([huskar], {}, { burst: 7 });
-    expect(effects.heroPowerMultiplier.get(huskar.id)).toBeCloseTo(0.92);
+    const effects = blessingEffectsFor([huskar], {}, { burst: 5.6 });
+    expect(effects.heroPowerMultiplier.get(huskar.id)).toBeCloseTo(0.8);
   });
 
   it('does not debuff an untagged hero even against a high-burst opponent', () => {
     const sniper = makeHero({ id: 1, name: 'Sniper' });
     const effects = blessingEffectsFor([sniper], {}, { burst: 9 });
     expect(effects.heroPowerMultiplier.has(sniper.id)).toBe(false);
+  });
+});
+
+describe('Disable Battery', () => {
+  it('buffs a solo carrier by 25% personal power', () => {
+    const disruptor = makeHero({ id: 1, name: 'Disruptor' });
+    const effects = blessingEffectsFor([disruptor], {});
+    expect(effects.heroPowerMultiplier.get(disruptor.id)).toBeCloseTo(1.25);
+  });
+
+  it('does nothing for an untagged hero', () => {
+    const sniper = makeHero({ id: 1, name: 'Sniper' });
+    const effects = blessingEffectsFor([sniper], {});
+    expect(effects.heroPowerMultiplier.has(sniper.id)).toBe(false);
+  });
+});
+
+describe('Haunt Absolute', () => {
+  it('buffs Spectre by 12% personal power', () => {
+    const spectre = makeHero({ id: 1, name: 'Spectre' });
+    const effects = blessingEffectsFor([spectre], {});
+    expect(effects.heroPowerMultiplier.get(spectre.id)).toBeCloseTo(1.12);
+  });
+});
+
+describe('Mirage Tax', () => {
+  it('penalises Naga Siren by 15% personal power', () => {
+    const naga = makeHero({ id: 1, name: 'Naga Siren' });
+    const effects = blessingEffectsFor([naga], {});
+    // Army of Clones +6% composed with Mirage Tax -15%: 1.06 * 0.85
+    expect(effects.heroPowerMultiplier.get(naga.id)).toBeCloseTo(1.06 * 0.85);
+  });
+
+  it('penalises Terrorblade the same way (also Army of Clones)', () => {
+    const tb = makeHero({ id: 1, name: 'Terrorblade' });
+    const effects = blessingEffectsFor([tb], {});
+    expect(effects.heroPowerMultiplier.get(tb.id)).toBeCloseTo(1.06 * 0.85);
+  });
+});
+
+describe('Paper Utility', () => {
+  it('penalises Keeper of the Light by 25% personal power', () => {
+    const kotl = makeHero({ id: 1, name: 'Keeper of the Light' });
+    const effects = blessingEffectsFor([kotl], {});
+    expect(effects.heroPowerMultiplier.get(kotl.id)).toBeCloseTo(0.75);
+  });
+
+  it('penalises Treant without Unseen buff (Treant removed from Unseen)', () => {
+    const treant = makeHero({ id: 1, name: 'Treant Protector' });
+    const effects = blessingEffectsFor([treant], {});
+    expect(effects.heroPowerMultiplier.get(treant.id)).toBeCloseTo(0.75);
+    expect(effects.heroAxisMultiplier.get(treant.id)?.map_control).toBeUndefined();
+  });
+
+  it('composes with Prone To Burst for Enchantress when opponent burst is high', () => {
+    const ench = makeHero({ id: 1, name: 'Enchantress' });
+    const effects = blessingEffectsFor([ench], {}, { burst: 7 });
+    expect(effects.heroPowerMultiplier.get(ench.id)).toBeCloseTo(0.75 * 0.8);
+  });
+});
+
+describe('Raid Boss', () => {
+  it('buffs Phantom Lancer by 18% (and still stacks with Army of Clones)', () => {
+    const pl = makeHero({ id: 1, name: 'Phantom Lancer' });
+    const effects = blessingEffectsFor([pl], {});
+    expect(effects.heroPowerMultiplier.get(pl.id)).toBeCloseTo(1.06 * 1.18);
+  });
+
+  it('buffs Medusa by 18% with no other power tags', () => {
+    const medusa = makeHero({ id: 1, name: 'Medusa' });
+    const effects = blessingEffectsFor([medusa], {});
+    expect(effects.heroPowerMultiplier.get(medusa.id)).toBeCloseTo(1.18);
+  });
+});
+
+describe('Showstopper Tax', () => {
+  it('penalises Ember Spirit by 25%', () => {
+    const ember = makeHero({ id: 1, name: 'Ember Spirit' });
+    const effects = blessingEffectsFor([ember], {});
+    expect(effects.heroPowerMultiplier.get(ember.id)).toBeCloseTo(0.75);
+  });
+});
+
+describe('False Immortal', () => {
+  it('penalises Necrophos by 18% unconditionally', () => {
+    const necro = makeHero({ id: 1, name: 'Necrophos' });
+    const effects = blessingEffectsFor([necro], {});
+    // Also Healer — team durability axis only, not personal power.
+    expect(effects.heroPowerMultiplier.get(necro.id)).toBeCloseTo(0.82);
+  });
+
+  it('stacks with Prone To Burst when opponent burst is high', () => {
+    const necro = makeHero({ id: 1, name: 'Necrophos' });
+    const effects = blessingEffectsFor([necro], {}, { burst: 7 });
+    expect(effects.heroPowerMultiplier.get(necro.id)).toBeCloseTo(0.82 * 0.8);
+  });
+
+  it('does not apply to Huskar (deliberately omitted from roster)', () => {
+    const huskar = makeHero({ id: 1, name: 'Huskar' });
+    const effects = blessingEffectsFor([huskar], {});
+    expect(effects.heroPowerMultiplier.has(huskar.id)).toBe(false);
+  });
+});
+
+describe('Siege Voltage', () => {
+  it('buffs Death Prophet by 12%', () => {
+    const dp = makeHero({ id: 1, name: 'Death Prophet' });
+    const effects = blessingEffectsFor([dp], {});
+    expect(effects.heroPowerMultiplier.get(dp.id)).toBeCloseTo(1.12);
+  });
+
+  it('stacks Statstealer solo with Siege Voltage on Outworld Destroyer', () => {
+    const od = makeHero({ id: 1, name: 'Outworld Destroyer' });
+    const effects = blessingEffectsFor([od], {});
+    expect(effects.heroPowerMultiplier.get(od.id)).toBeCloseTo(1.02 * 1.12);
   });
 });
 

@@ -3,6 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { api } from '../api/client';
 import type { HistoryEntry, ConfidenceTier } from 'shared';
 import { heroIconUrl } from '../utils/heroIcon';
+import {
+  currentWinStreakNewestFirst,
+  runRecord,
+  type FightOutcome,
+} from '../utils/runStreak';
+import CopyDraftButton from '../components/CopyDraftButton';
 import './HistoryPage.css';
 
 // Colors the score chip on the same 0-10 scale Evaluation's verdict uses.
@@ -10,6 +16,12 @@ function scoreClass(score: number): string {
   if (score < 4) return 'is-low';
   if (score < 7) return 'is-mid';
   return 'is-high';
+}
+
+function battleOutcomes(entry: HistoryEntry): FightOutcome[] {
+  return entry.battles
+    .map((b) => b.resolvedOutcome)
+    .filter((o): o is FightOutcome => o === 'Win' || o === 'Lose');
 }
 
 export default function HistoryPage() {
@@ -70,13 +82,18 @@ export default function HistoryPage() {
 
       <div className="history-list">
         {entries.map((entry) => {
-          const wins = entry.battles.filter((b) => b.resolvedOutcome === 'Win').length;
-          const losses = entry.battles.length - wins;
+          const outcomes = battleOutcomes(entry);
+          const { wins, losses } = runRecord(outcomes);
+          // History battles arrive newest-first from the API.
+          const winStreak = currentWinStreakNewestFirst(outcomes);
+          const archetypeId = entry.evaluation?.archetype?.id;
+          const archetypeLabel =
+            archetypeId != null
+              ? t(`evaluation.archetype.${archetypeId}`, { defaultValue: '' })
+              : '';
+
           return (
-            <article key={entry.id} className="panel history-entry">
-              {/* The roster was five text rows before — the same five heroes
-                  as a strip of portraits is both smaller and recognisable
-                  without reading, which is what a history list is for. */}
+            <article key={entry.id} className="panel bracketed history-entry motion-reveal">
               <div className="history-entry-top">
                 <ol className="history-roster">
                   {entry.heroes
@@ -103,6 +120,15 @@ export default function HistoryPage() {
                     <span className="history-score is-none">{t('evaluation.notAvailable')}</span>
                   )}
 
+                  {archetypeLabel ? (
+                    <span
+                      className="history-archetype"
+                      title={t(`evaluation.archetypeHint.${archetypeId}`)}
+                    >
+                      {archetypeLabel}
+                    </span>
+                  ) : null}
+
                   {entry.battles.length > 0 && (
                     <span className="history-record">
                       <span className="history-record-win">
@@ -114,10 +140,27 @@ export default function HistoryPage() {
                         {losses}
                         {t('history.lossShort')}
                       </span>
+                      {winStreak >= 2 && (
+                        <>
+                          <span className="history-record-sep">·</span>
+                          <span className="history-streak">
+                            {t('history.winStreak', { count: winStreak })}
+                          </span>
+                        </>
+                      )}
                     </span>
                   )}
 
                   <span className="history-date">{new Date(entry.createdAt).toLocaleString()}</span>
+
+                  <CopyDraftButton
+                    compact
+                    heroes={entry.heroes.map((h) => ({
+                      heroName: h.heroName,
+                      assignedRole: h.assignedRole,
+                      pickOrder: h.pickOrder,
+                    }))}
+                  />
                 </div>
               </div>
 

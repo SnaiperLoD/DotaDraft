@@ -20,7 +20,7 @@ export default function AboutPage() {
         {SECTIONS.map((key) => (
           <section
             key={key}
-            className={`panel about-section${key === 'ceiling' ? ' about-section--caveat' : ''}`}
+            className={`panel bracketed about-section${key === 'ceiling' ? ' about-section--caveat' : ''}`}
           >
             <h3>{t(`about.${key}Title`)}</h3>
             <p>{t(`about.${key}Text`)}</p>

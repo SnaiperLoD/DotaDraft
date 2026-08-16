@@ -6,17 +6,29 @@ import * as path from 'path';
 // (Blueprint/10-tech-debt-backlog.md, "Battle Engine Confidence Tier не
 // откалиброван" — the old MIN_GAMES=10 hard cutoff treated an 11-game
 // sample exactly as confidently as a 500-game one). Shrinks the raw win
-// rate toward the neutral 0.5 prior, weighted by `games / (games +
-// SHRINKAGE_K)`: a pair with `games` well below SHRINKAGE_K contributes
-// little to synergyBonus/matchupEdge in battle-resolution.ts (which just
-// average `winRate - 0.5` unweighted — shrinkage does the confidence
-// weighting instead of a separate weighted-average step), while `games`
-// well above it is barely shrunk at all. K=20 is a starting point, not
-// calibrated against real outcomes yet.
-const SHRINKAGE_K = 20;
+// rate toward the neutral 0.5 prior, weighted by `games / (games + K)`:
+// a pair with `games` well below K contributes little to
+// synergyBonus/matchupEdge in battle-resolution.ts (which just average
+// `winRate - 0.5` unweighted — shrinkage does the confidence weighting
+// instead of a separate weighted-average step), while `games` well above
+// it is barely shrunk at all. K lives in battle-diff-inputs.json so
+// calibrate / sweep scripts can retune it without a code change.
+const DIFF_INPUTS_PATH = path.join(__dirname, '..', '..', 'data', 'battle-diff-inputs.json');
 
-function shrinkTowardNeutral(winRate: number, games: number): number {
-  const weight = games / (games + SHRINKAGE_K);
+function loadDefaultShrinkageK(): number {
+  try {
+    const parsed = JSON.parse(fs.readFileSync(DIFF_INPUTS_PATH, 'utf-8')) as { shrinkageK?: number };
+    return typeof parsed.shrinkageK === 'number' ? parsed.shrinkageK : 20;
+  } catch {
+    // Specs mock `fs` — fall back to the historical starting point.
+    return 20;
+  }
+}
+
+const DEFAULT_SHRINKAGE_K = loadDefaultShrinkageK();
+
+function shrinkTowardNeutral(winRate: number, games: number, shrinkageK: number): number {
+  const weight = games / (games + shrinkageK);
   return weight * winRate + (1 - weight) * 0.5;
 }
 
@@ -34,6 +46,7 @@ interface HeroMetaEntry {
 @Injectable()
 export class HeroMetaService {
   private readonly byHeroId = new Map<number, HeroMetaEntry>();
+  private shrinkageK: number = DEFAULT_SHRINKAGE_K;
 
   constructor() {
     const metaPath = path.join(__dirname, '..', '..', 'data', 'hero-meta.json');
@@ -45,16 +58,23 @@ export class HeroMetaService {
     }
   }
 
+  // Calibration sweeps only — Nest always constructs with the JSON default.
+  static forCalibration(shrinkageK: number): HeroMetaService {
+    const service = new HeroMetaService();
+    service.shrinkageK = shrinkageK;
+    return service;
+  }
+
   getMatchupWinRate(heroId: number, opponentHeroId: number): number | null {
     const entry = this.byHeroId.get(heroId)?.matchups.find((m) => m.opponentHeroId === opponentHeroId);
     if (!entry || entry.games === 0) return null;
-    return shrinkTowardNeutral(entry.wins / entry.games, entry.games);
+    return shrinkTowardNeutral(entry.wins / entry.games, entry.games, this.shrinkageK);
   }
 
   getSynergyWinRate(heroId: number, allyHeroId: number): number | null {
     const entry = this.byHeroId.get(heroId)?.synergy.find((s) => s.allyHeroId === allyHeroId);
     if (!entry || entry.games === 0) return null;
-    return shrinkTowardNeutral(entry.wins / entry.games, entry.games);
+    return shrinkTowardNeutral(entry.wins / entry.games, entry.games, this.shrinkageK);
   }
 
   getWinRate(heroId: number): number | null {

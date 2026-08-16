@@ -25,6 +25,48 @@
   margin: 0;
 }
 
+.battle-run-chip {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+  margin-left: auto;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 5px 12px;
+  border: 1px solid var(--bronze);
+  background: color-mix(in srgb, var(--panel) 80%, transparent);
+  clip-path: polygon(6px 0, calc(100% - 6px) 0, 100% 50%, calc(100% - 6px) 100%, 6px 100%, 0 50%);
+}
+
+.battle-run-record {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.battle-run-win {
+  color: var(--win-bright);
+}
+
+.battle-run-lose {
+  color: var(--danger);
+}
+
+.battle-run-sep {
+  color: var(--ink-faint);
+}
+
+.battle-run-streak--win {
+  color: var(--win-bright);
+}
+
+.battle-run-streak--lose {
+  color: var(--danger);
+}
+
 .battle-back {
   flex-shrink: 0;
 }
@@ -47,10 +89,22 @@
    filter would both trap that fixed element inside this box — the
    full-screen win/lose flash would shrink to the size of the result card. */
 .battle-result {
+  position: relative;
   margin-top: var(--sp-2);
   padding: var(--sp-4);
   border-radius: var(--r-md);
   border: 1px solid transparent;
+}
+
+/* Ceremony frame without clip-path (ScreenFlash needs to escape). */
+.battle-result.bracketed::before {
+  top: 8px;
+  left: 8px;
+}
+
+.battle-result.bracketed::after {
+  bottom: 8px;
+  right: 8px;
 }
 
 /* Persistent win/lose read on the result itself — ScreenFlash (rendered
@@ -87,22 +141,12 @@
   line-height: 1;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  animation: verdict-slam var(--dur-4) var(--ease-spring) both;
+  animation: motion-stamp var(--dur-4) var(--ease-spring) both;
 }
 
-/* Lands like a stamp rather than fading in — this is the payoff moment of
-   the whole flow, and it's competing with ScreenFlash for attention. */
-@keyframes verdict-slam {
-  0% {
-    opacity: 0;
-    transform: scale(1.6);
-  }
-  60% {
-    opacity: 1;
-    transform: scale(0.96);
-  }
-  100% {
-    transform: scale(1);
+@media (prefers-reduced-motion: reduce) {
+  .battle-outcome {
+    animation: none;
   }
 }
 
@@ -266,12 +310,11 @@
   aspect-ratio: 130 / 81;
   object-fit: cover;
   object-position: center top;
-  border-radius: var(--r-sm);
-  /* Colour comes from an inherited custom property, not from a selector
-     that has to out-specify its neighbours — see the side-identity block
-     below for why that matters. */
+  border-radius: 0;
+  clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px);
   border: 1px solid var(--side-tint, var(--bronze-dim));
   display: block;
+  filter: drop-shadow(0 4px 10px var(--shadow-deep));
 }
 
 /* ---------- side identity ---------- */
@@ -330,11 +373,10 @@
   --side-tint: color-mix(in srgb, var(--danger) 55%, var(--bronze-dim));
 }
 
-/* Shutdown (common/shutdown.ts) — a hero countered by all 5 heroes on the
-   opposing draft. Cracked-glass overlay + desaturation on the portrait
-   only, no change to the row layout or caption. Rare by design (see
-   SHUTDOWN_WINRATE_MARGIN), so this should read as a dramatic one-off, not
-   a routine state. */
+/* Shutdown (common/shutdown.ts) — hero underperforms vs their own average
+   win rate against all 5 heroes on the opposing draft. Cracked-glass overlay
+   + desaturation on the portrait only, no change to the row layout or
+   caption. Rare-ish by design (see SHUTDOWN_WINRATE_MARGIN). */
 /* Overrides the side tint by sitting closer to the <img> in the
    inheritance chain than .faceoff-side does — no specificity contest. */
 .portrait-card--shutdown {
@@ -436,6 +478,13 @@
   color: var(--danger);
 }
 
+.battle-shutdown-blurb {
+  margin: 0 0 var(--sp-2);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink-muted);
+}
+
 .portrait-card .name {
   font-family: var(--font-body);
   font-weight: 700;
@@ -472,9 +521,41 @@
 
 .battle-list-block {
   padding: var(--sp-3) var(--sp-4);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
   background: var(--wash);
   border: 1px solid var(--line);
+}
+
+.battle-list-block--good {
+  border-left: 3px solid var(--win);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--win) 12%, transparent),
+    var(--wash) 40%
+  );
+}
+
+.battle-list-block--bad {
+  border-left: 3px solid var(--danger);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--danger) 12%, transparent),
+    var(--wash) 40%
+  );
+}
+
+.battle-list-block--deciding {
+  border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent);
+  border-left: 3px solid var(--gold-bright);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--gold) 10%, transparent), transparent 55%),
+    var(--wash);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 15%, transparent);
+}
+
+.battle-list-block--deciding .battle-list-heading {
+  color: var(--gold-bright);
+  letter-spacing: 0.14em;
 }
 
 .battle-list-heading {
@@ -506,6 +587,93 @@
   font-size: 14px;
   line-height: 1.5;
   color: var(--ink-muted);
+}
+
+.battle-list-block--explanation {
+  grid-column: 1 / -1;
+  padding: var(--sp-4) var(--sp-5);
+}
+
+.battle-story {
+  margin-top: var(--sp-4);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--line-strong);
+}
+
+.battle-story-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-3);
+}
+
+.battle-story-head .battle-list-heading {
+  margin: 0;
+}
+
+.battle-story-head > span {
+  font-size: 12px;
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+.battle-story-timeline {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp-4);
+}
+
+.battle-story-beat {
+  position: relative;
+  padding: var(--sp-3) var(--sp-4) var(--sp-3) var(--sp-5);
+  border-left: 1px solid var(--bronze);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--gold) 6%, transparent), transparent);
+}
+
+.battle-story-beat::before {
+  content: '';
+  position: absolute;
+  top: 17px;
+  left: -4px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold-bright);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--gold) 50%, transparent);
+}
+
+.battle-story-phase {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+}
+
+.battle-story-beat p {
+  margin: var(--sp-1) 0 var(--sp-2);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.battle-story-beat small {
+  display: block;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink-muted);
+}
+
+@media (max-width: 760px) {
+  .battle-story-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .battle-story-timeline {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 /* ---------- real-winRate matchup / pair rows ---------- */
@@ -601,10 +769,6 @@
 
 .battle-matchup-wr--bad {
   color: var(--danger);
-}
-
-.battle-ad {
-  margin: var(--sp-5) 0;
 }
 
 .battle-count {

@@ -1,0 +1,365 @@
+{
+  "generatedAt": "2026-08-15T21:47:55.867Z",
+  "nMatchesPerSeed": 60000,
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "factorsUsed": [
+    [
+      "tempo"
+    ],
+    [
+      "saving"
+    ],
+    [
+      "camp_stacking"
+    ],
+    [
+      "map_control",
+      "mobility"
+    ],
+    [
+      "control",
+      "initiating"
+    ],
+    [
+      "burst",
+      "durability",
+      "objectives",
+      "scaling",
+      "skirmish_rate",
+      "teamfight"
+    ]
+  ],
+  "heroLevel": {
+    "S1FactorEqualShareR2": 0.131,
+    "S2_note": "S2 is weight redistribution only; hero-level uses same factor scores as S1",
+    "S3": {
+      "description": "Within-position z-score of skirmish_rate vs winRate (S3 input-normalization probe)",
+      "n": 127,
+      "rRawSkirmish": 0.171,
+      "rWithinPositionZ": 0.104,
+      "improves": false,
+      "recommendation": "No clear S3 win from within-position residualization on current scores — skip weight/input change.",
+      "positionMeans": {
+        "Carry": 4.01,
+        "Offlane": 4.54,
+        "Support": 6.44,
+        "Mid": 4.18
+      }
+    }
+  },
+  "weightDiffs": {
+    "S1_mid": {
+      "teamfight": {
+        "from": 0.27,
+        "to": 0.417
+      },
+      "tempo": {
+        "from": 1.2,
+        "to": 1.2
+      },
+      "scaling": {
+        "from": 0.27,
+        "to": 0.417
+      },
+      "mobility": {
+        "from": 1,
+        "to": 0.5
+      },
+      "objectives": {
+        "from": 0.22,
+        "to": 0.417
+      },
+      "control": {
+        "from": 1,
+        "to": 1
+      },
+      "durability": {
+        "from": 0.22,
+        "to": 0.417
+      },
+      "burst": {
+        "from": 0.22,
+        "to": 0.417
+      },
+      "map_control": {
+        "from": 0,
+        "to": 0.5
+      },
+      "saving": {
+        "from": 1.7,
+        "to": 1.7
+      },
+      "initiating": {
+        "from": 1,
+        "to": 1
+      },
+      "skirmish_rate": {
+        "from": 1.3,
+        "to": 0.417
+      },
+      "camp_stacking": {
+        "from": 0.5,
+        "to": 0.5
+      }
+    },
+    "S2_mid": {
+      "burst": {
+        "from": 0.22,
+        "to": 0.071
+      },
+      "teamfight": {
+        "from": 0.27,
+        "to": 0.427
+      },
+      "scaling": {
+        "from": 0.27,
+        "to": 0.118
+      },
+      "objectives": {
+        "from": 0.22,
+        "to": 0.107
+      },
+      "durability": {
+        "from": 0.22,
+        "to": 0.477
+      }
+    }
+  },
+  "b0Reference": {
+    "rMean": 0.1994694525747318,
+    "flaggedMean": 41.6,
+    "directionHitRatePct": 57.6,
+    "flaggedCoreCount": 40
+  },
+  "candidates": {
+    "S1": {
+      "selfPlay": {
+        "perSeed": [
+          {
+            "seed": 1,
+            "rFavReal": 0.13346771732886473,
+            "avgAbsDivergencePp": 8.40009439632803,
+            "flaggedCount": 45
+          },
+          {
+            "seed": 2,
+            "rFavReal": 0.1192769871204014,
+            "avgAbsDivergencePp": 8.37898529296736,
+            "flaggedCount": 45
+          },
+          {
+            "seed": 3,
+            "rFavReal": 0.1300640488581856,
+            "avgAbsDivergencePp": 8.474311338788345,
+            "flaggedCount": 44
+          }
+        ],
+        "rMean": 0.12760291776915056,
+        "flaggedMean": 44.666666666666664,
+        "flaggedNames": [
+          "Ancient Apparition",
+          "Batrider",
+          "Centaur Warrunner",
+          "Crystal Maiden",
+          "Dark Willow",
+          "Dawnbreaker",
+          "Death Prophet",
+          "Disruptor",
+          "Ember Spirit",
+          "Enchantress",
+          "Grimstroke",
+          "Invoker",
+          "Juggernaut",
+          "Keeper of the Light",
+          "Kez",
+          "Kunkka",
+          "Largo",
+          "Lich",
+          "Lifestealer",
+          "Marci",
+          "Monkey King",
+          "Naga Siren",
+          "Necrophos",
+          "Oracle",
+          "Outworld Destroyer",
+          "Phantom Assassin",
+          "Phantom Lancer",
+          "Phoenix",
+          "Primal Beast",
+          "Riki",
+          "Ringmaster",
+          "Sand King",
+          "Shadow Fiend",
+          "Shadow Shaman",
+          "Silencer",
+          "Skywrath Mage",
+          "Snapfire",
+          "Spectre",
+          "Terrorblade",
+          "Tinker",
+          "Treant Protector",
+          "Troll Warlord",
+          "Undying",
+          "Witch Doctor",
+          "Zeus"
+        ]
+      },
+      "proDirectionPct": 58.1,
+      "proTail": [
+        "Pro matches graded: 644/764 (0 skipped — unknown hero, 120 Even)",
+        "",
+        "=== Even (no favorite) — should be close to 50/50, not a systematic bias ===",
+        "  n=120  radiant winrate=55.8%",
+        "",
+        "=== Confidence tier calibration: does the favored side actually win more as tier rises? ===",
+        "  tier       n   favored-side actual winrate   target win-weight   delta   resolvedOutcome hit-rate",
+        "  Low        272 55.1%                        53                 % +2.1pp      50.7%",
+        "  Moderate   307 58.3%                        62                 % -3.7pp      49.8%",
+        "  High       65  69.2%                        100                % -30.8pp      70.8%",
+        "",
+        "=== Overall (excluding Even) ===",
+        "  n=644",
+        "  advantageDirection hit-rate (primary calibration metric): 58.1%",
+        "  resolvedOutcome hit-rate (secondary, includes the intentional coin flip): 52.3%",
+        "",
+        "Caveat: n=764 total pro matches in the snapshot, split across Even + 3 tiers. Per-tier samples are still noisy at the High end — read overall hit-rate and Low→High monotonicity as the primary signal. hero-meta.json is a recent public snapshot, so pre-2022 TI playoffs dilute accuracy; prefer 2022+ when comparing configs (see sweep-battle-diff-inputs.ts)."
+      ],
+      "vsB0": {
+        "rDelta": -0.07186653480558125,
+        "flaggedCoreRemaining": 34,
+        "flaggedCoreTotalB0": 40,
+        "proDropPp": -0.5,
+        "passStopCriteria": false
+      }
+    },
+    "S2": {
+      "selfPlay": {
+        "perSeed": [
+          {
+            "seed": 1,
+            "rFavReal": 0.14804804424133364,
+            "avgAbsDivergencePp": 8.583090885511197,
+            "flaggedCount": 43
+          },
+          {
+            "seed": 2,
+            "rFavReal": 0.13520876851216218,
+            "avgAbsDivergencePp": 8.445255561416197,
+            "flaggedCount": 46
+          },
+          {
+            "seed": 3,
+            "rFavReal": 0.14605248902153395,
+            "avgAbsDivergencePp": 8.547518493975586,
+            "flaggedCount": 44
+          }
+        ],
+        "rMean": 0.14310310059167658,
+        "flaggedMean": 44.333333333333336,
+        "flaggedNames": [
+          "Ancient Apparition",
+          "Batrider",
+          "Centaur Warrunner",
+          "Crystal Maiden",
+          "Dark Seer",
+          "Dark Willow",
+          "Dawnbreaker",
+          "Death Prophet",
+          "Disruptor",
+          "Doom",
+          "Earth Spirit",
+          "Earthshaker",
+          "Ember Spirit",
+          "Enchantress",
+          "Keeper of the Light",
+          "Kunkka",
+          "Largo",
+          "Lich",
+          "Lina",
+          "Marci",
+          "Medusa",
+          "Monkey King",
+          "Naga Siren",
+          "Necrophos",
+          "Nyx Assassin",
+          "Outworld Destroyer",
+          "Phantom Assassin",
+          "Phantom Lancer",
+          "Phoenix",
+          "Primal Beast",
+          "Riki",
+          "Ringmaster",
+          "Shadow Shaman",
+          "Silencer",
+          "Skywrath Mage",
+          "Snapfire",
+          "Spectre",
+          "Sven",
+          "Treant Protector",
+          "Troll Warlord",
+          "Undying",
+          "Visage",
+          "Weaver"
+        ]
+      },
+      "proDirectionPct": 58.1,
+      "proTail": [
+        "Pro matches graded: 639/764 (0 skipped — unknown hero, 125 Even)",
+        "",
+        "=== Even (no favorite) — should be close to 50/50, not a systematic bias ===",
+        "  n=125  radiant winrate=55.2%",
+        "",
+        "=== Confidence tier calibration: does the favored side actually win more as tier rises? ===",
+        "  tier       n   favored-side actual winrate   target win-weight   delta   resolvedOutcome hit-rate",
+        "  Low        266 55.6%                        53                 % +2.6pp      50.0%",
+        "  Moderate   315 57.8%                        62                 % -4.2pp      55.6%",
+        "  High       58  70.7%                        100                % -29.3pp      70.7%",
+        "",
+        "=== Overall (excluding Even) ===",
+        "  n=639",
+        "  advantageDirection hit-rate (primary calibration metric): 58.1%",
+        "  resolvedOutcome hit-rate (secondary, includes the intentional coin flip): 54.6%",
+        "",
+        "Caveat: n=764 total pro matches in the snapshot, split across Even + 3 tiers. Per-tier samples are still noisy at the High end — read overall hit-rate and Low→High monotonicity as the primary signal. hero-meta.json is a recent public snapshot, so pre-2022 TI playoffs dilute accuracy; prefer 2022+ when comparing configs (see sweep-battle-diff-inputs.ts)."
+      ],
+      "vsB0": {
+        "rDelta": -0.05636635198305523,
+        "flaggedCoreRemaining": 36,
+        "flaggedCoreTotalB0": 40,
+        "proDropPp": -0.5,
+        "passStopCriteria": false
+      }
+    },
+    "S3": {
+      "selfPlay": null,
+      "note": "Input-normalization candidate — hero-level only in this run",
+      "heroLevel": {
+        "description": "Within-position z-score of skirmish_rate vs winRate (S3 input-normalization probe)",
+        "n": 127,
+        "rRawSkirmish": 0.171,
+        "rWithinPositionZ": 0.104,
+        "improves": false,
+        "recommendation": "No clear S3 win from within-position residualization on current scores — skip weight/input change.",
+        "positionMeans": {
+          "Carry": 4.01,
+          "Offlane": 4.54,
+          "Support": 6.44,
+          "Mid": 4.18
+        }
+      },
+      "vsB0": {
+        "passStopCriteria": false,
+        "reason": "no weight change proposed without stronger signal"
+      }
+    }
+  },
+  "verdict": {
+    "winners": [],
+    "recommendation": "No candidate meets stop criteria (honest r↑ AND flagged core not worse AND pro not −>1.5pp). Do not write axis-weights.json. Prefer new predictors (Phase 3) over weight reshuffles.",
+    "applyGate": "blocked_pending_user_approve"
+  }
+}

@@ -27,24 +27,37 @@
   gap: 8px;
 }
 
+.ledger--rail .ledger-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--sp-3);
+}
+
+.ledger--rail .ledger-slot {
+  min-width: 0;
+}
+
 .ledger-slot {
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 8px 10px;
-  border-radius: 3px;
+  border-radius: 2px;
   border: 1px solid var(--bronze-dim);
   background: var(--ground-2);
+  /* No clip-path here — RoleTooltip sits above the portrait
+     (bottom: 100% + 8px) and would be sliced off the same way .plate
+     would (see DraftLedger.tsx comment). Chamfer stays on hero-cards. */
 }
 
 .ledger-slot.filled {
   border-color: var(--gold);
-  background: linear-gradient(90deg, color-mix(in srgb, var(--gold) 10%, transparent), transparent 70%);
+  background: color-mix(in srgb, var(--gold) 5%, var(--ground-2));
 }
 
 .ledger-slot.empty {
   border-style: dashed;
-  opacity: 0.6;
+  opacity: 0.75;
 }
 
 .slot-index {
@@ -58,16 +71,44 @@
 .slot-portrait {
   width: 34px;
   height: 34px;
-  border-radius: 3px;
+  border-radius: 2px;
   object-fit: cover;
   border: 1px solid var(--bronze);
   flex-shrink: 0;
   display: block;
 }
 
+/* Empty-slot silhouette — loadout frame waiting for a pick, not a blank box. */
 .slot-portrait.placeholder {
-  background: var(--panel-raised);
+  position: relative;
+  background: color-mix(in srgb, var(--bronze-dim) 18%, var(--panel-raised));
   border-style: dashed;
+  border-color: var(--bronze-dim);
+  overflow: hidden;
+}
+
+.slot-portrait.placeholder::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 7px;
+  width: 10px;
+  height: 10px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--ink-faint) 45%, transparent);
+}
+
+.slot-portrait.placeholder::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 3px;
+  width: 18px;
+  height: 12px;
+  transform: translateX(-50%);
+  border-radius: 9px 9px 2px 2px;
+  background: color-mix(in srgb, var(--ink-faint) 35%, transparent);
 }
 
 .slot-text {
@@ -97,4 +138,16 @@
 
 .slot-name.placeholder {
   color: var(--ink-faint);
+}
+
+@media (max-width: 760px) {
+  .ledger--rail .ledger-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  .ledger--rail .ledger-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

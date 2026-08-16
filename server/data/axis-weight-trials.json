@@ -1,0 +1,648 @@
+{
+  "generatedAt": "2026-08-15T23:44:06.060Z",
+  "nMatchesPerSeed": 80000,
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "b0": {
+    "rMean": 0.1994694525747318,
+    "flaggedMean": 41.6,
+    "proDir": 57.6
+  },
+  "trials": {
+    "T_camp02": {
+      "midCamp": 0.2,
+      "midCombat": {
+        "burst": 0.22,
+        "teamfight": 0.27,
+        "scaling": 0.27,
+        "objectives": 0.22,
+        "durability": 0.22,
+        "skirmish_rate": 1.3
+      },
+      "selfPlay": {
+        "rMean": 0.21613795965990276,
+        "flaggedMean": 41.333333333333336,
+        "avgAbsDivMean": 8.160741839917572,
+        "flaggedNames": [
+          "Ember Spirit",
+          "Keeper of the Light",
+          "Treant Protector",
+          "Snapfire",
+          "Necrophos",
+          "Kunkka",
+          "Marci",
+          "Centaur Warrunner",
+          "Naga Siren",
+          "Monkey King",
+          "Primal Beast",
+          "Phoenix",
+          "Batrider",
+          "Earthshaker",
+          "Enchantress",
+          "Legion Commander",
+          "Largo",
+          "Invoker",
+          "Kez",
+          "Doom",
+          "Slark",
+          "Earth Spirit",
+          "Dawnbreaker",
+          "Sand King",
+          "Lina",
+          "Undying",
+          "Outworld Destroyer",
+          "Ringmaster",
+          "Phantom Assassin",
+          "Medusa",
+          "Troll Warlord",
+          "Dark Willow",
+          "Death Prophet",
+          "Silencer",
+          "Lich",
+          "Ancient Apparition",
+          "Spectre",
+          "Shadow Shaman",
+          "Disruptor",
+          "Crystal Maiden",
+          "Skywrath Mage",
+          "Phantom Lancer"
+        ],
+        "perSeed": [
+          {
+            "seed": 1,
+            "rFavReal": 0.226578303971701,
+            "avgAbsDivergencePp": 8.20133564582712,
+            "flaggedCount": 42
+          },
+          {
+            "seed": 2,
+            "rFavReal": 0.20406194551326648,
+            "avgAbsDivergencePp": 8.112944521689675,
+            "flaggedCount": 40
+          },
+          {
+            "seed": 3,
+            "rFavReal": 0.21777362949474077,
+            "avgAbsDivergencePp": 8.16794535223592,
+            "flaggedCount": 42
+          }
+        ]
+      },
+      "proDir": 57.8,
+      "vsB0": {
+        "rDelta": 0.016668507085170953,
+        "flaggedOk": true,
+        "proDrop": -0.19999999999999574,
+        "coreRemain": 39,
+        "b0Core": 40,
+        "pass": true
+      },
+      "productionPatch": {
+        "axisWeights": {
+          "map_control": 0,
+          "tempo": 1.2,
+          "durability": 0.22,
+          "objectives": 0.22,
+          "saving": 1.7,
+          "burst": 0.22,
+          "teamfight": 0.27,
+          "scaling": 0.27,
+          "skirmish_rate": 1.3,
+          "camp_stacking": 0.2
+        },
+        "phaseWeights": {
+          "early": {
+            "map_control": 0,
+            "tempo": 1.8,
+            "initiating": 1.75,
+            "skirmish_rate": 1.45,
+            "burst": 0.42,
+            "teamfight": 0.19,
+            "objectives": 0.18,
+            "durability": 0.14,
+            "camp_stacking": 0.216,
+            "scaling": 0.03
+          },
+          "late": {
+            "map_control": 0,
+            "scaling": 2.2,
+            "durability": 1.685,
+            "objectives": 1.538,
+            "saving": 1.35,
+            "teamfight": 0.36,
+            "burst": 0.26,
+            "initiating": 0.4,
+            "skirmish_rate": 0.25,
+            "camp_stacking": 0.076,
+            "tempo": 0.15
+          }
+        },
+        "phaseDistribution": {
+          "early": 0.15,
+          "mid": 0.35,
+          "late": 0.5
+        },
+        "realWinRateWeight": 2,
+        "hardCarryShareThreshold": 0.5,
+        "hardCarryStackPenalty": {
+          "3": 0.05,
+          "4": 0.15,
+          "5": 0.3
+        },
+        "utilityStackThreshold": 7,
+        "utilityStackFreeCount": 2,
+        "utilityStackPenalty": {
+          "3": 0.08,
+          "4": 0.18,
+          "5": 0.3,
+          "6": 0.45
+        }
+      }
+    },
+    "T_camp0": {
+      "midCamp": 0,
+      "midCombat": {
+        "burst": 0.22,
+        "teamfight": 0.27,
+        "scaling": 0.27,
+        "objectives": 0.22,
+        "durability": 0.22,
+        "skirmish_rate": 1.3
+      },
+      "selfPlay": {
+        "rMean": 0.22769495439257995,
+        "flaggedMean": 42,
+        "avgAbsDivMean": 8.19552732262997,
+        "flaggedNames": [
+          "Ember Spirit",
+          "Treant Protector",
+          "Keeper of the Light",
+          "Snapfire",
+          "Necrophos",
+          "Marci",
+          "Kunkka",
+          "Centaur Warrunner",
+          "Naga Siren",
+          "Monkey King",
+          "Primal Beast",
+          "Earthshaker",
+          "Phoenix",
+          "Batrider",
+          "Legion Commander",
+          "Enchantress",
+          "Slark",
+          "Invoker",
+          "Largo",
+          "Earth Spirit",
+          "Kez",
+          "Dawnbreaker",
+          "Terrorblade",
+          "Doom",
+          "Nyx Assassin",
+          "Gyrocopter",
+          "Sand King",
+          "Outworld Destroyer",
+          "Undying",
+          "Phantom Assassin",
+          "Lina",
+          "Ringmaster",
+          "Troll Warlord",
+          "Medusa",
+          "Death Prophet",
+          "Dark Willow",
+          "Silencer",
+          "Spectre",
+          "Lich",
+          "Ancient Apparition",
+          "Shadow Shaman",
+          "Disruptor",
+          "Crystal Maiden",
+          "Skywrath Mage",
+          "Phantom Lancer"
+        ],
+        "perSeed": [
+          {
+            "seed": 1,
+            "rFavReal": 0.23767246393559868,
+            "avgAbsDivergencePp": 8.23894759083219,
+            "flaggedCount": 45
+          },
+          {
+            "seed": 2,
+            "rFavReal": 0.21657584187587484,
+            "avgAbsDivergencePp": 8.138363501977757,
+            "flaggedCount": 41
+          },
+          {
+            "seed": 3,
+            "rFavReal": 0.22883655736626635,
+            "avgAbsDivergencePp": 8.209270875079957,
+            "flaggedCount": 40
+          }
+        ]
+      },
+      "proDir": 57.6,
+      "vsB0": {
+        "rDelta": 0.028225501817848136,
+        "flaggedOk": true,
+        "proDrop": 0,
+        "coreRemain": 39,
+        "b0Core": 40,
+        "pass": true
+      },
+      "productionPatch": {
+        "axisWeights": {
+          "map_control": 0,
+          "tempo": 1.2,
+          "durability": 0.22,
+          "objectives": 0.22,
+          "saving": 1.7,
+          "burst": 0.22,
+          "teamfight": 0.27,
+          "scaling": 0.27,
+          "skirmish_rate": 1.3,
+          "camp_stacking": 0
+        },
+        "phaseWeights": {
+          "early": {
+            "map_control": 0,
+            "tempo": 1.8,
+            "initiating": 1.75,
+            "skirmish_rate": 1.45,
+            "burst": 0.42,
+            "teamfight": 0.19,
+            "objectives": 0.18,
+            "durability": 0.14,
+            "camp_stacking": 0,
+            "scaling": 0.03
+          },
+          "late": {
+            "map_control": 0,
+            "scaling": 2.2,
+            "durability": 1.685,
+            "objectives": 1.538,
+            "saving": 1.35,
+            "teamfight": 0.36,
+            "burst": 0.26,
+            "initiating": 0.4,
+            "skirmish_rate": 0.25,
+            "camp_stacking": 0,
+            "tempo": 0.15
+          }
+        },
+        "phaseDistribution": {
+          "early": 0.15,
+          "mid": 0.35,
+          "late": 0.5
+        },
+        "realWinRateWeight": 2,
+        "hardCarryShareThreshold": 0.5,
+        "hardCarryStackPenalty": {
+          "3": 0.05,
+          "4": 0.15,
+          "5": 0.3
+        },
+        "utilityStackThreshold": 7,
+        "utilityStackFreeCount": 2,
+        "utilityStackPenalty": {
+          "3": 0.08,
+          "4": 0.18,
+          "5": 0.3,
+          "6": 0.45
+        }
+      }
+    },
+    "T_combatEq": {
+      "midCamp": 0.5,
+      "midCombat": {
+        "burst": 0.24,
+        "teamfight": 0.24,
+        "scaling": 0.24,
+        "objectives": 0.24,
+        "durability": 0.24,
+        "skirmish_rate": 1.3
+      },
+      "selfPlay": {
+        "rMean": 0.1959996480837737,
+        "flaggedMean": 42,
+        "avgAbsDivMean": 8.132577990607821,
+        "flaggedNames": [
+          "Keeper of the Light",
+          "Ember Spirit",
+          "Snapfire",
+          "Treant Protector",
+          "Necrophos",
+          "Kunkka",
+          "Naga Siren",
+          "Centaur Warrunner",
+          "Marci",
+          "Batrider",
+          "Phoenix",
+          "Primal Beast",
+          "Monkey King",
+          "Enchantress",
+          "Earthshaker",
+          "Largo",
+          "Legion Commander",
+          "Doom",
+          "Dawnbreaker",
+          "Invoker",
+          "Kez",
+          "Ursa",
+          "Sand King",
+          "Undying",
+          "Ringmaster",
+          "Outworld Destroyer",
+          "Phantom Assassin",
+          "Medusa",
+          "Death Prophet",
+          "Dark Willow",
+          "Troll Warlord",
+          "Silencer",
+          "Ancient Apparition",
+          "Shadow Shaman",
+          "Spectre",
+          "Lich",
+          "Disruptor",
+          "Crystal Maiden",
+          "Skywrath Mage",
+          "Phantom Lancer"
+        ],
+        "perSeed": [
+          {
+            "seed": 1,
+            "rFavReal": 0.20557559636943923,
+            "avgAbsDivergencePp": 8.173889209413163,
+            "flaggedCount": 40
+          },
+          {
+            "seed": 2,
+            "rFavReal": 0.18432899556116242,
+            "avgAbsDivergencePp": 8.079912070874032,
+            "flaggedCount": 42
+          },
+          {
+            "seed": 3,
+            "rFavReal": 0.19809435232071942,
+            "avgAbsDivergencePp": 8.143932691536266,
+            "flaggedCount": 44
+          }
+        ]
+      },
+      "proDir": 57.7,
+      "vsB0": {
+        "rDelta": -0.0034698044909581005,
+        "flaggedOk": true,
+        "proDrop": -0.10000000000000142,
+        "coreRemain": 39,
+        "b0Core": 40,
+        "pass": false
+      },
+      "productionPatch": {
+        "axisWeights": {
+          "map_control": 0,
+          "tempo": 1.2,
+          "durability": 0.24,
+          "objectives": 0.24,
+          "saving": 1.7,
+          "burst": 0.24,
+          "teamfight": 0.24,
+          "scaling": 0.24,
+          "skirmish_rate": 1.3,
+          "camp_stacking": 0.5
+        },
+        "phaseWeights": {
+          "early": {
+            "map_control": 0,
+            "tempo": 1.8,
+            "initiating": 1.75,
+            "skirmish_rate": 1.45,
+            "burst": 0.458,
+            "teamfight": 0.169,
+            "objectives": 0.196,
+            "durability": 0.153,
+            "camp_stacking": 0.54,
+            "scaling": 0.027
+          },
+          "late": {
+            "map_control": 0,
+            "scaling": 2.2,
+            "durability": 1.838,
+            "objectives": 1.678,
+            "saving": 1.35,
+            "teamfight": 0.32,
+            "burst": 0.284,
+            "initiating": 0.4,
+            "skirmish_rate": 0.25,
+            "camp_stacking": 0.19,
+            "tempo": 0.15
+          }
+        },
+        "phaseDistribution": {
+          "early": 0.15,
+          "mid": 0.35,
+          "late": 0.5
+        },
+        "realWinRateWeight": 2,
+        "hardCarryShareThreshold": 0.5,
+        "hardCarryStackPenalty": {
+          "3": 0.05,
+          "4": 0.15,
+          "5": 0.3
+        },
+        "utilityStackThreshold": 7,
+        "utilityStackFreeCount": 2,
+        "utilityStackPenalty": {
+          "3": 0.08,
+          "4": 0.18,
+          "5": 0.3,
+          "6": 0.45
+        }
+      }
+    },
+    "T_camp0_combatEq": {
+      "midCamp": 0,
+      "midCombat": {
+        "burst": 0.24,
+        "teamfight": 0.24,
+        "scaling": 0.24,
+        "objectives": 0.24,
+        "durability": 0.24,
+        "skirmish_rate": 1.3
+      },
+      "selfPlay": {
+        "rMean": 0.22668792525565684,
+        "flaggedMean": 42.333333333333336,
+        "avgAbsDivMean": 8.200728975595945,
+        "flaggedNames": [
+          "Ember Spirit",
+          "Treant Protector",
+          "Keeper of the Light",
+          "Snapfire",
+          "Necrophos",
+          "Marci",
+          "Kunkka",
+          "Centaur Warrunner",
+          "Naga Siren",
+          "Monkey King",
+          "Primal Beast",
+          "Phoenix",
+          "Earthshaker",
+          "Batrider",
+          "Legion Commander",
+          "Enchantress",
+          "Slark",
+          "Largo",
+          "Kez",
+          "Invoker",
+          "Earth Spirit",
+          "Terrorblade",
+          "Dawnbreaker",
+          "Doom",
+          "Gyrocopter",
+          "Undying",
+          "Zeus",
+          "Phantom Assassin",
+          "Outworld Destroyer",
+          "Sand King",
+          "Lina",
+          "Ringmaster",
+          "Troll Warlord",
+          "Medusa",
+          "Death Prophet",
+          "Dark Willow",
+          "Silencer",
+          "Spectre",
+          "Lich",
+          "Ancient Apparition",
+          "Shadow Shaman",
+          "Disruptor",
+          "Crystal Maiden",
+          "Skywrath Mage",
+          "Phantom Lancer"
+        ],
+        "perSeed": [
+          {
+            "seed": 1,
+            "rFavReal": 0.23651792588299345,
+            "avgAbsDivergencePp": 8.23930884981204,
+            "flaggedCount": 45
+          },
+          {
+            "seed": 2,
+            "rFavReal": 0.21533489862439792,
+            "avgAbsDivergencePp": 8.141967344359935,
+            "flaggedCount": 41
+          },
+          {
+            "seed": 3,
+            "rFavReal": 0.2282109512595792,
+            "avgAbsDivergencePp": 8.220910732615865,
+            "flaggedCount": 41
+          }
+        ]
+      },
+      "proDir": 57.8,
+      "vsB0": {
+        "rDelta": 0.027218472680925032,
+        "flaggedOk": false,
+        "proDrop": -0.19999999999999574,
+        "coreRemain": 39,
+        "b0Core": 40,
+        "pass": false
+      },
+      "productionPatch": {
+        "axisWeights": {
+          "map_control": 0,
+          "tempo": 1.2,
+          "durability": 0.24,
+          "objectives": 0.24,
+          "saving": 1.7,
+          "burst": 0.24,
+          "teamfight": 0.24,
+          "scaling": 0.24,
+          "skirmish_rate": 1.3,
+          "camp_stacking": 0
+        },
+        "phaseWeights": {
+          "early": {
+            "map_control": 0,
+            "tempo": 1.8,
+            "initiating": 1.75,
+            "skirmish_rate": 1.45,
+            "burst": 0.458,
+            "teamfight": 0.169,
+            "objectives": 0.196,
+            "durability": 0.153,
+            "camp_stacking": 0,
+            "scaling": 0.027
+          },
+          "late": {
+            "map_control": 0,
+            "scaling": 2.2,
+            "durability": 1.838,
+            "objectives": 1.678,
+            "saving": 1.35,
+            "teamfight": 0.32,
+            "burst": 0.284,
+            "initiating": 0.4,
+            "skirmish_rate": 0.25,
+            "camp_stacking": 0,
+            "tempo": 0.15
+          }
+        },
+        "phaseDistribution": {
+          "early": 0.15,
+          "mid": 0.35,
+          "late": 0.5
+        },
+        "realWinRateWeight": 2,
+        "hardCarryShareThreshold": 0.5,
+        "hardCarryStackPenalty": {
+          "3": 0.05,
+          "4": 0.15,
+          "5": 0.3
+        },
+        "utilityStackThreshold": 7,
+        "utilityStackFreeCount": 2,
+        "utilityStackPenalty": {
+          "3": 0.08,
+          "4": 0.18,
+          "5": 0.3,
+          "6": 0.45
+        }
+      }
+    }
+  },
+  "ranking": [
+    {
+      "id": "T_camp0",
+      "pass": true,
+      "rDelta": 0.028225501817848136,
+      "rMean": 0.22769495439257995
+    },
+    {
+      "id": "T_camp02",
+      "pass": true,
+      "rDelta": 0.016668507085170953,
+      "rMean": 0.21613795965990276
+    },
+    {
+      "id": "T_camp0_combatEq",
+      "pass": false,
+      "rDelta": 0.027218472680925032,
+      "rMean": 0.22668792525565684
+    },
+    {
+      "id": "T_combatEq",
+      "pass": false,
+      "rDelta": -0.0034698044909581005,
+      "rMean": 0.1959996480837737
+    }
+  ],
+  "winner": "T_camp0",
+  "recommendation": "Apply T_camp0 to axis-weights.json (user-approved trial)."
+}

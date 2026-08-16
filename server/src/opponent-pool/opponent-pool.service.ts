@@ -15,6 +15,8 @@ import type {
   LeaderboardEntryView,
   ResolvedOutcome,
 } from 'shared';
+import { pickWeightedOpponent } from './opponent-pool-pick';
+import type { PoolPickRow } from './opponent-pool-pick';
 
 @Injectable()
 export class OpponentPoolService {
@@ -120,15 +122,18 @@ export class OpponentPoolService {
         if (noOverlap.length > 0) rows = noOverlap;
       }
 
-      const row = rows[Math.floor(Math.random() * rows.length)];
+      // Soft freshness / player-source bias (not a hard filter). Pro recency
+      // uses match ids in `pro-${matchId}` — roughly monotonic with time —
+      // so we don't need a ProMatch join on the pull path.
+      const row = pickWeightedOpponent(rows as PoolPickRow[]);
 
       return {
         id: row.id,
         source: row.source as PooledDraftSource,
         heroIds: row.heroIds as number[],
         heroRoles: (row.heroRoles as PooledHeroRole[] | null) ?? null,
-        teamName: row.teamName,
-        leagueName: row.leagueName,
+        teamName: row.teamName ?? null,
+        leagueName: row.leagueName ?? null,
         // Derived from the id, not a stored column — see seed-opponent-pool.ts
         // (`pro-${matchId}`) and PooledDraftSummary's matchId doc comment.
         matchId: row.source === 'pro' ? row.id.replace(/^pro-/, '') : null,

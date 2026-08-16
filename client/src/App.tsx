@@ -41,15 +41,21 @@ const NAV_ITEMS = [
   { to: '/leaderboard', key: 'app.nav.leaderboard' },
 ] as const;
 
-// Forge stamp — an abstract emblem, not a Dota asset. Paired with the
-// wordmark so the header has a fixed anchor point at any width (the
-// wordmark text itself is what drops out first on narrow screens).
+// Forge crest — abstract stamp (not a Valve asset). Outer octagon reads as
+// a Dota-style panel chamfer; inner diamond is the existing wordmark core.
 function Mark() {
   return (
-    <svg className="wordmark-mark" viewBox="0 0 32 32" width="24" height="24" aria-hidden="true">
-      <path d="M16 2 30 16 16 30 2 16Z" fill="none" stroke="currentColor" strokeWidth="1.6" opacity="0.55" />
-      <path d="M16 8 24 16 16 24 8 16Z" fill="currentColor" opacity="0.18" />
-      <path d="M16 11 21 16 16 21 11 16Z" fill="currentColor" />
+    <svg className="wordmark-mark" viewBox="0 0 32 32" width="26" height="26" aria-hidden="true">
+      <path
+        d="M10 2h12l8 8v12l-8 8H10l-8-8V10Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        opacity="0.55"
+      />
+      <path d="M16 5 27 16 16 27 5 16Z" fill="currentColor" opacity="0.12" />
+      <path d="M16 9 23 16 16 23 9 16Z" fill="none" stroke="currentColor" strokeWidth="1.4" opacity="0.85" />
+      <path d="M16 12.5 19.5 16 16 19.5 12.5 16Z" fill="currentColor" />
     </svg>
   );
 }

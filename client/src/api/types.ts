@@ -1,5 +1,20 @@
 import type { Hero, HeroEvaluationValues } from 'shared';
 
+export interface TiFormHero {
+  heroId: number;
+  heroName: string;
+  games: number;
+  wins: number;
+  losses: number;
+  winRate: number;
+}
+
+export interface TiFormResponse {
+  leagueName: string | null;
+  matchCount: number;
+  heroes: TiFormHero[];
+}
+
 // Testing-only (DebugMatrixPage). Mirrors server/src/dev/dev.service.ts —
 // hand-synced rather than moved into `shared`, because nothing in the shipped
 // product consumes these and putting them in shared would imply they're part

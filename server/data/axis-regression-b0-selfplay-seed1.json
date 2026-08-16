@@ -1,0 +1,1151 @@
+{
+  "generatedAt": "2026-08-15T21:40:08.594Z",
+  "seed": 1,
+  "roleMode": "blended",
+  "nMatches": 100000,
+  "heroTable": [
+    {
+      "heroId": 90,
+      "name": "Keeper of the Light",
+      "appearances": 7850,
+      "favoredRate": 0.7529933481152994,
+      "avgContribution": 5.26643802057831,
+      "realWinRate": 0.5203430865983643,
+      "divergenceFromReal": 0.23265026151693513
+    },
+    {
+      "heroId": 128,
+      "name": "Snapfire",
+      "appearances": 7935,
+      "favoredRate": 0.7054078279055871,
+      "avgContribution": 5.121267994764769,
+      "realWinRate": 0.49019325335922576,
+      "divergenceFromReal": 0.21521457454636134
+    },
+    {
+      "heroId": 83,
+      "name": "Treant Protector",
+      "appearances": 7948,
+      "favoredRate": 0.7278018206237875,
+      "avgContribution": 4.4029663969647,
+      "realWinRate": 0.5157280906364545,
+      "divergenceFromReal": 0.21207372998733298
+    },
+    {
+      "heroId": 106,
+      "name": "Ember Spirit",
+      "appearances": 7792,
+      "favoredRate": 0.7174010455563854,
+      "avgContribution": 6.018500236929537,
+      "realWinRate": 0.5075004480239508,
+      "divergenceFromReal": 0.20990059753243462
+    },
+    {
+      "heroId": 36,
+      "name": "Necrophos",
+      "appearances": 7689,
+      "favoredRate": 0.7007085643869377,
+      "avgContribution": 5.692557799854679,
+      "realWinRate": 0.49656871138977066,
+      "divergenceFromReal": 0.20413985299716708
+    },
+    {
+      "heroId": 89,
+      "name": "Naga Siren",
+      "appearances": 7858,
+      "favoredRate": 0.6730447987851177,
+      "avgContribution": 4.944918456448664,
+      "realWinRate": 0.49651409518035766,
+      "divergenceFromReal": 0.17653070360476003
+    },
+    {
+      "heroId": 23,
+      "name": "Kunkka",
+      "appearances": 7842,
+      "favoredRate": 0.6779972439136426,
+      "avgContribution": 4.6900927942240624,
+      "realWinRate": 0.5022158875798944,
+      "divergenceFromReal": 0.17578135633374814
+    },
+    {
+      "heroId": 96,
+      "name": "Centaur Warrunner",
+      "appearances": 8125,
+      "favoredRate": 0.6654406355745182,
+      "avgContribution": 4.565362366863844,
+      "realWinRate": 0.4942305749216934,
+      "divergenceFromReal": 0.17121006065282474
+    },
+    {
+      "heroId": 136,
+      "name": "Marci",
+      "appearances": 7839,
+      "favoredRate": 0.6805407868752849,
+      "avgContribution": 5.169195442903673,
+      "realWinRate": 0.5108836783013824,
+      "divergenceFromReal": 0.16965710857390248
+    },
+    {
+      "heroId": 110,
+      "name": "Phoenix",
+      "appearances": 7781,
+      "favoredRate": 0.6785329018338727,
+      "avgContribution": 5.70263857720453,
+      "realWinRate": 0.5109851494224775,
+      "divergenceFromReal": 0.1675477524113952
+    },
+    {
+      "heroId": 65,
+      "name": "Batrider",
+      "appearances": 7935,
+      "favoredRate": 0.6190476190476191,
+      "avgContribution": 5.088736367601853,
+      "realWinRate": 0.45719489981785066,
+      "divergenceFromReal": 0.1618527192297684
+    },
+    {
+      "heroId": 137,
+      "name": "Primal Beast",
+      "appearances": 7867,
+      "favoredRate": 0.6618858712236801,
+      "avgContribution": 5.154720301942645,
+      "realWinRate": 0.5060006893742363,
+      "divergenceFromReal": 0.1558851818494439
+    },
+    {
+      "heroId": 114,
+      "name": "Monkey King",
+      "appearances": 7899,
+      "favoredRate": 0.6174393613754989,
+      "avgContribution": 5.499826657707156,
+      "realWinRate": 0.46603537844413756,
+      "divergenceFromReal": 0.15140398293136137
+    },
+    {
+      "heroId": 7,
+      "name": "Earthshaker",
+      "appearances": 7899,
+      "favoredRate": 0.6505859077765941,
+      "avgContribution": 5.037406877209474,
+      "realWinRate": 0.5111737075672872,
+      "divergenceFromReal": 0.1394122002093069
+    },
+    {
+      "heroId": 58,
+      "name": "Enchantress",
+      "appearances": 7825,
+      "favoredRate": 0.6149327562219817,
+      "avgContribution": 4.784361759646014,
+      "realWinRate": 0.4807384304138919,
+      "divergenceFromReal": 0.13419432580808982
+    },
+    {
+      "heroId": 155,
+      "name": "Largo",
+      "appearances": 7812,
+      "favoredRate": 0.6121538461538462,
+      "avgContribution": 3.5548761274566,
+      "realWinRate": 0.48830530889854523,
+      "divergenceFromReal": 0.12384853725530093
+    },
+    {
+      "heroId": 69,
+      "name": "Doom",
+      "appearances": 7941,
+      "favoredRate": 0.603785011355034,
+      "avgContribution": 4.431501554735535,
+      "realWinRate": 0.4865463706311748,
+      "divergenceFromReal": 0.11723864072385926
+    },
+    {
+      "heroId": 104,
+      "name": "Legion Commander",
+      "appearances": 7963,
+      "favoredRate": 0.6412386706948641,
+      "avgContribution": 5.263218346390336,
+      "realWinRate": 0.525557705648253,
+      "divergenceFromReal": 0.11568096504661107
+    },
+    {
+      "heroId": 74,
+      "name": "Invoker",
+      "appearances": 7778,
+      "favoredRate": 0.6267942583732058,
+      "avgContribution": 6.4061485056473515,
+      "realWinRate": 0.5150748608724836,
+      "divergenceFromReal": 0.11171939750072224
+    },
+    {
+      "heroId": 135,
+      "name": "Dawnbreaker",
+      "appearances": 7832,
+      "favoredRate": 0.6267884322678843,
+      "avgContribution": 5.814059676279127,
+      "realWinRate": 0.5203278036635863,
+      "divergenceFromReal": 0.10646062860429795
+    },
+    {
+      "heroId": 107,
+      "name": "Earth Spirit",
+      "appearances": 7914,
+      "favoredRate": 0.6038142110119963,
+      "avgContribution": 5.101000174957687,
+      "realWinRate": 0.5029757785467128,
+      "divergenceFromReal": 0.10083843246528346
+    },
+    {
+      "heroId": 145,
+      "name": "Kez",
+      "appearances": 7771,
+      "favoredRate": 0.5543360643066935,
+      "avgContribution": 5.980058996466444,
+      "realWinRate": 0.4535939313546675,
+      "divergenceFromReal": 0.10074213295202594
+    },
+    {
+      "heroId": 109,
+      "name": "Terrorblade",
+      "appearances": 8056,
+      "favoredRate": 0.57602382725242,
+      "avgContribution": 5.191538079596597,
+      "realWinRate": 0.4801541794087666,
+      "divergenceFromReal": 0.09586964784365337
+    },
+    {
+      "heroId": 55,
+      "name": "Dark Seer",
+      "appearances": 7791,
+      "favoredRate": 0.5900823876884813,
+      "avgContribution": 4.852756138740277,
+      "realWinRate": 0.5018470811257474,
+      "divergenceFromReal": 0.08823530656273393
+    },
+    {
+      "heroId": 88,
+      "name": "Nyx Assassin",
+      "appearances": 7928,
+      "favoredRate": 0.613345521023766,
+      "avgContribution": 5.006199060777723,
+      "realWinRate": 0.5265239169278537,
+      "divergenceFromReal": 0.08682160409591233
+    },
+    {
+      "heroId": 86,
+      "name": "Rubick",
+      "appearances": 7743,
+      "favoredRate": 0.5848089468779124,
+      "avgContribution": 4.245763419068749,
+      "realWinRate": 0.49922185865849295,
+      "divergenceFromReal": 0.08558708821941946
+    },
+    {
+      "heroId": 93,
+      "name": "Slark",
+      "appearances": 7918,
+      "favoredRate": 0.5840304182509506,
+      "avgContribution": 5.815408902792932,
+      "realWinRate": 0.4984672111818552,
+      "divergenceFromReal": 0.08556320706909537
+    },
+    {
+      "heroId": 54,
+      "name": "Lifestealer",
+      "appearances": 7882,
+      "favoredRate": 0.6082038908158649,
+      "avgContribution": 5.417071028438924,
+      "realWinRate": 0.533008243353071,
+      "divergenceFromReal": 0.07519564746279395
+    },
+    {
+      "heroId": 62,
+      "name": "Bounty Hunter",
+      "appearances": 7865,
+      "favoredRate": 0.6154553817847286,
+      "avgContribution": 4.287189593623032,
+      "realWinRate": 0.5493681579781056,
+      "divergenceFromReal": 0.06608722380662302
+    },
+    {
+      "heroId": 79,
+      "name": "Shadow Demon",
+      "appearances": 7854,
+      "favoredRate": 0.528322440087146,
+      "avgContribution": 4.211600164541618,
+      "realWinRate": 0.46252387908753795,
+      "divergenceFromReal": 0.06579856099960807
+    },
+    {
+      "heroId": 42,
+      "name": "Wraith King",
+      "appearances": 7829,
+      "favoredRate": 0.5975628332063976,
+      "avgContribution": 5.435075704726333,
+      "realWinRate": 0.5329226277998991,
+      "divergenceFromReal": 0.06464020540649851
+    },
+    {
+      "heroId": 28,
+      "name": "Slardar",
+      "appearances": 7773,
+      "favoredRate": 0.5580040925546985,
+      "avgContribution": 4.481363496917559,
+      "realWinRate": 0.49555354695745985,
+      "divergenceFromReal": 0.06245054559723867
+    },
+    {
+      "heroId": 56,
+      "name": "Clinkz",
+      "appearances": 7918,
+      "favoredRate": 0.5694063926940639,
+      "avgContribution": 5.454915771271414,
+      "realWinRate": 0.5084537275994307,
+      "divergenceFromReal": 0.06095266509463315
+    },
+    {
+      "heroId": 45,
+      "name": "Pugna",
+      "appearances": 7917,
+      "favoredRate": 0.5726192313628646,
+      "avgContribution": 4.627982627451682,
+      "realWinRate": 0.5152103206056796,
+      "divergenceFromReal": 0.05740891075718502
+    },
+    {
+      "heroId": 3,
+      "name": "Bane",
+      "appearances": 7904,
+      "favoredRate": 0.5699710674585047,
+      "avgContribution": 3.715148123637553,
+      "realWinRate": 0.5147565578189831,
+      "divergenceFromReal": 0.05521450963952157
+    },
+    {
+      "heroId": 81,
+      "name": "Chaos Knight",
+      "appearances": 7921,
+      "favoredRate": 0.5672721674876847,
+      "avgContribution": 4.866127043011318,
+      "realWinRate": 0.5129998535227772,
+      "divergenceFromReal": 0.054272313964907504
+    },
+    {
+      "heroId": 35,
+      "name": "Sniper",
+      "appearances": 7884,
+      "favoredRate": 0.5424200278164116,
+      "avgContribution": 5.421938297623299,
+      "realWinRate": 0.4888857179096905,
+      "divergenceFromReal": 0.053534309906721145
+    },
+    {
+      "heroId": 8,
+      "name": "Juggernaut",
+      "appearances": 7820,
+      "favoredRate": 0.5755340402643307,
+      "avgContribution": 4.811862089317126,
+      "realWinRate": 0.5225013393654384,
+      "divergenceFromReal": 0.05303270089889234
+    },
+    {
+      "heroId": 40,
+      "name": "Venomancer",
+      "appearances": 8068,
+      "favoredRate": 0.5209246109684242,
+      "avgContribution": 4.217167537470242,
+      "realWinRate": 0.4685956372814134,
+      "divergenceFromReal": 0.05232897368701084
+    },
+    {
+      "heroId": 52,
+      "name": "Leshrac",
+      "appearances": 7778,
+      "favoredRate": 0.5690136476426799,
+      "avgContribution": 5.361041003224258,
+      "realWinRate": 0.5167988521780719,
+      "divergenceFromReal": 0.052214795464608055
+    },
+    {
+      "heroId": 11,
+      "name": "Shadow Fiend",
+      "appearances": 7828,
+      "favoredRate": 0.5310864881502001,
+      "avgContribution": 5.075276129082506,
+      "realWinRate": 0.47985111306239886,
+      "divergenceFromReal": 0.05123537508780124
+    },
+    {
+      "heroId": 9,
+      "name": "Mirana",
+      "appearances": 7641,
+      "favoredRate": 0.5605746209098165,
+      "avgContribution": 4.267972375745864,
+      "realWinRate": 0.5125633793067645,
+      "divergenceFromReal": 0.048011241603051924
+    },
+    {
+      "heroId": 41,
+      "name": "Faceless Void",
+      "appearances": 7943,
+      "favoredRate": 0.5454683467435858,
+      "avgContribution": 4.875651517058733,
+      "realWinRate": 0.49756962606687677,
+      "divergenceFromReal": 0.04789872067670903
+    },
+    {
+      "heroId": 113,
+      "name": "Arc Warden",
+      "appearances": 7917,
+      "favoredRate": 0.5649031067363888,
+      "avgContribution": 5.922222869968206,
+      "realWinRate": 0.5300079936051159,
+      "divergenceFromReal": 0.034895113131272915
+    },
+    {
+      "heroId": 2,
+      "name": "Axe",
+      "appearances": 7859,
+      "favoredRate": 0.5166461159062885,
+      "avgContribution": 4.834510164730757,
+      "realWinRate": 0.4869933263527067,
+      "divergenceFromReal": 0.029652789553581804
+    },
+    {
+      "heroId": 60,
+      "name": "Night Stalker",
+      "appearances": 7703,
+      "favoredRate": 0.5598602731025722,
+      "avgContribution": 5.067052796612359,
+      "realWinRate": 0.5314835904337923,
+      "divergenceFromReal": 0.028376682668779907
+    },
+    {
+      "heroId": 123,
+      "name": "Hoodwink",
+      "appearances": 7748,
+      "favoredRate": 0.5069629166014709,
+      "avgContribution": 4.730067312656503,
+      "realWinRate": 0.4791080941106836,
+      "divergenceFromReal": 0.027854822490787245
+    },
+    {
+      "heroId": 21,
+      "name": "Windranger",
+      "appearances": 7976,
+      "favoredRate": 0.5169862600030197,
+      "avgContribution": 5.0009036725562765,
+      "realWinRate": 0.4923633644291219,
+      "divergenceFromReal": 0.02462289557389785
+    },
+    {
+      "heroId": 100,
+      "name": "Tusk",
+      "appearances": 7969,
+      "favoredRate": 0.5156964340140201,
+      "avgContribution": 4.521323976562837,
+      "realWinRate": 0.4911326435094998,
+      "divergenceFromReal": 0.02456379050452029
+    },
+    {
+      "heroId": 73,
+      "name": "Alchemist",
+      "appearances": 7745,
+      "favoredRate": 0.483456170613141,
+      "avgContribution": 4.183405671152488,
+      "realWinRate": 0.4592001686814732,
+      "divergenceFromReal": 0.024256001931667825
+    },
+    {
+      "heroId": 13,
+      "name": "Puck",
+      "appearances": 7708,
+      "favoredRate": 0.5022787993085023,
+      "avgContribution": 4.862443615025389,
+      "realWinRate": 0.47850832134785287,
+      "divergenceFromReal": 0.023770477960649405
+    },
+    {
+      "heroId": 91,
+      "name": "Io",
+      "appearances": 7968,
+      "favoredRate": 0.5065274151436031,
+      "avgContribution": 4.432349590670282,
+      "realWinRate": 0.4845084652358938,
+      "divergenceFromReal": 0.022018949907709306
+    },
+    {
+      "heroId": 103,
+      "name": "Elder Titan",
+      "appearances": 7917,
+      "favoredRate": 0.5561937286556969,
+      "avgContribution": 4.527436577568872,
+      "realWinRate": 0.5343128629245117,
+      "divergenceFromReal": 0.021880865731185195
+    },
+    {
+      "heroId": 102,
+      "name": "Abaddon",
+      "appearances": 7885,
+      "favoredRate": 0.5287696865741462,
+      "avgContribution": 3.558959075167043,
+      "realWinRate": 0.5081674802853924,
+      "divergenceFromReal": 0.020602206288753866
+    },
+    {
+      "heroId": 112,
+      "name": "Winter Wyvern",
+      "appearances": 7909,
+      "favoredRate": 0.5307408545957578,
+      "avgContribution": 4.457745314491344,
+      "realWinRate": 0.5135614989422786,
+      "divergenceFromReal": 0.017179355653479167
+    },
+    {
+      "heroId": 138,
+      "name": "Muerta",
+      "appearances": 8044,
+      "favoredRate": 0.48673639533121116,
+      "avgContribution": 5.356544772979904,
+      "realWinRate": 0.4698852169525732,
+      "divergenceFromReal": 0.016851178378637977
+    },
+    {
+      "heroId": 71,
+      "name": "Spirit Breaker",
+      "appearances": 7739,
+      "favoredRate": 0.5406976744186046,
+      "avgContribution": 5.057285278359904,
+      "realWinRate": 0.5238898743852666,
+      "divergenceFromReal": 0.01680780003333804
+    },
+    {
+      "heroId": 49,
+      "name": "Dragon Knight",
+      "appearances": 7805,
+      "favoredRate": 0.51655526193067,
+      "avgContribution": 4.638315675355956,
+      "realWinRate": 0.500750475301024,
+      "divergenceFromReal": 0.015804786629646017
+    },
+    {
+      "heroId": 57,
+      "name": "Omniknight",
+      "appearances": 7813,
+      "favoredRate": 0.5337965887555275,
+      "avgContribution": 3.386519508905516,
+      "realWinRate": 0.5180599929002485,
+      "divergenceFromReal": 0.01573659585527898
+    },
+    {
+      "heroId": 61,
+      "name": "Broodmother",
+      "appearances": 7947,
+      "favoredRate": 0.5254708243284965,
+      "avgContribution": 4.966207857827409,
+      "realWinRate": 0.5107462923308748,
+      "divergenceFromReal": 0.014724531997621693
+    },
+    {
+      "heroId": 17,
+      "name": "Storm Spirit",
+      "appearances": 7906,
+      "favoredRate": 0.4820735682135651,
+      "avgContribution": 4.902139562941898,
+      "realWinRate": 0.4702327564658658,
+      "divergenceFromReal": 0.011840811747699298
+    },
+    {
+      "heroId": 66,
+      "name": "Chen",
+      "appearances": 7945,
+      "favoredRate": 0.48573631457208943,
+      "avgContribution": 4.182227816237028,
+      "realWinRate": 0.4741293532338308,
+      "divergenceFromReal": 0.011606961338258615
+    },
+    {
+      "heroId": 51,
+      "name": "Clockwerk",
+      "appearances": 7875,
+      "favoredRate": 0.5068303914044513,
+      "avgContribution": 4.828749206349346,
+      "realWinRate": 0.4964700062955302,
+      "divergenceFromReal": 0.010360385108921122
+    },
+    {
+      "heroId": 129,
+      "name": "Mars",
+      "appearances": 7906,
+      "favoredRate": 0.4792662247572067,
+      "avgContribution": 4.24516919963464,
+      "realWinRate": 0.46947865699341995,
+      "divergenceFromReal": 0.009787567763786753
+    },
+    {
+      "heroId": 14,
+      "name": "Pudge",
+      "appearances": 7893,
+      "favoredRate": 0.5144348894348895,
+      "avgContribution": 3.767685095849163,
+      "realWinRate": 0.5064074484098855,
+      "divergenceFromReal": 0.008027441025003967
+    },
+    {
+      "heroId": 38,
+      "name": "Beastmaster",
+      "appearances": 7841,
+      "favoredRate": 0.4603298070939639,
+      "avgContribution": 5.943379474753227,
+      "realWinRate": 0.4550015928639694,
+      "divergenceFromReal": 0.005328214229994521
+    },
+    {
+      "heroId": 50,
+      "name": "Dazzle",
+      "appearances": 7854,
+      "favoredRate": 0.52359375,
+      "avgContribution": 3.5021027991620293,
+      "realWinRate": 0.5194311767260096,
+      "divergenceFromReal": 0.004162573273990389
+    },
+    {
+      "heroId": 78,
+      "name": "Brewmaster",
+      "appearances": 7967,
+      "favoredRate": 0.5229246001523229,
+      "avgContribution": 4.865089648647094,
+      "realWinRate": 0.519584755130485,
+      "divergenceFromReal": 0.0033398450218379283
+    },
+    {
+      "heroId": 98,
+      "name": "Timbersaw",
+      "appearances": 8012,
+      "favoredRate": 0.442110105811992,
+      "avgContribution": 4.284472329966578,
+      "realWinRate": 0.4404051151701444,
+      "divergenceFromReal": 0.0017049906418475924
+    },
+    {
+      "heroId": 80,
+      "name": "Lone Druid",
+      "appearances": 7943,
+      "favoredRate": 0.4794099569760295,
+      "avgContribution": 5.759365285351182,
+      "realWinRate": 0.4823907542911851,
+      "divergenceFromReal": -0.0029807973151556033
+    },
+    {
+      "heroId": 4,
+      "name": "Bloodseeker",
+      "appearances": 7821,
+      "favoredRate": 0.5120173670336486,
+      "avgContribution": 5.788713817827983,
+      "realWinRate": 0.5162573332007557,
+      "divergenceFromReal": -0.00423996616710709
+    },
+    {
+      "heroId": 39,
+      "name": "Queen of Pain",
+      "appearances": 7886,
+      "favoredRate": 0.46571778389960206,
+      "avgContribution": 5.29556760764002,
+      "realWinRate": 0.47001715612069833,
+      "divergenceFromReal": -0.004299372221096276
+    },
+    {
+      "heroId": 105,
+      "name": "Techies",
+      "appearances": 7784,
+      "favoredRate": 0.5013196708585623,
+      "avgContribution": 5.366968732707067,
+      "realWinRate": 0.5064426372419064,
+      "divergenceFromReal": -0.005122966383344085
+    },
+    {
+      "heroId": 97,
+      "name": "Magnus",
+      "appearances": 7974,
+      "favoredRate": 0.4857011070110701,
+      "avgContribution": 4.119536570777681,
+      "realWinRate": 0.5001351818195473,
+      "divergenceFromReal": -0.014434074808477193
+    },
+    {
+      "heroId": 6,
+      "name": "Drow Ranger",
+      "appearances": 7894,
+      "favoredRate": 0.4395316592204591,
+      "avgContribution": 4.706217964958726,
+      "realWinRate": 0.45697513343859886,
+      "divergenceFromReal": -0.017443474218139743
+    },
+    {
+      "heroId": 53,
+      "name": "Nature's Prophet",
+      "appearances": 7822,
+      "favoredRate": 0.4159826544835063,
+      "avgContribution": 6.107473988553136,
+      "realWinRate": 0.4334389392472645,
+      "divergenceFromReal": -0.017456284763758212
+    },
+    {
+      "heroId": 26,
+      "name": "Lion",
+      "appearances": 7743,
+      "favoredRate": 0.466109709962169,
+      "avgContribution": 3.5710597164682496,
+      "realWinRate": 0.4882487258962137,
+      "divergenceFromReal": -0.022139015934044715
+    },
+    {
+      "heroId": 108,
+      "name": "Underlord",
+      "appearances": 7813,
+      "favoredRate": 0.4601920693928129,
+      "avgContribution": 4.894413649833432,
+      "realWinRate": 0.4844482669242913,
+      "divergenceFromReal": -0.02425619753147845
+    },
+    {
+      "heroId": 29,
+      "name": "Tidehunter",
+      "appearances": 8008,
+      "favoredRate": 0.4741011578305911,
+      "avgContribution": 3.930719280719314,
+      "realWinRate": 0.4984506074396774,
+      "divergenceFromReal": -0.024349449609086304
+    },
+    {
+      "heroId": 77,
+      "name": "Lycan",
+      "appearances": 7904,
+      "favoredRate": 0.491470223325062,
+      "avgContribution": 5.4205348800998,
+      "realWinRate": 0.5158349888979783,
+      "divergenceFromReal": -0.02436476557291628
+    },
+    {
+      "heroId": 37,
+      "name": "Warlock",
+      "appearances": 7808,
+      "favoredRate": 0.4556056600839683,
+      "avgContribution": 4.301142812105719,
+      "realWinRate": 0.48467765250072276,
+      "divergenceFromReal": -0.029071992416754455
+    },
+    {
+      "heroId": 99,
+      "name": "Bristleback",
+      "appearances": 7811,
+      "favoredRate": 0.4333385555381482,
+      "avgContribution": 5.175340496144787,
+      "realWinRate": 0.46428663222556354,
+      "divergenceFromReal": -0.030948076687415338
+    },
+    {
+      "heroId": 84,
+      "name": "Ogre Magi",
+      "appearances": 7834,
+      "favoredRate": 0.4629398941139832,
+      "avgContribution": 3.567423067103634,
+      "realWinRate": 0.49584506383376853,
+      "divergenceFromReal": -0.032905169719785354
+    },
+    {
+      "heroId": 33,
+      "name": "Enigma",
+      "appearances": 7874,
+      "favoredRate": 0.5161990389086963,
+      "avgContribution": 4.1585549324942805,
+      "realWinRate": 0.55104347586359,
+      "divergenceFromReal": -0.0348444369548937
+    },
+    {
+      "heroId": 59,
+      "name": "Huskar",
+      "appearances": 7909,
+      "favoredRate": 0.4264415031188194,
+      "avgContribution": 5.223068169660406,
+      "realWinRate": 0.4629396306562511,
+      "divergenceFromReal": -0.0364981275374317
+    },
+    {
+      "heroId": 15,
+      "name": "Razor",
+      "appearances": 7893,
+      "favoredRate": 0.46099290780141844,
+      "avgContribution": 4.44459160502526,
+      "realWinRate": 0.5034361996573214,
+      "divergenceFromReal": -0.04244329185590301
+    },
+    {
+      "heroId": 64,
+      "name": "Jakiro",
+      "appearances": 7821,
+      "favoredRate": 0.4218919337358724,
+      "avgContribution": 3.82496533002824,
+      "realWinRate": 0.46917193583123945,
+      "divergenceFromReal": -0.047280002095367035
+    },
+    {
+      "heroId": 20,
+      "name": "Vengeful Spirit",
+      "appearances": 7831,
+      "favoredRate": 0.47229551451187335,
+      "avgContribution": 4.185025981552459,
+      "realWinRate": 0.5202379614177381,
+      "divergenceFromReal": -0.0479424469058648
+    },
+    {
+      "heroId": 120,
+      "name": "Pangolier",
+      "appearances": 7856,
+      "favoredRate": 0.41380363414261717,
+      "avgContribution": 5.350494477518454,
+      "realWinRate": 0.46935558646267966,
+      "divergenceFromReal": -0.05555195232006249
+    },
+    {
+      "heroId": 46,
+      "name": "Templar Assassin",
+      "appearances": 7742,
+      "favoredRate": 0.4057178565849086,
+      "avgContribution": 5.4490004570476085,
+      "realWinRate": 0.46456547540551235,
+      "divergenceFromReal": -0.05884761882060374
+    },
+    {
+      "heroId": 48,
+      "name": "Luna",
+      "appearances": 7922,
+      "favoredRate": 0.43800395557584054,
+      "avgContribution": 5.055376458936086,
+      "realWinRate": 0.4983034872761546,
+      "divergenceFromReal": -0.060299531700314046
+    },
+    {
+      "heroId": 30,
+      "name": "Witch Doctor",
+      "appearances": 7845,
+      "favoredRate": 0.44602536343952986,
+      "avgContribution": 3.9753100946219857,
+      "realWinRate": 0.507752142154797,
+      "divergenceFromReal": -0.06172677871526716
+    },
+    {
+      "heroId": 82,
+      "name": "Meepo",
+      "appearances": 7944,
+      "favoredRate": 0.4762121903024776,
+      "avgContribution": 6.165272290650289,
+      "realWinRate": 0.5412441350083245,
+      "divergenceFromReal": -0.06503194470584689
+    },
+    {
+      "heroId": 121,
+      "name": "Grimstroke",
+      "appearances": 7970,
+      "favoredRate": 0.44720781202319193,
+      "avgContribution": 4.210113888621332,
+      "realWinRate": 0.5143125293289535,
+      "divergenceFromReal": -0.06710471730576162
+    },
+    {
+      "heroId": 34,
+      "name": "Tinker",
+      "appearances": 7985,
+      "favoredRate": 0.41856971153846156,
+      "avgContribution": 5.326657675449389,
+      "realWinRate": 0.48629648497198164,
+      "divergenceFromReal": -0.06772677343352007
+    },
+    {
+      "heroId": 111,
+      "name": "Oracle",
+      "appearances": 7800,
+      "favoredRate": 0.4506269592476489,
+      "avgContribution": 3.771733727810952,
+      "realWinRate": 0.5188160966900152,
+      "divergenceFromReal": -0.06818913744236627
+    },
+    {
+      "heroId": 126,
+      "name": "Void Spirit",
+      "appearances": 8029,
+      "favoredRate": 0.4267086330935252,
+      "avgContribution": 5.3674564319733316,
+      "realWinRate": 0.4962212081311665,
+      "divergenceFromReal": -0.0695125750376413
+    },
+    {
+      "heroId": 47,
+      "name": "Viper",
+      "appearances": 7833,
+      "favoredRate": 0.4172762645914397,
+      "avgContribution": 4.973429965923228,
+      "realWinRate": 0.49295541533050585,
+      "divergenceFromReal": -0.07567915073906617
+    },
+    {
+      "heroId": 22,
+      "name": "Zeus",
+      "appearances": 7933,
+      "favoredRate": 0.4175874769797422,
+      "avgContribution": 5.135839579555559,
+      "realWinRate": 0.49536855739976504,
+      "divergenceFromReal": -0.07778108042002285
+    },
+    {
+      "heroId": 32,
+      "name": "Riki",
+      "appearances": 7868,
+      "favoredRate": 0.44379064725921336,
+      "avgContribution": 5.127038441984314,
+      "realWinRate": 0.5230688361646716,
+      "divergenceFromReal": -0.07927818890545824
+    },
+    {
+      "heroId": 72,
+      "name": "Gyrocopter",
+      "appearances": 7747,
+      "favoredRate": 0.369132732359341,
+      "avgContribution": 4.699594880400422,
+      "realWinRate": 0.4513854263124154,
+      "divergenceFromReal": -0.08225269395307439
+    },
+    {
+      "heroId": 10,
+      "name": "Morphling",
+      "appearances": 7919,
+      "favoredRate": 0.39082736553405456,
+      "avgContribution": 4.336408054630395,
+      "realWinRate": 0.47549591598599766,
+      "divergenceFromReal": -0.0846685504519431
+    },
+    {
+      "heroId": 25,
+      "name": "Lina",
+      "appearances": 7828,
+      "favoredRate": 0.41286531622081335,
+      "avgContribution": 5.589039345937877,
+      "realWinRate": 0.5016910367491771,
+      "divergenceFromReal": -0.0888257205283638
+    },
+    {
+      "heroId": 1,
+      "name": "Anti-Mage",
+      "appearances": 7762,
+      "favoredRate": 0.4062255592053809,
+      "avgContribution": 4.1080510574201154,
+      "realWinRate": 0.49604483743975275,
+      "divergenceFromReal": -0.08981927823437186
+    },
+    {
+      "heroId": 92,
+      "name": "Visage",
+      "appearances": 7840,
+      "favoredRate": 0.4592045275900016,
+      "avgContribution": 5.502683477237228,
+      "realWinRate": 0.5494900250176407,
+      "divergenceFromReal": -0.09028549742763908
+    },
+    {
+      "heroId": 19,
+      "name": "Tiny",
+      "appearances": 7929,
+      "favoredRate": 0.35338459219056234,
+      "avgContribution": 4.1087652919664555,
+      "realWinRate": 0.44390085389850703,
+      "divergenceFromReal": -0.09051626170794469
+    },
+    {
+      "heroId": 63,
+      "name": "Weaver",
+      "appearances": 7805,
+      "favoredRate": 0.3788296568627451,
+      "avgContribution": 4.824216232198126,
+      "realWinRate": 0.47430369420813423,
+      "divergenceFromReal": -0.09547403734538912
+    },
+    {
+      "heroId": 18,
+      "name": "Sven",
+      "appearances": 7798,
+      "favoredRate": 0.4196151458721291,
+      "avgContribution": 5.397210330065188,
+      "realWinRate": 0.5153663718563171,
+      "divergenceFromReal": -0.09575122598418795
+    },
+    {
+      "heroId": 16,
+      "name": "Sand King",
+      "appearances": 7935,
+      "favoredRate": 0.37378493317132444,
+      "avgContribution": 4.808675294459943,
+      "realWinRate": 0.47374483165977554,
+      "divergenceFromReal": -0.0999598984884511
+    },
+    {
+      "heroId": 70,
+      "name": "Ursa",
+      "appearances": 7900,
+      "favoredRate": 0.3738904193449648,
+      "avgContribution": 4.947511197662874,
+      "realWinRate": 0.48224256895222695,
+      "divergenceFromReal": -0.10835214960726214
+    },
+    {
+      "heroId": 131,
+      "name": "Ringmaster",
+      "appearances": 7927,
+      "favoredRate": 0.37578065498857577,
+      "avgContribution": 4.2478132186975,
+      "realWinRate": 0.4845678573964917,
+      "divergenceFromReal": -0.10878720240791595
+    },
+    {
+      "heroId": 85,
+      "name": "Undying",
+      "appearances": 7822,
+      "favoredRate": 0.4029051987767584,
+      "avgContribution": 3.921715870424825,
+      "realWinRate": 0.5138604734818678,
+      "divergenceFromReal": -0.11095527470510941
+    },
+    {
+      "heroId": 76,
+      "name": "Outworld Destroyer",
+      "appearances": 7831,
+      "favoredRate": 0.41205640787230746,
+      "avgContribution": 5.180232409653902,
+      "realWinRate": 0.5358076319916362,
+      "divergenceFromReal": -0.1237512241193287
+    },
+    {
+      "heroId": 44,
+      "name": "Phantom Assassin",
+      "appearances": 7968,
+      "favoredRate": 0.3699026171637249,
+      "avgContribution": 4.97101096694433,
+      "realWinRate": 0.4990904239837004,
+      "divergenceFromReal": -0.1291878068199755
+    },
+    {
+      "heroId": 94,
+      "name": "Medusa",
+      "appearances": 7842,
+      "favoredRate": 0.36362240982348426,
+      "avgContribution": 4.643818295960671,
+      "realWinRate": 0.4930138131443812,
+      "divergenceFromReal": -0.12939140332089694
+    },
+    {
+      "heroId": 119,
+      "name": "Dark Willow",
+      "appearances": 7800,
+      "favoredRate": 0.34959851760345895,
+      "avgContribution": 4.059702169625153,
+      "realWinRate": 0.5006404571879003,
+      "divergenceFromReal": -0.15104193958444134
+    },
+    {
+      "heroId": 95,
+      "name": "Troll Warlord",
+      "appearances": 7901,
+      "favoredRate": 0.35749012458219387,
+      "avgContribution": 4.854084682562328,
+      "realWinRate": 0.5102914539766178,
+      "divergenceFromReal": -0.15280132939442392
+    },
+    {
+      "heroId": 43,
+      "name": "Death Prophet",
+      "appearances": 7771,
+      "favoredRate": 0.33097072419106316,
+      "avgContribution": 4.966885758688313,
+      "realWinRate": 0.48605119355766463,
+      "divergenceFromReal": -0.15508046936660147
+    },
+    {
+      "heroId": 75,
+      "name": "Silencer",
+      "appearances": 7856,
+      "favoredRate": 0.33287545787545786,
+      "avgContribution": 3.9528816778944904,
+      "realWinRate": 0.4983755345015511,
+      "divergenceFromReal": -0.16550007662609323
+    },
+    {
+      "heroId": 68,
+      "name": "Ancient Apparition",
+      "appearances": 7857,
+      "favoredRate": 0.3335369578497251,
+      "avgContribution": 3.287469282657993,
+      "realWinRate": 0.5085102649587647,
+      "divergenceFromReal": -0.17497330710903963
+    },
+    {
+      "heroId": 31,
+      "name": "Lich",
+      "appearances": 7868,
+      "favoredRate": 0.3429412676274601,
+      "avgContribution": 3.423994955223171,
+      "realWinRate": 0.522016136753327,
+      "divergenceFromReal": -0.17907486912586695
+    },
+    {
+      "heroId": 67,
+      "name": "Spectre",
+      "appearances": 7806,
+      "favoredRate": 0.3515673017824216,
+      "avgContribution": 5.944342616133045,
+      "realWinRate": 0.5369640879607657,
+      "divergenceFromReal": -0.18539678617834404
+    },
+    {
+      "heroId": 27,
+      "name": "Shadow Shaman",
+      "appearances": 7906,
+      "favoredRate": 0.3291793313069909,
+      "avgContribution": 3.4522495086498437,
+      "realWinRate": 0.5165126163810552,
+      "divergenceFromReal": -0.18733328507406427
+    },
+    {
+      "heroId": 87,
+      "name": "Disruptor",
+      "appearances": 8015,
+      "favoredRate": 0.3125653668011355,
+      "avgContribution": 3.2859974087048816,
+      "realWinRate": 0.5043696957864878,
+      "divergenceFromReal": -0.19180432898535232
+    },
+    {
+      "heroId": 5,
+      "name": "Crystal Maiden",
+      "appearances": 8112,
+      "favoredRate": 0.3009549388242316,
+      "avgContribution": 3.1276560840543404,
+      "realWinRate": 0.5020395180001497,
+      "divergenceFromReal": -0.2010845791759181
+    },
+    {
+      "heroId": 101,
+      "name": "Skywrath Mage",
+      "appearances": 8052,
+      "favoredRate": 0.2753365882527001,
+      "avgContribution": 4.163474913065611,
+      "realWinRate": 0.4912526580320897,
+      "divergenceFromReal": -0.2159160697793896
+    },
+    {
+      "heroId": 12,
+      "name": "Phantom Lancer",
+      "appearances": 7896,
+      "favoredRate": 0.26181601312062025,
+      "avgContribution": 3.8311413763544913,
+      "realWinRate": 0.5293130331101532,
+      "divergenceFromReal": -0.26749701998953296
+    }
+  ]
+}

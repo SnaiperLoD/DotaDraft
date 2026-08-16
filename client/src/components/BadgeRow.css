@@ -12,24 +12,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
+  border-radius: var(--r-sm);
   background: linear-gradient(160deg, var(--panel-raised), var(--panel));
   border: 1px solid var(--gold);
-  box-shadow:
-    0 4px 10px var(--shadow-deep),
-    0 0 10px color-mix(in srgb, var(--gold) 25%, transparent);
+  filter: drop-shadow(0 4px 10px var(--shadow-deep))
+    drop-shadow(0 0 8px color-mix(in srgb, var(--gold) 25%, transparent));
   color: var(--gold-bright);
   cursor: default;
   transition:
     transform 0.15s ease,
-    box-shadow 0.15s ease;
+    filter 0.15s ease;
 }
 
 .badge-square:hover {
   transform: translateY(-2px);
-  box-shadow:
-    0 6px 14px var(--shadow-deep),
-    0 0 16px color-mix(in srgb, var(--gold) 45%, transparent);
+  filter: drop-shadow(0 6px 14px var(--shadow-deep))
+    drop-shadow(0 0 14px color-mix(in srgb, var(--gold) 45%, transparent));
 }
 
 .badge-icon {

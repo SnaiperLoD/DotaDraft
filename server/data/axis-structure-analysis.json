@@ -1,0 +1,1103 @@
+{
+  "generatedAt": "2026-08-15T21:38:23.830Z",
+  "n": 127,
+  "axes": [
+    "teamfight",
+    "tempo",
+    "scaling",
+    "mobility",
+    "objectives",
+    "control",
+    "durability",
+    "burst",
+    "map_control",
+    "saving",
+    "initiating",
+    "skirmish_rate",
+    "camp_stacking"
+  ],
+  "correlation": {
+    "teamfight": {
+      "teamfight": 1,
+      "tempo": 0.202,
+      "scaling": 0.569,
+      "mobility": 0.22,
+      "objectives": 0.486,
+      "control": -0.33,
+      "durability": 0.337,
+      "burst": 0.782,
+      "map_control": -0.178,
+      "saving": -0.373,
+      "initiating": -0.185,
+      "skirmish_rate": -0.391,
+      "camp_stacking": -0.105
+    },
+    "tempo": {
+      "teamfight": 0.202,
+      "tempo": 1,
+      "scaling": -0.4,
+      "mobility": 0.267,
+      "objectives": 0.23,
+      "control": -0.088,
+      "durability": 0.146,
+      "burst": 0.238,
+      "map_control": 0.179,
+      "saving": -0.066,
+      "initiating": 0.003,
+      "skirmish_rate": -0.064,
+      "camp_stacking": -0.061
+    },
+    "scaling": {
+      "teamfight": 0.569,
+      "tempo": -0.4,
+      "scaling": 1,
+      "mobility": 0.097,
+      "objectives": 0.549,
+      "control": -0.328,
+      "durability": 0.489,
+      "burst": 0.643,
+      "map_control": -0.428,
+      "saving": -0.339,
+      "initiating": -0.236,
+      "skirmish_rate": -0.534,
+      "camp_stacking": -0.281
+    },
+    "mobility": {
+      "teamfight": 0.22,
+      "tempo": 0.267,
+      "scaling": 0.097,
+      "mobility": 1,
+      "objectives": 0.167,
+      "control": -0.118,
+      "durability": 0.231,
+      "burst": 0.279,
+      "map_control": 0.591,
+      "saving": -0.145,
+      "initiating": 0.25,
+      "skirmish_rate": -0.292,
+      "camp_stacking": -0.251
+    },
+    "objectives": {
+      "teamfight": 0.486,
+      "tempo": 0.23,
+      "scaling": 0.549,
+      "mobility": 0.167,
+      "objectives": 1,
+      "control": -0.417,
+      "durability": 0.478,
+      "burst": 0.59,
+      "map_control": -0.283,
+      "saving": -0.295,
+      "initiating": -0.334,
+      "skirmish_rate": -0.52,
+      "camp_stacking": -0.242
+    },
+    "control": {
+      "teamfight": -0.33,
+      "tempo": -0.088,
+      "scaling": -0.328,
+      "mobility": -0.118,
+      "objectives": -0.417,
+      "control": 1,
+      "durability": -0.214,
+      "burst": -0.42,
+      "map_control": 0.101,
+      "saving": -0.047,
+      "initiating": 0.546,
+      "skirmish_rate": 0.214,
+      "camp_stacking": 0.107
+    },
+    "durability": {
+      "teamfight": 0.337,
+      "tempo": 0.146,
+      "scaling": 0.489,
+      "mobility": 0.231,
+      "objectives": 0.478,
+      "control": -0.214,
+      "durability": 1,
+      "burst": 0.395,
+      "map_control": -0.337,
+      "saving": -0.198,
+      "initiating": 0.033,
+      "skirmish_rate": -0.555,
+      "camp_stacking": -0.42
+    },
+    "burst": {
+      "teamfight": 0.782,
+      "tempo": 0.238,
+      "scaling": 0.643,
+      "mobility": 0.279,
+      "objectives": 0.59,
+      "control": -0.42,
+      "durability": 0.395,
+      "burst": 1,
+      "map_control": -0.18,
+      "saving": -0.428,
+      "initiating": -0.252,
+      "skirmish_rate": -0.346,
+      "camp_stacking": -0.339
+    },
+    "map_control": {
+      "teamfight": -0.178,
+      "tempo": 0.179,
+      "scaling": -0.428,
+      "mobility": 0.591,
+      "objectives": -0.283,
+      "control": 0.101,
+      "durability": -0.337,
+      "burst": -0.18,
+      "map_control": 1,
+      "saving": 0.153,
+      "initiating": 0.379,
+      "skirmish_rate": 0.182,
+      "camp_stacking": 0.108
+    },
+    "saving": {
+      "teamfight": -0.373,
+      "tempo": -0.066,
+      "scaling": -0.339,
+      "mobility": -0.145,
+      "objectives": -0.295,
+      "control": -0.047,
+      "durability": -0.198,
+      "burst": -0.428,
+      "map_control": 0.153,
+      "saving": 1,
+      "initiating": 0.062,
+      "skirmish_rate": 0.124,
+      "camp_stacking": 0.17
+    },
+    "initiating": {
+      "teamfight": -0.185,
+      "tempo": 0.003,
+      "scaling": -0.236,
+      "mobility": 0.25,
+      "objectives": -0.334,
+      "control": 0.546,
+      "durability": 0.033,
+      "burst": -0.252,
+      "map_control": 0.379,
+      "saving": 0.062,
+      "initiating": 1,
+      "skirmish_rate": 0.136,
+      "camp_stacking": -0.098
+    },
+    "skirmish_rate": {
+      "teamfight": -0.391,
+      "tempo": -0.064,
+      "scaling": -0.534,
+      "mobility": -0.292,
+      "objectives": -0.52,
+      "control": 0.214,
+      "durability": -0.555,
+      "burst": -0.346,
+      "map_control": 0.182,
+      "saving": 0.124,
+      "initiating": 0.136,
+      "skirmish_rate": 1,
+      "camp_stacking": -0.009
+    },
+    "camp_stacking": {
+      "teamfight": -0.105,
+      "tempo": -0.061,
+      "scaling": -0.281,
+      "mobility": -0.251,
+      "objectives": -0.242,
+      "control": 0.107,
+      "durability": -0.42,
+      "burst": -0.339,
+      "map_control": 0.108,
+      "saving": 0.17,
+      "initiating": -0.098,
+      "skirmish_rate": -0.009,
+      "camp_stacking": 1
+    }
+  },
+  "simpleCorrWithWinRate": {
+    "teamfight": -0.106,
+    "tempo": -0.056,
+    "scaling": -0.038,
+    "mobility": 0.028,
+    "objectives": 0.016,
+    "control": 0.068,
+    "durability": -0.133,
+    "burst": 0.002,
+    "map_control": 0.101,
+    "saving": 0.202,
+    "initiating": -0.068,
+    "skirmish_rate": 0.171,
+    "camp_stacking": -0.248
+  },
+  "partialCorrWithWinRate_ctrlAxisSum": {
+    "teamfight": -0.12,
+    "tempo": -0.052,
+    "scaling": -0.033,
+    "mobility": 0.056,
+    "objectives": 0.03,
+    "control": 0.066,
+    "durability": -0.134,
+    "burst": 0.02,
+    "map_control": 0.116,
+    "saving": 0.2,
+    "initiating": -0.065,
+    "skirmish_rate": 0.174,
+    "camp_stacking": -0.25
+  },
+  "vif": {
+    "teamfight": 3.09,
+    "tempo": 4.6,
+    "scaling": 9.98,
+    "mobility": 3.21,
+    "objectives": 2.47,
+    "control": 2.02,
+    "durability": 2.62,
+    "burst": 5.58,
+    "map_control": 3.59,
+    "saving": 1.43,
+    "initiating": 2.11,
+    "skirmish_rate": 2.64,
+    "camp_stacking": 1.78
+  },
+  "pca": {
+    "componentsTo80pct": 6,
+    "componentsTo90pct": 8,
+    "components": [
+      {
+        "index": 1,
+        "eigenvalue": 4.4,
+        "varianceShare": 0.338,
+        "cumulativeShare": 0.338,
+        "topLoadings": [
+          [
+            "burst",
+            -0.843
+          ],
+          [
+            "scaling",
+            -0.803
+          ],
+          [
+            "objectives",
+            -0.795
+          ],
+          [
+            "teamfight",
+            -0.758
+          ],
+          [
+            "durability",
+            -0.668
+          ]
+        ],
+        "loadings": {
+          "teamfight": -0.758,
+          "tempo": -0.133,
+          "scaling": -0.803,
+          "mobility": -0.262,
+          "objectives": -0.795,
+          "control": 0.523,
+          "durability": -0.668,
+          "burst": -0.843,
+          "map_control": 0.387,
+          "saving": 0.45,
+          "initiating": 0.362,
+          "skirmish_rate": 0.638,
+          "camp_stacking": 0.374
+        }
+      },
+      {
+        "index": 2,
+        "eigenvalue": 2.046,
+        "varianceShare": 0.157,
+        "cumulativeShare": 0.496,
+        "topLoadings": [
+          [
+            "mobility",
+            0.833
+          ],
+          [
+            "map_control",
+            0.74
+          ],
+          [
+            "initiating",
+            0.563
+          ],
+          [
+            "tempo",
+            0.522
+          ],
+          [
+            "camp_stacking",
+            -0.253
+          ]
+        ],
+        "loadings": {
+          "teamfight": 0.108,
+          "tempo": 0.522,
+          "scaling": -0.249,
+          "mobility": 0.833,
+          "objectives": -0.004,
+          "control": 0.151,
+          "durability": 0.137,
+          "burst": 0.144,
+          "map_control": 0.74,
+          "saving": -0.105,
+          "initiating": 0.563,
+          "skirmish_rate": -0.074,
+          "camp_stacking": -0.253
+        }
+      },
+      {
+        "index": 3,
+        "eigenvalue": 1.447,
+        "varianceShare": 0.111,
+        "cumulativeShare": 0.607,
+        "topLoadings": [
+          [
+            "control",
+            0.573
+          ],
+          [
+            "initiating",
+            0.571
+          ],
+          [
+            "tempo",
+            -0.504
+          ],
+          [
+            "camp_stacking",
+            -0.383
+          ],
+          [
+            "durability",
+            0.338
+          ]
+        ],
+        "loadings": {
+          "teamfight": -0.124,
+          "tempo": -0.504,
+          "scaling": 0.334,
+          "mobility": -0.039,
+          "objectives": -0.143,
+          "control": 0.573,
+          "durability": 0.338,
+          "burst": -0.108,
+          "map_control": -0.235,
+          "saving": -0.241,
+          "initiating": 0.571,
+          "skirmish_rate": -0.07,
+          "camp_stacking": -0.383
+        }
+      },
+      {
+        "index": 4,
+        "eigenvalue": 1.108,
+        "varianceShare": 0.085,
+        "cumulativeShare": 0.692,
+        "topLoadings": [
+          [
+            "saving",
+            0.634
+          ],
+          [
+            "skirmish_rate",
+            -0.506
+          ],
+          [
+            "tempo",
+            -0.281
+          ],
+          [
+            "burst",
+            -0.272
+          ],
+          [
+            "durability",
+            0.264
+          ]
+        ],
+        "loadings": {
+          "teamfight": -0.238,
+          "tempo": -0.281,
+          "scaling": 0.144,
+          "mobility": 0.227,
+          "objectives": 0.045,
+          "control": -0.25,
+          "durability": 0.264,
+          "burst": -0.272,
+          "map_control": 0.139,
+          "saving": 0.634,
+          "initiating": 0.029,
+          "skirmish_rate": -0.506,
+          "camp_stacking": 0.118
+        }
+      },
+      {
+        "index": 5,
+        "eigenvalue": 1.052,
+        "varianceShare": 0.081,
+        "cumulativeShare": 0.773,
+        "topLoadings": [
+          [
+            "camp_stacking",
+            0.502
+          ],
+          [
+            "tempo",
+            -0.47
+          ],
+          [
+            "durability",
+            -0.402
+          ],
+          [
+            "map_control",
+            0.321
+          ],
+          [
+            "scaling",
+            0.295
+          ]
+        ],
+        "loadings": {
+          "teamfight": 0.278,
+          "tempo": -0.47,
+          "scaling": 0.295,
+          "mobility": 0.201,
+          "objectives": -0.135,
+          "control": 0.052,
+          "durability": -0.402,
+          "burst": 0.116,
+          "map_control": 0.321,
+          "saving": -0.25,
+          "initiating": 0.011,
+          "skirmish_rate": -0.112,
+          "camp_stacking": 0.502
+        }
+      },
+      {
+        "index": 6,
+        "eigenvalue": 0.984,
+        "varianceShare": 0.076,
+        "cumulativeShare": 0.849,
+        "topLoadings": [
+          [
+            "camp_stacking",
+            -0.56
+          ],
+          [
+            "skirmish_rate",
+            0.446
+          ],
+          [
+            "control",
+            -0.396
+          ],
+          [
+            "tempo",
+            -0.361
+          ],
+          [
+            "map_control",
+            0.193
+          ]
+        ],
+        "loadings": {
+          "teamfight": -0.1,
+          "tempo": -0.361,
+          "scaling": 0.158,
+          "mobility": 0.161,
+          "objectives": -0.119,
+          "control": -0.396,
+          "durability": -0.166,
+          "burst": 0.128,
+          "map_control": 0.193,
+          "saving": 0.109,
+          "initiating": -0.127,
+          "skirmish_rate": 0.446,
+          "camp_stacking": -0.56
+        }
+      },
+      {
+        "index": 7,
+        "eigenvalue": 0.613,
+        "varianceShare": 0.047,
+        "cumulativeShare": 0.896,
+        "topLoadings": [
+          [
+            "saving",
+            0.45
+          ],
+          [
+            "teamfight",
+            0.421
+          ],
+          [
+            "initiating",
+            0.289
+          ],
+          [
+            "burst",
+            0.24
+          ],
+          [
+            "objectives",
+            -0.185
+          ]
+        ],
+        "loadings": {
+          "teamfight": 0.421,
+          "tempo": 0.059,
+          "scaling": 0.057,
+          "mobility": -0.171,
+          "objectives": -0.185,
+          "control": 0.012,
+          "durability": -0.005,
+          "burst": 0.24,
+          "map_control": -0.071,
+          "saving": 0.45,
+          "initiating": 0.289,
+          "skirmish_rate": 0.125,
+          "camp_stacking": 0.038
+        }
+      },
+      {
+        "index": 8,
+        "eigenvalue": 0.41,
+        "varianceShare": 0.032,
+        "cumulativeShare": 0.928,
+        "topLoadings": [
+          [
+            "objectives",
+            0.453
+          ],
+          [
+            "durability",
+            -0.295
+          ],
+          [
+            "control",
+            0.238
+          ],
+          [
+            "saving",
+            0.18
+          ],
+          [
+            "camp_stacking",
+            -0.1
+          ]
+        ],
+        "loadings": {
+          "teamfight": -0.059,
+          "tempo": -0.011,
+          "scaling": 0.066,
+          "mobility": -0.053,
+          "objectives": 0.453,
+          "control": 0.238,
+          "durability": -0.295,
+          "burst": 0.05,
+          "map_control": 0.065,
+          "saving": 0.18,
+          "initiating": 0.029,
+          "skirmish_rate": -0.008,
+          "camp_stacking": -0.1
+        }
+      }
+    ]
+  },
+  "hierarchicalClusters": {
+    "k4": [
+      [
+        "tempo"
+      ],
+      [
+        "camp_stacking"
+      ],
+      [
+        "map_control",
+        "mobility"
+      ],
+      [
+        "burst",
+        "control",
+        "durability",
+        "initiating",
+        "objectives",
+        "saving",
+        "scaling",
+        "skirmish_rate",
+        "teamfight"
+      ]
+    ],
+    "k5": [
+      [
+        "tempo"
+      ],
+      [
+        "camp_stacking"
+      ],
+      [
+        "map_control",
+        "mobility"
+      ],
+      [
+        "control",
+        "initiating"
+      ],
+      [
+        "burst",
+        "durability",
+        "objectives",
+        "saving",
+        "scaling",
+        "skirmish_rate",
+        "teamfight"
+      ]
+    ],
+    "k6": [
+      [
+        "tempo"
+      ],
+      [
+        "saving"
+      ],
+      [
+        "camp_stacking"
+      ],
+      [
+        "map_control",
+        "mobility"
+      ],
+      [
+        "control",
+        "initiating"
+      ],
+      [
+        "burst",
+        "durability",
+        "objectives",
+        "scaling",
+        "skirmish_rate",
+        "teamfight"
+      ]
+    ]
+  },
+  "mergeHistoryTail": [
+    {
+      "a": "teamfight",
+      "b": "burst",
+      "dist": 0.21799999999999997
+    },
+    {
+      "a": "scaling",
+      "b": "(teamfight+burst)",
+      "dist": 0.394
+    },
+    {
+      "a": "mobility",
+      "b": "map_control",
+      "dist": 0.40900000000000003
+    },
+    {
+      "a": "durability",
+      "b": "skirmish_rate",
+      "dist": 0.44499999999999995
+    },
+    {
+      "a": "control",
+      "b": "initiating",
+      "dist": 0.45399999999999996
+    },
+    {
+      "a": "objectives",
+      "b": "(scaling+(teamfight+burst))",
+      "dist": 0.4583333333333333
+    },
+    {
+      "a": "(durability+skirmish_rate)",
+      "b": "(objectives+(scaling+(teamfight+burst)))",
+      "dist": 0.56375
+    },
+    {
+      "a": "saving",
+      "b": "((durability+skirmish_rate)+(objectives+(scaling+(teamfight+burst))))",
+      "dist": 0.7071666666666667
+    },
+    {
+      "a": "(control+initiating)",
+      "b": "(saving+((durability+skirmish_rate)+(objectives+(scaling+(teamfight+burst)))))",
+      "dist": 0.7708571428571426
+    },
+    {
+      "a": "(mobility+map_control)",
+      "b": "((control+initiating)+(saving+((durability+skirmish_rate)+(objectives+(scaling+(teamfight+burst))))))",
+      "dist": 0.7766666666666667
+    },
+    {
+      "a": "camp_stacking",
+      "b": "((mobility+map_control)+((control+initiating)+(saving+((durability+skirmish_rate)+(objectives+(scaling+(teamfight+burst)))))))",
+      "dist": 0.8063636363636363
+    },
+    {
+      "a": "tempo",
+      "b": "(camp_stacking+((mobility+map_control)+((control+initiating)+(saving+((durability+skirmish_rate)+(objectives+(scaling+(teamfight+burst))))))))",
+      "dist": 0.8380000000000001
+    }
+  ],
+  "proposedFactors": [
+    {
+      "id": "F1",
+      "members": [
+        "tempo"
+      ],
+      "anchor": "tempo",
+      "meanAbsPartialR": 0.052,
+      "handCompositeOverlap": [
+        {
+          "name": "tempo",
+          "overlap": 1,
+          "handSize": 1
+        }
+      ]
+    },
+    {
+      "id": "F2",
+      "members": [
+        "camp_stacking"
+      ],
+      "anchor": "camp_stacking",
+      "meanAbsPartialR": 0.25,
+      "handCompositeOverlap": [
+        {
+          "name": "camp_stacking",
+          "overlap": 1,
+          "handSize": 1
+        }
+      ]
+    },
+    {
+      "id": "F3",
+      "members": [
+        "map_control",
+        "mobility"
+      ],
+      "anchor": "map_control",
+      "meanAbsPartialR": 0.086,
+      "handCompositeOverlap": [
+        {
+          "name": "movement",
+          "overlap": 1,
+          "handSize": 2
+        },
+        {
+          "name": "supporting",
+          "overlap": 1,
+          "handSize": 2
+        }
+      ]
+    },
+    {
+      "id": "F4",
+      "members": [
+        "control",
+        "initiating"
+      ],
+      "anchor": "control",
+      "meanAbsPartialR": 0.066,
+      "handCompositeOverlap": [
+        {
+          "name": "movement",
+          "overlap": 1,
+          "handSize": 2
+        },
+        {
+          "name": "control",
+          "overlap": 1,
+          "handSize": 1
+        }
+      ]
+    },
+    {
+      "id": "F5",
+      "members": [
+        "burst",
+        "durability",
+        "objectives",
+        "saving",
+        "scaling",
+        "skirmish_rate",
+        "teamfight"
+      ],
+      "anchor": "saving",
+      "meanAbsPartialR": 0.102,
+      "handCompositeOverlap": [
+        {
+          "name": "damage_dealing",
+          "overlap": 2,
+          "handSize": 2
+        },
+        {
+          "name": "pushing_power",
+          "overlap": 2,
+          "handSize": 2
+        },
+        {
+          "name": "supporting",
+          "overlap": 1,
+          "handSize": 2
+        },
+        {
+          "name": "durability",
+          "overlap": 1,
+          "handSize": 1
+        },
+        {
+          "name": "skirmish_rate",
+          "overlap": 1,
+          "handSize": 1
+        }
+      ]
+    }
+  ],
+  "handCompositeQuality": [
+    {
+      "name": "damage_dealing",
+      "members": [
+        "burst",
+        "teamfight"
+      ],
+      "meanAbsWithinCorr": 0.782,
+      "simpleRMembers": {
+        "burst": 0.002,
+        "teamfight": -0.106
+      },
+      "partialRMembers": {
+        "burst": 0.02,
+        "teamfight": -0.12
+      }
+    },
+    {
+      "name": "movement",
+      "members": [
+        "mobility",
+        "initiating"
+      ],
+      "meanAbsWithinCorr": 0.25,
+      "simpleRMembers": {
+        "mobility": 0.028,
+        "initiating": -0.068
+      },
+      "partialRMembers": {
+        "mobility": 0.056,
+        "initiating": -0.065
+      }
+    },
+    {
+      "name": "pushing_power",
+      "members": [
+        "objectives",
+        "scaling"
+      ],
+      "meanAbsWithinCorr": 0.549,
+      "simpleRMembers": {
+        "objectives": 0.016,
+        "scaling": -0.038
+      },
+      "partialRMembers": {
+        "objectives": 0.03,
+        "scaling": -0.033
+      }
+    },
+    {
+      "name": "supporting",
+      "members": [
+        "saving",
+        "map_control"
+      ],
+      "meanAbsWithinCorr": 0.153,
+      "simpleRMembers": {
+        "saving": 0.202,
+        "map_control": 0.101
+      },
+      "partialRMembers": {
+        "saving": 0.2,
+        "map_control": 0.116
+      }
+    },
+    {
+      "name": "durability",
+      "members": [
+        "durability"
+      ],
+      "meanAbsWithinCorr": null,
+      "simpleRMembers": {
+        "durability": -0.133
+      },
+      "partialRMembers": {
+        "durability": -0.134
+      }
+    },
+    {
+      "name": "control",
+      "members": [
+        "control"
+      ],
+      "meanAbsWithinCorr": null,
+      "simpleRMembers": {
+        "control": 0.068
+      },
+      "partialRMembers": {
+        "control": 0.066
+      }
+    },
+    {
+      "name": "tempo",
+      "members": [
+        "tempo"
+      ],
+      "meanAbsWithinCorr": null,
+      "simpleRMembers": {
+        "tempo": -0.056
+      },
+      "partialRMembers": {
+        "tempo": -0.052
+      }
+    },
+    {
+      "name": "skirmish_rate",
+      "members": [
+        "skirmish_rate"
+      ],
+      "meanAbsWithinCorr": null,
+      "simpleRMembers": {
+        "skirmish_rate": 0.171
+      },
+      "partialRMembers": {
+        "skirmish_rate": 0.174
+      }
+    },
+    {
+      "name": "camp_stacking",
+      "members": [
+        "camp_stacking"
+      ],
+      "meanAbsWithinCorr": null,
+      "simpleRMembers": {
+        "camp_stacking": -0.248
+      },
+      "partialRMembers": {
+        "camp_stacking": -0.25
+      }
+    }
+  ],
+  "axisMeansByPosition": {
+    "Carry": {
+      "teamfight": 6.24,
+      "tempo": 4.99,
+      "scaling": 6.88,
+      "mobility": 4.83,
+      "objectives": 7.89,
+      "control": 3.51,
+      "durability": 5.29,
+      "burst": 6.66,
+      "map_control": 3.65,
+      "saving": 1.82,
+      "initiating": 3.95,
+      "skirmish_rate": 4.01,
+      "camp_stacking": 4.31
+    },
+    "Offlane": {
+      "teamfight": 4.44,
+      "tempo": 4.72,
+      "scaling": 5,
+      "mobility": 5.2,
+      "objectives": 4.76,
+      "control": 5.77,
+      "durability": 5.55,
+      "burst": 4.23,
+      "map_control": 4.33,
+      "saving": 2.57,
+      "initiating": 5.72,
+      "skirmish_rate": 4.54,
+      "camp_stacking": 3.67
+    },
+    "Support": {
+      "teamfight": 2.96,
+      "tempo": 4.83,
+      "scaling": 2.97,
+      "mobility": 3.9,
+      "objectives": 2.6,
+      "control": 5.63,
+      "durability": 1.73,
+      "burst": 2.83,
+      "map_control": 6.43,
+      "saving": 4.12,
+      "initiating": 5.09,
+      "skirmish_rate": 6.44,
+      "camp_stacking": 6.49
+    },
+    "Mid": {
+      "teamfight": 8.06,
+      "tempo": 5.71,
+      "scaling": 6.31,
+      "mobility": 5.52,
+      "objectives": 5.72,
+      "control": 4.88,
+      "durability": 4.92,
+      "burst": 7.89,
+      "map_control": 4.92,
+      "saving": 1.89,
+      "initiating": 4.88,
+      "skirmish_rate": 4.18,
+      "camp_stacking": 4.48
+    }
+  },
+  "candidateS1FactorEqualShare": {
+    "description": "Mean within data-driven k=5 clusters; ridge λ=1 on standardized factor scores → winRate",
+    "factorLabels": [
+      "F1:tempo",
+      "F2:camp_stacking",
+      "F3:map_control+mobility",
+      "F4:control+initiating",
+      "F5:burst+durability+objectives+saving+scaling+skirmish_rate+teamfight"
+    ],
+    "ridgeBeta": [
+      -0.002,
+      -0.006,
+      0.002,
+      -0.001,
+      -0.002
+    ],
+    "inSampleR2": 0.076,
+    "leavePositionOutPearson": [
+      {
+        "hold": "Carry",
+        "nTest": 35,
+        "r": 0.188
+      },
+      {
+        "hold": "Offlane",
+        "nTest": 25,
+        "r": 0.206
+      },
+      {
+        "hold": "Support",
+        "nTest": 46,
+        "r": 0.246
+      },
+      {
+        "hold": "Mid",
+        "nTest": 21,
+        "r": -0.163
+      }
+    ]
+  },
+  "notes": [
+    "Do NOT copy multivariate OLS axis betas into axis-weights (suppression lesson).",
+    "Prefer partial r and simple r over multivariate t for deciding which axes carry independent signal.",
+    "map_control is in AXES but Battle weight is 0 — expect near-zero decision influence."
+  ]
+}

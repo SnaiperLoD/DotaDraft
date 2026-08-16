@@ -5,6 +5,7 @@ import { percentileFor } from '../axis-percentiles';
 import { roleAwareAxisValue, supportMiscastMultiplier, coreMiscastMultiplier } from '../../common/role-fit';
 import { hardCarryPenalty, hardCarryAxisMultipliers, isHardCarry } from '../../common/hard-carry';
 import { utilityStackAxisMultipliers, utilityStackBreadth } from '../../common/utility-stacking';
+import { calibrationMultipliersForTeam } from '../../common/calibration-tags';
 
 type AxisKey = keyof HeroEvaluationValues;
 
@@ -16,6 +17,8 @@ export function createAxisAnalyzer(key: AxisKey, label: string): Analyzer {
       if (picks.length === 0) {
         return { score: null, percentile: null, explanation: ['No heroes to analyze.'] };
       }
+
+      const calibrationByHero = calibrationMultipliersForTeam(picks.map((p) => p.hero));
 
       const values = picks.map((p) => {
         const raw = p.hero.evaluation_values[key];
@@ -43,7 +46,14 @@ export function createAxisAnalyzer(key: AxisKey, label: string): Analyzer {
         // 1 (no-op) for a hero who genuinely plays the assigned role.
         const miscastMult =
           supportMiscastMultiplier(p.hero, p.assignedRole) * coreMiscastMultiplier(p.hero, p.assignedRole);
-        const value = Math.round(roleFitAdjusted * utilityMult * miscastMult * 10) / 10;
+        // Always-hidden balance tags (Summoning Sickness / Tempo Monster /
+        // Divided Attention / Mirage Tax / Paper Utility / Showstopper Tax /
+        // False Immortal) — same magnitudes as Battle blessings, applied
+        // here so Evaluation Total Score stays consistent with the model.
+        const cal = calibrationByHero.get(p.hero.id);
+        const calPower = cal?.power ?? 1;
+        const calAxis = cal?.axis[key] ?? 1;
+        const value = Math.round(roleFitAdjusted * utilityMult * miscastMult * calPower * calAxis * 10) / 10;
         return {
           hero: p.hero,
           value,

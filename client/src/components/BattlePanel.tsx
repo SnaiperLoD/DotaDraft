@@ -8,7 +8,13 @@ import { api } from '../api/client';
 import { getSubmitterToken } from '../utils/submitterToken';
 import { heroPortraitUrl, heroIconUrl } from '../utils/heroIcon';
 import type { DraftHeroView } from '../api/types';
-import AdSlot from './AdSlot';
+import {
+  bestWinStreak,
+  currentLoseStreak,
+  currentWinStreak,
+  runRecord,
+  type FightOutcome,
+} from '../utils/runStreak';
 import './BattlePanel.css';
 
 function sleep(ms: number): Promise<void> {
@@ -127,6 +133,114 @@ function MatchupList({ heading, rows, good }: { heading: string; rows: BattleMat
           </li>
         ))}
       </ul>
+    </div>
+  );
+}
+
+function BattleStory({
+  result,
+  heroes,
+  heroNames,
+}: {
+  result: BattleResultResponse;
+  heroes: DraftHeroView[];
+  heroNames: string[];
+}) {
+  const { t } = useTranslation();
+  const won = result.resolvedOutcome === 'Win';
+  const mineByRole = (role: string) => heroes.find((hero) => hero.assignedRole === role)?.hero.name;
+  const opponentByRole = (role: string) =>
+    result.opponent.heroes.find((hero) => hero.assignedRole === role)?.heroName;
+  const winnerByRole = (role: string) => (won ? mineByRole(role) : opponentByRole(role));
+  const loserByRole = (role: string) => (won ? opponentByRole(role) : mineByRole(role));
+  const fallbackWinner =
+    (won ? heroes[0]?.hero.name : result.opponent.heroes[0]?.heroName) ?? t('battle.story.winningDraft');
+  const winnerFarmer = winnerByRole('Carry') ?? fallbackWinner;
+  const winnerTempo =
+    winnerByRole('Mid') ?? winnerByRole('Offlane') ?? winnerFarmer;
+  const winnerAction =
+    winnerByRole('Soft Support') ?? winnerByRole('Offlane') ?? winnerByRole('Hard Support') ?? winnerTempo;
+  const losingCore = loserByRole('Carry') ?? loserByRole('Mid') ?? t('battle.sideOpponent');
+  const relevantMatchup = (won ? result.bestMatchups : result.worstMatchups)[0];
+  const matchupWinner = relevantMatchup
+    ? won
+      ? relevantMatchup.hero
+      : relevantMatchup.vs
+    : winnerTempo;
+  const matchupLoser = relevantMatchup
+    ? won
+      ? relevantMatchup.vs
+      : relevantMatchup.hero
+    : losingCore;
+  const winnerLabel = t(won ? 'battle.story.yourSide' : 'battle.story.opponentSide');
+  const lanes = result.lanes ?? [];
+  const winnerLaneWins = lanes.filter((lane) => lane.winner === (won ? 'mine' : 'opponent')).length;
+  const loserLaneWins = lanes.filter((lane) => lane.winner === (won ? 'opponent' : 'mine')).length;
+  const cameFromBehind = winnerLaneWins < loserLaneWins;
+  const laneSummary = lanes
+    .map((lane) => {
+      const mine = lane.mine.join(' + ');
+      const opponent = lane.opponent.join(' + ');
+      const laneName = t(`battle.story.lanes.${lane.lane}`);
+      if (lane.winner === 'mine') {
+        return t('battle.story.laneWon', { lane: laneName, winner: mine, loser: opponent });
+      }
+      if (lane.winner === 'opponent') {
+        return t('battle.story.laneWon', { lane: laneName, winner: opponent, loser: mine });
+      }
+      return t('battle.story.laneEven', { lane: laneName, mine, opponent });
+    })
+    .join(' ');
+
+  return (
+    <div className="battle-story">
+      <div className="battle-story-head">
+        <div className="battle-list-heading">{t('battle.story.title')}</div>
+        <span>{t('battle.story.disclaimer')}</span>
+      </div>
+      <div className="battle-story-timeline">
+        <div className="battle-story-beat">
+          <span className="battle-story-phase">{t('battle.story.early')}</span>
+          <p>
+            {boldHeroNames(
+              t(cameFromBehind ? 'battle.story.openingComeback' : 'battle.story.openingAhead', {
+                lanes: laneSummary,
+                tempo: winnerTempo,
+                farmer: winnerFarmer,
+              }),
+              heroNames,
+            )}
+          </p>
+        </div>
+        <div className="battle-story-beat">
+          <span className="battle-story-phase">{t('battle.story.turning')}</span>
+          <p>
+            {boldHeroNames(
+              t(cameFromBehind ? 'battle.story.turningComeback' : 'battle.story.turningAhead', {
+                action: winnerAction,
+                tempo: winnerTempo,
+                matchupWinner,
+                matchupLoser,
+              }),
+              heroNames,
+            )}
+          </p>
+        </div>
+        <div className="battle-story-beat">
+          <span className="battle-story-phase">{t('battle.story.finish')}</span>
+          <p>
+            {boldHeroNames(
+              t('battle.story.finishText', {
+                farmer: winnerFarmer,
+                winner: winnerLabel,
+                action: winnerAction,
+                losingCore,
+              }),
+              heroNames,
+            )}
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
@@ -272,6 +386,12 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
   const [revealing, setRevealing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [battleCount, setBattleCount] = useState(0);
+  // Chronological outcomes for this Battle Mode visit (the "run"). Resets when
+  // BattlePanel remounts — i.e. a new draft — not when bouncing back to Eval.
+  // Appended only after OpponentRollAnimation settles — never while the roll
+  // is still spinning, or the header chip spoils the verdict.
+  const [runOutcomes, setRunOutcomes] = useState<FightOutcome[]>([]);
+  const pendingRunOutcomeRef = useRef<FightOutcome | null>(null);
   // Increments at the START of each fight. The roll keys on this so a single
   // fight's spin flows straight into its settle without remounting, while a
   // fresh "Fight Again" gets a clean roll.
@@ -296,6 +416,10 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
       ]);
       setResult(res);
       setBattleCount((c) => c + 1);
+      pendingRunOutcomeRef.current =
+        res.resolvedOutcome === 'Win' || res.resolvedOutcome === 'Lose'
+          ? res.resolvedOutcome
+          : null;
       // Hand off from the searching spin to the slot-by-slot settle; the full
       // result renders once OpponentRollAnimation calls onSettled.
       setRevealing(true);
@@ -338,6 +462,11 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [revealing, battleCount]);
 
+  const { wins: runWins, losses: runLosses } = runRecord(runOutcomes);
+  const winStreak = currentWinStreak(runOutcomes);
+  const loseStreak = currentLoseStreak(runOutcomes);
+  const peakWinStreak = bestWinStreak(runOutcomes);
+
   return (
     <div className="battle-panel">
       <div className="battle-screen-head">
@@ -350,6 +479,31 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
           </button>
         )}
         <h3>{t('battle.title')}</h3>
+        {runOutcomes.length > 0 && (
+          <div className="battle-run-chip" title={t('battle.runHint')}>
+            <span className="battle-run-record">
+              <span className="battle-run-win">
+                {runWins}
+                {t('history.winShort')}
+              </span>
+              <span className="battle-run-sep">–</span>
+              <span className="battle-run-lose">
+                {runLosses}
+                {t('history.lossShort')}
+              </span>
+            </span>
+            {winStreak >= 2 && (
+              <span className="battle-run-streak battle-run-streak--win">
+                {t('battle.winStreak', { count: winStreak })}
+              </span>
+            )}
+            {loseStreak >= 2 && (
+              <span className="battle-run-streak battle-run-streak--lose">
+                {t('battle.loseStreak', { count: loseStreak })}
+              </span>
+            )}
+          </div>
+        )}
       </div>
 
       {!result && !loading && !revealing && (
@@ -370,14 +524,21 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
         <OpponentRollAnimation
           key={fightSeq}
           opponentHeroes={revealing ? (result?.opponent.heroes ?? null) : null}
-          onSettled={() => setRevealing(false)}
+          onSettled={() => {
+            setRevealing(false);
+            const pending = pendingRunOutcomeRef.current;
+            if (pending) {
+              pendingRunOutcomeRef.current = null;
+              setRunOutcomes((prev) => [...prev, pending]);
+            }
+          }}
         />
       )}
 
       {error && <p className="error-text">{error}</p>}
 
       {result && !loading && !revealing && (
-        <div className={`battle-result battle-result--${result.resolvedOutcome === 'Win' ? 'win' : 'lose'}`}>
+        <div className={`battle-result bracketed battle-result--${result.resolvedOutcome === 'Win' ? 'win' : 'lose'}`}>
           <ScreenFlash outcome={result.resolvedOutcome} flashKey={battleCount} />
 
           {/* Outcome, confidence and opponent used to run together in one
@@ -427,19 +588,34 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
           {/* Outcome write-up: hero names bolded via boldHeroNames the same way
               the portraits above are already bold (battleHeroNames, user request). */}
           <div className="battle-lists">
-            {result.shutdownNotes.length > 0 && (
+            {result.shutdownHeroIds.length > 0 && (
               <div className="battle-list-block battle-list-block--shutdown">
                 <div className="battle-list-heading">{t('battle.shutdown')}</div>
+                <p className="battle-shutdown-blurb">{t('battle.shutdownBlurb')}</p>
                 <ul>
-                  {result.shutdownNotes.map((n, i) => (
-                    <li key={i}>{boldHeroNames(n, battleHeroNames)}</li>
-                  ))}
+                  {heroes
+                    .filter((h) => result.shutdownHeroIds.includes(h.heroId))
+                    .map((h) => (
+                      <li key={`mine-${h.heroId}`}>
+                        {boldHeroNames(t('battle.shutdownNoteMine', { hero: h.hero.name }), battleHeroNames)}
+                      </li>
+                    ))}
+                  {result.opponent.heroes
+                    .filter((h) => result.shutdownHeroIds.includes(h.heroId))
+                    .map((h) => (
+                      <li key={`opp-${h.heroId}`}>
+                        {boldHeroNames(
+                          t('battle.shutdownNoteOpponent', { hero: h.heroName }),
+                          battleHeroNames,
+                        )}
+                      </li>
+                    ))}
                 </ul>
               </div>
             )}
 
             {result.winningHighlights.length > 0 && (
-              <div className="battle-list-block">
+              <div className="battle-list-block battle-list-block--deciding">
                 <div className="battle-list-heading">{t('battle.decidingFactors')}</div>
                 <ul>
                   {result.winningHighlights.map((h, i) => (
@@ -471,13 +647,14 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
               </div>
             )}
 
-            <div className="battle-list-block">
+            <div className="battle-list-block battle-list-block--explanation">
               <div className="battle-list-heading">{t('battle.explanation')}</div>
               <ul>
                 {result.explanation.map((line, i) => (
                   <li key={i}>{boldHeroNames(line, battleHeroNames)}</li>
                 ))}
               </ul>
+              <BattleStory result={result} heroes={heroes} heroNames={battleHeroNames} />
             </div>
           </div>
 
@@ -518,15 +695,19 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
             </>
           )}
 
-          <div className="battle-ad">
-            <AdSlot size="leaderboard" />
-          </div>
-
           <button className="btn btn-primary" onClick={() => void handleFight()} disabled={loading}>
             {loading && <span className="btn-spinner" aria-hidden="true" />}
             {loading ? t('battle.findingOpponent') : t('battle.fightAgain')}
           </button>
-          <p className="battle-count">{t('battle.battlesThisVisit', { count: battleCount })}</p>
+          <p className="battle-count">
+            {t('battle.battlesThisVisit', { count: battleCount })}
+            {peakWinStreak >= 2 && (
+              <>
+                {' · '}
+                {t('battle.bestWinStreak', { count: peakWinStreak })}
+              </>
+            )}
+          </p>
         </div>
       )}
     </div>

@@ -309,14 +309,18 @@ html {
 /* ---------- panel ---------- */
 
 .panel {
-  background: var(--panel);
+  position: relative;
+  background-color: var(--panel);
   border: 1px solid var(--bronze-dim);
   border-radius: var(--r-md);
   box-shadow: var(--elev-2);
-  /* Top edge catches the light, like a bevelled metal plate — one line
-     that does most of the work of making a flat rectangle read as an
-     object rather than a div. */
-  background-image: linear-gradient(180deg, var(--wash), transparent 90px);
+  /* Wash + soft forge grain. No overflow:hidden — tooltips (RoleTooltip)
+     escape the ledger panel top edge. */
+  background-image:
+    var(--panel-noise),
+    linear-gradient(180deg, var(--wash), transparent 90px);
+  background-size: 180px 180px, auto;
+  background-blend-mode: soft-light, normal;
 }
 
 /* ---------- plate (chamfered surface) ---------- */
@@ -335,8 +339,12 @@ html {
  * the clipped shape rather than the original rectangle. */
 .plate {
   position: relative;
-  background: var(--panel);
-  background-image: linear-gradient(180deg, var(--wash), transparent 90px);
+  background-color: var(--panel);
+  background-image:
+    var(--panel-noise),
+    linear-gradient(180deg, var(--wash), transparent 90px);
+  background-size: 180px 180px, auto;
+  background-blend-mode: soft-light, normal;
   clip-path: polygon(
     var(--bevel) 0,
     100% 0,
@@ -381,6 +389,7 @@ html {
       )
       bottom right / var(--cut-box) var(--cut-box) no-repeat;
   opacity: 0.8;
+  z-index: 1;
 }
 
 /* Bracket marks on the two square corners — the corner filigree Dota puts
@@ -398,6 +407,98 @@ html {
   border-top: 2px solid var(--bronze);
   border-right: 2px solid var(--bronze);
   opacity: 0.8;
+  z-index: 2;
+}
+
+/* ---------- corner brackets (non-clipped panels) ---------- */
+
+/* Four L-corners without clip-path — usable on History cards, Battle
+   result frame, etc. where tooltips/overflow must escape. */
+.bracketed {
+  position: relative;
+}
+
+.bracketed::before,
+.bracketed::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+  opacity: 0.7;
+  z-index: 2;
+}
+
+.bracketed::before {
+  top: 6px;
+  left: 6px;
+  border-top: 2px solid var(--bronze);
+  border-left: 2px solid var(--bronze);
+}
+
+.bracketed::after {
+  bottom: 6px;
+  right: 6px;
+  border-bottom: 2px solid var(--bronze);
+  border-right: 2px solid var(--bronze);
+}
+
+/* ---------- motion recipes (shared grammar) ---------- */
+
+@keyframes motion-deal {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes motion-stamp {
+  0% {
+    opacity: 0;
+    transform: scale(1.55);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.96);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes motion-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.motion-deal {
+  animation: motion-deal var(--dur-3) var(--ease-out) both;
+}
+
+.motion-stamp {
+  animation: motion-stamp var(--dur-4) var(--ease-spring) both;
+}
+
+.motion-reveal {
+  animation: motion-reveal var(--dur-3) var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-deal,
+  .motion-stamp,
+  .motion-reveal {
+    animation: none;
+  }
 }
 
 /* ---------- pills / chips ---------- */

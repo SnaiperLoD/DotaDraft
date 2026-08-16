@@ -50,6 +50,11 @@ export class HeroController {
     });
   }
 
+  @Get('ti-form')
+  tiForm() {
+    return this.heroService.tiForm(5);
+  }
+
   // Blueprint/10-tech-debt-backlog.md, "Хайлайт топ-контрибьюторов по оси" —
   // powers EvaluationPanel's top-contributor ability drill-down. `category`
   // is the ability-tagging category (control_strength/mobility/saving/

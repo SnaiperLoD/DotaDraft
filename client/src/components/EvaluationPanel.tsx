@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { api } from '../api/client';
 import type { EvaluationResult } from 'shared';
 import type { DraftHeroView } from '../api/types';
-import { detectBadges } from '../data/badges';
+import { detectBadges, type ActiveBadge } from '../data/badges';
 import BadgeRow from './BadgeRow';
 import AxisRadar from './AxisRadar';
 import TopContributorHighlight from './TopContributorHighlight';
@@ -166,16 +166,26 @@ function useReveal(durationMs = 850): number {
   return progress;
 }
 
-function ScoreHeadline({ score }: { score: number }) {
+function ScoreHeadline({
+  score,
+  archetypeId,
+  badges,
+}: {
+  score: number;
+  archetypeId: string | null | undefined;
+  badges: ActiveBadge[];
+}) {
   const { t } = useTranslation();
   const progress = useReveal();
   const decimals = Number.isInteger(score) ? 0 : 1;
   const shownValue = (score * progress).toFixed(decimals);
   const fraction = Math.max(0, Math.min(1, score / 10)) * progress;
   const starPercent = Math.max(0, Math.min(100, (score / 10) * 100)) * progress;
+  const archetypeLabel =
+    archetypeId != null ? t(`evaluation.archetype.${archetypeId}`, { defaultValue: '' }) : '';
 
   return (
-    <div className="plate plate--framed evaluation-hero">
+    <div className="panel evaluation-hero">
       <div className="evaluation-hero-dial">
         <ScoreDial fraction={fraction} />
         <span className="evaluation-hero-value">
@@ -186,8 +196,15 @@ function ScoreHeadline({ score }: { score: number }) {
       <div className="evaluation-hero-copy">
         <div className="evaluation-hero-label">{t('evaluation.totalScoreShort')}</div>
         <div className="evaluation-hero-verdict">{t(`evaluation.verdict.${verdictKey(score)}`)}</div>
+        {archetypeLabel ? (
+          <div className="evaluation-archetype-seal" title={t(`evaluation.archetypeHint.${archetypeId}`)}>
+            <span className="evaluation-archetype-seal-ring" aria-hidden="true" />
+            <span className="evaluation-archetype-seal-label">{archetypeLabel}</span>
+          </div>
+        ) : null}
         <StarRating score={score} fillPercent={starPercent} />
       </div>
+      <BadgeRow badges={badges} />
     </div>
   );
 }
@@ -228,18 +245,13 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
 
   return (
     <div className="evaluation-panel">
-      <BadgeRow badges={badges} />
-
-      <ScoreHeadline score={result.totalScore} />
+      <ScoreHeadline score={result.totalScore} archetypeId={result.archetype?.id} badges={badges} />
 
 
-      <p className="evaluation-gameplan">{boldHeroNames(result.summary.gameplan, heroNames)}</p>
-      {result.campStackingNote && (
-        <p className="evaluation-note">{boldHeroNames(result.campStackingNote, heroNames)}</p>
-      )}
+      <p className="evaluation-gameplan bracketed">{boldHeroNames(result.summary.gameplan, heroNames)}</p>
 
       <div className="evaluation-columns">
-        <div className="panel evaluation-radar-panel">
+        <div className="panel bracketed evaluation-radar-panel">
           <AxisRadar breakdown={result.breakdown} />
         </div>
 
@@ -270,8 +282,9 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
       <TopContributorHighlight breakdown={result.breakdown} heroes={heroes} />
 
       {result.customTags.length > 0 && (
-        <div className="panel evaluation-combos">
+        <div className="panel bracketed evaluation-combos">
           <div className="evaluation-combos-heading">{t('evaluation.activeCombos')}</div>
+          <p className="evaluation-combos-note">{t('evaluation.combosBattleNote')}</p>
           <ul>
             {result.customTags.map((tag) => (
               <li key={tag.name}>
@@ -280,6 +293,7 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
               </li>
             ))}
           </ul>
+          <p className="evaluation-combos-footnote">{t('evaluation.combosBattleSummary')}</p>
         </div>
       )}
 

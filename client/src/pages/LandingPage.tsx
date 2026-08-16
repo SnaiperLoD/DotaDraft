@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import AdSlot from '../components/AdSlot';
 import { heroPortraitUrl } from '../utils/heroIcon';
 import './LandingPage.css';
 
@@ -85,7 +84,7 @@ export default function LandingPage() {
         </div>
         <ol className="landing-step-grid">
           {STEPS.map((step, i) => (
-            <li key={step} className="plate landing-step">
+            <li key={step} className="panel landing-step">
               <span className="landing-step-index">{String(i + 1).padStart(2, '0')}</span>
               <h3>{t(`landing.steps.${step}.title`)}</h3>
               <p>{t(`landing.steps.${step}.text`)}</p>
@@ -94,7 +93,6 @@ export default function LandingPage() {
         </ol>
       </section>
 
-      <AdSlot size="leaderboard" />
     </div>
   );
 }

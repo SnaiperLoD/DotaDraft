@@ -1,15 +1,56 @@
 /* ---------- hero ---------- */
 
+.landing-page {
+  position: relative;
+}
+
+/* Atmosphere strip — cool fog/embers without a stock wallpaper. */
+.landing-page::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: -40px;
+  width: 140vw;
+  max-width: 1600px;
+  height: min(520px, 70vh);
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(
+      ellipse 55% 45% at 70% 35%,
+      color-mix(in srgb, var(--gold) 14%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 50% 50% at 20% 20%,
+      color-mix(in srgb, var(--danger) 10%, transparent),
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 80% 60% at 50% 80%,
+      color-mix(in srgb, var(--ink-faint) 8%, transparent),
+      transparent 70%
+    );
+  opacity: 0.9;
+}
+
+.landing-page > * {
+  position: relative;
+  z-index: 1;
+}
+
 .landing-hero {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
-  gap: var(--sp-7);
-  padding: var(--sp-6) 0 var(--sp-7);
+  gap: var(--sp-8);
+  min-height: 520px;
+  padding: var(--sp-7) 0 var(--sp-8);
 }
 
 .landing-hero-copy {
-  max-width: 30em;
+  max-width: 36em;
 }
 
 .landing-eyebrow {
@@ -27,7 +68,7 @@
 }
 
 .landing-title {
-  font-size: clamp(40px, 7vw, 62px);
+  font-size: clamp(48px, 6vw, 76px);
   line-height: 1;
   margin: 0 0 var(--sp-4);
   color: var(--ink);
@@ -43,7 +84,7 @@
 }
 
 .landing-pitch {
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1.65;
   color: var(--ink-muted);
   margin: 0 0 var(--sp-5);
@@ -93,7 +134,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 300px;
+  min-height: 360px;
 }
 
 .landing-fan {
@@ -107,18 +148,18 @@
 
 .landing-fan-card {
   position: relative;
-  width: 132px;
-  height: 168px;
-  margin: 0 -22px;
-  border-radius: var(--r-lg);
+  width: 154px;
+  height: 196px;
+  margin: 0 -25px;
+  border-radius: var(--r-sm);
   overflow: hidden;
   border: 1px solid var(--bronze);
-  box-shadow: var(--elev-3);
+  filter: drop-shadow(0 12px 28px var(--shadow-deep));
   transform: rotate(var(--tilt)) translateY(var(--lift));
   transform-origin: bottom center;
   transition:
     transform var(--dur-3) var(--ease-out),
-    box-shadow var(--dur-3) var(--ease-out),
+    filter var(--dur-3) var(--ease-out),
     border-color var(--dur-3) ease;
   animation: fan-deal var(--dur-4) var(--ease-out) both;
   animation-delay: var(--delay);
@@ -169,9 +210,8 @@
 .landing-fan-card:hover {
   transform: rotate(var(--tilt)) translateY(calc(var(--lift) - 14px)) scale(1.05);
   border-color: var(--gold);
-  box-shadow:
-    var(--elev-3),
-    0 0 26px color-mix(in srgb, var(--gold) 35%, transparent);
+  filter: drop-shadow(0 16px 32px var(--shadow-deep))
+    drop-shadow(0 0 20px color-mix(in srgb, var(--gold) 35%, transparent));
   z-index: 4;
 }
 

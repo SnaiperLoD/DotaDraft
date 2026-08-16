@@ -2,15 +2,16 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Hero } from 'shared';
 import { api } from '../api/client';
-import type { DraftStateView } from '../api/types';
+import type { DraftStateView, TiFormResponse } from '../api/types';
+import { heroPortraitUrl } from '../utils/heroIcon';
 import HeroPool from '../components/HeroPool';
 import RoleAssignment from '../components/RoleAssignment';
 import DraftLedger from '../components/DraftLedger';
 import DraftProgress from '../components/DraftProgress';
 import EvaluationPanel from '../components/EvaluationPanel';
 import CommitToPoolButton from '../components/CommitToPoolButton';
+import CopyDraftButton from '../components/CopyDraftButton';
 import BattlePanel from '../components/BattlePanel';
-import AdSlot from '../components/AdSlot';
 import TapalkaWidget from '../components/TapalkaWidget';
 import './DraftPage.css';
 
@@ -35,9 +36,9 @@ function DraftSkeleton() {
             <div key={i} className="skeleton draft-skeleton-card" />
           ))}
         </div>
-        <aside className="draft-sidebar">
+        <div className="draft-below">
           <div className="skeleton draft-skeleton-panel" />
-        </aside>
+        </div>
       </div>
     </div>
   );
@@ -58,6 +59,7 @@ export default function DraftPage() {
   const [draft, setDraft] = useState<DraftStateView | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [tiForm, setTiForm] = useState<TiFormResponse | null>(null);
   // Battle Mode is a separate screen, not a section stacked under the
   // Evaluation (per user). The Evaluation subtree stays mounted underneath
   // (hidden, not unmounted) so returning to it keeps whatever the player
@@ -78,6 +80,9 @@ export default function DraftPage() {
   // duplicate-draft bug — the old effect called a non-idempotent
   // /draft/start and left an orphan row behind on every mount.
   useEffect(loadPool, []);
+  useEffect(() => {
+    api.getTiForm().then(setTiForm).catch(() => setTiForm(null));
+  }, []);
 
   const handlePick = async (heroId: number) => {
     setLoading(true);
@@ -170,10 +175,8 @@ export default function DraftPage() {
         <>
           <DraftProgress heroes={heroes} totalSlots={5} currentRound={status === 'PICKING' ? round : null} />
 
-          <AdSlot size="leaderboard" />
-
           <div className="draft-layout">
-            <main>
+            <main className="draft-stage">
               {status === 'PICKING' && (
                 <>
                   <div className="pool-hint-row">
@@ -220,11 +223,42 @@ export default function DraftPage() {
               )}
             </main>
 
-            <aside className="draft-sidebar">
-              <DraftLedger heroes={heroes} totalSlots={5} />
-              <TapalkaWidget />
-              <AdSlot size="rectangle" />
-            </aside>
+            <div className="draft-below">
+              <DraftLedger heroes={heroes} totalSlots={5} layout="rail" />
+            </div>
+
+            <section className="panel draft-waiting-room">
+              <div className="draft-waiting-copy">
+                <div className="draft-waiting-kicker">{tiForm?.leagueName ?? t('tapalka.tournamentWatch')}</div>
+                <h3>{t('tapalka.tiFormHeading')}</h3>
+                <p>{t('tapalka.tiFormNote', { count: tiForm?.matchCount ?? 0 })}</p>
+                <div className="ti-form-list">
+                  {(tiForm?.heroes ?? []).map((hero, index) => (
+                    <div key={hero.heroId} className="ti-form-hero">
+                      <span className="ti-form-rank">{String(index + 1).padStart(2, '0')}</span>
+                      <img
+                        src={heroPortraitUrl(hero.heroId)}
+                        alt={hero.heroName}
+                        width={112}
+                        height={70}
+                        loading="lazy"
+                      />
+                      <div className="ti-form-hero-copy">
+                        <strong>{hero.heroName}</strong>
+                        <span>
+                          {t('tapalka.tiRecord', {
+                            wins: hero.wins,
+                            losses: hero.losses,
+                            rate: Math.round(hero.winRate * 100),
+                          })}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <TapalkaWidget embedded />
+            </section>
           </div>
         </>
       )}
@@ -238,7 +272,16 @@ export default function DraftPage() {
           <div className="completed-view" hidden={battleView}>
             <DraftLedger heroes={draft.heroes} totalSlots={5} title={t('draft.yourTeam')} />
             <EvaluationPanel draftId={draft.id} heroes={draft.heroes} />
-            <CommitToPoolButton draftId={draft.id} />
+            <div className="completed-tools">
+              <CommitToPoolButton draftId={draft.id} />
+              <CopyDraftButton
+                heroes={draft.heroes.map((h) => ({
+                  heroName: h.hero.name,
+                  assignedRole: h.assignedRole,
+                  pickOrder: h.pickOrder,
+                }))}
+              />
+            </div>
             <div className="completed-actions">
               <button className="btn btn-primary" onClick={() => setBattleView(true)}>
                 {t('battle.enterBattleMode')}

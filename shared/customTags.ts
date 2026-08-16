@@ -360,12 +360,10 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
     revealable: false,
     description:
       'Personal invisibility — a real strength no axis measures. +6% personal power, +8% personal map control, active even solo. 2+ on the team: -durability/-teamfight each, scaling with stack count (too many pick-off specialists, not enough frontline).',
-    // 'Treant Protector' added 2026-08-13 session-2 (user): Nature's Guise
-    // grants tree-adjacent invisibility. NOTE calibration concern — Treant was
-    // already ~+17pp OVERRATED in the no-crutch self-play run, and Unseen's
-    // solo effect is +6% power, which pushes him further over. Flagged, not
-    // blocked (user call); revisit if the next self-play pass regresses on him.
-    heroNames: ['Riki', 'Weaver', 'Clinkz', 'Bounty Hunter', 'Nyx Assassin', 'Treant Protector'],
+    // Treant Protector removed 2026-08-16: Nature's Guise is real invis, but
+    // he was already overrated and Unseen's +6% pushed him further — moved to
+    // Paper Utility (hidden calibration) instead of carrying a buff.
+    heroNames: ['Riki', 'Weaver', 'Clinkz', 'Bounty Hunter', 'Nyx Assassin'],
   },
   {
     name: 'Army of Clones',
@@ -401,8 +399,115 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
     visible: true,
     revealable: false,
     description:
-      "Vulnerable to burst damage despite looking sturdy on paper. -8% personal power when the opposing team's raw Burst average is high.",
+      "Vulnerable to burst damage despite looking sturdy on paper. -20% personal power when the opposing team's raw Burst average is above average.",
     heroNames: ['Huskar', 'Phoenix', 'Enchantress', 'Necrophos', 'Monkey King'],
+  },
+  // --- Divergence-fix batch 2026-08-16 (B0 flagged clusters; user-approved) ---
+  {
+    name: 'Disable Battery',
+    rarity: 'rare',
+    visible: true,
+    revealable: false,
+    description:
+      'Backline disable/nuke that wins fights — axes tax these heroes as "dies a lot / farms little," but the real win condition is the battery of control from the fog. +25% personal power, active even solo.',
+    heroNames: [
+      'Disruptor',
+      'Shadow Shaman',
+      'Crystal Maiden',
+      'Lich',
+      'Ancient Apparition',
+      'Silencer',
+      'Skywrath Mage',
+      'Dark Willow',
+    ],
+  },
+  {
+    name: 'Haunt Absolute',
+    rarity: 'rare',
+    visible: true,
+    revealable: false,
+    description:
+      "Haunt is global presence that axes under-count as personal strength (and Global's map-control buff is inert while that axis weighs 0). +12% personal power, active even solo.",
+    heroNames: ['Spectre'],
+  },
+  {
+    name: 'Mirage Tax',
+    rarity: 'rare',
+    visible: false,
+    revealable: false, // always-hidden — calibration only
+    description:
+      'Illusion farm and body-count inflate objectives/mobility without a matching real-body fight presence. -15% personal power, always active. Never shown to the player.',
+    heroNames: ['Naga Siren', 'Terrorblade'],
+  },
+  {
+    name: 'Paper Utility',
+    rarity: 'rare',
+    visible: false,
+    revealable: false, // always-hidden — calibration only
+    description:
+      'Utility axes (stacks, map presence, control) read high without converting to outcomes. -25% personal power, always active. Never shown to the player.',
+    heroNames: [
+      'Keeper of the Light',
+      'Snapfire',
+      'Treant Protector',
+      'Batrider',
+      'Enchantress',
+    ],
+  },
+  // --- Divergence-fix batch 2 (2026-08-16, post tag-batch measure) ---
+  {
+    name: 'Raid Boss',
+    rarity: 'rare',
+    visible: true,
+    revealable: false,
+    description:
+      'Late-game / space-dependent cores the mid-clash model under-rates. +18% personal power, active even solo.',
+    heroNames: [
+      'Phantom Lancer',
+      'Medusa',
+      'Troll Warlord',
+      'Phantom Assassin',
+      'Sven',
+      'Ursa',
+    ],
+  },
+  {
+    name: 'Showstopper Tax',
+    rarity: 'rare',
+    visible: false,
+    revealable: false,
+    description:
+      'Flashy initiate/setup reads sky-high on control/tempo without converting in average games. -25% personal power, always active. Never shown to the player.',
+    heroNames: [
+      'Ember Spirit',
+      'Kunkka',
+      'Marci',
+      'Primal Beast',
+      'Centaur Warrunner',
+      'Earthshaker',
+      'Legion Commander',
+      'Earth Spirit',
+      'Dawnbreaker',
+    ],
+  },
+  {
+    name: 'False Immortal',
+    rarity: 'rare',
+    visible: false,
+    revealable: false,
+    description:
+      'Self-sustain looks like durability on paper; focused burst still deletes them. -18% personal power, always active (stacks with Prone To Burst when that fires). Never shown to the player.',
+    // Huskar/Enchantress deliberately omitted — already near-neutral after Prone/Paper Utility.
+    heroNames: ['Necrophos', 'Monkey King', 'Phoenix'],
+  },
+  {
+    name: 'Siege Voltage',
+    rarity: 'rare',
+    visible: true,
+    revealable: false,
+    description:
+      'Mid push/nuke cores whose siege and burst win conditions axes under-count. +12% personal power, active even solo.',
+    heroNames: ['Death Prophet', 'Lina', 'Outworld Destroyer'],
   },
 ];
 

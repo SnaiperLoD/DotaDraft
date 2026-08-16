@@ -9,7 +9,8 @@
     "teamfight": 0.27,
     "scaling": 0.27,
     "skirmish_rate": 1.3,
-    "camp_stacking": 0.5
+    "camp_stacking": 0,
+    "resource_efficiency": 0.5
   },
   "phaseWeights": {
     "early": {
@@ -21,7 +22,8 @@
       "teamfight": 0.19,
       "objectives": 0.18,
       "durability": 0.14,
-      "camp_stacking": 0.54,
+      "camp_stacking": 0,
+      "resource_efficiency": 0.4,
       "scaling": 0.03
     },
     "late": {
@@ -34,7 +36,8 @@
       "burst": 0.26,
       "initiating": 0.4,
       "skirmish_rate": 0.25,
-      "camp_stacking": 0.19,
+      "camp_stacking": 0,
+      "resource_efficiency": 0.55,
       "tempo": 0.15
     }
   },

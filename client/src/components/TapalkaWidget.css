@@ -3,6 +3,10 @@
   text-align: center;
 }
 
+.tapalka--embedded {
+  padding: 0;
+}
+
 .tapalka-heading {
   font-family: var(--font-ui);
   font-size: 11px;

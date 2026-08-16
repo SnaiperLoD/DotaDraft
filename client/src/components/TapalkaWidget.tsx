@@ -4,15 +4,11 @@ import { heroPortraitUrl } from '../utils/heroIcon';
 import './TapalkaWidget.css';
 
 // Blueprint/10-tech-debt-backlog.md, "Тапалка" — pure tactile/engagement
-// filler for the draft-thinking wait, no gameplay effect and no reward
-// (Monetization rule, Blueprint/00-project-overview.md: no real
-// upgrades/currency from clicking). By explicit user decision, this renders
+// filler for the draft-thinking wait, no gameplay effect and no reward.
+// By explicit user decision, this renders
 // a real 3D Brewmaster model (TapalkaModel3D.tsx, three.js + a glTF mirrored
 // from pissang/dota2hero) rather than an original non-Dota mascot — same
-// accepted legal/IP risk as the rest of the project's Dota assets (Valve's
-// fan-content terms are strictly non-commercial, conflicts with ad
-// monetization once that goes live, explicitly deferred by the user, see
-// Blueprint/10-tech-debt-backlog.md).
+// accepted legal/IP risk as the rest of the project's Dota assets.
 //
 // No skeletal animation on the model (see TapalkaModel3D.tsx's own comment
 // for why — the source's animations are raw .smd files, not glTF clips).
@@ -53,7 +49,11 @@ const VOICE_LINE_CHANCE = 0.01;
 const VOICE_LINE_DISPLAY_MS = 3000;
 const BUBBLE_COUNT = 6;
 
-export default function TapalkaWidget() {
+interface Props {
+  embedded?: boolean;
+}
+
+export default function TapalkaWidget({ embedded = false }: Props) {
   const { t } = useTranslation();
   const [clicks, setClicks] = useState(0);
   const [drinkKey, setDrinkKey] = useState(0);
@@ -80,8 +80,8 @@ export default function TapalkaWidget() {
   };
 
   return (
-    <div className="panel tapalka">
-      <div className="tapalka-heading">{t('tapalka.heading')}</div>
+    <div className={`${embedded ? 'tapalka tapalka--embedded' : 'panel tapalka'}`}>
+      {!embedded && <div className="tapalka-heading">{t('tapalka.heading')}</div>}
       <button type="button" className="tapalka-button" onClick={handleClick} aria-label={t('tapalka.heading')}>
         {voiceLine && <span className="tapalka-speech-bubble">{voiceLine}</span>}
         <span className={`tapalka-glow${drinking ? ' tapalka-glow--active' : ''}`} aria-hidden="true" />

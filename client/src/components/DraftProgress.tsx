@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import type { CSSProperties } from 'react';
 import type { DraftHeroView } from '../api/types';
 import { heroIconUrl } from '../utils/heroIcon';
 import './DraftProgress.css';
@@ -37,7 +38,16 @@ export default function DraftProgress({ heroes, totalSlots, currentRound }: Prop
         </span>
       </div>
 
-      <ol className="draft-progress-rail">
+      <ol
+        className="draft-progress-rail"
+        style={
+          {
+            '--draft-progress': `${
+              totalSlots > 1 ? (Math.max(0, sorted.length - 1) / (totalSlots - 1)) * 80 : 0
+            }%`,
+          } as CSSProperties
+        }
+      >
         {slots.map((hero, i) => {
           const state = hero ? 'filled' : i + 1 === currentRound ? 'current' : 'empty';
           return (

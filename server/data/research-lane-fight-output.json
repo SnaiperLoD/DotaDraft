@@ -1,0 +1,1018 @@
+[
+  {
+    "heroId": 1,
+    "name": "Anti-Mage",
+    "games": 109,
+    "avgXpDelta": 626,
+    "avgLhDelta": 23.38,
+    "avgDnDelta": 5.14
+  },
+  {
+    "heroId": 2,
+    "name": "Axe",
+    "games": 725,
+    "avgXpDelta": 764,
+    "avgLhDelta": 25.42,
+    "avgDnDelta": -0.45
+  },
+  {
+    "heroId": 3,
+    "name": "Bane",
+    "games": 361,
+    "avgXpDelta": -629,
+    "avgLhDelta": -27.96,
+    "avgDnDelta": -1.97
+  },
+  {
+    "heroId": 4,
+    "name": "Bloodseeker",
+    "games": 31,
+    "avgXpDelta": 532,
+    "avgLhDelta": 22.82,
+    "avgDnDelta": 3.35
+  },
+  {
+    "heroId": 5,
+    "name": "Crystal Maiden",
+    "games": 237,
+    "avgXpDelta": -739,
+    "avgLhDelta": -28.46,
+    "avgDnDelta": -2.04
+  },
+  {
+    "heroId": 6,
+    "name": "Drow Ranger",
+    "games": 568,
+    "avgXpDelta": 746,
+    "avgLhDelta": 29.92,
+    "avgDnDelta": 8.59
+  },
+  {
+    "heroId": 7,
+    "name": "Earthshaker",
+    "games": 95,
+    "avgXpDelta": -180,
+    "avgLhDelta": -1.67,
+    "avgDnDelta": -0.89
+  },
+  {
+    "heroId": 8,
+    "name": "Juggernaut",
+    "games": 158,
+    "avgXpDelta": 304,
+    "avgLhDelta": 25.02,
+    "avgDnDelta": 2.65
+  },
+  {
+    "heroId": 9,
+    "name": "Mirana",
+    "games": 214,
+    "avgXpDelta": -583,
+    "avgLhDelta": -22.62,
+    "avgDnDelta": -2.91
+  },
+  {
+    "heroId": 10,
+    "name": "Morphling",
+    "games": 75,
+    "avgXpDelta": 273,
+    "avgLhDelta": 23.39,
+    "avgDnDelta": 3.07
+  },
+  {
+    "heroId": 11,
+    "name": "Shadow Fiend",
+    "games": 998,
+    "avgXpDelta": 919,
+    "avgLhDelta": 35.43,
+    "avgDnDelta": 4.88
+  },
+  {
+    "heroId": 12,
+    "name": "Phantom Lancer",
+    "games": 195,
+    "avgXpDelta": 489,
+    "avgLhDelta": 25.47,
+    "avgDnDelta": 3.5
+  },
+  {
+    "heroId": 13,
+    "name": "Puck",
+    "games": 495,
+    "avgXpDelta": -56,
+    "avgLhDelta": -2.55,
+    "avgDnDelta": -3.14
+  },
+  {
+    "heroId": 14,
+    "name": "Pudge",
+    "games": 325,
+    "avgXpDelta": -144,
+    "avgLhDelta": -11.76,
+    "avgDnDelta": -0.57
+  },
+  {
+    "heroId": 15,
+    "name": "Razor",
+    "games": 155,
+    "avgXpDelta": 463,
+    "avgLhDelta": 16.75,
+    "avgDnDelta": 2.86
+  },
+  {
+    "heroId": 16,
+    "name": "Sand King",
+    "games": 123,
+    "avgXpDelta": 183,
+    "avgLhDelta": 5.31,
+    "avgDnDelta": -5.42
+  },
+  {
+    "heroId": 17,
+    "name": "Storm Spirit",
+    "games": 640,
+    "avgXpDelta": -9,
+    "avgLhDelta": 4.94,
+    "avgDnDelta": -1.35
+  },
+  {
+    "heroId": 18,
+    "name": "Sven",
+    "games": 178,
+    "avgXpDelta": 713,
+    "avgLhDelta": 35.86,
+    "avgDnDelta": 0.74
+  },
+  {
+    "heroId": 19,
+    "name": "Tiny",
+    "games": 773,
+    "avgXpDelta": 348,
+    "avgLhDelta": 17.32,
+    "avgDnDelta": 1.02
+  },
+  {
+    "heroId": 20,
+    "name": "Vengeful Spirit",
+    "games": 193,
+    "avgXpDelta": -370,
+    "avgLhDelta": -10.94,
+    "avgDnDelta": 0.9
+  },
+  {
+    "heroId": 21,
+    "name": "Windranger",
+    "games": 657,
+    "avgXpDelta": 91,
+    "avgLhDelta": 1.47,
+    "avgDnDelta": 2.08
+  },
+  {
+    "heroId": 22,
+    "name": "Zeus",
+    "games": 404,
+    "avgXpDelta": -816,
+    "avgLhDelta": -24.49,
+    "avgDnDelta": -1.92
+  },
+  {
+    "heroId": 23,
+    "name": "Kunkka",
+    "games": 247,
+    "avgXpDelta": 613,
+    "avgLhDelta": 19.6,
+    "avgDnDelta": 0.13
+  },
+  {
+    "heroId": 25,
+    "name": "Lina",
+    "games": 475,
+    "avgXpDelta": 400,
+    "avgLhDelta": 11.67,
+    "avgDnDelta": 1.32
+  },
+  {
+    "heroId": 26,
+    "name": "Lion",
+    "games": 777,
+    "avgXpDelta": -815,
+    "avgLhDelta": -30.58,
+    "avgDnDelta": -2.89
+  },
+  {
+    "heroId": 27,
+    "name": "Shadow Shaman",
+    "games": 274,
+    "avgXpDelta": -733,
+    "avgLhDelta": -27.22,
+    "avgDnDelta": -1.46
+  },
+  {
+    "heroId": 28,
+    "name": "Slardar",
+    "games": 497,
+    "avgXpDelta": 206,
+    "avgLhDelta": 6.8,
+    "avgDnDelta": 1.53
+  },
+  {
+    "heroId": 29,
+    "name": "Tidehunter",
+    "games": 539,
+    "avgXpDelta": 410,
+    "avgLhDelta": 17.65,
+    "avgDnDelta": -0.52
+  },
+  {
+    "heroId": 30,
+    "name": "Witch Doctor",
+    "games": 227,
+    "avgXpDelta": -763,
+    "avgLhDelta": -29.75,
+    "avgDnDelta": -2.06
+  },
+  {
+    "heroId": 31,
+    "name": "Lich",
+    "games": 569,
+    "avgXpDelta": -611,
+    "avgLhDelta": -28.79,
+    "avgDnDelta": 0.3
+  },
+  {
+    "heroId": 32,
+    "name": "Riki",
+    "games": 40,
+    "avgXpDelta": -177,
+    "avgLhDelta": -3.01,
+    "avgDnDelta": 0.49
+  },
+  {
+    "heroId": 33,
+    "name": "Enigma",
+    "games": 131,
+    "avgXpDelta": 343,
+    "avgLhDelta": 7.82,
+    "avgDnDelta": 3.43
+  },
+  {
+    "heroId": 34,
+    "name": "Tinker",
+    "games": 88,
+    "avgXpDelta": -28,
+    "avgLhDelta": 2.91,
+    "avgDnDelta": -1.39
+  },
+  {
+    "heroId": 35,
+    "name": "Sniper",
+    "games": 298,
+    "avgXpDelta": 242,
+    "avgLhDelta": 11.2,
+    "avgDnDelta": 1.08
+  },
+  {
+    "heroId": 36,
+    "name": "Necrophos",
+    "games": 453,
+    "avgXpDelta": 737,
+    "avgLhDelta": 26.65,
+    "avgDnDelta": 3.63
+  },
+  {
+    "heroId": 37,
+    "name": "Warlock",
+    "games": 294,
+    "avgXpDelta": -695,
+    "avgLhDelta": -30.05,
+    "avgDnDelta": -1.72
+  },
+  {
+    "heroId": 38,
+    "name": "Beastmaster",
+    "games": 395,
+    "avgXpDelta": 501,
+    "avgLhDelta": 18.87,
+    "avgDnDelta": 1.32
+  },
+  {
+    "heroId": 39,
+    "name": "Queen of Pain",
+    "games": 450,
+    "avgXpDelta": 2,
+    "avgLhDelta": 0.18,
+    "avgDnDelta": 0.91
+  },
+  {
+    "heroId": 40,
+    "name": "Venomancer",
+    "games": 162,
+    "avgXpDelta": -508,
+    "avgLhDelta": -13.78,
+    "avgDnDelta": -1.95
+  },
+  {
+    "heroId": 41,
+    "name": "Faceless Void",
+    "games": 303,
+    "avgXpDelta": 230,
+    "avgLhDelta": 15.4,
+    "avgDnDelta": 1.42
+  },
+  {
+    "heroId": 42,
+    "name": "Wraith King",
+    "games": 125,
+    "avgXpDelta": 136,
+    "avgLhDelta": 15.15,
+    "avgDnDelta": 0.46
+  },
+  {
+    "heroId": 43,
+    "name": "Death Prophet",
+    "games": 136,
+    "avgXpDelta": 232,
+    "avgLhDelta": 7.5,
+    "avgDnDelta": 1.41
+  },
+  {
+    "heroId": 44,
+    "name": "Phantom Assassin",
+    "games": 85,
+    "avgXpDelta": 168,
+    "avgLhDelta": 19.11,
+    "avgDnDelta": 1.79
+  },
+  {
+    "heroId": 45,
+    "name": "Pugna",
+    "games": 35,
+    "avgXpDelta": -647,
+    "avgLhDelta": -21.8,
+    "avgDnDelta": -1.81
+  },
+  {
+    "heroId": 46,
+    "name": "Templar Assassin",
+    "games": 201,
+    "avgXpDelta": 524,
+    "avgLhDelta": 25.13,
+    "avgDnDelta": 0.37
+  },
+  {
+    "heroId": 47,
+    "name": "Viper",
+    "games": 274,
+    "avgXpDelta": 468,
+    "avgLhDelta": 8.65,
+    "avgDnDelta": 6.94
+  },
+  {
+    "heroId": 48,
+    "name": "Luna",
+    "games": 468,
+    "avgXpDelta": 570,
+    "avgLhDelta": 32.87,
+    "avgDnDelta": 0.64
+  },
+  {
+    "heroId": 49,
+    "name": "Dragon Knight",
+    "games": 121,
+    "avgXpDelta": 360,
+    "avgLhDelta": 21.94,
+    "avgDnDelta": 1.06
+  },
+  {
+    "heroId": 50,
+    "name": "Dazzle",
+    "games": 66,
+    "avgXpDelta": -596,
+    "avgLhDelta": -26.63,
+    "avgDnDelta": -1.05
+  },
+  {
+    "heroId": 51,
+    "name": "Clockwerk",
+    "games": 579,
+    "avgXpDelta": -749,
+    "avgLhDelta": -29.63,
+    "avgDnDelta": -3.8
+  },
+  {
+    "heroId": 52,
+    "name": "Leshrac",
+    "games": 72,
+    "avgXpDelta": 36,
+    "avgLhDelta": 3.78,
+    "avgDnDelta": -0.14
+  },
+  {
+    "heroId": 53,
+    "name": "Nature's Prophet",
+    "games": 323,
+    "avgXpDelta": 0,
+    "avgLhDelta": 6.45,
+    "avgDnDelta": 2.75
+  },
+  {
+    "heroId": 54,
+    "name": "Lifestealer",
+    "games": 364,
+    "avgXpDelta": 348,
+    "avgLhDelta": 20.16,
+    "avgDnDelta": 3.84
+  },
+  {
+    "heroId": 55,
+    "name": "Dark Seer",
+    "games": 207,
+    "avgXpDelta": 351,
+    "avgLhDelta": 17,
+    "avgDnDelta": -5.55
+  },
+  {
+    "heroId": 56,
+    "name": "Clinkz",
+    "games": 179,
+    "avgXpDelta": 503,
+    "avgLhDelta": 21.56,
+    "avgDnDelta": 4.23
+  },
+  {
+    "heroId": 57,
+    "name": "Omniknight",
+    "games": 54,
+    "avgXpDelta": -192,
+    "avgLhDelta": -7.24,
+    "avgDnDelta": 1.55
+  },
+  {
+    "heroId": 58,
+    "name": "Enchantress",
+    "games": 245,
+    "avgXpDelta": -576,
+    "avgLhDelta": -23.49,
+    "avgDnDelta": -2.25
+  },
+  {
+    "heroId": 59,
+    "name": "Huskar",
+    "games": 150,
+    "avgXpDelta": 666,
+    "avgLhDelta": 16.4,
+    "avgDnDelta": 7.21
+  },
+  {
+    "heroId": 60,
+    "name": "Night Stalker",
+    "games": 295,
+    "avgXpDelta": 511,
+    "avgLhDelta": 14.67,
+    "avgDnDelta": 1.37
+  },
+  {
+    "heroId": 61,
+    "name": "Broodmother",
+    "games": 38,
+    "avgXpDelta": 476,
+    "avgLhDelta": 16.39,
+    "avgDnDelta": 1.33
+  },
+  {
+    "heroId": 62,
+    "name": "Bounty Hunter",
+    "games": 35,
+    "avgXpDelta": -979,
+    "avgLhDelta": -32.83,
+    "avgDnDelta": -5.84
+  },
+  {
+    "heroId": 63,
+    "name": "Weaver",
+    "games": 119,
+    "avgXpDelta": 326,
+    "avgLhDelta": 11.3,
+    "avgDnDelta": 1.68
+  },
+  {
+    "heroId": 64,
+    "name": "Jakiro",
+    "games": 230,
+    "avgXpDelta": -691,
+    "avgLhDelta": -24.79,
+    "avgDnDelta": -2.54
+  },
+  {
+    "heroId": 65,
+    "name": "Batrider",
+    "games": 214,
+    "avgXpDelta": 28,
+    "avgLhDelta": -2.44,
+    "avgDnDelta": -1.56
+  },
+  {
+    "heroId": 66,
+    "name": "Chen",
+    "games": 43,
+    "avgXpDelta": -872,
+    "avgLhDelta": -23.12,
+    "avgDnDelta": 1.04
+  },
+  {
+    "heroId": 67,
+    "name": "Spectre",
+    "games": 128,
+    "avgXpDelta": 161,
+    "avgLhDelta": 14.03,
+    "avgDnDelta": 1.42
+  },
+  {
+    "heroId": 68,
+    "name": "Ancient Apparition",
+    "games": 66,
+    "avgXpDelta": -831,
+    "avgLhDelta": -27.88,
+    "avgDnDelta": -3.51
+  },
+  {
+    "heroId": 69,
+    "name": "Doom",
+    "games": 620,
+    "avgXpDelta": 435,
+    "avgLhDelta": 15.03,
+    "avgDnDelta": 0.55
+  },
+  {
+    "heroId": 70,
+    "name": "Ursa",
+    "games": 278,
+    "avgXpDelta": 288,
+    "avgLhDelta": 23.21,
+    "avgDnDelta": 1.49
+  },
+  {
+    "heroId": 71,
+    "name": "Spirit Breaker",
+    "games": 359,
+    "avgXpDelta": -589,
+    "avgLhDelta": -22.28,
+    "avgDnDelta": -2.54
+  },
+  {
+    "heroId": 74,
+    "name": "Invoker",
+    "games": 554,
+    "avgXpDelta": -258,
+    "avgLhDelta": -10.87,
+    "avgDnDelta": 0.56
+  },
+  {
+    "heroId": 75,
+    "name": "Silencer",
+    "games": 412,
+    "avgXpDelta": -758,
+    "avgLhDelta": -27.48,
+    "avgDnDelta": -2.21
+  },
+  {
+    "heroId": 76,
+    "name": "Outworld Destroyer",
+    "games": 57,
+    "avgXpDelta": -373,
+    "avgLhDelta": -6.26,
+    "avgDnDelta": 2.73
+  },
+  {
+    "heroId": 77,
+    "name": "Lycan",
+    "games": 164,
+    "avgXpDelta": 252,
+    "avgLhDelta": 9.37,
+    "avgDnDelta": 0.52
+  },
+  {
+    "heroId": 78,
+    "name": "Brewmaster",
+    "games": 141,
+    "avgXpDelta": 195,
+    "avgLhDelta": 6.99,
+    "avgDnDelta": 0.16
+  },
+  {
+    "heroId": 79,
+    "name": "Shadow Demon",
+    "games": 182,
+    "avgXpDelta": -859,
+    "avgLhDelta": -30.57,
+    "avgDnDelta": -3.05
+  },
+  {
+    "heroId": 80,
+    "name": "Lone Druid",
+    "games": 234,
+    "avgXpDelta": 838,
+    "avgLhDelta": 26.64,
+    "avgDnDelta": 6.24
+  },
+  {
+    "heroId": 81,
+    "name": "Chaos Knight",
+    "games": 103,
+    "avgXpDelta": 450,
+    "avgLhDelta": 23.11,
+    "avgDnDelta": 1.51
+  },
+  {
+    "heroId": 82,
+    "name": "Meepo",
+    "games": 62,
+    "avgXpDelta": 358,
+    "avgLhDelta": 22.99,
+    "avgDnDelta": 1.07
+  },
+  {
+    "heroId": 83,
+    "name": "Treant Protector",
+    "games": 338,
+    "avgXpDelta": -676,
+    "avgLhDelta": -27.92,
+    "avgDnDelta": -2.08
+  },
+  {
+    "heroId": 84,
+    "name": "Ogre Magi",
+    "games": 322,
+    "avgXpDelta": -611,
+    "avgLhDelta": -25.41,
+    "avgDnDelta": -0.84
+  },
+  {
+    "heroId": 85,
+    "name": "Undying",
+    "games": 387,
+    "avgXpDelta": -280,
+    "avgLhDelta": -14.27,
+    "avgDnDelta": -0.22
+  },
+  {
+    "heroId": 86,
+    "name": "Rubick",
+    "games": 1252,
+    "avgXpDelta": -596,
+    "avgLhDelta": -25.51,
+    "avgDnDelta": -2.35
+  },
+  {
+    "heroId": 87,
+    "name": "Disruptor",
+    "games": 353,
+    "avgXpDelta": -814,
+    "avgLhDelta": -32.26,
+    "avgDnDelta": -2.23
+  },
+  {
+    "heroId": 88,
+    "name": "Nyx Assassin",
+    "games": 163,
+    "avgXpDelta": -801,
+    "avgLhDelta": -27.98,
+    "avgDnDelta": -4.51
+  },
+  {
+    "heroId": 89,
+    "name": "Naga Siren",
+    "games": 65,
+    "avgXpDelta": 480,
+    "avgLhDelta": 32.36,
+    "avgDnDelta": 0.17
+  },
+  {
+    "heroId": 90,
+    "name": "Keeper of the Light",
+    "games": 370,
+    "avgXpDelta": -528,
+    "avgLhDelta": -18.83,
+    "avgDnDelta": -5.21
+  },
+  {
+    "heroId": 91,
+    "name": "Io",
+    "games": 100,
+    "avgXpDelta": -91,
+    "avgLhDelta": -13.43,
+    "avgDnDelta": -2.3
+  },
+  {
+    "heroId": 92,
+    "name": "Visage",
+    "games": 60,
+    "avgXpDelta": 98,
+    "avgLhDelta": 0.54,
+    "avgDnDelta": 1.01
+  },
+  {
+    "heroId": 93,
+    "name": "Slark",
+    "games": 140,
+    "avgXpDelta": 402,
+    "avgLhDelta": 17.51,
+    "avgDnDelta": 4.79
+  },
+  {
+    "heroId": 94,
+    "name": "Medusa",
+    "games": 101,
+    "avgXpDelta": 501,
+    "avgLhDelta": 27,
+    "avgDnDelta": 1.75
+  },
+  {
+    "heroId": 95,
+    "name": "Troll Warlord",
+    "games": 95,
+    "avgXpDelta": 611,
+    "avgLhDelta": 28.01,
+    "avgDnDelta": 3.75
+  },
+  {
+    "heroId": 96,
+    "name": "Centaur Warrunner",
+    "games": 457,
+    "avgXpDelta": 371,
+    "avgLhDelta": 16.25,
+    "avgDnDelta": -0.01
+  },
+  {
+    "heroId": 97,
+    "name": "Magnus",
+    "games": 160,
+    "avgXpDelta": 347,
+    "avgLhDelta": 11.86,
+    "avgDnDelta": 0.99
+  },
+  {
+    "heroId": 98,
+    "name": "Timbersaw",
+    "games": 373,
+    "avgXpDelta": 398,
+    "avgLhDelta": 11.96,
+    "avgDnDelta": -1.14
+  },
+  {
+    "heroId": 99,
+    "name": "Bristleback",
+    "games": 280,
+    "avgXpDelta": 744,
+    "avgLhDelta": 26.34,
+    "avgDnDelta": 0.59
+  },
+  {
+    "heroId": 100,
+    "name": "Tusk",
+    "games": 543,
+    "avgXpDelta": -642,
+    "avgLhDelta": -27.71,
+    "avgDnDelta": -2.98
+  },
+  {
+    "heroId": 101,
+    "name": "Skywrath Mage",
+    "games": 297,
+    "avgXpDelta": -747,
+    "avgLhDelta": -31.31,
+    "avgDnDelta": -2.79
+  },
+  {
+    "heroId": 102,
+    "name": "Abaddon",
+    "games": 85,
+    "avgXpDelta": 280,
+    "avgLhDelta": 10.7,
+    "avgDnDelta": 1.39
+  },
+  {
+    "heroId": 103,
+    "name": "Elder Titan",
+    "games": 30,
+    "avgXpDelta": -738,
+    "avgLhDelta": -20.3,
+    "avgDnDelta": -1.58
+  },
+  {
+    "heroId": 104,
+    "name": "Legion Commander",
+    "games": 157,
+    "avgXpDelta": 317,
+    "avgLhDelta": 17.38,
+    "avgDnDelta": 1.32
+  },
+  {
+    "heroId": 105,
+    "name": "Techies",
+    "games": 417,
+    "avgXpDelta": -697,
+    "avgLhDelta": -27.25,
+    "avgDnDelta": -3.95
+  },
+  {
+    "heroId": 106,
+    "name": "Ember Spirit",
+    "games": 808,
+    "avgXpDelta": -144,
+    "avgLhDelta": -3.3,
+    "avgDnDelta": -3.54
+  },
+  {
+    "heroId": 107,
+    "name": "Earth Spirit",
+    "games": 316,
+    "avgXpDelta": -343,
+    "avgLhDelta": -11.62,
+    "avgDnDelta": -1.8
+  },
+  {
+    "heroId": 108,
+    "name": "Underlord",
+    "games": 386,
+    "avgXpDelta": 316,
+    "avgLhDelta": 14.03,
+    "avgDnDelta": 1.06
+  },
+  {
+    "heroId": 109,
+    "name": "Terrorblade",
+    "games": 287,
+    "avgXpDelta": 530,
+    "avgLhDelta": 30.28,
+    "avgDnDelta": 3.99
+  },
+  {
+    "heroId": 110,
+    "name": "Phoenix",
+    "games": 613,
+    "avgXpDelta": -472,
+    "avgLhDelta": -15.94,
+    "avgDnDelta": -3.1
+  },
+  {
+    "heroId": 111,
+    "name": "Oracle",
+    "games": 69,
+    "avgXpDelta": -849,
+    "avgLhDelta": -31.3,
+    "avgDnDelta": -2.53
+  },
+  {
+    "heroId": 112,
+    "name": "Winter Wyvern",
+    "games": 393,
+    "avgXpDelta": -775,
+    "avgLhDelta": -31.14,
+    "avgDnDelta": -2.5
+  },
+  {
+    "heroId": 113,
+    "name": "Arc Warden",
+    "games": 38,
+    "avgXpDelta": -46,
+    "avgLhDelta": -1.64,
+    "avgDnDelta": 0.83
+  },
+  {
+    "heroId": 114,
+    "name": "Monkey King",
+    "games": 328,
+    "avgXpDelta": 213,
+    "avgLhDelta": 12.95,
+    "avgDnDelta": 5.43
+  },
+  {
+    "heroId": 119,
+    "name": "Dark Willow",
+    "games": 336,
+    "avgXpDelta": -662,
+    "avgLhDelta": -27.93,
+    "avgDnDelta": -2.61
+  },
+  {
+    "heroId": 120,
+    "name": "Pangolier",
+    "games": 775,
+    "avgXpDelta": 11,
+    "avgLhDelta": 1.77,
+    "avgDnDelta": -0.64
+  },
+  {
+    "heroId": 121,
+    "name": "Grimstroke",
+    "games": 252,
+    "avgXpDelta": -633,
+    "avgLhDelta": -27.24,
+    "avgDnDelta": -3.42
+  },
+  {
+    "heroId": 123,
+    "name": "Hoodwink",
+    "games": 978,
+    "avgXpDelta": -623,
+    "avgLhDelta": -27.29,
+    "avgDnDelta": -2.9
+  },
+  {
+    "heroId": 126,
+    "name": "Void Spirit",
+    "games": 379,
+    "avgXpDelta": -71,
+    "avgLhDelta": -2.24,
+    "avgDnDelta": 1.54
+  },
+  {
+    "heroId": 128,
+    "name": "Snapfire",
+    "games": 868,
+    "avgXpDelta": -106,
+    "avgLhDelta": -6,
+    "avgDnDelta": 1
+  },
+  {
+    "heroId": 129,
+    "name": "Mars",
+    "games": 315,
+    "avgXpDelta": 151,
+    "avgLhDelta": 12.17,
+    "avgDnDelta": 1.72
+  },
+  {
+    "heroId": 131,
+    "name": "Ringmaster",
+    "games": 337,
+    "avgXpDelta": -808,
+    "avgLhDelta": -28.23,
+    "avgDnDelta": -3.86
+  },
+  {
+    "heroId": 135,
+    "name": "Dawnbreaker",
+    "games": 576,
+    "avgXpDelta": 394,
+    "avgLhDelta": 12.15,
+    "avgDnDelta": 0.62
+  },
+  {
+    "heroId": 136,
+    "name": "Marci",
+    "games": 128,
+    "avgXpDelta": -407,
+    "avgLhDelta": -19.8,
+    "avgDnDelta": -1.46
+  },
+  {
+    "heroId": 137,
+    "name": "Primal Beast",
+    "games": 193,
+    "avgXpDelta": 180,
+    "avgLhDelta": 4.54,
+    "avgDnDelta": -2.05
+  },
+  {
+    "heroId": 138,
+    "name": "Muerta",
+    "games": 254,
+    "avgXpDelta": 378,
+    "avgLhDelta": 21.34,
+    "avgDnDelta": 5.6
+  },
+  {
+    "heroId": 145,
+    "name": "Kez",
+    "games": 486,
+    "avgXpDelta": 588,
+    "avgLhDelta": 19.51,
+    "avgDnDelta": 4.64
+  },
+  {
+    "heroId": 155,
+    "name": "Largo",
+    "games": 380,
+    "avgXpDelta": 118,
+    "avgLhDelta": 2.9,
+    "avgDnDelta": 0.71
+  },
+  {
+    "heroId": 72,
+    "name": "Gyrocopter",
+    "games": 113,
+    "avgXpDelta": 264,
+    "avgLhDelta": 25.94,
+    "avgDnDelta": 2.85
+  },
+  {
+    "heroId": 73,
+    "name": "Alchemist",
+    "games": 247,
+    "avgXpDelta": 233,
+    "avgLhDelta": 21.03,
+    "avgDnDelta": -2.5
+  }
+]

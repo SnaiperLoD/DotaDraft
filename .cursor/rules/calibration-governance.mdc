@@ -1,0 +1,29 @@
+---
+description: Ask before changing coeffs/tags/weights; never recompute real data unprompted
+alwaysApply: true
+---
+
+# Calibration & data governance
+
+## Ask before changing coefficients, tags, or weights
+
+Before changing any of the following, **stop and ask the user**:
+
+- numeric coefficients / multipliers / penalties / thresholds (Battle, Evaluation, tags, role-fit, etc.)
+- custom tag membership, magnitudes, or effect shape
+- axis weights / phase weights / `realWinRateWeight` and similar configs (`axis-weights.json`, hardcoded consts, etc.)
+
+Do not “fix divergence” or “tune while here” by editing these without an explicit go-ahead.
+
+OK without asking: bug fixes that restore an already-agreed value; copy/UI that does not change math; tests that assert existing behavior.
+
+## Never recompute real-data pipelines without a request
+
+Do **not** run scripts that refetch or recompute from live/external match data unless the user explicitly asks, including (non-exhaustive):
+
+- `fetch-hero-meta` / `refetch-incomplete-hero-meta` / `recompute-presumed-positions`
+- `fetch-pro-matches*` / hero-meta or pro-match refresh
+- `calibrate-evaluation-values` / ability-tag aggregate pipelines that rewrite hero calibration
+- any other OpenDota/Explorer/Liquipedia pull or full seed driven by a fresh external snapshot
+
+Local `npm run seed` from **already present** data files is fine when needed to load existing snapshots into SQLite — still do not refresh those snapshots first without asking.

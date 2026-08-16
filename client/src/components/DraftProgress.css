@@ -33,13 +33,39 @@
 /* ---------- rail ---------- */
 
 .draft-progress-rail {
+  position: relative;
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
-  gap: var(--sp-2);
+  gap: 0;
+}
+
+/* One calm uninterrupted rail. The previous chain of chamfered squares and
+   separate connector fragments looked noisy and visibly broke at every pick. */
+.draft-progress-rail::before,
+.draft-progress-rail::after {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: 10%;
+  height: 2px;
+  pointer-events: none;
+}
+
+.draft-progress-rail::before {
+  right: 10%;
+  background: var(--line-strong);
+}
+
+.draft-progress-rail::after {
+  width: var(--draft-progress);
+  max-width: 80%;
+  background: var(--gold);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--gold) 25%, transparent);
+  transition: width var(--dur-3) var(--ease-out);
 }
 
 .draft-progress-step {
@@ -51,45 +77,20 @@
   min-width: 0;
 }
 
-/* The connecting rail is drawn per step as a line running left from its
-   own node, rather than as one background under the row — that way each
-   segment can be colored by the state of the step it leads into (a filled
-   step lights its incoming segment gold). */
-.draft-progress-step::before {
-  content: '';
-  position: absolute;
-  top: 21px;
-  right: 50%;
-  left: -50%;
-  height: 2px;
-  background: var(--bronze-dim);
-  margin-right: 26px;
-  margin-left: 26px;
-  z-index: 0;
-}
-
-.draft-progress-step:first-child::before {
-  display: none;
-}
-
-.draft-progress-step.is-filled::before {
-  background: var(--gold);
-}
-
 .draft-progress-node {
   position: relative;
   z-index: 1;
-  width: 42px;
-  height: 42px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   display: grid;
   place-items: center;
-  border: 2px solid var(--bronze-dim);
-  background: var(--ground-2);
+  border: 2px solid var(--line-strong);
+  background: var(--ground);
   overflow: hidden;
   transition:
     border-color var(--dur-3) ease,
-    box-shadow var(--dur-3) ease,
+    filter var(--dur-3) ease,
     transform var(--dur-3) var(--ease-spring);
 }
 
@@ -108,9 +109,7 @@
 
 .is-filled .draft-progress-node {
   border-color: var(--gold);
-  box-shadow: 0 0 14px color-mix(in srgb, var(--gold) 35%, transparent);
-  /* Freshly filled nodes pop once on mount — the step going from empty to
-     a hero portrait is the main feedback that a pick registered. */
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--gold) 25%, transparent));
   animation: progress-node-lock var(--dur-4) var(--ease-spring);
 }
 
@@ -128,7 +127,7 @@
 
 .is-current .draft-progress-node {
   border-color: var(--blood-bright);
-  border-style: dashed;
+  background: var(--panel);
   animation: progress-node-pulse 2s ease-in-out infinite;
 }
 
@@ -139,10 +138,10 @@
 @keyframes progress-node-pulse {
   0%,
   100% {
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--danger) 45%, transparent);
+    filter: drop-shadow(0 0 0 transparent);
   }
   50% {
-    box-shadow: 0 0 0 7px transparent;
+    filter: drop-shadow(0 0 12px color-mix(in srgb, var(--danger) 55%, transparent));
   }
 }
 
@@ -168,8 +167,6 @@
 }
 
 @media (max-width: 560px) {
-  /* Names collide well before the nodes do — drop the labels and keep the
-     rail, which still reads as "2 of 5 done". */
   .draft-progress-label {
     display: none;
   }

@@ -15,9 +15,10 @@ interface Props {
   heroes: DraftHeroView[];
   totalSlots: number;
   title?: string;
+  layout?: 'stacked' | 'rail';
 }
 
-export default function DraftLedger({ heroes, totalSlots, title }: Props) {
+export default function DraftLedger({ heroes, totalSlots, title, layout = 'stacked' }: Props) {
   const { t } = useTranslation();
   const sorted = heroes.slice().sort((a, b) => a.pickOrder - b.pickOrder);
   const slots = Array.from({ length: totalSlots }, (_, i) => sorted[i] ?? null);
@@ -27,7 +28,7 @@ export default function DraftLedger({ heroes, totalSlots, title }: Props) {
   // slot (bottom: 100% + 8px), so slot #1's tooltip overflows the top edge
   // and .plate's clip-path would cut it off.
   return (
-    <div className="panel ledger">
+    <div className={`panel ledger ledger--${layout}`}>
       <h2 className="ledger-title">{title ?? t('draftLedger.defaultTitle')}</h2>
       <p className="ledger-sub">{t('draftLedger.picked', { picked: sorted.length, total: totalSlots })}</p>
       <ol className="ledger-list">

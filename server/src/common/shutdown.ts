@@ -1,11 +1,12 @@
 import type { Hero } from 'shared';
 
 // Shutdown (Blueprint/10-tech-debt-backlog.md, "Shutdown-механика на этапе
-// Battle", by direct user request 2026-08-06): a hero who is uniformly
-// countered by EVERY hero on the opposing team — not just weak against one
-// of them — is flagged SHUTDOWN. Deliberately strict (all 5 matchups must
-// clear the bar at once, not "on average" or "3 of 5") so this stays a rare,
-// dramatic state, not a routine soft-counter read.
+// Battle", by direct user request 2026-08-06): a hero whose real matchup
+// win rate is below their own overall average against EVERY hero on the
+// opposing draft — not just weak against one of them — is flagged
+// SHUTDOWN. Deliberately strict (all 5 matchups must clear the bar at once,
+// not "on average" or "3 of 5") so this stays a rare, dramatic state, not a
+// routine soft-counter read.
 //
 // Local structural interface instead of importing battle-resolution.ts's
 // MatchupLookup — that file imports FROM common/ already (role-fit,

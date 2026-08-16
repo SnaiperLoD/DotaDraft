@@ -48,6 +48,21 @@ export function ensureRoleCoverage(pool: Hero[], rest: Hero[]): Hero[] {
   return result;
 }
 
+export interface TiFormHero {
+  heroId: number;
+  heroName: string;
+  games: number;
+  wins: number;
+  losses: number;
+  winRate: number;
+}
+
+export interface TiFormResponse {
+  leagueName: string | null;
+  matchCount: number;
+  heroes: TiFormHero[];
+}
+
 @Injectable()
 export class HeroService {
   constructor(private readonly prisma: PrismaService) {}
@@ -76,6 +91,57 @@ export class HeroService {
   async findByIds(ids: number[]): Promise<Hero[]> {
     const rows = await this.prisma.hero.findMany({ where: { id: { in: ids } } });
     return rows.map((row) => this.toHero(row));
+  }
+
+  async tiForm(limit = 5): Promise<TiFormResponse> {
+    const matches = await this.prisma.proMatch.findMany({
+      where: { leagueName: { contains: 'The International' } },
+      orderBy: { startTime: 'desc' },
+    });
+    if (matches.length === 0) return { leagueName: null, matchCount: 0, heroes: [] };
+
+    // The newest match identifies the current TI snapshot. Older TI editions
+    // may coexist in the database and must not leak into this form table.
+    const leagueName = matches[0].leagueName;
+    const current = matches.filter((match) => match.leagueName === leagueName);
+    const performance = new Map<number, { games: number; wins: number }>();
+
+    const recordSide = (heroIdsJson: string, won: boolean) => {
+      const heroIds = JSON.parse(heroIdsJson) as number[];
+      for (const heroId of heroIds) {
+        const row = performance.get(heroId) ?? { games: 0, wins: 0 };
+        row.games += 1;
+        if (won) row.wins += 1;
+        performance.set(heroId, row);
+      }
+    };
+
+    for (const match of current) {
+      recordSide(match.radiantHeroIds, match.radiantWin);
+      recordSide(match.direHeroIds, !match.radiantWin);
+    }
+
+    const heroRows = await this.prisma.hero.findMany({
+      where: { id: { in: [...performance.keys()] } },
+      select: { id: true, name: true },
+    });
+    const names = new Map(heroRows.map((hero) => [hero.id, hero.name]));
+
+    const heroes = [...performance.entries()]
+      .map(([heroId, row]) => ({
+        heroId,
+        heroName: names.get(heroId) ?? `Hero ${heroId}`,
+        games: row.games,
+        wins: row.wins,
+        losses: row.games - row.wins,
+        winRate: row.games === 0 ? 0 : row.wins / row.games,
+      }))
+      // "Form" is deliberately transparent rather than a hidden composite:
+      // most wins first, then win rate and sample size as tie-breakers.
+      .sort((a, b) => b.wins - a.wins || b.winRate - a.winRate || b.games - a.games || a.heroId - b.heroId)
+      .slice(0, Math.max(1, limit));
+
+    return { leagueName, matchCount: current.length, heroes };
   }
 
   async randomPool(excludeIds: number[], size: number, seed: number): Promise<Hero[]> {

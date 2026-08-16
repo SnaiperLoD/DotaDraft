@@ -149,9 +149,11 @@ function main() {
   );
 
   console.log(
-    '\nCaveat: n=100 total, split across 4 buckets (Even + 3 tiers) — per-tier samples are small enough that ' +
-      'individual tier deltas can be noisy. Read the overall hit-rate and the Low->High trend direction as the ' +
-      'primary signal, not any single tier in isolation.',
+    `\nCaveat: n=${matches.length} total pro matches in the snapshot, split across Even + 3 tiers. ` +
+      'Per-tier samples are still noisy at the High end — read overall hit-rate and Low→High ' +
+      'monotonicity as the primary signal. hero-meta.json is a recent public snapshot, so ' +
+      'pre-2022 TI playoffs dilute accuracy; prefer 2022+ when comparing configs ' +
+      '(see sweep-battle-diff-inputs.ts).',
   );
 }
 

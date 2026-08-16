@@ -14,10 +14,9 @@ export interface HeroEvaluationValues {
   camp_stacking: number;
   // Damage per team-networth-share (server/scripts/fetch-damage-networth-share-data.ts):
   // resource-efficiency read on damage output, distinct from teamfight's raw
-  // hero_damage_per_min — see Blueprint/09-hero-knowledge-base.md. Evaluation
-  // Engine-only (not in Battle Engine's AXES/axis-weights.json): no
-  // real-winRate validation yet, unlike skirmish_rate/camp_stacking before
-  // they were wired into Battle Engine.
+  // hero_damage_per_min — see Blueprint/09-hero-knowledge-base.md. Wired into
+  // both Evaluation and Battle (AXES + axis-weights.json); camp_stacking /
+  // map_control remain data artifacts with Battle weight 0 / no Eval card.
   resource_efficiency: number;
 }
 
