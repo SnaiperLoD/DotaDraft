@@ -1,63 +1,46 @@
 # Next Session Priorities
 
-Updated at the end of the 2026-08-16 session. This file is a handoff and triage
-guide; `10-tech-debt-backlog.md` remains the detailed source of truth.
+Updated at the end of the 2026-08-16 UI/functionality session. This file is a
+handoff and triage guide; `10-tech-debt-backlog.md` remains the detailed source
+of truth.
 
 Major work now landed: calibration/research tooling and evidence; calibration
 governance; current TI 2026 data and freshness-weighted opponents; named draft
-archetypes; Battle run/streak/history features; structured lane context and a
-flavor-only narrative simulation; correct hidden/revealable-tag semantics; and
-a broad responsive UI pass (full-width draft, horizontal ledger, Evaluation /
-Battle hierarchy, cool light palette, TI Waiting Room and removal of ads).
+archetypes; Battle run/streak/history features; structured lane context with a
+**server-owned** flavor narrative (`BattleResultResponse.story`); correct
+hidden/revealable-tag semantics; Playwright on the critical path; Tapalka
+static fallback; and a broad responsive UI pass (full-width draft, horizontal
+ledger, Evaluation / Battle hierarchy, cool light palette, TI Waiting Room and
+removal of ads).
 
-**Status check:** the implementation session is pushed to `origin/master`.
-This handoff is the follow-up documentation commit. Still no production hosting
-and no release process.
+**Status check:** this session's code is local (not committed unless asked).
+Still no production hosting and no release process. `npm run lint` and
+`npm run format:check` were already red on a large pile of scripts/specs
+**before** this session — do not treat that as an E2E regression, and do not
+mass-format 100+ files as a drive-by.
 
 ---
 
 ## Next session — priorities in order
 
-### 1. Move Battle narrative construction out of React
-
-`BattlePanel.tsx` currently chooses farmers/playmakers and assembles the three
-story phases. The server supplies structured lane results, but the domain
-narrative still belongs server-side. Introduce explicit story-beat data
-(`opening`, `turn`, `conversion`, `finish`, each with evidence), test win/loss,
-won/lost-lanes and upset cases, and leave React as a renderer.
-
-Do not add more invented specificity until the server can support it. The
-current text is labelled flavor, but lane outcomes must stay tied to structured
-matchup calculations rather than arbitrary best/worst rows.
-
-### 2. Stop using Git as the calibration artifact store
+### 1. Stop using Git as the calibration artifact store
 
 The implementation commit included a large matrix of seed outputs and research
 JSON. Keep production snapshots and compact summaries in Git; move raw
 multi-seed outputs to an artifact directory/store (or Git LFS), add a manifest
 with command/config/seed/source hash, and document which files are runtime
-inputs versus reproducibility evidence.
+inputs versus reproducibility evidence. This is repo health, not product UI.
 
-### 3. Add browser-level regression coverage
-
-There are still no Playwright/E2E tests. Cover the critical path:
-
-- five picks -> role assignment -> Evaluation -> Battle;
-- role tooltip overflow;
-- streak updates only after the result reveal;
-- hidden versus revealed custom tags;
-- desktop/mobile and dark/light screenshots for Landing, Draft, Evaluation and
-  Battle.
-
-### 4. Product validation before more surface area
+### 2. Product validation before more surface area
 
 Before adding more mechanics, measure or at least instrument draft completion,
 Evaluation generation, Battle entry, fights per completed draft, copy/commit
 usage and Waiting Room/Tapalka interaction. The product is feature-rich enough
 to learn from behavior; avoid another broad feature/UI pass driven only by
-taste.
+taste. Lock-hero / pool-of-8 / items / build orders stay parked until there is
+a signal they are needed.
 
-### 5. Calibration work: pause by default
+### 3. Calibration work: pause by default
 
 Do not start another coefficient/tag/weight pass merely because an outlier
 looks ugly. Pick one hypothesis, define a holdout and acceptance metric, get
@@ -65,16 +48,25 @@ explicit user approval, run reproducible seeds, and compare with the production
 baseline. Structural unresolved items remain in `10-tech-debt-backlog.md`; they
 are not automatic next-session work.
 
-### 6. Performance and accessibility cleanup
-
-- investigate whether the lazy Tapalka 3D chunk (~564 kB) needs further
-  isolation or a static/mobile fallback;
-- run keyboard/focus and reduced-motion checks;
-- verify contrast in the cool light theme;
-- complete mobile review of long Evaluation and Battle results.
-
 ## Completed since the previous priority list
 
+- **Battle story on the server** — `server/src/battle/battle-story.ts` emits
+  four beats (`opening | turn | conversion | finish`) with `key` / `params` /
+  `evidence`. Cast and the converting matchup are taken from the **winning**
+  side (`bestMatchupEdge`), not the player's best/worst rows. `cameFromBehind`
+  = winner won fewer lanes than the loser. Upset is a beat key (High Skill
+  uses `turningUpsetHighSkill` when a swing hero is set). React
+  `BattleStory` only interpolates i18n. Jest covers Win / Lose / comeback /
+  even lanes / upset. No new invented flavor.
+- **Playwright critical path** — `npm run test:e2e`. Nest on `127.0.0.1:3012`
+  via `e2e/start-server.cjs` (temp SQLite + seed from existing
+  `server/data/heroes.json`, no OpenDota refetch). Vite on `127.0.0.1:5175`.
+  Battle is mocked. CI installs Chromium, runs the suite, uploads the HTML
+  report. Screenshots are artifacts, not git goldens.
+- **Tapalka / a11y / mobile** — static portrait on `max-width: 720px` or
+  `prefers-reduced-motion` (three.js chunk not loaded). Keyboard path
+  Draft → roles → Eval → Battle. Cool-light `--ink-faint` darkened;
+  Evaluation/Battle collapse to one column and wrap matchup rows.
 - **Named draft archetypes** — shipped in Evaluation.
 - **Win Streak** — shipped as session-run W/L, current win/loss streak and best
   win streak.
@@ -124,6 +116,11 @@ User's request (2026-08-06): heroes who genuinely play both a core and a support
 
 ## Recurring gotchas (still true, worth re-reading before touching these areas)
 
+- **Playwright E2E binds 127.0.0.1:3012 + 127.0.0.1:5175**, not 3001/5173, and
+  seeds a temp SQLite under `os.tmpdir()` — a `file:` URL through the repo path
+  dies on the space in `Claude Projects`. Vite needs `--host 127.0.0.1` or the
+  ready-probe hits IPv6 localhost and times out. Battle is mocked; draft/eval
+  hit the seeded roster. `reuseExistingServer` is false.
 - **nodemon doesn't reliably pick up server-side `.ts` changes** — bit us again this session (a live opponent-pool test showed a real hero-overlap bug that turned out to just be a stale server). Restart (`preview_stop`/`preview_start`) before trusting a "the fix didn't work" result.
 - **Vite's `optimizeDeps` cache for the `shared` workspace package doesn't auto-invalidate** on a `shared/dist` rebuild — if a shared-package change doesn't seem to reach the client, `rm -rf client/node_modules/.vite` before restarting, not just restart alone.
 - **`calibrate-evaluation-values.ts` only writes `heroes.json`** — the running server reads SQLite. Always follow with `npm run seed`.
@@ -133,10 +130,43 @@ User's request (2026-08-06): heroes who genuinely play both a core and a support
 
 ## Where to start
 
-Start with current priority 1 for product correctness, priority 2 for repository
-health, or priority 3 for release confidence. Do not begin with another
-calibration sweep or broad visual redesign without a narrower question and
-explicit acceptance criteria.
+Start with current priority 1 (Git as calibration artifact store) for repository
+health, or priority 2 if the goal is to learn from real play before adding
+surface. Do not begin with another calibration sweep or broad visual redesign
+without a narrower question and explicit acceptance criteria.
+
+---
+
+## Session log — 2026-08-16 (UI/functionality: Battle story, E2E, cleanup)
+
+Scoped **out**: coefficients / tags / weights / `axis-weights.json` /
+`realWinRateWeight`; live OpenDota refetch; Git-LFS artifact move; product
+analytics SDK; ads; new mechanics (lock hero, pool of 8, items).
+
+**Battle narrative.** New `buildBattleStory` next to `buildLaneResults` in
+`BattleService.fight`. Shared type `BattleStory` is required on
+`BattleResultResponse`. Client dropped hero-selection logic; i18n split the
+old three-phase copy into four beats and added upset keys. Copy stayed flavor
+(rune / triangle / Roshan / buyback) with the existing disclaimer.
+
+**E2E.** Root Playwright. Windows gotchas that will bite the next person:
+repo path has a space, so Prisma `file:../../database/e2e.db` is poison —
+`start-server.cjs` uses `os.tmpdir()/dotadraft-e2e-{PORT}.db` and `prisma db
+push` + local `heroes.json` seed. Vite must bind `--host 127.0.0.1` or
+Playwright's `127.0.0.1:5175` probe ECONNREFUSED on IPv6 `localhost`. Do not
+kill whatever is already on 3001/5173. Hidden-tag assertions must target
+`data-tag` / tag name (Silencer still shows public Global / Disable Battery).
+Keyboard picks have to wait for `.draft-progress-count` or Enter races the
+in-flight disable.
+
+**UI.** Tapalka `data-testid` `tapalka-static` / `tapalka-3d`. Role tooltips
+on the rail drop below portraits and clamp first/last slot. No new chrome.
+
+Follow-up the same day (still UI, still not a redesign): skip-to-content;
+mobile nav Escape / click-outside / viewport close / body scroll lock;
+Leaderboard stacks into a labelled grid below 700px instead of sideways
+scroll; History battle dates wrap; language toggle `aria-pressed`; legend
+closes on Escape.
 
 ---
 

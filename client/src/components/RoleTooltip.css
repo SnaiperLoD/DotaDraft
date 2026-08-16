@@ -13,6 +13,7 @@
   flex-direction: column;
   gap: 4px;
   min-width: 140px;
+  max-width: min(240px, calc(100vw - 24px));
   padding: 8px 10px;
   background: var(--panel-raised);
   border: 1px solid var(--bronze-dim);
@@ -25,7 +26,7 @@
     opacity 0.12s ease,
     transform 0.12s ease,
     visibility 0.12s;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .role-tooltip-panel::after {

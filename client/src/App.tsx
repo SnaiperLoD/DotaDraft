@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createBrowserRouter, RouterProvider, Outlet, NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LandingPage from './pages/LandingPage';
@@ -18,12 +18,32 @@ import './App.css';
 // CSS fallback animation for browsers without the View Transitions API
 // (App.css), and it keeps each page's mount semantics identical to before —
 // DraftPage in particular expects a fresh mount per visit.
+function SkipLink() {
+  const { t } = useTranslation();
+  return (
+    <a
+      href="#main-content"
+      className="skip-link"
+      data-testid="skip-link"
+      onClick={(event) => {
+        event.preventDefault();
+        const main = document.getElementById('main-content');
+        main?.focus();
+        main?.scrollIntoView();
+      }}
+    >
+      {t('app.skipToContent')}
+    </a>
+  );
+}
+
 function RootLayout() {
   const location = useLocation();
   return (
     <>
+      <SkipLink />
       <SiteHeader />
-      <main className="app-main">
+      <main id="main-content" className="app-main" tabIndex={-1}>
         <div key={location.pathname} className="page-transition">
           <Outlet />
         </div>
@@ -64,6 +84,8 @@ function SiteHeader() {
   const { t } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const barRef = useRef<HTMLElement>(null);
+  const burgerRef = useRef<HTMLButtonElement>(null);
 
   // Every link closes the mobile panel on the way out — otherwise it stays
   // open over the page it just navigated to. Handled on the click rather
@@ -81,8 +103,41 @@ function SiteHeader() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  useEffect(() => {
+    document.documentElement.classList.toggle('nav-open', menuOpen);
+    return () => document.documentElement.classList.remove('nav-open');
+  }, [menuOpen]);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 901px)');
+    const onChange = () => {
+      if (mq.matches) setMenuOpen(false);
+    };
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      setMenuOpen(false);
+      burgerRef.current?.focus();
+    };
+    const onPointer = (event: PointerEvent) => {
+      if (barRef.current?.contains(event.target as Node)) return;
+      setMenuOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    document.addEventListener('pointerdown', onPointer);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.removeEventListener('pointerdown', onPointer);
+    };
+  }, [menuOpen]);
+
   return (
-    <header className={`command-bar${scrolled ? ' command-bar--scrolled' : ''}`}>
+    <header ref={barRef} className={`command-bar${scrolled ? ' command-bar--scrolled' : ''}`}>
       <div className="command-bar-inner">
         <NavLink to="/" className="wordmark" onClick={closeMenu} viewTransition end>
           <Mark />
@@ -91,7 +146,12 @@ function SiteHeader() {
           </span>
         </NavLink>
 
-        <nav className={`command-nav${menuOpen ? ' command-nav--open' : ''}`} id="primary-nav">
+        <nav
+          className={`command-nav${menuOpen ? ' command-nav--open' : ''}`}
+          id="primary-nav"
+          data-testid="primary-nav"
+          aria-label={t('app.nav.primary')}
+        >
           {NAV_ITEMS.map((item) => (
             <NavLink
               key={item.to}
@@ -112,8 +172,10 @@ function SiteHeader() {
           <LanguageSwitcher />
           <ThemeToggle />
           <button
+            ref={burgerRef}
             type="button"
             className="nav-burger"
+            data-testid="nav-burger"
             aria-label={t('app.nav.menu')}
             aria-expanded={menuOpen}
             aria-controls="primary-nav"
@@ -158,7 +220,12 @@ const router = createBrowserRouter([
       // code never reaches, so it's genuinely absent from a prod build. The
       // server side is gated separately (app.module.ts).
       ...(import.meta.env.DEV
-        ? [{ path: '/debug', lazy: () => import('./pages/DebugMatrixPage').then((m) => ({ Component: m.default })) }]
+        ? [
+            {
+              path: '/debug',
+              lazy: () => import('./pages/DebugMatrixPage').then((m) => ({ Component: m.default })),
+            },
+          ]
         : []),
     ],
   },

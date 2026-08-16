@@ -48,7 +48,8 @@ export function createAxisAnalyzer(key: AxisKey, label: string): Analyzer {
           supportMiscastMultiplier(p.hero, p.assignedRole) * coreMiscastMultiplier(p.hero, p.assignedRole);
         // Always-hidden balance tags (Summoning Sickness / Tempo Monster /
         // Divided Attention / Mirage Tax / Paper Utility / Showstopper Tax /
-        // False Immortal) — same magnitudes as Battle blessings, applied
+        // False Immortal / Raid Boss / Disable Battery / Haunt Absolute /
+        // Siege Voltage) — same magnitudes as Battle blessings, applied
         // here so Evaluation Total Score stays consistent with the model.
         const cal = calibrationByHero.get(p.hero.id);
         const calPower = cal?.power ?? 1;

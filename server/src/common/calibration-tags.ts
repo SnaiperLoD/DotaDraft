@@ -26,6 +26,14 @@ const SHOWSTOPPER_TAX = heroNameSetForTag('Showstopper Tax');
 const SHOWSTOPPER_TAX_PENALTY = 0.75;
 const FALSE_IMMORTAL = heroNameSetForTag('False Immortal');
 const FALSE_IMMORTAL_PENALTY = 0.82;
+const RAID_BOSS = heroNameSetForTag('Raid Boss');
+const RAID_BOSS_BUFF = 1.18;
+const DISABLE_BATTERY = heroNameSetForTag('Disable Battery');
+const DISABLE_BATTERY_BUFF = 1.25;
+const HAUNT_ABSOLUTE = heroNameSetForTag('Haunt Absolute');
+const HAUNT_ABSOLUTE_BUFF = 1.12;
+const SIEGE_VOLTAGE = heroNameSetForTag('Siege Voltage');
+const SIEGE_VOLTAGE_BUFF = 1.12;
 
 export interface CalibrationTagMultipliers {
   /** Flat multiplier on every axis value for this hero. */
@@ -79,6 +87,18 @@ export function calibrationMultipliersForTeam(
     if (FALSE_IMMORTAL.has(h.name)) {
       m.power *= FALSE_IMMORTAL_PENALTY;
     }
+    if (RAID_BOSS.has(h.name)) {
+      m.power *= RAID_BOSS_BUFF;
+    }
+    if (DISABLE_BATTERY.has(h.name)) {
+      m.power *= DISABLE_BATTERY_BUFF;
+    }
+    if (HAUNT_ABSOLUTE.has(h.name)) {
+      m.power *= HAUNT_ABSOLUTE_BUFF;
+    }
+    if (SIEGE_VOLTAGE.has(h.name)) {
+      m.power *= SIEGE_VOLTAGE_BUFF;
+    }
     if (TEMPO_MONSTER.has(h.name)) {
       if (teamTempo > TEMPO_MONSTER_THRESHOLD) {
         m.power *= TEMPO_MONSTER_BUFF;
@@ -105,6 +125,10 @@ export function teamHasHiddenCalibrationTags(team: Hero[]): boolean {
       MIRAGE_TAX.has(h.name) ||
       PAPER_UTILITY.has(h.name) ||
       SHOWSTOPPER_TAX.has(h.name) ||
-      FALSE_IMMORTAL.has(h.name),
+      FALSE_IMMORTAL.has(h.name) ||
+      RAID_BOSS.has(h.name) ||
+      DISABLE_BATTERY.has(h.name) ||
+      HAUNT_ABSOLUTE.has(h.name) ||
+      SIEGE_VOLTAGE.has(h.name),
   );
 }

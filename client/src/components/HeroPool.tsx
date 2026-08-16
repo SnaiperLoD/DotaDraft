@@ -135,6 +135,8 @@ export default function HeroPool({
             }${isWorst ? ' hero-card--synergy-worst' : ''}${
               isCommitting ? ' hero-card--committing' : ''
             }${isFading ? ' hero-card--fading' : ''}`}
+            data-testid="hero-card"
+            data-hero-name={hero.name}
             onClick={() => {
               setPickingId(hero.id);
               onPick(hero.id);

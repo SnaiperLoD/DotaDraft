@@ -176,7 +176,13 @@
 }
 
 @media (max-width: 480px) {
+  .legend-widget {
+    right: 12px;
+    bottom: 12px;
+  }
+
   .legend-panel {
-    width: calc(100vw - 40px);
+    width: min(280px, calc(100vw - 24px));
+    max-height: min(70vh, calc(100dvh - 72px));
   }
 }

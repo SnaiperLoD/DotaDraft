@@ -231,3 +231,86 @@
   border-radius: var(--r-pill);
   background: linear-gradient(90deg, var(--bronze), var(--gold));
 }
+
+@media (max-width: 700px) {
+  .leaderboard-scroll {
+    overflow-x: visible;
+  }
+
+  .leaderboard-table {
+    min-width: 0;
+  }
+
+  .leaderboard-table thead {
+    display: none;
+  }
+
+  .leaderboard-table tbody tr {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr) auto auto 72px;
+    grid-template-areas:
+      'rank draft draft draft rate'
+      'rank eval wins losses rate';
+    column-gap: 8px;
+    row-gap: 6px;
+    align-items: center;
+    padding: var(--sp-3);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .leaderboard-table tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  .leaderboard-table td {
+    width: auto;
+    padding: 0;
+    border-bottom: none;
+    text-align: left;
+  }
+
+  .col-rank {
+    grid-area: rank;
+  }
+
+  .col-draft {
+    grid-area: draft;
+    min-width: 0;
+  }
+
+  .col-eval {
+    grid-area: eval;
+  }
+
+  .col-wins {
+    grid-area: wins;
+  }
+
+  .col-losses {
+    grid-area: losses;
+  }
+
+  .col-rate {
+    grid-area: rate;
+    width: 72px;
+  }
+
+  .col-eval::before,
+  .col-wins::before,
+  .col-losses::before {
+    content: attr(data-label);
+    display: block;
+    font-family: var(--font-ui);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .col-wins,
+  .col-losses {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+}

@@ -53,6 +53,27 @@ interface Props {
   embedded?: boolean;
 }
 
+// On mobile / reduced-motion, skip the lazy three.js chunk (~600KB) and
+// keep the static Brewmaster portrait. The 3D turntable is the idle cue;
+// without it the CSS drink sequence on click still runs.
+const TAPALKA_STATIC_MQ = '(max-width: 720px), (prefers-reduced-motion: reduce)';
+
+function useStaticTapalka(): boolean {
+  const [staticModel, setStaticModel] = useState(() =>
+    typeof window === 'undefined' ? false : window.matchMedia(TAPALKA_STATIC_MQ).matches,
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia(TAPALKA_STATIC_MQ);
+    const update = () => setStaticModel(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
+  return staticModel;
+}
+
 export default function TapalkaWidget({ embedded = false }: Props) {
   const { t } = useTranslation();
   const [clicks, setClicks] = useState(0);
@@ -60,10 +81,14 @@ export default function TapalkaWidget({ embedded = false }: Props) {
   const [drinking, setDrinking] = useState(false);
   const [voiceLine, setVoiceLine] = useState<string | null>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const staticModel = useStaticTapalka();
 
-  useEffect(() => () => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-  }, []);
+  useEffect(
+    () => () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    },
+    [],
+  );
 
   const handleClick = () => {
     setClicks((c) => c + 1);
@@ -79,26 +104,38 @@ export default function TapalkaWidget({ embedded = false }: Props) {
     }
   };
 
+  const portrait = (
+    <img
+      src={heroPortraitUrl(BREWMASTER_ID)}
+      alt="Brewmaster"
+      width={MODEL_WIDTH}
+      height={MODEL_HEIGHT}
+      className="tapalka-portrait"
+    />
+  );
+
   return (
     <div className={`${embedded ? 'tapalka tapalka--embedded' : 'panel tapalka'}`}>
       {!embedded && <div className="tapalka-heading">{t('tapalka.heading')}</div>}
-      <button type="button" className="tapalka-button" onClick={handleClick} aria-label={t('tapalka.heading')}>
+      <button
+        type="button"
+        className="tapalka-button"
+        onClick={handleClick}
+        aria-label={t('tapalka.heading')}
+      >
         {voiceLine && <span className="tapalka-speech-bubble">{voiceLine}</span>}
         <span className={`tapalka-glow${drinking ? ' tapalka-glow--active' : ''}`} aria-hidden="true" />
-        <span className={`tapalka-portrait-wrap${drinking ? ' tapalka-portrait-wrap--drinking' : ''}`}>
-          <Suspense
-            fallback={
-              <img
-                src={heroPortraitUrl(BREWMASTER_ID)}
-                alt="Brewmaster"
-                width={MODEL_WIDTH}
-                height={MODEL_HEIGHT}
-                className="tapalka-portrait"
-              />
-            }
-          >
-            <TapalkaModel3D drinking={drinking} width={MODEL_WIDTH} height={MODEL_HEIGHT} />
-          </Suspense>
+        <span
+          className={`tapalka-portrait-wrap${drinking ? ' tapalka-portrait-wrap--drinking' : ''}`}
+          data-testid={staticModel ? 'tapalka-static' : 'tapalka-3d'}
+        >
+          {staticModel ? (
+            portrait
+          ) : (
+            <Suspense fallback={portrait}>
+              <TapalkaModel3D drinking={drinking} width={MODEL_WIDTH} height={MODEL_HEIGHT} />
+            </Suspense>
+          )}
           {drinking && (
             <span key={drinkKey} className="tapalka-mug" aria-hidden="true">
               <svg viewBox="0 0 24 24" width="26" height="26">

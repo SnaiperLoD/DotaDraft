@@ -81,6 +81,54 @@ describe('classifyDraftArchetype', () => {
     expect(classifyDraftArchetype(heroes, breakdown).id).toBe('push');
   });
 
+  it('returns tempo on a tempo spike with soft scaling', () => {
+    const heroes = [hero({ name: 'A' }), hero({ name: 'B' }), hero({ name: 'C' }), hero({ name: 'D' }), hero({ name: 'E' })];
+    const breakdown = [
+      axis('tempo', 96),
+      axis('scaling', 0),
+      axis('objectives', 1),
+      axis('mobility', 78),
+      axis('teamfight', 3),
+    ];
+    expect(classifyDraftArchetype(heroes, breakdown).id).toBe('tempo');
+  });
+
+  it('does not call a high-objectives siege tempo — Push still wins', () => {
+    const heroes = [hero({ name: 'A' }), hero({ name: 'B' }), hero({ name: 'C' }), hero({ name: 'D' }), hero({ name: 'E' })];
+    const breakdown = [
+      axis('objectives', 75),
+      axis('tempo', 80),
+      axis('scaling', 40),
+      axis('mobility', 40),
+      axis('teamfight', 50),
+    ];
+    expect(classifyDraftArchetype(heroes, breakdown).id).toBe('push');
+  });
+
+  it('does not call tempo when scaling is also high', () => {
+    const heroes = [hero({ name: 'A' }), hero({ name: 'B' }), hero({ name: 'C' }), hero({ name: 'D' }), hero({ name: 'E' })];
+    const breakdown = [
+      axis('tempo', 80),
+      axis('scaling', 60),
+      axis('objectives', 50),
+      axis('mobility', 40),
+      axis('teamfight', 50),
+    ];
+    expect(classifyDraftArchetype(heroes, breakdown).id).toBe('balance');
+  });
+
+  it('does not call tempo below the 70 gate', () => {
+    const heroes = [hero({ name: 'A' }), hero({ name: 'B' }), hero({ name: 'C' }), hero({ name: 'D' }), hero({ name: 'E' })];
+    const breakdown = [
+      axis('tempo', 65),
+      axis('scaling', 40),
+      axis('objectives', 50),
+      axis('mobility', 40),
+      axis('teamfight', 50),
+    ];
+    expect(classifyDraftArchetype(heroes, breakdown).id).toBe('balance');
+  });
+
   it('returns deathball on high teamfight without mobility spike', () => {
     const heroes = [hero({ name: 'A' }), hero({ name: 'B' }), hero({ name: 'C' }), hero({ name: 'D' }), hero({ name: 'E' })];
     const breakdown = [

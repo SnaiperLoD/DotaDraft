@@ -22,9 +22,9 @@ export default function RoleTooltip({ hero, children }: Props) {
   const positions = hero.presumed_positions;
 
   return (
-    <span className="role-tooltip">
+    <span className="role-tooltip" data-testid="role-tooltip">
       {children}
-      <span className="role-tooltip-panel" role="tooltip">
+      <span className="role-tooltip-panel" role="tooltip" data-testid="role-tooltip-panel">
         <span className="role-tooltip-name">{hero.name}</span>
         {positions.length > 0 ? (
           <span className="role-tooltip-positions">

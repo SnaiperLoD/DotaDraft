@@ -81,7 +81,10 @@ export default function DraftPage() {
   // /draft/start and left an orphan row behind on every mount.
   useEffect(loadPool, []);
   useEffect(() => {
-    api.getTiForm().then(setTiForm).catch(() => setTiForm(null));
+    api
+      .getTiForm()
+      .then(setTiForm)
+      .catch(() => setTiForm(null));
   }, []);
 
   const handlePick = async (heroId: number) => {
@@ -229,7 +232,9 @@ export default function DraftPage() {
 
             <section className="panel draft-waiting-room">
               <div className="draft-waiting-copy">
-                <div className="draft-waiting-kicker">{tiForm?.leagueName ?? t('tapalka.tournamentWatch')}</div>
+                <div className="draft-waiting-kicker">
+                  {tiForm?.leagueName ?? t('tapalka.tournamentWatch')}
+                </div>
                 <h3>{t('tapalka.tiFormHeading')}</h3>
                 <p>{t('tapalka.tiFormNote', { count: tiForm?.matchCount ?? 0 })}</p>
                 <div className="ti-form-list">
@@ -283,7 +288,11 @@ export default function DraftPage() {
               />
             </div>
             <div className="completed-actions">
-              <button className="btn btn-primary" onClick={() => setBattleView(true)}>
+              <button
+                className="btn btn-primary"
+                data-testid="enter-battle-mode"
+                onClick={() => setBattleView(true)}
+              >
                 {t('battle.enterBattleMode')}
               </button>
               <button className="btn btn-secondary" onClick={handleRestart}>

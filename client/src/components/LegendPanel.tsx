@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import './LegendPanel.css';
 
@@ -22,13 +22,27 @@ export default function LegendPanel() {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open]);
+
   return (
     <div className="legend-widget">
       {open && (
         <div className="legend-panel panel">
           <div className="legend-header">
             <span>{t('legend.title')}</span>
-            <button type="button" className="legend-close" onClick={() => setOpen(false)} aria-label={t('legend.close')}>
+            <button
+              type="button"
+              className="legend-close"
+              onClick={() => setOpen(false)}
+              aria-label={t('legend.close')}
+            >
               ×
             </button>
           </div>
@@ -39,7 +53,11 @@ export default function LegendPanel() {
             <div className="legend-swatch-row">
               {ROLE_SWATCHES.map((r) => (
                 <div key={r.key} className="legend-swatch-item">
-                  <span className="legend-swatch" style={{ background: `rgb(${r.rgb})` }} aria-hidden="true" />
+                  <span
+                    className="legend-swatch"
+                    style={{ background: `rgb(${r.rgb})` }}
+                    aria-hidden="true"
+                  />
                   <span>{t(`positions.${r.key}`)}</span>
                 </div>
               ))}

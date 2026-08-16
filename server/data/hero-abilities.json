@@ -4877,7 +4877,9 @@
           }
         ],
         "iconUrl": "/ability-icons/puck_waning_rift.png",
-        "categoryScores": {}
+        "categoryScores": {
+          "initiating": 5
+        }
       },
       {
         "abilityKey": "puck_phase_shift",

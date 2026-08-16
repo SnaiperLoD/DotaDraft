@@ -257,6 +257,7 @@ const PRONE_TO_BURST_PENALTY = 0.8;
 // Disable Battery — under-modeled backline caster supports (B0 flagged).
 // Axes tax them via skirmish (deaths / low LH); real win condition is disable
 // + nuke from the fog. Solo-active flat power buff. Starting magnitude.
+// Always-hidden; Evaluation mirrors this via common/calibration-tags.ts.
 const DISABLE_BATTERY = heroNameSetForTag('Disable Battery');
 // Was 1.10 (+10%): pool mean −18.3→−14.6, almost all still flagged.
 // Bumped 2026-08-16 user "дожми" → 1.25 (+25%). Rough linear read from the
@@ -267,6 +268,7 @@ const DISABLE_BATTERY_BUFF = 1.25;
 // Haunt Absolute — Spectre's Haunt is global presence that Global's
 // map_control buff cannot express while map_control weight is 0. Flat
 // power buff instead. Starting magnitude.
+// Always-hidden; Evaluation mirrors this via common/calibration-tags.ts.
 const HAUNT_ABSOLUTE = heroNameSetForTag('Haunt Absolute');
 const HAUNT_ABSOLUTE_BUFF = 1.12;
 
@@ -284,6 +286,7 @@ const PAPER_UTILITY = heroNameSetForTag('Paper Utility');
 const PAPER_UTILITY_PENALTY = 0.75;
 
 // Raid Boss — under late/space cores (post tag-batch measure). Flat power.
+// Always-hidden; Evaluation mirrors this via common/calibration-tags.ts.
 const RAID_BOSS = heroNameSetForTag('Raid Boss');
 const RAID_BOSS_BUFF = 1.18;
 
@@ -298,6 +301,7 @@ const FALSE_IMMORTAL = heroNameSetForTag('False Immortal');
 const FALSE_IMMORTAL_PENALTY = 0.82;
 
 // Siege Voltage — under mid push/nuke (DP/Lina/OD).
+// Always-hidden; Evaluation mirrors this via common/calibration-tags.ts.
 const SIEGE_VOLTAGE = heroNameSetForTag('Siege Voltage');
 const SIEGE_VOLTAGE_BUFF = 1.12;
 

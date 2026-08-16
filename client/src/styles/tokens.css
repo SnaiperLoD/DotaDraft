@@ -41,7 +41,7 @@
   /* Cool slate ink in light — warm brown ink was half of the "beige app" feel. */
   --ink: light-dark(#1a1e26, #ece2c9);
   --ink-muted: light-dark(#4a5363, #a99878);
-  --ink-faint: light-dark(#7a8494, #7a6d55);
+  --ink-faint: light-dark(#5a6372, #7a6d55);
 
   /* ---------- lines ---------- */
   --line: light-dark(rgba(36, 48, 68, 0.12), rgba(236, 226, 201, 0.09));

@@ -6,8 +6,12 @@ database/dev.db
 database/dev.db-journal
 database/test.db
 database/test.db-journal
+database/e2e.db
+database/e2e.db-journal
 server/reports/
 server/.stryker-tmp/
+/playwright-report/
+/test-results/
 *.log
 .env
 .DS_Store

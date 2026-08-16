@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import ScreenFlash from './ScreenFlash';
 import OpponentRollAnimation from './OpponentRollAnimation';
 import { ROLES } from 'shared';
-import type { BattleResultResponse, BattleOpponentHero, BattleMatchup } from 'shared';
+import type { BattleResultResponse, BattleOpponentHero, BattleMatchup, BattleLaneResult } from 'shared';
 import { api } from '../api/client';
 import { getSubmitterToken } from '../utils/submitterToken';
 import { heroPortraitUrl, heroIconUrl } from '../utils/heroIcon';
@@ -92,8 +92,9 @@ function shatterPaths(heroId: number): string[] {
 }
 
 // Real win rate as a whole percent. Battle Mode normally avoids surfacing raw
-// percentages (Accuracy Ceiling), but the matchup/pair rows exist precisely to
-// show the number, by user request — so this is the one place it's shown.
+// percentages (Accuracy Ceiling), but the matchup/pair rows and lane cards
+// exist precisely to show the number, by user request — so this is the one
+// place it's shown.
 const pct = (winRate: number) => `${Math.round(winRate * 100)}%`;
 
 function HeroChip({ heroId, name }: { heroId: number; name: string }) {
@@ -123,9 +124,7 @@ function MatchupList({ heading, rows, good }: { heading: string; rows: BattleMat
               <HeroChip heroId={m.vsId} name={m.vs} />
             </span>
             <span className="battle-matchup-wr">
-              {m.baseWinRate !== null && (
-                <span className="battle-matchup-base">{pct(m.baseWinRate)} → </span>
-              )}
+              {m.baseWinRate !== null && <span className="battle-matchup-base">{pct(m.baseWinRate)} → </span>}
               <span className={good ? 'battle-matchup-wr--good' : 'battle-matchup-wr--bad'}>
                 {pct(m.winRate)}
               </span>
@@ -137,109 +136,130 @@ function MatchupList({ heading, rows, good }: { heading: string; rows: BattleMat
   );
 }
 
-function BattleStory({
-  result,
-  heroes,
-  heroNames,
-}: {
-  result: BattleResultResponse;
-  heroes: DraftHeroView[];
-  heroNames: string[];
-}) {
+function LaneMatchups({ lanes }: { lanes: BattleLaneResult[] }) {
   const { t } = useTranslation();
-  const won = result.resolvedOutcome === 'Win';
-  const mineByRole = (role: string) => heroes.find((hero) => hero.assignedRole === role)?.hero.name;
-  const opponentByRole = (role: string) =>
-    result.opponent.heroes.find((hero) => hero.assignedRole === role)?.heroName;
-  const winnerByRole = (role: string) => (won ? mineByRole(role) : opponentByRole(role));
-  const loserByRole = (role: string) => (won ? opponentByRole(role) : mineByRole(role));
-  const fallbackWinner =
-    (won ? heroes[0]?.hero.name : result.opponent.heroes[0]?.heroName) ?? t('battle.story.winningDraft');
-  const winnerFarmer = winnerByRole('Carry') ?? fallbackWinner;
-  const winnerTempo =
-    winnerByRole('Mid') ?? winnerByRole('Offlane') ?? winnerFarmer;
-  const winnerAction =
-    winnerByRole('Soft Support') ?? winnerByRole('Offlane') ?? winnerByRole('Hard Support') ?? winnerTempo;
-  const losingCore = loserByRole('Carry') ?? loserByRole('Mid') ?? t('battle.sideOpponent');
-  const relevantMatchup = (won ? result.bestMatchups : result.worstMatchups)[0];
-  const matchupWinner = relevantMatchup
-    ? won
-      ? relevantMatchup.hero
-      : relevantMatchup.vs
-    : winnerTempo;
-  const matchupLoser = relevantMatchup
-    ? won
-      ? relevantMatchup.vs
-      : relevantMatchup.hero
-    : losingCore;
-  const winnerLabel = t(won ? 'battle.story.yourSide' : 'battle.story.opponentSide');
-  const lanes = result.lanes ?? [];
-  const winnerLaneWins = lanes.filter((lane) => lane.winner === (won ? 'mine' : 'opponent')).length;
-  const loserLaneWins = lanes.filter((lane) => lane.winner === (won ? 'opponent' : 'mine')).length;
-  const cameFromBehind = winnerLaneWins < loserLaneWins;
-  const laneSummary = lanes
-    .map((lane) => {
-      const mine = lane.mine.join(' + ');
-      const opponent = lane.opponent.join(' + ');
-      const laneName = t(`battle.story.lanes.${lane.lane}`);
-      if (lane.winner === 'mine') {
-        return t('battle.story.laneWon', { lane: laneName, winner: mine, loser: opponent });
-      }
-      if (lane.winner === 'opponent') {
-        return t('battle.story.laneWon', { lane: laneName, winner: opponent, loser: mine });
-      }
-      return t('battle.story.laneEven', { lane: laneName, mine, opponent });
-    })
-    .join(' ');
+  if (lanes.length === 0) return null;
 
   return (
-    <div className="battle-story">
+    <div className="battle-lanes" data-testid="battle-lanes">
+      {lanes.map((lane) => {
+        const winnerLabel =
+          lane.winner === 'mine'
+            ? t('battle.laneWinnerYours')
+            : lane.winner === 'opponent'
+              ? t('battle.laneWinnerOpponent')
+              : t('battle.laneEven');
+        const chance =
+          lane.winRate === null
+            ? null
+            : lane.winner === 'opponent'
+              ? pct(1 - lane.winRate)
+              : pct(lane.winRate);
+        const chanceClass =
+          lane.winner === 'mine'
+            ? 'battle-matchup-wr--good'
+            : lane.winner === 'opponent'
+              ? 'battle-matchup-wr--bad'
+              : undefined;
+        return (
+          <div
+            key={lane.lane}
+            className="battle-lane-card"
+            data-testid="battle-lane-card"
+            data-lane={lane.lane}
+            data-winner={lane.winner}
+          >
+            <div className="battle-lane-label">{t(`battle.story.lanes.${lane.lane}`)}</div>
+            <div className="battle-lane-heroes">
+              <span className="battle-lane-side">
+                {lane.mine.map((name, i) => (
+                  <HeroChip key={`m-${lane.mineIds[i] ?? name}`} heroId={lane.mineIds[i] ?? 0} name={name} />
+                ))}
+              </span>
+              <span className="battle-lane-vs">{t('battle.matchupVs')}</span>
+              <span className="battle-lane-side">
+                {lane.opponent.map((name, i) => (
+                  <HeroChip key={`o-${lane.opponentIds[i] ?? name}`} heroId={lane.opponentIds[i] ?? 0} name={name} />
+                ))}
+              </span>
+            </div>
+            <div className="battle-lane-result">
+              <span>{winnerLabel}</span>
+              {chance !== null && <span className={chanceClass}>{chance}</span>}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function BattleStory({ result, heroNames }: { result: BattleResultResponse; heroNames: string[] }) {
+  const { t } = useTranslation();
+  const story = result.story;
+  if (!story?.beats.length) return null;
+
+  return (
+    <div className="battle-story" data-testid="battle-story">
       <div className="battle-story-head">
         <div className="battle-list-heading">{t('battle.story.title')}</div>
         <span>{t('battle.story.disclaimer')}</span>
       </div>
       <div className="battle-story-timeline">
-        <div className="battle-story-beat">
-          <span className="battle-story-phase">{t('battle.story.early')}</span>
-          <p>
-            {boldHeroNames(
-              t(cameFromBehind ? 'battle.story.openingComeback' : 'battle.story.openingAhead', {
-                lanes: laneSummary,
-                tempo: winnerTempo,
-                farmer: winnerFarmer,
-              }),
-              heroNames,
-            )}
-          </p>
-        </div>
-        <div className="battle-story-beat">
-          <span className="battle-story-phase">{t('battle.story.turning')}</span>
-          <p>
-            {boldHeroNames(
-              t(cameFromBehind ? 'battle.story.turningComeback' : 'battle.story.turningAhead', {
-                action: winnerAction,
-                tempo: winnerTempo,
-                matchupWinner,
-                matchupLoser,
-              }),
-              heroNames,
-            )}
-          </p>
-        </div>
-        <div className="battle-story-beat">
-          <span className="battle-story-phase">{t('battle.story.finish')}</span>
-          <p>
-            {boldHeroNames(
-              t('battle.story.finishText', {
-                farmer: winnerFarmer,
-                winner: winnerLabel,
-                action: winnerAction,
-                losingCore,
-              }),
-              heroNames,
-            )}
-          </p>
-        </div>
+        {story.beats.map((beat) => {
+          const winner = t(
+            beat.params.winnerSide === 'opponent' ? 'battle.story.opponentSide' : 'battle.story.yourSide',
+          );
+          const interpolated: Record<string, string> = {
+            ...beat.params,
+            winner,
+            topAxis: beat.params.topAxis
+              ? t(`battle.story.axes.${beat.params.topAxis}`, {
+                  defaultValue: beat.params.topAxis,
+                })
+              : '',
+            openingLane: beat.params.openingLane
+              ? t(`battle.story.laneFull.${beat.params.openingLane}`, {
+                  defaultValue: beat.params.openingLane,
+                })
+              : '',
+            posture:
+              beat.params.posture === 'behind' || beat.params.posture === 'upset'
+                ? t(`battle.story.posture.${beat.params.posture}`)
+                : '',
+          };
+          const chunks: string[] = [t(`battle.story.${beat.key}`, interpolated)];
+          if (beat.phase === 'opening' && interpolated.openingPairHero && interpolated.openingPairVs) {
+            chunks.push(t('battle.story.openingLaneHook', interpolated));
+          }
+          if (beat.phase === 'opening' && interpolated.theirDriver) {
+            chunks.push(t('battle.story.answerLine', interpolated));
+          }
+          if (beat.phase === 'opening' && interpolated.turner) {
+            chunks.push(t('battle.story.turnerLine', interpolated));
+          }
+          if (beat.phase === 'finish' && interpolated.myCarry && interpolated.theirCarry) {
+            if (interpolated.lateMatchupWinner && interpolated.carryWinRate) {
+              chunks.push(t('battle.story.carryLateMatchup', interpolated));
+            } else {
+              chunks.push(t('battle.story.carryLate', interpolated));
+            }
+            if (interpolated.scaleLeader) {
+              chunks.push(t('battle.story.carryScale', interpolated));
+            }
+          }
+          return (
+            <div
+              key={beat.phase}
+              className="battle-story-beat"
+              data-testid="battle-story-beat"
+              data-phase={beat.phase}
+            >
+              <span className="battle-story-phase">{t(`battle.story.phases.${beat.phase}`)}</span>
+              <p>{boldHeroNames(chunks.join(' '), heroNames)}</p>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -417,9 +437,7 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
       setResult(res);
       setBattleCount((c) => c + 1);
       pendingRunOutcomeRef.current =
-        res.resolvedOutcome === 'Win' || res.resolvedOutcome === 'Lose'
-          ? res.resolvedOutcome
-          : null;
+        res.resolvedOutcome === 'Win' || res.resolvedOutcome === 'Lose' ? res.resolvedOutcome : null;
       // Hand off from the searching spin to the slot-by-slot settle; the full
       // result renders once OpponentRollAnimation calls onSettled.
       setRevealing(true);
@@ -472,7 +490,17 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
       <div className="battle-screen-head">
         {onBack && (
           <button type="button" className="btn btn-ghost btn-sm battle-back" onClick={onBack}>
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              width="14"
+              height="14"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
               <path d="M15 18l-6-6 6-6" />
             </svg>
             {t('battle.backToEvaluation')}
@@ -480,7 +508,7 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
         )}
         <h3>{t('battle.title')}</h3>
         {runOutcomes.length > 0 && (
-          <div className="battle-run-chip" title={t('battle.runHint')}>
+          <div className="battle-run-chip" title={t('battle.runHint')} data-testid="battle-run-chip">
             <span className="battle-run-record">
               <span className="battle-run-win">
                 {runWins}
@@ -538,7 +566,9 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
       {error && <p className="error-text">{error}</p>}
 
       {result && !loading && !revealing && (
-        <div className={`battle-result bracketed battle-result--${result.resolvedOutcome === 'Win' ? 'win' : 'lose'}`}>
+        <div
+          className={`battle-result bracketed battle-result--${result.resolvedOutcome === 'Win' ? 'win' : 'lose'}`}
+        >
           <ScreenFlash outcome={result.resolvedOutcome} flashKey={battleCount} />
 
           {/* Outcome, confidence and opponent used to run together in one
@@ -547,6 +577,8 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
               the verdict, the caveat, the who. */}
           <div
             className={`battle-verdict battle-verdict--${result.resolvedOutcome === 'Win' ? 'win' : 'lose'}`}
+            data-testid="battle-verdict"
+            data-outcome={result.resolvedOutcome}
           >
             <span className="battle-outcome">
               {result.resolvedOutcome === 'Win' ? t('battle.victory') : t('battle.defeat')}
@@ -584,6 +616,8 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
             collisionKey={battleCount}
             shutdownHeroIds={result.shutdownHeroIds}
           />
+
+          <LaneMatchups lanes={result.lanes ?? []} />
 
           {/* Outcome write-up: hero names bolded via boldHeroNames the same way
               the portraits above are already bold (battleHeroNames, user request). */}
@@ -649,12 +683,13 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
 
             <div className="battle-list-block battle-list-block--explanation">
               <div className="battle-list-heading">{t('battle.explanation')}</div>
-              <ul>
+              <p className="battle-explanation-blurb">{t('battle.explanationBlurb')}</p>
+              <div className="battle-explanation-prose">
                 {result.explanation.map((line, i) => (
-                  <li key={i}>{boldHeroNames(line, battleHeroNames)}</li>
+                  <p key={i}>{boldHeroNames(line, battleHeroNames)}</p>
                 ))}
-              </ul>
-              <BattleStory result={result} heroes={heroes} heroNames={battleHeroNames} />
+              </div>
+              <BattleStory result={result} heroNames={battleHeroNames} />
             </div>
           </div>
 
@@ -689,7 +724,11 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
                   <MatchupList heading={t('battle.bestMatchups')} rows={result.bestMatchups ?? []} good />
                 )}
                 {(result.worstMatchups ?? []).length > 0 && (
-                  <MatchupList heading={t('battle.worstMatchups')} rows={result.worstMatchups ?? []} good={false} />
+                  <MatchupList
+                    heading={t('battle.worstMatchups')}
+                    rows={result.worstMatchups ?? []}
+                    good={false}
+                  />
                 )}
               </div>
             </>

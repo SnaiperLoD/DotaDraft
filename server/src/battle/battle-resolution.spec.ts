@@ -102,11 +102,7 @@ describe('resolveBattle', () => {
     expect(result.confidenceTier).toBe('High');
     expect(result.resolvedOutcome).toBe('Win');
     expect(result.advantages.length).toBeGreaterThan(0);
-    // Only the (favoredIsA=true, userWon=true) branch of the closingLine
-    // ternary is reachable when !isUpset (the other favoredIsA=true branch
-    // requires userWon=false, which is the isUpset path instead) — exact
-    // text pins that reachable branch.
-    expect(result.explanation[1]).toBe('That advantage held up.');
+    expect(result.explanation.join(' ')).toMatch(/advantage held up/i);
   });
 
   it('says the favorite\'s edge "held up" when the opponent (not the user) is correctly favored and wins', () => {
@@ -117,7 +113,7 @@ describe('resolveBattle', () => {
     const result = resolveBattle(weakTeam, strongOpponent, noData, () => 0.5);
     expect(result.advantageDirection).toBe('B');
     expect(result.resolvedOutcome).toBe('Lose');
-    expect(result.explanation[1]).toBe('That edge held up here.');
+    expect(result.explanation.join(' ')).toMatch(/edge held up here/i);
   });
 
   it('produces an upset explanation (not "the model was wrong") when the underdog wins', () => {

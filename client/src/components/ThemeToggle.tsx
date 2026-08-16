@@ -104,6 +104,7 @@ export default function ThemeToggle() {
     <button
       type="button"
       className="theme-toggle"
+      data-testid="theme-toggle"
       onClick={next}
       title={t(`theme.${choice}`)}
       aria-label={t('theme.toggle', { mode: t(`theme.${choice}`) })}

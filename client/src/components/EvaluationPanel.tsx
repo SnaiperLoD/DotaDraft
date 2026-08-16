@@ -231,7 +231,12 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
   if (!result) {
     return (
       <div className="evaluation-panel">
-        <button className="btn btn-primary" onClick={() => void handleEvaluate()} disabled={loading}>
+        <button
+          className="btn btn-primary"
+          data-testid="evaluate-draft"
+          onClick={() => void handleEvaluate()}
+          disabled={loading}
+        >
           {loading && <span className="btn-spinner" aria-hidden="true" />}
           {loading ? t('evaluation.evaluating') : t('evaluation.evaluateDraft')}
         </button>
@@ -244,9 +249,8 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
   const heroNames = heroes.map((h) => h.hero.name);
 
   return (
-    <div className="evaluation-panel">
+    <div className="evaluation-panel" data-testid="evaluation-result">
       <ScoreHeadline score={result.totalScore} archetypeId={result.archetype?.id} badges={badges} />
-
 
       <p className="evaluation-gameplan bracketed">{boldHeroNames(result.summary.gameplan, heroNames)}</p>
 

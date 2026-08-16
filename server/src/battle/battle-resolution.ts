@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import type { Hero, HeroEvaluationValues, BattlePair, BattleMatchup } from 'shared';
+import type { Hero, HeroEvaluationValues, BattlePair, BattleMatchup, BattleLaneResult } from 'shared';
+import { buildExplanation } from './battle-explanation';
 import { roleAwareAxisValue, supportMiscastMultiplier, coreMiscastMultiplier } from '../common/role-fit';
 import { hardCarryAxisMultipliers, isHardCarry } from '../common/hard-carry';
 import { utilityStackAxisMultipliers, utilityStackBreadth } from '../common/utility-stacking';
@@ -61,6 +62,13 @@ export interface BattleResult {
   // client prefers localized copy built from shutdownHeroIds.
   shutdownHeroIds: number[];
   shutdownNotes: string[];
+  // Named High Skill hero when that tag's variance actually flipped the
+  // binary outcome. Null otherwise — battle-story.ts uses this for the
+  // upset beat, not a new invented cause.
+  highSkillSwingHeroName: string | null;
+  // Largest |axis delta| this fight, winner-agnostic. Story names it
+  // instead of inventing a catch/smoke/Roshan sequence.
+  topAxis: keyof HeroEvaluationValues | null;
 }
 
 export const AXES: (keyof HeroEvaluationValues)[] = [
@@ -149,7 +157,8 @@ export const DEFAULT_DIFF_INPUTS: DiffInputCoeffs = {
 };
 
 const DEFAULT_PHASE_DISTRIBUTION: Record<GamePhase, number> = { early: 1 / 3, mid: 1 / 3, late: 1 / 3 };
-const phaseDistribution: Record<GamePhase, number> = axisWeightsConfig.phaseDistribution ?? DEFAULT_PHASE_DISTRIBUTION;
+const phaseDistribution: Record<GamePhase, number> =
+  axisWeightsConfig.phaseDistribution ?? DEFAULT_PHASE_DISTRIBUTION;
 
 function axisWeight(axis: keyof HeroEvaluationValues): number {
   return axisWeightsConfig.axisWeights[axis] ?? 1;
@@ -245,7 +254,10 @@ function overallPowerForPhase(team: BattlePick[], phase: GamePhase, tagEffects?:
 // computing one average, since each phase's total weight differs. This is
 // the actual (not approximated) phase-blended team power.
 function blendedOverallPower(team: BattlePick[], tagEffects?: CustomTagEffects): number {
-  return PHASES.reduce((sum, phase) => sum + overallPowerForPhase(team, phase, tagEffects) * phaseDistribution[phase], 0);
+  return PHASES.reduce(
+    (sum, phase) => sum + overallPowerForPhase(team, phase, tagEffects) * phaseDistribution[phase],
+    0,
+  );
 }
 
 // Average of (winRate - 0.5) across all valid matchup pairs — positive means
@@ -440,103 +452,12 @@ function describeAxis(axis: keyof HeroEvaluationValues, favorsA: boolean): strin
   return `${favorsA ? 'an edge in' : 'a deficit in'} ${AXIS_LABEL[axis]}`;
 }
 
-interface ExplanationContext {
-  advantageDirection: AdvantageDirection;
-  confidenceTier: ConfidenceTier;
-  resolvedOutcome: ResolvedOutcome;
-  teamA: Hero[];
-  teamB: Hero[];
-  lookup: MatchupLookup;
-  topAxisDelta: { axis: keyof HeroEvaluationValues; delta: number };
-  // Full ranked list (not just the top one) — an upset explanation is
-  // richer when it can point to whichever axis the underdog *did* lead on,
-  // even inside an overall-losing matchup, not just the single biggest
-  // swing factor.
-  axisDeltas: { axis: keyof HeroEvaluationValues; delta: number }[];
-  // The specific High Skill hero whose variance caused THIS outcome (not
-  // just present on the roster — actually flipped the result, see
-  // resolveBattle's highSkillSwing check), if any. Takes priority as the
-  // lead reason in an upset explanation: a named, mechanical cause beats a
-  // generic "every draft has some edge" line every time.
-  highSkillSwingHero: Hero | null;
-}
-
-function buildExplanation(ctx: ExplanationContext): string[] {
-  const { advantageDirection, confidenceTier, resolvedOutcome, teamA, teamB, lookup, topAxisDelta, axisDeltas, highSkillSwingHero } = ctx;
-
-  if (advantageDirection === 'Even') {
-    return [
-      `This is a close matchup with no clear favorite (${confidenceTier} confidence) — ${describeAxis(topAxisDelta.axis, topAxisDelta.delta > 0)} for your draft was the closest thing to an edge.`,
-      resolvedOutcome === 'Win'
-        ? 'Your draft came out on top in what was essentially a coin flip.'
-        : 'Your draft came up just short in what was essentially a coin flip.',
-    ];
-  }
-
-  const favoredIsA = advantageDirection === 'A';
-  const userWon = resolvedOutcome === 'Win';
-  const isUpset = favoredIsA ? !userWon : userWon;
-
-  const favoredLabel = favoredIsA ? 'Your draft' : "Opponent's draft";
-  const underdogTeam = favoredIsA ? teamB : teamA;
-  const favoredTeam = favoredIsA ? teamA : teamB;
-
-  const axisFavorsFavoredSide = favoredIsA === topAxisDelta.delta > 0;
-  const baseLine = `${favoredLabel} leaned ahead overall (${confidenceTier} confidence), with ${describeAxis(topAxisDelta.axis, axisFavorsFavoredSide)} standing out.`;
-
-  if (!isUpset) {
-    const closingLine = favoredIsA
-      ? userWon
-        ? 'That advantage held up.'
-        : 'That advantage should have held up — this loss runs against the grain.'
-      : userWon
-        ? "The opponent's edge should have held up — this win runs against the grain."
-        : 'That edge held up here.';
-    return [baseLine, closingLine];
-  }
-
-  // Upset: the underdog won. At High confidence this is now IMPOSSIBLE
-  // through bare variance (WIN_WEIGHT_BY_TIER.High=1) — it only happens
-  // through an explained mechanic (High Skill), so highSkillSwingHero is
-  // near-guaranteed to be set here when confidenceTier is High. At
-  // Moderate/Low it may still be plain tier variance, so the explanation
-  // builds every available real reason, not just one.
-  const underdogLabel = favoredIsA ? "opponent's draft" : 'your draft';
-  const sentences: string[] = [];
-
-  if (highSkillSwingHero) {
-    sentences.push(
-      `${highSkillSwingHero.name}'s own play was the deciding swing here — real match data shows outcomes around this hero carry more variance than the stat sheet alone suggests, and this game landed on the wrong side of it for the favorite.`,
-    );
-  }
-
-  const synergy = bestSynergyPair(underdogTeam, lookup);
-  const matchup = bestMatchupEdge(underdogTeam, favoredTeam, lookup);
-  // The underdog's own strongest axis, restricted to axes where they
-  // actually led — even a draft that loses on the overall picture usually
-  // wins at least one real category, and citing it grounds the upset in
-  // something concrete rather than "the model was wrong."
-  const underdogBestAxis = [...axisDeltas]
-    .filter((d) => (favoredIsA ? d.delta < 0 : d.delta > 0))
-    .sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta))[0];
-
-  const dataReasons: string[] = [];
-  if (matchup) dataReasons.push(`${matchup.hero}'s individual matchup into ${matchup.vs} favored ${underdogLabel} directly`);
-  if (synergy) dataReasons.push(`the ${synergy.heroA} + ${synergy.heroB} combination gave ${underdogLabel} a real, data-backed edge`);
-  if (underdogBestAxis) {
-    dataReasons.push(`${underdogLabel} actually led in ${AXIS_LABEL[underdogBestAxis.axis]} despite trailing on the overall picture`);
-  }
-
-  if (dataReasons.length > 0) {
-    const lead = sentences.length > 0 ? 'On top of that, ' : 'But ';
-    sentences.push(`${lead}${underdogLabel} had real advantages of its own — ${dataReasons.join('; ')} — enough to make this upset plausible even against a stronger overall draft.`);
-  } else if (sentences.length === 0) {
-    sentences.push(
-      `Every draft carries some risk even in a clear matchup, and at ${confidenceTier} confidence the odds still had to break exactly right for ${underdogLabel} — this time they did.`,
-    );
-  }
-
-  return [baseLine, ...sentences];
+export interface BattleResolveExtras {
+  // Display-aligned lanes / opponent roles. Fight math still uses the
+  // teamB passed to resolveBattle; these only feed Explanation so it can
+  // talk about the same lane cards the client renders.
+  lanes?: BattleLaneResult[];
+  narrativeOpponent?: BattlePick[];
 }
 
 // Magnitude `diff` (post synergy/matchup multipliers) must clear before a
@@ -684,12 +605,20 @@ export function assessBattle(
     taggedPowerA *
     clamp(1 + synergyBonusA * diffInputs.synergyCoeff, 0.3, 1.7) *
     clamp(1 + edgeA * diffInputs.matchupCoeff, 0.3, 1.7) *
-    clamp(1 + winRateEdgeA * axisWeightsConfig.realWinRateWeight, 1 - REAL_WIN_RATE_CAP, 1 + REAL_WIN_RATE_CAP);
+    clamp(
+      1 + winRateEdgeA * axisWeightsConfig.realWinRateWeight,
+      1 - REAL_WIN_RATE_CAP,
+      1 + REAL_WIN_RATE_CAP,
+    );
   const powerB =
     taggedPowerB *
     clamp(1 + synergyBonusB * diffInputs.synergyCoeff, 0.3, 1.7) *
     clamp(1 - edgeA * diffInputs.matchupCoeff, 0.3, 1.7) *
-    clamp(1 + winRateEdgeB * axisWeightsConfig.realWinRateWeight, 1 - REAL_WIN_RATE_CAP, 1 + REAL_WIN_RATE_CAP);
+    clamp(
+      1 + winRateEdgeB * axisWeightsConfig.realWinRateWeight,
+      1 - REAL_WIN_RATE_CAP,
+      1 + REAL_WIN_RATE_CAP,
+    );
 
   const diff = powerA - powerB;
 
@@ -708,7 +637,9 @@ export function assessBattle(
   // (tagEffectsA/B), same reasoning as taggedPowerA/B above.
   const axisDeltas = AXES.map((axis) => ({
     axis,
-    delta: (axisAverage(teamA, axis, tagEffectsA) - axisAverage(teamB, axis, tagEffectsB)) * blendedAxisWeight(axis),
+    delta:
+      (axisAverage(teamA, axis, tagEffectsA) - axisAverage(teamB, axis, tagEffectsB)) *
+      blendedAxisWeight(axis),
   })).sort((x, y) => Math.abs(y.delta) - Math.abs(x.delta));
 
   return {
@@ -747,14 +678,19 @@ export function resolveBattle(
   teamB: BattlePick[],
   lookup: MatchupLookup,
   random: () => number = Math.random,
+  extras: BattleResolveExtras = {},
 ): BattleResult {
   const heroesA = teamA.map((p) => p.hero);
   const heroesB = teamB.map((p) => p.hero);
-  const { confidenceTier, advantageDirection, axisDeltas, shutdownHeroesA, shutdownHeroesB } = assessBattle(
-    teamA,
-    teamB,
-    lookup,
-  );
+  const {
+    confidenceTier,
+    advantageDirection,
+    axisDeltas,
+    shutdownHeroesA,
+    shutdownHeroesB,
+    hardCarryCountA,
+    hardCarryCountB,
+  } = assessBattle(teamA, teamB, lookup);
 
   // Shutdown notes — phrased from the calling player's own perspective
   // (teamA is always "your draft," see BattleService.fight()), independent
@@ -773,7 +709,8 @@ export function resolveBattle(
   const shutdownHeroIds = [...shutdownHeroesA, ...shutdownHeroesB].map((h) => h.id);
 
   const favorWeight = WIN_WEIGHT_BY_TIER[confidenceTier];
-  const basePWinA = advantageDirection === 'A' ? favorWeight : advantageDirection === 'B' ? 1 - favorWeight : 0.5;
+  const basePWinA =
+    advantageDirection === 'A' ? favorWeight : advantageDirection === 'B' ? 1 - favorWeight : 0.5;
 
   // High Skill (custom-tags.ts) — each team's own presence of a High Skill
   // hero pulls THAT team's predicted result toward a coinflip, independent
@@ -842,12 +779,17 @@ export function resolveBattle(
     advantageDirection,
     confidenceTier,
     resolvedOutcome,
-    teamA: heroesA,
-    teamB: heroesB,
+    teamA,
+    teamB: extras.narrativeOpponent ?? teamB,
     lookup,
     topAxisDelta: axisDeltas[0],
     axisDeltas,
     highSkillSwingHero,
+    lanes: extras.lanes,
+    shutdownHeroesA,
+    shutdownHeroesB,
+    hardCarryCountA,
+    hardCarryCountB,
   });
 
   const winnerIsA = resolvedOutcome === 'Win';
@@ -878,5 +820,7 @@ export function resolveBattle(
     worstMatchups,
     shutdownHeroIds,
     shutdownNotes,
+    highSkillSwingHeroName: highSkillSwingHero?.name ?? null,
+    topAxis: axisDeltas[0]?.axis ?? null,
   };
 }

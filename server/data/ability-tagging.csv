@@ -97,7 +97,7 @@ DISPEL TYPE: Basic Dispel",Point Target/AOE,22/18/14/10,,,4,,,,,,
  At any point, Puck may teleport to the orb's location using Ethereal Jaunt.
 
  Can be put on alt-cast to launch the Orb straight ahead.",Point Target,11/10/9/8,90/100/110/120,TRUE,7,,,TRUE,4,,
-13,Puck,puck_waning_rift,Waning Rift,Puck teleports to the target location and releases a burst of faerie dust that deals damage and silences enemy units nearby.,Point Target/AOE,16/15/14/13,100/110/120/130,,,,,,,TRUE,
+13,Puck,puck_waning_rift,Waning Rift,Puck teleports to the target location and releases a burst of faerie dust that deals damage and silences enemy units nearby.,Point Target/AOE,16/15/14/13,100/110/120/130,,,,,TRUE,5,TRUE,
 13,Puck,puck_phase_shift,Phase Shift,CHANNELED - Puck briefly shifts into another dimension where it is immune from harm.,No Target/Channeled,8/7.5/7/6.5,,TRUE,,,,,,,
 13,Puck,puck_ethereal_jaunt,Ethereal Jaunt,Teleports Puck to a flying Illusory Orb.,No Target,,,TRUE,,,,,,,
 13,Puck,puck_puckish,Puckish,"Whenever Puck disjoints an attack, it restores 3% of its max health and mana. Dodging a targeted spell projectile restores 3x that amount. Does not apply to attacks by Towers.",Passive,,,,,TRUE,,,,,

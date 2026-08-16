@@ -1,3 +1,43 @@
+/* Skip link sits above the sticky command bar so keyboard users can
+   jump the chrome. Hidden until focused — not display:none, or it
+   wouldn't be in the tab order. */
+.skip-link {
+  position: absolute;
+  left: var(--gutter);
+  top: -48px;
+  z-index: 500;
+  padding: 8px 12px;
+  background: var(--panel-raised);
+  color: var(--ink);
+  border: 1px solid var(--gold);
+  border-radius: var(--r-sm);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: var(--sp-3);
+}
+
+.app-main:focus {
+  outline: none;
+}
+
+.app-main:focus-visible {
+  outline: none;
+}
+
+html.nav-open {
+  overflow: hidden;
+}
+
+html {
+  scroll-padding-top: 72px;
+}
+
 /* Sticky command bar. The blur + translucent ground keeps the page
    readable as it scrolls under the bar without needing an opaque strip
    that cuts the layout in two. */

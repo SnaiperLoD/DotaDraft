@@ -1,5 +1,12 @@
 .ledger {
   padding: 18px 16px;
+  overflow: visible;
+}
+
+.ledger-list,
+.ledger-slot,
+.role-tooltip {
+  overflow: visible;
 }
 
 .ledger-title {
@@ -150,4 +157,36 @@
   .ledger--rail .ledger-list {
     grid-template-columns: minmax(0, 1fr);
   }
+}
+
+/* Rail sits at the top of the draft screen — a tooltip above slot #1
+   would clip the viewport. Drop it below the portrait instead. */
+.ledger--rail .role-tooltip-panel {
+  bottom: auto;
+  top: calc(100% + 8px);
+}
+
+.ledger--rail .role-tooltip-panel::after {
+  top: auto;
+  bottom: 100%;
+  border-top-color: transparent;
+  border-bottom-color: var(--bronze-dim);
+}
+
+.ledger--rail .ledger-slot:first-child .role-tooltip-panel {
+  left: 0;
+  transform: translateY(4px);
+}
+
+.ledger--rail .ledger-slot:last-child .role-tooltip-panel {
+  left: auto;
+  right: 0;
+  transform: translateX(0) translateY(4px);
+}
+
+.ledger--rail .ledger-slot:first-child .role-tooltip:hover .role-tooltip-panel,
+.ledger--rail .ledger-slot:first-child .role-tooltip:focus-within .role-tooltip-panel,
+.ledger--rail .ledger-slot:last-child .role-tooltip:hover .role-tooltip-panel,
+.ledger--rail .ledger-slot:last-child .role-tooltip:focus-within .role-tooltip-panel {
+  transform: translateY(0);
 }

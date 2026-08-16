@@ -32,14 +32,14 @@ function LeaderboardTable({ rows }: { rows: Row[] }) {
   const { t } = useTranslation();
   return (
     <div className="leaderboard-scroll">
-      <table className="leaderboard-table">
+      <table className="leaderboard-table" data-testid="leaderboard-table">
         <thead>
           <tr>
             <th className="col-rank">#</th>
-            <th>{t('leaderboard.draft')}</th>
-            <th className="col-num">{t('leaderboard.evaluation')}</th>
-            <th className="col-num">{t('leaderboard.wins')}</th>
-            <th className="col-num">{t('leaderboard.losses')}</th>
+            <th className="col-draft">{t('leaderboard.draft')}</th>
+            <th className="col-num col-eval">{t('leaderboard.evaluation')}</th>
+            <th className="col-num col-wins">{t('leaderboard.wins')}</th>
+            <th className="col-num col-losses">{t('leaderboard.losses')}</th>
             <th className="col-rate">{t('leaderboard.winRate')}</th>
           </tr>
         </thead>
@@ -50,9 +50,11 @@ function LeaderboardTable({ rows }: { rows: Row[] }) {
                   leaderboard whose first rows look identical to its fortieth
                   isn't doing its one job. */}
               <td className="col-rank">
-                <span className={`leaderboard-rank${i < 3 ? ` is-medal is-medal-${i + 1}` : ''}`}>{i + 1}</span>
+                <span className={`leaderboard-rank${i < 3 ? ` is-medal is-medal-${i + 1}` : ''}`}>
+                  {i + 1}
+                </span>
               </td>
-              <td>
+              <td className="col-draft">
                 <div className="leaderboard-draft-cell">
                   <div className="leaderboard-draft-icons">
                     {row.heroIds.map((heroId) => (
@@ -67,16 +69,23 @@ function LeaderboardTable({ rows }: { rows: Row[] }) {
                   )}
                 </div>
               </td>
-              <td className="col-num">
+              <td className="col-num col-eval" data-label={t('leaderboard.evaluation')}>
                 {row.evaluationScore !== null ? `${row.evaluationScore}/10` : t('evaluation.notAvailable')}
               </td>
-              <td className="col-num leaderboard-wins">{row.wins}</td>
-              <td className="col-num leaderboard-losses">{row.losses}</td>
-              <td className="col-rate">
+              <td className="col-num col-wins leaderboard-wins" data-label={t('leaderboard.wins')}>
+                {row.wins}
+              </td>
+              <td className="col-num col-losses leaderboard-losses" data-label={t('leaderboard.losses')}>
+                {row.losses}
+              </td>
+              <td className="col-rate" data-label={t('leaderboard.winRate')}>
                 <div className="leaderboard-rate">
                   <span className="leaderboard-rate-value">{Math.round(row.winRate * 100)}%</span>
                   <span className="leaderboard-rate-track">
-                    <span className="leaderboard-rate-fill" style={{ width: `${Math.round(row.winRate * 100)}%` }} />
+                    <span
+                      className="leaderboard-rate-fill"
+                      style={{ width: `${Math.round(row.winRate * 100)}%` }}
+                    />
                   </span>
                 </div>
               </td>

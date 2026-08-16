@@ -16,11 +16,27 @@ export interface BattleOpponentHero {
 export type BattleLaneId = 'safe' | 'mid' | 'off';
 export type BattleLaneWinner = 'mine' | 'opponent' | 'even';
 
+export interface BattleLaneTopPair {
+  hero: string;
+  heroId: number;
+  vs: string;
+  vsId: number;
+  winRate: number;
+}
+
 export interface BattleLaneResult {
   lane: BattleLaneId;
   mine: string[];
   opponent: string[];
   winner: BattleLaneWinner;
+  // Mine's implied chance from the already-computed average matchup edge
+  // (0.5 + averageEdge). null when the lane had no real pair data.
+  winRate: number | null;
+  mineIds: number[];
+  opponentIds: number[];
+  // Best real matchup pair for the winning side in this lane. null when
+  // the lane is even or no pair data exists for the winner.
+  topPair: BattleLaneTopPair | null;
 }
 
 export interface BattleOpponent {
@@ -66,6 +82,56 @@ export interface BattleMatchup {
   baseWinRate: number | null;
 }
 
+export type BattleStoryPhase = 'opening' | 'turn' | 'conversion' | 'finish';
+
+export type BattleStoryBeatKey =
+  | 'openingAhead'
+  | 'openingComeback'
+  | 'openingEven'
+  | 'openingUpset'
+  | 'turningCatchCombo'
+  | 'turningCatch'
+  | 'turningCombo'
+  | 'turningAxis'
+  | 'turningUpsetHighSkill'
+  | 'conversionRoshanEarly'
+  | 'conversionRoshanMid'
+  | 'conversionRoshanLate'
+  | 'finishHeld'
+  | 'finishComeback'
+  | 'finishUpset';
+
+export interface BattleStoryLaneEvidence {
+  lane: BattleLaneId;
+  winner: BattleLaneWinner;
+}
+
+export interface BattleStoryMatchupEvidence {
+  winnerId: number;
+  loserId: number;
+}
+
+export interface BattleStoryBeatEvidence {
+  heroIds: number[];
+  lanes?: BattleStoryLaneEvidence[];
+  matchup?: BattleStoryMatchupEvidence;
+}
+
+export interface BattleStoryBeat {
+  phase: BattleStoryPhase;
+  key: BattleStoryBeatKey;
+  // Interpolation bag for client i18n. Values are hero names or side keys
+  // (`yours` / `opponent`), never pre-translated prose.
+  params: Record<string, string>;
+  evidence: BattleStoryBeatEvidence;
+}
+
+export interface BattleStory {
+  cameFromBehind: boolean;
+  isUpset: boolean;
+  beats: BattleStoryBeat[];
+}
+
 export interface BattleResultResponse {
   resolvedOutcome: ResolvedOutcome;
   advantageDirection: AdvantageDirection;
@@ -90,5 +156,8 @@ export interface BattleResultResponse {
   shutdownHeroIds: number[];
   shutdownNotes: string[];
   lanes?: BattleLaneResult[];
+  // Domain narrative assembled server-side (battle-story.ts). React only
+  // renders `beats` through i18n — it does not pick farmers or phases.
+  story: BattleStory;
   opponent: BattleOpponent;
 }

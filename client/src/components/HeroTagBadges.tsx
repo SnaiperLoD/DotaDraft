@@ -22,7 +22,13 @@ export default function HeroTagBadges({ tags, variant = 'overlay' }: Props) {
   return (
     <div className={`hero-tag-row hero-tag-row--${variant}`}>
       {tags.map((tag) => (
-        <span key={tag.name} className={`hero-tag-badge rarity-${tag.rarity}`} title={tag.description}>
+        <span
+          key={tag.name}
+          className={`hero-tag-badge rarity-${tag.rarity}`}
+          title={tag.description}
+          data-testid="hero-tag-badge"
+          data-tag={tag.name}
+        >
           {tag.name}
         </span>
       ))}

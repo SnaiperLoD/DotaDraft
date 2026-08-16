@@ -133,4 +133,11 @@ describe('createAxisAnalyzer', () => {
     expect(result.score).toBeCloseTo(6 * 1.1, 5);
     expect(result.explanation.some((line) => line.includes('boost') && line.includes('hard-carry'))).toBe(true);
   });
+
+  it('applies hidden Raid Boss +18% on Evaluation axes', () => {
+    const medusa = heroWithAxis(1, 'Medusa', 'teamfight', 5);
+    const analyzer = createAxisAnalyzer('teamfight', 'Teamfight');
+    const result = analyzer.analyze(picks([medusa]));
+    expect(result.score).toBeCloseTo(5 * 1.18, 5);
+  });
 });

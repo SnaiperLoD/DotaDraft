@@ -35,6 +35,7 @@ export type DraftArchetypeId =
   | 'four_plus_one'
   | 'split_push'
   | 'push'
+  | 'tempo'
   | 'deathball'
   | 'scaling'
   | 'balance';

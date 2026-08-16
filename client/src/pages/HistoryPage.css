@@ -256,11 +256,26 @@
 }
 
 @media (max-width: 560px) {
+  .history-entry {
+    padding: var(--sp-3);
+  }
+
   .history-entry-meta {
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     margin-left: 0;
     width: 100%;
     justify-content: space-between;
+  }
+
+  .history-roster {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .history-battle-date {
+    margin-left: 0;
+    flex-basis: 100%;
   }
 }

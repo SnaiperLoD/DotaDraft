@@ -1,12 +1,19 @@
 {
   "app": {
+    "skipToContent": "Skip to content",
     "nav": {
       "draft": "Draft",
       "about": "About",
       "history": "History",
       "leaderboard": "Leaderboard",
       "reportBug": "Report a Bug",
-      "menu": "Menu"
+      "menu": "Menu",
+      "primary": "Primary"
+    },
+    "languageLabel": "Language",
+    "language": {
+      "en": "English",
+      "ru": "Russian"
     }
   },
   "theme": {
@@ -119,6 +126,7 @@
       "four_plus_one": "4+1",
       "split_push": "Split-push",
       "push": "Push",
+      "tempo": "Tempo",
       "deathball": "Deathball",
       "scaling": "Late game",
       "balance": "Balance"
@@ -127,6 +135,7 @@
       "four_plus_one": "One dedicated Carry, four supporting pieces",
       "split_push": "High mobility with map pressure / split identity",
       "push": "Strong objectives and early-mid tempo",
+      "tempo": "Wants the game over early; does not scale",
       "deathball": "Group fight draft — not a mobile split plan",
       "scaling": "Wants the late game; soft early tempo",
       "balance": "No single dominant shape"
@@ -178,27 +187,73 @@
     "advantages": "Advantages",
     "disadvantages": "Disadvantages",
     "explanation": "Explanation",
+    "explanationBlurb": "Why this matchup resolved this way — lanes, pairs, axes, tags, and the carry late from this fight. Not a reconstructed replay.",
+    "laneWinnerYours": "Yours",
+    "laneWinnerOpponent": "Opponent",
+    "laneEven": "Even",
     "story": {
       "title": "How the match may have unfolded",
-      "disclaimer": "Narrative simulation for flavor. This is not a replay or a reconstruction of a real match.",
-      "early": "Opening",
-      "turning": "Turning point",
-      "finish": "Finish",
+      "disclaimer": "A read from this fight's lanes, pairs, and axes — not a reconstructed replay.",
+      "phases": {
+        "opening": "Opening",
+        "turn": "Turning point",
+        "conversion": "Conversion",
+        "finish": "Finish"
+      },
       "yourSide": "Your draft",
       "opponentSide": "The opponent",
       "winningDraft": "the winning core",
       "lanes": {
-        "safe": "Safe lane",
+        "safe": "Safe",
         "mid": "Mid",
-        "off": "Offlane"
+        "off": "Off"
       },
-      "laneWon": "{{lane}} advantage goes to {{winner}} in the matchup against {{loser}}.",
-      "laneEven": "{{lane}} stays even between {{mine}} and {{opponent}}.",
-      "openingAhead": "{{lanes}} The lane result gives {{tempo}} the first move toward the power rune and leaves {{farmer}} on the protected lane-and-jungle farming route.",
-      "openingComeback": "{{lanes}} The winning side leaves the lanes behind: {{farmer}} gives up the contested lane for the jungle, while {{tempo}} cuts the next wave and trades the opposite side of the map instead of defending the first tower.",
-      "turningAhead": "{{action}} links with {{tempo}} behind the first catapult wave, takes the outer tower and moves directly into the enemy triangle. In the fight that follows, {{matchupWinner}} gets onto {{matchupLoser}} before the counter-initiation arrives; the winner keeps the triangle, both side lanes and the next objective spawn.",
-      "turningComeback": "The opponent groups to convert the lane lead into another outer tower. {{action}} wraps behind that push under smoke, {{tempo}} closes the retreat, and {{matchupWinner}} catches {{matchupLoser}} before the fight is set. The turnaround hands over the tower, the triangle and the next objective spawn.",
-      "finishText": "{{farmer}} absorbs the side lanes and triangle until the core items are complete. {{winner}} clears Roshan under its own vision, puts the Aegis on {{farmer}} and waits for the lanes to meet the enemy high ground. {{action}} starts the siege fight, {{losingCore}} is forced into an early buyback, and the second entry ends the defence."
+      "laneFull": {
+        "safe": "safe lane",
+        "mid": "mid",
+        "off": "offlane"
+      },
+      "posture": {
+        "behind": "They're playing from behind. ",
+        "upset": "They're the pre-fight underdog. "
+      },
+      "turnerLine": "{{turner}} is the one who turns a lost fight — the save, not the first jump in.",
+      "answerLine": "{{theirDriver}} is who has to answer.",
+      "openingLaneHook": "It actually breaks in the {{openingLane}}: {{openingPairHero}} into {{openingPairVs}} ({{openingPairWinRate}}%) is a real hole, not just a lane score.",
+      "carryLateMatchup": "Late, the argument is {{myCarry}} vs {{theirCarry}} — {{lateMatchupWinner}} owns that matchup ({{carryWinRate}}%).",
+      "carryLate": "Late, it's {{myCarry}} against {{theirCarry}}.",
+      "carryScale": "The longer this lives, the more dangerous {{scaleLeader}} gets.",
+      "openingAhead": "{{winner}} takes the lanes {{winnerLanes}}–{{loserLanes}}. {{driver}} is first into every fight — that's whose tempo the opening is on.",
+      "openingComeback": "The lanes went {{loserLanes}}–{{winnerLanes}} against the side that still wins. {{driver}} is the one who has to drag the map back.",
+      "openingEven": "Nobody takes the lanes clean. From here it's fights, and {{driver}} is the one who starts them.",
+      "openingUpset": "The favorite closed the lanes {{winnerLanes}}–{{loserLanes}}. If this flips, it starts with who walks into the fights first: {{driver}}.",
+      "turningCatchCombo": "{{posture}}{{matchupWinner}} gets onto {{matchupLoser}} ({{matchupWinRate}}%). {{comboA}} + {{comboB}} ({{comboWinRate}}%) is the pairing that actually wins games together — that's the turn.",
+      "turningCatch": "{{posture}}{{matchupWinner}} gets onto {{matchupLoser}} ({{matchupWinRate}}%). That's the matchup the other side doesn't solve while it's on the map.",
+      "turningCombo": "{{posture}}{{comboA}} + {{comboB}} ({{comboWinRate}}%) is not a vibe. Together they win games, and the turn is tied to that pair.",
+      "turningAxis": "{{posture}}There's no pretty catch on the sheet. The winning side's real edge is {{topAxis}} — the thing the other draft doesn't answer.",
+      "turningUpsetHighSkill": "{{swingHero}} is the kind of hero who steals games the sheet can't price. This one went the wrong way for the favorite.",
+      "conversionRoshanEarly": "This is a tempo draft. The game they want ends in the {{roshanBand}} window — after that, they're playing against the other roster's late game.",
+      "conversionRoshanMid": "Neither side has a sharp clock. The fight lives in the {{roshanBand}} window, where Roshan is the prize if someone can actually take the map.",
+      "conversionRoshanLate": "This draft is playing for the {{roshanBand}} window. If the game gets there, the late game is the actual win condition.",
+      "finishHeld": "The pre-fight read held. This was their game if they didn't give the clock away.",
+      "finishComeback": "The lanes lied about the ending. They didn't win the lane phase — they won the game anyway.",
+      "finishUpset": "The underdog closed it. The pre-fight favorite was supposed to be the story. They weren't.",
+      "axes": {
+        "teamfight": "damage output",
+        "tempo": "tempo",
+        "scaling": "late-game scaling",
+        "mobility": "mobility",
+        "objectives": "objective pressure",
+        "control": "control",
+        "durability": "durability",
+        "burst": "burst damage",
+        "map_control": "map control",
+        "saving": "ally saving",
+        "initiating": "initiation",
+        "skirmish_rate": "skirmish rate",
+        "camp_stacking": "camp stacking",
+        "resource_efficiency": "resource efficiency"
+      }
     },
     "fightAgain": "Fight Again",
     "battlesThisVisit": "Battles this visit: {{count}}",

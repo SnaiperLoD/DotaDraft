@@ -915,7 +915,7 @@
       "burst": 7.3,
       "map_control": 4.6,
       "saving": 0,
-      "initiating": 4.3,
+      "initiating": 5.7,
       "skirmish_rate": 2.4,
       "camp_stacking": 2.7,
       "resource_efficiency": 8.8
@@ -938,7 +938,7 @@
         "mobility": 6.3,
         "map_control": 3.4,
         "saving": 1.1,
-        "initiating": 4.3,
+        "initiating": 5.7,
         "skirmish_rate": 1.2,
         "camp_stacking": 3.4,
         "resource_efficiency": 8.4

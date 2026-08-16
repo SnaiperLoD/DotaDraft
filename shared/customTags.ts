@@ -406,10 +406,10 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
   {
     name: 'Disable Battery',
     rarity: 'rare',
-    visible: true,
-    revealable: false,
+    visible: false,
+    revealable: false, // always-hidden — calibration only
     description:
-      'Backline disable/nuke that wins fights — axes tax these heroes as "dies a lot / farms little," but the real win condition is the battery of control from the fog. +25% personal power, active even solo.',
+      'Backline disable/nuke that wins fights — axes tax these heroes as "dies a lot / farms little," but the real win condition is the battery of control from the fog. +25% personal power, always active. Never shown to the player.',
     heroNames: [
       'Disruptor',
       'Shadow Shaman',
@@ -424,10 +424,10 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
   {
     name: 'Haunt Absolute',
     rarity: 'rare',
-    visible: true,
-    revealable: false,
+    visible: false,
+    revealable: false, // always-hidden — calibration only
     description:
-      "Haunt is global presence that axes under-count as personal strength (and Global's map-control buff is inert while that axis weighs 0). +12% personal power, active even solo.",
+      "Haunt is global presence that axes under-count as personal strength (and Global's map-control buff is inert while that axis weighs 0). +12% personal power, always active. Never shown to the player.",
     heroNames: ['Spectre'],
   },
   {
@@ -458,10 +458,10 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
   {
     name: 'Raid Boss',
     rarity: 'rare',
-    visible: true,
-    revealable: false,
+    visible: false,
+    revealable: false, // always-hidden — calibration only
     description:
-      'Late-game / space-dependent cores the mid-clash model under-rates. +18% personal power, active even solo.',
+      'Late-game / space-dependent cores the mid-clash model under-rates. +18% personal power, always active. Never shown to the player.',
     heroNames: [
       'Phantom Lancer',
       'Medusa',
@@ -503,10 +503,10 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
   {
     name: 'Siege Voltage',
     rarity: 'rare',
-    visible: true,
-    revealable: false,
+    visible: false,
+    revealable: false, // always-hidden — calibration only
     description:
-      'Mid push/nuke cores whose siege and burst win conditions axes under-count. +12% personal power, active even solo.',
+      'Mid push/nuke cores whose siege and burst win conditions axes under-count. +12% personal power, always active. Never shown to the player.',
     heroNames: ['Death Prophet', 'Lina', 'Outworld Destroyer'],
   },
 ];

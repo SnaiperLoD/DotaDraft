@@ -35,6 +35,7 @@
     "sweep-battle-diff-thresholds": "ts-node scripts/sweep-battle-diff-thresholds.ts",
     "simulate-self-play": "ts-node scripts/simulate-self-play.ts",
     "audit-pool-coverage": "ts-node scripts/audit-pool-coverage.ts",
+    "audit-battle-story": "ts-node scripts/audit-battle-story.ts",
     "build-debug-matrix": "ts-node scripts/build-debug-matrix.ts",
     "report-winrate-divergence": "ts-node scripts/report-winrate-divergence.ts",
     "regress-axis-weights": "ts-node scripts/regress-axis-weights.ts",

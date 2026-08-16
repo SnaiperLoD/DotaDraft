@@ -124,6 +124,8 @@ export default function RoleAssignment({ heroes, onSubmit, submitting }: Props) 
                       className={`role-cell${selected === role ? ' is-selected' : ''}${
                         recommended.has(role) ? ' is-recommended' : ''
                       }`}
+                      data-testid="role-cell"
+                      data-role={role}
                       aria-pressed={selected === role}
                       title={
                         stolenFrom
@@ -155,7 +157,12 @@ export default function RoleAssignment({ heroes, onSubmit, submitting }: Props) 
         })}
       </div>
 
-      <button className="btn btn-primary" onClick={handleSubmit} disabled={!canSubmit || submitting}>
+      <button
+        className="btn btn-primary"
+        data-testid="confirm-roles"
+        onClick={handleSubmit}
+        disabled={!canSubmit || submitting}
+      >
         {submitting && <span className="btn-spinner" aria-hidden="true" />}
         {t('roleAssignment.confirm')}
       </button>

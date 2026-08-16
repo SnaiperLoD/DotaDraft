@@ -63,6 +63,12 @@ export function classifyDraftArchetype(
     return { id: 'push' };
   }
 
+  // Tempo — wants the game over early; not a siege (that's Push above) and
+  // not a late scaler. Same 70 / 55 spike-vs-soft gates as scaling, mirrored.
+  if (tempo != null && tempo >= 70 && (scaling == null || scaling < 55)) {
+    return { id: 'tempo' };
+  }
+
   // Deathball — group fight, not mobile.
   if (
     teamfight != null &&

@@ -50,8 +50,9 @@ export const EVALUATION_MID_AXES: (keyof HeroEvaluationValues)[] = [
 ];
 
 // Historical Eval-only cards — not derived from Battle mid.
+// synergy 0.30 → 0.25 (2026-08-16, user: cut Synergy's Total Score share by 5pp).
 const EVAL_ONLY_WEIGHTS: Record<string, number> = {
-  synergy: 0.3,
+  synergy: 0.25,
   proSimilarity: 0.05,
 };
 

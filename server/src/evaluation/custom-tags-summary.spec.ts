@@ -32,6 +32,21 @@ describe('activeCustomTagsForTeam', () => {
     expect(active).toEqual([]);
   });
 
+  it('hides divergence-fix calibration tags even for a solo carrier', () => {
+    const active = activeCustomTagsForTeam([
+      'Phantom Assassin',
+      'Disruptor',
+      'Spectre',
+      'Lina',
+      'Crystal Maiden',
+    ]);
+    const names = active.map((t) => t.name);
+    expect(names).not.toContain('Raid Boss');
+    expect(names).not.toContain('Disable Battery');
+    expect(names).not.toContain('Haunt Absolute');
+    expect(names).not.toContain('Siege Voltage');
+  });
+
   // Blueprint/10-tech-debt-backlog.md, "Active Combos: динамический текст
   // магнитуды для count-based тегов" — by direct user request, found while
   // investigating the Mass Buffer bug: the static description explained the

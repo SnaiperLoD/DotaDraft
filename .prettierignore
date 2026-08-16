@@ -5,3 +5,5 @@ server/data
 shared/dist
 database
 Blueprint
+playwright-report
+test-results

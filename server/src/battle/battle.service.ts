@@ -5,45 +5,10 @@ import { HeroMetaService } from '../hero-meta/hero-meta.service';
 import { OpponentPoolService } from '../opponent-pool/opponent-pool.service';
 import { resolveBattle, type BattlePick } from './battle-resolution';
 import { alignOpponentToRoles } from './opponent-alignment';
+import { buildBattleStory } from './battle-story';
+import { buildLaneResults } from './battle-lanes';
 import { ROLES } from 'shared';
-import type { BattleLaneResult, BattleResultResponse, DraftRole, Hero, ResolvedOutcome } from 'shared';
-
-const LANE_ROLES: {
-  lane: BattleLaneResult['lane'];
-  mine: DraftRole[];
-  opponent: DraftRole[];
-}[] = [
-  { lane: 'safe', mine: ['Carry', 'Hard Support'], opponent: ['Offlane', 'Soft Support'] },
-  { lane: 'mid', mine: ['Mid'], opponent: ['Mid'] },
-  { lane: 'off', mine: ['Offlane', 'Soft Support'], opponent: ['Carry', 'Hard Support'] },
-];
-
-function buildLaneResults(
-  mineByRole: Map<string, Hero>,
-  opponentByRole: Map<string, Hero>,
-  lookup: HeroMetaService,
-): BattleLaneResult[] {
-  return LANE_ROLES.map((spec) => {
-    const mine = spec.mine.map((role) => mineByRole.get(role)).filter((hero): hero is Hero => hero != null);
-    const opponent = spec.opponent
-      .map((role) => opponentByRole.get(role))
-      .filter((hero): hero is Hero => hero != null);
-    const edges: number[] = [];
-    for (const hero of mine) {
-      for (const enemy of opponent) {
-        const winRate = lookup.getMatchupWinRate(hero.id, enemy.id);
-        if (winRate !== null) edges.push(winRate - 0.5);
-      }
-    }
-    const averageEdge = edges.length > 0 ? edges.reduce((sum, edge) => sum + edge, 0) / edges.length : 0;
-    return {
-      lane: spec.lane,
-      mine: mine.map((hero) => hero.name),
-      opponent: opponent.map((hero) => hero.name),
-      winner: averageEdge > 0 ? 'mine' : averageEdge < 0 ? 'opponent' : 'even',
-    };
-  });
-}
+import type { BattleResultResponse, ResolvedOutcome } from 'shared';
 
 @Injectable()
 export class BattleService {
@@ -86,11 +51,6 @@ export class BattleService {
       assignedRole: roleByHeroId.get(hero.id) ?? null,
     }));
 
-    const result = resolveBattle(teamA, teamB, this.heroMetaService);
-
-    // Aligned purely for display (so the Battle screen can show opponent
-    // heroes facing the user's role slots) — doesn't feed back into
-    // resolveBattle, which treats both teams as unordered sets.
     const teamBAligned = alignOpponentToRoles(opponentHeroes);
     const mineByRole = new Map(
       teamA
@@ -99,6 +59,29 @@ export class BattleService {
     );
     const opponentByRole = new Map(teamBAligned.map((hero, index) => [ROLES[index], hero]));
     const lanes = buildLaneResults(mineByRole, opponentByRole, this.heroMetaService);
+    const opponentPicks: BattlePick[] = teamBAligned.map((hero, index) => ({
+      hero,
+      assignedRole: ROLES[index],
+    }));
+
+    // Fight math still uses pool-stored teamB roles. Lanes and the aligned
+    // opponent roster are display-side only — passed so Explanation talks
+    // about the same lane cards the client renders.
+    const result = resolveBattle(teamA, teamB, this.heroMetaService, Math.random, {
+      lanes,
+      narrativeOpponent: opponentPicks,
+    });
+
+    const story = buildBattleStory({
+      resolvedOutcome: result.resolvedOutcome,
+      advantageDirection: result.advantageDirection,
+      lanes,
+      mine: teamA,
+      opponent: opponentPicks,
+      lookup: this.heroMetaService,
+      highSkillSwingHeroName: result.highSkillSwingHeroName,
+      topAxis: result.topAxis,
+    });
 
     // Persisted for History (Blueprint/10-tech-debt-backlog.md, "Сохранять
     // в истории результаты боёв") — best-effort, same reasoning as
@@ -139,6 +122,7 @@ export class BattleService {
       shutdownHeroIds: result.shutdownHeroIds,
       shutdownNotes: result.shutdownNotes,
       lanes,
+      story,
       opponent: {
         source: opponent.source,
         heroes: teamBAligned.map((h, index) => ({

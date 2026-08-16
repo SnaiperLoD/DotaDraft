@@ -373,6 +373,100 @@
   --side-tint: color-mix(in srgb, var(--danger) 55%, var(--bronze-dim));
 }
 
+/* Three lane matchups under the portraits — compact cards, not a prose dump.
+   Winner + chance live here; "why this lane" stays in Explanation. */
+.battle-lanes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp-2);
+  margin: var(--sp-3) 0 0;
+}
+
+.battle-lane-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--r-sm);
+  background: var(--wash);
+  border: 1px solid var(--line);
+  min-width: 0;
+}
+
+.battle-lane-card[data-winner='mine'] {
+  border-left: 3px solid var(--win);
+}
+
+.battle-lane-card[data-winner='opponent'] {
+  border-left: 3px solid var(--danger);
+}
+
+.battle-lane-label {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.battle-lane-heroes {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.battle-lane-side {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
+}
+
+.battle-lane-side .battle-hero-chip {
+  max-width: 100%;
+  font-size: 11px;
+}
+
+.battle-lane-side .battle-hero-chip span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 5.5rem;
+}
+
+.battle-lane-vs {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  flex-shrink: 0;
+}
+
+.battle-lane-result {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.battle-lane-result .battle-matchup-wr--good,
+.battle-lane-result .battle-matchup-wr--bad {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 720px) {
+  .battle-lanes {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Shutdown (common/shutdown.ts) — hero underperforms vs their own average
    win rate against all 5 heroes on the opposing draft. Cracked-glass overlay
    + desaturation on the portrait only, no change to the row layout or
@@ -528,28 +622,19 @@
 
 .battle-list-block--good {
   border-left: 3px solid var(--win);
-  background: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--win) 12%, transparent),
-    var(--wash) 40%
-  );
+  background: linear-gradient(90deg, color-mix(in srgb, var(--win) 12%, transparent), var(--wash) 40%);
 }
 
 .battle-list-block--bad {
   border-left: 3px solid var(--danger);
-  background: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--danger) 12%, transparent),
-    var(--wash) 40%
-  );
+  background: linear-gradient(90deg, color-mix(in srgb, var(--danger) 12%, transparent), var(--wash) 40%);
 }
 
 .battle-list-block--deciding {
   border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent);
   border-left: 3px solid var(--gold-bright);
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--gold) 10%, transparent), transparent 55%),
-    var(--wash);
+    linear-gradient(180deg, color-mix(in srgb, var(--gold) 10%, transparent), transparent 55%), var(--wash);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 15%, transparent);
 }
 
@@ -594,6 +679,26 @@
   padding: var(--sp-4) var(--sp-5);
 }
 
+.battle-explanation-blurb {
+  margin: 0 0 var(--sp-3);
+  font-size: 12px;
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+.battle-explanation-prose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.battle-explanation-prose p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink);
+}
+
 .battle-story {
   margin-top: var(--sp-4);
   padding-top: var(--sp-4);
@@ -620,7 +725,7 @@
 
 .battle-story-timeline {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--sp-4);
 }
 
@@ -653,8 +758,8 @@
 
 .battle-story-beat p {
   margin: var(--sp-1) 0 var(--sp-2);
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 15px;
+  line-height: 1.65;
   color: var(--ink);
 }
 
@@ -665,6 +770,12 @@
   color: var(--ink-muted);
 }
 
+@media (max-width: 1100px) {
+  .battle-story-timeline {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 760px) {
   .battle-story-head {
     align-items: flex-start;
@@ -673,6 +784,19 @@
 
   .battle-story-timeline {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .battle-matchups {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .battle-matchup-col li {
+    flex-wrap: wrap;
+  }
+
+  .portrait-card img {
+    width: 100%;
+    height: auto;
   }
 }
 
