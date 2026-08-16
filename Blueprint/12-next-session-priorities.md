@@ -1,12 +1,93 @@
 # Next Session Priorities
 
-Written at the end of the 2026-08-06 session (long one, picks up mid-session from an earlier compaction). Major work this session: `resource_efficiency` axis; 4 new custom tags (Unseen/Army of Clones/Mass Buffer/Prone To Burst) + Statstealer solo bonus; a large batch of UI/product fixes from live use (custom tags in Evaluation, win/lose coloring, multi-card top-contributor, font/bold sizing); a real bug found and fixed in Mass Buffer's formula; Storm Spirit's `initiating` hand-tagged after a calibration-gap investigation; a **hybrid Carry/Mid/Offlane/Support position classification** (GPM-rank for Support, real lane data for the rest — GPM-rank was confirmed to systematically confuse Mid/Carry for ~1/3 of the roster); a new **support-miscast penalty** (-10% for a hero with <5% real Support history forced into a Support role); a **percentile-transform on Evaluation's totalScore** (was clustering tightly around 4.9, now properly spans 0-10); the Tapalka 3D model's pose fixed (was reading as vulgar, now faces a safe 130° angle with a narrow wobble instead of a full turntable); RoleAssignment now lets you "steal" an occupied role instead of blocking the pick; the opponent pool now excludes any drafted-hero overlap; Synergy now shows the worst real-data pair alongside the best; and Active Combos text now substitutes the real computed magnitude for count-dependent tags instead of restating the formula. Full detail lives in `10-tech-debt-backlog.md` — this file is a triage/reading guide, not a new source of truth.
+Updated at the end of the 2026-08-16 session. This file is a handoff and triage
+guide; `10-tech-debt-backlog.md` remains the detailed source of truth.
 
-**Status check:** everything through this file's own commit is pushed to `origin/master` — check `git log` for the actual current hash rather than trusting any hash recorded here. Still no production hosting, still not preparing for a real release.
+Major work now landed: calibration/research tooling and evidence; calibration
+governance; current TI 2026 data and freshness-weighted opponents; named draft
+archetypes; Battle run/streak/history features; structured lane context and a
+flavor-only narrative simulation; correct hidden/revealable-tag semantics; and
+a broad responsive UI pass (full-width draft, horizontal ledger, Evaluation /
+Battle hierarchy, cool light palette, TI Waiting Room and removal of ads).
+
+**Status check:** the implementation session is pushed to `origin/master`.
+This handoff is the follow-up documentation commit. Still no production hosting
+and no release process.
 
 ---
 
-## Open backlog items, in rough priority order
+## Next session — priorities in order
+
+### 1. Move Battle narrative construction out of React
+
+`BattlePanel.tsx` currently chooses farmers/playmakers and assembles the three
+story phases. The server supplies structured lane results, but the domain
+narrative still belongs server-side. Introduce explicit story-beat data
+(`opening`, `turn`, `conversion`, `finish`, each with evidence), test win/loss,
+won/lost-lanes and upset cases, and leave React as a renderer.
+
+Do not add more invented specificity until the server can support it. The
+current text is labelled flavor, but lane outcomes must stay tied to structured
+matchup calculations rather than arbitrary best/worst rows.
+
+### 2. Stop using Git as the calibration artifact store
+
+The implementation commit included a large matrix of seed outputs and research
+JSON. Keep production snapshots and compact summaries in Git; move raw
+multi-seed outputs to an artifact directory/store (or Git LFS), add a manifest
+with command/config/seed/source hash, and document which files are runtime
+inputs versus reproducibility evidence.
+
+### 3. Add browser-level regression coverage
+
+There are still no Playwright/E2E tests. Cover the critical path:
+
+- five picks -> role assignment -> Evaluation -> Battle;
+- role tooltip overflow;
+- streak updates only after the result reveal;
+- hidden versus revealed custom tags;
+- desktop/mobile and dark/light screenshots for Landing, Draft, Evaluation and
+  Battle.
+
+### 4. Product validation before more surface area
+
+Before adding more mechanics, measure or at least instrument draft completion,
+Evaluation generation, Battle entry, fights per completed draft, copy/commit
+usage and Waiting Room/Tapalka interaction. The product is feature-rich enough
+to learn from behavior; avoid another broad feature/UI pass driven only by
+taste.
+
+### 5. Calibration work: pause by default
+
+Do not start another coefficient/tag/weight pass merely because an outlier
+looks ugly. Pick one hypothesis, define a holdout and acceptance metric, get
+explicit user approval, run reproducible seeds, and compare with the production
+baseline. Structural unresolved items remain in `10-tech-debt-backlog.md`; they
+are not automatic next-session work.
+
+### 6. Performance and accessibility cleanup
+
+- investigate whether the lazy Tapalka 3D chunk (~564 kB) needs further
+  isolation or a static/mobile fallback;
+- run keyboard/focus and reduced-motion checks;
+- verify contrast in the cool light theme;
+- complete mobile review of long Evaluation and Battle results.
+
+## Completed since the previous priority list
+
+- **Named draft archetypes** — shipped in Evaluation.
+- **Win Streak** — shipped as session-run W/L, current win/loss streak and best
+  win streak.
+- **Opponent freshness / pro context** — shipped with weighted selection and
+  current TI data. The old generic “100 -> 1000” pool target is no longer an
+  immediate task.
+- **UI quick wins** — draft copying, history metadata, full-width selection,
+  light-theme cleanup and advertising removal are shipped.
+
+## Superseded priority snapshot (historical)
+
+The section below is retained as research history. It is not the current work
+order; use the priorities above and `10-tech-debt-backlog.md`.
 
 ### 1. Self-play tag divergence — custom tags moved some heroes the WRONG way
 
@@ -52,7 +133,10 @@ User's request (2026-08-06): heroes who genuinely play both a core and a support
 
 ## Where to start
 
-Item 1 (tag divergence) is the most consequential but needs the user to pick a strategy (isolate-and-rerun vs. accept-the-noise) before any code — ask first. Items 3-4 (named archetypes, Win Streak) are cheap UI/product asks that just need one scoping decision each — good if the user wants quick wins. Item 2 (pro-match pool) needs one script run before a real decision. Items 5-6 are genuinely open-ended research — don't build infrastructure speculatively for either, cheap validation first.
+Start with current priority 1 for product correctness, priority 2 for repository
+health, or priority 3 for release confidence. Do not begin with another
+calibration sweep or broad visual redesign without a narrower question and
+explicit acceptance criteria.
 
 ---
 
