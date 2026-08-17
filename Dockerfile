@@ -5,6 +5,11 @@
 # in local dev; the reverse proxy must do the same in prod.
 
 FROM node:20-bookworm-slim AS deps
+# Prisma on bookworm-slim cannot detect libssl and silently generates
+# debian-openssl-1.1.x engines; runtime then dies looking for 3.0.x.
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends openssl ca-certificates \
+  && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 COPY package.json package-lock.json ./
 COPY client/package.json client/
@@ -37,7 +42,6 @@ COPY --from=build /app/shared ./shared
 COPY --from=build /app/server/dist ./server/dist
 COPY --from=build /app/server/prisma ./server/prisma
 COPY --from=build /app/server/prisma-pool ./server/prisma-pool
-COPY --from=build /app/server/generated ./server/generated
 COPY --from=build /app/server/package.json ./server/package.json
 COPY --from=build /app/server/scripts/seed-opponent-pool.ts ./server/scripts/seed-opponent-pool.ts
 COPY --from=build /app/server/tsconfig.json ./server/tsconfig.json
@@ -54,6 +58,13 @@ RUN rm -rf node_modules/shared \
   && chmod +x /entrypoint.sh \
   && mkdir -p /data \
   && sed -i 's/\r$//' /entrypoint.sh
+
+# Do not COPY host `server/generated` — it is gitignored and often a Windows
+# or OpenSSL 1.1 engine. Generate inside bookworm (OpenSSL 3) instead.
+WORKDIR /app/server
+RUN npx prisma generate \
+  && npx prisma generate --schema=prisma-pool/schema.prisma
+WORKDIR /app
 
 EXPOSE 3001
 HEALTHCHECK --interval=30s --timeout=5s --start-period=120s --retries=5 \

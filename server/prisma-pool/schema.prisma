@@ -3,8 +3,9 @@
 // used by prisma/schema.prisma (see Blueprint/01-core-rules.md Data Rule
 // exception, Blueprint/06-battle-engine.md Implementation Decisions).
 generator client {
-  provider = "prisma-client-js"
-  output   = "../generated/pool-client"
+  provider      = "prisma-client-js"
+  output        = "../generated/pool-client"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {
