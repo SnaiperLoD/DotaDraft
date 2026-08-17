@@ -115,7 +115,8 @@ Prefer telemetry dump + hosting analytics over more survey guesswork.
 ## Engineering hygiene
 
 ### Broader unit coverage (controllers/services) — `partial`
-Health + pool smoke + Fundamentals helpers landed; controller gaps remain.
+Health + pool smoke + Fundamentals helpers + battle-cast + expanded
+`battle-explanation` branch coverage landed; controller gaps remain.
 ### Server narrative i18n — `partial`
 Client static done; server prose stays English.
 ### Tapalka skeletal animation — `partial`
@@ -133,11 +134,9 @@ Docker Compose + Dockerfiles + `.env.example` + `Blueprint/13-deploy.md` +
 PR trigger, full monorepo build, Playwright cache, Docker build. Lint/format
 remain non-blocking until the scripts pile is scoped.
 ### Mutation testing — `partial`
-Expanded mutate set + full run (2026-08-17): **69.92%** total / **73.60%**
-covered (`server/reports/mutation/`). Strong: health 100, role-fit 96,
-shutdown 96, custom-tags 84, battle-cast 87. Weak: battle-explanation 39,
-hero.service 39 (tiForm now unit-tested — re-run to lift). Optional CI job
-via `npm run test:mutation --workspace server` (≈12 min).
+Full suite (2026-08-17): **69.92%** total. Re-run on
+`battle-explanation.ts` after deeper Jest: **~65%** on that file alone
+(was **38.55%**). Next: keep killing survivors / optional CI mutation job.
 
 ---
 
