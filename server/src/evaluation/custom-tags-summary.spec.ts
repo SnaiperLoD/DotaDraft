@@ -97,5 +97,11 @@ describe('activeCustomTagsForTeam', () => {
       const statstealer = active.find((t) => t.name === 'Statstealer')!;
       expect(statstealer.description).toContain('3 on this team');
     });
+
+    it('keeps solo Fundamentals generic until Eval fills named axes', () => {
+      const active = activeCustomTagsForTeam(['Io', 'Axe', 'Sniper', 'Rubick', 'Pudge']);
+      const fundamentals = active.find((t) => t.name === 'The Fundamentals')!;
+      expect(fundamentals.description).toContain('2+ Fundamentals');
+    });
   });
 });

@@ -7,6 +7,7 @@ import { detectBadges, type ActiveBadge } from '../data/badges';
 import BadgeRow from './BadgeRow';
 import AxisRadar from './AxisRadar';
 import TopContributorHighlight from './TopContributorHighlight';
+import { track } from '../telemetry';
 import './EvaluationPanel.css';
 
 interface Props {
@@ -221,6 +222,11 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
     try {
       const res = await api.getEvaluation(draftId);
       setResult(res);
+      track(
+        'evaluate_success',
+        { totalScore: res.totalScore, archetype: res.archetype?.id ?? null },
+        draftId,
+      );
     } catch (err) {
       setError((err as Error).message);
     } finally {

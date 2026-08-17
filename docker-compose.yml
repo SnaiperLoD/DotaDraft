@@ -1,0 +1,32 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      PORT: "3001"
+      DATABASE_URL: file:/data/prod.db
+      # Comma-separated browser origins if the SPA is not same-origin.
+      # Leave empty when nginx fronts both (recommended).
+      CORS_ORIGIN: ""
+      # Optional Postgres opponent pool; empty disables pool features.
+      POOL_DATABASE_URL: ""
+    volumes:
+      - dota-draft-data:/data
+    expose:
+      - "3001"
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  dota-draft-data:

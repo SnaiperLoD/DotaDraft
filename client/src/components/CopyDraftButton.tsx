@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ROLES } from 'shared';
+import { track } from '../telemetry';
 
 export interface CopyDraftHero {
   heroName: string;
@@ -47,6 +48,7 @@ export default function CopyDraftButton({ heroes, className, compact }: Props) {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
+      track('draft_copy', { source: compact ? 'history' : 'draft' });
       window.setTimeout(() => setCopied(false), 1600);
     } catch {
       // Fallback for older / restricted contexts.
@@ -60,6 +62,7 @@ export default function CopyDraftButton({ heroes, className, compact }: Props) {
       try {
         document.execCommand('copy');
         setCopied(true);
+        track('draft_copy', { source: compact ? 'history' : 'draft' });
         window.setTimeout(() => setCopied(false), 1600);
       } finally {
         document.body.removeChild(ta);

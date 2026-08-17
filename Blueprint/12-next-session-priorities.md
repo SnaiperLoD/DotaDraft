@@ -1,52 +1,59 @@
 # Next Session Priorities
 
-Updated at the end of the 2026-08-16 UI/functionality session. This file is a
+Updated after the 2026-08-17 autonomy pass (backlog slim → Fundamentals axes →
+hosting prep → CI → deeper tests → Stryker mutate expansion). This file is a
 handoff and triage guide; `10-tech-debt-backlog.md` remains the detailed source
-of truth.
+of truth. Deploy notes: `13-deploy.md`.
 
 Major work now landed: calibration/research tooling and evidence; calibration
 governance; current TI 2026 data and freshness-weighted opponents; named draft
-archetypes; Battle run/streak/history features; structured lane context with a
-**server-owned** flavor narrative (`BattleResultResponse.story`); correct
+archetypes (incl. Tempo); Battle run/streak/history features; structured lane
+context with a **server-owned** grounded story + richer Explanation; correct
 hidden/revealable-tag semantics; Playwright on the critical path; Tapalka
-static fallback; and a broad responsive UI pass (full-width draft, horizontal
-ledger, Evaluation / Battle hierarchy, cool light palette, TI Waiting Room and
-removal of ads).
+static fallback; a broad responsive UI pass; **Git no longer tracks raw
+multi-seed/research dumps** (`artifacts/README.md`); a **local funnel
+telemetry buffer** (`client/src/telemetry/`); **Fundamentals Active Combos
+names the boosted axes**; **Docker Compose hosting prep**; **CI on PRs with
+full build + Docker image build** (lint/format still soft).
 
-**Status check:** this session's code is local (not committed unless asked).
-Still no production hosting and no release process. `npm run lint` and
-`npm run format:check` were already red on a large pile of scripts/specs
-**before** this session — do not treat that as an E2E regression, and do not
-mass-format 100+ files as a drive-by.
+**Status check:** hosting files are in-repo — pick a host and finish DNS/TLS.
+`npm run lint` / `format:check` may still be red on an old scripts pile — do
+not mass-format as a drive-by.
 
 ---
 
 ## Next session — priorities in order
 
-### 1. Stop using Git as the calibration artifact store
+### 1. Read the funnel (now that it exists)
 
-The implementation commit included a large matrix of seed outputs and research
-JSON. Keep production snapshots and compact summaries in Git; move raw
-multi-seed outputs to an artifact directory/store (or Git LFS), add a manifest
-with command/config/seed/source hash, and document which files are runtime
-inputs versus reproducibility evidence. This is repo health, not product UI.
+Use `window.__DOTADRAFT_TELEMETRY__.dump()` after real play sessions, and/or
+SQLite History aggregates (completed drafts, % evaluated, fights per draft).
+Decide from signal — not taste — whether Story/Explanation still needs work
+or whether hosting/instrumented multi-user analytics is the next step.
 
 ### 2. Product validation before more surface area
 
-Before adding more mechanics, measure or at least instrument draft completion,
-Evaluation generation, Battle entry, fights per completed draft, copy/commit
-usage and Waiting Room/Tapalka interaction. The product is feature-rich enough
-to learn from behavior; avoid another broad feature/UI pass driven only by
-taste. Lock-hero / pool-of-8 / items / build orders stay parked until there is
-a signal they are needed.
+Lock-hero / pool-of-8 / items / build orders stay parked until there is a
+signal they are needed. Avoid another broad feature/UI pass driven only by
+taste.
 
 ### 3. Calibration work: pause by default
 
 Do not start another coefficient/tag/weight pass merely because an outlier
 looks ugly. Pick one hypothesis, define a holdout and acceptance metric, get
-explicit user approval, run reproducible seeds, and compare with the production
-baseline. Structural unresolved items remain in `10-tech-debt-backlog.md`; they
-are not automatic next-session work.
+explicit user approval, run reproducible seeds into `artifacts/` (not
+`server/data/` commits), and compare with the production baseline.
+
+## Completed this pass (2026-08-17)
+
+- **Artifact hygiene** — ~91 research/self-play/debug dump files
+  `git rm --cached` from `server/data/`; gitignore patterns + `artifacts/`
+  policy (`artifacts/README.md`, `server/scripts/lib/artifact-paths.ts`).
+  Runtime snapshots and compact summaries stay tracked. Files remain on disk
+  locally so old scripts still read them.
+- **Local telemetry** — `client/src/telemetry/` ring buffer; funnel events
+  for session → draft complete → evaluate → battle enter/fight/outcome →
+  copy/commit → Tapalka. Devtools dump on `window.__DOTADRAFT_TELEMETRY__`.
 
 ## Completed since the previous priority list
 

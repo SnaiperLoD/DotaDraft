@@ -15,3 +15,28 @@ server/.stryker-tmp/
 *.log
 .env
 .DS_Store
+
+# Calibration / research dumps — keep production snapshots + compact
+# summaries tracked; raw multi-seed / Explorer / debug matrices stay local.
+# Policy: artifacts/README.md
+/artifacts/**
+!/artifacts/README.md
+server/data/self-play-*.json
+server/data/axis-cand-*.json
+server/data/axis-final-*.json
+server/data/axis-trial-*.json
+server/data/axis-regression-b0-seed*.json
+server/data/axis-regression-b0-selfplay-*.json
+server/data/tag-batch-measure-seed*.json
+server/data/tag-batch-measure-selfplay-*.json
+server/data/research-*-output.json
+server/data/research-role-threshold-coverage.json
+server/data/debug-ds-*.json
+server/data/battle-diff-*-sweep.json
+server/data/*-data.json
+server/data/*-screen.json
+server/data/ability-category-candidates.json
+server/data/anomaly-full-list.json
+server/data/eval-battle-divergence.json
+server/data/role-axis-correlation.json
+server/data/farm-elasticity-*.json

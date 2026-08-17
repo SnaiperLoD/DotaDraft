@@ -11,9 +11,32 @@ import { percentileFor } from './axis-percentiles';
 import type { Analyzer, DraftPick } from './analyzer.interface';
 import type { EvaluationResult, EvaluationSummary, AnalyzerResult } from 'shared';
 import { classifyDraftArchetype } from './draft-archetype';
-import { activeCustomTagsForTeam } from 'shared';
+import { activeCustomTagsForTeam, heroNameSetForTag } from 'shared';
 import { teamHasHiddenCalibrationTags } from '../common/calibration-tags';
 import { buildEvaluationScoreWeights } from '../common/axis-weights-config';
+import { AXES, AXIS_LABEL, axisAverage, type BattlePick } from '../battle/battle-resolution';
+import { formatFundamentalsDescription, fundamentalsTargetAxes } from '../battle/custom-tags';
+
+const FUNDAMENTALS = heroNameSetForTag('The Fundamentals');
+
+function fundamentalsDescription(picks: DraftPick[]): string {
+  const count = picks.filter((p) => FUNDAMENTALS.has(p.hero.name)).length;
+  if (count < 2) {
+    return formatFundamentalsDescription([], count);
+  }
+  const battlePicks: BattlePick[] = picks.map((p) => ({
+    hero: p.hero,
+    assignedRole: p.assignedRole,
+  }));
+  const raw = Object.fromEntries(AXES.map((axis) => [axis, axisAverage(battlePicks, axis)])) as Partial<
+    Record<(typeof AXES)[number], number>
+  >;
+  const axes = fundamentalsTargetAxes(raw, count);
+  return formatFundamentalsDescription(
+    axes.map((axis) => AXIS_LABEL[axis]),
+    count,
+  );
+}
 
 // Categories eligible for the strengths/weaknesses summary. map_control and
 // camp_stacking deliberately absent — see BASE_ANALYZERS below.
@@ -141,12 +164,11 @@ export class EvaluationService {
     // Public tags plus revealable-hidden tags whose composition gate was
     // reached during drafting. Permanently hidden tags never enter this
     // collection; Battle still applies their effects normally.
-    const customTags = activeCustomTagsForTeam(picks.map((p) => p.hero.name))
-      .map((t) => ({
-        name: t.name,
-        rarity: t.rarity,
-        description: t.description,
-      }));
+    const customTags = activeCustomTagsForTeam(picks.map((p) => p.hero.name)).map((t) => ({
+      name: t.name,
+      rarity: t.rarity,
+      description: t.name === 'The Fundamentals' ? fundamentalsDescription(picks) : t.description,
+    }));
     const hiddenCalibrationApplied = teamHasHiddenCalibrationTags(picks.map((p) => p.hero));
 
     const archetype = classifyDraftArchetype(

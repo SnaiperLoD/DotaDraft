@@ -13,6 +13,7 @@ import CommitToPoolButton from '../components/CommitToPoolButton';
 import CopyDraftButton from '../components/CopyDraftButton';
 import BattlePanel from '../components/BattlePanel';
 import TapalkaWidget from '../components/TapalkaWidget';
+import { track } from '../telemetry';
 import './DraftPage.css';
 
 // Shape-matched placeholder for the first load. The page used to show a
@@ -131,6 +132,9 @@ export default function DraftPage() {
     try {
       const updated = await api.assignRoles(draft.id, assignments);
       setDraft(updated);
+      if (updated.status === 'COMPLETED') {
+        track('draft_completed', undefined, updated.id);
+      }
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -291,7 +295,10 @@ export default function DraftPage() {
               <button
                 className="btn btn-primary"
                 data-testid="enter-battle-mode"
-                onClick={() => setBattleView(true)}
+                onClick={() => {
+                  track('battle_enter', undefined, draft.id);
+                  setBattleView(true);
+                }}
               >
                 {t('battle.enterBattleMode')}
               </button>

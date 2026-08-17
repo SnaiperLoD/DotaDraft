@@ -575,6 +575,15 @@ function describeActiveTag(def: CustomTagDefinition, heroNames: string[]): strin
       : '+2% final power, active even solo (rises to +5% each once a 2nd Statstealer joins the team).';
   }
 
+  if (def.name === 'The Fundamentals') {
+    // Axis names are filled in by EvaluationService once raw averages are
+    // known (same picker as Battle). Solo carrier stays generic.
+    if (count < 2) {
+      return "Boosts the team's weakest axis once 2+ Fundamentals heroes are drafted.";
+    }
+    return def.description;
+  }
+
   return def.description;
 }
 

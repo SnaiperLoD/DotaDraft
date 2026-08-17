@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { api } from '../api/client';
 import { getSubmitterToken } from '../utils/submitterToken';
+import { track } from '../telemetry';
 
 interface Props {
   draftId: string;
@@ -18,9 +19,11 @@ export default function CommitToPoolButton({ draftId }: Props) {
     try {
       await api.commitToPool(draftId, getSubmitterToken());
       setStatus('done');
+      track('pool_commit', { ok: true }, draftId);
     } catch (err) {
       setError((err as Error).message);
       setStatus('error');
+      track('pool_commit', { ok: false }, draftId);
     }
   };
 

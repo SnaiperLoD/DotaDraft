@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { heroPortraitUrl } from '../utils/heroIcon';
+import { trackTapalkaClick } from '../telemetry';
 import './TapalkaWidget.css';
 
 // Blueprint/10-tech-debt-backlog.md, "Тапалка" — pure tactile/engagement
@@ -94,6 +95,7 @@ export default function TapalkaWidget({ embedded = false }: Props) {
     setClicks((c) => c + 1);
     setDrinkKey((k) => k + 1);
     setDrinking(true);
+    trackTapalkaClick();
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(() => setDrinking(false), DRINK_ANIMATION_MS);
 

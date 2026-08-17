@@ -1,5 +1,13 @@
 import { makeHero } from '../test-utils/hero-factory';
-import { blessingEffectsFor, curseEffectsOnOpponent, mergeTagEffects, emptyTagEffects } from './custom-tags';
+import {
+  blessingEffectsFor,
+  curseEffectsOnOpponent,
+  mergeTagEffects,
+  emptyTagEffects,
+  fundamentalsTargetAxes,
+  fundamentalsBoostMagnitude,
+  formatFundamentalsDescription,
+} from './custom-tags';
 
 describe('blessingEffectsFor', () => {
   describe('Mana Booster', () => {
@@ -95,6 +103,46 @@ describe('blessingEffectsFor', () => {
         burst: 1.25,
         durability: 1.02,
       });
+    });
+  });
+
+  describe('fundamentalsTargetAxes / formatFundamentalsDescription', () => {
+    const raw = {
+      teamfight: 5,
+      tempo: 2,
+      scaling: 5,
+      mobility: 3,
+      objectives: 5,
+      control: 4,
+      durability: 5,
+      burst: 4.5,
+      map_control: 5,
+      saving: 5,
+      initiating: 5,
+      skirmish_rate: 5,
+      camp_stacking: 5,
+    };
+
+    it('picks the same axis tiers as blessingEffectsFor', () => {
+      expect(fundamentalsTargetAxes(raw, 1)).toEqual([]);
+      expect(fundamentalsTargetAxes(raw, 2)).toEqual(['tempo']);
+      expect(fundamentalsTargetAxes(raw, 3)).toEqual(['tempo', 'mobility']);
+      expect(fundamentalsTargetAxes(raw, 4)).toEqual(['tempo', 'mobility', 'control', 'burst']);
+      expect(fundamentalsBoostMagnitude(2)).toBe(1.2);
+      expect(fundamentalsBoostMagnitude(4)).toBe(1.25);
+    });
+
+    it('names human axis labels for Active Combos copy', () => {
+      expect(formatFundamentalsDescription([], 1)).toContain('2+ Fundamentals');
+      expect(formatFundamentalsDescription(['tempo'], 2)).toBe(
+        "Boosts this draft's weakest axis: tempo.",
+      );
+      expect(formatFundamentalsDescription(['tempo', 'damage output'], 3)).toBe(
+        "Boosts this draft's weakest axes: tempo and damage output.",
+      );
+      expect(formatFundamentalsDescription(['tempo', 'mobility', 'control'], 4)).toBe(
+        "Boosts this draft's weakest axes: tempo, mobility, and control.",
+      );
     });
   });
 });

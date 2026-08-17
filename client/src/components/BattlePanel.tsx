@@ -15,6 +15,7 @@ import {
   runRecord,
   type FightOutcome,
 } from '../utils/runStreak';
+import { track } from '../telemetry';
 import './BattlePanel.css';
 
 function sleep(ms: number): Promise<void> {
@@ -426,9 +427,11 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
   );
 
   const handleFight = async () => {
+    const fightIndex = battleCount;
     setFightSeq((s) => s + 1);
     setLoading(true);
     setError(null);
+    track('battle_fight', { n: fightIndex + 1, auto: fightIndex === 0 }, draftId);
     try {
       const [res] = await Promise.all([
         api.fightBattle(draftId, getSubmitterToken()),
@@ -558,6 +561,15 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
             if (pending) {
               pendingRunOutcomeRef.current = null;
               setRunOutcomes((prev) => [...prev, pending]);
+              track(
+                'battle_outcome',
+                {
+                  outcome: pending,
+                  confidenceTier: result?.confidenceTier ?? null,
+                  opponentSource: result?.opponent.source ?? null,
+                },
+                draftId,
+              );
             }
           }}
         />

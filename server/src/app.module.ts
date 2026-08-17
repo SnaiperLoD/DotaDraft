@@ -7,6 +7,7 @@ import { EvaluationModule } from './evaluation/evaluation.module';
 import { OpponentPoolModule } from './opponent-pool/opponent-pool.module';
 import { BattleModule } from './battle/battle.module';
 import { DevModule } from './dev/dev.module';
+import { HealthModule } from './health/health.module';
 
 // DevModule is testing-only — it serves the hero calibration matrix (raw axis
 // values, hidden tags, real vs modelled winRate). Gated on NODE_ENV so the
@@ -16,6 +17,7 @@ const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 @Module({
   imports: [
+    HealthModule,
     PrismaModule,
     HeroModule,
     DraftModule,
