@@ -41,7 +41,7 @@
       },
       "evaluate": {
         "title": "Get an honest read",
-        "text": "Your lineup is scored on synergy, tempo, control, scaling and more, each axis ranked against ten thousand random teams so a number actually means something."
+        "text": "Your lineup is scored on synergy, tempo, control, scaling and more, each axis ranked against 50,000 unique Ancient + Divine drafts from OpenDota so a number actually means something."
       },
       "battle": {
         "title": "Send it into battle",
@@ -158,8 +158,8 @@
     },
     "radarTitle": "Axis profile",
     "radarAlt": "Radar chart of this draft's percentile on each evaluation axis",
-    "radarNote": "Distance from the centre is the percentile against 10,000 random teams. The dashed ring is average.",
-    "radarReadout": "{{percentile}}th percentile against 10,000 random teams",
+    "radarNote": "Distance from the centre is the percentile against 50,000 unique Ancient + Divine drafts from OpenDota. The dashed ring is average.",
+    "radarReadout": "{{percentile}}th percentile against 50,000 unique Ancient + Divine drafts from OpenDota",
     "strengths": "Strengths",
     "weaknesses": "Weaknesses",
     "notAvailable": "N/A",
@@ -458,7 +458,7 @@
       "legendary": "Legendary"
     },
     "percentileHeading": "Evaluation percentile",
-    "percentileNote": "How this draft's score on an axis ranks against 10,000 random 5-hero teams.",
+    "percentileNote": "How this draft's score on an axis ranks against 50,000 unique Ancient + Divine 5-hero drafts from OpenDota.",
     "percentileHigh": "Top 30%",
     "percentileMid": "Middle 40%",
     "percentileLow": "Bottom 30%"

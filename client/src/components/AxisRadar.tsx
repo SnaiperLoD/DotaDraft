@@ -13,7 +13,7 @@ import './AxisRadar.css';
 // 3.5-5.7 band for most drafts (see this file's callers — that clustering
 // is exactly why the total score got a percentile transform), which would
 // draw every team as the same near-circle. Percentiles are already
-// rank-spread against 10,000 random teams, so they fill the chart.
+// rank-spread against unique Ancient+Divine OpenDota drafts, so they fill the chart.
 interface Props {
   breakdown: AnalyzerResult[];
 }

@@ -4,8 +4,9 @@ export interface AnalyzerResult {
   key: string;
   label: string;
   score: number | null;
-  // 0-100 rank against 10000 random 5-hero teams scored the same way — null
-  // for non-axis analyzers (Synergy, Counter, Pro Similarity).
+  // 0-100 rank against unique Ancient+Divine 5-hero drafts from OpenDota
+  // scored the same way — null for non-axis analyzers (Synergy, Counter,
+  // Pro Similarity).
   percentile: number | null;
   // I18nLine for new payloads; plain English strings for History snapshots.
   explanation: LocalizedLine[];

@@ -310,8 +310,8 @@ export class EvaluationService {
   // nominal 0-10 scale. The raw weighted average below (`rawTotal`) is now
   // only an intermediate value — the number actually returned is
   // `rawTotal`'s PERCENTILE against `axis-percentile-distributions.json`'s
-  // `totalScore` reference population (10,000 random drafts scored the
-  // same way, computed by `compute-axis-percentiles.ts`), the same
+  // `totalScore` reference population (unique Ancient+Divine drafts from
+  // OpenDota scored the same way, computed by `compute-axis-percentiles.ts`), the same
   // population-relative treatment every individual axis's breakdown
   // percentile already got — just applied one more time on top of the
   // combined score instead of stopping at the per-axis level. This

@@ -11,9 +11,9 @@ export type ScoreBracket = 'low' | 'mid' | 'high';
 export type AxisBracket = 'veryLow' | 'low' | 'mid' | 'high' | 'veryHigh';
 
 // Percentile-driven, not a fixed 0-10 cutoff — "average" means "near the
-// middle of how 10000 random 5-hero teams score on this specific axis"
-// (server/data/axis-percentile-distributions.json), not a fixed number on
-// the scale. Some axes (saving) cluster much lower by nature than others
+// middle of how unique Ancient+Divine 5-hero drafts from OpenDota score on
+// this specific axis" (server/data/axis-percentile-distributions.json),
+// not a fixed number on the scale. Some axes (saving) cluster much lower by nature than others
 // (durability), so a flat "7+ is high" threshold would call a genuinely
 // above-average saving draft "mediocre" just because the axis itself
 // rarely reaches 7. 30/70 split leaves a real 40-percentile-point "average"
