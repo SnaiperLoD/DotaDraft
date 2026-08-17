@@ -442,4 +442,63 @@ describe('buildExplanation', () => {
     expect(text).toMatch(/Lanes weren't a wash/);
     expect(text).toMatch(/leans this way because Storm Spirit into Shadow Fiend is a real matchup edge/);
   });
+
+  it('covers solo initiator / solo save and carry scale-vs-matchup tension', () => {
+    const soloInitMine = [
+      pick(1, 'Anti-Mage', 'Carry', { scaling: 9, initiating: 2 }),
+      pick(2, 'Storm Spirit', 'Mid', { initiating: 9, tempo: 8 }),
+      pick(3, 'Tidehunter', 'Offlane', { initiating: 2, control: 8 }),
+      pick(4, 'Earth Spirit', 'Soft Support', { initiating: 2 }),
+      pick(5, 'Dazzle', 'Hard Support', { saving: 9, tempo: 7 }),
+    ];
+    const softOpp = [
+      pick(11, 'Phantom Assassin', 'Carry', { scaling: 7, initiating: 2 }),
+      pick(13, 'Shadow Fiend', 'Mid', { initiating: 2 }),
+      pick(14, 'Axe', 'Offlane', { initiating: 2 }),
+      pick(12, 'Earthshaker', 'Soft Support', { initiating: 2 }),
+      pick(15, 'Lion', 'Hard Support', { saving: 2 }),
+    ];
+    const lookup: MatchupLookup = {
+      getMatchupWinRate: (a, b) => (a === 1 && b === 11 ? 0.7 : null),
+      getSynergyWinRate: () => null,
+      getWinRate: () => 0.5,
+    };
+    const text = buildExplanation({
+      advantageDirection: 'A',
+      confidenceTier: 'Moderate',
+      resolvedOutcome: 'Win',
+      teamA: soloInitMine,
+      teamB: softOpp,
+      lookup,
+      topAxisDelta: { axis: 'initiating', delta: 1 },
+      axisDeltas: [{ axis: 'initiating', delta: 1.2 }],
+      highSkillSwingHero: null,
+    }).join(' ');
+
+    expect(text).toMatch(/Storm Spirit is the one who starts fights on your side/);
+    expect(text).toMatch(/Dazzle is the only one on the board who actually saves/);
+    expect(text).toMatch(/Anti-Mage owns that matchup at 70%, and they scale harder on the sheet too/);
+  });
+
+  it('covers carry matchup owner differing from the scaler', () => {
+    const lookup: MatchupLookup = {
+      getMatchupWinRate: (a, b) => (a === 1 && b === 11 ? 0.35 : null),
+      getSynergyWinRate: () => null,
+      getWinRate: () => 0.5,
+    };
+    const text = buildExplanation({
+      advantageDirection: 'A',
+      confidenceTier: 'Moderate',
+      resolvedOutcome: 'Win',
+      teamA: mine,
+      teamB: opponent,
+      lookup,
+      topAxisDelta: emptyDeltas[3],
+      axisDeltas: emptyDeltas,
+      highSkillSwingHero: null,
+    }).join(' ');
+
+    expect(text).toMatch(/Phantom Assassin owns that matchup at 65%/);
+    expect(text).toMatch(/but Anti-Mage is the one who actually scales harder/);
+  });
 });
