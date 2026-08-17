@@ -5,6 +5,7 @@ import type { AnalyzerResult, TopAbility } from 'shared';
 import type { DraftHeroView } from '../api/types';
 import { api } from '../api/client';
 import { heroPortraitUrl } from '../utils/heroIcon';
+import { axisLabel } from '../i18n/display';
 import './TopContributorHighlight.css';
 
 interface Props {
@@ -58,7 +59,9 @@ function ContributorCard({ item, heroes }: { item: AnalyzerResult; heroes: Draft
 
   return (
     <div className="top-contributor-card">
-      <div className="top-contributor-heading">{t('evaluation.topContributorHeading', { axis: item.label })}</div>
+      <div className="top-contributor-heading">
+        {t('evaluation.topContributorHeading', { axis: axisLabel(t, item.key, item.label) })}
+      </div>
       <div className="top-contributor-body">
         <div className="top-contributor-hero">
           <img src={heroPortraitUrl(hero.id)} alt={hero.name} width={96} height={60} />

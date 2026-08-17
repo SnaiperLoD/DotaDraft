@@ -24,6 +24,12 @@ void i18n
     lng: initialLanguage(),
     fallbackLng: 'en',
     interpolation: { escapeValue: false },
+  })
+  .then(() => {
+    if (typeof document !== 'undefined') document.documentElement.lang = i18n.language;
+  })
+  .catch((err: unknown) => {
+    console.error(err);
   });
 
 // Keeps localStorage and i18next's own state in sync regardless of which
@@ -31,6 +37,9 @@ void i18n
 // i18n.changeLanguage() directly, this listener is what persists it.
 i18n.on('languageChanged', (lng) => {
   localStorage.setItem(STORAGE_KEY, lng);
+  if (typeof document !== 'undefined') document.documentElement.lang = lng;
 });
+
+if (typeof document !== 'undefined') document.documentElement.lang = i18n.language;
 
 export default i18n;

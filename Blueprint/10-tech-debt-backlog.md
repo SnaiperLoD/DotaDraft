@@ -19,7 +19,10 @@ Tempo) · Battle lanes + server story/explanation · Session win streak ·
 History / leaderboards · Tapalka (static + 3D) · Hidden calibration tags in
 Eval · Synergy Total Score weight 0.25 · Opponent freshness / TI context ·
 Fundamentals Active Combos names boosted axes · Hosting Docker prep ·
-CI PR/build/Docker (lint/format still soft).
+CI PR/build/Docker (lint/format still soft) · Client + server narrative i18n
+(`I18nLine` keys, RU/EN catalogs) · TI grand-finals opponent badge ·
+Phantom Lancer / Tinker `late_game_scaling` (split-push is their late plan,
+not an early close).
 
 ---
 
@@ -118,12 +121,19 @@ Prefer telemetry dump + hosting analytics over more survey guesswork.
 Health + pool smoke + Fundamentals helpers + battle-cast + expanded
 `battle-explanation` branch coverage landed; controller gaps remain.
 ### Server narrative i18n — `partial`
-Client static done; server prose stays English.
+Product chrome + Eval/Battle live copy go through client i18n (`eval.*`,
+`battle.explain.*`, `battle.highlight.*`, axes/tags/badges). Remaining:
+legacy History snapshots stored as English strings; `AXIS_NARRATIVE` English
+fixtures (tests only). Debug matrix stays untranslated on purpose.
 ### Tapalka skeletal animation — `partial`
 ### Report-a-bug pre-release — `partial`
 mailto shipped.
 ### History eval backfill after percentile regen — `open`
-### HKB tag revision (`heroes.json`) — `open`
+Also: History fights have no `matchId`, so the TI Finals badge cannot show
+there without a schema add.
+### HKB tag revision (`heroes.json`) — `partial`
+PL and Tinker gained `late_game_scaling` (2026-08-17) so split-push × late
+anti-synergy no longer calls them an early-end plan. Rest of HKB still open.
 ### Ability-tag coverage expansion — `partial`
 ### Pro pool expand 100→1000 — `partial`
 Long-horizon; freshness/TI covers immediate need.

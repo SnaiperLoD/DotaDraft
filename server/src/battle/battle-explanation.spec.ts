@@ -2,6 +2,7 @@ import type { BattleLaneResult, Hero, HeroEvaluationValues } from 'shared';
 import { makeHero, DEFAULT_EVALUATION_VALUES } from '../test-utils/hero-factory';
 import { buildExplanation } from './battle-explanation';
 import type { BattlePick, MatchupLookup } from './battle-resolution';
+import { flattenLocalized } from '../test-utils/localized-text';
 
 function hero(id: number, name: string, axisOverrides: Partial<HeroEvaluationValues> = {}): Hero {
   return makeHero({ id, name, evaluation_values: { ...DEFAULT_EVALUATION_VALUES, ...axisOverrides } });
@@ -92,7 +93,7 @@ describe('buildExplanation', () => {
       },
     ];
 
-    const text = buildExplanation({
+    const text = flattenLocalized(buildExplanation({
       advantageDirection: 'A',
       confidenceTier: 'Moderate',
       resolvedOutcome: 'Win',
@@ -103,25 +104,33 @@ describe('buildExplanation', () => {
       axisDeltas: emptyDeltas,
       highSkillSwingHero: null,
       lanes,
-    }).join(' ');
+    }));
 
-    expect(text).toMatch(/Anti-Mage into Axe \(70%\)/);
-    expect(text).toMatch(/Phantom Assassin into Tidehunter is a 71% hole/);
+    expect(text).toMatch(/battle.explain.lane.mineLean/);
+    expect(text).toMatch(/Anti-Mage/);
+    expect(text).toMatch(/Axe/);
+    expect(text).toMatch(/70/);
+    expect(text).toMatch(/battle.explain.lane.oppHole/);
+    expect(text).toMatch(/Phantom Assassin/);
+    expect(text).toMatch(/Tidehunter/);
+    expect(text).toMatch(/71/);
     expect(text).not.toMatch(/mid was/);
-    expect(text).toMatch(/Storm Spirit is the one who starts fights/);
-    expect(text).toMatch(/Axe is the one who has to answer/);
-    expect(text).toMatch(/Dazzle is the only one on the board who actually saves/);
-    expect(text).toMatch(/Anti-Mage against Phantom Assassin/);
-    expect(text).toMatch(/Anti-Mage owns that matchup at 58%/);
-    expect(text).toMatch(/Storm Spirit \+ Dazzle/);
-    expect(text).toMatch(/That advantage held up/);
+    expect(text).toMatch(/battle.explain.shape.duel/);
+    expect(text).toMatch(/Storm Spirit/);
+    expect(text).toMatch(/battle.explain.shape.saveMine/);
+    expect(text).toMatch(/Dazzle/);
+    expect(text).toMatch(/battle.explain.carry.late/);
+    expect(text).toMatch(/battle.explain.carry.mineOwns/);
+    expect(text).toMatch(/58/);
+    expect(text).toMatch(/battle.explain.combo.win/);
+    expect(text).toMatch(/battle.explain.close.favoredHeld/);
     expect(text.toLowerCase()).not.toMatch(/took roshan|aegis|buyback|catapult/);
   });
 
   it('names a visible tag and stays silent on hidden calibration tags', () => {
     const withCm = [...mine.slice(0, 4), pick(5, 'Crystal Maiden', 'Hard Support', { saving: 8 })];
     const withBm = [...opponent.slice(0, 4), pick(16, 'Beastmaster', 'Hard Support')];
-    const text = buildExplanation({
+    const text = flattenLocalized(buildExplanation({
       advantageDirection: 'A',
       confidenceTier: 'Moderate',
       resolvedOutcome: 'Win',
@@ -131,7 +140,7 @@ describe('buildExplanation', () => {
       topAxisDelta: emptyDeltas[3],
       axisDeltas: emptyDeltas,
       highSkillSwingHero: null,
-    }).join(' ');
+    }));
 
     expect(text).toMatch(/Mana Booster/);
     expect(text).not.toMatch(/Summoning Sickness/);
@@ -144,7 +153,7 @@ describe('buildExplanation', () => {
       getSynergyWinRate: () => 0.44,
       getWinRate: () => 0.5,
     };
-    const text = buildExplanation({
+    const text = flattenLocalized(buildExplanation({
       advantageDirection: 'A',
       confidenceTier: 'Moderate',
       resolvedOutcome: 'Win',
@@ -154,14 +163,14 @@ describe('buildExplanation', () => {
       topAxisDelta: emptyDeltas[3],
       axisDeltas: emptyDeltas,
       highSkillSwingHero: null,
-    }).join(' ');
+    }));
 
-    expect(text).not.toMatch(/catch that actually matters/);
-    expect(text).not.toMatch(/real pairing on the winning side/);
+    expect(text).not.toMatch(/battle.explain.catch/);
+    expect(text).not.toMatch(/battle.explain.combo.win/);
   });
 
   it('frames an Even matchup and closes as a coin flip', () => {
-    const text = buildExplanation({
+    const text = flattenLocalized(buildExplanation({
       advantageDirection: 'Even',
       confidenceTier: 'Low',
       resolvedOutcome: 'Lose',
@@ -171,10 +180,11 @@ describe('buildExplanation', () => {
       topAxisDelta: { axis: 'control', delta: 0.1 },
       axisDeltas: [{ axis: 'control', delta: 0.1 }],
       highSkillSwingHero: null,
-    }).join(' ');
+    }));
 
-    expect(text).toMatch(/close matchup with no clear favorite \(Low confidence\)/);
-    expect(text).toMatch(/came up just short in what was essentially a coin flip/);
+    expect(text).toMatch(/battle.explain.frame.even/);
+    expect(text).toMatch(/Low/);
+    expect(text).toMatch(/battle.explain.close.evenLose/);
   });
 
   it('frames opponent favorite, High Skill swing, and upset reasons', () => {
@@ -184,7 +194,7 @@ describe('buildExplanation', () => {
         (a === 2 && b === 5) || (b === 2 && a === 5) ? 0.61 : null,
       getWinRate: () => 0.5,
     };
-    const text = buildExplanation({
+    const text = flattenLocalized(buildExplanation({
       advantageDirection: 'B',
       confidenceTier: 'High',
       resolvedOutcome: 'Win',
@@ -197,14 +207,18 @@ describe('buildExplanation', () => {
         { axis: 'initiating', delta: 0.9 },
       ],
       highSkillSwingHero: hero(2, 'Storm Spirit', { initiating: 8 }),
-    }).join(' ');
+    }));
 
-    expect(text).toMatch(/Opponent's draft leaned ahead overall \(High confidence\)/);
-    expect(text).toMatch(/Storm Spirit's own play was the deciding swing/);
-    expect(text).toMatch(/On top of that, your draft had real advantages/);
-    expect(text).toMatch(/Storm Spirit's individual matchup into Shadow Fiend/);
-    expect(text).toMatch(/Storm Spirit \+ Dazzle/);
-    expect(text).toMatch(/led in initiation potential/);
+    expect(text).toMatch(/battle.explain.frame.ahead/);
+    expect(text).toMatch(/opponent/);
+    expect(text).toMatch(/High/);
+    expect(text).toMatch(/battle.explain.highSkill/);
+    expect(text).toMatch(/Storm Spirit/);
+    expect(text).toMatch(/battle.explain.upset.reasons/);
+    expect(text).toMatch(/top/);
+    expect(text).toMatch(/Shadow Fiend/);
+    expect(text).toMatch(/Dazzle/);
+    expect(text).toMatch(/initiating/);
   });
 
   it('describes tempo-vs-scaling clock split and early tempo winners', () => {
@@ -224,7 +238,7 @@ describe('buildExplanation', () => {
         saving: 3,
       }),
     );
-    const text = buildExplanation({
+    const text = flattenLocalized(buildExplanation({
       advantageDirection: 'A',
       confidenceTier: 'Moderate',
       resolvedOutcome: 'Win',
@@ -237,11 +251,12 @@ describe('buildExplanation', () => {
         { axis: 'scaling', delta: -1 },
       ],
       highSkillSwingHero: null,
-    }).join(' ');
+    }));
 
-    expect(text).toMatch(/Your draft wants this over now/);
-    expect(text).toMatch(/the opponent's draft is the one that gets paid/);
-    expect(text).toMatch(/15–20 minute window/);
+    expect(text).toMatch(/battle.explain.clock.split/);
+    expect(text).toMatch(/yours/);
+    expect(text).toMatch(/opponent/);
+    expect(text).toMatch(/15–20/);
   });
 
   it('describes a late-scaling winning side when tempos are tied', () => {
@@ -251,7 +266,7 @@ describe('buildExplanation', () => {
     const flatOpp = opponent.map((p) =>
       pick(p.hero.id, p.hero.name, p.assignedRole, { tempo: 4, scaling: 4, initiating: 3, saving: 3 }),
     );
-    const text = buildExplanation({
+    const text = flattenLocalized(buildExplanation({
       advantageDirection: 'A',
       confidenceTier: 'Moderate',
       resolvedOutcome: 'Win',
@@ -261,11 +276,12 @@ describe('buildExplanation', () => {
       topAxisDelta: { axis: 'scaling', delta: 1 },
       axisDeltas: [{ axis: 'scaling', delta: 1.2 }],
       highSkillSwingHero: null,
-    }).join(' ');
+    }));
 
-    expect(text).toMatch(/scales harder than it plays early/);
-    expect(text).toMatch(/30\+ minute window/);
-    expect(text).toMatch(/your draft's real pull is late-game scaling/);
+    expect(text).toMatch(/battle.explain.clock.late/);
+    expect(text).toMatch(/30\+/);
+    expect(text).toMatch(/battle.explain.sheet.yours/);
+    expect(text).toMatch(/scaling/);
   });
 
   it('covers opponent-only fight shape, save, and axis lead', () => {
@@ -283,7 +299,7 @@ describe('buildExplanation', () => {
       pick(12, 'Earthshaker', 'Soft Support', { initiating: 3, saving: 2 }),
       pick(15, 'Dazzle', 'Hard Support', { initiating: 2, saving: 9 }),
     ];
-    const text = buildExplanation({
+    const text = flattenLocalized(buildExplanation({
       advantageDirection: 'B',
       confidenceTier: 'Moderate',
       resolvedOutcome: 'Lose',
@@ -296,12 +312,15 @@ describe('buildExplanation', () => {
         { axis: 'saving', delta: -1.0 },
       ],
       highSkillSwingHero: null,
-    }).join(' ');
+    }));
 
-    expect(text).toMatch(/Anti-Mage is the one who starts fights on your side; Axe is the one who has to answer/);
-    expect(text).toMatch(/Dazzle is the save the opponent brought/);
-    expect(text).toMatch(/opponent's draft is the one leading in/);
-    expect(text).toMatch(/That edge held up here/);
+    expect(text).toMatch(/battle.explain.shape.duel/);
+    expect(text).toMatch(/Anti-Mage/);
+    expect(text).toMatch(/Axe/);
+    expect(text).toMatch(/battle.explain.shape.saveOpp/);
+    expect(text).toMatch(/Dazzle/);
+    expect(text).toMatch(/battle.explain.sheet.theirs/);
+    expect(text).toMatch(/battle.explain.close.underdogHeld/);
   });
 
   it('covers carry coin-flip matchup, opponent tag-only board, shutdown and hard-carry tax', () => {
@@ -311,7 +330,7 @@ describe('buildExplanation', () => {
       getWinRate: () => 0.5,
     };
     const withBm = [...opponent.slice(0, 4), pick(16, 'Beastmaster', 'Hard Support')];
-    const text = buildExplanation({
+    const text = flattenLocalized(buildExplanation({
       advantageDirection: 'A',
       confidenceTier: 'Moderate',
       resolvedOutcome: 'Win',
@@ -325,14 +344,20 @@ describe('buildExplanation', () => {
       shutdownHeroesB: [hero(11, 'Phantom Assassin'), hero(14, 'Axe')],
       hardCarryCountA: 3,
       hardCarryCountB: 4,
-    }).join(' ');
+    }));
 
-    expect(text).toMatch(/individual matchup is a coin flip \(50%\)/);
-    expect(text).toMatch(/theirs has/);
-    expect(text).toMatch(/Anti-Mage is in shutdown/);
-    expect(text).toMatch(/Phantom Assassin and Axe on the other side are similarly boxed in/);
-    expect(text).toMatch(/Three hard-carries on your side/);
-    expect(text).toMatch(/opponent stacked 4 hard-carries/);
+    expect(text).toMatch(/battle.explain.carry.flip/);
+    expect(text).toMatch(/50/);
+    expect(text).toMatch(/battle.explain.tags/);
+    expect(text).toMatch(/battle.explain.shutdown.mine/);
+    expect(text).toMatch(/Anti-Mage/);
+    expect(text).toMatch(/battle.explain.shutdown.opp/);
+    expect(text).toMatch(/Phantom Assassin/);
+    expect(text).toMatch(/Axe/);
+    expect(text).toMatch(/battle.explain.hardCarry.mine/);
+    expect(text).toMatch(/3/);
+    expect(text).toMatch(/battle.explain.hardCarry.opp/);
+    expect(text).toMatch(/4/);
   });
 
   it('covers opponent-owned carry matchup and a second catch plus leftover combo', () => {
@@ -350,7 +375,7 @@ describe('buildExplanation', () => {
       },
       getWinRate: () => 0.5,
     };
-    const text = buildExplanation({
+    const text = flattenLocalized(buildExplanation({
       advantageDirection: 'A',
       confidenceTier: 'Moderate',
       resolvedOutcome: 'Win',
@@ -360,17 +385,25 @@ describe('buildExplanation', () => {
       topAxisDelta: emptyDeltas[3],
       axisDeltas: emptyDeltas,
       highSkillSwingHero: null,
-    }).join(' ');
+    }));
 
-    expect(text).toMatch(/Phantom Assassin owns that matchup at 65%/);
-    expect(text).toMatch(/catch that actually matters for your draft is Storm Spirit into Axe \(72%\)/);
-    expect(text).toMatch(/Tidehunter into Lion \(68%\) is a second real hole/);
-    expect(text).toMatch(/Storm Spirit \+ Dazzle is a real pairing on the winning side/);
-    expect(text).toMatch(/the opponent still had/);
+    expect(text).toMatch(/battle.explain.carry.oppOwns/);
+    expect(text).toMatch(/65/);
+    expect(text).toMatch(/battle.explain.catch.first/);
+    expect(text).toMatch(/Storm Spirit/);
+    expect(text).toMatch(/Axe/);
+    expect(text).toMatch(/72/);
+    expect(text).toMatch(/battle.explain.catch.second/);
+    expect(text).toMatch(/Tidehunter/);
+    expect(text).toMatch(/Lion/);
+    expect(text).toMatch(/68/);
+    expect(text).toMatch(/battle.explain.combo.win/);
+    expect(text).toMatch(/Dazzle/);
+    expect(text).toMatch(/battle.explain.combo.leftover/);
   });
 
   it('joins three shutdown names with an oxford comma', () => {
-    const text = buildExplanation({
+    const text = flattenLocalized(buildExplanation({
       advantageDirection: 'A',
       confidenceTier: 'Moderate',
       resolvedOutcome: 'Lose',
@@ -381,10 +414,14 @@ describe('buildExplanation', () => {
       axisDeltas: emptyDeltas,
       highSkillSwingHero: null,
       shutdownHeroesA: [hero(1, 'Anti-Mage'), hero(2, 'Storm Spirit'), hero(3, 'Tidehunter')],
-    }).join(' ');
+    }));
 
-    expect(text).toMatch(/Anti-Mage, Storm Spirit, and Tidehunter are in shutdown/);
-    expect(text).toMatch(/opponent's draft had real advantages of its own/);
+    expect(text).toMatch(/battle.explain.shutdown.mine/);
+    expect(text).toMatch(/Anti-Mage/);
+    expect(text).toMatch(/Storm Spirit/);
+    expect(text).toMatch(/Tidehunter/);
+    expect(text).toMatch(/3/);
+    expect(text).toMatch(/battle.explain.upset.reasons/);
   });
 
   it('skips catches at the exact 50% floor and still narrates null carry matchup', () => {
@@ -396,7 +433,7 @@ describe('buildExplanation', () => {
       getSynergyWinRate: () => 0.5,
       getWinRate: () => 0.5,
     };
-    const text = buildExplanation({
+    const text = flattenLocalized(buildExplanation({
       advantageDirection: 'Even',
       confidenceTier: 'Moderate',
       resolvedOutcome: 'Win',
@@ -406,11 +443,13 @@ describe('buildExplanation', () => {
       topAxisDelta: { axis: 'control', delta: 0 },
       axisDeltas: [{ axis: 'control', delta: 0.05 }],
       highSkillSwingHero: null,
-    }).join(' ');
+    }));
 
-    expect(text).not.toMatch(/catch that actually matters/);
-    expect(text).toMatch(/There isn't a real individual matchup row for Anti-Mage into Phantom Assassin/);
-    expect(text).toMatch(/came out on top in what was essentially a coin flip/);
+    expect(text).not.toMatch(/battle.explain.catch/);
+    expect(text).toMatch(/battle.explain.carry.noRow/);
+    expect(text).toMatch(/Anti-Mage/);
+    expect(text).toMatch(/Phantom Assassin/);
+    expect(text).toMatch(/battle.explain.close.evenWin/);
   });
 
   it('narrates a lane without a numeric lean when winRate is null', () => {
@@ -426,7 +465,7 @@ describe('buildExplanation', () => {
         topPair: { hero: 'Storm Spirit', heroId: 2, vs: 'Shadow Fiend', vsId: 13, winRate: 0.66 },
       },
     ];
-    const text = buildExplanation({
+    const text = flattenLocalized(buildExplanation({
       advantageDirection: 'A',
       confidenceTier: 'Moderate',
       resolvedOutcome: 'Win',
@@ -437,10 +476,12 @@ describe('buildExplanation', () => {
       axisDeltas: emptyDeltas,
       highSkillSwingHero: null,
       lanes,
-    }).join(' ');
+    }));
 
-    expect(text).toMatch(/Lanes weren't a wash/);
-    expect(text).toMatch(/leans this way because Storm Spirit into Shadow Fiend is a real matchup edge/);
+    expect(text).toMatch(/battle.explain.lanes.wash/);
+    expect(text).toMatch(/battle.explain.lane.mineEdge/);
+    expect(text).toMatch(/Storm Spirit/);
+    expect(text).toMatch(/Shadow Fiend/);
   });
 
   it('covers solo initiator / solo save and carry scale-vs-matchup tension', () => {
@@ -463,7 +504,7 @@ describe('buildExplanation', () => {
       getSynergyWinRate: () => null,
       getWinRate: () => 0.5,
     };
-    const text = buildExplanation({
+    const text = flattenLocalized(buildExplanation({
       advantageDirection: 'A',
       confidenceTier: 'Moderate',
       resolvedOutcome: 'Win',
@@ -473,11 +514,15 @@ describe('buildExplanation', () => {
       topAxisDelta: { axis: 'initiating', delta: 1 },
       axisDeltas: [{ axis: 'initiating', delta: 1.2 }],
       highSkillSwingHero: null,
-    }).join(' ');
+    }));
 
-    expect(text).toMatch(/Storm Spirit is the one who starts fights on your side/);
-    expect(text).toMatch(/Dazzle is the only one on the board who actually saves/);
-    expect(text).toMatch(/Anti-Mage owns that matchup at 70%, and they scale harder on the sheet too/);
+    expect(text).toMatch(/battle.explain.shape.duel/);
+    expect(text).toMatch(/Storm Spirit/);
+    expect(text).toMatch(/battle.explain.shape.saveMine/);
+    expect(text).toMatch(/Dazzle/);
+    expect(text).toMatch(/battle.explain.carry.mineOwns/);
+    expect(text).toMatch(/70/);
+    expect(text).toMatch(/battle.explain.carry.scaleSame/);
   });
 
   it('covers carry matchup owner differing from the scaler', () => {
@@ -486,7 +531,7 @@ describe('buildExplanation', () => {
       getSynergyWinRate: () => null,
       getWinRate: () => 0.5,
     };
-    const text = buildExplanation({
+    const text = flattenLocalized(buildExplanation({
       advantageDirection: 'A',
       confidenceTier: 'Moderate',
       resolvedOutcome: 'Win',
@@ -496,9 +541,11 @@ describe('buildExplanation', () => {
       topAxisDelta: emptyDeltas[3],
       axisDeltas: emptyDeltas,
       highSkillSwingHero: null,
-    }).join(' ');
+    }));
 
-    expect(text).toMatch(/Phantom Assassin owns that matchup at 65%/);
-    expect(text).toMatch(/but Anti-Mage is the one who actually scales harder/);
+    expect(text).toMatch(/battle.explain.carry.oppOwns/);
+    expect(text).toMatch(/65/);
+    expect(text).toMatch(/battle.explain.carry.scaleTension/);
+    expect(text).toMatch(/Anti-Mage/);
   });
 });

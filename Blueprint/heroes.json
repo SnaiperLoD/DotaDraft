@@ -379,7 +379,8 @@
     ],
     "tags": [
       "illusion_based",
-      "split_push"
+      "split_push",
+      "late_game_scaling"
     ],
     "synergy_tags": [
       "needs_space"
@@ -1093,7 +1094,8 @@
     "tags": [
       "poke",
       "split_push",
-      "global_impact"
+      "global_impact",
+      "late_game_scaling"
     ],
     "synergy_tags": [
       "needs_setup"

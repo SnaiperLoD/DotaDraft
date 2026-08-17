@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { heroPortraitUrl } from '../utils/heroIcon';
@@ -56,6 +57,7 @@ interface Props {
 }
 
 export default function TapalkaModel3D({ drinking, width, height }: Props) {
+  const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
   const drinkingRef = useRef(drinking);
   const [failed, setFailed] = useState(false);
@@ -173,7 +175,7 @@ export default function TapalkaModel3D({ drinking, width, height }: Props) {
     return (
       <img
         src={heroPortraitUrl(FALLBACK_HERO_ID)}
-        alt="Brewmaster"
+        alt={t('tapalka.alt')}
         width={width}
         height={height}
         className="tapalka-portrait"

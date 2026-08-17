@@ -30,22 +30,10 @@ const MODEL_HEIGHT = 150;
 
 const TapalkaModel3D = lazy(() => import('./TapalkaModel3D'));
 
-// A handful of Brewmaster's own real in-game lines (Blueprint/10-tech-debt-backlog.md
-// research pass) — always shown in English regardless of the UI language,
-// same as any other in-universe flavor text would be, not run through
-// i18n. 1-in-100 chance per click, shown in HP's comic-speech-bubble style
-// per the MVP scope decision (audio deferred to a future pass).
-const VOICE_LINES = [
-  'Drink it in!',
-  'This one’s on me.',
-  'I’ll drink to that.',
-  'There’s trouble abrewing.',
-  'Time to brawl!',
-  'Drink and be bleary, for tomorrow we die.',
-  'Just a bit tipsy.',
-  'Punch drunk.',
-];
-
+// A handful of Brewmaster's own real in-game lines — localized via i18n so
+// RU/EN UI stay consistent (still flavor, not gameplay). 1-in-100 chance
+// per click, shown in HP's comic-speech-bubble style (audio deferred).
+const VOICE_LINE_COUNT = 8;
 const VOICE_LINE_CHANCE = 0.01;
 const VOICE_LINE_DISPLAY_MS = 3000;
 const BUBBLE_COUNT = 6;
@@ -100,8 +88,8 @@ export default function TapalkaWidget({ embedded = false }: Props) {
     timeoutRef.current = setTimeout(() => setDrinking(false), DRINK_ANIMATION_MS);
 
     if (Math.random() < VOICE_LINE_CHANCE) {
-      const line = VOICE_LINES[Math.floor(Math.random() * VOICE_LINES.length)];
-      setVoiceLine(line);
+      const idx = Math.floor(Math.random() * VOICE_LINE_COUNT);
+      setVoiceLine(t(`tapalka.voice.${idx}`));
       setTimeout(() => setVoiceLine(null), VOICE_LINE_DISPLAY_MS);
     }
   };
@@ -109,7 +97,7 @@ export default function TapalkaWidget({ embedded = false }: Props) {
   const portrait = (
     <img
       src={heroPortraitUrl(BREWMASTER_ID)}
-      alt="Brewmaster"
+      alt={t('tapalka.alt')}
       width={MODEL_WIDTH}
       height={MODEL_HEIGHT}
       className="tapalka-portrait"

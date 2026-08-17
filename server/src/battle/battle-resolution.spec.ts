@@ -9,7 +9,9 @@ import {
   type BattlePick,
 } from './battle-resolution';
 import type { Hero, HeroEvaluationValues } from 'shared';
+import { i18nLine } from 'shared';
 import { makeHero, DEFAULT_EVALUATION_VALUES } from '../test-utils/hero-factory';
+import { flattenLocalized } from '../test-utils/localized-text';
 import axisWeightsConfig from '../../data/axis-weights.json';
 
 function hero(id: number, name: string, axisOverrides: Partial<HeroEvaluationValues> = {}): Hero {
@@ -45,8 +47,8 @@ describe('resolveBattle', () => {
     // values on both sides mean every axisDelta is exactly 0, so the sort is
     // stable and topAxisDelta is AXES[0] ('teamfight'), with delta>0 false.
     expect(result.explanation).toEqual([
-      'This is a close matchup with no clear favorite (Low confidence) — a deficit in damage output for your draft was the closest thing to an edge.',
-      'Your draft came out on top in what was essentially a coin flip.',
+      i18nLine('battle.explain.frame.even', { confidence: 'Low', axis: 'teamfight', edge: 'deficit' }),
+      i18nLine('battle.explain.close.evenWin'),
     ]);
   });
 
@@ -102,7 +104,7 @@ describe('resolveBattle', () => {
     expect(result.confidenceTier).toBe('High');
     expect(result.resolvedOutcome).toBe('Win');
     expect(result.advantages.length).toBeGreaterThan(0);
-    expect(result.explanation.join(' ')).toMatch(/advantage held up/i);
+    expect(flattenLocalized(result.explanation)).toMatch(/battle.explain.close.favoredHeld/);
   });
 
   it('says the favorite\'s edge "held up" when the opponent (not the user) is correctly favored and wins', () => {
@@ -113,7 +115,7 @@ describe('resolveBattle', () => {
     const result = resolveBattle(weakTeam, strongOpponent, noData, () => 0.5);
     expect(result.advantageDirection).toBe('B');
     expect(result.resolvedOutcome).toBe('Lose');
-    expect(result.explanation.join(' ')).toMatch(/edge held up here/i);
+    expect(flattenLocalized(result.explanation)).toMatch(/battle.explain.close.underdogHeld/);
   });
 
   it('produces an upset explanation (not "the model was wrong") when the underdog wins', () => {
@@ -125,9 +127,9 @@ describe('resolveBattle', () => {
     const result = resolveBattle(strongTeam, weakTeam, noData, () => 0.99);
     expect(result.advantageDirection).toBe('A');
     expect(result.resolvedOutcome).toBe('Lose');
-    const text = result.explanation.join(' ');
+    const text = flattenLocalized(result.explanation);
     expect(text.toLowerCase()).not.toContain('model was wrong');
-    expect(text).toMatch(/upset|edge of its own|advantages of its own|odds still had to break/i);
+    expect(text).toMatch(/battle.explain.upset/);
   });
 
   it("cites the underdog's real matchup/synergy edges in the upset explanation when data exists", () => {
@@ -141,7 +143,7 @@ describe('resolveBattle', () => {
     };
     const result = resolveBattle(strongTeam, weakTeam, lookup, () => 0.99);
     expect(result.resolvedOutcome).toBe('Lose');
-    const text = result.explanation.join(' ');
+    const text = flattenLocalized(result.explanation);
     expect(text).toContain('Hero6');
     expect(text).toContain('Hero1');
   });
@@ -154,8 +156,9 @@ describe('resolveBattle', () => {
     ];
     const result = resolveBattle(strongTeam, weakTeam, noData, () => 0.99);
     expect(result.resolvedOutcome).toBe('Lose');
-    const text = result.explanation.join(' ');
-    expect(text).toContain('actually led in ally saving power despite trailing on the overall picture');
+    const text = flattenLocalized(result.explanation);
+    expect(text).toMatch(/saving/);
+    expect(text).toMatch(/battle.explain.upset/);
   });
 
   describe('High confidence (deterministic absent an explained mechanic)', () => {
@@ -178,7 +181,7 @@ describe('resolveBattle', () => {
       const result = resolveBattle(strongTeam, weakTeamWithHighSkill, noData, () => 0.97);
       expect(result.confidenceTier).toBe('High');
       expect(result.resolvedOutcome).toBe('Lose');
-      const text = result.explanation.join(' ');
+      const text = flattenLocalized(result.explanation);
       expect(text).toContain('Invoker');
       expect(text.toLowerCase()).not.toContain('model was wrong');
     });
@@ -481,7 +484,7 @@ describe('resolveBattle', () => {
 
       const result = resolveBattle(strongTeam, weakTeamWithHighSkill, noData, () => 0.97);
       expect(result.resolvedOutcome).toBe('Lose');
-      expect(result.explanation.some((line) => line.includes('Invoker'))).toBe(true);
+      expect(flattenLocalized(result.explanation)).toContain('Invoker');
     });
 
     it('does not flip the outcome (or mention High Skill) without a tagged hero present, same roll', () => {
@@ -499,7 +502,7 @@ describe('resolveBattle', () => {
       // 0.1 is comfortably below both 1 and 0.95 -> Win either way, no swing.
       const result = resolveBattle(strongTeam, weakTeamWithHighSkill, noData, () => 0.1);
       expect(result.resolvedOutcome).toBe('Win');
-      expect(result.explanation.some((line) => line.includes('Invoker'))).toBe(false);
+      expect(flattenLocalized(result.explanation)).not.toContain('Invoker');
     });
 
     // Mirror of the two tests above with the roles reversed: here the
@@ -515,7 +518,7 @@ describe('resolveBattle', () => {
       const result = resolveBattle(weakTeamWithHighSkill, strongOpponent, noData, () => 0.02);
       expect(result.advantageDirection).toBe('B');
       expect(result.resolvedOutcome).toBe('Win');
-      expect(result.explanation.some((line) => line.includes('Invoker'))).toBe(true);
+      expect(flattenLocalized(result.explanation)).toContain('Invoker');
     });
   });
 
@@ -575,8 +578,8 @@ describe('resolveBattle', () => {
       const result = resolveBattle(strongTeam, weakTeam, lookup, () => 0.1); // A wins at High confidence
       expect(result.resolvedOutcome).toBe('Win');
       expect(result.winningHighlights).toEqual([
-        'The Hero2 + Hero3 combination gave your draft a real, data-backed edge.',
-        "Hero1's matchup into Hero6 worked in your draft's favor.",
+        i18nLine('battle.highlight.synergy', { hero: 'Hero2', vs: 'Hero3', perspective: 'yours' }),
+        i18nLine('battle.highlight.matchup', { hero: 'Hero1', vs: 'Hero6', perspective: 'yours' }),
       ]);
     });
 

@@ -6,6 +6,7 @@ import { heroPortraitUrl } from '../utils/heroIcon';
 import { roleTintGradient } from '../utils/heroRoleColor';
 import { visibleTagsFor } from '../data/customTags';
 import HeroTagBadges from './HeroTagBadges';
+import { dotaRoleLabel, attributeLabel } from '../i18n/display';
 import './HeroPool.css';
 
 interface Props {
@@ -149,11 +150,14 @@ export default function HeroPool({
               <div className="role-tint" style={{ background: roleTintGradient(hero) }} />
               <span
                 className={`hero-attr hero-attr--${hero.primary_attribute}`}
-                title={hero.primary_attribute}
+                title={attributeLabel(t, hero.primary_attribute)}
               >
                 {ATTR_LETTER[hero.primary_attribute] ?? '?'}
               </span>
-              <HeroTagBadges tags={visibleTagsFor(hero.name, [...pickedHeroNames, hero.name])} />
+              <HeroTagBadges
+                tags={visibleTagsFor(hero.name, [...pickedHeroNames, hero.name])}
+                contextHeroNames={[...pickedHeroNames, hero.name]}
+              />
 
               {/* The border color already flagged these two cards, but only
                   the Legend explained what the color meant. The label says
@@ -178,7 +182,7 @@ export default function HeroPool({
             <div className="card-body">
               {hero.roles.slice(0, 3).map((role) => (
                 <span key={role} className="pill">
-                  {role}
+                  {dotaRoleLabel(t, role)}
                 </span>
               ))}
             </div>

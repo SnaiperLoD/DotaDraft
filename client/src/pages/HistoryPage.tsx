@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { api } from '../api/client';
 import type { HistoryEntry, ConfidenceTier } from 'shared';
 import { heroIconUrl } from '../utils/heroIcon';
+import { renderLocalizedLines } from '../i18n/narrative';
 import {
   currentWinStreakNewestFirst,
   runRecord,
@@ -165,7 +166,9 @@ export default function HistoryPage() {
               </div>
 
               {entry.evaluation ? (
-                <p className="history-evaluation-gameplan">{entry.evaluation.summary.gameplan}</p>
+                <p className="history-evaluation-gameplan">
+                  {renderLocalizedLines(t, entry.evaluation.summary.gameplan)}
+                </p>
               ) : (
                 <p className="history-evaluation-empty">{t('history.notEvaluated')}</p>
               )}

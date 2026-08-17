@@ -1,4 +1,5 @@
 import type { PooledDraftSource } from './opponent-pool';
+import type { LocalizedLine } from './i18n';
 
 export type ConfidenceTier = 'Low' | 'Moderate' | 'High';
 export type AdvantageDirection = 'A' | 'B' | 'Even';
@@ -136,9 +137,12 @@ export interface BattleResultResponse {
   resolvedOutcome: ResolvedOutcome;
   advantageDirection: AdvantageDirection;
   confidenceTier: ConfidenceTier;
+  // Axis keys (`tempo`, `control`, …) for client i18n. Legacy History rows
+  // may still store full English sentences — the client accepts both.
   advantages: string[];
   disadvantages: string[];
-  explanation: string[];
+  // I18nLine[] for new fights; plain English strings for History snapshots.
+  explanation: LocalizedLine[];
   // Your draft's best real synergy pairs (getSynergyWinRate), and your best /
   // worst individual matchups into THIS opponent's heroes (getMatchupWinRate).
   // Empty when no real matchup data is available for the heroes in play.
@@ -147,14 +151,15 @@ export interface BattleResultResponse {
   worstMatchups: BattleMatchup[];
   // Blueprint/10-tech-debt-backlog.md, "Комментарии по конкретным успешным
   // матчапам" — top real matchup/synergy pairs for whichever side actually
-  // won this battle, narrative sentences only (see battle-resolution.ts).
-  winningHighlights: string[];
+  // won this battle. I18nLine[] (or legacy English strings).
+  winningHighlights: LocalizedLine[];
   // Shutdown (common/shutdown.ts) — hero ids on EITHER side whose real
   // matchup win rate is below their own average vs every hero on the other
   // draft. Client marks portraits and builds localized notes from
-  // shutdownHeroIds; shutdownNotes remain English fallbacks from the server.
+  // shutdownHeroIds; shutdownNotes are the same copy as I18nLine (or
+  // legacy English strings in History).
   shutdownHeroIds: number[];
-  shutdownNotes: string[];
+  shutdownNotes: LocalizedLine[];
   lanes?: BattleLaneResult[];
   // Domain narrative assembled server-side (battle-story.ts). React only
   // renders `beats` through i18n — it does not pick farmers or phases.

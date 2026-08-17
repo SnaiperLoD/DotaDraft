@@ -1,5 +1,7 @@
+import { isI18nLine } from 'shared';
 import { createSynergyAnalyzer, type SynergyLookup } from './synergy.analyzer';
 import { makeHero, DEFAULT_EVALUATION_VALUES, picks } from '../../test-utils/hero-factory';
+import { flattenLocalized } from '../../test-utils/localized-text';
 
 const noRealData: SynergyLookup = {
   getSynergyWinRate: () => null,
@@ -13,7 +15,7 @@ describe('createSynergyAnalyzer (tag rules, no real data)', () => {
     const heroes = [makeHero({ id: 1, name: 'A' }), makeHero({ id: 2, name: 'B' })];
     const result = synergyAnalyzer.analyze(picks(heroes));
     expect(result.score).toBe(0);
-    expect(result.explanation[0]).toMatch(/no strong hero-to-hero synergies/i);
+    expect(flattenLocalized(result.explanation)).toMatch(/eval.synergy.none/);
   });
 
   it('scores a needs_setup + enables_engage pair and names both heroes', () => {
@@ -21,8 +23,8 @@ describe('createSynergyAnalyzer (tag rules, no real data)', () => {
     const enabler = makeHero({ id: 2, name: 'Mirana', synergy_tags: ['enables_engage'] });
     const result = synergyAnalyzer.analyze(picks([setup, enabler]));
     expect(result.score).toBe(2.5);
-    expect(result.explanation[0]).toContain('Lion');
-    expect(result.explanation[0]).toContain('Mirana');
+    expect(flattenLocalized([result.explanation[0]])).toContain('Lion');
+    expect(flattenLocalized([result.explanation[0]])).toContain('Mirana');
   });
 
   it('stacks multiple independent tag-pair rules', () => {
@@ -48,14 +50,14 @@ describe('createSynergyAnalyzer (tag rules, no real data)', () => {
       makeHero({ id, name, evaluation_values: { ...DEFAULT_EVALUATION_VALUES, mobility: 6 } });
     const result = synergyAnalyzer.analyze(picks([mobile(1, 'A'), mobile(2, 'B')]));
     expect(result.score).toBe(1);
-    expect(result.explanation.some((line) => line.includes('high-mobility'))).toBe(true);
+    expect(flattenLocalized(result.explanation)).toMatch(/eval.synergy.mobility/);
   });
 
   it('adds a bonus for 3+ teamfight-tagged heroes', () => {
     const teamfighter = (id: number, name: string) => makeHero({ id, name, tags: ['teamfight'] });
     const result = synergyAnalyzer.analyze(picks([teamfighter(1, 'A'), teamfighter(2, 'B'), teamfighter(3, 'C')]));
     expect(result.score).toBe(1);
-    expect(result.explanation.some((line) => line.includes('teamfight-oriented core'))).toBe(true);
+    expect(flattenLocalized(result.explanation)).toMatch(/eval.synergy.teamfight/);
   });
 
   it('caps the final score at 10', () => {
@@ -106,7 +108,7 @@ describe('createSynergyAnalyzer (real win-rate data blending)', () => {
     // earn the separate best-pair bonus): penalty = min(3, 0.05*15) = 0.75.
     // 1.25 - 0.75 = 0.5.
     expect(result.score).toBe(0.5);
-    expect(result.explanation[0]).toMatch(/underperforms expectations/i);
+    expect(isI18nLine(result.explanation[0]) && result.explanation[0].params?.dampened).toBe('1');
   });
 
   it('does not dampen a tag rule when the underperformance is within the threshold', () => {
@@ -121,7 +123,7 @@ describe('createSynergyAnalyzer (real win-rate data blending)', () => {
 
     const result = createSynergyAnalyzer(mildUnderperformance).analyze(picks([setup, enabler]));
     expect(result.score).toBe(2.5);
-    expect(result.explanation[0]).not.toMatch(/underperforms expectations/i);
+    expect(isI18nLine(result.explanation[0]) && result.explanation[0].params?.dampened).toBeUndefined();
   });
 
   it('rewards a real-data-only synergy pair with no matching tags at all', () => {
@@ -136,9 +138,9 @@ describe('createSynergyAnalyzer (real win-rate data blending)', () => {
 
     const result = createSynergyAnalyzer(strongRealSynergy).analyze(picks([heroA, heroB]));
     expect(result.score).toBeGreaterThan(0);
-    expect(result.explanation[0]).toContain('Axe');
-    expect(result.explanation[0]).toContain('Sven');
-    expect(result.explanation[0]).toMatch(/strong real win rate/i);
+    expect(flattenLocalized([result.explanation[0]])).toContain('Axe');
+    expect(flattenLocalized([result.explanation[0]])).toContain('Sven');
+    expect(flattenLocalized([result.explanation[0]])).toMatch(/eval.synergy.realStrong/);
   });
 
   it('ignores small real-data deltas as noise (below the significance threshold)', () => {
@@ -170,9 +172,9 @@ describe('createSynergyAnalyzer (real win-rate data blending)', () => {
 
     const result = createSynergyAnalyzer(weakRealSynergy).analyze(picks([heroA, heroB]));
     expect(result.score).toBe(0); // floored — nothing else contributes positively here
-    expect(result.explanation[0]).toContain('Axe');
-    expect(result.explanation[0]).toContain('Sven');
-    expect(result.explanation[0]).toMatch(/below-average real win rate/i);
+    expect(flattenLocalized([result.explanation[0]])).toContain('Axe');
+    expect(flattenLocalized([result.explanation[0]])).toContain('Sven');
+    expect(flattenLocalized([result.explanation[0]])).toMatch(/eval.synergy.realWeak/);
   });
 
   it('SHOWS a small negative real-data pair but does NOT penalize it below the significance threshold', () => {
@@ -190,7 +192,7 @@ describe('createSynergyAnalyzer (real win-rate data blending)', () => {
 
     const result = createSynergyAnalyzer(mildSignal).analyze(picks([heroA, heroB]));
     expect(result.score).toBe(0); // not penalized
-    expect(result.explanation.some((line) => /below-average real win rate/i.test(line))).toBe(true);
+    expect(flattenLocalized(result.explanation)).toMatch(/eval.synergy.realWeak/);
   });
 
   it('floors the final score at 0 rather than going negative', () => {
@@ -225,8 +227,8 @@ describe('createSynergyAnalyzer (real win-rate data blending)', () => {
 
     const result = createSynergyAnalyzer(mixedSignal).analyze(picks([strong1, strong2, weak1, weak2]));
     // +3 (capped bonus) - 3 (capped penalty) = 0, but both lines should still be present.
-    expect(result.explanation.some((line) => /strong real win rate/i.test(line))).toBe(true);
-    expect(result.explanation.some((line) => /below-average real win rate/i.test(line))).toBe(true);
+    expect(flattenLocalized(result.explanation)).toMatch(/eval.synergy.realStrong/);
+    expect(flattenLocalized(result.explanation)).toMatch(/eval.synergy.realWeak/);
   });
 });
 
@@ -241,9 +243,10 @@ describe('createSynergyAnalyzer (game-plan conflict / anti-synergy rules)', () =
     const medusa = makeHero({ id: 2, name: 'Medusa', tags: ['late_game_scaling'] });
 
     const result = createSynergyAnalyzer(noRealData).analyze(picks([lycan, medusa]));
-    expect(result.explanation.some((l) => l.includes('Lycan') && l.includes('Medusa') && /conflicting game plans/i.test(l))).toBe(
-      true,
-    );
+    const text = flattenLocalized(result.explanation);
+    expect(text).toContain('Lycan');
+    expect(text).toContain('Medusa');
+    expect(text).toMatch(/eval.synergy.anti.split_push_late/);
     // Floored at 0 (a lone conflicting pair has nothing positive to offset it).
     expect(result.score).toBe(0);
   });
@@ -253,7 +256,7 @@ describe('createSynergyAnalyzer (game-plan conflict / anti-synergy rules)', () =
     const lateCarry = makeHero({ id: 2, name: 'Spectre', tags: ['late_game_scaling'] });
 
     const result = createSynergyAnalyzer(noRealData).analyze(picks([deathball, lateCarry]));
-    expect(result.explanation.some((l) => /conflicting timings/i.test(l))).toBe(true);
+    expect(flattenLocalized(result.explanation)).toMatch(/eval.synergy.anti.deathball_late/);
   });
 
   it('does not flag a conflict when only one side of the archetype pair is present', () => {
@@ -261,7 +264,7 @@ describe('createSynergyAnalyzer (game-plan conflict / anti-synergy rules)', () =
     const other = makeHero({ id: 2, name: 'Sven', tags: ['teamfight'] });
 
     const result = createSynergyAnalyzer(noRealData).analyze(picks([lycan, other]));
-    expect(result.explanation.some((l) => /conflicting/i.test(l))).toBe(false);
+    expect(flattenLocalized(result.explanation)).not.toMatch(/eval.synergy.anti/);
   });
 
   it('does not flag a single hero carrying both tags against itself', () => {
@@ -269,6 +272,45 @@ describe('createSynergyAnalyzer (game-plan conflict / anti-synergy rules)', () =
     const filler = makeHero({ id: 2, name: 'Filler', tags: ['teamfight'] });
 
     const result = createSynergyAnalyzer(noRealData).analyze(picks([both, filler]));
-    expect(result.explanation.some((l) => /conflicting/i.test(l))).toBe(false);
+    expect(flattenLocalized(result.explanation)).not.toMatch(/eval.synergy.anti/);
+  });
+
+  it('does not treat a dual-tagged late split-pusher as wanting to end early', () => {
+    // Phantom Lancer / Lone Druid style: split_push is the late-game map plan,
+    // not an early-close win condition. Pairing them must not fire the
+    // "press the map and end early" conflict template.
+    const pl = makeHero({
+      id: 12,
+      name: 'Phantom Lancer',
+      tags: ['illusion_based', 'split_push', 'late_game_scaling'],
+    });
+    const ld = makeHero({ id: 80, name: 'Lone Druid', tags: ['split_push', 'late_game_scaling'] });
+
+    const result = createSynergyAnalyzer(noRealData).analyze(picks([pl, ld]));
+    expect(flattenLocalized(result.explanation)).not.toMatch(/eval.synergy.anti/);
+  });
+
+  it('does not flag dual-tagged split_push + pure late_game_scaling as a conflict', () => {
+    // Arc Warden already carried both tags; without skipping dual-tagged early
+    // sides, he was narrated as wanting to end early vs Medusa.
+    const aw = makeHero({ id: 1, name: 'Arc Warden', tags: ['split_push', 'late_game_scaling'] });
+    const medusa = makeHero({ id: 2, name: 'Medusa', tags: ['late_game_scaling'] });
+
+    const result = createSynergyAnalyzer(noRealData).analyze(picks([aw, medusa]));
+    expect(flattenLocalized(result.explanation)).not.toMatch(/eval.synergy.anti/);
+  });
+
+  it('does not treat Tinker as wanting to end early vs a late scaler', () => {
+    // Same dual-tag exemption as PL/LD/AW: Tinker split-pushes after scaling,
+    // so pairing with Medusa must not fire the early-close conflict template.
+    const tinker = makeHero({
+      id: 34,
+      name: 'Tinker',
+      tags: ['poke', 'split_push', 'global_impact', 'late_game_scaling'],
+    });
+    const medusa = makeHero({ id: 94, name: 'Medusa', tags: ['late_game_scaling'] });
+
+    const result = createSynergyAnalyzer(noRealData).analyze(picks([tinker, medusa]));
+    expect(flattenLocalized(result.explanation)).not.toMatch(/eval.synergy.anti/);
   });
 });

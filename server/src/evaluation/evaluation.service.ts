@@ -9,7 +9,8 @@ import { createProSimilarityAnalyzer } from './analyzers/pro-similarity.analyzer
 import { percentileBracket } from './score-narrative';
 import { percentileFor } from './axis-percentiles';
 import type { Analyzer, DraftPick } from './analyzer.interface';
-import type { EvaluationResult, EvaluationSummary, AnalyzerResult } from 'shared';
+import type { EvaluationResult, EvaluationSummary, AnalyzerResult, LocalizedLine } from 'shared';
+import { i18nLine, isI18nLine } from 'shared';
 import { classifyDraftArchetype } from './draft-archetype';
 import { activeCustomTagsForTeam, heroNameSetForTag } from 'shared';
 import { teamHasHiddenCalibrationTags } from '../common/calibration-tags';
@@ -19,11 +20,9 @@ import { formatFundamentalsDescription, fundamentalsTargetAxes } from '../battle
 
 const FUNDAMENTALS = heroNameSetForTag('The Fundamentals');
 
-function fundamentalsDescription(picks: DraftPick[]): string {
+function fundamentalsAxisKeys(picks: DraftPick[]): (typeof AXES)[number][] {
   const count = picks.filter((p) => FUNDAMENTALS.has(p.hero.name)).length;
-  if (count < 2) {
-    return formatFundamentalsDescription([], count);
-  }
+  if (count < 2) return [];
   const battlePicks: BattlePick[] = picks.map((p) => ({
     hero: p.hero,
     assignedRole: p.assignedRole,
@@ -31,7 +30,11 @@ function fundamentalsDescription(picks: DraftPick[]): string {
   const raw = Object.fromEntries(AXES.map((axis) => [axis, axisAverage(battlePicks, axis)])) as Partial<
     Record<(typeof AXES)[number], number>
   >;
-  const axes = fundamentalsTargetAxes(raw, count);
+  return fundamentalsTargetAxes(raw, count);
+}
+
+function fundamentalsDescription(picks: DraftPick[], axes: (typeof AXES)[number][]): string {
+  const count = picks.filter((p) => FUNDAMENTALS.has(p.hero.name)).length;
   return formatFundamentalsDescription(
     axes.map((axis) => AXIS_LABEL[axis]),
     count,
@@ -113,14 +116,26 @@ const BASE_ANALYZERS: Analyzer[] = [
 // Total Score.
 const WEIGHTS: Record<string, number> = buildEvaluationScoreWeights();
 
-// Mirrors EvaluationPanel.tsx's percentileLabel() exactly (same 30/70
-// split as score-narrative.ts's percentileBracket()) — used only for the
-// compact strengths/weaknesses list, not the breakdown cards (which get
-// their percentile pill text formatted client-side, unchanged).
-function formatPercentile(percentile: number): string {
-  if (percentile < 30) return `bottom ${Math.max(1, percentile)}%`;
-  if (percentile < 70) return `${percentile}th percentile`;
-  return `top ${Math.max(1, 100 - percentile)}%`;
+function summaryBand(percentile: number): 'bottom' | 'mid' | 'top' {
+  if (percentile < 30) return 'bottom';
+  if (percentile < 70) return 'mid';
+  return 'top';
+}
+
+function summaryPct(percentile: number, band: 'bottom' | 'mid' | 'top'): string {
+  if (band === 'top') return String(Math.max(1, 100 - percentile));
+  return String(Math.max(1, percentile));
+}
+
+function wrapGameplanBeat(kind: 'leanOn' | 'coverFor', item: AnalyzerResult): LocalizedLine {
+  const last = item.explanation[item.explanation.length - 1];
+  if (isI18nLine(last) && last.key === 'eval.axis.narrative' && last.params) {
+    return i18nLine(`eval.gameplan.${kind}`, last.params);
+  }
+  if (isI18nLine(last)) {
+    return i18nLine(`eval.gameplan.${kind}Other`, { detailKey: last.key, axis: item.key, ...last.params });
+  }
+  return i18nLine(`eval.gameplan.${kind}Other`, { detailKey: 'eval.axis.empty', axis: item.key });
 }
 
 @Injectable()
@@ -164,10 +179,12 @@ export class EvaluationService {
     // Public tags plus revealable-hidden tags whose composition gate was
     // reached during drafting. Permanently hidden tags never enter this
     // collection; Battle still applies their effects normally.
+    const fundAxes = fundamentalsAxisKeys(picks);
     const customTags = activeCustomTagsForTeam(picks.map((p) => p.hero.name)).map((t) => ({
       name: t.name,
       rarity: t.rarity,
-      description: t.name === 'The Fundamentals' ? fundamentalsDescription(picks) : t.description,
+      description: t.name === 'The Fundamentals' ? fundamentalsDescription(picks, fundAxes) : t.description,
+      ...(t.name === 'The Fundamentals' && fundAxes.length > 0 ? { fundamentalsAxes: fundAxes } : {}),
     }));
     const hiddenCalibrationApplied = teamHasHiddenCalibrationTags(picks.map((p) => p.hero));
 
@@ -211,19 +228,30 @@ export class EvaluationService {
       .filter((b) => SUMMARY_KEYS.includes(b.key) && b.score !== null)
       .sort((a, b) => rankValue(b) - rankValue(a));
 
-    // Compact "Label — percentile" line, NOT the full narrative sentence
+    // Compact axis + band line, NOT the full narrative sentence
     // (2026-08-03, by explicit user request — the previous version quoted
     // the same narrative sentence here, in this axis's breakdown card
     // below, AND in the gameplan paragraph for whichever item ranks #1,
     // up to 3x duplication of one sentence). The breakdown grid remains
     // the one place the full narrative lives; this list is now purely a
-    // fast-scan index into it. Same percentile-bucket phrasing as the
-    // client's percentile pill labels (EvaluationPanel.tsx's
-    // percentileLabel()) — kept in sync by hand, same as that comment
-    // already documents for the 30/70 split itself.
+    // fast-scan index into it. Same 30/70 split as the client's
+    // percentile pill labels (EvaluationPanel.tsx).
     const describe = (item: AnalyzerResult) => {
-      const detail = item.percentile !== null ? formatPercentile(item.percentile) : `${item.score}/10`;
-      return `${item.label} — ${detail}`;
+      if (item.percentile !== null) {
+        const band = summaryBand(item.percentile);
+        return i18nLine('eval.summary.axisLine', {
+          axis: item.key,
+          band,
+          pct: summaryPct(item.percentile, band),
+        });
+      }
+      const score = item.score ?? 0;
+      return i18nLine('eval.summary.axisLine', {
+        axis: item.key,
+        band: score < 4 ? 'bottom' : score < 7 ? 'mid' : 'top',
+        pct: String(score),
+        scale: 'score',
+      });
     };
 
     const strengths = ranked.slice(0, 3).map(describe);
@@ -244,32 +272,25 @@ export class EvaluationService {
     breakdown: AnalyzerResult[],
     topStrength: AnalyzerResult,
     topWeakness: AnalyzerResult,
-  ): string {
+  ): LocalizedLine[] {
     const tempo = breakdown.find((b) => b.key === 'tempo');
     const scaling = breakdown.find((b) => b.key === 'scaling');
     const tempoBracket = tempo?.percentile != null ? percentileBracket(tempo.percentile) : 'mid';
     const scalingBracket = scaling?.percentile != null ? percentileBracket(scaling.percentile) : 'mid';
 
-    const winConditionLine = ((): string => {
-      if (tempoBracket === 'high' && scalingBracket !== 'high') {
-        return 'This is a draft that wants to win fast: force early lane swaps and skirmishes, take fights before 25 minutes, and avoid letting the game drag — it does not get meaningfully stronger with time.';
-      }
-      if (tempoBracket !== 'high' && scalingBracket === 'high') {
-        return 'This is a patient draft: farm safely, avoid unnecessary risk in the laning stage, and let the game run past 35-40 minutes, where its late-game power actually shows up.';
-      }
-      if (tempoBracket === 'high' && scalingBracket === 'high') {
-        return 'This draft has real flexibility in how the game is played — it can force an early lead off a fast start, or fall back on genuine late-game scaling if the opening does not go to plan.';
-      }
-      if (tempoBracket === 'low' && scalingBracket === 'low') {
-        return 'This draft has no strong forcing function in either direction — it does not want to rush the early game or stall for a late-game payoff, so small edges and picks have to be manufactured rather than relied on.';
-      }
-      return 'This draft sits in the middle on both game speed and scaling — the win condition depends more on execution and picks than on a built-in early or late-game plan.';
+    const winKey = ((): 'fast' | 'patient' | 'flexible' | 'neither' | 'middle' => {
+      if (tempoBracket === 'high' && scalingBracket !== 'high') return 'fast';
+      if (tempoBracket !== 'high' && scalingBracket === 'high') return 'patient';
+      if (tempoBracket === 'high' && scalingBracket === 'high') return 'flexible';
+      if (tempoBracket === 'low' && scalingBracket === 'low') return 'neither';
+      return 'middle';
     })();
 
-    const strengthLine = `Lean on this: ${topStrength.explanation[topStrength.explanation.length - 1]}`;
-    const weaknessLine = `Cover for this: ${topWeakness.explanation[topWeakness.explanation.length - 1]}`;
-
-    return `${winConditionLine} ${strengthLine} ${weaknessLine}`;
+    return [
+      i18nLine(`eval.gameplan.win.${winKey}`),
+      wrapGameplanBeat('leanOn', topStrength),
+      wrapGameplanBeat('coverFor', topWeakness),
+    ];
   }
 
   // By direct user request (2026-08-06, Blueprint/10-tech-debt-backlog.md,

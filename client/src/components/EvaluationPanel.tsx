@@ -8,6 +8,14 @@ import BadgeRow from './BadgeRow';
 import AxisRadar from './AxisRadar';
 import TopContributorHighlight from './TopContributorHighlight';
 import { track } from '../telemetry';
+import {
+  axisLabel,
+  customTagDescription,
+  customTagName,
+  formatPercentileLabel,
+  parseFundamentalsAxesFromDescription,
+} from '../i18n/display';
+import { renderLocalizedLine, renderLocalizedLines } from '../i18n/narrative';
 import './EvaluationPanel.css';
 
 interface Props {
@@ -19,16 +27,9 @@ function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-// Server narrative is plain English prose (Blueprint's i18n scoping —
-// server-side text isn't translated/marked-up, see score-narrative.ts) —
-// this finds hero names client-side rather than needing the server to
-// return structured segments. Scoped to just this draft's 5 heroes (not
-// the full 127-hero roster): every narrative sentence in Evaluation talks
-// about "this team," never an opponent, so that's the complete set of
-// names that could appear. Longest-first in the alternation so e.g. a
-// hypothetical "Storm" wouldn't shadow "Storm Spirit" (no such collision
-// exists in the current roster, but the ordering costs nothing and avoids
-// relying on that staying true).
+// Server narrative is I18nLine (or legacy English strings from History).
+// Hero names stay in params; we bold this draft's 5 names after i18n render.
+// Longest-first so a hypothetical "Storm" wouldn't shadow "Storm Spirit".
 function boldHeroNames(text: string, heroNames: string[]) {
   if (heroNames.length === 0) return text;
   const pattern = new RegExp(
@@ -44,32 +45,9 @@ function boldHeroNames(text: string, heroNames: string[]) {
   );
 }
 
-// English ordinal suffix. The label used to hardcode "th", which read as
-// "31th percentile" / "42th percentile" for roughly a fifth of all values.
-function ordinal(n: number): string {
-  const mod100 = n % 100;
-  if (mod100 >= 11 && mod100 <= 13) return `${n}th`;
-  switch (n % 10) {
-    case 1:
-      return `${n}st`;
-    case 2:
-      return `${n}nd`;
-    case 3:
-      return `${n}rd`;
-    default:
-      return `${n}th`;
-  }
-}
-
 // Same 30/70 split as the server's percentileBracket() (score-narrative.ts)
 // — kept in sync by hand since this is purely a display-color decision,
 // not scoring logic.
-function percentileLabel(percentile: number): string {
-  if (percentile < 30) return `Bottom ${Math.max(1, percentile)}%`;
-  if (percentile < 70) return `${ordinal(percentile)} percentile`;
-  return `Top ${Math.max(1, 100 - percentile)}%`;
-}
-
 function percentileClass(percentile: number): string {
   if (percentile < 30) return 'percentile-low';
   if (percentile < 70) return 'percentile-mid';
@@ -97,8 +75,9 @@ function verdictKey(score: number): string {
 // ring and the counting number; `score` stays the source for the a11y label,
 // which always states the final value regardless of animation.
 function StarRating({ score, fillPercent }: { score: number; fillPercent: number }) {
+  const { t } = useTranslation();
   return (
-    <span className="star-rating" aria-label={`${(score / 2).toFixed(1)} out of 5 stars`}>
+    <span className="star-rating" aria-label={t('evaluation.starsAria', { score: (score / 2).toFixed(1) })}>
       <span className="star-rating-bg" aria-hidden="true">
         ★★★★★
       </span>
@@ -258,7 +237,9 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
     <div className="evaluation-panel" data-testid="evaluation-result">
       <ScoreHeadline score={result.totalScore} archetypeId={result.archetype?.id} badges={badges} />
 
-      <p className="evaluation-gameplan bracketed">{boldHeroNames(result.summary.gameplan, heroNames)}</p>
+      <p className="evaluation-gameplan bracketed">
+        {boldHeroNames(renderLocalizedLines(t, result.summary.gameplan), heroNames)}
+      </p>
 
       <div className="evaluation-columns">
         <div className="panel bracketed evaluation-radar-panel">
@@ -272,7 +253,7 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
             </div>
             <ul>
               {result.summary.strengths.map((line, i) => (
-                <li key={i}>{boldHeroNames(line, heroNames)}</li>
+                <li key={i}>{boldHeroNames(renderLocalizedLine(t, line), heroNames)}</li>
               ))}
             </ul>
           </div>
@@ -282,7 +263,7 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
             </div>
             <ul>
               {result.summary.weaknesses.map((line, i) => (
-                <li key={i}>{boldHeroNames(line, heroNames)}</li>
+                <li key={i}>{boldHeroNames(renderLocalizedLine(t, line), heroNames)}</li>
               ))}
             </ul>
           </div>
@@ -296,13 +277,27 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
           <div className="evaluation-combos-heading">{t('evaluation.activeCombos')}</div>
           <p className="evaluation-combos-note">{t('evaluation.combosBattleNote')}</p>
           <ul>
-            {result.customTags.map((tag) => (
-              <li key={tag.name}>
-                <span className={`hero-tag-badge rarity-${tag.rarity}`}>{tag.name}</span>
-                <span className="evaluation-combos-description">{tag.description}</span>
-              </li>
-            ))}
-          </ul>
+            {result.customTags.map((tag) => {
+              const fundamentalsAxes =
+                tag.name === 'The Fundamentals'
+                  ? tag.fundamentalsAxes?.length
+                    ? tag.fundamentalsAxes
+                    : parseFundamentalsAxesFromDescription(tag.description)
+                  : undefined;
+              return (
+                <li key={tag.name}>
+                  <span className={`hero-tag-badge rarity-${tag.rarity}`}>
+                    {customTagName(t, tag.name)}
+                  </span>
+                  <span className="evaluation-combos-description">
+                    {customTagDescription(t, tag, {
+                      teamHeroNames: heroNames,
+                      fundamentalsAxes,
+                    })}
+                  </span>
+                </li>
+              );
+            })}          </ul>
           <p className="evaluation-combos-footnote">{t('evaluation.combosBattleSummary')}</p>
         </div>
       )}
@@ -311,14 +306,13 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
         {result.breakdown.map((item) => (
           <div key={item.key} className="panel evaluation-item">
             <div className="evaluation-item-header">
-              <span>{item.label}</span>
+              <span>{axisLabel(t, item.key, item.label)}</span>
               <span className="evaluation-item-scores">
                 {item.percentile !== null && (
                   <span className={`percentile-pill ${percentileClass(item.percentile)}`}>
-                    {percentileLabel(item.percentile)}
+                    {formatPercentileLabel(t, item.percentile)}
                   </span>
-                )}
-                <span className="score">
+                )}                <span className="score">
                   {item.score === null ? t('evaluation.notAvailable') : `${item.score}/10`}
                 </span>
               </span>
@@ -337,7 +331,7 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
 
             <ul>
               {item.explanation.map((line, i) => (
-                <li key={i}>{boldHeroNames(line, heroNames)}</li>
+                <li key={i}>{boldHeroNames(renderLocalizedLine(t, line), heroNames)}</li>
               ))}
             </ul>
             {item.matchUrl && (

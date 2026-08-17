@@ -10,7 +10,7 @@ import LanguageSwitcher from './components/LanguageSwitcher';
 import ThemeToggle from './components/ThemeToggle';
 import Footer from './components/Footer';
 import LegendPanel from './components/LegendPanel';
-import { BUG_REPORT_MAILTO_HREF } from './utils/bugReport';
+import { bugReportMailtoHref } from './utils/bugReport';
 import './App.css';
 
 // Keyed by pathname so React remounts this div on every route change.
@@ -81,7 +81,7 @@ function Mark() {
 }
 
 function SiteHeader() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const barRef = useRef<HTMLElement>(null);
@@ -163,7 +163,7 @@ function SiteHeader() {
               {t(item.key)}
             </NavLink>
           ))}
-          <a href={BUG_REPORT_MAILTO_HREF} onClick={closeMenu}>
+          <a href={bugReportMailtoHref(i18n.language)} onClick={closeMenu}>
             {t('app.nav.reportBug')}
           </a>
         </nav>

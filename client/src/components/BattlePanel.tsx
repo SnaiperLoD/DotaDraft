@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import ScreenFlash from './ScreenFlash';
 import OpponentRollAnimation from './OpponentRollAnimation';
-import { ROLES } from 'shared';
+import { ROLES, isTiFinalsOpponent } from 'shared';
 import type { BattleResultResponse, BattleOpponentHero, BattleMatchup, BattleLaneResult } from 'shared';
 import { api } from '../api/client';
 import { getSubmitterToken } from '../utils/submitterToken';
@@ -16,6 +16,8 @@ import {
   type FightOutcome,
 } from '../utils/runStreak';
 import { track } from '../telemetry';
+import { formatBattleAxisLine } from '../i18n/display';
+import { renderLocalizedLine } from '../i18n/narrative';
 import './BattlePanel.css';
 
 function sleep(ms: number): Promise<void> {
@@ -316,6 +318,30 @@ function PortraitCard({
   );
 }
 
+// Tiny trophy mark for a The International grand-finals opponent.
+// Detection is match-id based (isTiFinalsOpponent) — not leagueName.
+function TiFinalsMark() {
+  const { t } = useTranslation();
+  const label = t('battle.tiFinals');
+  return (
+    <span className="battle-ti-finals" title={label} aria-label={label} role="img" data-testid="battle-ti-finals">
+      <svg viewBox="0 0 16 16" width="12" height="12" fill="none" aria-hidden="true">
+        <path
+          d="M3.2 2.2h9.6v1.4c0 2.7-2.15 4.9-4.8 4.9S3.2 6.3 3.2 3.6V2.2Z"
+          stroke="currentColor"
+          strokeWidth="1.35"
+          strokeLinejoin="round"
+        />
+        <path d="M3.2 3.4H2.1A2.1 2.1 0 0 0 4.2 5.5" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
+        <path d="M12.8 3.4h1.1A2.1 2.1 0 0 1 11.8 5.5" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
+        <path d="M8 8.5v2.2" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
+        <path d="M5.6 12.4h4.8" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
+        <path d="M4.8 14.2h6.4" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
+      </svg>
+    </span>
+  );
+}
+
 // Two rows of full portraits, ordered by role slot (Carry, Mid, Offlane,
 // Soft Support, Hard Support) so the hero facing each of the user's picks
 // lines up in the same column. No score/evaluation here on either side —
@@ -332,11 +358,13 @@ function FaceOff({
   opponentHeroes,
   collisionKey,
   shutdownHeroIds,
+  tiFinals,
 }: {
   myHeroes: DraftHeroView[];
   opponentHeroes: BattleOpponentHero[];
   collisionKey: number;
   shutdownHeroIds: number[];
+  tiFinals: boolean;
 }) {
   const { t } = useTranslation();
   const roleOrder = ROLES as readonly string[];
@@ -381,7 +409,10 @@ function FaceOff({
             />
           ))}
         </div>
-        <span className="faceoff-side-label">{t('battle.sideOpponent')}</span>
+        <span className="faceoff-side-label">
+          {t('battle.sideOpponent')}
+          {tiFinals && <TiFinalsMark />}
+        </span>
       </div>
     </div>
   );
@@ -487,6 +518,7 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
   const winStreak = currentWinStreak(runOutcomes);
   const loseStreak = currentLoseStreak(runOutcomes);
   const peakWinStreak = bestWinStreak(runOutcomes);
+  const tiFinals = isTiFinalsOpponent(result?.opponent);
 
   return (
     <div className="battle-panel">
@@ -602,6 +634,7 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
 
           <p className="battle-vs">
             {t('battle.vs')}{' '}
+            {tiFinals && <TiFinalsMark />}
             {result.opponent.teamName
               ? `${result.opponent.teamName}${result.opponent.leagueName ? ` (${result.opponent.leagueName})` : ''}`
               : result.opponent.source === 'pro'
@@ -627,6 +660,7 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
             opponentHeroes={result.opponent.heroes}
             collisionKey={battleCount}
             shutdownHeroIds={result.shutdownHeroIds}
+            tiFinals={tiFinals}
           />
 
           <LaneMatchups lanes={result.lanes ?? []} />
@@ -665,7 +699,7 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
                 <div className="battle-list-heading">{t('battle.decidingFactors')}</div>
                 <ul>
                   {result.winningHighlights.map((h, i) => (
-                    <li key={i}>{boldHeroNames(h, battleHeroNames)}</li>
+                    <li key={i}>{boldHeroNames(renderLocalizedLine(t, h), battleHeroNames)}</li>
                   ))}
                 </ul>
               </div>
@@ -676,7 +710,7 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
                 <div className="battle-list-heading">{t('battle.advantages')}</div>
                 <ul>
                   {result.advantages.map((a, i) => (
-                    <li key={i}>{boldHeroNames(a, battleHeroNames)}</li>
+                    <li key={i}>{boldHeroNames(formatBattleAxisLine(t, a, 'advantage'), battleHeroNames)}</li>
                   ))}
                 </ul>
               </div>
@@ -687,7 +721,9 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
                 <div className="battle-list-heading">{t('battle.disadvantages')}</div>
                 <ul>
                   {result.disadvantages.map((d, i) => (
-                    <li key={i}>{boldHeroNames(d, battleHeroNames)}</li>
+                    <li key={i}>
+                      {boldHeroNames(formatBattleAxisLine(t, d, 'disadvantage'), battleHeroNames)}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -698,7 +734,7 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
               <p className="battle-explanation-blurb">{t('battle.explanationBlurb')}</p>
               <div className="battle-explanation-prose">
                 {result.explanation.map((line, i) => (
-                  <p key={i}>{boldHeroNames(line, battleHeroNames)}</p>
+                  <p key={i}>{boldHeroNames(renderLocalizedLine(t, line), battleHeroNames)}</p>
                 ))}
               </div>
               <BattleStory result={result} heroNames={battleHeroNames} />

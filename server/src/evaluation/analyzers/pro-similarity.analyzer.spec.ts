@@ -2,6 +2,7 @@ import { createProSimilarityAnalyzer } from './pro-similarity.analyzer';
 import type { Hero } from 'shared';
 import type { ProComposition } from '../../pro-match/pro-match.service';
 import { makeHero, picks } from '../../test-utils/hero-factory';
+import { flattenLocalized } from '../../test-utils/localized-text';
 
 function hero(id: number, name: string): Hero {
   return makeHero({ id, name });
@@ -12,7 +13,7 @@ describe('createProSimilarityAnalyzer', () => {
     const analyzer = createProSimilarityAnalyzer([]);
     const result = analyzer.analyze(picks([hero(1, 'A'), hero(2, 'B')]));
     expect(result.score).toBeNull();
-    expect(result.explanation[0]).toMatch(/no professional match data/i);
+    expect(flattenLocalized(result.explanation)).toMatch(/eval.pro.none/);
   });
 
   it('returns null (not a low score) when the best overlap is below the 3-hero threshold', () => {
@@ -23,8 +24,8 @@ describe('createProSimilarityAnalyzer', () => {
     // Only 2 of 5 heroes overlap — below MIN_OVERLAP_FOR_SIMILARITY.
     const result = analyzer.analyze(picks([hero(1, 'A'), hero(2, 'B'), hero(3, 'C')]));
     expect(result.score).toBeNull();
-    expect(result.explanation[0]).toMatch(/does not share|no imported professional draft/i);
-    expect(result.explanation[0]).toContain('closest match: 2 of 5');
+    expect(flattenLocalized(result.explanation)).toMatch(/eval.pro.tooFew/);
+    expect(flattenLocalized(result.explanation)).toContain('2');
   });
 
   it('returns null for zero overlap the same way as below-threshold overlap', () => {
@@ -34,7 +35,7 @@ describe('createProSimilarityAnalyzer', () => {
     const analyzer = createProSimilarityAnalyzer(compositions);
     const result = analyzer.analyze(picks([hero(1, 'A'), hero(2, 'B')]));
     expect(result.score).toBeNull();
-    expect(result.explanation[0]).toContain('closest match: 0 of 5');
+    expect(flattenLocalized(result.explanation)).toContain('0');
   });
 
   it('picks the composition with the highest overlap and names the shared heroes once 3+ heroes match', () => {
@@ -45,9 +46,9 @@ describe('createProSimilarityAnalyzer', () => {
     const analyzer = createProSimilarityAnalyzer(compositions);
     const result = analyzer.analyze(picks([hero(1, 'Axe'), hero(2, 'Zeus'), hero(3, 'Lion')]));
     expect(result.score).toBe(6); // 3 of 5 heroes overlap
-    expect(result.explanation[0]).toContain('Axe, Zeus, Lion');
-    expect(result.explanation[0]).toContain('Team Secret');
-    expect(result.explanation[0]).toContain('TI');
+    expect(flattenLocalized(result.explanation)).toContain('Axe, Zeus, Lion');
+    expect(flattenLocalized(result.explanation)).toContain('Team Secret');
+    expect(flattenLocalized(result.explanation)).toContain('TI');
     expect(result.matchUrl).toBe('https://www.opendota.com/matches/2');
   });
 

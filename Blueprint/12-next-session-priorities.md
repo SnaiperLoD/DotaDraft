@@ -1,24 +1,12 @@
 # Next Session Priorities
 
-Updated after the 2026-08-17 autonomy pass (backlog slim → Fundamentals axes →
-hosting prep → CI → deeper tests → Stryker mutate expansion). This file is a
-handoff and triage guide; `10-tech-debt-backlog.md` remains the detailed source
-of truth. Deploy notes: `13-deploy.md`.
-
-Major work now landed: calibration/research tooling and evidence; calibration
-governance; current TI 2026 data and freshness-weighted opponents; named draft
-archetypes (incl. Tempo); Battle run/streak/history features; structured lane
-context with a **server-owned** grounded story + richer Explanation; correct
-hidden/revealable-tag semantics; Playwright on the critical path; Tapalka
-static fallback; a broad responsive UI pass; **Git no longer tracks raw
-multi-seed/research dumps** (`artifacts/README.md`); a **local funnel
-telemetry buffer** (`client/src/telemetry/`); **Fundamentals Active Combos
-names the boosted axes**; **Docker Compose hosting prep**; **CI on PRs with
-full build + Docker image build** (lint/format still soft).
+Updated 2026-08-17 after the i18n + TI-finals + late-split-pusher pass.
+Handoff / triage; `10-tech-debt-backlog.md` is the detailed source of truth.
+Deploy notes: `13-deploy.md`.
 
 **Status check:** hosting files are in-repo — pick a host and finish DNS/TLS.
-`npm run lint` / `format:check` may still be red on an old scripts pile — do
-not mass-format as a drive-by.
+Live Eval/Battle copy is RU/EN via `I18nLine`. `npm run lint` / `format:check`
+may still be red on an old scripts pile — do not mass-format as a drive-by.
 
 ---
 
@@ -43,6 +31,20 @@ Do not start another coefficient/tag/weight pass merely because an outlier
 looks ugly. Pick one hypothesis, define a holdout and acceptance metric, get
 explicit user approval, run reproducible seeds into `artifacts/` (not
 `server/data/` commits), and compare with the production baseline.
+
+## Completed this pass (2026-08-17, later)
+
+- **Full product i18n** — server Eval/Battle narratives emit `I18nLine`
+  (`eval.*`, `battle.explain.*`, `battle.highlight.*`); client renders via
+  `i18n/narrative.ts` + catalogs. Chrome/axes/tags/badges/percentiles/Tapalka
+  already catalogued. Legacy History English strings still display as stored.
+- **TI Finals badge** — frozen grand-final match IDs (TI 2012–2025), icon on
+  Battle faceoff + result opponent. Not leagueName. Append IDs after TI 2026 GF.
+- **Late split-pushers** — Phantom Lancer and Tinker got `late_game_scaling`;
+  dual-tagged heroes are not the early side of split_push × late anti-synergy
+  (Lycan+Medusa still flags).
+- **TI form copy** — dropped the win-rate tie-break sentence on the draft
+  waiting-room table.
 
 ## Completed this pass (2026-08-17)
 

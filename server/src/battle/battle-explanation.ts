@@ -4,12 +4,12 @@ import type {
   ConfidenceTier,
   Hero,
   HeroEvaluationValues,
+  LocalizedLine,
   ResolvedOutcome,
 } from 'shared';
-import { activeCustomTagsForTeam } from 'shared';
+import { activeCustomTagsForTeam, i18nLine } from 'shared';
 import { isHardCarry } from '../common/hard-carry';
-import { AXIS_LABEL, bestMatchupEdge, bestSynergyPair, type BattlePick, type MatchupLookup } from './battle-resolution';
-import { LANE_LABEL } from './battle-lanes';
+import { bestMatchupEdge, bestSynergyPair, type BattlePick, type MatchupLookup } from './battle-resolution';
 import {
   INITIATING_FLOOR,
   MATCHUP_FLOOR,
@@ -26,12 +26,10 @@ const AXIS_DELTA_FLOOR = 0.3;
 const TEMPO_SPLIT_FLOOR = 0.75;
 const TAG_SKIP = new Set(['High Skill', 'Mechanical']);
 
+type Side = 'yours' | 'opponent';
+
 function pct(winRate: number): string {
   return String(Math.round(winRate * 100));
-}
-
-function describeAxis(axis: keyof HeroEvaluationValues, favorsA: boolean): string {
-  return `${favorsA ? 'an edge in' : 'a deficit in'} ${AXIS_LABEL[axis]}`;
 }
 
 function heroesOf(picks: BattlePick[]): Hero[] {
@@ -42,11 +40,8 @@ function namesOf(picks: BattlePick[]): string[] {
   return picks.map((pick) => pick.hero.name);
 }
 
-function joinNames(names: string[]): string {
-  if (names.length === 0) return '';
-  if (names.length === 1) return names[0];
-  if (names.length === 2) return `${names[0]} and ${names[1]}`;
-  return `${names.slice(0, -1).join(', ')}, and ${names[names.length - 1]}`;
+function pipeNames(names: string[]): string {
+  return names.join('|');
 }
 
 function leaderOn(picks: BattlePick[], axis: keyof HeroEvaluationValues): BattlePick | undefined {
@@ -101,60 +96,64 @@ export interface BattleExplanationContext {
   hardCarryCountB?: number;
 }
 
-function frameLine(ctx: BattleExplanationContext): string {
+function frameLine(ctx: BattleExplanationContext): LocalizedLine {
   const { advantageDirection, confidenceTier, topAxisDelta } = ctx;
   if (advantageDirection === 'Even') {
-    return `This is a close matchup with no clear favorite (${confidenceTier} confidence) — ${describeAxis(topAxisDelta.axis, topAxisDelta.delta > 0)} for your draft was the closest thing to an edge.`;
+    return i18nLine('battle.explain.frame.even', {
+      confidence: confidenceTier,
+      axis: topAxisDelta.axis,
+      edge: topAxisDelta.delta > 0 ? 'edge' : 'deficit',
+    });
   }
   const favoredIsA = advantageDirection === 'A';
-  const favoredLabel = favoredIsA ? 'Your draft' : "Opponent's draft";
   const axisFavorsFavoredSide = favoredIsA === topAxisDelta.delta > 0;
-  return `${favoredLabel} leaned ahead overall (${confidenceTier} confidence), with ${describeAxis(topAxisDelta.axis, axisFavorsFavoredSide)} standing out.`;
+  return i18nLine('battle.explain.frame.ahead', {
+    side: favoredIsA ? 'yours' : 'opponent',
+    confidence: confidenceTier,
+    axis: topAxisDelta.axis,
+    edge: axisFavorsFavoredSide ? 'edge' : 'deficit',
+  });
 }
 
-function highSkillLine(hero: Hero): string {
-  return `${hero.name}'s own play was the deciding swing here — real match data shows outcomes around this hero carry more variance than the stat sheet alone suggests, and this game landed on the wrong side of it for the favorite.`;
-}
-
-function clockLine(mine: BattlePick[], opponent: BattlePick[], winners: BattlePick[]): string | null {
+function clockLine(mine: BattlePick[], opponent: BattlePick[], winners: BattlePick[]): LocalizedLine | null {
   const myTempo = teamAvg(mine, 'tempo');
   const theirTempo = teamAvg(opponent, 'tempo');
   const myScaling = teamAvg(mine, 'scaling');
   const theirScaling = teamAvg(opponent, 'scaling');
-  const faster =
+  const faster: Side | null =
     myTempo - theirTempo >= TEMPO_SPLIT_FLOOR
-      ? 'Your draft'
+      ? 'yours'
       : theirTempo - myTempo >= TEMPO_SPLIT_FLOOR
-        ? "The opponent's draft"
+        ? 'opponent'
         : null;
-  const scaler =
+  const scaler: Side | null =
     myScaling - theirScaling >= TEMPO_SPLIT_FLOOR
-      ? 'your draft'
+      ? 'yours'
       : theirScaling - myScaling >= TEMPO_SPLIT_FLOOR
-        ? "the opponent's draft"
+        ? 'opponent'
         : null;
   const { band, key } = roshanBand(winners);
 
-  if (faster && scaler && faster.toLowerCase() !== scaler) {
-    return `${faster} wants this over now; ${scaler} is the one that gets paid if the game lives. That split points at a ${band} minute window — whose clock this matchup is on, not a reconstructed Roshan take.`;
+  if (faster && scaler && faster !== scaler) {
+    return i18nLine('battle.explain.clock.split', { faster, scaler, band });
   }
   if (key === 'conversionRoshanEarly') {
-    return `The winning side is a tempo draft, not a scaler — this matchup wants to be decided in the ${band} minute window, before the other roster's late game comes online.`;
+    return i18nLine('battle.explain.clock.early', { band });
   }
   if (key === 'conversionRoshanLate') {
-    return `The winning side scales harder than it plays early — this matchup is playing for the ${band} minute window. If it gets there, the late game is the actual win condition.`;
+    return i18nLine('battle.explain.clock.late', { band });
   }
   return null;
 }
 
-function fightShapeLine(mine: BattlePick[], opponent: BattlePick[]): string | null {
+function fightShapeLines(mine: BattlePick[], opponent: BattlePick[]): LocalizedLine[] {
   const myDriver = maxByAxes(mine, 'initiating', 'skirmish_rate');
   const theirDriver = maxByAxes(opponent, 'initiating', 'skirmish_rate');
   const mySaver = maxByAxes(mine, 'saving');
   const theirSaver = maxByAxes(opponent, 'saving');
   const myInit = myDriver ? axisOf(myDriver, 'initiating') : 0;
   const theirInit = theirDriver ? axisOf(theirDriver, 'initiating') : 0;
-  const parts: string[] = [];
+  const lines: LocalizedLine[] = [];
 
   if (
     myDriver &&
@@ -162,57 +161,62 @@ function fightShapeLine(mine: BattlePick[], opponent: BattlePick[]): string | nu
     myDriver.hero.id !== theirDriver.hero.id &&
     (myInit >= INITIATING_FLOOR || theirInit >= INITIATING_FLOOR)
   ) {
-    parts.push(
-      `${myDriver.hero.name} is the one who starts fights on your side; ${theirDriver.hero.name} is the one who has to answer.`,
+    lines.push(
+      i18nLine('battle.explain.shape.duel', { mine: myDriver.hero.name, theirs: theirDriver.hero.name }),
     );
   } else if (myDriver && myInit >= INITIATING_FLOOR) {
-    parts.push(`${myDriver.hero.name} is the one who actually starts fights on your side.`);
+    lines.push(i18nLine('battle.explain.shape.mineStarts', { hero: myDriver.hero.name }));
   } else if (theirDriver && theirInit >= INITIATING_FLOOR) {
-    parts.push(`${theirDriver.hero.name} is the one who starts fights for the opponent.`);
+    lines.push(i18nLine('battle.explain.shape.oppStarts', { hero: theirDriver.hero.name }));
   }
 
   const mySave = mySaver && axisOf(mySaver, 'saving') >= SAVING_FLOOR ? mySaver : undefined;
   const theirSave = theirSaver && axisOf(theirSaver, 'saving') >= SAVING_FLOOR ? theirSaver : undefined;
   if (mySave && theirSave && mySave.hero.id !== theirSave.hero.id) {
-    parts.push(
-      `${mySave.hero.name} is the save on your side; ${theirSave.hero.name} is theirs — both actually clear a real saving bar, not a token 3 on the sheet.`,
-    );
+    lines.push(i18nLine('battle.explain.shape.savesBoth', { mine: mySave.hero.name, theirs: theirSave.hero.name }));
   } else if (mySave) {
-    parts.push(`${mySave.hero.name} is the only one on the board who actually saves people at a real level.`);
+    lines.push(i18nLine('battle.explain.shape.saveMine', { hero: mySave.hero.name }));
   } else if (theirSave) {
-    parts.push(`${theirSave.hero.name} is the save the opponent brought — your side doesn't have one at that level.`);
+    lines.push(i18nLine('battle.explain.shape.saveOpp', { hero: theirSave.hero.name }));
   }
 
-  return parts.length > 0 ? parts.join(' ') : null;
+  return lines;
+}
+
+function axisNamed(delta: { axis: keyof HeroEvaluationValues }, side: BattlePick[]): string {
+  const hero = leaderOn(side, delta.axis);
+  return hero ? `${delta.axis}:${hero.hero.name}` : delta.axis;
 }
 
 function axisPictureLine(
   axisDeltas: BattleExplanationContext['axisDeltas'],
   mine: BattlePick[],
   opponent: BattlePick[],
-): string | null {
+): LocalizedLine | null {
   const leads = axisDeltas.filter((delta) => Math.abs(delta.delta) >= AXIS_DELTA_FLOOR).slice(0, 3);
   if (leads.length === 0) return null;
 
   const yours = leads.filter((delta) => delta.delta > 0);
   const theirs = leads.filter((delta) => delta.delta < 0);
-  const named = (delta: (typeof leads)[number], side: BattlePick[]): string => {
-    const hero = leaderOn(side, delta.axis);
-    const label = AXIS_LABEL[delta.axis];
-    return hero ? `${label} (${hero.hero.name})` : label;
-  };
 
   if (yours.length > 0 && theirs.length > 0) {
-    return `On the sheet, your draft leads in ${yours.map((d) => named(d, mine)).join(' and ')}; the hole is ${theirs.map((d) => named(d, opponent)).join(' and ')}.`;
+    return i18nLine('battle.explain.sheet.both', {
+      yours: yours.map((d) => axisNamed(d, mine)).join('|'),
+      hole: theirs.map((d) => axisNamed(d, opponent)).join('|'),
+    });
   }
   if (yours.length > 0) {
-    return `On the sheet, your draft's real pull is ${yours.map((d) => named(d, mine)).join(' and ')}.`;
+    return i18nLine('battle.explain.sheet.yours', {
+      yours: yours.map((d) => axisNamed(d, mine)).join('|'),
+    });
   }
-  return `On the sheet, the opponent's draft is the one leading in ${theirs.map((d) => named(d, opponent)).join(' and ')}.`;
+  return i18nLine('battle.explain.sheet.theirs', {
+    theirs: theirs.map((d) => axisNamed(d, opponent)).join('|'),
+  });
 }
 
-function laneLine(lanes: BattleLaneResult[] | undefined): string | null {
-  if (!lanes || lanes.length === 0) return null;
+function laneLines(lanes: BattleLaneResult[] | undefined): LocalizedLine[] {
+  if (!lanes || lanes.length === 0) return [];
   const decided = lanes
     .filter((lane) => lane.winner !== 'even' && lane.topPair)
     .slice()
@@ -220,96 +224,123 @@ function laneLine(lanes: BattleLaneResult[] | undefined): string | null {
       (a, b) => Math.abs((b.topPair?.winRate ?? 0.5) - 0.5) - Math.abs((a.topPair?.winRate ?? 0.5) - 0.5),
     )
     .slice(0, 3);
-  if (decided.length === 0) return null;
+  if (decided.length === 0) return [];
 
+  const intro = i18nLine(decided.length === 1 ? 'battle.explain.lanes.wash' : 'battle.explain.lanes.uneven');
   const bits = decided.map((lane) => {
     const pair = lane.topPair!;
-    const label = LANE_LABEL[lane.lane];
     const chance =
       lane.winRate === null
-        ? null
+        ? ''
         : lane.winner === 'opponent'
           ? pct(1 - lane.winRate)
           : pct(lane.winRate);
     const pairPct = pct(pair.winRate);
+    const params: Record<string, string> = {
+      lane: lane.lane,
+      hero: pair.hero,
+      vs: pair.vs,
+      pairPct,
+    };
+    if (chance) params.chance = chance;
     if (lane.winner === 'mine') {
-      return chance
-        ? `your ${label} was a ${chance}% lean because ${pair.hero} into ${pair.vs} (${pairPct}%) is a real matchup`
-        : `your ${label} leans this way because ${pair.hero} into ${pair.vs} is a real matchup edge`;
+      return i18nLine(chance ? 'battle.explain.lane.mineLean' : 'battle.explain.lane.mineEdge', params);
     }
-    return chance
-      ? `the ${label} went the other way — ${pair.hero} into ${pair.vs} is a ${pairPct}% hole from your side`
-      : `the ${label} went the other way because ${pair.hero} into ${pair.vs} is a real matchup edge`;
+    return i18nLine(chance ? 'battle.explain.lane.oppHole' : 'battle.explain.lane.oppEdge', params);
   });
 
-  if (bits.length === 1) return `Lanes weren't a wash: ${bits[0]}.`;
-  return `Lanes weren't even. ${bits[0].charAt(0).toUpperCase()}${bits[0].slice(1)}; ${bits.slice(1).join('; ')}.`;
+  return [intro, ...bits];
 }
 
-function catchAndComboLine(
+function catchAndComboLines(
   winners: Hero[],
   losers: Hero[],
   lookup: MatchupLookup,
-  winnerLabel: string,
-  loserLabel: string,
+  winner: Side,
+  loser: Side,
   lanePairKeys: Set<string>,
-): string | null {
+): LocalizedLine[] {
   const catches = topMatchups(winners, losers, lookup, 3).filter(
     (row) => !lanePairKeys.has(`${row.hero}|${row.vs}`),
   );
   const combo = usableCombo(bestSynergyPair(winners, lookup));
   const leftoverCombo = usableCombo(bestSynergyPair(losers, lookup));
-  const parts: string[] = [];
+  const lines: LocalizedLine[] = [];
 
   if (catches.length > 0) {
     const first = catches[0];
-    parts.push(
-      `The catch that actually matters for ${winnerLabel} is ${first.hero} into ${first.vs} (${pct(first.winRate)}%)`,
+    lines.push(
+      i18nLine('battle.explain.catch.first', {
+        winner,
+        hero: first.hero,
+        vs: first.vs,
+        pct: pct(first.winRate),
+      }),
     );
     if (catches[1]) {
-      parts.push(`${catches[1].hero} into ${catches[1].vs} (${pct(catches[1].winRate)}%) is a second real hole`);
+      lines.push(
+        i18nLine('battle.explain.catch.second', {
+          hero: catches[1].hero,
+          vs: catches[1].vs,
+          pct: pct(catches[1].winRate),
+        }),
+      );
     }
   }
   if (combo) {
-    parts.push(
-      `${combo.heroA} + ${combo.heroB} is a real pairing on the winning side (${pct(combo.winRate)}%) — not a vibe, a co-pick that actually wins games together`,
+    lines.push(
+      i18nLine('battle.explain.combo.win', {
+        heroA: combo.heroA,
+        heroB: combo.heroB,
+        pct: pct(combo.winRate),
+      }),
     );
   }
   if (
     leftoverCombo &&
     (!combo || leftoverCombo.heroA !== combo.heroA || leftoverCombo.heroB !== combo.heroB)
   ) {
-    parts.push(
-      `${loserLabel} still had ${leftoverCombo.heroA} + ${leftoverCombo.heroB} (${pct(leftoverCombo.winRate)}%) — a real combo that didn't carry the rest of the sheet`,
+    lines.push(
+      i18nLine('battle.explain.combo.leftover', {
+        loser,
+        heroA: leftoverCombo.heroA,
+        heroB: leftoverCombo.heroB,
+        pct: pct(leftoverCombo.winRate),
+      }),
     );
   }
 
-  if (parts.length === 0) return null;
-  return `${parts.join('; ')}.`;
+  return lines;
 }
 
-function carryLateLine(mine: BattlePick[], opponent: BattlePick[], lookup: MatchupLookup): string | null {
+function carryLateLines(mine: BattlePick[], opponent: BattlePick[], lookup: MatchupLookup): LocalizedLine[] {
   const myCarry = pickByRole(mine, 'Carry');
   const theirCarry = pickByRole(opponent, 'Carry');
-  if (!myCarry || !theirCarry) return null;
+  if (!myCarry || !theirCarry) return [];
   const carryMatchup = lookup.getMatchupWinRate(myCarry.hero.id, theirCarry.hero.id);
   const myScale = axisOf(myCarry, 'scaling');
   const theirScale = axisOf(theirCarry, 'scaling');
   const scaleLeader =
     myScale !== theirScale ? (myScale > theirScale ? myCarry.hero.name : theirCarry.hero.name) : '';
 
-  let matchupClause: string;
+  const lines: LocalizedLine[] = [
+    i18nLine('battle.explain.carry.late', { mine: myCarry.hero.name, theirs: theirCarry.hero.name }),
+  ];
+
   if (carryMatchup === null) {
-    matchupClause = `there isn't a real individual matchup row for ${myCarry.hero.name} into ${theirCarry.hero.name}`;
+    lines.push(
+      i18nLine('battle.explain.carry.noRow', { mine: myCarry.hero.name, theirs: theirCarry.hero.name }),
+    );
   } else if (carryMatchup > MATCHUP_FLOOR) {
-    matchupClause = `${myCarry.hero.name} owns that matchup at ${pct(carryMatchup)}%`;
+    lines.push(i18nLine('battle.explain.carry.mineOwns', { hero: myCarry.hero.name, pct: pct(carryMatchup) }));
   } else if (carryMatchup < 1 - MATCHUP_FLOOR) {
-    matchupClause = `${theirCarry.hero.name} owns that matchup at ${pct(1 - carryMatchup)}%`;
+    lines.push(
+      i18nLine('battle.explain.carry.oppOwns', { hero: theirCarry.hero.name, pct: pct(1 - carryMatchup) }),
+    );
   } else {
-    matchupClause = `the individual matchup is a coin flip (${pct(carryMatchup)}%)`;
+    lines.push(i18nLine('battle.explain.carry.flip', { pct: pct(carryMatchup) }));
   }
 
-  let scaleClause = '';
   if (scaleLeader && carryMatchup !== null) {
     const matchupWinner =
       carryMatchup > MATCHUP_FLOOR
@@ -318,126 +349,115 @@ function carryLateLine(mine: BattlePick[], opponent: BattlePick[], lookup: Match
           ? theirCarry.hero.name
           : '';
     if (matchupWinner && scaleLeader === matchupWinner) {
-      scaleClause = ', and they scale harder on the sheet too';
+      lines.push(i18nLine('battle.explain.carry.scaleSame'));
     } else if (matchupWinner && scaleLeader !== matchupWinner) {
-      scaleClause = `, but ${scaleLeader} is the one who actually scales harder — if this lives, that tension is the late game`;
+      lines.push(i18nLine('battle.explain.carry.scaleTension', { scaler: scaleLeader }));
     } else {
-      scaleClause = `, and ${scaleLeader} is the one who scales harder`;
+      lines.push(i18nLine('battle.explain.carry.scaleAlso', { scaler: scaleLeader }));
     }
   } else if (scaleLeader) {
-    scaleClause = ` — ${scaleLeader} is still the one who scales harder on the sheet`;
+    lines.push(i18nLine('battle.explain.carry.scaleOnly', { scaler: scaleLeader }));
   }
 
-  return `Late, it's ${myCarry.hero.name} against ${theirCarry.hero.name}. ${matchupClause.charAt(0).toUpperCase()}${matchupClause.slice(1)}${scaleClause}.`;
+  return lines;
 }
 
-function tagsLine(mine: BattlePick[], opponent: BattlePick[]): string | null {
+function tagsLine(mine: BattlePick[], opponent: BattlePick[]): LocalizedLine | null {
   const mineTags = visibleTags(mine);
   const theirTags = visibleTags(opponent);
   if (mineTags.length === 0 && theirTags.length === 0) return null;
   if (mineTags.length > 0 && theirTags.length > 0) {
-    return `On the board: your side is running ${joinNames(mineTags)}; theirs has ${joinNames(theirTags)}.`;
+    return i18nLine('battle.explain.tags.both', { mine: pipeNames(mineTags), theirs: pipeNames(theirTags) });
   }
   if (mineTags.length > 0) {
-    return `On the board, your side is running ${joinNames(mineTags)} — that's a real draft mechanic, not flavor text.`;
+    return i18nLine('battle.explain.tags.mine', { tags: pipeNames(mineTags) });
   }
-  return `On the board, the opponent is running ${joinNames(theirTags)} — that's a real draft mechanic, not flavor text.`;
+  return i18nLine('battle.explain.tags.opp', { tags: pipeNames(theirTags) });
 }
 
-function shutdownLine(mine: Hero[] | undefined, opponent: Hero[] | undefined): string | null {
+function shutdownLines(mine: Hero[] | undefined, opponent: Hero[] | undefined): LocalizedLine[] {
   const myNames = (mine ?? []).map((hero) => hero.name);
   const theirNames = (opponent ?? []).map((hero) => hero.name);
-  const parts: string[] = [];
+  const lines: LocalizedLine[] = [];
   if (myNames.length > 0) {
-    parts.push(
-      `${joinNames(myNames)} ${myNames.length === 1 ? 'is' : 'are'} in shutdown into this lineup — every individual matchup sits below their own average`,
-    );
+    lines.push(i18nLine('battle.explain.shutdown.mine', { names: pipeNames(myNames), count: String(myNames.length) }));
   }
   if (theirNames.length > 0) {
-    parts.push(
-      `${joinNames(theirNames)} on the other side ${theirNames.length === 1 ? 'is' : 'are'} similarly boxed in`,
+    lines.push(
+      i18nLine('battle.explain.shutdown.opp', { names: pipeNames(theirNames), count: String(theirNames.length) }),
     );
   }
-  if (parts.length === 0) return null;
-  return `${parts.join('; ')}.`;
+  return lines;
 }
 
-function hardCarryLine(countA: number | undefined, countB: number | undefined): string | null {
+function hardCarryLines(countA: number | undefined, countB: number | undefined): LocalizedLine[] {
   const mine = countA ?? 0;
   const theirs = countB ?? 0;
-  const parts: string[] = [];
+  const lines: LocalizedLine[] = [];
   if (mine >= 3) {
-    parts.push(
-      `${mine === 3 ? 'Three' : String(mine)} hard-carries on your side is a farm-split the sheet already discounts — more late-game bodies, less of everything else`,
-    );
+    lines.push(i18nLine('battle.explain.hardCarry.mine', { count: String(mine) }));
   }
   if (theirs >= 3) {
-    parts.push(
-      `the opponent stacked ${theirs} hard-carries, same tax`,
-    );
+    lines.push(i18nLine('battle.explain.hardCarry.opp', { count: String(theirs) }));
   }
-  if (parts.length === 0) return null;
-  return `${parts.join('; ')}.`;
+  return lines;
 }
 
 function closingLine(
   advantageDirection: AdvantageDirection,
   resolvedOutcome: ResolvedOutcome,
-): string {
+): LocalizedLine {
   const favoredIsA = advantageDirection === 'A';
   const userWon = resolvedOutcome === 'Win';
   if (advantageDirection === 'Even') {
-    return userWon
-      ? 'Your draft came out on top in what was essentially a coin flip.'
-      : 'Your draft came up just short in what was essentially a coin flip.';
+    return i18nLine(userWon ? 'battle.explain.close.evenWin' : 'battle.explain.close.evenLose');
   }
   if (favoredIsA) {
-    return userWon
-      ? 'That advantage held up.'
-      : 'That advantage should have held up — this loss runs against the grain.';
+    return i18nLine(userWon ? 'battle.explain.close.favoredHeld' : 'battle.explain.close.favoredUpset');
   }
-  return userWon
-    ? "The opponent's edge should have held up — this win runs against the grain."
-    : 'That edge held up here.';
+  return i18nLine(userWon ? 'battle.explain.close.underdogWin' : 'battle.explain.close.underdogHeld');
 }
 
-function upsetReasonsLine(ctx: BattleExplanationContext, underdog: Hero[], favorite: Hero[]): string | null {
+function upsetReasonLines(ctx: BattleExplanationContext, underdog: Hero[], favorite: Hero[]): LocalizedLine[] {
   const favoredIsA = ctx.advantageDirection === 'A';
-  const underdogLabel = favoredIsA ? "opponent's draft" : 'your draft';
+  const underdogSide: Side = favoredIsA ? 'opponent' : 'yours';
   const matchup = bestMatchupEdge(underdog, favorite, ctx.lookup);
   const synergy = bestSynergyPair(underdog, ctx.lookup);
   const underdogBestAxis = [...ctx.axisDeltas]
     .filter((delta) => (favoredIsA ? delta.delta < 0 : delta.delta > 0))
     .sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta))[0];
 
-  const dataReasons: string[] = [];
+  const params: Record<string, string> = {
+    lead: ctx.highSkillSwingHero ? 'top' : 'but',
+    underdog: underdogSide,
+  };
   if (matchup) {
-    dataReasons.push(
-      `${matchup.hero}'s individual matchup into ${matchup.vs} favored ${underdogLabel} directly`,
-    );
+    params.matchupHero = matchup.hero;
+    params.matchupVs = matchup.vs;
   }
   if (synergy) {
-    dataReasons.push(
-      `the ${synergy.heroA} + ${synergy.heroB} combination gave ${underdogLabel} a real, data-backed edge`,
-    );
+    params.comboA = synergy.heroA;
+    params.comboB = synergy.heroB;
   }
   if (underdogBestAxis) {
-    dataReasons.push(
-      `${underdogLabel} actually led in ${AXIS_LABEL[underdogBestAxis.axis]} despite trailing on the overall picture`,
-    );
+    params.axis = underdogBestAxis.axis;
   }
 
-  if (dataReasons.length > 0) {
-    const lead = ctx.highSkillSwingHero ? 'On top of that, ' : 'But ';
-    return `${lead}${underdogLabel} had real advantages of its own — ${dataReasons.join('; ')} — enough to make this upset plausible even against a stronger overall draft.`;
+  if (matchup || synergy || underdogBestAxis) {
+    return [i18nLine('battle.explain.upset.reasons', params)];
   }
   if (!ctx.highSkillSwingHero) {
-    return `Every draft carries some risk even in a clear matchup, and at ${ctx.confidenceTier} confidence the odds still had to break exactly right for ${underdogLabel} — this time they did.`;
+    return [
+      i18nLine('battle.explain.upset.odds', {
+        confidence: ctx.confidenceTier,
+        underdog: underdogSide,
+      }),
+    ];
   }
-  return null;
+  return [];
 }
 
-export function buildExplanation(ctx: BattleExplanationContext): string[] {
+export function buildExplanation(ctx: BattleExplanationContext): LocalizedLine[] {
   const mine = ctx.teamA;
   const opponent = ctx.teamB;
   const won = ctx.resolvedOutcome === 'Win';
@@ -446,8 +466,8 @@ export function buildExplanation(ctx: BattleExplanationContext): string[] {
   const winnerHeroes = heroesOf(winners);
   const loserHeroes = heroesOf(losers);
   const isUpset = isBattleUpset(ctx.advantageDirection, ctx.resolvedOutcome);
-  const winnerLabel = won ? 'your draft' : 'the opponent';
-  const loserLabel = won ? 'the opponent' : 'your draft';
+  const winner: Side = won ? 'yours' : 'opponent';
+  const loser: Side = won ? 'opponent' : 'yours';
 
   const lanePairKeys = new Set(
     (ctx.lanes ?? [])
@@ -461,55 +481,45 @@ export function buildExplanation(ctx: BattleExplanationContext): string[] {
     lanePairKeys.add(`${theirCarry.hero.name}|${myCarry.hero.name}`);
   }
 
-  const lines: string[] = [frameLine(ctx)];
+  const lines: LocalizedLine[] = [frameLine(ctx)];
 
   if (ctx.highSkillSwingHero) {
-    lines.push(highSkillLine(ctx.highSkillSwingHero));
+    lines.push(i18nLine('battle.explain.highSkill', { hero: ctx.highSkillSwingHero.name }));
   }
 
   const clock = clockLine(mine, opponent, winners);
   if (clock) lines.push(clock);
 
-  const shape = fightShapeLine(mine, opponent);
-  if (shape) lines.push(shape);
+  lines.push(...fightShapeLines(mine, opponent));
 
   const axes = axisPictureLine(ctx.axisDeltas, mine, opponent);
   if (axes) lines.push(axes);
 
-  const lanes = laneLine(ctx.lanes);
-  if (lanes) lines.push(lanes);
+  lines.push(...laneLines(ctx.lanes));
 
-  const catchCombo = catchAndComboLine(
-    winnerHeroes,
-    loserHeroes,
-    ctx.lookup,
-    winnerLabel,
-    loserLabel,
-    lanePairKeys,
+  lines.push(
+    ...catchAndComboLines(winnerHeroes, loserHeroes, ctx.lookup, winner, loser, lanePairKeys),
   );
-  if (catchCombo) lines.push(catchCombo);
 
-  const carry = carryLateLine(mine, opponent, ctx.lookup);
-  if (carry) lines.push(carry);
+  lines.push(...carryLateLines(mine, opponent, ctx.lookup));
 
   const tags = tagsLine(mine, opponent);
   if (tags) lines.push(tags);
 
-  const shutdown = shutdownLine(ctx.shutdownHeroesA, ctx.shutdownHeroesB);
-  if (shutdown) lines.push(shutdown);
+  lines.push(...shutdownLines(ctx.shutdownHeroesA, ctx.shutdownHeroesB));
 
-  const stacked = hardCarryLine(
-    ctx.hardCarryCountA ?? heroesOf(mine).filter(isHardCarry).length,
-    ctx.hardCarryCountB ?? heroesOf(opponent).filter(isHardCarry).length,
+  lines.push(
+    ...hardCarryLines(
+      ctx.hardCarryCountA ?? heroesOf(mine).filter(isHardCarry).length,
+      ctx.hardCarryCountB ?? heroesOf(opponent).filter(isHardCarry).length,
+    ),
   );
-  if (stacked) lines.push(stacked);
 
   if (isUpset) {
     const favoredIsA = ctx.advantageDirection === 'A';
-    const underdog = favoredIsA ? heroesOf(opponent) : heroesOf(mine);
-    const favorite = favoredIsA ? heroesOf(mine) : heroesOf(opponent);
-    const reasons = upsetReasonsLine(ctx, underdog, favorite);
-    if (reasons) lines.push(reasons);
+    const underdogHeroes = favoredIsA ? heroesOf(opponent) : heroesOf(mine);
+    const favoriteHeroes = favoredIsA ? heroesOf(mine) : heroesOf(opponent);
+    lines.push(...upsetReasonLines(ctx, underdogHeroes, favoriteHeroes));
   } else {
     lines.push(closingLine(ctx.advantageDirection, ctx.resolvedOutcome));
   }

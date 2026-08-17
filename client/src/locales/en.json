@@ -94,6 +94,22 @@
     "Soft Support": "Soft Support",
     "Hard Support": "Hard Support"
   },
+  "heroRoles": {
+    "Carry": "Carry",
+    "Support": "Support",
+    "Nuker": "Nuker",
+    "Disabler": "Disabler",
+    "Initiator": "Initiator",
+    "Durable": "Durable",
+    "Escape": "Escape",
+    "Pusher": "Pusher"
+  },
+  "attributes": {
+    "str": "Strength",
+    "agi": "Agility",
+    "int": "Intelligence",
+    "all": "Universal"
+  },
   "positions": {
     "Carry": "Carry",
     "Mid": "Mid",
@@ -147,11 +163,23 @@
     "strengths": "Strengths",
     "weaknesses": "Weaknesses",
     "notAvailable": "N/A",
+    "starsAria": "{{score}} out of 5 stars",
     "viewMatch": "View match on OpenDota →",
     "topContributorHeading": "Top {{axis}} Contributor",
     "activeCombos": "Active Combos",
     "combosBattleNote": "These combos do not change the Evaluation score above — they apply in Battle.",
-    "combosBattleSummary": "In Battle, active tags can buff or debuff your draft (and curse the opponent). Treat them as part of the fight, not this score."
+    "combosBattleSummary": "In Battle, active tags can buff or debuff your draft (and curse the opponent). Treat them as part of the fight, not this score.",
+    "percentile": {
+      "bottom": "Bottom {{pct}}%",
+      "mid": "{{ordinal}} percentile",
+      "top": "Top {{pct}}%"
+    },
+    "ordinal": {
+      "st": "{{n}}st",
+      "nd": "{{n}}nd",
+      "rd": "{{n}}rd",
+      "th": "{{n}}th"
+    }
   },
   "commitToPool": {
     "committing": "Committing…",
@@ -172,6 +200,7 @@
     "sideYours": "Your draft",
     "sideOpponent": "Opponent",
     "proDraft": "a professional draft",
+    "tiFinals": "TI Finals",
     "anotherPlayer": "another player",
     "viewMatch": "(view match on OpenDota →)",
     "shutdown": "Shutdown",
@@ -265,6 +294,115 @@
       "Low": "Low",
       "Moderate": "Moderate",
       "High": "High"
+    },
+    "advantageEdge": "Your draft has an edge in {{axis}}.",
+    "advantageDeficit": "Your draft has a deficit in {{axis}}.",
+    "highlight": {
+      "matchup": "{{hero}}'s matchup into {{vs}} worked in {{perspective}}'s favor.",
+      "synergy": "The {{hero}} + {{vs}} combination gave {{perspective}} a real, data-backed edge."
+    },
+    "explain": {
+      "axisHero": "{{axis}} ({{hero}})",
+      "edge": {
+        "edge": "an edge in",
+        "deficit": "a deficit in"
+      },
+      "side": {
+        "yours": {
+          "subject": "Your draft",
+          "object": "your draft"
+        },
+        "opponent": {
+          "subject": "The opponent's draft",
+          "object": "the opponent"
+        }
+      },
+      "frame": {
+        "even": "This is a close matchup with no clear favorite ({{confidence}} confidence) — {{edgePhrase}} {{axis}} for your draft was the closest thing to an edge.",
+        "ahead": "{{side}} leaned ahead overall ({{confidence}} confidence), with {{edgePhrase}} {{axis}} standing out."
+      },
+      "highSkill": "{{hero}}'s own play was the deciding swing here — real match data shows outcomes around this hero carry more variance than the stat sheet alone suggests, and this game landed on the wrong side of it for the favorite.",
+      "clock": {
+        "split": "{{faster}} wants this over now; {{scaler}} is the one that gets paid if the game lives. That split points at a {{band}} minute window — whose clock this matchup is on, not a reconstructed Roshan take.",
+        "early": "The winning side is a tempo draft, not a scaler — this matchup wants to be decided in the {{band}} minute window, before the other roster's late game comes online.",
+        "late": "The winning side scales harder than it plays early — this matchup is playing for the {{band}} minute window. If it gets there, the late game is the actual win condition."
+      },
+      "shape": {
+        "duel": "{{mine}} is the one who starts fights on your side; {{theirs}} is the one who has to answer.",
+        "mineStarts": "{{hero}} is the one who actually starts fights on your side.",
+        "oppStarts": "{{hero}} is the one who starts fights for the opponent.",
+        "savesBoth": "{{mine}} is the save on your side; {{theirs}} is theirs — both actually clear a real saving bar, not a token 3 on the sheet.",
+        "saveMine": "{{hero}} is the only one on the board who actually saves people at a real level.",
+        "saveOpp": "{{hero}} is the save the opponent brought — your side doesn't have one at that level."
+      },
+      "sheet": {
+        "both": "On the sheet, your draft leads in {{yours}}; the hole is {{hole}}.",
+        "yours": "On the sheet, your draft's real pull is {{yours}}.",
+        "theirs": "On the sheet, the opponent's draft is the one leading in {{theirs}}."
+      },
+      "lanes": {
+        "wash": "Lanes weren't a wash.",
+        "uneven": "Lanes weren't even."
+      },
+      "lane": {
+        "mineLean": "Your {{lane}} was a {{chance}}% lean because {{hero}} into {{vs}} ({{pairPct}}%) is a real matchup.",
+        "mineEdge": "Your {{lane}} leans this way because {{hero}} into {{vs}} is a real matchup edge.",
+        "oppHole": "The {{lane}} went the other way — {{hero}} into {{vs}} is a {{pairPct}}% hole from your side.",
+        "oppEdge": "The {{lane}} went the other way because {{hero}} into {{vs}} is a real matchup edge."
+      },
+      "catch": {
+        "first": "The catch that actually matters for {{winner}} is {{hero}} into {{vs}} ({{pct}}%).",
+        "second": "{{hero}} into {{vs}} ({{pct}}%) is a second real hole."
+      },
+      "combo": {
+        "win": "{{heroA}} + {{heroB}} is a real pairing on the winning side ({{pct}}%) — not a vibe, a co-pick that actually wins games together.",
+        "leftover": "{{loser}} still had {{heroA}} + {{heroB}} ({{pct}}%) — a real combo that didn't carry the rest of the sheet."
+      },
+      "carry": {
+        "late": "Late, it's {{mine}} against {{theirs}}.",
+        "noRow": "There isn't a real individual matchup row for {{mine}} into {{theirs}}.",
+        "mineOwns": "{{hero}} owns that matchup at {{pct}}%.",
+        "oppOwns": "{{hero}} owns that matchup at {{pct}}%.",
+        "flip": "The individual matchup is a coin flip ({{pct}}%).",
+        "scaleSame": "And they scale harder on the sheet too.",
+        "scaleTension": "But {{scaler}} is the one who actually scales harder — if this lives, that tension is the late game.",
+        "scaleAlso": "And {{scaler}} is the one who scales harder.",
+        "scaleOnly": "{{scaler}} is still the one who scales harder on the sheet."
+      },
+      "tags": {
+        "both": "On the board: your side is running {{mine}}; theirs has {{theirs}}.",
+        "mine": "On the board, your side is running {{tags}} — that's a real draft mechanic, not flavor text.",
+        "opp": "On the board, the opponent is running {{tags}} — that's a real draft mechanic, not flavor text."
+      },
+      "shutdown": {
+        "mine_one": "{{names}} is in shutdown into this lineup — every individual matchup sits below their own average.",
+        "mine_other": "{{names}} are in shutdown into this lineup — every individual matchup sits below their own average.",
+        "opp_one": "{{names}} on the other side is similarly boxed in.",
+        "opp_other": "{{names}} on the other side are similarly boxed in."
+      },
+      "hardCarry": {
+        "mine": "{{count}} hard-carries on your side is a farm-split the sheet already discounts — more late-game bodies, less of everything else.",
+        "opp": "The opponent stacked {{count}} hard-carries, same tax."
+      },
+      "close": {
+        "evenWin": "Your draft came out on top in what was essentially a coin flip.",
+        "evenLose": "Your draft came up just short in what was essentially a coin flip.",
+        "favoredHeld": "That advantage held up.",
+        "favoredUpset": "That advantage should have held up — this loss runs against the grain.",
+        "underdogWin": "The opponent's edge should have held up — this win runs against the grain.",
+        "underdogHeld": "That edge held up here."
+      },
+      "upset": {
+        "lead": {
+          "top": "On top of that, ",
+          "but": "But "
+        },
+        "reasons": "{{lead}}{{underdog}} had real advantages of its own — {{reasons}} — enough to make this upset plausible even against a stronger overall draft.",
+        "odds": "Every draft carries some risk even in a clear matchup, and at {{confidence}} confidence the odds still had to break exactly right for {{underdog}} — this time they did.",
+        "matchup": "{{hero}}'s individual matchup into {{vs}} favored {{underdog}} directly",
+        "synergy": "the {{heroA}} + {{heroB}} combination gave {{underdog}} a real, data-backed edge",
+        "axis": "{{underdog}} actually led in {{axis}} despite trailing on the overall picture"
+      }
     }
   },
   "history": {
@@ -285,10 +423,21 @@
     "heading": "Waiting Room",
     "tournamentWatch": "Tournament watch",
     "tiFormHeading": "Heroes setting the pace",
-    "tiFormNote": "Win leaders from {{count}} matches in the current TI snapshot. Ranked by wins, with win rate as the tie-breaker.",
+    "tiFormNote": "Win leaders from {{count}} matches in the current TI snapshot.",
     "tiRecord": "{{wins}}–{{losses}} · {{rate}}% win rate",
     "clicks_one": "{{count}} click this visit",
-    "clicks_other": "{{count}} clicks this visit"
+    "clicks_other": "{{count}} clicks this visit",
+    "alt": "Brewmaster",
+    "voice": {
+      "0": "Drink it in!",
+      "1": "This one's on me.",
+      "2": "I'll drink to that.",
+      "3": "There's trouble abrewing.",
+      "4": "Time to brawl!",
+      "5": "Drink and be bleary, for tomorrow we die.",
+      "6": "Just a bit tipsy.",
+      "7": "Punch drunk."
+    }
   },
   "legend": {
     "toggle": "Legend",
@@ -327,5 +476,369 @@
     "wins": "Wins",
     "losses": "Losses",
     "winRate": "Win Rate"
+  },
+  "axes": {
+    "teamfight": "Damage Output",
+    "tempo": "Tempo",
+    "scaling": "Scaling",
+    "mobility": "Mobility",
+    "objectives": "Objectives",
+    "control": "Control",
+    "durability": "Durability",
+    "burst": "Burst",
+    "map_control": "Map Control",
+    "saving": "Saving",
+    "initiating": "Initiating",
+    "skirmish_rate": "Skirmish Rate",
+    "camp_stacking": "Camp Stacking",
+    "resource_efficiency": "Resource Efficiency",
+    "synergy": "Synergy",
+    "counter": "Counter",
+    "proSimilarity": "Pro Similarity"
+  },
+  "eval": {
+    "list": {
+      "pair": "{{a}} and {{b}}",
+      "many": "{{head}}, and {{last}}"
+    },
+    "axis": {
+      "empty": "No heroes drafted.",
+      "teamAverage": "Team {{axis}} average: {{score}}.",
+      "contributors": "Top contributors: {{list}}.",
+      "roleFit": "{{heroes}} get a role-fit boost on this axis.",
+      "heroRole": "{{name}} ({{role}})",
+      "hardCarryScaling": "{{count}} hard-carry heroes: scaling boosted {{pct}}% — they want the game to go long."
+    },
+    "lede": {
+      "veryHigh": "This draft ranks in the top {{pct}}% of all drafts for {{axis}} — one of this draft's defining strengths{{carried}}.",
+      "high": "This draft ranks in the top {{pct}}% of drafts for {{axis}}{{carried}}.",
+      "mid": "This draft sits close to the median for {{axis}} ({{pct}}th percentile){{carried}}.",
+      "low": "This draft ranks in the bottom {{pct}}% of drafts for {{axis}}{{carried}}.",
+      "veryLow": "This draft ranks in the bottom {{pct}}% of all drafts for {{axis}} — one of this draft's most serious weaknesses{{carried}}.",
+      "carriedOne": ", carried by {{name}}",
+      "carriedTwo": ", led by {{a}} and {{b}}"
+    },
+    "body": {
+      "teamfight": {
+        "high": "Expect this team to look for 5v5 fights around Roshan, high ground, and objective clusters rather than split-pushing.",
+        "mid": "It can hold its own in an even fight but shouldn't force a 5-man engagement blindly.",
+        "low": "Avoid grouping for even fights — pick-offs, split pushes, and disengaging from bad fights are the safer path here."
+      },
+      "tempo": {
+        "high": "This is a fast-start draft that wants to contest the first Rune, force early lane swaps, and close the game before the 25-minute mark — real match data shows drafts like this see their win rate fall the longer the game runs.",
+        "mid": "It can play either an early skirmish game or settle into a patient one depending on how the laning stage goes.",
+        "low": "Avoid forcing early confrontations — this team wants to reach the 30+ minute mark, where real match data shows drafts like this actually turn their win rate around."
+      },
+      "scaling": {
+        "high": "This team gets meaningfully stronger every ten minutes it survives — real match data shows drafts like this often start behind on win rate before 25 minutes and pull ahead past 40, so the priority is farming safely and denying Roshan/high-ground pushes rather than forcing action early.",
+        "mid": "It scales reasonably but isn't a guaranteed late-game powerhouse — neither rushing nor stalling the game is a clear win condition on its own.",
+        "low": "This team doesn't get much stronger with time and should look to end the game early — real match data shows the win-rate gap for drafts like this tends to widen the longer the game goes."
+      },
+      "mobility": {
+        "high": "High mobility lets this team roam between lanes, collapse on isolated targets, and reposition out of bad fights quickly.",
+        "mid": "It has some mobility tools but isn't especially map-mobile — rotations will be telegraphed.",
+        "low": "Low mobility makes this team vulnerable to being caught out of position and slow to answer ganks on other lanes."
+      },
+      "map_control": {
+        "high": "Strong warding and roaming presence should let this team see enemy rotations coming and set up their own ganks on the river and jungle entrances.",
+        "mid": "Vision is about average — standard warding discipline on the high-ground cliffs will be needed to avoid getting caught.",
+        "low": "Weak map control leaves this team blind to rotations — expect to get ganked in lane more than a typical draft."
+      },
+      "objectives": {
+        "high": "This team pushes towers and barracks efficiently and should look to close games through map pressure rather than waiting for a decisive teamfight.",
+        "mid": "It can take a tower when the opportunity is there but isn't built to siege on its own.",
+        "low": "Weak at taking structures — this team should convert kills into picks rather than trying to push lanes after a fight."
+      },
+      "saving": {
+        "high": "Strong healing and defensive tools should keep the team's priority targets alive through a bad initiation.",
+        "mid": "Some saving tools are available, but this team can't bail out every bad engagement — good positioning matters more than usual.",
+        "low": "Little in the way of healing or defensive cooldowns — a bad engagement or a blink initiation onto a core is likely to end in a death."
+      },
+      "burst": {
+        "high": "This team can delete a priority target out of a fog-of-war initiation — a clean pick-off window is often lethal.",
+        "mid": "Some burst potential is there, but this team can't reliably one-shot a priority target through defensive items.",
+        "low": "Low burst damage means this team relies on sustained fighting and kiting rather than quick kills — expect longer fights."
+      },
+      "control": {
+        "high": "Heavy disable chains let this team lock down a target through Black King Bar and dictate exactly when fights happen.",
+        "mid": "Some disable is available, but not enough to fully control a fight on its own — timing initiations around cooldowns matters.",
+        "low": "Light on disables — this team will struggle to lock down mobile or spell-immune targets and may lose fights to a clean BKB play."
+      },
+      "durability": {
+        "high": "This team is tanky and hard to burst down, and can afford to front-line and body-block for the rest of the team in fights.",
+        "mid": "Moderate durability — this team can still be burst down by a focused-fire initiation.",
+        "low": "Fragile and vulnerable to burst — bad positioning near the enemy's initiators is likely to get someone deleted."
+      },
+      "initiating": {
+        "high": "Strong initiation tools let this team pick exactly when and where a fight starts, catching the enemy team out of position on rotations.",
+        "mid": "It can start some fights on its own terms, but lacks a single dedicated initiation threat to build a play around.",
+        "low": "Weak initiation means this team will usually be reacting to the enemy's engage rather than dictating the fight themselves."
+      },
+      "skirmish_rate": {
+        "high": "This team leans into risk — trading and dying for river/jungle skirmishes rather than playing it safe, which real match data links to a better actual win rate than a pure stat sheet would suggest.",
+        "mid": "A moderate risk appetite — not purely passive, but not built around constant early trades either.",
+        "low": "This team plays it safe and prioritizes efficient farm over trades — real data suggests that safety can come at the cost of actually winning."
+      },
+      "camp_stacking": {
+        "high": "This team stacks jungle camps for each other — a supportive, resource-sharing playstyle real data links to a better actual win rate than a pure stat sheet would suggest.",
+        "mid": "Camps get stacked occasionally, without a game plan built around it.",
+        "low": "This team doesn't stack camps for each other — not necessarily a problem (efficient personal farmers score low here too), but the team isn't generating this kind of shared resource."
+      },
+      "resource_efficiency": {
+        "high": "This team deals real damage without needing a large share of the team's gold to do it — priority farm can go to whichever hero needs it most instead of being locked to whoever hits hardest.",
+        "mid": "Damage output is reasonably proportionate to farm priority — no strong efficiency edge either way.",
+        "low": "This team's damage is expensive — it depends on a hero (or heroes) getting a large share of the team's resources first, so a slow start or contested farm hits harder here than for a more efficient draft."
+      }
+    },
+    "summary": {
+      "axisLine": "{{axis}} — {{bandLabel}}",
+      "score": "{{pct}}/10",
+      "band": {
+        "bottom": "bottom {{pct}}%",
+        "mid": "{{pct}}th percentile",
+        "top": "top {{pct}}%"
+      }
+    },
+    "gameplan": {
+      "win": {
+        "fast": "This is a draft that wants to win fast: force early lane swaps and skirmishes, take fights before 25 minutes, and avoid letting the game drag — it does not get meaningfully stronger with time.",
+        "patient": "This is a patient draft: farm safely, avoid unnecessary risk in the laning stage, and let the game run past 35-40 minutes, where its late-game power actually shows up.",
+        "flexible": "This draft has real flexibility in how the game is played — it can force an early lead off a fast start, or fall back on genuine late-game scaling if the opening does not go to plan.",
+        "neither": "This draft has no strong forcing function in either direction — it does not want to rush the early game or stall for a late-game payoff, so small edges and picks have to be manufactured rather than relied on.",
+        "middle": "This draft sits in the middle on both game speed and scaling — the win condition depends more on execution and picks than on a built-in early or late-game plan."
+      },
+      "leanOn": "Lean on this: {{narrative}}",
+      "coverFor": "Cover for this: {{narrative}}"
+    },
+    "synergy": {
+      "dampened": " (real data shows this pairing underperforms expectations, weighted down)",
+      "none": "No strong hero-to-hero synergies detected in this composition.",
+      "mobility": "Multiple high-mobility heroes ({{heroes}}) enable pick-off plays.",
+      "teamfight": "Strong teamfight-oriented core ({{heroes}}).",
+      "realStrong": "{{heroA}} + {{heroB}} have a strong real win rate together — outperforming what their individual strength alone would predict.",
+      "realWeak": "{{heroA}} + {{heroB}} have a below-average real win rate together — underperforming what their individual strength alone would predict.",
+      "summary": {
+        "high": "This is a well-connected draft — the heroes' kits actively support one another.",
+        "mid": "This draft has some hero synergy, but the picks don't form a tightly connected game plan.",
+        "low": "This draft is fairly disconnected — the heroes don't strongly support each other's game plans."
+      },
+      "tag": {
+        "needs_setup": "needs setup",
+        "enables_engage": "enables engage",
+        "needs_space": "needs space",
+        "creates_space": "creates space",
+        "protects_allies": "protects allies",
+        "amplifies_magic_damage": "amplifies magic damage",
+        "amplifies_physical_damage": "amplifies physical damage",
+        "wave_clear_support": "wave clear support"
+      },
+      "pair": {
+        "needs_setup_enables_engage": "{{heroA}} (needs setup) + {{heroB}} (enables engage): initiation sets up pick-off/burst combos.",
+        "needs_space_creates_space": "{{heroB}} (creates space) supports {{heroA}} (needs space) to scale safely.",
+        "needs_space_protects_allies": "{{heroB}} (protects allies) helps keep {{heroA}} (needs space) alive while farming.",
+        "enables_engage_amplifies_magic_damage": "{{heroA}} (enables engage) sets up {{heroB}} (amplifies magic damage) for burst follow-up.",
+        "enables_engage_amplifies_physical_damage": "{{heroA}} (enables engage) sets up {{heroB}} (amplifies physical damage) for follow-up.",
+        "wave_clear_support_needs_space": "{{heroA}} (wave clear support) frees up lanes for {{heroB}} (needs space) to scale."
+      },
+      "anti": {
+        "split_push_late": "{{heroA}} (split-push/tempo) wants to press the map and end early, while {{heroB}} (late-game scaling) needs the game to go long — conflicting game plans.",
+        "deathball_late": "{{heroA}} (deathball) is built to group and end fast, pulling against {{heroB}} (late-game scaling), whose payoff is a farm-heavy late game — conflicting timings."
+      }
+    },
+    "counter": {
+      "none": "This draft has no specialized counters against common threat types (illusions, summons, invisibility, etc.).",
+      "covers": "Counters {{threat}}: {{heroes}}.",
+      "summary": {
+        "high": "This team is well-equipped to answer a wide range of common threats.",
+        "mid": "This team covers some common threats but has notable gaps.",
+        "low": "This team has little in the way of specialized counters and may struggle against common threats like illusions or invisibility."
+      },
+      "threat": {
+        "illusions": "illusions",
+        "summons": "summons",
+        "invisibility": "invisibility",
+        "channeled_ultimates": "channeled ultimates",
+        "low_mobility": "low mobility",
+        "high_mobility": "high mobility",
+        "squishy_backline": "squishy backline",
+        "mana_reliant": "mana reliant",
+        "tanky_durable": "tanky durable"
+      }
+    },
+    "pro": {
+      "none": "No professional match data has been imported yet (planned for Milestone 3).",
+      "tooFew": "No imported professional draft shares {{min}} or more heroes with this composition (closest match: {{overlap}} of 5) — not enough overlap to call it pro-similar.",
+      "match": "Shares {{overlap}} of 5 heroes ({{heroes}}) with a winning professional draft{{byTeam}}{{league}}.",
+      "byTeam": " by {{teamName}}",
+      "league": " ({{leagueName}})"
+    }
+  },
+  "badges": {
+    "chainLock": {
+      "name": "Chain Lock",
+      "description": "3+ heroes with strong control chain their disables — +8% to the team's control axis."
+    },
+    "ironWall": {
+      "name": "Iron Wall",
+      "description": "3+ heroes built to survive (durability + saving) — +10% effective survivability in extended fights."
+    },
+    "tempoStorm": {
+      "name": "Tempo Storm",
+      "description": "3+ heroes built around early aggression — +12% snowball potential in the first 15 minutes."
+    },
+    "oneTrueKing": {
+      "name": "One True King",
+      "description": "Exactly one dedicated Carry, four heroes built to enable them — +6% to the Carry's effective power."
+    },
+    "visionWeb": {
+      "name": "Vision Web",
+      "description": "3+ heroes with strong map control — +7% map-wide vision advantage."
+    },
+    "allMelee": {
+      "name": "All Melee",
+      "description": "Five melee heroes — a frontline wall that trades reach for staying power: +5% durability, -5% skirmish rate, -5% scaling."
+    },
+    "allRanged": {
+      "name": "All Ranged",
+      "description": "Five ranged heroes — poke and kite instead of a frontline: +5% skirmish rate, +5% control, -10% durability, -5% map control."
+    }
+  },
+  "customTags": {
+    "Mana_Booster": {
+      "name": "Mana Booster",
+      "description": "Crystal Maiden's mana aura — allies tagged Mana Dependent get a final-power boost."
+    },
+    "Statstealer": {
+      "name": "Statstealer",
+      "description": "+5% final power to every Statstealer-tagged hero once 2+ are on the team."
+    },
+    "Frosty": {
+      "name": "Frosty",
+      "description": "-3% to the enemy team's Movement axis per Frosty hero on this team."
+    },
+    "The_Fundamentals": {
+      "name": "The Fundamentals",
+      "description": "Boosts the team's weakest axis (or axes) — strength scales with how many Fundamentals heroes are drafted."
+    },
+    "Two_Heads_Better": {
+      "name": "Two Heads Better",
+      "description": "Solo or duo: each doubles their own weakest axis. All 3 (Ogre Magi + Jakiro + Alchemist): replaced by +20% team teamfight and map control."
+    },
+    "The_Button": {
+      "name": "The Button",
+      "description": "+5% personal scaling, plus an extra +5% power in the late game — active even solo."
+    },
+    "Global": {
+      "name": "Global",
+      "description": "+10% personal map control, active even solo. 2+ on the team: each also gets +5% teamfight and +5% burst."
+    },
+    "Mechanical": {
+      "name": "Mechanical",
+      "description": "Machines don't tilt — immune to High Skill upset swings and to the opponent's synergy curses."
+    },
+    "Healer": {
+      "name": "Healer",
+      "description": "Sustained healing keeps the team topped up — adds to team durability, and each Healer contributes more as the group grows."
+    },
+    "Gold_Generator": {
+      "name": "Gold Generator",
+      "description": "Feeds the whole team extra gold (Track / Greevil’s Greed) — a richer team scales harder. Adds to team scaling per Gold Generator."
+    },
+    "High_Skill": {
+      "name": "High Skill",
+      "description": "Upsets are more likely around this hero (execution swings the result either way). 2+ on the team: -2.5% overall power each."
+    },
+    "Divided_Attention": {
+      "name": "Divided Attention",
+      "description": "-10% personal durability and -10% personal objectives, active even solo — power split across multiple bodies is easier to pick apart."
+    },
+    "Tempo_Monster": {
+      "name": "Tempo Monster",
+      "description": "+3% final power if team tempo > 8; otherwise -25% scaling/durability/map control. Additional -10% if another hard-carry hero is drafted. Never shown to the player."
+    },
+    "Summoning_Sickness": {
+      "name": "Summoning Sickness",
+      "description": "Summoned units inflate the hero's own calibration. -30% personal power, always active. Never shown to the player."
+    },
+    "Agility_Crusher": {
+      "name": "Agility Crusher",
+      "description": "Debuffs enemy agility cores at battle-assessment time. Never shown to the player."
+    },
+    "Old_Rivals": {
+      "name": "Old Rivals",
+      "description": "Kunkka and Tidehunter, bound by an old grudge. Forced onto the same team: the tension shows, -5% teamfight each. Facing each other across the draft: whichever of the two is on the enemy side gets personally debuffed, -5% power — the rivalry distracts them even from a distance."
+    },
+    "Reunion": {
+      "name": "Reunion",
+      "description": "Mirana and Muerta, reunited. Both on the team: +3% personal map control each."
+    },
+    "Unseen": {
+      "name": "Unseen",
+      "description": "Personal invisibility — a real strength no axis measures. +6% personal power, +8% personal map control, active even solo. 2+ on the team: -durability/-teamfight each, scaling with stack count (too many pick-off specialists, not enough frontline)."
+    },
+    "Army_of_Clones": {
+      "name": "Army of Clones",
+      "description": "Illusions/clones — extra bodies for damage, split-push, and vision no axis measures. +6% personal power, +8% personal map control, active even solo. 2+ on the team: -durability/-teamfight each, scaling with stack count (the real body is easier to pick apart the more the team leans on illusions)."
+    },
+    "Mass_Buffer": {
+      "name": "Mass Buffer",
+      "description": "Team-wide damage amplification (auras/debuffs). Each Mass Buffer hero adds to team teamfight/burst, active even solo — and the per-hero contribution itself grows with stack size (+3% solo, +4% each at 2, +5% each at 3...), so the total scales faster than linearly."
+    },
+    "Prone_To_Burst": {
+      "name": "Prone To Burst",
+      "description": "Vulnerable to burst damage despite looking sturdy on paper. -20% personal power when the opposing team's raw Burst average is above average."
+    },
+    "Disable_Battery": {
+      "name": "Disable Battery",
+      "description": "Backline disable/nuke that wins fights — axes tax these heroes as \"dies a lot / farms little,\" but the real win condition is the battery of control from the fog. +25% personal power, always active. Never shown to the player."
+    },
+    "Haunt_Absolute": {
+      "name": "Haunt Absolute",
+      "description": "Haunt is global presence that axes under-count as personal strength (and Global's map-control buff is inert while that axis weighs 0). +12% personal power, always active. Never shown to the player."
+    },
+    "Mirage_Tax": {
+      "name": "Mirage Tax",
+      "description": "Illusion farm and body-count inflate objectives/mobility without a matching real-body fight presence. -15% personal power, always active. Never shown to the player."
+    },
+    "Paper_Utility": {
+      "name": "Paper Utility",
+      "description": "Utility axes (stacks, map presence, control) read high without converting to outcomes. -25% personal power, always active. Never shown to the player."
+    },
+    "Raid_Boss": {
+      "name": "Raid Boss",
+      "description": "Late-game / space-dependent cores the mid-clash model under-rates. +18% personal power, always active. Never shown to the player."
+    },
+    "Showstopper_Tax": {
+      "name": "Showstopper Tax",
+      "description": "Flashy initiate/setup reads sky-high on control/tempo without converting in average games. -25% personal power, always active. Never shown to the player."
+    },
+    "False_Immortal": {
+      "name": "False Immortal",
+      "description": "Self-sustain looks like durability on paper; focused burst still deletes them. -18% personal power, always active (stacks with Prone To Burst when that fires). Never shown to the player."
+    },
+    "Siege_Voltage": {
+      "name": "Siege Voltage",
+      "description": "Mid push/nuke cores whose siege and burst win conditions axes under-count. +12% personal power, always active. Never shown to the player."
+    },
+    "dynamic": {
+      "fundamentalsSolo": "Boosts the team's weakest axis once 2+ Fundamentals heroes are drafted.",
+      "fundamentalsOne": "Boosts this draft's weakest axis: {{axes}}.",
+      "fundamentalsMany": "Boosts this draft's weakest axes: {{axes}}.",
+      "axisPair": "{{a}} and {{b}}",
+      "axisList": "{{head}}, and {{last}}",
+      "statstealerSolo": "+2% final power, active even solo (rises to +5% each once a 2nd Statstealer joins the team).",
+      "statstealerMany": "+5% final power to every Statstealer-tagged hero — {{count}} on this team.",
+      "healerOne": "Sustained healing keeps the team topped up. 1 Healer on this team: +{{perHero}}% team durability.",
+      "healerMany": "Sustained healing keeps the team topped up. {{count}} Healers on this team: +{{perHero}}% team durability each, +{{total}}% combined.",
+      "massBuffer": "Team-wide damage amplification (auras/debuffs). {{count}} Mass Buffer hero(es) on this team: +{{perHero}}% team teamfight/burst each, +{{total}}% combined.",
+      "stealthSolo": "{{flavor}} — a real strength no axis measures. +6% personal power, +8% personal map control, active even solo.",
+      "stealthMany": "{{flavor}} — a real strength no axis measures. +6% personal power, +8% personal map control, active even solo. {{count}} on this team: -{{penalty}}% durability/teamfight each.",
+      "unseenFlavor": "Personal invisibility",
+      "armyFlavor": "Illusions/clones"
+    }
+  },
+  "bugReport": {
+    "subject": "DotaDraft Bug Report",
+    "body": "Describe what happened:\n\n\n(feel free to include the page URL and any other details)"
   }
 }

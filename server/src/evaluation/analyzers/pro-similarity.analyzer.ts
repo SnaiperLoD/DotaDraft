@@ -1,3 +1,4 @@
+import { i18nLine } from 'shared';
 import type { Analyzer } from '../analyzer.interface';
 import type { ProComposition } from '../../pro-match/pro-match.service';
 
@@ -21,7 +22,7 @@ export function createProSimilarityAnalyzer(compositions: ProComposition[]): Ana
         return {
           score: null,
           percentile: null,
-          explanation: ['No professional match data has been imported yet (planned for Milestone 3).'],
+          explanation: [i18nLine('eval.pro.none')],
         };
       }
 
@@ -41,25 +42,28 @@ export function createProSimilarityAnalyzer(compositions: ProComposition[]): Ana
           score: null,
           percentile: null,
           explanation: [
-            `No imported professional draft shares ${MIN_OVERLAP_FOR_SIMILARITY} or more heroes with this composition (closest match: ${overlapCount} of 5) — not enough overlap to call it pro-similar.`,
+            i18nLine('eval.pro.tooFew', {
+              min: String(MIN_OVERLAP_FOR_SIMILARITY),
+              overlap: String(overlapCount),
+            }),
           ],
         };
       }
 
       const score = Math.round((overlapCount / 5) * 10 * 10) / 10;
-      const explanation = [
-        `Shares ${overlapCount} of 5 heroes (${best!.overlap.join(', ')}) with a winning professional draft` +
-          (best!.comp.teamName ? ` by ${best!.comp.teamName}` : '') +
-          (best!.comp.leagueName ? ` (${best!.comp.leagueName})` : '') +
-          '.',
-      ];
+      const params: Record<string, string> = {
+        overlap: String(overlapCount),
+        heroes: best!.overlap.join(', '),
+      };
+      if (best!.comp.teamName) params.teamName = best!.comp.teamName;
+      if (best!.comp.leagueName) params.leagueName = best!.comp.leagueName;
 
       // Not axis-based (no evaluation_values score) — no percentile
       // distribution to rank against, see analyzer.interface.ts.
       return {
         score,
         percentile: null,
-        explanation,
+        explanation: [i18nLine('eval.pro.match', params)],
         matchUrl: `https://www.opendota.com/matches/${best!.comp.matchId}`,
       };
     },

@@ -1,3 +1,5 @@
+import type { LocalizedLine } from './i18n';
+
 export interface AnalyzerResult {
   key: string;
   label: string;
@@ -5,7 +7,8 @@ export interface AnalyzerResult {
   // 0-100 rank against 10000 random 5-hero teams scored the same way — null
   // for non-axis analyzers (Synergy, Counter, Pro Similarity).
   percentile: number | null;
-  explanation: string[];
+  // I18nLine for new payloads; plain English strings for History snapshots.
+  explanation: LocalizedLine[];
   // OpenDota match link for the specific pro match this result is drawn
   // from — currently only Pro Similarity Analyzer sets it. See
   // Blueprint/10-tech-debt-backlog.md, "Ссылка на исходный матч для
@@ -20,13 +23,11 @@ export interface AnalyzerResult {
 }
 
 export interface EvaluationSummary {
-  strengths: string[];
-  weaknesses: string[];
-  // A short synthesized paragraph describing how a real game would likely
-  // play out with this draft (win condition, game length, what to lean on
-  // and what to cover for) — distinct from strengths/weaknesses, which are
-  // per-axis fragments.
-  gameplan: string;
+  strengths: LocalizedLine[];
+  weaknesses: LocalizedLine[];
+  // Win-condition + lean-on / cover-for beats (I18nLine[]). Legacy History
+  // may still store a single English paragraph string.
+  gameplan: LocalizedLine[] | string;
 }
 
 // Named draft shape for Evaluation UI (Blueprint/10 §archetypes). Id only —
@@ -44,6 +45,17 @@ export interface DraftArchetype {
   id: DraftArchetypeId;
 }
 
+export interface EvaluationCustomTag {
+  name: string;
+  rarity: string;
+  // English fallback (History snapshots / older clients). UI prefers i18n
+  // catalogs + fundamentalsAxes keys when present.
+  description: string;
+  // Axis keys The Fundamentals is boosting this draft. Client localizes
+  // via axes.*; History without this field still parses `description`.
+  fundamentalsAxes?: string[];
+}
+
 export interface EvaluationResult {
   draftId: string;
   totalScore: number;
@@ -54,7 +66,7 @@ export interface EvaluationResult {
   // whose reveal condition the team's own composition already clears.
   // Public flavour tags plus revealable-hidden tags whose team-composition
   // gate was reached during drafting. Permanently hidden tags stay out.
-  customTags: { name: string; rarity: string; description: string }[];
+  customTags: EvaluationCustomTag[];
   // Legacy field — camp_stacking muted (no UI). Always null.
   campStackingNote: string | null;
   // Internal/backward-compatible diagnostic only; the client deliberately

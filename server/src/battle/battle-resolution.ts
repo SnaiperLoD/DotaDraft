@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import type { Hero, HeroEvaluationValues, BattlePair, BattleMatchup, BattleLaneResult } from 'shared';
+import type { Hero, HeroEvaluationValues, BattlePair, BattleMatchup, BattleLaneResult, LocalizedLine } from 'shared';
+import { i18nLine } from 'shared';
 import { buildExplanation } from './battle-explanation';
 import { roleAwareAxisValue, supportMiscastMultiplier, coreMiscastMultiplier } from '../common/role-fit';
 import { hardCarryAxisMultipliers, isHardCarry } from '../common/hard-carry';
@@ -47,8 +48,8 @@ export interface BattleResult {
   confidenceTier: ConfidenceTier;
   advantages: string[];
   disadvantages: string[];
-  explanation: string[];
-  winningHighlights: string[];
+  explanation: LocalizedLine[];
+  winningHighlights: LocalizedLine[];
   // Real-winRate rows from the CALLING player's (teamA) perspective, win or
   // lose — best synergy pairs on your own team, and your best / worst
   // individual matchups into this opponent's heroes. Empty when no real
@@ -58,10 +59,10 @@ export interface BattleResult {
   worstMatchups: BattleMatchup[];
   // Shutdown (common/shutdown.ts) — hero ids on EITHER side flagged this
   // battle, for the client to mark on portraits regardless of which side
-  // they're rendering. shutdownNotes are English narrative fallbacks; the
-  // client prefers localized copy built from shutdownHeroIds.
+  // they're rendering. shutdownNotes are I18nLine (same keys the client
+  // already uses from shutdownHeroIds).
   shutdownHeroIds: number[];
-  shutdownNotes: string[];
+  shutdownNotes: LocalizedLine[];
   // Named High Skill hero when that tag's variance actually flipped the
   // binary outcome. Null otherwise — battle-story.ts uses this for the
   // upset beat, not a new invented cause.
@@ -408,21 +409,21 @@ function winningHighlights(
   team: Hero[],
   opponent: Hero[],
   lookup: MatchupLookup,
-  perspectiveLabel: string,
+  perspective: 'yours' | 'opponent',
   limit = 3,
-): string[] {
+): LocalizedLine[] {
   const matchups = topMatchupEdges(team, opponent, lookup, limit).map((m) => ({
-    text: `${m.hero}'s matchup into ${m.vs} worked in ${perspectiveLabel}'s favor.`,
+    line: i18nLine('battle.highlight.matchup', { hero: m.hero, vs: m.vs, perspective }),
     winRate: m.winRate,
   }));
   const synergies = topSynergyPairs(team, lookup, limit).map((s) => ({
-    text: `The ${s.heroA} + ${s.heroB} combination gave ${perspectiveLabel} a real, data-backed edge.`,
+    line: i18nLine('battle.highlight.synergy', { hero: s.heroA, vs: s.heroB, perspective }),
     winRate: s.winRate,
   }));
   return [...matchups, ...synergies]
     .sort((a, b) => b.winRate - a.winRate)
     .slice(0, limit)
-    .map((h) => h.text);
+    .map((h) => h.line);
 }
 
 export const AXIS_LABEL: Record<keyof HeroEvaluationValues, string> = {
@@ -442,15 +443,11 @@ export const AXIS_LABEL: Record<keyof HeroEvaluationValues, string> = {
   skirmish_rate: 'skirmish rate',
   camp_stacking: 'camp stacking',
   // Not in AXES below (Evaluation Engine-only axis, see
-  // calibrate-evaluation-values.ts) — describeAxis() never actually gets
-  // called with this key today. Entry exists only because AXIS_LABEL's
-  // type is total over HeroEvaluationValues.
+  // calibrate-evaluation-values.ts). Entry exists only because AXIS_LABEL's
+  // type is total over HeroEvaluationValues. Battle advantages now send the
+  // raw axis key; AXIS_LABEL still feeds Evaluation Fundamentals copy.
   resource_efficiency: 'resource efficiency',
 };
-
-function describeAxis(axis: keyof HeroEvaluationValues, favorsA: boolean): string {
-  return `${favorsA ? 'an edge in' : 'a deficit in'} ${AXIS_LABEL[axis]}`;
-}
 
 export interface BattleResolveExtras {
   // Display-aligned lanes / opponent roles. Fight math still uses the
@@ -697,14 +694,8 @@ export function resolveBattle(
   // of advantageDirection/resolvedOutcome: a hero can be countered out of
   // the game on the winning side too, worth surfacing either way.
   const shutdownNotes = [
-    ...shutdownHeroesA.map(
-      (h) =>
-        `Your ${h.name} is in Shutdown: underperforms their own average against every hero on the opposing draft (−10% power).`,
-    ),
-    ...shutdownHeroesB.map(
-      (h) =>
-        `Opponent's ${h.name} is in Shutdown: underperforms their own average against every hero on your draft (−10% power).`,
-    ),
+    ...shutdownHeroesA.map((h) => i18nLine('battle.shutdownNoteMine', { hero: h.name })),
+    ...shutdownHeroesB.map((h) => i18nLine('battle.shutdownNoteOpponent', { hero: h.name })),
   ];
   const shutdownHeroIds = [...shutdownHeroesA, ...shutdownHeroesB].map((h) => h.id);
 
@@ -751,11 +742,11 @@ export function resolveBattle(
   const advantages = axisDeltas
     .filter((d) => d.delta > 0.3)
     .slice(0, 2)
-    .map((d) => `Your draft has ${describeAxis(d.axis, true)}.`);
+    .map((d) => d.axis);
   const disadvantages = axisDeltas
     .filter((d) => d.delta < -0.3)
     .slice(0, 2)
-    .map((d) => `Your draft has ${describeAxis(d.axis, false)}.`);
+    .map((d) => d.axis);
 
   // Which hero to credit when High Skill's shift actually produced an
   // upset (underdog won) — only computed when that's really what happened,
@@ -797,7 +788,7 @@ export function resolveBattle(
     winnerIsA ? heroesA : heroesB,
     winnerIsA ? heroesB : heroesA,
     lookup,
-    winnerIsA ? 'your draft' : 'the opponent',
+    winnerIsA ? 'yours' : 'opponent',
   );
 
   // Always from YOUR draft's (teamA) perspective, independent of who won:

@@ -53,7 +53,11 @@ export default function DraftLedger({ heroes, totalSlots, title, layout = 'stack
                     {h.assignedRole ? t(`roles.${h.assignedRole}`) : t('draftLedger.rolePending')}
                   </span>
                 </span>
-                <HeroTagBadges tags={visibleTagsFor(h.hero.name, pickedHeroNames)} variant="inline" />
+                <HeroTagBadges
+                  tags={visibleTagsFor(h.hero.name, pickedHeroNames)}
+                  variant="inline"
+                  contextHeroNames={pickedHeroNames}
+                />
               </>
             ) : (
               <>

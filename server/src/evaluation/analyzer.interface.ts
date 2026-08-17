@@ -1,4 +1,4 @@
-import type { Hero } from 'shared';
+import type { Hero, LocalizedLine } from 'shared';
 
 export interface AnalyzerOutput {
   score: number | null;
@@ -7,7 +7,7 @@ export interface AnalyzerOutput {
   // src/evaluation/axis-percentiles.ts) — null for analyzers that aren't
   // axis-based (Synergy, Counter, Pro Similarity have no such population).
   percentile: number | null;
-  explanation: string[];
+  explanation: LocalizedLine[];
   // OpenDota match link for the specific pro match an analyzer's result is
   // drawn from (currently only Pro Similarity Analyzer sets this — see
   // Blueprint/10-tech-debt-backlog.md, "Ссылка на исходный матч для

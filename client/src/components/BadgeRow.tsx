@@ -1,9 +1,8 @@
+import { useTranslation } from 'react-i18next';
 import type { ActiveBadge } from '../data/badges';
+import { badgeCopy } from '../i18n/display';
 import './BadgeRow.css';
 
-// Hand-drawn (not sourced) line icons — kept simple/geometric to read at
-// small size and to match the page's line-art weight rather than importing
-// an icon library for 5 glyphs.
 const BADGE_ICONS: Record<string, JSX.Element> = {
   chainLock: (
     <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -34,26 +33,37 @@ const BADGE_ICONS: Record<string, JSX.Element> = {
       <circle cx="20" cy="20" r="5" fill="currentColor" stroke="none" />
     </svg>
   ),
+  allMelee: (
+    <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round">
+      <path d="M8 28 L20 8 L32 28 Z" />
+    </svg>
+  ),
+  allRanged: (
+    <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="2.5">
+      <circle cx="20" cy="20" r="10" />
+      <circle cx="20" cy="20" r="3" fill="currentColor" stroke="none" />
+    </svg>
+  ),
 };
 
 interface Props {
   badges: ActiveBadge[];
 }
 
-// Square icon-only badges for the Evaluation screen — distinct from
-// HeroTagBadges (rectangular, text-labeled, shown during drafting). No text
-// visible by default per spec; the full description (and which/how many
-// heroes triggered it) only shows on hover via the native title tooltip.
 export default function BadgeRow({ badges }: Props) {
+  const { t } = useTranslation();
   if (badges.length === 0) return null;
 
   return (
     <div className="badge-row">
-      {badges.map((badge) => (
-        <div key={badge.id} className="badge-square" title={`${badge.name} — ${badge.description}`}>
-          <span className="badge-icon">{BADGE_ICONS[badge.id]}</span>
-        </div>
-      ))}
+      {badges.map((badge) => {
+        const copy = badgeCopy(t, badge.id);
+        return (
+          <div key={badge.id} className="badge-square" title={`${copy.name} — ${copy.description}`}>
+            <span className="badge-icon">{BADGE_ICONS[badge.id]}</span>
+          </div>
+        );
+      })}
     </div>
   );
 }

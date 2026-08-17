@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnalyzerResult } from 'shared';
+import { axisLabel } from '../i18n/display';
 import './AxisRadar.css';
 
 // The "draft fingerprint" — every axis with a percentile, plotted on one
@@ -100,9 +101,8 @@ export default function AxisRadar({ breakdown }: Props) {
             // Anchor by which half of the circle the label sits in, so text
             // grows away from the chart instead of over it.
             const anchor = x < CENTER - 4 ? 'end' : x > CENTER + 4 ? 'start' : 'middle';
-            // Long labels ("Resource Efficiency", "Damage Output") get a
-            // second line rather than running into their neighbours.
-            const words = axis.label.split(' ');
+            const label = axisLabel(t, axis.key, axis.label);
+            const words = label.split(' ');
             // Vertical placement has to follow which part of the circle the
             // label sits on. A two-line label at 12 o'clock anchored on its
             // first line hangs down into the chart and collides with the
@@ -125,7 +125,7 @@ export default function AxisRadar({ breakdown }: Props) {
                 textAnchor={anchor}
               >
                 {words.map((word, w) => (
-                  <tspan key={word} x={x} dy={w === 0 ? firstDy : LINE_H}>
+                  <tspan key={`${word}-${w}`} x={x} dy={w === 0 ? firstDy : LINE_H}>
                     {word}
                   </tspan>
                 ))}
@@ -144,13 +144,14 @@ export default function AxisRadar({ breakdown }: Props) {
         <div className="axis-radar-hotspots">
           {axes.map((axis, i) => {
             const [x, y] = pointAt(i, count, axis.percentile!);
+            const label = axisLabel(t, axis.key, axis.label);
             return (
               <button
                 key={axis.key}
                 type="button"
                 className="axis-radar-hotspot"
                 style={{ left: `${(x / SIZE) * 100}%`, top: `${(y / SIZE) * 100}%` }}
-                aria-label={`${axis.label}: ${axis.percentile}`}
+                aria-label={`${label}: ${axis.percentile}`}
                 onMouseEnter={() => setActive(i)}
                 onMouseLeave={() => setActive(null)}
                 onFocus={() => setActive(i)}
@@ -171,7 +172,7 @@ export default function AxisRadar({ breakdown }: Props) {
           t('evaluation.radarNote')
         ) : (
           <span className="axis-radar-readout">
-            <strong>{axes[active].label}</strong>
+            <strong>{axisLabel(t, axes[active].key, axes[active].label)}</strong>
             <span>{t('evaluation.radarReadout', { percentile: axes[active].percentile })}</span>
           </span>
         )}

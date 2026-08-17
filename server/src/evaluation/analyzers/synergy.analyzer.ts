@@ -1,6 +1,7 @@
-import type { Hero } from 'shared';
+import type { Hero, LocalizedLine } from 'shared';
+import { i18nLine } from 'shared';
 import type { Analyzer } from '../analyzer.interface';
-import { SYNERGY_NARRATIVE, scoreBracket } from '../score-narrative';
+import { scoreBracket } from '../score-narrative';
 
 export interface SynergyLookup {
   getSynergyWinRate(heroId: number, allyHeroId: number): number | null;
@@ -22,7 +23,7 @@ interface TagPairRule {
   tagA: string;
   tagB: string;
   weight: number;
-  describe(a: Hero, b: Hero): string;
+  key: string;
 }
 
 // Grounded in the synergy_tags taxonomy from Blueprint/09-hero-knowledge-base.md.
@@ -31,40 +32,37 @@ const TAG_PAIR_RULES: TagPairRule[] = [
     tagA: 'needs_setup',
     tagB: 'enables_engage',
     weight: 2.5,
-    describe: (a, b) =>
-      `${a.name} (needs setup) + ${b.name} (enables engage): initiation sets up pick-off/burst combos.`,
+    key: 'eval.synergy.pair.needs_setup_enables_engage',
   },
   {
     tagA: 'needs_space',
     tagB: 'creates_space',
     weight: 2,
-    describe: (a, b) => `${b.name} (creates space) supports ${a.name} (needs space) to scale safely.`,
+    key: 'eval.synergy.pair.needs_space_creates_space',
   },
   {
     tagA: 'needs_space',
     tagB: 'protects_allies',
     weight: 1.5,
-    describe: (a, b) => `${b.name} (protects allies) helps keep ${a.name} (needs space) alive while farming.`,
+    key: 'eval.synergy.pair.needs_space_protects_allies',
   },
   {
     tagA: 'enables_engage',
     tagB: 'amplifies_magic_damage',
     weight: 1.5,
-    describe: (a, b) =>
-      `${a.name} (enables engage) sets up ${b.name} (amplifies magic damage) for burst follow-up.`,
+    key: 'eval.synergy.pair.enables_engage_amplifies_magic_damage',
   },
   {
     tagA: 'enables_engage',
     tagB: 'amplifies_physical_damage',
     weight: 1.5,
-    describe: (a, b) =>
-      `${a.name} (enables engage) sets up ${b.name} (amplifies physical damage) for follow-up.`,
+    key: 'eval.synergy.pair.enables_engage_amplifies_physical_damage',
   },
   {
     tagA: 'wave_clear_support',
     tagB: 'needs_space',
     weight: 1.5,
-    describe: (a, b) => `${a.name} (wave clear support) frees up lanes for ${b.name} (needs space) to scale.`,
+    key: 'eval.synergy.pair.wave_clear_support_needs_space',
   },
 ];
 
@@ -97,31 +95,32 @@ interface AntiSynergyRule {
   tagA: string;
   tagB: string;
   weight: number;
-  describe(a: Hero, b: Hero): string;
+  key: string;
 }
 const ANTI_SYNERGY_RULES: AntiSynergyRule[] = [
   {
     tagA: 'split_push',
     tagB: 'late_game_scaling',
     weight: 1.5,
-    describe: (a, b) =>
-      `${a.name} (split-push/tempo) wants to press the map and end early, while ${b.name} (late-game scaling) needs the game to go long — conflicting game plans.`,
+    key: 'eval.synergy.anti.split_push_late',
   },
   {
     tagA: 'deathball',
     tagB: 'late_game_scaling',
     weight: 2,
-    describe: (a, b) =>
-      `${a.name} (deathball) is built to group and end fast, pulling against ${b.name} (late-game scaling), whose payoff is a farm-heavy late game — conflicting timings.`,
+    key: 'eval.synergy.anti.deathball_late',
   },
 ];
 
-// Same shape as findPair but reads the archetype `tags` field, and requires two
-// DIFFERENT heroes (a hero that is both tagA and tagB doesn't conflict with
-// itself).
+// Same shape as findPair but reads the archetype `tags` field. Requires two
+// DIFFERENT heroes. A hero that carries BOTH sides of the conflict (e.g.
+// Arc Warden / Lone Druid / Phantom Lancer / Tinker: split_push + late_game_scaling)
+// is not an "early end" win condition — split-push is how they close AFTER
+// scaling — so they are never matched as the tagA (early) side.
 function findArchetypePair(heroes: Hero[], tagA: string, tagB: string): [Hero, Hero] | null {
   for (const a of heroes) {
     if (!a.tags.includes(tagA)) continue;
+    if (a.tags.includes(tagB)) continue;
     for (const b of heroes) {
       if (a.id === b.id) continue;
       if (b.tags.includes(tagB)) return [a, b];
@@ -194,6 +193,10 @@ function worstRealSynergyPair(
   return worst;
 }
 
+function pairLine(key: string, a: Hero, b: Hero, extra?: Record<string, string>): LocalizedLine {
+  return i18nLine(key, { heroA: a.name, heroB: b.name, ...extra });
+}
+
 // Real co-pick win rate (Blueprint/06-battle-engine.md's data, already used
 // by Battle Engine) as an equal signal alongside the hand-authored tag
 // pairs, per the Milestone-6-adjacent design agreed for this analyzer —
@@ -207,7 +210,7 @@ export function createSynergyAnalyzer(lookup: SynergyLookup): Analyzer {
     analyze(picks) {
       const heroes = picks.map((p) => p.hero);
       let score = 0;
-      const explanation: string[] = [];
+      const explanation: LocalizedLine[] = [];
 
       for (const rule of TAG_PAIR_RULES) {
         const pair = findPair(heroes, rule.tagA, rule.tagB);
@@ -219,9 +222,11 @@ export function createSynergyAnalyzer(lookup: SynergyLookup): Analyzer {
 
         score += weight;
         explanation.push(
-          dampened
-            ? `${rule.describe(pair[0], pair[1])} (real data shows this pairing underperforms expectations, weighted down)`
-            : rule.describe(pair[0], pair[1]),
+          pairLine(rule.key, pair[0], pair[1], {
+            tagA: rule.tagA,
+            tagB: rule.tagB,
+            ...(dampened ? { dampened: '1' } : {}),
+          }),
         );
       }
 
@@ -229,10 +234,7 @@ export function createSynergyAnalyzer(lookup: SynergyLookup): Analyzer {
       if (realPair && realPair.delta >= REAL_SYNERGY_SIGNIFICANCE) {
         const bonus = Math.min(3, realPair.delta * 15);
         score += bonus;
-        explanation.push(
-          `${realPair.heroA.name} + ${realPair.heroB.name} have a strong real win rate together — ` +
-            `outperforming what their individual strength alone would predict.`,
-        );
+        explanation.push(pairLine('eval.synergy.realStrong', realPair.heroA, realPair.heroB));
       }
 
       // Game-plan conflicts (archetype tags) — surfaced even when the pair has
@@ -241,7 +243,7 @@ export function createSynergyAnalyzer(lookup: SynergyLookup): Analyzer {
         const pair = findArchetypePair(heroes, rule.tagA, rule.tagB);
         if (!pair) continue;
         score -= rule.weight;
-        explanation.push(rule.describe(pair[0], pair[1]));
+        explanation.push(pairLine(rule.key, pair[0], pair[1]));
       }
 
       // Worst real-data pair: now SHOWN whenever it's genuinely negative (user:
@@ -255,35 +257,34 @@ export function createSynergyAnalyzer(lookup: SynergyLookup): Analyzer {
         if (worstPair.delta <= -REAL_SYNERGY_SIGNIFICANCE) {
           score -= Math.min(3, Math.abs(worstPair.delta) * 15);
         }
-        explanation.push(
-          `${worstPair.heroA.name} + ${worstPair.heroB.name} have a below-average real win rate together — ` +
-            `underperforming what their individual strength alone would predict.`,
-        );
+        explanation.push(pairLine('eval.synergy.realWeak', worstPair.heroA, worstPair.heroB));
       }
 
       const highMobilityHeroes = heroes.filter((h) => h.evaluation_values.mobility >= 5);
       if (highMobilityHeroes.length >= 2) {
         score += 1;
         explanation.push(
-          `Multiple high-mobility heroes (${highMobilityHeroes.map((h) => h.name).join(', ')}) enable pick-off plays.`,
+          i18nLine('eval.synergy.mobility', { heroes: highMobilityHeroes.map((h) => h.name).join(', ') }),
         );
       }
 
       const teamfightHeroes = heroes.filter((h) => h.tags.includes('teamfight'));
       if (teamfightHeroes.length >= 3) {
         score += 1;
-        explanation.push(`Strong teamfight-oriented core (${teamfightHeroes.map((h) => h.name).join(', ')}).`);
+        explanation.push(
+          i18nLine('eval.synergy.teamfight', { heroes: teamfightHeroes.map((h) => h.name).join(', ') }),
+        );
       }
 
       if (explanation.length === 0) {
-        explanation.push('No strong hero-to-hero synergies detected in this composition.');
+        explanation.push(i18nLine('eval.synergy.none'));
       }
 
       // Floor added alongside the worst-pair penalty above — score had no
       // lower bound before because nothing in this analyzer could push it
       // below 0 (every other term is additive-only).
       const finalScore = Math.max(0, Math.min(10, Math.round(score * 10) / 10));
-      explanation.push(SYNERGY_NARRATIVE[scoreBracket(finalScore)]);
+      explanation.push(i18nLine(`eval.synergy.summary.${scoreBracket(finalScore)}`));
 
       // Not axis-based (no evaluation_values score) — no percentile
       // distribution to rank against, see analyzer.interface.ts.

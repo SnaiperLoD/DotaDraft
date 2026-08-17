@@ -1,5 +1,7 @@
 import { createAxisAnalyzer } from './axis.analyzer';
 import { makeHero, DEFAULT_EVALUATION_VALUES, picks } from '../../test-utils/hero-factory';
+import { flattenLocalized } from '../../test-utils/localized-text';
+import { isI18nLine } from 'shared';
 
 function heroWithAxis(id: number, name: string, axis: string, value: number) {
   return makeHero({ id, name, evaluation_values: { ...DEFAULT_EVALUATION_VALUES, [axis]: value } });
@@ -41,9 +43,9 @@ describe('createAxisAnalyzer', () => {
     ];
     const analyzer = createAxisAnalyzer('scaling', 'Scaling');
     const result = analyzer.analyze(picks(heroes));
-    expect(result.explanation[1]).toContain('High (9)');
-    expect(result.explanation[1]).toContain('Mid (6)');
-    expect(result.explanation[1]).not.toContain('Low (2)');
+    expect(flattenLocalized([result.explanation[1]])).toContain('High (9)');
+    expect(flattenLocalized([result.explanation[1]])).toContain('Mid (6)');
+    expect(flattenLocalized([result.explanation[1]])).not.toContain('Low (2)');
   });
 
   it('picks the narrative bracket matching the rounded score', () => {
@@ -51,8 +53,11 @@ describe('createAxisAnalyzer', () => {
     const weak = [heroWithAxis(1, 'A', 'tempo', 1)];
     const analyzer = createAxisAnalyzer('tempo', 'Tempo');
 
-    expect(analyzer.analyze(picks(strong)).explanation[2]).toMatch(/fast-start draft/i);
-    expect(analyzer.analyze(picks(weak)).explanation[2]).toMatch(/avoid forcing early confrontations/i);
+    const strongLine = analyzer.analyze(picks(strong)).explanation[2];
+    const weakLine = analyzer.analyze(picks(weak)).explanation[2];
+    expect(isI18nLine(strongLine) && strongLine.key).toBe('eval.axis.narrative');
+    expect(isI18nLine(strongLine) && strongLine.params?.bodyBracket).toBe('high');
+    expect(isI18nLine(weakLine) && weakLine.params?.bodyBracket).toBe('low');
   });
 
   it('applies a role-fit boost and mentions it when a hero is assigned a role its strong axis matches', () => {
@@ -72,10 +77,9 @@ describe('createAxisAnalyzer', () => {
     const assigned = analyzer.analyze(picks([carry], 'Carry'));
 
     expect(assigned.score as number).toBeGreaterThan(unassigned.score as number);
-    expect(assigned.explanation.some((line) => line.includes('Anti-Mage (Carry)') && line.includes('role-fit'))).toBe(
-      true,
-    );
-    expect(unassigned.explanation.some((line) => line.includes('role-fit'))).toBe(false);
+    expect(flattenLocalized(assigned.explanation)).toMatch(/eval.axis.roleFit/);
+    expect(flattenLocalized(assigned.explanation)).toContain('Anti-Mage:Carry');
+    expect(flattenLocalized(unassigned.explanation)).not.toMatch(/eval.axis.roleFit/);
   });
 
   it('does not boost when the assigned role has no relevant axis here', () => {
@@ -83,7 +87,7 @@ describe('createAxisAnalyzer', () => {
     const analyzer = createAxisAnalyzer('scaling', 'Scaling');
 
     const result = analyzer.analyze(picks([support], 'Hard Support'));
-    expect(result.explanation.some((line) => line.includes('role-fit'))).toBe(false);
+    expect(flattenLocalized(result.explanation)).not.toMatch(/eval.axis.roleFit/);
   });
 
   it('applies the hard-carry stacking penalty (3+ threshold) without explaining it on non-scaling axes', () => {
@@ -108,14 +112,14 @@ describe('createAxisAnalyzer', () => {
     const withPenalty = analyzer.analyze(picks(threeStacked));
 
     expect(belowThreshold.score).toBe(6);
-    expect(belowThreshold.explanation.some((line) => line.includes('hard-carry'))).toBe(false);
+    expect(flattenLocalized(belowThreshold.explanation)).not.toMatch(/eval.axis.hardCarryScaling/);
     // 3 hard-carries = -5% (server/data/axis-weights.json hardCarryStackPenalty)
     // — still applies to the score, just no longer explained on a
     // non-scaling axis (Blueprint/10-tech-debt-backlog.md, "Дублирующаяся
     // строка про hard-carry stacking" — used to repeat verbatim across
     // ~11 of the 13 axes at once).
     expect(withPenalty.score).toBeCloseTo(6 * 0.95, 5);
-    expect(withPenalty.explanation.some((line) => line.includes('hard-carry'))).toBe(false);
+    expect(flattenLocalized(withPenalty.explanation)).not.toMatch(/eval.axis.hardCarryScaling/);
   });
 
   it('exempts scaling from the penalty and boosts it instead, once 3+ hard-carries are drafted', () => {
@@ -131,7 +135,7 @@ describe('createAxisAnalyzer', () => {
     const result = analyzer.analyze(picks(threeStacked));
 
     expect(result.score).toBeCloseTo(6 * 1.1, 5);
-    expect(result.explanation.some((line) => line.includes('boost') && line.includes('hard-carry'))).toBe(true);
+    expect(flattenLocalized(result.explanation)).toMatch(/eval.axis.hardCarryScaling/);
   });
 
   it('applies hidden Raid Boss +18% on Evaluation axes', () => {
