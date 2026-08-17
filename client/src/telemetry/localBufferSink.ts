@@ -5,6 +5,7 @@ const MAX_EVENTS = 200;
 
 const EMPTY_COUNTS = (): Record<TelemetryEventName, number> => ({
   session_start: 0,
+  draft_first_pick: 0,
   draft_completed: 0,
   evaluate_success: 0,
   battle_enter: 0,

@@ -103,7 +103,9 @@ older pool dump will not duplicate those rows on the next commit.
 - TLS termination (Caddy, cloud LB, or platform certs)
 - Backups for the SQLite volume **and** the Postgres pool volume — commands
   are in this file; you still pick a schedule and off-box destination
-- Observability beyond local telemetry (`client/src/telemetry/`)
+- Set `TELEMETRY_READ_TOKEN` to read the closed-alpha funnel:
+  `GET /api/telemetry/funnel` with header `X-Telemetry-Read-Token`.
+  Unset = the dump 404s. Events still ingest on `POST /api/telemetry`.
 
 ## Non-goals of this pass
 

@@ -96,8 +96,10 @@ export default function DraftPage() {
         setDraft(await api.pickHero(draft.id, heroId));
       } else if (pending) {
         // The first pick is what creates the draft server-side.
-        setDraft(await api.createDraft(pending.seed, heroId, pending.rerollUsed));
+        const created = await api.createDraft(pending.seed, heroId, pending.rerollUsed);
+        setDraft(created);
         setPending(null);
+        track('draft_first_pick', undefined, created.id);
       }
     } catch (err) {
       setError((err as Error).message);

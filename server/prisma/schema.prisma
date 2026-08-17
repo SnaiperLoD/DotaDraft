@@ -101,3 +101,19 @@ model ProMatch {
   startTime        DateTime
   createdAt        DateTime @default(now())
 }
+
+// Closed-alpha funnel (no PII, no lineups). Written by POST /telemetry,
+// read by GET /telemetry/funnel behind TELEMETRY_READ_TOKEN.
+model FunnelEvent {
+  id        Int      @id @default(autoincrement())
+  name      String
+  ts        DateTime
+  sessionId String
+  visitorId String
+  draftKey  String?
+  props     String?
+  createdAt DateTime @default(now())
+
+  @@index([sessionId])
+  @@index([name])
+}

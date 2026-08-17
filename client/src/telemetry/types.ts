@@ -1,5 +1,6 @@
 export type TelemetryEventName =
   | 'session_start'
+  | 'draft_first_pick'
   | 'draft_completed'
   | 'evaluate_success'
   | 'battle_enter'

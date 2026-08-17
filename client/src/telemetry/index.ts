@@ -1,4 +1,5 @@
 import { getSessionId, getVisitorId, hashDraftId } from './ids';
+import { HttpTelemetrySink } from './httpSink';
 import {
   LocalBufferSink,
   clearTelemetryEvents,
@@ -7,9 +8,22 @@ import {
 } from './localBufferSink';
 import type { TelemetryEvent, TelemetryEventName, TelemetryProp, TelemetrySink } from './types';
 
-let sink: TelemetrySink = new LocalBufferSink();
+class CompositeSink implements TelemetrySink {
+  constructor(private readonly sinks: TelemetrySink[]) {}
+
+  enqueue(event: TelemetryEvent): void {
+    for (const sink of this.sinks) sink.enqueue(event);
+  }
+
+  async flush(): Promise<void> {
+    await Promise.all(this.sinks.map((sink) => sink.flush?.()));
+  }
+}
+
+let sink: TelemetrySink = new CompositeSink([new LocalBufferSink(), new HttpTelemetrySink()]);
 let sessionStarted = false;
 let tapalkaClicks = 0;
+let pagehideBound = false;
 
 export function setTelemetrySink(next: TelemetrySink): void {
   sink = next;
@@ -40,6 +54,7 @@ export function track(
 export function trackSessionStart(): void {
   if (sessionStarted) return;
   sessionStarted = true;
+  bindPageHide();
   track('session_start');
 }
 
@@ -67,11 +82,20 @@ declare global {
 
 export function installTelemetryDevtools(): void {
   if (typeof window === 'undefined') return;
+  bindPageHide();
   window.__DOTADRAFT_TELEMETRY__ = {
     dump: dumpTelemetryFunnel,
     events: readTelemetryEvents,
     clear: clearTelemetryEvents,
   };
+}
+
+function bindPageHide(): void {
+  if (pagehideBound || typeof window === 'undefined') return;
+  pagehideBound = true;
+  window.addEventListener('pagehide', () => {
+    void sink.flush?.();
+  });
 }
 
 export type { TelemetryEvent, TelemetryEventName, TelemetrySink };

@@ -4,10 +4,9 @@ Updated 2026-08-17 after the architecture / engineering / product audit.
 Handoff / triage; `10-tech-debt-backlog.md` is the detailed source of truth.
 Deploy notes: `13-deploy.md`.
 
-**Status check:** the product is a strong closed-alpha MVP. Docker Compose
-provisions the Postgres Opponent Pool; CI runs live Battle smoke plus the
-HTTP integration suite; lint/format block on production source. Next is a
-small-audience deploy (priority 6), not another calibration sweep.
+**Status check:** the product is a strong closed-alpha MVP. Funnel events
+land in SQLite. Next is a small-audience deploy (host/DNS/TLS), not another
+calibration sweep.
 
 ---
 
@@ -54,13 +53,13 @@ gltf ignored). `/health`
 reports `{ status, sqlite, pool }`; persistence `.catch` paths log; SQLite
 backup/restore is in `13-deploy.md`.
 
-### 6. Closed-alpha product validation
+### 6. Closed-alpha product validation — in progress (2026-08-17)
 
-Only after priorities 1–5: deploy to a small audience and replace the
-developer-only local telemetry buffer with a privacy-safe aggregate sink.
-Measure session → first pick → draft complete → evaluate → battle enter →
-second fight → pool commit. Use the funnel and observed sessions to decide
-whether Evaluation needs progressive disclosure or first-session guidance.
+Funnel sink is in: events batch to `POST /telemetry` (SQLite `FunnelEvent`)
+and still buffer locally. `draft_first_pick` is on the path. Dump:
+`GET /telemetry/funnel` behind `TELEMETRY_READ_TOKEN`. Host/DNS/TLS and a
+small audience are still manual — pick a box and ship Compose, don't start
+another calibration pass.
 
 ### 7. Restore architectural and explainability boundaries
 
@@ -117,9 +116,9 @@ explicit user approval, run reproducible seeds into `artifacts/` (not
   policy (`artifacts/README.md`, `server/scripts/lib/artifact-paths.ts`).
   Runtime snapshots and compact summaries stay tracked. Files remain on disk
   locally so old scripts still read them.
-- **Local telemetry** — `client/src/telemetry/` ring buffer; funnel events
-  for session → draft complete → evaluate → battle enter/fight/outcome →
-  copy/commit → Tapalka. Devtools dump on `window.__DOTADRAFT_TELEMETRY__`.
+- **Local telemetry** — `client/src/telemetry/` ring buffer **and**
+  `POST /telemetry` → SQLite. Funnel includes first pick. Aggregate dump
+  `GET /telemetry/funnel` behind `TELEMETRY_READ_TOKEN`.
 
 ## Completed since the previous priority list
 
@@ -205,9 +204,8 @@ User's request (2026-08-06): heroes who genuinely play both a core and a support
 
 ## Where to start
 
-Priorities 1–5 are done. Next is priority 6: closed-alpha product
-validation (small audience, privacy-safe funnel sink). Do not begin with
-another calibration sweep, new mechanic, or broad visual redesign.
+Priorities 1–5 are done. Funnel sink is in. Next is actually putting it
+on a host and inviting 5–15 players — not another calibration sweep.
 
 ---
 

@@ -14,7 +14,7 @@ Synergy Analyzer + real co-pick WR · Damage Output label (key still
 `teamfight`) · Pro tier1 pool · Role-fit · Hard-carry stacking · Phase-aware
 resolution · Custom tags + Eval Active Combos · Shutdown · totalScore
 percentile · Eval↔Battle shared mid skeleton · Playwright e2e · Artifact
-hygiene (`artifacts/`) · Local telemetry buffer · Named archetypes (incl.
+hygiene (`artifacts/`) · Funnel telemetry (local + SQLite) · Named archetypes (incl.
 Tempo) · Battle lanes + server story/explanation · Session win streak ·
 History / leaderboards · Tapalka (static + 3D) · Hidden calibration tags in
 Eval · Synergy Total Score weight 0.25 · Opponent freshness / TI context ·
@@ -112,7 +112,7 @@ Accuracy Ceiling / MVP boundary — likely never.
 ### Supportless-lineup synergy half-check — `partial`
 Axes checked; synergy half never run (weight now 0.25).
 ### User research — `open`
-Prefer telemetry dump + hosting analytics over more survey guesswork.
+Prefer `GET /telemetry/funnel` (plus hosting) over more survey guesswork.
 
 ---
 

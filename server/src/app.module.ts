@@ -9,6 +9,7 @@ import { OpponentPoolModule } from './opponent-pool/opponent-pool.module';
 import { BattleModule } from './battle/battle.module';
 import { DevModule } from './dev/dev.module';
 import { HealthModule } from './health/health.module';
+import { TelemetryModule } from './telemetry/telemetry.module';
 import { WriteRateLimitInterceptor } from './common/write-rate-limit';
 
 // DevModule is testing-only — it serves the hero calibration matrix (raw axis
@@ -20,6 +21,7 @@ const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 @Module({
   imports: [
     HealthModule,
+    TelemetryModule,
     PrismaModule,
     HeroModule,
     DraftModule,

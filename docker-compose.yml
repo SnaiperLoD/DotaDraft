@@ -26,6 +26,7 @@ services:
       # Leave empty when nginx fronts both (recommended).
       CORS_ORIGIN: ''
       POOL_DATABASE_URL: postgresql://dota:dota@pool:5432/opponent_pool
+      TELEMETRY_READ_TOKEN: ${TELEMETRY_READ_TOKEN:-}
     volumes:
       - dota-draft-data:/data
     expose:
