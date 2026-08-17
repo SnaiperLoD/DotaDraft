@@ -1,0 +1,27 @@
+# Overlay: Cloudflare Tunnel. nginx on `web` stays the app proxy.
+# No inbound 80/443. :8080 stays loopback-only on the host.
+#
+# Friends-alpha (no token, no domain) — leave this in the foreground and
+# copy the https://*.trycloudflare.com URL from the logs:
+#   docker compose up -d
+#   docker compose -f docker-compose.yml -f docker-compose.tunnel.yml up tunnel
+#
+# Named tunnel (stable hostname, needs CLOUDFLARE_TUNNEL_TOKEN):
+#   docker compose -f docker-compose.yml -f docker-compose.tunnel.yml --profile named up -d
+# Zero Trust → Tunnels → Create (Docker). Public hostname service must be
+# http://web:80 (compose DNS), not localhost:8080. Never commit the token.
+
+services:
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate --url http://web:80
+    depends_on:
+      - web
+
+  tunnel-named:
+    profiles: ['named']
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN}
+    depends_on:
+      - web
+    restart: unless-stopped

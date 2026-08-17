@@ -140,8 +140,10 @@ anti-synergy no longer calls them an early-end plan. Rest of HKB still open.
 Long-horizon; freshness/TI covers immediate need.
 ### Hosting / release process — `partial`
 Docker Compose + Dockerfiles + `.env.example` + `Blueprint/13-deploy.md` +
-`start:prod` + `/health` (`sqlite`/`pool`). Host/DNS/TLS still manual.
-SQLite backup/restore commands are in `13-deploy.md`.
+`start:prod` + `/health` (`sqlite`/`pool`). Friends-alpha TLS is a
+Cloudflare **quick** tunnel (`docker-compose.tunnel.yml`); named tunnel +
+domain + VPS stay deferred until a stable URL is needed. SQLite
+backup/restore commands are in `13-deploy.md`.
 ### CI hardening — `partial`
 PR trigger, full monorepo build, Playwright cache, Docker build, server
 integration suite. Lint and Prettier are blocking for production source

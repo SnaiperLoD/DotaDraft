@@ -41,7 +41,9 @@ services:
       context: .
       dockerfile: Dockerfile.client
     ports:
-      - '8080:80'
+      # Loopback only: local Docker Desktop still hits http://localhost:8080.
+      # Public HTTPS is Cloudflare Tunnel (docker-compose.tunnel.yml), not :8080.
+      - '127.0.0.1:8080:80'
     depends_on:
       api:
         condition: service_healthy

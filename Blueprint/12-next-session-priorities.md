@@ -57,9 +57,10 @@ backup/restore is in `13-deploy.md`.
 
 Funnel sink is in: events batch to `POST /telemetry` (SQLite `FunnelEvent`)
 and still buffer locally. `draft_first_pick` is on the path. Dump:
-`GET /telemetry/funnel` behind `TELEMETRY_READ_TOKEN`. Host/DNS/TLS and a
-small audience are still manual — pick a box and ship Compose, don't start
-another calibration pass.
+`GET /telemetry/funnel` behind `TELEMETRY_READ_TOKEN`. This week is two
+friends over a Cloudflare **quick** tunnel from the laptop
+(`13-deploy.md`, `docker-compose.tunnel.yml`) — no domain, no VPS. Named
+tunnel + box is the later step. Don't start another calibration pass.
 
 ### 7. Restore architectural and explainability boundaries
 
@@ -204,8 +205,9 @@ User's request (2026-08-06): heroes who genuinely play both a core and a support
 
 ## Where to start
 
-Priorities 1–5 are done. Funnel sink is in. Next is actually putting it
-on a host and inviting 5–15 players — not another calibration sweep.
+Priorities 1–5 are done. Funnel sink is in. Next is a scheduled playtest
+with two friends via quick tunnel (`13-deploy.md`) — not a public launch
+and not another calibration sweep.
 
 ---
 

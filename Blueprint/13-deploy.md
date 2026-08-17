@@ -73,6 +73,10 @@ See `.env.example`. Important:
   and API are on different hosts
 - `POOL_DATABASE_URL` — required for the advertised Battle core loop.
   Compose sets it to the `pool` service. Empty disables pool features.
+- `TELEMETRY_READ_TOKEN` — read `GET /api/telemetry/funnel`. Unset = 404.
+  Events still ingest on `POST /api/telemetry`.
+- `CLOUDFLARE_TUNNEL_TOKEN` — named tunnel only (`--profile named`). Quick
+  tunnel for friends-alpha does not need it.
 - Do not point production at `database/dev.db` from a laptop path
 
 ## SQLite backup and restore
@@ -97,15 +101,90 @@ Postgres Opponent Pool is a normal `pg_dump` / `pg_restore` of the `pool`
 volume. Player commits are keyed by `sourceDraftId` (unique); restoring an
 older pool dump will not duplicate those rows on the next commit.
 
+## Friends-alpha this week (2 people, laptop)
+
+No public launch. No domain, no VPS, no inbound 80/443. Keep the local
+Docker Desktop stack at http://localhost:8080 and share a **Cloudflare
+quick tunnel** so two friends get a temporary `https://*.trycloudflare.com`
+URL. TLS terminates at the Cloudflare edge; `cloudflared` dials out.
+
+`:8080` is bound to loopback only (`127.0.0.1:8080:80`). The laptop does
+not advertise LAN:8080. Friends never hit that port — they hit the
+trycloudflare URL.
+
+The URL **dies** on tunnel restart, `docker compose down`, or laptop sleep.
+That is fine for a scheduled playtest. Keep the lid open. Do not treat this
+as a product URL.
+
+Do **not** buy a domain this week. Do **not** rent a VPS this week.
+
+### Nick runs (stack already healthy at :8080)
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.tunnel.yml up tunnel
+```
+
+If the stack is not up yet:
+
+```bash
+docker compose up -d --build
+docker compose -f docker-compose.yml -f docker-compose.tunnel.yml up tunnel
+```
+
+Leave that in the foreground. Copy the `https://*.trycloudflare.com` line
+from the logs. Send it to two friends. Check
+`https://<that-host>/api/health` yourself first.
+
+Host-side equivalent if `cloudflared` is already on PATH (same URL class,
+still no token):
+
+```bash
+cloudflared tunnel --url http://127.0.0.1:8080
+```
+
+Prefer the compose overlay: no extra install, origin is `http://web:80` on
+the compose network.
+
+ngrok is an optional footnote if Cloudflare is blocked for a tester. Not
+the primary path. Do not add a second nginx.
+
+Funnel dump still uses the local token against the tunneled host:
+
+```bash
+curl -H "X-Telemetry-Read-Token: $TELEMETRY_READ_TOKEN" https://<trycloudflare-host>/api/telemetry/funnel
+```
+
+## Later: stable URL / more testers (not this week)
+
+When you actually want a hostname that survives sleep and 5–15 people on a
+box: cheap VPS (2 vCPU / 2 GB, Docker) + **named** Cloudflare Tunnel + a
+domain in a Cloudflare zone. Same compose, two named volumes. Do not split
+onto Fly/Railway.
+
+1. Domain in Cloudflare (reuse one you have, or buy then). Apex or
+   `draft.` — branding does not matter.
+2. Zero Trust → Networks → Tunnels → Create (Docker). Paste the token into
+   gitignored `.env` as `CLOUDFLARE_TUNNEL_TOKEN`. Public hostname →
+   service **`http://web:80`**. Cloudflare CNAME to
+   `<tunnel-id>.cfargotunnel.com` (proxied). No A record to the VPS.
+3. On the VPS:
+
+   ```bash
+   docker compose -f docker-compose.yml -f docker-compose.tunnel.yml --profile named up -d --build
+   ```
+
+4. `https://<domain>/api/health`, then invite.
+
+If testers are mostly on RU ISPs and Cloudflare is flaky, fallback is the
+same VPS with an A record + Caddy/Let's Encrypt in front of
+`127.0.0.1:8080`. That is a second proxy — don't start there.
+
 ## Still manual after this prep
 
-- Choose a host (Fly / Railway / VPS / etc.) and point DNS
-- TLS termination (Caddy, cloud LB, or platform certs)
-- Backups for the SQLite volume **and** the Postgres pool volume — commands
-  are in this file; you still pick a schedule and off-box destination
-- Set `TELEMETRY_READ_TOKEN` to read the closed-alpha funnel:
-  `GET /api/telemetry/funnel` with header `X-Telemetry-Read-Token`.
-  Unset = the dump 404s. Events still ingest on `POST /api/telemetry`.
+- Off-box backup schedule for the SQLite volume **and** the Postgres pool
+  volume — commands are in this file; you still pick a destination
+- Named tunnel / domain / VPS — only when a stable URL is actually needed
+  (cannot be done from this repo)
 
 ## Non-goals of this pass
 
