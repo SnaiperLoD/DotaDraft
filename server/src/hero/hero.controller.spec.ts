@@ -10,7 +10,9 @@ import type { TopAbility } from 'shared';
 describe('HeroController.synergyPreview', () => {
   function makeController(winRates: Record<number, number>, synergy: Record<string, number>) {
     const heroService = {
-      findByIds: jest.fn((ids: number[]) => Promise.resolve(ids.map((id) => makeHero({ id, name: `Hero${id}` })))),
+      findByIds: jest.fn((ids: number[]) =>
+        Promise.resolve(ids.map((id) => makeHero({ id, name: `Hero${id}` }))),
+      ),
     } as unknown as HeroService;
 
     const heroMetaService = {
@@ -38,10 +40,7 @@ describe('HeroController.synergyPreview', () => {
   it('averages real synergy delta across all picked heroes for each candidate', async () => {
     // Candidate 10 vs picked 1 (winRate 0.5 each, synergy 0.55 -> delta +0.05)
     // and picked 2 (winRate 0.5 each, synergy 0.45 -> delta -0.05) averages to 0.
-    const controller = makeController(
-      { 1: 0.5, 2: 0.5, 10: 0.5 },
-      { '1-10': 0.55, '2-10': 0.45 },
-    );
+    const controller = makeController({ 1: 0.5, 2: 0.5, 10: 0.5 }, { '1-10': 0.55, '2-10': 0.45 });
     const result = await controller.synergyPreview({ pickedHeroIds: [1, 2], candidateHeroIds: [10] });
     expect(result[0].heroId).toBe(10);
     expect(result[0].score).toBeCloseTo(0);
@@ -77,7 +76,11 @@ describe('HeroController.findAll', () => {
   it('delegates directly to HeroService.findAll', () => {
     const heroes = [makeHero({ id: 1, name: 'A' })];
     const heroService = { findAll: jest.fn(() => heroes) } as unknown as HeroService;
-    const controller = new HeroController(heroService, {} as unknown as HeroAbilitiesService, {} as unknown as HeroMetaService);
+    const controller = new HeroController(
+      heroService,
+      {} as unknown as HeroAbilitiesService,
+      {} as unknown as HeroMetaService,
+    );
     expect(controller.findAll()).toBe(heroes);
     expect(heroService.findAll).toHaveBeenCalledTimes(1);
   });

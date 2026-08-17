@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import {
+  assertMockedBattleStory,
   completeDraftToEvaluation,
   enterBattle,
   fetchHeroes,
@@ -16,6 +17,7 @@ test('five picks, roles, evaluation, then battle story', async ({ page }) => {
   await mockBattle(page);
   await completeDraftToEvaluation(page);
   await enterBattle(page);
+  await assertMockedBattleStory(page);
   await expect(page.getByTestId('battle-verdict')).toHaveAttribute('data-outcome', 'Win');
 });
 
@@ -167,4 +169,12 @@ test('Tapalka stays static when reduced motion is preferred', async ({ page }) =
   await expect(page.getByTestId('hero-card')).toHaveCount(5);
   await expect(page.getByTestId('tapalka-static')).toBeVisible();
   await expect(page.getByTestId('tapalka-3d')).toHaveCount(0);
+});
+
+test('live Battle path pulls a pool opponent and resolves Win or Lose', async ({ page }) => {
+  test.skip(!process.env.POOL_DATABASE_URL?.trim(), 'POOL_DATABASE_URL is not set');
+  await completeDraftToEvaluation(page);
+  await enterBattle(page);
+  const outcome = await page.getByTestId('battle-verdict').getAttribute('data-outcome');
+  expect(outcome === 'Win' || outcome === 'Lose').toBe(true);
 });

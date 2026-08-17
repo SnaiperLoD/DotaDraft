@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeReadFile": [
+      {
+        "command": "node .cursor/hooks/block-secrets.cjs",
+        "failClosed": true,
+        "timeout": 5
+      }
+    ],
+    "beforeTabFileRead": [
+      {
+        "command": "node .cursor/hooks/block-secrets.cjs",
+        "failClosed": true,
+        "timeout": 5
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": "node .cursor/hooks/block-live-data.cjs",
+        "failClosed": true,
+        "timeout": 5
+      }
+    ],
+    "afterFileEdit": [
+      {
+        "command": "node .cursor/hooks/prettier-edit.cjs",
+        "timeout": 20
+      }
+    ]
+  }
+}

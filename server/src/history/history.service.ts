@@ -10,9 +10,9 @@ export class HistoryService {
     private readonly heroService: HeroService,
   ) {}
 
-  async findAll(): Promise<HistoryEntry[]> {
+  async findAll(ownerToken: string): Promise<HistoryEntry[]> {
     const drafts = await this.prisma.draft.findMany({
-      where: { status: 'COMPLETED' },
+      where: { status: 'COMPLETED', ownerToken },
       include: { heroes: true, battleResults: { orderBy: { createdAt: 'desc' } } },
       orderBy: { createdAt: 'desc' },
     });

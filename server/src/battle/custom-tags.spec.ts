@@ -134,9 +134,7 @@ describe('blessingEffectsFor', () => {
 
     it('names human axis labels for Active Combos copy', () => {
       expect(formatFundamentalsDescription([], 1)).toContain('2+ Fundamentals');
-      expect(formatFundamentalsDescription(['tempo'], 2)).toBe(
-        "Boosts this draft's weakest axis: tempo.",
-      );
+      expect(formatFundamentalsDescription(['tempo'], 2)).toBe("Boosts this draft's weakest axis: tempo.");
       expect(formatFundamentalsDescription(['tempo', 'damage output'], 3)).toBe(
         "Boosts this draft's weakest axes: tempo and damage output.",
       );
@@ -764,7 +762,7 @@ describe('curseEffectsOnOpponent', () => {
   });
 
   describe('Mechanical (curse immunity)', () => {
-    it("exempts a Mechanical opponent from Agility Crusher, while a plain agi core is still cursed", () => {
+    it('exempts a Mechanical opponent from Agility Crusher, while a plain agi core is still cursed', () => {
       const caster = [makeHero({ id: 1, name: 'Elder Titan' })];
       // Tinker is Mechanical; force it agi so it WOULD be hit by the -10% if
       // it weren't immune. Anti-Mage is the non-Mechanical control.

@@ -4,11 +4,7 @@ import { api } from '../api/client';
 import type { HistoryEntry, ConfidenceTier } from 'shared';
 import { heroIconUrl } from '../utils/heroIcon';
 import { renderLocalizedLines } from '../i18n/narrative';
-import {
-  currentWinStreakNewestFirst,
-  runRecord,
-  type FightOutcome,
-} from '../utils/runStreak';
+import { currentWinStreakNewestFirst, runRecord, type FightOutcome } from '../utils/runStreak';
 import CopyDraftButton from '../components/CopyDraftButton';
 import './HistoryPage.css';
 
@@ -89,9 +85,7 @@ export default function HistoryPage() {
           const winStreak = currentWinStreakNewestFirst(outcomes);
           const archetypeId = entry.evaluation?.archetype?.id;
           const archetypeLabel =
-            archetypeId != null
-              ? t(`evaluation.archetype.${archetypeId}`, { defaultValue: '' })
-              : '';
+            archetypeId != null ? t(`evaluation.archetype.${archetypeId}`, { defaultValue: '' }) : '';
 
           return (
             <article key={entry.id} className="panel bracketed history-entry motion-reveal">
@@ -122,10 +116,7 @@ export default function HistoryPage() {
                   )}
 
                   {archetypeLabel ? (
-                    <span
-                      className="history-archetype"
-                      title={t(`evaluation.archetypeHint.${archetypeId}`)}
-                    >
+                    <span className="history-archetype" title={t(`evaluation.archetypeHint.${archetypeId}`)}>
                       {archetypeLabel}
                     </span>
                   ) : null}

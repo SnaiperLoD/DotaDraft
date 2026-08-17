@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { LeaderboardResponse } from 'shared';
 import { api } from '../api/client';
-import { getSubmitterToken } from '../utils/submitterToken';
 import { heroIconUrl } from '../utils/heroIcon';
 import './LeaderboardPage.css';
 
@@ -11,8 +10,7 @@ import './LeaderboardPage.css';
 // drafts (wins/win rate across the battles they fought with each), "Pool
 // Opponents" is the older weak board — committed drafts ranked by how they do
 // as the OPPONENT other players pull (not a personal record). No accounts; a
-// pool row this browser committed (matched via getSubmitterToken()) is
-// highlighted.
+// pool row this browser committed is highlighted via server-computed `isMine`.
 
 // One normalized row for the shared table — both boards render the same
 // columns; only the pool board carries a team name / own-row highlight.
@@ -101,7 +99,6 @@ export default function LeaderboardPage() {
   const { t } = useTranslation();
   const [data, setData] = useState<LeaderboardResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const myToken = getSubmitterToken();
 
   useEffect(() => {
     api
@@ -152,7 +149,7 @@ export default function LeaderboardPage() {
     winRate: p.winRate,
     teamName: p.source === 'pro' ? p.teamName : null,
     leagueName: p.source === 'pro' ? p.leagueName : null,
-    isMine: p.submitterToken === myToken,
+    isMine: p.isMine,
   }));
 
   return (

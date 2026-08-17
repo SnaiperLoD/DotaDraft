@@ -9,6 +9,20 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: dota
+          POSTGRES_PASSWORD: dota
+          POSTGRES_DB: opponent_pool
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U dota -d opponent_pool"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - uses: actions/checkout@v4
 
@@ -19,16 +33,18 @@ jobs:
 
       - run: npm ci
 
+      - name: npm audit (production deps)
+        run: npm audit --omit=dev --audit-level=high
+        continue-on-error: true
+
       - name: Build (shared + server + client)
         run: npm run build
 
-      - name: Lint (non-blocking until scripts pile is scoped)
+      - name: Lint
         run: npm run lint
-        continue-on-error: true
 
-      - name: Format check (non-blocking until scripts pile is scoped)
+      - name: Format check
         run: npm run format:check
-        continue-on-error: true
 
       - name: Typecheck server
         run: npx tsc -p server/tsconfig.json --noEmit
@@ -39,6 +55,13 @@ jobs:
       - name: Server unit tests
         run: npx jest --ci
         working-directory: server
+        env:
+          POOL_DATABASE_URL: ''
+
+      - name: Server integration tests
+        run: npm run test:integration --workspace server
+        env:
+          POOL_DATABASE_URL: ''
 
       - name: Cache Playwright browsers
         uses: actions/cache@v4
@@ -53,7 +76,7 @@ jobs:
         run: npm run test:e2e
         env:
           CI: true
-          POOL_DATABASE_URL: ''
+          POOL_DATABASE_URL: postgresql://dota:dota@localhost:5432/opponent_pool
 
       - name: Docker build (api + web)
         run: docker compose build

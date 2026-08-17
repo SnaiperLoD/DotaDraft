@@ -15,6 +15,7 @@ import { classifyDraftArchetype } from './draft-archetype';
 import { activeCustomTagsForTeam, heroNameSetForTag } from 'shared';
 import { teamHasHiddenCalibrationTags } from '../common/calibration-tags';
 import { buildEvaluationScoreWeights } from '../common/axis-weights-config';
+import { logPersistenceFailure } from '../common/log';
 import { AXES, AXIS_LABEL, axisAverage, type BattlePick } from '../battle/battle-resolution';
 import { formatFundamentalsDescription, fundamentalsTargetAxes } from '../battle/custom-tags';
 
@@ -116,6 +117,88 @@ const BASE_ANALYZERS: Analyzer[] = [
 // Total Score.
 const WEIGHTS: Record<string, number> = buildEvaluationScoreWeights();
 
+// Ranked by percentile (population-relative), not raw score — an axis
+// like saving that clusters low across the whole population (see
+// axis-percentile-distributions.json) shouldn't look like a bigger
+// "weakness" than a genuinely below-average axis just because its raw
+// number is smaller. Synergy/Counter/Pro Similarity have no percentile
+// (not axis-based) — score*10 puts their 0-10 scale on the same rough
+// footing as a 0-100 percentile for ranking purposes only.
+//
+// Sort is DESCENDING (highest first). Strengths take the head, weaknesses
+// the tail, gameplan lean-on / cover-for follow the same ends. An ascending
+// comparator silently inverts all three — covered by evaluation-summary.spec.
+export function buildSummary(breakdown: AnalyzerResult[]): EvaluationSummary {
+  const rankValue = (b: AnalyzerResult) => b.percentile ?? (b.score as number) * 10;
+  const ranked = breakdown
+    .filter((b) => SUMMARY_KEYS.includes(b.key) && b.score !== null)
+    .sort((a, b) => rankValue(b) - rankValue(a));
+
+  // Compact axis + band line, NOT the full narrative sentence
+  // (2026-08-03, by explicit user request — the previous version quoted
+  // the same narrative sentence here, in this axis's breakdown card
+  // below, AND in the gameplan paragraph for whichever item ranks #1,
+  // up to 3x duplication of one sentence). The breakdown grid remains
+  // the one place the full narrative lives; this list is now purely a
+  // fast-scan index into it. Same 30/70 split as the client's
+  // percentile pill labels (EvaluationPanel.tsx).
+  const describe = (item: AnalyzerResult) => {
+    if (item.percentile !== null) {
+      const band = summaryBand(item.percentile);
+      return i18nLine('eval.summary.axisLine', {
+        axis: item.key,
+        band,
+        pct: summaryPct(item.percentile, band),
+      });
+    }
+    const score = item.score ?? 0;
+    return i18nLine('eval.summary.axisLine', {
+      axis: item.key,
+      band: score < 4 ? 'bottom' : score < 7 ? 'mid' : 'top',
+      pct: String(score),
+      scale: 'score',
+    });
+  };
+
+  const strengths = ranked.slice(0, 3).map(describe);
+  const weaknesses = ranked.slice(-3).reverse().map(describe);
+  const gameplan = buildGameplan(breakdown, ranked[0], ranked[ranked.length - 1]);
+
+  return { strengths, weaknesses, gameplan };
+}
+
+// A short synthesized paragraph on top of the strengths/weaknesses list —
+// those are independent per-axis fragments, this ties tempo+scaling
+// (the two axes that actually drive game *length*, per their own
+// real-data-backed narratives in score-narrative.ts) into a single win
+// condition, then names the standout strength/weakness to lean on or
+// cover for. Recombines already-calibrated axis narratives rather than
+// introducing a new signal.
+function buildGameplan(
+  breakdown: AnalyzerResult[],
+  topStrength: AnalyzerResult,
+  topWeakness: AnalyzerResult,
+): LocalizedLine[] {
+  const tempo = breakdown.find((b) => b.key === 'tempo');
+  const scaling = breakdown.find((b) => b.key === 'scaling');
+  const tempoBracket = tempo?.percentile != null ? percentileBracket(tempo.percentile) : 'mid';
+  const scalingBracket = scaling?.percentile != null ? percentileBracket(scaling.percentile) : 'mid';
+
+  const winKey = ((): 'fast' | 'patient' | 'flexible' | 'neither' | 'middle' => {
+    if (tempoBracket === 'high' && scalingBracket !== 'high') return 'fast';
+    if (tempoBracket !== 'high' && scalingBracket === 'high') return 'patient';
+    if (tempoBracket === 'high' && scalingBracket === 'high') return 'flexible';
+    if (tempoBracket === 'low' && scalingBracket === 'low') return 'neither';
+    return 'middle';
+  })();
+
+  return [
+    i18nLine(`eval.gameplan.win.${winKey}`),
+    wrapGameplanBeat('leanOn', topStrength),
+    wrapGameplanBeat('coverFor', topWeakness),
+  ];
+}
+
 function summaryBand(percentile: number): 'bottom' | 'mid' | 'top' {
   if (percentile < 30) return 'bottom';
   if (percentile < 70) return 'mid';
@@ -146,8 +229,8 @@ export class EvaluationService {
     private readonly heroMetaService: HeroMetaService,
   ) {}
 
-  async evaluate(draftId: string): Promise<EvaluationResult> {
-    const draft = await this.draftService.getById(draftId);
+  async evaluate(draftId: string, ownerToken: string): Promise<EvaluationResult> {
+    const draft = await this.draftService.getById(draftId, ownerToken);
     if (!draft) throw new NotFoundException('Draft not found');
     if (draft.heroes.length < 5) {
       throw new BadRequestException('Draft must have all 5 heroes picked before evaluation');
@@ -174,7 +257,7 @@ export class EvaluationService {
     });
 
     const totalScore = this.weightedTotal(breakdown);
-    const summary = this.buildSummary(breakdown);
+    const summary = buildSummary(breakdown);
 
     // Public tags plus revealable-hidden tags whose composition gate was
     // reached during drafting. Permanently hidden tags never enter this
@@ -210,87 +293,11 @@ export class EvaluationService {
     // reason (e.g. draft already deleted between getById above and now,
     // which shouldn't happen in practice but isn't worth failing the whole
     // request over).
-    await this.draftService.saveEvaluationResult(draftId, JSON.stringify(result)).catch(() => undefined);
+    await this.draftService.saveEvaluationResult(draftId, JSON.stringify(result)).catch((err) => {
+      logPersistenceFailure('evaluation.saveResult', err, { draftId });
+    });
 
     return result;
-  }
-
-  private buildSummary(breakdown: AnalyzerResult[]): EvaluationSummary {
-    // Ranked by percentile (population-relative), not raw score — an axis
-    // like saving that clusters low across the whole population (see
-    // axis-percentile-distributions.json) shouldn't look like a bigger
-    // "weakness" than a genuinely below-average axis just because its raw
-    // number is smaller. Synergy/Counter/Pro Similarity have no percentile
-    // (not axis-based) — score*10 puts their 0-10 scale on the same rough
-    // footing as a 0-100 percentile for ranking purposes only.
-    const rankValue = (b: AnalyzerResult) => b.percentile ?? (b.score as number) * 10;
-    const ranked = breakdown
-      .filter((b) => SUMMARY_KEYS.includes(b.key) && b.score !== null)
-      .sort((a, b) => rankValue(b) - rankValue(a));
-
-    // Compact axis + band line, NOT the full narrative sentence
-    // (2026-08-03, by explicit user request — the previous version quoted
-    // the same narrative sentence here, in this axis's breakdown card
-    // below, AND in the gameplan paragraph for whichever item ranks #1,
-    // up to 3x duplication of one sentence). The breakdown grid remains
-    // the one place the full narrative lives; this list is now purely a
-    // fast-scan index into it. Same 30/70 split as the client's
-    // percentile pill labels (EvaluationPanel.tsx).
-    const describe = (item: AnalyzerResult) => {
-      if (item.percentile !== null) {
-        const band = summaryBand(item.percentile);
-        return i18nLine('eval.summary.axisLine', {
-          axis: item.key,
-          band,
-          pct: summaryPct(item.percentile, band),
-        });
-      }
-      const score = item.score ?? 0;
-      return i18nLine('eval.summary.axisLine', {
-        axis: item.key,
-        band: score < 4 ? 'bottom' : score < 7 ? 'mid' : 'top',
-        pct: String(score),
-        scale: 'score',
-      });
-    };
-
-    const strengths = ranked.slice(0, 3).map(describe);
-    const weaknesses = ranked.slice(-3).reverse().map(describe);
-    const gameplan = this.buildGameplan(breakdown, ranked[0], ranked[ranked.length - 1]);
-
-    return { strengths, weaknesses, gameplan };
-  }
-
-  // A short synthesized paragraph on top of the strengths/weaknesses list —
-  // those are independent per-axis fragments, this ties tempo+scaling
-  // (the two axes that actually drive game *length*, per their own
-  // real-data-backed narratives in score-narrative.ts) into a single win
-  // condition, then names the standout strength/weakness to lean on or
-  // cover for. Recombines already-calibrated axis narratives rather than
-  // introducing a new signal.
-  private buildGameplan(
-    breakdown: AnalyzerResult[],
-    topStrength: AnalyzerResult,
-    topWeakness: AnalyzerResult,
-  ): LocalizedLine[] {
-    const tempo = breakdown.find((b) => b.key === 'tempo');
-    const scaling = breakdown.find((b) => b.key === 'scaling');
-    const tempoBracket = tempo?.percentile != null ? percentileBracket(tempo.percentile) : 'mid';
-    const scalingBracket = scaling?.percentile != null ? percentileBracket(scaling.percentile) : 'mid';
-
-    const winKey = ((): 'fast' | 'patient' | 'flexible' | 'neither' | 'middle' => {
-      if (tempoBracket === 'high' && scalingBracket !== 'high') return 'fast';
-      if (tempoBracket !== 'high' && scalingBracket === 'high') return 'patient';
-      if (tempoBracket === 'high' && scalingBracket === 'high') return 'flexible';
-      if (tempoBracket === 'low' && scalingBracket === 'low') return 'neither';
-      return 'middle';
-    })();
-
-    return [
-      i18nLine(`eval.gameplan.win.${winKey}`),
-      wrapGameplanBeat('leanOn', topStrength),
-      wrapGameplanBeat('coverFor', topWeakness),
-    ];
   }
 
   // By direct user request (2026-08-06, Blueprint/10-tech-debt-backlog.md,

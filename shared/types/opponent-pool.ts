@@ -45,9 +45,8 @@ export interface CommitDraftResponse {
 // by how it performs as the OPPONENT when other players' battles pull it
 // — not the committing player's own battle record (that isn't tracked at
 // all; see OpponentPoolService.recordDraftOutcome). No account system —
-// submitterToken is the same anonymous client-generated UUID used to
-// commit, present so the client can highlight rows it committed itself
-// via getSubmitterToken(), not a player identity.
+// `isMine` is computed server-side from the caller's owner token so the
+// raw submitterToken never leaves the pool DB.
 export interface LeaderboardEntryView {
   id: string;
   source: PooledDraftSource;
@@ -58,7 +57,7 @@ export interface LeaderboardEntryView {
   // Snapshot of the draft's Evaluation total score at commit time — null
   // if it was never evaluated before committing.
   evaluationScore: number | null;
-  submitterToken: string | null;
+  isMine: boolean;
   wins: number;
   losses: number;
   winRate: number;
@@ -69,8 +68,7 @@ export interface LeaderboardEntryView {
 // perspective, aggregated from BattleResult rows keyed by draftId). This is
 // the counterpart to LeaderboardEntryView: that one ranks a pooled draft by
 // how it does AS AN OPPONENT other players pull; this one ranks the player's
-// own active session. Anonymous — there is no account system and Draft has no
-// submitterToken, so a run is identified by its five heroes, not a player.
+// own active session. Scoped to the anonymous ownerToken on Draft.
 export interface RunLeaderboardEntry {
   draftId: string;
   heroIds: number[];

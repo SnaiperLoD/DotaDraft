@@ -20,7 +20,9 @@ describe('HeroAbilitiesService.topAbilities', () => {
     const result = service.topAbilities(INVOKER_ID, 'control_strength', 20);
     // invoker_wex/alacrity/sun_strike/forge_spirit have no control_strength
     // entry at all in categoryScores — must not appear with a fabricated 0.
-    expect(result.map((a) => a.abilityKey)).not.toEqual(expect.arrayContaining(['invoker_wex', 'invoker_alacrity']));
+    expect(result.map((a) => a.abilityKey)).not.toEqual(
+      expect.arrayContaining(['invoker_wex', 'invoker_alacrity']),
+    );
   });
 
   it('returns an empty array for a hero with no ability data', () => {

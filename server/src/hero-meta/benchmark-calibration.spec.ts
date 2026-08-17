@@ -93,7 +93,7 @@ describe('anchoredGroupScale', () => {
     expect(result[2]).toBeCloseTo(3.4, 1);
   });
 
-  it("anchors a single-member group directly to its own global score (span=0), not a group-relative midpoint", () => {
+  it('anchors a single-member group directly to its own global score (span=0), not a group-relative midpoint', () => {
     const values = [10, 20, 30];
     const groups = ['A', 'A', 'B']; // B has exactly one member
     const result = anchoredGroupScale(values, groups);
@@ -171,7 +171,7 @@ describe('zScoreExtremityScale', () => {
     expect(zScoreExtremityScale([300, null], 1.6)).toEqual([5, null]);
   });
 
-  it('normalizes each tail by its OWN max, not the other tail\'s — an asymmetric spread must not borrow the wrong denominator', () => {
+  it("normalizes each tail by its OWN max, not the other tail's — an asymmetric spread must not borrow the wrong denominator", () => {
     // exponent=1 keeps adjusted values equal to plain z-scores. Below-mean:
     // 1,4,6,7 (max |z|≈1.14); above-mean: 9,20 (max z≈2.03) — deliberately
     // asymmetric, so picking the wrong tail's max (or the wrong arithmetic

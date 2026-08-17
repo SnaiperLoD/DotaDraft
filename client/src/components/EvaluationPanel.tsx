@@ -286,9 +286,7 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
                   : undefined;
               return (
                 <li key={tag.name}>
-                  <span className={`hero-tag-badge rarity-${tag.rarity}`}>
-                    {customTagName(t, tag.name)}
-                  </span>
+                  <span className={`hero-tag-badge rarity-${tag.rarity}`}>{customTagName(t, tag.name)}</span>
                   <span className="evaluation-combos-description">
                     {customTagDescription(t, tag, {
                       teamHeroNames: heroNames,
@@ -297,7 +295,8 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
                   </span>
                 </li>
               );
-            })}          </ul>
+            })}{' '}
+          </ul>
           <p className="evaluation-combos-footnote">{t('evaluation.combosBattleSummary')}</p>
         </div>
       )}
@@ -312,7 +311,8 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
                   <span className={`percentile-pill ${percentileClass(item.percentile)}`}>
                     {formatPercentileLabel(t, item.percentile)}
                   </span>
-                )}                <span className="score">
+                )}{' '}
+                <span className="score">
                   {item.score === null ? t('evaluation.notAvailable') : `${item.score}/10`}
                 </span>
               </span>

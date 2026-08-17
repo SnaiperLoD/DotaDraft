@@ -30,7 +30,9 @@ function standoutWonLane(
   resolvedOutcome: ResolvedOutcome,
 ): BattleLaneResult | undefined {
   const winner = resolvedOutcome === 'Win' ? 'mine' : 'opponent';
-  const won = lanes.filter((lane) => lane.winner === winner && lane.topPair && lane.topPair.winRate > MATCHUP_FLOOR);
+  const won = lanes.filter(
+    (lane) => lane.winner === winner && lane.topPair && lane.topPair.winRate > MATCHUP_FLOOR,
+  );
   if (won.length === 0) return undefined;
   return won.reduce((best, lane) =>
     (lane.topPair?.winRate ?? 0) > (best.topPair?.winRate ?? 0) ? lane : best,
@@ -86,7 +88,7 @@ export function buildBattleStory(input: {
   const saver = maxByAxes(winners, 'saving');
   const saverHigh = saver && axisOf(saver, 'saving') >= SAVING_FLOOR ? saver : undefined;
   const swingHero = input.highSkillSwingHeroName ?? '';
-  const turnerPick = swingHero ? findByName(winners, swingHero) ?? saverHigh : saverHigh;
+  const turnerPick = swingHero ? (findByName(winners, swingHero) ?? saverHigh) : saverHigh;
   const turnerName =
     turnerPick && driver && turnerPick.hero.id === driver.hero.id ? '' : (turnerPick?.hero.name ?? swingHero);
 
@@ -138,7 +140,11 @@ export function buildBattleStory(input: {
   else if (isUpset && swingHero) turnKey = 'turningUpsetHighSkill';
   else turnKey = 'turningAxis';
 
-  const finishKey: BattleStoryBeatKey = isUpset ? 'finishUpset' : cameFromBehind ? 'finishComeback' : 'finishHeld';
+  const finishKey: BattleStoryBeatKey = isUpset
+    ? 'finishUpset'
+    : cameFromBehind
+      ? 'finishComeback'
+      : 'finishHeld';
   const posture = isUpset ? 'upset' : cameFromBehind ? 'behind' : lanesEven ? 'even' : 'ahead';
 
   const params: Record<string, string> = {

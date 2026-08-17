@@ -22,10 +22,7 @@ function dedicatedCarryCount(heroes: Hero[]): number {
  * Classify a 5-hero draft. Thresholds are starting guesses (Blueprint §3);
  * tweak after sniffing real drafts — not calibration coefficients for Battle.
  */
-export function classifyDraftArchetype(
-  heroes: Hero[],
-  breakdown: AnalyzerResult[],
-): DraftArchetype {
+export function classifyDraftArchetype(heroes: Hero[], breakdown: AnalyzerResult[]): DraftArchetype {
   const mobility = pct(breakdown, 'mobility');
   const objectives = pct(breakdown, 'objectives');
   const tempo = pct(breakdown, 'tempo');
@@ -44,22 +41,12 @@ export function classifyDraftArchetype(
   }
 
   // Split-push — move + (objectives or split/illusion identity).
-  if (
-    mobility != null &&
-    mobility >= 70 &&
-    ((objectives != null && objectives >= 55) || splitTags >= 1)
-  ) {
+  if (mobility != null && mobility >= 70 && ((objectives != null && objectives >= 55) || splitTags >= 1)) {
     return { id: 'split_push' };
   }
 
   // Push / siege — objectives spike, tempo not lagging scaling.
-  if (
-    objectives != null &&
-    objectives >= 70 &&
-    tempo != null &&
-    scaling != null &&
-    tempo >= scaling - 5
-  ) {
+  if (objectives != null && objectives >= 70 && tempo != null && scaling != null && tempo >= scaling - 5) {
     return { id: 'push' };
   }
 

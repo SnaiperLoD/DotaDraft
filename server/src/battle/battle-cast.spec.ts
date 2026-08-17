@@ -1,12 +1,5 @@
 import { makeHero, DEFAULT_EVALUATION_VALUES } from '../test-utils/hero-factory';
-import {
-  idsOf,
-  isBattleUpset,
-  maxByAxes,
-  pickByRole,
-  roshanBand,
-  teamAvg,
-} from './battle-cast';
+import { idsOf, isBattleUpset, maxByAxes, pickByRole, roshanBand, teamAvg } from './battle-cast';
 import type { BattlePick } from './battle-resolution';
 
 function pick(

@@ -10,7 +10,8 @@ const STORAGE_KEY = 'dotadraft-lang';
 
 function initialLanguage(): SupportedLanguage {
   const stored = localStorage.getItem(STORAGE_KEY);
-  if (stored && (SUPPORTED_LANGUAGES as readonly string[]).includes(stored)) return stored as SupportedLanguage;
+  if (stored && (SUPPORTED_LANGUAGES as readonly string[]).includes(stored))
+    return stored as SupportedLanguage;
   return 'en';
 }
 

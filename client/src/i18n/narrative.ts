@@ -38,15 +38,18 @@ function composeAxisNarrative(t: TFunction, params: Record<string, string>): str
 
 function formatAxisHeroList(t: TFunction, spec: string): string {
   if (!spec) return '';
-  const parts = spec.split('|').filter(Boolean).map((part) => {
-    const colon = part.indexOf(':');
-    const axisKey = colon === -1 ? part : part.slice(0, colon);
-    const hero = colon === -1 ? '' : part.slice(colon + 1);
-    const storyPath = `battle.story.axes.${axisKey}`;
-    const storyLabel = t(storyPath);
-    const label = storyLabel !== storyPath ? storyLabel : axisLabel(t, axisKey);
-    return hero ? t('battle.explain.axisHero', { axis: label, hero }) : label;
-  });
+  const parts = spec
+    .split('|')
+    .filter(Boolean)
+    .map((part) => {
+      const colon = part.indexOf(':');
+      const axisKey = colon === -1 ? part : part.slice(0, colon);
+      const hero = colon === -1 ? '' : part.slice(colon + 1);
+      const storyPath = `battle.story.axes.${axisKey}`;
+      const storyLabel = t(storyPath);
+      const label = storyLabel !== storyPath ? storyLabel : axisLabel(t, axisKey);
+      return hero ? t('battle.explain.axisHero', { axis: label, hero }) : label;
+    });
   return joinAnd(t, parts);
 }
 
@@ -181,7 +184,11 @@ function translateBag(t: TFunction, key: string, params: Record<string, string>)
 
   for (const field of ['winner', 'loser', 'underdog', 'perspective'] as const) {
     if (bag[field] === 'yours' || bag[field] === 'opponent') {
-      bag[field] = sidePhrase(t, bag[field], field === 'perspective' || field === 'underdog' ? 'object' : 'object');
+      bag[field] = sidePhrase(
+        t,
+        bag[field],
+        field === 'perspective' || field === 'underdog' ? 'object' : 'object',
+      );
     }
   }
 

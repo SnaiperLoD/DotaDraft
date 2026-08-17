@@ -5,7 +5,14 @@ import { Test } from '@nestjs/testing';
 import request from 'supertest';
 import { AppModule } from '../../src/app.module';
 import { PrismaService } from '../../src/prisma/prisma.service';
-import { ROLES } from 'shared';
+import { OWNER_TOKEN_HEADER, ROLES } from 'shared';
+
+const OWNER = 'integration-owner';
+const OTHER = 'other-owner';
+
+function withOwner(req: request.Test, token = OWNER) {
+  return req.set(OWNER_TOKEN_HEADER, token);
+}
 
 // Round 1 is served by POST /draft/pool, which writes nothing; the Draft
 // row is created by POST /draft, which carries the first pick. Helper so
@@ -13,11 +20,11 @@ import { ROLES } from 'shared';
 async function startDraftWithFirstPick(
   server: ReturnType<INestApplication['getHttpServer']>,
   rerollUsed = false,
+  token = OWNER,
 ) {
   const poolRes = await request(server).post('/draft/pool').expect(201);
   const heroId = poolRes.body.pool[0].id as number;
-  const createRes = await request(server)
-    .post('/draft')
+  const createRes = await withOwner(request(server).post('/draft'), token)
     .send({ seed: poolRes.body.seed, heroId, rerollUsed })
     .expect(201);
   return { draftId: createRes.body.id as string, firstHeroId: heroId, createRes, poolRes };
@@ -71,6 +78,7 @@ describe('Draft flow (integration)', () => {
     });
     expect(row?.status).toBe('PICKING');
     expect(row?.rerollsRemaining).toBe(1);
+    expect(row?.ownerToken).toBe(OWNER);
     expect(row?.heroes).toHaveLength(1);
     expect(row?.heroes[0]).toMatchObject({ heroId: firstHeroId, pickOrder: 1 });
   });
@@ -88,17 +96,16 @@ describe('Draft flow (integration)', () => {
     const row = await prisma.draft.findUnique({ where: { id: draftId } });
     expect(row?.rerollsRemaining).toBe(0);
 
-    await request(app.getHttpServer()).post(`/draft/${draftId}/reroll`).expect(400);
+    await withOwner(request(app.getHttpServer()).post(`/draft/${draftId}/reroll`)).expect(400);
   });
 
   it('rejects a first pick that is not in the offered pool', async () => {
     const poolRes = await request(app.getHttpServer()).post('/draft/pool').expect(201);
-    const poolIds = new Set(poolRes.body.pool.map((h: any) => h.id));
+    const poolIds = new Set(poolRes.body.pool.map((h: { id: number }) => h.id));
     const allHeroes = await request(app.getHttpServer()).get('/heroes').expect(200);
-    const outsideHero = allHeroes.body.find((h: any) => !poolIds.has(h.id));
+    const outsideHero = allHeroes.body.find((h: { id: number }) => !poolIds.has(h.id));
 
-    const res = await request(app.getHttpServer())
-      .post('/draft')
+    const res = await withOwner(request(app.getHttpServer()).post('/draft'))
       .send({ seed: poolRes.body.seed, heroId: outsideHero.id, rerollUsed: false })
       .expect(400);
     expect(res.body.message).toMatch(/not in current pool/i);
@@ -113,12 +120,11 @@ describe('Draft flow (integration)', () => {
     const pickedHeroIds: number[] = [firstHeroId];
 
     for (let round = 2; round <= 5; round++) {
-      const current = await request(app.getHttpServer()).get(`/draft/${draftId}`).expect(200);
+      const current = await withOwner(request(app.getHttpServer()).get(`/draft/${draftId}`)).expect(200);
       const heroId = current.body.pool[0].id as number;
       pickedHeroIds.push(heroId);
 
-      const pickRes = await request(app.getHttpServer())
-        .post(`/draft/${draftId}/pick`)
+      const pickRes = await withOwner(request(app.getHttpServer()).post(`/draft/${draftId}/pick`))
         .send({ heroId })
         .expect(201);
 
@@ -135,59 +141,105 @@ describe('Draft flow (integration)', () => {
     }
 
     const assignments = pickedHeroIds.map((heroId, i) => ({ heroId, role: ROLES[i] }));
-    const rolesRes = await request(app.getHttpServer())
-      .post(`/draft/${draftId}/roles`)
+    const rolesRes = await withOwner(request(app.getHttpServer()).post(`/draft/${draftId}/roles`))
       .send({ assignments })
       .expect(201);
 
     expect(rolesRes.body.status).toBe('COMPLETED');
-    const rolesByHeroId = new Map(rolesRes.body.heroes.map((h: any) => [h.heroId, h.assignedRole]));
+    const rolesByHeroId = new Map(
+      rolesRes.body.heroes.map((h: { heroId: number; assignedRole: string }) => [h.heroId, h.assignedRole]),
+    );
     for (const { heroId, role } of assignments) {
       expect(rolesByHeroId.get(heroId)).toBe(role);
     }
 
     // Confirm it actually persisted, not just echoed back in the response.
-    const persisted = await request(app.getHttpServer()).get(`/draft/${draftId}`).expect(200);
+    const persisted = await withOwner(request(app.getHttpServer()).get(`/draft/${draftId}`)).expect(200);
     expect(persisted.body.status).toBe('COMPLETED');
-    expect(persisted.body.heroes.map((h: any) => h.assignedRole).sort()).toEqual([...ROLES].sort());
+    expect(persisted.body.heroes.map((h: { assignedRole: string }) => h.assignedRole).sort()).toEqual(
+      [...ROLES].sort(),
+    );
   });
 
   it('allows one reroll then rejects a second', async () => {
     const { draftId } = await startDraftWithFirstPick(app.getHttpServer());
 
-    const rerollRes = await request(app.getHttpServer()).post(`/draft/${draftId}/reroll`).expect(201);
+    const rerollRes = await withOwner(request(app.getHttpServer()).post(`/draft/${draftId}/reroll`)).expect(
+      201,
+    );
     expect(rerollRes.body.rerollsRemaining).toBe(0);
     expect(rerollRes.body.pool).toHaveLength(5);
     expect(rerollRes.body.status).toBe('PICKING');
 
-    const secondReroll = await request(app.getHttpServer()).post(`/draft/${draftId}/reroll`).expect(400);
+    const secondReroll = await withOwner(
+      request(app.getHttpServer()).post(`/draft/${draftId}/reroll`),
+    ).expect(400);
     expect(secondReroll.body.message).toMatch(/no rerolls remaining/i);
   });
 
+  it('returns 401 when the owner token is missing', async () => {
+    await request(app.getHttpServer())
+      .post('/draft')
+      .send({ seed: 1, heroId: 1, rerollUsed: false })
+      .expect(401);
+    await request(app.getHttpServer()).get('/draft/does-not-exist').expect(401);
+    await request(app.getHttpServer()).get('/history').expect(401);
+  });
+
+  it('rejects a malformed draft id with 400', async () => {
+    await withOwner(request(app.getHttpServer()).get('/draft/does-not-exist')).expect(400);
+    await withOwner(request(app.getHttpServer()).post('/draft/not-a-uuid/pick'))
+      .send({ heroId: 1 })
+      .expect(400);
+  });
+
+  it('rejects a junk create body with 400', async () => {
+    await withOwner(request(app.getHttpServer()).post('/draft')).send({ heroId: 1 }).expect(400);
+    await withOwner(request(app.getHttpServer()).post('/draft'))
+      .send({ seed: 1, heroId: 'antimage', rerollUsed: false })
+      .expect(400);
+  });
+
   it('returns 404 for a draft id that does not exist', async () => {
-    await request(app.getHttpServer()).get('/draft/does-not-exist').expect(404);
+    await withOwner(request(app.getHttpServer()).get('/draft/00000000-0000-4000-8000-000000000000')).expect(
+      404,
+    );
+  });
+
+  it("hides another visitor's draft behind 404 and keeps History scoped", async () => {
+    const mine = await startDraftWithFirstPick(app.getHttpServer(), false, OWNER);
+    const theirs = await startDraftWithFirstPick(app.getHttpServer(), false, OTHER);
+    await prisma.draft.update({ where: { id: mine.draftId }, data: { status: 'COMPLETED' } });
+    await prisma.draft.update({ where: { id: theirs.draftId }, data: { status: 'COMPLETED' } });
+
+    await withOwner(request(app.getHttpServer()).get(`/draft/${mine.draftId}`), OTHER).expect(404);
+
+    const historyMine = await withOwner(request(app.getHttpServer()).get('/history'), OWNER).expect(200);
+    const historyOther = await withOwner(request(app.getHttpServer()).get('/history'), OTHER).expect(200);
+    expect(historyMine.body.map((row: { id: string }) => row.id)).toContain(mine.draftId);
+    expect(historyMine.body.map((row: { id: string }) => row.id)).not.toContain(theirs.draftId);
+    expect(historyOther.body.map((row: { id: string }) => row.id)).toContain(theirs.draftId);
+    expect(historyOther.body.map((row: { id: string }) => row.id)).not.toContain(mine.draftId);
   });
 
   it('rejects picking a hero that is not in the current pool', async () => {
     const { draftId, createRes } = await startDraftWithFirstPick(app.getHttpServer());
-    const poolIds = new Set(createRes.body.pool.map((h: any) => h.id));
+    const poolIds = new Set(createRes.body.pool.map((h: { id: number }) => h.id));
 
     const allHeroes = await request(app.getHttpServer()).get('/heroes').expect(200);
-    const outsideHero = allHeroes.body.find((h: any) => !poolIds.has(h.id));
+    const outsideHero = allHeroes.body.find((h: { id: number }) => !poolIds.has(h.id));
 
-    const res = await request(app.getHttpServer())
-      .post(`/draft/${draftId}/pick`)
+    const res = await withOwner(request(app.getHttpServer()).post(`/draft/${draftId}/pick`))
       .send({ heroId: outsideHero.id })
       .expect(400);
     expect(res.body.message).toMatch(/not in current pool/i);
   });
 
   it('rejects role assignment while the draft is still in the picking phase', async () => {
-    const { draftId } = await startDraftWithFirstPick(app.getHttpServer());
+    const { draftId, firstHeroId } = await startDraftWithFirstPick(app.getHttpServer());
 
-    const res = await request(app.getHttpServer())
-      .post(`/draft/${draftId}/roles`)
-      .send({ assignments: [] })
+    const res = await withOwner(request(app.getHttpServer()).post(`/draft/${draftId}/roles`))
+      .send({ assignments: ROLES.map((role) => ({ heroId: firstHeroId, role })) })
       .expect(400);
     expect(res.body.message).toMatch(/not in role assignment phase/i);
   });

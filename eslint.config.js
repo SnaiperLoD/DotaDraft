@@ -18,6 +18,8 @@ module.exports = tseslint.config(
       'playwright.config.ts',
       'playwright-report/**',
       'test-results/**',
+      'server/scripts/**',
+      'server/test/integration/**',
     ],
   },
   js.configs.recommended,
@@ -26,7 +28,13 @@ module.exports = tseslint.config(
     languageOptions: {
       parserOptions: {
         projectService: {
-          allowDefaultProject: ['eslint.config.js', 'client/vite.config.ts', 'server/jest.config.js'],
+          allowDefaultProject: [
+            'eslint.config.js',
+            'client/vite.config.ts',
+            'server/jest.config.js',
+            'server/jest.integration.config.js',
+            'server/jest.stryker.config.js',
+          ],
         },
         tsconfigRootDir: __dirname,
       },
@@ -47,14 +55,6 @@ module.exports = tseslint.config(
     },
   },
   {
-    // One-off data/research scripts: `any` from OpenDota's untyped Explorer
-    // responses is inherent to the shape of the work, not sloppiness.
-    files: ['server/scripts/**/*.ts'],
-    rules: {
-      '@typescript-eslint/no-floating-promises': 'off',
-    },
-  },
-  {
     // Test files intentionally use `as any` to build lightweight Prisma
     // mocks — already an established pattern, not worth fighting. Mock
     // methods are also declared `async` to match the real Prisma API shape
@@ -63,6 +63,9 @@ module.exports = tseslint.config(
     rules: {
       '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/require-await': 'off',
+      '@typescript-eslint/no-require-imports': 'off',
+      '@typescript-eslint/unbound-method': 'off',
+      '@typescript-eslint/no-unnecessary-type-assertion': 'off',
     },
   },
   {
@@ -88,7 +91,12 @@ module.exports = tseslint.config(
   {
     // Plain CommonJS config files (this file included) — not part of any
     // app tsconfig, and intentionally use require()/module.exports.
-    files: ['eslint.config.js', 'server/jest.config.js'],
+    files: [
+      'eslint.config.js',
+      'server/jest.config.js',
+      'server/jest.integration.config.js',
+      'server/jest.stryker.config.js',
+    ],
     languageOptions: {
       globals: globals.node,
       sourceType: 'commonjs',

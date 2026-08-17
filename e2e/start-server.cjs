@@ -10,7 +10,8 @@ const databaseUrl = `file:${dbPath.replace(/\\/g, '/')}`;
 
 process.env.DATABASE_URL = databaseUrl;
 process.env.PORT = process.env.PORT || '3012';
-if (!process.env.POOL_DATABASE_URL) process.env.POOL_DATABASE_URL = '';
+const poolUrl = (process.env.POOL_DATABASE_URL || '').trim();
+process.env.POOL_DATABASE_URL = poolUrl;
 
 for (const suffix of ['', '-journal']) {
   const file = dbPath + suffix;
@@ -49,7 +50,48 @@ async function seedAndStart() {
   if (count < 100) {
     throw new Error(`e2e seed produced ${count} heroes, expected the full roster`);
   }
+
+  if (poolUrl) {
+    const proPath = path.join(serverDir, 'data', 'pro-matches.json');
+    const { matches } = JSON.parse(fs.readFileSync(proPath, 'utf8'));
+    // Enough for overlap-filtered pulls without loading the full 764-match snapshot.
+    const sample = matches.slice(0, 40);
+    for (const match of sample) {
+      await prisma.proMatch.create({
+        data: {
+          id: match.matchId,
+          radiantName: match.radiantName,
+          direName: match.direName,
+          leagueName: match.leagueName,
+          radiantWin: match.radiantWin,
+          radiantHeroIds: JSON.stringify(match.radiantHeroIds),
+          direHeroIds: JSON.stringify(match.direHeroIds),
+          radiantHeroRoles: match.radiantHeroRoles ? JSON.stringify(match.radiantHeroRoles) : null,
+          direHeroRoles: match.direHeroRoles ? JSON.stringify(match.direHeroRoles) : null,
+          startTime: new Date(match.startTime),
+        },
+      });
+    }
+  }
   await prisma.$disconnect();
+
+  if (poolUrl) {
+    execSync('npx prisma generate --schema=prisma-pool/schema.prisma', {
+      cwd: serverDir,
+      env: { ...process.env, POOL_DATABASE_URL: poolUrl },
+      stdio: 'inherit',
+    });
+    execSync('npx prisma migrate deploy --schema=prisma-pool/schema.prisma', {
+      cwd: serverDir,
+      env: { ...process.env, POOL_DATABASE_URL: poolUrl },
+      stdio: 'inherit',
+    });
+    execSync('npx ts-node --transpile-only scripts/seed-opponent-pool.ts', {
+      cwd: serverDir,
+      env: { ...process.env, POOL_DATABASE_URL: poolUrl, DATABASE_URL: databaseUrl },
+      stdio: 'inherit',
+    });
+  }
 
   process.chdir(serverDir);
   require('ts-node/register/transpile-only');

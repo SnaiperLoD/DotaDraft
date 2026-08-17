@@ -138,10 +138,7 @@ export default function TapalkaModel3D({ drinking, width, height }: Props) {
           // of the old hard snap (which set the rest angle absolutely).
           const idleY =
             REST_ROTATION_Y + IDLE_WOBBLE_AMPLITUDE_RADIANS * Math.sin(elapsed * IDLE_WOBBLE_RADIANS_PER_SEC);
-          const shortest = Math.atan2(
-            Math.sin(idleY - model.rotation.y),
-            Math.cos(idleY - model.rotation.y),
-          );
+          const shortest = Math.atan2(Math.sin(idleY - model.rotation.y), Math.cos(idleY - model.rotation.y));
           model.rotation.y += shortest * Math.min(1, delta * IDLE_RETURN_PER_SEC);
         }
       }

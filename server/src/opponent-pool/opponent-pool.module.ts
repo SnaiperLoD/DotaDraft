@@ -9,6 +9,6 @@ import { DraftModule } from '../draft/draft.module';
   imports: [DraftModule],
   controllers: [OpponentPoolController, LeaderboardController],
   providers: [PoolPrismaService, OpponentPoolService],
-  exports: [OpponentPoolService],
+  exports: [OpponentPoolService, PoolPrismaService],
 })
 export class OpponentPoolModule {}

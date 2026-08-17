@@ -9,9 +9,12 @@ import { buildBattleStory } from './battle-story';
 import { buildLaneResults } from './battle-lanes';
 import { ROLES } from 'shared';
 import type { BattleResultResponse, ResolvedOutcome } from 'shared';
+import { logPersistenceFailure } from '../common/log';
 
 @Injectable()
 export class BattleService {
+  private readonly inflight = new Map<string, Promise<BattleResultResponse>>();
+
   constructor(
     private readonly draftService: DraftService,
     private readonly heroService: HeroService,
@@ -20,7 +23,23 @@ export class BattleService {
   ) {}
 
   async fight(draftId: string, submitterToken: string): Promise<BattleResultResponse> {
-    const draft = await this.draftService.getById(draftId);
+    const running = this.inflight.get(draftId);
+    if (running) {
+      // Serialize fights on the same draft. Fight Again is a new fight, not
+      // a replay of the in-flight one — wait, then run.
+      await running.catch(() => undefined);
+    }
+    const pending = this.doFight(draftId, submitterToken);
+    this.inflight.set(draftId, pending);
+    try {
+      return await pending;
+    } finally {
+      if (this.inflight.get(draftId) === pending) this.inflight.delete(draftId);
+    }
+  }
+
+  private async doFight(draftId: string, submitterToken: string): Promise<BattleResultResponse> {
+    const draft = await this.draftService.getById(draftId, submitterToken);
     if (!draft) throw new NotFoundException('Draft not found');
     if (draft.status !== 'COMPLETED') {
       throw new BadRequestException('Draft must be completed before entering Battle Mode');
@@ -96,7 +115,9 @@ export class BattleService {
         opponentLeagueName: opponent.leagueName,
         opponentHeroIds: opponent.heroIds,
       })
-      .catch(() => undefined);
+      .catch((err) => {
+        logPersistenceFailure('battle.saveResult', err, { draftId });
+      });
 
     // Best-effort, same reasoning as saveBattleResult above — the
     // leaderboard (Blueprint/10-tech-debt-backlog.md, "Лидерборд драфтов")
@@ -106,7 +127,9 @@ export class BattleService {
     // CALLING player's perspective (teamA) — the opponent draft (teamB)
     // won exactly when the caller lost, and vice versa.
     const opponentOutcome: ResolvedOutcome = result.resolvedOutcome === 'Win' ? 'Lose' : 'Win';
-    await this.opponentPoolService.recordDraftOutcome(opponent.id, opponentOutcome).catch(() => undefined);
+    await this.opponentPoolService.recordDraftOutcome(opponent.id, opponentOutcome).catch((err) => {
+      logPersistenceFailure('battle.recordDraftOutcome', err, { draftId, opponentId: opponent.id });
+    });
 
     return {
       resolvedOutcome: result.resolvedOutcome,

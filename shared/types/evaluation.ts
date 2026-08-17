@@ -33,13 +33,7 @@ export interface EvaluationSummary {
 // Named draft shape for Evaluation UI (Blueprint/10 §archetypes). Id only —
 // labels are client i18n (`evaluation.archetype.*`). Display-only; no Battle math.
 export type DraftArchetypeId =
-  | 'four_plus_one'
-  | 'split_push'
-  | 'push'
-  | 'tempo'
-  | 'deathball'
-  | 'scaling'
-  | 'balance';
+  'four_plus_one' | 'split_push' | 'push' | 'tempo' | 'deathball' | 'scaling' | 'balance';
 
 export interface DraftArchetype {
   id: DraftArchetypeId;

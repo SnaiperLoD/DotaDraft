@@ -22,7 +22,8 @@ Fundamentals Active Combos names boosted axes · Hosting Docker prep ·
 CI PR/build/Docker (lint/format still soft) · Client + server narrative i18n
 (`I18nLine` keys, RU/EN catalogs) · TI grand-finals opponent badge ·
 Phantom Lancer / Tinker `late_game_scaling` (split-push is their late plan,
-not an early close).
+not an early close) · Anonymous draft ownership (`ownerToken` / `X-Owner-Token`)
+· Compose Postgres Opponent Pool + live Battle e2e smoke.
 
 ---
 
@@ -139,10 +140,13 @@ anti-synergy no longer calls them an early-end plan. Rest of HKB still open.
 Long-horizon; freshness/TI covers immediate need.
 ### Hosting / release process — `partial`
 Docker Compose + Dockerfiles + `.env.example` + `Blueprint/13-deploy.md` +
-`start:prod` + `/health`. Host/DNS/TLS still manual.
+`start:prod` + `/health` (`sqlite`/`pool`). Host/DNS/TLS still manual.
+SQLite backup/restore commands are in `13-deploy.md`.
 ### CI hardening — `partial`
-PR trigger, full monorepo build, Playwright cache, Docker build. Lint/format
-remain non-blocking until the scripts pile is scoped.
+PR trigger, full monorepo build, Playwright cache, Docker build, server
+integration suite. Lint and Prettier are blocking for production source
+(`server/scripts`, Blueprint, generated data, gltf ignored). Dependabot
+weekly + `npm audit` in CI (`continue-on-error`).
 ### Mutation testing — `partial`
 Full suite (2026-08-17): **69.92%** total. Re-run on
 `battle-explanation.ts` after deeper Jest: **~65%** on that file alone

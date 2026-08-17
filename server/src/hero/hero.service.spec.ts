@@ -20,10 +20,21 @@ function rawRow(hero: Hero) {
 
 describe('ensureRoleCoverage', () => {
   const support = (id: number) =>
-    makeHero({ id, name: `Support${id}`, roles: ['Support'], presumed_positions: [{ position: 'Support', share: 0.8 }] });
+    makeHero({
+      id,
+      name: `Support${id}`,
+      roles: ['Support'],
+      presumed_positions: [{ position: 'Support', share: 0.8 }],
+    });
   const core = (id: number) =>
-    makeHero({ id, name: `Core${id}`, roles: ['Carry'], presumed_positions: [{ position: 'Carry', share: 0.8 }] });
-  const isSupportReal = (h: ReturnType<typeof support>) => h.presumed_positions.some((p) => p.position === 'Support');
+    makeHero({
+      id,
+      name: `Core${id}`,
+      roles: ['Carry'],
+      presumed_positions: [{ position: 'Carry', share: 0.8 }],
+    });
+  const isSupportReal = (h: ReturnType<typeof support>) =>
+    h.presumed_positions.some((p) => p.position === 'Support');
 
   it('leaves the pool unchanged when it already has both a Support and a core hero', () => {
     const pool = [support(1), core(2)];
@@ -70,7 +81,12 @@ describe('ensureRoleCoverage', () => {
   });
 
   it('falls back to the roles tag when a hero has no position data at all', () => {
-    const noDataSupport = makeHero({ id: 6, name: 'NoDataSupport', roles: ['Support'], presumed_positions: [] });
+    const noDataSupport = makeHero({
+      id: 6,
+      name: 'NoDataSupport',
+      roles: ['Support'],
+      presumed_positions: [],
+    });
     const pool = [core(1), core(2)];
     const rest = [core(3), noDataSupport];
     const result = ensureRoleCoverage(pool, rest);

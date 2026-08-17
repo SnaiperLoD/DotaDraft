@@ -31,7 +31,7 @@ model PooledDraft {
   // local draft is re-evaluated afterward — a leaderboard row is a
   // snapshot of the draft as committed, not a synced mirror.
   evaluationScore Float?
-  // Wins/losses are for THIS draft as the OPPONENT (pulled by
+  // wins/losses are for THIS draft as the OPPONENT (pulled by
   // pullRandom() into someone ELSE's battle) — NOT for the committing
   // player's own battles played with other drafts. Incremented directly
   // on this row (not a separate join table) since each row already IS
@@ -40,5 +40,8 @@ model PooledDraft {
   // was: gameable, no minimum-battle floor.
   wins           Int      @default(0)
   losses         Int      @default(0)
+  // Player commits only. Pro seed rows stay null (Postgres UNIQUE allows
+  // multiple NULLs). Dedupes retry/double-commit of the same local draft.
+  sourceDraftId String? @unique
   createdAt      DateTime @default(now())
 }

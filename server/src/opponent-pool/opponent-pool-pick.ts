@@ -110,19 +110,16 @@ export function pickWeightedIndex(weights: number[], rand: number): number {
   if (!(total > 0) || weights.length === 0) return 0;
   let r = rand * total;
   for (let i = 0; i < weights.length; i++) {
-    r -= weights[i]!;
+    r -= weights[i];
     if (r < 0) return i;
   }
   return weights.length - 1;
 }
 
-export function pickWeightedOpponent<T extends PoolPickRow>(
-  rows: T[],
-  rand: () => number = Math.random,
-): T {
+export function pickWeightedOpponent<T extends PoolPickRow>(rows: T[], rand: () => number = Math.random): T {
   if (rows.length === 0) throw new Error('pickWeightedOpponent: empty rows');
-  if (rows.length === 1) return rows[0]!;
+  if (rows.length === 1) return rows[0];
   const ranges = buildOpponentPickRanges(rows);
   const weights = rows.map((r) => opponentPickWeight(r, ranges));
-  return rows[pickWeightedIndex(weights, rand())]!;
+  return rows[pickWeightedIndex(weights, rand())];
 }

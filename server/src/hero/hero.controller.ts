@@ -4,7 +4,8 @@ import { HeroAbilitiesService } from './hero-abilities.service';
 import { HeroMetaService } from '../hero-meta/hero-meta.service';
 import { realSynergyDelta } from '../evaluation/analyzers/synergy.analyzer';
 import { ABILITY_CATEGORY_FOR_AXIS } from 'shared';
-import type { SynergyPreviewRequest, SynergyPreviewEntry, TopAbility, AbilityCategory } from 'shared';
+import type { SynergyPreviewEntry, TopAbility, AbilityCategory } from 'shared';
+import { assertSynergyPreviewBody } from '../common/request-validation';
 
 const VALID_CATEGORIES = new Set<string>(Object.values(ABILITY_CATEGORY_FOR_AXIS));
 const DEFAULT_TOP_ABILITIES_LIMIT = 3;
@@ -33,13 +34,14 @@ export class HeroController {
   // picked hero (not enough games), or when there are no picked heroes yet
   // (round 1 — nothing to synergize with).
   @Post('synergy-preview')
-  async synergyPreview(@Body() body: SynergyPreviewRequest): Promise<SynergyPreviewEntry[]> {
-    if (body.pickedHeroIds.length === 0) {
-      return body.candidateHeroIds.map((heroId) => ({ heroId, score: null }));
+  async synergyPreview(@Body() body: unknown): Promise<SynergyPreviewEntry[]> {
+    const parsed = assertSynergyPreviewBody(body);
+    if (parsed.pickedHeroIds.length === 0) {
+      return parsed.candidateHeroIds.map((heroId) => ({ heroId, score: null }));
     }
 
-    const picked = await this.heroService.findByIds(body.pickedHeroIds);
-    const candidates = await this.heroService.findByIds(body.candidateHeroIds);
+    const picked = await this.heroService.findByIds(parsed.pickedHeroIds);
+    const candidates = await this.heroService.findByIds(parsed.candidateHeroIds);
 
     return candidates.map((candidate) => {
       const deltas = picked
@@ -71,7 +73,9 @@ export class HeroController {
       throw new BadRequestException(`category must be one of: ${[...VALID_CATEGORIES].join(', ')}`);
     }
     const parsedLimit = limitParam ? parseInt(limitParam, 10) : NaN;
-    const limit = Number.isNaN(parsedLimit) ? DEFAULT_TOP_ABILITIES_LIMIT : Math.min(MAX_TOP_ABILITIES_LIMIT, Math.max(1, parsedLimit));
+    const limit = Number.isNaN(parsedLimit)
+      ? DEFAULT_TOP_ABILITIES_LIMIT
+      : Math.min(MAX_TOP_ABILITIES_LIMIT, Math.max(1, parsedLimit));
     return this.heroAbilitiesService.topAbilities(id, category as AbilityCategory, limit);
   }
 }

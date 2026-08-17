@@ -23,7 +23,9 @@ test('mobile nav opens, then Escape returns focus to the burger', async ({ page 
   await burger.click();
   await expect(burger).toHaveAttribute('aria-expanded', 'true');
   await expect(page.getByTestId('primary-nav')).toHaveClass(/command-nav--open/);
-  await expect(page.getByTestId('primary-nav').getByRole('link', { name: 'Draft', exact: true })).toBeVisible();
+  await expect(
+    page.getByTestId('primary-nav').getByRole('link', { name: 'Draft', exact: true }),
+  ).toBeVisible();
 
   await page.keyboard.press('Escape');
   await expect(burger).toHaveAttribute('aria-expanded', 'false');

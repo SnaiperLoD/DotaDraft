@@ -4,60 +4,55 @@ Updated 2026-08-17 after the architecture / engineering / product audit.
 Handoff / triage; `10-tech-debt-backlog.md` is the detailed source of truth.
 Deploy notes: `13-deploy.md`.
 
-**Status check:** the product is a strong closed-alpha MVP, not yet safe for
-public multi-user hosting. Docker files exist, but the main SQLite database has
-no per-visitor ownership boundary, the Compose Opponent Pool is unconfigured,
-and the real Battle path is mocked in Playwright. Do not reduce this to
-"pick a host and finish DNS/TLS."
+**Status check:** the product is a strong closed-alpha MVP. Docker Compose
+provisions the Postgres Opponent Pool; CI runs live Battle smoke plus the
+HTTP integration suite; lint/format block on production source. Next is a
+small-audience deploy (priority 6), not another calibration sweep.
 
 ---
 
 ## Next session — priorities in order
 
-### 1. Establish a clean Git baseline
+### 1. Establish a clean Git baseline — done (2026-08-17)
 
-The audit started with dozens of source/config/data files shown as untracked.
-Before more feature work, verify the live `git status`, separate source from
-generated/local files, and create a reviewable baseline. Never include
-`database/dev.db`, `.env`, `shared/dist`, generated Prisma clients, or raw
-research artifacts merely to make the tree look clean.
+Working tree was already clean (`master` == `origin/master`, no untracked).
+`.gitignore` covers `database/dev.db`, `.env`, `dist/`, Prisma generate, and
+research dumps. Do not re-open unless `git status` is dirty again.
 
-### 2. Fix the Evaluation summary ordering bug
+### 2. Fix the Evaluation summary ordering bug — done (2026-08-17)
 
-`EvaluationService.buildSummary()` sorts percentile ranks ascending but assigns
-the first three rows to `strengths`; `gameplan` likewise receives the lowest
-ranked item as `topStrength`. Correct the ordering and add a focused regression
-test covering strengths, weaknesses, and lean-on / cover-for direction. This is
-a logic bug, not calibration work.
+Audit claim was stale: `buildSummary()` already sorted descending (July).
+Added `evaluation-summary.spec.ts` locking strengths / weaknesses / lean-on /
+cover-for direction so an inverted comparator cannot land again.
 
-### 3. Add anonymous ownership before public hosting
+### 3. Add anonymous ownership before public hosting — done (2026-08-17)
 
-The hosted Nest server uses one SQLite volume. Today `/history` returns every
-completed draft and Draft / Evaluation / Battle operations are scoped only by
-`draftId`. Add an anonymous owner token to `Draft`, require it on private
-reads/writes, scope History and Best Runs, and stop returning raw
-`submitterToken` values in the public leaderboard response. Accounts remain
-out of scope; an anonymous browser identity is enough for the MVP.
+`Draft.ownerToken` stores the same UUID the client already kept as
+`submitterToken`. Private Draft / Evaluation / Battle / History / Best Runs
+require `X-Owner-Token`; mismatch is 404. Leaderboard pool rows expose
+`isMine` instead of the raw token. Pre-ownership SQLite rows stay in the
+DB but are invisible (null token never matches). Accounts remain out of
+scope.
 
-### 4. Exercise the real deployed Battle path
+### 4. Exercise the real deployed Battle path — done (2026-08-17)
 
-Provision the Postgres Opponent Pool, run its migrations/seed from existing
-snapshots, and add an integration or E2E smoke path that does not mock Battle.
-`docker-compose.yml` currently sets `POOL_DATABASE_URL` empty, so the advertised
-core loop is unavailable on the documented quick-start deployment.
+Compose runs Postgres (`pool`) and the API entrypoint migrates + seeds the
+Opponent Pool from `server/data/pro-matches.json` when empty. CI stands up
+Postgres and runs `live Battle path pulls a pool opponent…` without mocking
+`POST /battle`. Local `npm run test:e2e` without `POOL_DATABASE_URL` still
+skips that one test. Mocked Playwright tests remain for story-copy assertions.
 
-### 5. Launch hardening
+### 5. Launch hardening — done (2026-08-17)
 
-In this order:
-
-1. runtime request validation and payload limits;
-2. transactions / idempotency around picks, fights, and pool commits;
-3. rate limits on write-heavy public endpoints;
-4. run the existing integration suite in CI;
-5. make lint blocking for production source without mass-formatting research
-   scripts;
-6. structured logging for best-effort persistence failures, database readiness,
-   SQLite backup and restore instructions.
+JSON bodies capped at 64kb; create/pick/roles/battle/commit/synergy-preview
+and draft ids are type-guarded (400 on junk). Pick + role assignment run in
+an interactive transaction; retried picks/roles/commits are idempotent;
+concurrent fights on one draft serialize. Writes are 60/min per owner token
+(skipped in `NODE_ENV=test`). CI runs `test:integration` and blocking lint +
+Prettier on production source (`server/scripts`, Blueprint, generated data,
+gltf ignored). `/health`
+reports `{ status, sqlite, pool }`; persistence `.catch` paths log; SQLite
+backup/restore is in `13-deploy.md`.
 
 ### 6. Closed-alpha product validation
 
@@ -83,6 +78,23 @@ Do not start another coefficient/tag/weight pass merely because an outlier
 looks ugly. Pick one hypothesis, define a holdout and acceptance metric, get
 explicit user approval, run reproducible seeds into `artifacts/` (not
 `server/data/` commits), and compare with the production baseline.
+
+## Completed this pass (2026-08-17, later still)
+
+- **Git baseline** — verified clean; no extra commit needed.
+- **Eval summary ordering** — sort was already descending; added
+  `evaluation-summary.spec.ts` (strengths / weaknesses / lean-on / cover-for).
+- **Anonymous ownership** — `Draft.ownerToken` + `X-Owner-Token` on private
+  reads/writes; History and Best Runs scoped; leaderboard `isMine` instead of
+  raw `submitterToken`. Legacy null-owner drafts are inaccessible.
+- **Opponent Pool in Compose** — Postgres `pool` service, entrypoint migrate +
+  seed from existing `pro-matches.json`. CI Playwright live Battle smoke
+  (no `POST /battle` mock) when `POOL_DATABASE_URL` is set.
+- **Launch hardening** — 64kb JSON limit, request type-guards, transactional
+  pick/roles, idempotent pick/roles/commit, serialized fights, 60/min write
+  cap, blocking lint + Prettier (scripts/Blueprint/gltf ignored),
+  integration tests in CI, `/health` sqlite+pool, persistence logs, SQLite
+  backup notes.
 
 ## Completed this pass (2026-08-17, later)
 
@@ -193,11 +205,9 @@ User's request (2026-08-06): heroes who genuinely play both a core and a support
 
 ## Where to start
 
-Start with current priority 1, then fix the self-contained Evaluation ordering
-bug before touching hosting. Do not expose the current SQLite-backed server to
-multiple users until priority 3 establishes ownership and History scoping. Do
-not begin with another calibration sweep, new mechanic, or broad visual
-redesign.
+Priorities 1–5 are done. Next is priority 6: closed-alpha product
+validation (small audience, privacy-safe funnel sink). Do not begin with
+another calibration sweep, new mechanic, or broad visual redesign.
 
 ---
 

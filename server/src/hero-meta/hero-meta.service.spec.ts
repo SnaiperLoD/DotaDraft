@@ -44,7 +44,10 @@ describe('HeroMetaService', () => {
   it('shrinks the raw win rate toward 0.5 proportional to sample size (K from battle-diff-inputs.json), instead of a hard cutoff', () => {
     const actualFs = jest.requireActual<typeof fs>('fs');
     const { shrinkageK: K } = JSON.parse(
-      actualFs.readFileSync(require('path').join(__dirname, '..', '..', 'data', 'battle-diff-inputs.json'), 'utf-8'),
+      actualFs.readFileSync(
+        require('path').join(__dirname, '..', '..', 'data', 'battle-diff-inputs.json'),
+        'utf-8',
+      ),
     ) as { shrinkageK: number };
     mockHeroMeta([
       {

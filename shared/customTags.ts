@@ -446,13 +446,7 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
     revealable: false, // always-hidden — calibration only
     description:
       'Utility axes (stacks, map presence, control) read high without converting to outcomes. -25% personal power, always active. Never shown to the player.',
-    heroNames: [
-      'Keeper of the Light',
-      'Snapfire',
-      'Treant Protector',
-      'Batrider',
-      'Enchantress',
-    ],
+    heroNames: ['Keeper of the Light', 'Snapfire', 'Treant Protector', 'Batrider', 'Enchantress'],
   },
   // --- Divergence-fix batch 2 (2026-08-16, post tag-batch measure) ---
   {
@@ -462,14 +456,7 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
     revealable: false, // always-hidden — calibration only
     description:
       'Late-game / space-dependent cores the mid-clash model under-rates. +18% personal power, always active. Never shown to the player.',
-    heroNames: [
-      'Phantom Lancer',
-      'Medusa',
-      'Troll Warlord',
-      'Phantom Assassin',
-      'Sven',
-      'Ursa',
-    ],
+    heroNames: ['Phantom Lancer', 'Medusa', 'Troll Warlord', 'Phantom Assassin', 'Sven', 'Ursa'],
   },
   {
     name: 'Showstopper Tax',

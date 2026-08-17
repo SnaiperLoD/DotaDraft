@@ -186,6 +186,9 @@ export async function enterBattle(page: Page) {
   await expect(page.getByTestId('battle-story-beat')).toHaveCount(4);
   await expect(page.getByTestId('battle-lanes')).toBeVisible();
   await expect(page.getByTestId('battle-lane-card')).toHaveCount(3);
+}
+
+export async function assertMockedBattleStory(page: Page) {
   await expect(page.getByTestId('battle-story-beat').first()).toContainText('2–0');
   await expect(page.getByTestId('battle-story-beat').first()).toContainText('Storm Spirit');
   await expect(page.getByTestId('battle-story-beat').first()).not.toContainText('advantage goes to');

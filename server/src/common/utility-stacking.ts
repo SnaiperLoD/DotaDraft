@@ -62,9 +62,7 @@ export function utilityStackPenalty(hero: Hero): number {
 // durability/objectives/burst/teamfight/scaling/tempo/camp_stacking are
 // untouched, since those aren't part of the collinear cluster this
 // discounts.
-export function utilityStackAxisMultipliers(
-  hero: Hero,
-): Partial<Record<keyof HeroEvaluationValues, number>> {
+export function utilityStackAxisMultipliers(hero: Hero): Partial<Record<keyof HeroEvaluationValues, number>> {
   const penalty = utilityStackPenalty(hero);
   if (penalty === 0) return {};
   const multipliers: Partial<Record<keyof HeroEvaluationValues, number>> = {};

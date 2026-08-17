@@ -359,7 +359,10 @@ describe('resolveBattle', () => {
         { hero: hero(1, 'A', { control: 3 }), assignedRole: 'Carry' },
         ...team(4, {}, 2),
       ];
-      const sameNoRole: BattlePick[] = [{ hero: hero(6, 'B', { control: 3 }), assignedRole: null }, ...team(4, {}, 7)];
+      const sameNoRole: BattlePick[] = [
+        { hero: hero(6, 'B', { control: 3 }), assignedRole: null },
+        ...team(4, {}, 7),
+      ];
 
       const result = resolveBattle(belowBaseline, sameNoRole, noData, () => 0.4);
       expect(result.advantageDirection).toBe('Even');
@@ -367,7 +370,12 @@ describe('resolveBattle', () => {
   });
 
   describe('hard-carry stacking penalty', () => {
-    function heroAtPosition(id: number, name: string, position: 'Carry' | 'Mid' | 'Offlane' | 'Support', share: number): Hero {
+    function heroAtPosition(
+      id: number,
+      name: string,
+      position: 'Carry' | 'Mid' | 'Offlane' | 'Support',
+      share: number,
+    ): Hero {
       return makeHero({
         id,
         name,
@@ -449,7 +457,7 @@ describe('resolveBattle', () => {
       expect(boosted).toBeGreaterThan(baseline);
     });
 
-    it('a curse (Agility Crusher) lowers the opposing agility carry\'s side, only when Elder Titan is drafted', () => {
+    it("a curse (Agility Crusher) lowers the opposing agility carry's side, only when Elder Titan is drafted", () => {
       const agiCarry = makeHero({
         id: 20,
         name: 'Anti-Mage',
@@ -478,7 +486,7 @@ describe('resolveBattle', () => {
     // this revision). A roll of 0.97 is < 1 (A wins with no shift) but not
     // < 0.95 (A loses once a High Skill hero on B pulls pWinA toward 0.5 by
     // 0.05) — lands exactly in the swing zone.
-    it('can flip the favorite\'s win into a loss when the underdog has a High Skill hero, and names them', () => {
+    it("can flip the favorite's win into a loss when the underdog has a High Skill hero, and names them", () => {
       const strongTeam = dominantTeam();
       const weakTeamWithHighSkill: BattlePick[] = [pick(hero(6, 'Invoker')), ...team(4, {}, 7)];
 
@@ -658,14 +666,23 @@ describe('resolveBattle', () => {
 
   describe('axisDeltas', () => {
     it('map_control never contributes, since its blended phase weight is 0 in every phase', () => {
-      const teamA: BattlePick[] = [{ hero: hero(9001, 'A', { map_control: 10 }), assignedRole: null }, ...team(4, {}, 9002)];
-      const teamB: BattlePick[] = [{ hero: hero(9011, 'B', { map_control: 0 }), assignedRole: null }, ...team(4, {}, 9012)];
+      const teamA: BattlePick[] = [
+        { hero: hero(9001, 'A', { map_control: 10 }), assignedRole: null },
+        ...team(4, {}, 9002),
+      ];
+      const teamB: BattlePick[] = [
+        { hero: hero(9011, 'B', { map_control: 0 }), assignedRole: null },
+        ...team(4, {}, 9012),
+      ];
       const { axisDeltas } = assessBattle(teamA, teamB, noData);
       expect(axisDeltas.find((d) => d.axis === 'map_control')!.delta).toBe(0);
     });
 
     it('is sorted by absolute delta magnitude, largest first', () => {
-      const teamA: BattlePick[] = [{ hero: hero(9001, 'A', { tempo: 9, saving: 6 }), assignedRole: null }, ...team(4, {}, 9002)];
+      const teamA: BattlePick[] = [
+        { hero: hero(9001, 'A', { tempo: 9, saving: 6 }), assignedRole: null },
+        ...team(4, {}, 9002),
+      ];
       const teamB = team(5, {}, 9011);
       const { axisDeltas } = assessBattle(teamA, teamB, noData);
       const magnitudes = axisDeltas.map((d) => Math.abs(d.delta));

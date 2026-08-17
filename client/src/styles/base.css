@@ -316,10 +316,10 @@ html {
   box-shadow: var(--elev-2);
   /* Wash + soft forge grain. No overflow:hidden — tooltips (RoleTooltip)
      escape the ledger panel top edge. */
-  background-image:
-    var(--panel-noise),
-    linear-gradient(180deg, var(--wash), transparent 90px);
-  background-size: 180px 180px, auto;
+  background-image: var(--panel-noise), linear-gradient(180deg, var(--wash), transparent 90px);
+  background-size:
+    180px 180px,
+    auto;
   background-blend-mode: soft-light, normal;
 }
 
@@ -340,10 +340,10 @@ html {
 .plate {
   position: relative;
   background-color: var(--panel);
-  background-image:
-    var(--panel-noise),
-    linear-gradient(180deg, var(--wash), transparent 90px);
-  background-size: 180px 180px, auto;
+  background-image: var(--panel-noise), linear-gradient(180deg, var(--wash), transparent 90px);
+  background-size:
+    180px 180px,
+    auto;
   background-blend-mode: soft-light, normal;
   clip-path: polygon(
     var(--bevel) 0,

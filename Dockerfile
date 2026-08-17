@@ -16,9 +16,7 @@ FROM deps AS build
 COPY shared shared
 COPY server server
 COPY tsconfig.base.json ./
-RUN npm run build --workspace shared \
-  && npm run prisma:generate --workspace server \
-  && npm run build --workspace server
+RUN npm run build --workspace shared && npm run build --workspace server
 
 FROM node:20-bookworm-slim AS runtime
 WORKDIR /app
@@ -38,7 +36,12 @@ COPY --from=deps /app/shared/package.json ./shared/package.json
 COPY --from=build /app/shared ./shared
 COPY --from=build /app/server/dist ./server/dist
 COPY --from=build /app/server/prisma ./server/prisma
+COPY --from=build /app/server/prisma-pool ./server/prisma-pool
+COPY --from=build /app/server/generated ./server/generated
 COPY --from=build /app/server/package.json ./server/package.json
+COPY --from=build /app/server/scripts/seed-opponent-pool.ts ./server/scripts/seed-opponent-pool.ts
+COPY --from=build /app/server/tsconfig.json ./server/tsconfig.json
+COPY --from=build /app/tsconfig.base.json ./tsconfig.base.json
 COPY server/data ./server/data
 COPY docker/server-entrypoint.sh /entrypoint.sh
 
@@ -53,7 +56,7 @@ RUN rm -rf node_modules/shared \
   && sed -i 's/\r$//' /entrypoint.sh
 
 EXPOSE 3001
-HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=5s --start-period=120s --retries=5 \
   CMD node -e "fetch('http://127.0.0.1:'+(process.env.PORT||3001)+'/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
 
 ENTRYPOINT ["/entrypoint.sh"]

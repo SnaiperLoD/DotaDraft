@@ -205,7 +205,11 @@ describe('supportMiscastMultiplier', () => {
   });
 
   it('treats a missing Support entry as 0% share (below threshold)', () => {
-    const noSupportEntry = makeHero({ id: 3, name: 'Sniper', presumed_positions: [{ position: 'Mid', share: 1 }] });
+    const noSupportEntry = makeHero({
+      id: 3,
+      name: 'Sniper',
+      presumed_positions: [{ position: 'Mid', share: 1 }],
+    });
     expect(supportMiscastMultiplier(noSupportEntry, 'Hard Support')).toBeCloseTo(0.9);
   });
 
@@ -343,18 +347,30 @@ describe('roleAwareAxisValue', () => {
   it('falls back to the old aggregate + heuristic-boost mechanism when no real per-role data exists (no_info)', () => {
     // makeHero defaults every role to no_info. `initiating` (still a Carry
     // role-fit axis) exercises the boost; control no longer would.
-    const hero = makeHero({ id: 2, name: 'Y', evaluation_values: { ...DEFAULT_EVALUATION_VALUES, initiating: 8 } });
+    const hero = makeHero({
+      id: 2,
+      name: 'Y',
+      evaluation_values: { ...DEFAULT_EVALUATION_VALUES, initiating: 8 },
+    });
     // roleFitValue's own boost formula: 8 is 3 above baseline(5) -> +0.9 -> 8.9.
     expect(roleAwareAxisValue('initiating', hero, 'Carry')).toBe(8.9);
   });
 
   it('falls back to the aggregate unchanged when assignedRole is null (no position to look up)', () => {
-    const hero = makeHero({ id: 3, name: 'Z', evaluation_values: { ...DEFAULT_EVALUATION_VALUES, control: 8 } });
+    const hero = makeHero({
+      id: 3,
+      name: 'Z',
+      evaluation_values: { ...DEFAULT_EVALUATION_VALUES, control: 8 },
+    });
     expect(roleAwareAxisValue('control', hero, null)).toBe(8);
   });
 
   it('falls back to the aggregate unchanged for an unrecognized role string (maps to no position)', () => {
-    const hero = makeHero({ id: 4, name: 'W', evaluation_values: { ...DEFAULT_EVALUATION_VALUES, control: 8 } });
+    const hero = makeHero({
+      id: 4,
+      name: 'W',
+      evaluation_values: { ...DEFAULT_EVALUATION_VALUES, control: 8 },
+    });
     expect(roleAwareAxisValue('control', hero, 'Jungle')).toBe(8);
   });
 

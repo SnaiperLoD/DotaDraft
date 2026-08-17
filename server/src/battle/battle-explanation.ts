@@ -173,7 +173,9 @@ function fightShapeLines(mine: BattlePick[], opponent: BattlePick[]): LocalizedL
   const mySave = mySaver && axisOf(mySaver, 'saving') >= SAVING_FLOOR ? mySaver : undefined;
   const theirSave = theirSaver && axisOf(theirSaver, 'saving') >= SAVING_FLOOR ? theirSaver : undefined;
   if (mySave && theirSave && mySave.hero.id !== theirSave.hero.id) {
-    lines.push(i18nLine('battle.explain.shape.savesBoth', { mine: mySave.hero.name, theirs: theirSave.hero.name }));
+    lines.push(
+      i18nLine('battle.explain.shape.savesBoth', { mine: mySave.hero.name, theirs: theirSave.hero.name }),
+    );
   } else if (mySave) {
     lines.push(i18nLine('battle.explain.shape.saveMine', { hero: mySave.hero.name }));
   } else if (theirSave) {
@@ -220,9 +222,7 @@ function laneLines(lanes: BattleLaneResult[] | undefined): LocalizedLine[] {
   const decided = lanes
     .filter((lane) => lane.winner !== 'even' && lane.topPair)
     .slice()
-    .sort(
-      (a, b) => Math.abs((b.topPair?.winRate ?? 0.5) - 0.5) - Math.abs((a.topPair?.winRate ?? 0.5) - 0.5),
-    )
+    .sort((a, b) => Math.abs((b.topPair?.winRate ?? 0.5) - 0.5) - Math.abs((a.topPair?.winRate ?? 0.5) - 0.5))
     .slice(0, 3);
   if (decided.length === 0) return [];
 
@@ -230,11 +230,7 @@ function laneLines(lanes: BattleLaneResult[] | undefined): LocalizedLine[] {
   const bits = decided.map((lane) => {
     const pair = lane.topPair!;
     const chance =
-      lane.winRate === null
-        ? ''
-        : lane.winner === 'opponent'
-          ? pct(1 - lane.winRate)
-          : pct(lane.winRate);
+      lane.winRate === null ? '' : lane.winner === 'opponent' ? pct(1 - lane.winRate) : pct(lane.winRate);
     const pairPct = pct(pair.winRate);
     const params: Record<string, string> = {
       lane: lane.lane,
@@ -332,7 +328,9 @@ function carryLateLines(mine: BattlePick[], opponent: BattlePick[], lookup: Matc
       i18nLine('battle.explain.carry.noRow', { mine: myCarry.hero.name, theirs: theirCarry.hero.name }),
     );
   } else if (carryMatchup > MATCHUP_FLOOR) {
-    lines.push(i18nLine('battle.explain.carry.mineOwns', { hero: myCarry.hero.name, pct: pct(carryMatchup) }));
+    lines.push(
+      i18nLine('battle.explain.carry.mineOwns', { hero: myCarry.hero.name, pct: pct(carryMatchup) }),
+    );
   } else if (carryMatchup < 1 - MATCHUP_FLOOR) {
     lines.push(
       i18nLine('battle.explain.carry.oppOwns', { hero: theirCarry.hero.name, pct: pct(1 - carryMatchup) }),
@@ -380,11 +378,16 @@ function shutdownLines(mine: Hero[] | undefined, opponent: Hero[] | undefined): 
   const theirNames = (opponent ?? []).map((hero) => hero.name);
   const lines: LocalizedLine[] = [];
   if (myNames.length > 0) {
-    lines.push(i18nLine('battle.explain.shutdown.mine', { names: pipeNames(myNames), count: String(myNames.length) }));
+    lines.push(
+      i18nLine('battle.explain.shutdown.mine', { names: pipeNames(myNames), count: String(myNames.length) }),
+    );
   }
   if (theirNames.length > 0) {
     lines.push(
-      i18nLine('battle.explain.shutdown.opp', { names: pipeNames(theirNames), count: String(theirNames.length) }),
+      i18nLine('battle.explain.shutdown.opp', {
+        names: pipeNames(theirNames),
+        count: String(theirNames.length),
+      }),
     );
   }
   return lines;
@@ -418,7 +421,11 @@ function closingLine(
   return i18nLine(userWon ? 'battle.explain.close.underdogWin' : 'battle.explain.close.underdogHeld');
 }
 
-function upsetReasonLines(ctx: BattleExplanationContext, underdog: Hero[], favorite: Hero[]): LocalizedLine[] {
+function upsetReasonLines(
+  ctx: BattleExplanationContext,
+  underdog: Hero[],
+  favorite: Hero[],
+): LocalizedLine[] {
   const favoredIsA = ctx.advantageDirection === 'A';
   const underdogSide: Side = favoredIsA ? 'opponent' : 'yours';
   const matchup = bestMatchupEdge(underdog, favorite, ctx.lookup);
@@ -497,9 +504,7 @@ export function buildExplanation(ctx: BattleExplanationContext): LocalizedLine[]
 
   lines.push(...laneLines(ctx.lanes));
 
-  lines.push(
-    ...catchAndComboLines(winnerHeroes, loserHeroes, ctx.lookup, winner, loser, lanePairKeys),
-  );
+  lines.push(...catchAndComboLines(winnerHeroes, loserHeroes, ctx.lookup, winner, loser, lanePairKeys));
 
   lines.push(...carryLateLines(mine, opponent, ctx.lookup));
 

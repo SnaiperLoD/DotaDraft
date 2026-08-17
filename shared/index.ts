@@ -6,6 +6,7 @@ export * from './types/battle';
 export * from './types/i18n';
 export * from './constants/roles';
 export * from './constants/ability-categories';
+export * from './constants/owner-token';
 export * from './utils/heroPosition';
 export * from './utils/evaluationValues';
 export * from './utils/tiFinalsOpponent';

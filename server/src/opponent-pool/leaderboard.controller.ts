@@ -1,6 +1,7 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { OpponentPoolService } from './opponent-pool.service';
 import { DraftService } from '../draft/draft.service';
+import { OptionalOwnerToken } from '../common/owner-token';
 import type { LeaderboardResponse } from 'shared';
 
 const DEFAULT_LIMIT = 20;
@@ -26,12 +27,15 @@ export class LeaderboardController {
   // drafts ranked by their passive opponent record (Postgres, OpponentPool).
   // Fetched together so the page renders both sections from one request.
   @Get()
-  async getLeaderboard(@Query('limit') limitParam?: string): Promise<LeaderboardResponse> {
+  async getLeaderboard(
+    @OptionalOwnerToken() ownerToken: string | null,
+    @Query('limit') limitParam?: string,
+  ): Promise<LeaderboardResponse> {
     const parsed = limitParam ? parseInt(limitParam, 10) : NaN;
     const limit = Number.isNaN(parsed) ? DEFAULT_LIMIT : Math.min(MAX_LIMIT, Math.max(1, parsed));
     const [runs, pool] = await Promise.all([
-      this.draftService.getBestRuns(limit, RUN_MIN_FIGHTS),
-      this.opponentPoolService.getLeaderboard(limit),
+      ownerToken ? this.draftService.getBestRuns(limit, RUN_MIN_FIGHTS, ownerToken) : Promise.resolve([]),
+      this.opponentPoolService.getLeaderboard(limit, ownerToken),
     ]);
     return { runs, pool };
   }

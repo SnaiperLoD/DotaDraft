@@ -5,12 +5,11 @@
   flex-direction: column;
   align-items: center;
   gap: var(--sp-2);
-  background:
-    radial-gradient(
-      ellipse 60% 55% at 50% 48%,
-      color-mix(in srgb, var(--gold) 6%, transparent),
-      transparent 70%
-    );
+  background: radial-gradient(
+    ellipse 60% 55% at 50% 48%,
+    color-mix(in srgb, var(--gold) 6%, transparent),
+    transparent 70%
+  );
 }
 
 .axis-radar-caption {

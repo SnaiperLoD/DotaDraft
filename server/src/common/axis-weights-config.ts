@@ -23,9 +23,7 @@ export interface AxisWeightsConfig {
 
 const AXIS_WEIGHTS_PATH = path.join(__dirname, '..', '..', 'data', 'axis-weights.json');
 
-export const axisWeightsConfig: AxisWeightsConfig = JSON.parse(
-  fs.readFileSync(AXIS_WEIGHTS_PATH, 'utf-8'),
-);
+export const axisWeightsConfig: AxisWeightsConfig = JSON.parse(fs.readFileSync(AXIS_WEIGHTS_PATH, 'utf-8'));
 
 /** Mid-phase (baseline) Battle weight; missing keys default to 1, same as battle-resolution. */
 export function midAxisWeight(axis: keyof HeroEvaluationValues): number {

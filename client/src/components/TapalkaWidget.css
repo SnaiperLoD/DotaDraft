@@ -86,7 +86,9 @@
    (900ms) matches DRINK_ANIMATION_MS in the component, which is also when
    the mug/bubbles unmount. */
 .tapalka-portrait-wrap--drinking {
-  animation: tapalka-idle-float 3.4s ease-in-out infinite, tapalka-chug-punch 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation:
+    tapalka-idle-float 3.4s ease-in-out infinite,
+    tapalka-chug-punch 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @keyframes tapalka-chug-punch {

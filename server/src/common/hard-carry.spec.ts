@@ -1,13 +1,20 @@
 import { makeHero } from '../test-utils/hero-factory';
 import { isHardCarry, hardCarryPenalty, hardCarryAxisMultipliers } from './hard-carry';
 
-function heroAtPosition(id: number, name: string, position: 'Carry' | 'Mid' | 'Offlane' | 'Support', share: number) {
+function heroAtPosition(
+  id: number,
+  name: string,
+  position: 'Carry' | 'Mid' | 'Offlane' | 'Support',
+  share: number,
+) {
   return makeHero({ id, name, presumed_positions: [{ position, share }] });
 }
 
 function teamWithHardCarries(count: number) {
   return Array.from({ length: 5 }, (_, i) =>
-    i < count ? heroAtPosition(i + 1, `HC${i + 1}`, 'Carry', 0.8) : heroAtPosition(i + 1, `Sup${i + 1}`, 'Support', 0.8),
+    i < count
+      ? heroAtPosition(i + 1, `HC${i + 1}`, 'Carry', 0.8)
+      : heroAtPosition(i + 1, `Sup${i + 1}`, 'Support', 0.8),
   );
 }
 

@@ -1,4 +1,10 @@
-import { isShutdown, shutdownHeroes, shutdownHeroMultipliers, SHUTDOWN_WINRATE_MARGIN, SHUTDOWN_POWER_PENALTY } from './shutdown';
+import {
+  isShutdown,
+  shutdownHeroes,
+  shutdownHeroMultipliers,
+  SHUTDOWN_WINRATE_MARGIN,
+  SHUTDOWN_POWER_PENALTY,
+} from './shutdown';
 import type { Hero } from 'shared';
 
 function makeHero(id: number, name = `Hero ${id}`): Hero {
@@ -20,10 +26,7 @@ describe('isShutdown', () => {
   const opponents = [makeHero(2), makeHero(3), makeHero(4), makeHero(5), makeHero(6)];
 
   it('flags a hero whose matchup winRate against all 5 opponents clears the margin', () => {
-    const lookup = lookupFrom(
-      { 1: 0.5 },
-      { '1:2': 0.48, '1:3': 0.47, '1:4': 0.4, '1:5': 0.3, '1:6': 0.45 },
-    );
+    const lookup = lookupFrom({ 1: 0.5 }, { '1:2': 0.48, '1:3': 0.47, '1:4': 0.4, '1:5': 0.3, '1:6': 0.45 });
     expect(isShutdown(hero, opponents, lookup)).toBe(true);
   });
 
@@ -78,8 +81,16 @@ describe('shutdownHeroes', () => {
     const lookup = lookupFrom(
       { 1: 0.5, 2: 0.5 },
       {
-        '1:10': 0.4, '1:11': 0.4, '1:12': 0.4, '1:13': 0.4, '1:14': 0.4,
-        '2:10': 0.55, '2:11': 0.55, '2:12': 0.55, '2:13': 0.55, '2:14': 0.55,
+        '1:10': 0.4,
+        '1:11': 0.4,
+        '1:12': 0.4,
+        '1:13': 0.4,
+        '1:14': 0.4,
+        '2:10': 0.55,
+        '2:11': 0.55,
+        '2:12': 0.55,
+        '2:13': 0.55,
+        '2:14': 0.55,
       },
     );
     expect(shutdownHeroes([shutHero, fineHero], opponents, lookup)).toEqual([shutHero]);

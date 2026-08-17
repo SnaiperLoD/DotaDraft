@@ -4,12 +4,7 @@ import { buildBattleStory } from './battle-story';
 import type { BattlePick, MatchupLookup } from './battle-resolution';
 import type { HeroEvaluationValues } from 'shared';
 
-function pick(
-  id: number,
-  name: string,
-  role: string,
-  axes: Partial<HeroEvaluationValues> = {},
-): BattlePick {
+function pick(id: number, name: string, role: string, axes: Partial<HeroEvaluationValues> = {}): BattlePick {
   return {
     hero: makeHero({
       id,
@@ -279,7 +274,11 @@ describe('buildBattleStory', () => {
       lookup,
     });
     expect(story.beats[1].key).toBe('turningCombo');
-    expect(story.beats[1].params).toMatchObject({ comboA: 'Radiant Carry', comboB: 'Radiant Mid', comboWinRate: '62' });
+    expect(story.beats[1].params).toMatchObject({
+      comboA: 'Radiant Carry',
+      comboB: 'Radiant Mid',
+      comboWinRate: '62',
+    });
 
     const weak: MatchupLookup = {
       getMatchupWinRate: () => null,

@@ -26,6 +26,11 @@ model Draft {
   status           String       @default("PICKING")
   seed             Int
   pool             String
+  // Anonymous browser identity (same UUID the client stores as
+  // submitterToken). Required on create. Private reads/writes 404 unless
+  // the header matches. Null on pre-ownership rows — those stay
+  // inaccessible rather than world-readable.
+  ownerToken       String?
   // One-time reroll of the current round's pool (Blueprint/10-tech-debt-backlog.md,
   // "Кнопка реролла пула героев") — decremented to 0 on use, never
   // replenished mid-draft.
@@ -41,6 +46,8 @@ model Draft {
   // point-in-time snapshot per past calibration.
   evaluationResult String?
   battleResults    BattleResult[]
+
+  @@index([ownerToken])
 }
 
 // One row per Battle Mode fight against this draft — a draft can be fought

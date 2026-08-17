@@ -1,21 +1,38 @@
 services:
+  pool:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: dota
+      POSTGRES_PASSWORD: dota
+      POSTGRES_DB: opponent_pool
+    volumes:
+      - dota-draft-pool:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U dota -d opponent_pool']
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    restart: unless-stopped
+
   api:
     build:
       context: .
       dockerfile: Dockerfile
     environment:
       NODE_ENV: production
-      PORT: "3001"
+      PORT: '3001'
       DATABASE_URL: file:/data/prod.db
       # Comma-separated browser origins if the SPA is not same-origin.
       # Leave empty when nginx fronts both (recommended).
-      CORS_ORIGIN: ""
-      # Optional Postgres opponent pool; empty disables pool features.
-      POOL_DATABASE_URL: ""
+      CORS_ORIGIN: ''
+      POOL_DATABASE_URL: postgresql://dota:dota@pool:5432/opponent_pool
     volumes:
       - dota-draft-data:/data
     expose:
-      - "3001"
+      - '3001'
+    depends_on:
+      pool:
+        condition: service_healthy
     restart: unless-stopped
 
   web:
@@ -23,10 +40,12 @@ services:
       context: .
       dockerfile: Dockerfile.client
     ports:
-      - "8080:80"
+      - '8080:80'
     depends_on:
-      - api
+      api:
+        condition: service_healthy
     restart: unless-stopped
 
 volumes:
   dota-draft-data:
+  dota-draft-pool:

@@ -1,6 +1,12 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { DraftService } from './draft.service';
-import type { PickRequest, AssignRolesRequest, CreateDraftRequest } from 'shared';
+import { OwnerToken } from '../common/owner-token';
+import {
+  assertAssignRolesBody,
+  assertCreateDraftBody,
+  assertDraftId,
+  assertPickBody,
+} from '../common/request-validation';
 
 @Controller('draft')
 export class DraftController {
@@ -18,27 +24,32 @@ export class DraftController {
   // Creates the draft. Carries the first pick, because a draft with no
   // heroes is precisely what we don't want in the database.
   @Post()
-  create(@Body() body: CreateDraftRequest) {
-    return this.draftService.create(body.seed, body.heroId, body.rerollUsed);
+  create(@OwnerToken() ownerToken: string, @Body() body: unknown) {
+    const parsed = assertCreateDraftBody(body);
+    return this.draftService.create(parsed.seed, parsed.heroId, parsed.rerollUsed, ownerToken);
   }
 
   @Get(':id')
-  getById(@Param('id') id: string) {
-    return this.draftService.getById(id);
+  getById(@OwnerToken() ownerToken: string, @Param('id') id: string) {
+    return this.draftService.getById(assertDraftId(id), ownerToken);
   }
 
   @Post(':id/pick')
-  pick(@Param('id') id: string, @Body() body: PickRequest) {
-    return this.draftService.pick(id, body.heroId);
+  pick(@OwnerToken() ownerToken: string, @Param('id') id: string, @Body() body: unknown) {
+    return this.draftService.pick(assertDraftId(id), assertPickBody(body).heroId, ownerToken);
   }
 
   @Post(':id/reroll')
-  reroll(@Param('id') id: string) {
-    return this.draftService.reroll(id);
+  reroll(@OwnerToken() ownerToken: string, @Param('id') id: string) {
+    return this.draftService.reroll(assertDraftId(id), ownerToken);
   }
 
   @Post(':id/roles')
-  assignRoles(@Param('id') id: string, @Body() body: AssignRolesRequest) {
-    return this.draftService.assignRoles(id, body.assignments);
+  assignRoles(@OwnerToken() ownerToken: string, @Param('id') id: string, @Body() body: unknown) {
+    return this.draftService.assignRoles(
+      assertDraftId(id),
+      assertAssignRolesBody(body).assignments,
+      ownerToken,
+    );
   }
 }

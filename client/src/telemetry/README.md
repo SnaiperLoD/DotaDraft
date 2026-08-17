@@ -5,17 +5,17 @@ No SaaS. Events append to `localStorage` key `dotadraft.telemetry.v1`
 
 ## Events
 
-| name | when |
-|---|---|
-| `session_start` | app mount (`main.tsx`) |
-| `draft_completed` | roles assigned → `COMPLETED` |
-| `evaluate_success` | Evaluate returns |
-| `battle_enter` | Enter Battle Mode |
-| `battle_fight` | fight starts (`n`, `auto`) |
-| `battle_outcome` | roll settle (`outcome`, `confidenceTier`, `opponentSource`) |
-| `draft_copy` | copy draft clipboard |
-| `pool_commit` | pool commit ok/fail |
-| `tapalka_click` | first + every 10th tap |
+| name               | when                                                        |
+| ------------------ | ----------------------------------------------------------- |
+| `session_start`    | app mount (`main.tsx`)                                      |
+| `draft_completed`  | roles assigned → `COMPLETED`                                |
+| `evaluate_success` | Evaluate returns                                            |
+| `battle_enter`     | Enter Battle Mode                                           |
+| `battle_fight`     | fight starts (`n`, `auto`)                                  |
+| `battle_outcome`   | roll settle (`outcome`, `confidenceTier`, `opponentSource`) |
+| `draft_copy`       | copy draft clipboard                                        |
+| `pool_commit`      | pool commit ok/fail                                         |
+| `tapalka_click`    | first + every 10th tap                                      |
 
 ## Privacy
 
@@ -28,7 +28,7 @@ No SaaS. Events append to `localStorage` key `dotadraft.telemetry.v1`
 In the browser console:
 
 ```js
-await window.__DOTADRAFT_TELEMETRY__.dump()
-window.__DOTADRAFT_TELEMETRY__.events()
-window.__DOTADRAFT_TELEMETRY__.clear()
+await window.__DOTADRAFT_TELEMETRY__.dump();
+window.__DOTADRAFT_TELEMETRY__.events();
+window.__DOTADRAFT_TELEMETRY__.clear();
 ```

@@ -59,7 +59,7 @@ describe('classifyDraftArchetype', () => {
 
   it('returns split_push on high mobility + split_push tag', () => {
     const heroes = [
-      hero({ name: 'Nature\'s Prophet', tags: ['split_push'] }),
+      hero({ name: "Nature's Prophet", tags: ['split_push'] }),
       hero({ name: 'A' }),
       hero({ name: 'B' }),
       hero({ name: 'C' }),
@@ -70,7 +70,13 @@ describe('classifyDraftArchetype', () => {
   });
 
   it('returns push on high objectives with tempo not lagging scaling', () => {
-    const heroes = [hero({ name: 'A' }), hero({ name: 'B' }), hero({ name: 'C' }), hero({ name: 'D' }), hero({ name: 'E' })];
+    const heroes = [
+      hero({ name: 'A' }),
+      hero({ name: 'B' }),
+      hero({ name: 'C' }),
+      hero({ name: 'D' }),
+      hero({ name: 'E' }),
+    ];
     const breakdown = [
       axis('objectives', 75),
       axis('tempo', 70),
@@ -82,7 +88,13 @@ describe('classifyDraftArchetype', () => {
   });
 
   it('returns tempo on a tempo spike with soft scaling', () => {
-    const heroes = [hero({ name: 'A' }), hero({ name: 'B' }), hero({ name: 'C' }), hero({ name: 'D' }), hero({ name: 'E' })];
+    const heroes = [
+      hero({ name: 'A' }),
+      hero({ name: 'B' }),
+      hero({ name: 'C' }),
+      hero({ name: 'D' }),
+      hero({ name: 'E' }),
+    ];
     const breakdown = [
       axis('tempo', 96),
       axis('scaling', 0),
@@ -94,7 +106,13 @@ describe('classifyDraftArchetype', () => {
   });
 
   it('does not call a high-objectives siege tempo — Push still wins', () => {
-    const heroes = [hero({ name: 'A' }), hero({ name: 'B' }), hero({ name: 'C' }), hero({ name: 'D' }), hero({ name: 'E' })];
+    const heroes = [
+      hero({ name: 'A' }),
+      hero({ name: 'B' }),
+      hero({ name: 'C' }),
+      hero({ name: 'D' }),
+      hero({ name: 'E' }),
+    ];
     const breakdown = [
       axis('objectives', 75),
       axis('tempo', 80),
@@ -106,7 +124,13 @@ describe('classifyDraftArchetype', () => {
   });
 
   it('does not call tempo when scaling is also high', () => {
-    const heroes = [hero({ name: 'A' }), hero({ name: 'B' }), hero({ name: 'C' }), hero({ name: 'D' }), hero({ name: 'E' })];
+    const heroes = [
+      hero({ name: 'A' }),
+      hero({ name: 'B' }),
+      hero({ name: 'C' }),
+      hero({ name: 'D' }),
+      hero({ name: 'E' }),
+    ];
     const breakdown = [
       axis('tempo', 80),
       axis('scaling', 60),
@@ -118,7 +142,13 @@ describe('classifyDraftArchetype', () => {
   });
 
   it('does not call tempo below the 70 gate', () => {
-    const heroes = [hero({ name: 'A' }), hero({ name: 'B' }), hero({ name: 'C' }), hero({ name: 'D' }), hero({ name: 'E' })];
+    const heroes = [
+      hero({ name: 'A' }),
+      hero({ name: 'B' }),
+      hero({ name: 'C' }),
+      hero({ name: 'D' }),
+      hero({ name: 'E' }),
+    ];
     const breakdown = [
       axis('tempo', 65),
       axis('scaling', 40),
@@ -130,7 +160,13 @@ describe('classifyDraftArchetype', () => {
   });
 
   it('returns deathball on high teamfight without mobility spike', () => {
-    const heroes = [hero({ name: 'A' }), hero({ name: 'B' }), hero({ name: 'C' }), hero({ name: 'D' }), hero({ name: 'E' })];
+    const heroes = [
+      hero({ name: 'A' }),
+      hero({ name: 'B' }),
+      hero({ name: 'C' }),
+      hero({ name: 'D' }),
+      hero({ name: 'E' }),
+    ];
     const breakdown = [
       axis('teamfight', 80),
       axis('durability', 60),
@@ -143,7 +179,13 @@ describe('classifyDraftArchetype', () => {
   });
 
   it('returns scaling when scaling is high and tempo is soft', () => {
-    const heroes = [hero({ name: 'A' }), hero({ name: 'B' }), hero({ name: 'C' }), hero({ name: 'D' }), hero({ name: 'E' })];
+    const heroes = [
+      hero({ name: 'A' }),
+      hero({ name: 'B' }),
+      hero({ name: 'C' }),
+      hero({ name: 'D' }),
+      hero({ name: 'E' }),
+    ];
     const breakdown = [
       axis('scaling', 80),
       axis('tempo', 40),
@@ -155,7 +197,13 @@ describe('classifyDraftArchetype', () => {
   });
 
   it('defaults to balance when nothing spikes', () => {
-    const heroes = [hero({ name: 'A' }), hero({ name: 'B' }), hero({ name: 'C' }), hero({ name: 'D' }), hero({ name: 'E' })];
+    const heroes = [
+      hero({ name: 'A' }),
+      hero({ name: 'B' }),
+      hero({ name: 'C' }),
+      hero({ name: 'D' }),
+      hero({ name: 'E' }),
+    ];
     const breakdown = [
       axis('scaling', 50),
       axis('tempo', 50),

@@ -56,8 +56,7 @@ describe('buildExplanation', () => {
         if (heroId === 11 && vsId === 3) return 0.71;
         return null;
       },
-      getSynergyWinRate: (a, b) =>
-        (a === 2 && b === 5) || (b === 2 && a === 5) ? 0.62 : null,
+      getSynergyWinRate: (a, b) => ((a === 2 && b === 5) || (b === 2 && a === 5) ? 0.62 : null),
       getWinRate: () => 0.5,
     };
     const lanes: BattleLaneResult[] = [
@@ -93,18 +92,20 @@ describe('buildExplanation', () => {
       },
     ];
 
-    const text = flattenLocalized(buildExplanation({
-      advantageDirection: 'A',
-      confidenceTier: 'Moderate',
-      resolvedOutcome: 'Win',
-      teamA: mine,
-      teamB: opponent,
-      lookup,
-      topAxisDelta: emptyDeltas[3],
-      axisDeltas: emptyDeltas,
-      highSkillSwingHero: null,
-      lanes,
-    }));
+    const text = flattenLocalized(
+      buildExplanation({
+        advantageDirection: 'A',
+        confidenceTier: 'Moderate',
+        resolvedOutcome: 'Win',
+        teamA: mine,
+        teamB: opponent,
+        lookup,
+        topAxisDelta: emptyDeltas[3],
+        axisDeltas: emptyDeltas,
+        highSkillSwingHero: null,
+        lanes,
+      }),
+    );
 
     expect(text).toMatch(/battle.explain.lane.mineLean/);
     expect(text).toMatch(/Anti-Mage/);
@@ -130,17 +131,19 @@ describe('buildExplanation', () => {
   it('names a visible tag and stays silent on hidden calibration tags', () => {
     const withCm = [...mine.slice(0, 4), pick(5, 'Crystal Maiden', 'Hard Support', { saving: 8 })];
     const withBm = [...opponent.slice(0, 4), pick(16, 'Beastmaster', 'Hard Support')];
-    const text = flattenLocalized(buildExplanation({
-      advantageDirection: 'A',
-      confidenceTier: 'Moderate',
-      resolvedOutcome: 'Win',
-      teamA: withCm,
-      teamB: withBm,
-      lookup: noData,
-      topAxisDelta: emptyDeltas[3],
-      axisDeltas: emptyDeltas,
-      highSkillSwingHero: null,
-    }));
+    const text = flattenLocalized(
+      buildExplanation({
+        advantageDirection: 'A',
+        confidenceTier: 'Moderate',
+        resolvedOutcome: 'Win',
+        teamA: withCm,
+        teamB: withBm,
+        lookup: noData,
+        topAxisDelta: emptyDeltas[3],
+        axisDeltas: emptyDeltas,
+        highSkillSwingHero: null,
+      }),
+    );
 
     expect(text).toMatch(/Mana Booster/);
     expect(text).not.toMatch(/Summoning Sickness/);
@@ -153,34 +156,38 @@ describe('buildExplanation', () => {
       getSynergyWinRate: () => 0.44,
       getWinRate: () => 0.5,
     };
-    const text = flattenLocalized(buildExplanation({
-      advantageDirection: 'A',
-      confidenceTier: 'Moderate',
-      resolvedOutcome: 'Win',
-      teamA: mine,
-      teamB: opponent,
-      lookup,
-      topAxisDelta: emptyDeltas[3],
-      axisDeltas: emptyDeltas,
-      highSkillSwingHero: null,
-    }));
+    const text = flattenLocalized(
+      buildExplanation({
+        advantageDirection: 'A',
+        confidenceTier: 'Moderate',
+        resolvedOutcome: 'Win',
+        teamA: mine,
+        teamB: opponent,
+        lookup,
+        topAxisDelta: emptyDeltas[3],
+        axisDeltas: emptyDeltas,
+        highSkillSwingHero: null,
+      }),
+    );
 
     expect(text).not.toMatch(/battle.explain.catch/);
     expect(text).not.toMatch(/battle.explain.combo.win/);
   });
 
   it('frames an Even matchup and closes as a coin flip', () => {
-    const text = flattenLocalized(buildExplanation({
-      advantageDirection: 'Even',
-      confidenceTier: 'Low',
-      resolvedOutcome: 'Lose',
-      teamA: mine,
-      teamB: opponent,
-      lookup: noData,
-      topAxisDelta: { axis: 'control', delta: 0.1 },
-      axisDeltas: [{ axis: 'control', delta: 0.1 }],
-      highSkillSwingHero: null,
-    }));
+    const text = flattenLocalized(
+      buildExplanation({
+        advantageDirection: 'Even',
+        confidenceTier: 'Low',
+        resolvedOutcome: 'Lose',
+        teamA: mine,
+        teamB: opponent,
+        lookup: noData,
+        topAxisDelta: { axis: 'control', delta: 0.1 },
+        axisDeltas: [{ axis: 'control', delta: 0.1 }],
+        highSkillSwingHero: null,
+      }),
+    );
 
     expect(text).toMatch(/battle.explain.frame.even/);
     expect(text).toMatch(/Low/);
@@ -190,24 +197,25 @@ describe('buildExplanation', () => {
   it('frames opponent favorite, High Skill swing, and upset reasons', () => {
     const lookup: MatchupLookup = {
       getMatchupWinRate: (a, b) => (a === 2 && b === 13 ? 0.66 : null),
-      getSynergyWinRate: (a, b) =>
-        (a === 2 && b === 5) || (b === 2 && a === 5) ? 0.61 : null,
+      getSynergyWinRate: (a, b) => ((a === 2 && b === 5) || (b === 2 && a === 5) ? 0.61 : null),
       getWinRate: () => 0.5,
     };
-    const text = flattenLocalized(buildExplanation({
-      advantageDirection: 'B',
-      confidenceTier: 'High',
-      resolvedOutcome: 'Win',
-      teamA: mine,
-      teamB: opponent,
-      lookup,
-      topAxisDelta: { axis: 'control', delta: -0.8 },
-      axisDeltas: [
-        { axis: 'control', delta: -0.8 },
-        { axis: 'initiating', delta: 0.9 },
-      ],
-      highSkillSwingHero: hero(2, 'Storm Spirit', { initiating: 8 }),
-    }));
+    const text = flattenLocalized(
+      buildExplanation({
+        advantageDirection: 'B',
+        confidenceTier: 'High',
+        resolvedOutcome: 'Win',
+        teamA: mine,
+        teamB: opponent,
+        lookup,
+        topAxisDelta: { axis: 'control', delta: -0.8 },
+        axisDeltas: [
+          { axis: 'control', delta: -0.8 },
+          { axis: 'initiating', delta: 0.9 },
+        ],
+        highSkillSwingHero: hero(2, 'Storm Spirit', { initiating: 8 }),
+      }),
+    );
 
     expect(text).toMatch(/battle.explain.frame.ahead/);
     expect(text).toMatch(/opponent/);
@@ -238,20 +246,22 @@ describe('buildExplanation', () => {
         saving: 3,
       }),
     );
-    const text = flattenLocalized(buildExplanation({
-      advantageDirection: 'A',
-      confidenceTier: 'Moderate',
-      resolvedOutcome: 'Win',
-      teamA: tempoMine,
-      teamB: scaleOpp,
-      lookup: noData,
-      topAxisDelta: { axis: 'tempo', delta: 1 },
-      axisDeltas: [
-        { axis: 'tempo', delta: 1 },
-        { axis: 'scaling', delta: -1 },
-      ],
-      highSkillSwingHero: null,
-    }));
+    const text = flattenLocalized(
+      buildExplanation({
+        advantageDirection: 'A',
+        confidenceTier: 'Moderate',
+        resolvedOutcome: 'Win',
+        teamA: tempoMine,
+        teamB: scaleOpp,
+        lookup: noData,
+        topAxisDelta: { axis: 'tempo', delta: 1 },
+        axisDeltas: [
+          { axis: 'tempo', delta: 1 },
+          { axis: 'scaling', delta: -1 },
+        ],
+        highSkillSwingHero: null,
+      }),
+    );
 
     expect(text).toMatch(/battle.explain.clock.split/);
     expect(text).toMatch(/yours/);
@@ -266,17 +276,19 @@ describe('buildExplanation', () => {
     const flatOpp = opponent.map((p) =>
       pick(p.hero.id, p.hero.name, p.assignedRole, { tempo: 4, scaling: 4, initiating: 3, saving: 3 }),
     );
-    const text = flattenLocalized(buildExplanation({
-      advantageDirection: 'A',
-      confidenceTier: 'Moderate',
-      resolvedOutcome: 'Win',
-      teamA: scaleMine,
-      teamB: flatOpp,
-      lookup: noData,
-      topAxisDelta: { axis: 'scaling', delta: 1 },
-      axisDeltas: [{ axis: 'scaling', delta: 1.2 }],
-      highSkillSwingHero: null,
-    }));
+    const text = flattenLocalized(
+      buildExplanation({
+        advantageDirection: 'A',
+        confidenceTier: 'Moderate',
+        resolvedOutcome: 'Win',
+        teamA: scaleMine,
+        teamB: flatOpp,
+        lookup: noData,
+        topAxisDelta: { axis: 'scaling', delta: 1 },
+        axisDeltas: [{ axis: 'scaling', delta: 1.2 }],
+        highSkillSwingHero: null,
+      }),
+    );
 
     expect(text).toMatch(/battle.explain.clock.late/);
     expect(text).toMatch(/30\+/);
@@ -299,20 +311,22 @@ describe('buildExplanation', () => {
       pick(12, 'Earthshaker', 'Soft Support', { initiating: 3, saving: 2 }),
       pick(15, 'Dazzle', 'Hard Support', { initiating: 2, saving: 9 }),
     ];
-    const text = flattenLocalized(buildExplanation({
-      advantageDirection: 'B',
-      confidenceTier: 'Moderate',
-      resolvedOutcome: 'Lose',
-      teamA: passiveMine,
-      teamB: aggressiveOpp,
-      lookup: noData,
-      topAxisDelta: { axis: 'initiating', delta: -1 },
-      axisDeltas: [
-        { axis: 'initiating', delta: -1.2 },
-        { axis: 'saving', delta: -1.0 },
-      ],
-      highSkillSwingHero: null,
-    }));
+    const text = flattenLocalized(
+      buildExplanation({
+        advantageDirection: 'B',
+        confidenceTier: 'Moderate',
+        resolvedOutcome: 'Lose',
+        teamA: passiveMine,
+        teamB: aggressiveOpp,
+        lookup: noData,
+        topAxisDelta: { axis: 'initiating', delta: -1 },
+        axisDeltas: [
+          { axis: 'initiating', delta: -1.2 },
+          { axis: 'saving', delta: -1.0 },
+        ],
+        highSkillSwingHero: null,
+      }),
+    );
 
     expect(text).toMatch(/battle.explain.shape.duel/);
     expect(text).toMatch(/Anti-Mage/);
@@ -330,21 +344,23 @@ describe('buildExplanation', () => {
       getWinRate: () => 0.5,
     };
     const withBm = [...opponent.slice(0, 4), pick(16, 'Beastmaster', 'Hard Support')];
-    const text = flattenLocalized(buildExplanation({
-      advantageDirection: 'A',
-      confidenceTier: 'Moderate',
-      resolvedOutcome: 'Win',
-      teamA: mine,
-      teamB: withBm,
-      lookup,
-      topAxisDelta: emptyDeltas[3],
-      axisDeltas: emptyDeltas,
-      highSkillSwingHero: null,
-      shutdownHeroesA: [hero(1, 'Anti-Mage')],
-      shutdownHeroesB: [hero(11, 'Phantom Assassin'), hero(14, 'Axe')],
-      hardCarryCountA: 3,
-      hardCarryCountB: 4,
-    }));
+    const text = flattenLocalized(
+      buildExplanation({
+        advantageDirection: 'A',
+        confidenceTier: 'Moderate',
+        resolvedOutcome: 'Win',
+        teamA: mine,
+        teamB: withBm,
+        lookup,
+        topAxisDelta: emptyDeltas[3],
+        axisDeltas: emptyDeltas,
+        highSkillSwingHero: null,
+        shutdownHeroesA: [hero(1, 'Anti-Mage')],
+        shutdownHeroesB: [hero(11, 'Phantom Assassin'), hero(14, 'Axe')],
+        hardCarryCountA: 3,
+        hardCarryCountB: 4,
+      }),
+    );
 
     expect(text).toMatch(/battle.explain.carry.flip/);
     expect(text).toMatch(/50/);
@@ -375,17 +391,19 @@ describe('buildExplanation', () => {
       },
       getWinRate: () => 0.5,
     };
-    const text = flattenLocalized(buildExplanation({
-      advantageDirection: 'A',
-      confidenceTier: 'Moderate',
-      resolvedOutcome: 'Win',
-      teamA: mine,
-      teamB: opponent,
-      lookup,
-      topAxisDelta: emptyDeltas[3],
-      axisDeltas: emptyDeltas,
-      highSkillSwingHero: null,
-    }));
+    const text = flattenLocalized(
+      buildExplanation({
+        advantageDirection: 'A',
+        confidenceTier: 'Moderate',
+        resolvedOutcome: 'Win',
+        teamA: mine,
+        teamB: opponent,
+        lookup,
+        topAxisDelta: emptyDeltas[3],
+        axisDeltas: emptyDeltas,
+        highSkillSwingHero: null,
+      }),
+    );
 
     expect(text).toMatch(/battle.explain.carry.oppOwns/);
     expect(text).toMatch(/65/);
@@ -403,18 +421,20 @@ describe('buildExplanation', () => {
   });
 
   it('joins three shutdown names with an oxford comma', () => {
-    const text = flattenLocalized(buildExplanation({
-      advantageDirection: 'A',
-      confidenceTier: 'Moderate',
-      resolvedOutcome: 'Lose',
-      teamA: mine,
-      teamB: opponent,
-      lookup: noData,
-      topAxisDelta: emptyDeltas[3],
-      axisDeltas: emptyDeltas,
-      highSkillSwingHero: null,
-      shutdownHeroesA: [hero(1, 'Anti-Mage'), hero(2, 'Storm Spirit'), hero(3, 'Tidehunter')],
-    }));
+    const text = flattenLocalized(
+      buildExplanation({
+        advantageDirection: 'A',
+        confidenceTier: 'Moderate',
+        resolvedOutcome: 'Lose',
+        teamA: mine,
+        teamB: opponent,
+        lookup: noData,
+        topAxisDelta: emptyDeltas[3],
+        axisDeltas: emptyDeltas,
+        highSkillSwingHero: null,
+        shutdownHeroesA: [hero(1, 'Anti-Mage'), hero(2, 'Storm Spirit'), hero(3, 'Tidehunter')],
+      }),
+    );
 
     expect(text).toMatch(/battle.explain.shutdown.mine/);
     expect(text).toMatch(/Anti-Mage/);
@@ -433,17 +453,19 @@ describe('buildExplanation', () => {
       getSynergyWinRate: () => 0.5,
       getWinRate: () => 0.5,
     };
-    const text = flattenLocalized(buildExplanation({
-      advantageDirection: 'Even',
-      confidenceTier: 'Moderate',
-      resolvedOutcome: 'Win',
-      teamA: mine,
-      teamB: opponent,
-      lookup,
-      topAxisDelta: { axis: 'control', delta: 0 },
-      axisDeltas: [{ axis: 'control', delta: 0.05 }],
-      highSkillSwingHero: null,
-    }));
+    const text = flattenLocalized(
+      buildExplanation({
+        advantageDirection: 'Even',
+        confidenceTier: 'Moderate',
+        resolvedOutcome: 'Win',
+        teamA: mine,
+        teamB: opponent,
+        lookup,
+        topAxisDelta: { axis: 'control', delta: 0 },
+        axisDeltas: [{ axis: 'control', delta: 0.05 }],
+        highSkillSwingHero: null,
+      }),
+    );
 
     expect(text).not.toMatch(/battle.explain.catch/);
     expect(text).toMatch(/battle.explain.carry.noRow/);
@@ -465,18 +487,20 @@ describe('buildExplanation', () => {
         topPair: { hero: 'Storm Spirit', heroId: 2, vs: 'Shadow Fiend', vsId: 13, winRate: 0.66 },
       },
     ];
-    const text = flattenLocalized(buildExplanation({
-      advantageDirection: 'A',
-      confidenceTier: 'Moderate',
-      resolvedOutcome: 'Win',
-      teamA: mine,
-      teamB: opponent,
-      lookup: noData,
-      topAxisDelta: emptyDeltas[3],
-      axisDeltas: emptyDeltas,
-      highSkillSwingHero: null,
-      lanes,
-    }));
+    const text = flattenLocalized(
+      buildExplanation({
+        advantageDirection: 'A',
+        confidenceTier: 'Moderate',
+        resolvedOutcome: 'Win',
+        teamA: mine,
+        teamB: opponent,
+        lookup: noData,
+        topAxisDelta: emptyDeltas[3],
+        axisDeltas: emptyDeltas,
+        highSkillSwingHero: null,
+        lanes,
+      }),
+    );
 
     expect(text).toMatch(/battle.explain.lanes.wash/);
     expect(text).toMatch(/battle.explain.lane.mineEdge/);
@@ -504,17 +528,19 @@ describe('buildExplanation', () => {
       getSynergyWinRate: () => null,
       getWinRate: () => 0.5,
     };
-    const text = flattenLocalized(buildExplanation({
-      advantageDirection: 'A',
-      confidenceTier: 'Moderate',
-      resolvedOutcome: 'Win',
-      teamA: soloInitMine,
-      teamB: softOpp,
-      lookup,
-      topAxisDelta: { axis: 'initiating', delta: 1 },
-      axisDeltas: [{ axis: 'initiating', delta: 1.2 }],
-      highSkillSwingHero: null,
-    }));
+    const text = flattenLocalized(
+      buildExplanation({
+        advantageDirection: 'A',
+        confidenceTier: 'Moderate',
+        resolvedOutcome: 'Win',
+        teamA: soloInitMine,
+        teamB: softOpp,
+        lookup,
+        topAxisDelta: { axis: 'initiating', delta: 1 },
+        axisDeltas: [{ axis: 'initiating', delta: 1.2 }],
+        highSkillSwingHero: null,
+      }),
+    );
 
     expect(text).toMatch(/battle.explain.shape.duel/);
     expect(text).toMatch(/Storm Spirit/);
@@ -531,17 +557,19 @@ describe('buildExplanation', () => {
       getSynergyWinRate: () => null,
       getWinRate: () => 0.5,
     };
-    const text = flattenLocalized(buildExplanation({
-      advantageDirection: 'A',
-      confidenceTier: 'Moderate',
-      resolvedOutcome: 'Win',
-      teamA: mine,
-      teamB: opponent,
-      lookup,
-      topAxisDelta: emptyDeltas[3],
-      axisDeltas: emptyDeltas,
-      highSkillSwingHero: null,
-    }));
+    const text = flattenLocalized(
+      buildExplanation({
+        advantageDirection: 'A',
+        confidenceTier: 'Moderate',
+        resolvedOutcome: 'Win',
+        teamA: mine,
+        teamB: opponent,
+        lookup,
+        topAxisDelta: emptyDeltas[3],
+        axisDeltas: emptyDeltas,
+        highSkillSwingHero: null,
+      }),
+    );
 
     expect(text).toMatch(/battle.explain.carry.oppOwns/);
     expect(text).toMatch(/65/);

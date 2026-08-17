@@ -17,7 +17,11 @@ interface Props {
 // the user has scrolled), not just its own container.
 export default function ScreenFlash({ outcome, flashKey }: Props) {
   return createPortal(
-    <div key={flashKey} className={`screen-flash screen-flash--${outcome === 'Win' ? 'win' : 'lose'}`} aria-hidden="true" />,
+    <div
+      key={flashKey}
+      className={`screen-flash screen-flash--${outcome === 'Win' ? 'win' : 'lose'}`}
+      aria-hidden="true"
+    />,
     document.body,
   );
 }

@@ -55,16 +55,12 @@ function mulAxis(m: CalibrationTagMultipliers, axis: Axis, factor: number): void
  * (no opponent). Used by Evaluation axis analyzers so Total Score includes
  * the same crutches Battle applies on the blessing side.
  */
-export function calibrationMultipliersForTeam(
-  team: Hero[],
-): Map<number, CalibrationTagMultipliers> {
+export function calibrationMultipliersForTeam(team: Hero[]): Map<number, CalibrationTagMultipliers> {
   const out = new Map<number, CalibrationTagMultipliers>();
   for (const h of team) out.set(h.id, emptyMult());
 
   const teamTempo =
-    team.length === 0
-      ? 0
-      : team.reduce((s, h) => s + (h.evaluation_values.tempo ?? 5), 0) / team.length;
+    team.length === 0 ? 0 : team.reduce((s, h) => s + (h.evaluation_values.tempo ?? 5), 0) / team.length;
 
   for (const h of team) {
     const m = out.get(h.id)!;

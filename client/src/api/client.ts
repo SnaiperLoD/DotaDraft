@@ -14,7 +14,9 @@ import type {
   AbilityCategory,
   LeaderboardResponse,
 } from 'shared';
+import { OWNER_TOKEN_HEADER } from 'shared';
 import type { DraftStateView, TiFormResponse } from './types';
+import { getSubmitterToken } from '../utils/submitterToken';
 
 const BASE_URL = '/api';
 
@@ -24,8 +26,12 @@ const BASE_URL = '/api';
 // App.tsx, so nothing about /dev reaches a production bundle.
 export async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, {
-    headers: { 'Content-Type': 'application/json' },
     ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      [OWNER_TOKEN_HEADER]: getSubmitterToken(),
+      ...options?.headers,
+    },
   });
   if (!res.ok) {
     const text = await res.text();

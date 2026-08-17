@@ -55,7 +55,9 @@ describe('createSynergyAnalyzer (tag rules, no real data)', () => {
 
   it('adds a bonus for 3+ teamfight-tagged heroes', () => {
     const teamfighter = (id: number, name: string) => makeHero({ id, name, tags: ['teamfight'] });
-    const result = synergyAnalyzer.analyze(picks([teamfighter(1, 'A'), teamfighter(2, 'B'), teamfighter(3, 'C')]));
+    const result = synergyAnalyzer.analyze(
+      picks([teamfighter(1, 'A'), teamfighter(2, 'B'), teamfighter(3, 'C')]),
+    );
     expect(result.score).toBe(1);
     expect(flattenLocalized(result.explanation)).toMatch(/eval.synergy.teamfight/);
   });
@@ -90,7 +92,7 @@ describe('createSynergyAnalyzer (tag rules, no real data)', () => {
 });
 
 describe('createSynergyAnalyzer (real win-rate data blending)', () => {
-  it('halves a tag rule\'s weight when real data shows the pair underperforming by 4.5pp+', () => {
+  it("halves a tag rule's weight when real data shows the pair underperforming by 4.5pp+", () => {
     const setup = makeHero({ id: 1, name: 'Lion', synergy_tags: ['needs_setup'] });
     const enabler = makeHero({ id: 2, name: 'Mirana', synergy_tags: ['enables_engage'] });
 

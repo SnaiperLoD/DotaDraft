@@ -166,7 +166,10 @@ export function parseFundamentalsAxesFromDescription(description: string): strin
   const many = description.match(/weakest axes:\s*(.+)\.\s*$/i);
   const blob = one?.[1] ?? many?.[1];
   if (!blob) return undefined;
-  const parts = blob.split(/,| and /).map((s) => s.trim()).filter(Boolean);
+  const parts = blob
+    .split(/,| and /)
+    .map((s) => s.trim())
+    .filter(Boolean);
   const reverse: Record<string, string> = {
     'damage output': 'teamfight',
     tempo: 'tempo',
@@ -190,6 +193,6 @@ export function parseFundamentalsAxesFromDescription(description: string): strin
     'camp stacking': 'camp_stacking',
     'resource efficiency': 'resource_efficiency',
   };
-  const keys = parts.map((p) => reverse[p.toLowerCase()]).filter(Boolean) as string[];
+  const keys = parts.map((p) => reverse[p.toLowerCase()]).filter((k): k is string => Boolean(k));
   return keys.length > 0 ? keys : undefined;
 }

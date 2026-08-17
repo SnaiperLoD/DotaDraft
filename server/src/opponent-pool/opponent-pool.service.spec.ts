@@ -6,6 +6,7 @@ function makeMockPool() {
     pooledDraft: {
       create: jest.fn(),
       findMany: jest.fn(),
+      findUnique: jest.fn().mockResolvedValue(null),
       update: jest.fn(),
     },
   };
@@ -15,7 +16,10 @@ function makeMockDraftService(
   draft: { status: string; heroes: { heroId: number; assignedRole?: string }[] },
   evaluationScore: number | null = null,
 ) {
-  return { getById: jest.fn().mockResolvedValue(draft), getEvaluationScore: jest.fn().mockResolvedValue(evaluationScore) };
+  return {
+    getById: jest.fn().mockResolvedValue(draft),
+    getEvaluationScore: jest.fn().mockResolvedValue(evaluationScore),
+  };
 }
 
 describe('OpponentPoolService.commit', () => {
@@ -49,6 +53,7 @@ describe('OpponentPoolService.commit', () => {
       data: {
         source: 'player',
         submitterToken: 'my-token',
+        sourceDraftId: 'draft-1',
         heroIds: [1, 2, 3, 4, 5],
         heroRoles: [
           { heroId: 1, role: 'Carry' },
@@ -81,6 +86,28 @@ describe('OpponentPoolService.commit', () => {
     expect(pool.pooledDraft.create).toHaveBeenCalledWith(
       expect.objectContaining({ data: expect.objectContaining({ evaluationScore: 7.2 }) }),
     );
+  });
+
+  it('returns the existing pool row instead of inserting a duplicate on retry', async () => {
+    const pool = makeMockPool();
+    const heroes = [
+      { heroId: 1, assignedRole: 'Carry' },
+      { heroId: 2, assignedRole: 'Mid' },
+      { heroId: 3, assignedRole: 'Offlane' },
+      { heroId: 4, assignedRole: 'Soft Support' },
+      { heroId: 5, assignedRole: 'Hard Support' },
+    ];
+    const draftService = makeMockDraftService({ status: 'COMPLETED', heroes }, null);
+    pool.pooledDraft.findUnique.mockResolvedValue({
+      id: 'pool-existing',
+      createdAt: new Date('2026-01-02T00:00:00Z'),
+    });
+    const service = new OpponentPoolService(pool as any, draftService as any);
+
+    const result = await service.commit('draft-1', 'my-token');
+
+    expect(pool.pooledDraft.create).not.toHaveBeenCalled();
+    expect(result).toEqual({ id: 'pool-existing', committedAt: '2026-01-02T00:00:00.000Z' });
   });
 
   it('reports storage as unreachable rather than a raw Prisma error when POOL_DATABASE_URL is unset', async () => {
@@ -297,6 +324,23 @@ describe('OpponentPoolService.getLeaderboard', () => {
     const result = await service.getLeaderboard(10);
 
     expect(result[0].evaluationScore).toBe(6.4);
+  });
+
+  it('sets isMine from the caller token and never returns submitterToken', async () => {
+    const pool = makeMockPool();
+    pool.pooledDraft.findMany.mockResolvedValue([
+      makeRow({ id: 'mine', wins: 1, submitterToken: 'owner-a' }),
+      makeRow({ id: 'theirs', wins: 1, submitterToken: 'owner-b' }),
+    ]);
+    const service = new OpponentPoolService(pool as any, {} as any);
+
+    const result = await service.getLeaderboard(10, 'owner-a');
+
+    expect(result.map((r) => ({ id: r.id, isMine: r.isMine }))).toEqual([
+      { id: 'mine', isMine: true },
+      { id: 'theirs', isMine: false },
+    ]);
+    expect(result.every((r) => !('submitterToken' in r))).toBe(true);
   });
 });
 

@@ -2,8 +2,12 @@ node_modules
 dist
 server/generated
 server/data
+server/scripts
 shared/dist
 database
 Blueprint
 playwright-report
 test-results
+*.gltf
+*.glb
+client/public/models

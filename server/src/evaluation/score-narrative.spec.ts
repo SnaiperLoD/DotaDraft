@@ -1,4 +1,9 @@
-import { axisNarrativeBracket, percentileBracket, AXIS_NARRATIVE, type NarrativeContext } from './score-narrative';
+import {
+  axisNarrativeBracket,
+  percentileBracket,
+  AXIS_NARRATIVE,
+  type NarrativeContext,
+} from './score-narrative';
 
 describe('axisNarrativeBracket', () => {
   it('adds veryLow (<10) and veryHigh (>=90) bands around the 30/70 core', () => {

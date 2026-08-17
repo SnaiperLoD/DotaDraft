@@ -45,7 +45,8 @@ const AXIS_SHORT: Record<(typeof AXES)[number], string> = {
   resource_efficiency: 'res',
 };
 
-const pct = (v: number | null | undefined) => (v === null || v === undefined ? '—' : `${(v * 100).toFixed(1)}%`);
+const pct = (v: number | null | undefined) =>
+  v === null || v === undefined ? '—' : `${(v * 100).toFixed(1)}%`;
 const pp = (v: number | null | undefined) =>
   v === null || v === undefined ? '—' : `${v >= 0 ? '+' : ''}${(v * 100).toFixed(1)}`;
 
@@ -90,8 +91,7 @@ export default function DebugMatrixPage() {
       if (onlyFlagged && Math.abs(r.divergence[primaryKey] ?? 0) < FLAG_THRESHOLD) return false;
       if (!needle) return true;
       return (
-        r.name.toLowerCase().includes(needle) ||
-        r.tags.some((t) => t.name.toLowerCase().includes(needle))
+        r.name.toLowerCase().includes(needle) || r.tags.some((t) => t.name.toLowerCase().includes(needle))
       );
     });
     const num = (v: number | null | undefined) => (v === null || v === undefined ? -Infinity : v);
@@ -111,17 +111,15 @@ export default function DebugMatrixPage() {
   if (error) return <div className="debug-page">Failed to load: {error}</div>;
   if (!data) return <div className="debug-page">Loading hero matrix…</div>;
 
-  const flagged = data.rows.filter(
-    (r) => Math.abs(r.divergence[primaryKey] ?? 0) >= FLAG_THRESHOLD,
-  ).length;
+  const flagged = data.rows.filter((r) => Math.abs(r.divergence[primaryKey] ?? 0) >= FLAG_THRESHOLD).length;
 
   return (
     <div className="debug-page">
       <header className="debug-head">
         <h1>Hero calibration matrix</h1>
         <p className="debug-warning">
-          Testing build only — this route does not exist in a production bundle, and the API behind
-          it is not registered when NODE_ENV=production.
+          Testing build only — this route does not exist in a production bundle, and the API behind it is not
+          registered when NODE_ENV=production.
         </p>
         <div className="debug-sources">
           {data.datasets.map((d) => (
@@ -138,11 +136,7 @@ export default function DebugMatrixPage() {
           onChange={(e) => setFilter(e.target.value)}
         />
         <label>
-          <input
-            type="checkbox"
-            checked={onlyFlagged}
-            onChange={(e) => setOnlyFlagged(e.target.checked)}
-          />
+          <input type="checkbox" checked={onlyFlagged} onChange={(e) => setOnlyFlagged(e.target.checked)} />
           only |Δ| ≥ 10pp
         </label>
         <span className="debug-count">

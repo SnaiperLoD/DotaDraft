@@ -81,7 +81,13 @@ describe('activeCustomTagsForTeam', () => {
     });
 
     it('scales the Army of Clones stacking penalty text with a 3rd carrier', () => {
-      const active = activeCustomTagsForTeam(['Phantom Lancer', 'Terrorblade', 'Naga Siren', 'Rubick', 'Axe']);
+      const active = activeCustomTagsForTeam([
+        'Phantom Lancer',
+        'Terrorblade',
+        'Naga Siren',
+        'Rubick',
+        'Axe',
+      ]);
       const armyOfClones = active.find((t) => t.name === 'Army of Clones')!;
       expect(armyOfClones.description).toContain('3 on this team: -10% durability/teamfight each');
     });

@@ -26,7 +26,7 @@ export class OpponentPoolService {
   ) {}
 
   async commit(draftId: string, submitterToken: string): Promise<CommitDraftResponse> {
-    const draft = await this.draftService.getById(draftId);
+    const draft = await this.draftService.getById(draftId, submitterToken);
     if (draft.status !== 'COMPLETED') {
       throw new BadRequestException('Draft must be completed before it can be committed to the pool');
     }
@@ -44,19 +44,38 @@ export class OpponentPoolService {
     // DraftPage.tsx).
     const evaluationScore = await this.draftService.getEvaluationScore(draftId);
 
-    const created = await this.runPoolQuery(() =>
-      this.pool.pooledDraft.create({
-        data: {
-          source: 'player',
-          submitterToken,
-          heroIds,
-          heroRoles: heroRoles as unknown as Prisma.InputJsonValue,
-          evaluationScore,
-        },
-      }),
+    const existing = await this.runPoolQuery(() =>
+      this.pool.pooledDraft.findUnique({ where: { sourceDraftId: draftId } }),
     );
+    if (existing) {
+      return { id: existing.id, committedAt: existing.createdAt.toISOString() };
+    }
 
-    return { id: created.id, committedAt: created.createdAt.toISOString() };
+    try {
+      const created = await this.runPoolQuery(() =>
+        this.pool.pooledDraft.create({
+          data: {
+            source: 'player',
+            submitterToken,
+            sourceDraftId: draftId,
+            heroIds,
+            heroRoles: heroRoles as unknown as Prisma.InputJsonValue,
+            evaluationScore,
+          },
+        }),
+      );
+      return { id: created.id, committedAt: created.createdAt.toISOString() };
+    } catch (err) {
+      if (isUniqueConflict(err)) {
+        const raced = await this.runPoolQuery(() =>
+          this.pool.pooledDraft.findUnique({ where: { sourceDraftId: draftId } }),
+        );
+        if (raced) {
+          return { id: raced.id, committedAt: raced.createdAt.toISOString() };
+        }
+      }
+      throw err;
+    }
   }
 
   // Excludes the caller's own token where possible so a lone player doesn't
@@ -112,7 +131,9 @@ export class OpponentPoolService {
         const facedKeys = new Set(excludeFacedHeroSets.map(heroSetKey));
         rows = rows.filter((r) => !facedKeys.has(heroSetKey(r.heroIds as number[])));
         if (rows.length === 0) {
-          throw new NotFoundException('No new opponents left in the pool for this run — every available draft has been fought.');
+          throw new NotFoundException(
+            'No new opponents left in the pool for this run — every available draft has been fought.',
+          );
         }
       }
 
@@ -130,7 +151,7 @@ export class OpponentPoolService {
       return {
         id: row.id,
         source: row.source as PooledDraftSource,
-        heroIds: row.heroIds as number[],
+        heroIds: row.heroIds,
         heroRoles: (row.heroRoles as PooledHeroRole[] | null) ?? null,
         teamName: row.teamName ?? null,
         leagueName: row.leagueName ?? null,
@@ -165,7 +186,7 @@ export class OpponentPoolService {
   // counts. Only rows that have actually been fought at least once
   // (wins+losses > 0) — an unfought committed draft isn't a leaderboard
   // entry, just an unused pool row.
-  async getLeaderboard(limit: number): Promise<LeaderboardEntryView[]> {
+  async getLeaderboard(limit: number, callerToken?: string | null): Promise<LeaderboardEntryView[]> {
     const rows = await this.runPoolQuery(() =>
       this.pool.pooledDraft.findMany({ where: { OR: [{ wins: { gt: 0 } }, { losses: { gt: 0 } }] } }),
     );
@@ -178,7 +199,7 @@ export class OpponentPoolService {
         teamName: row.teamName,
         leagueName: row.leagueName,
         evaluationScore: row.evaluationScore,
-        submitterToken: row.submitterToken,
+        isMine: callerToken != null && row.submitterToken === callerToken,
         wins: row.wins,
         losses: row.losses,
         winRate: row.wins + row.losses > 0 ? row.wins / (row.wins + row.losses) : 0,
@@ -201,4 +222,8 @@ export class OpponentPoolService {
       throw err;
     }
   }
+}
+
+function isUniqueConflict(err: unknown): boolean {
+  return typeof err === 'object' && err !== null && (err as { code?: string }).code === 'P2002';
 }

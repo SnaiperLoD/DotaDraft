@@ -21,8 +21,8 @@ import './OpponentRollAnimation.css';
 // the fight, not the phase), so the spin flows straight into the settle
 // instead of restarting.
 const HERO_ID_POOL = [
-  1, 2, 3, 6, 7, 8, 9, 11, 14, 17, 19, 21, 25, 26, 28, 31, 35, 36, 39, 41, 44, 46, 51, 54, 58, 62, 67, 69, 72, 74, 78,
-  84, 86, 90, 91, 96, 104, 106, 110, 114, 120, 126, 128, 131, 135, 137, 145,
+  1, 2, 3, 6, 7, 8, 9, 11, 14, 17, 19, 21, 25, 26, 28, 31, 35, 36, 39, 41, 44, 46, 51, 54, 58, 62, 67, 69, 72,
+  74, 78, 84, 86, 90, 91, 96, 104, 106, 110, 114, 120, 126, 128, 131, 135, 137, 145,
 ];
 const SLOT_COUNT = 5;
 // Slower than the original flat 90ms cycle — the spin should read as reels

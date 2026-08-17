@@ -16,10 +16,7 @@ interface Props {
   compact?: boolean;
 }
 
-function formatDraftLines(
-  heroes: CopyDraftHero[],
-  roleLabel: (role: string) => string,
-): string {
+function formatDraftLines(heroes: CopyDraftHero[], roleLabel: (role: string) => string): string {
   const roleIndex = (role: string | null) => {
     if (!role) return 99;
     const i = (ROLES as readonly string[]).indexOf(role);
@@ -73,10 +70,7 @@ export default function CopyDraftButton({ heroes, className, compact }: Props) {
   return (
     <button
       type="button"
-      className={
-        className ??
-        (compact ? 'btn btn-ghost btn-sm' : 'btn btn-secondary')
-      }
+      className={className ?? (compact ? 'btn btn-ghost btn-sm' : 'btn btn-secondary')}
       onClick={() => void handleCopy()}
     >
       {copied ? t('draft.copied') : t('draft.copyDraft')}

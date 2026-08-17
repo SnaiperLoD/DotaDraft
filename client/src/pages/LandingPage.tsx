@@ -92,7 +92,6 @@ export default function LandingPage() {
           ))}
         </ol>
       </section>
-
     </div>
   );
 }

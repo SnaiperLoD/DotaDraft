@@ -1,5 +1,10 @@
 import { getSessionId, getVisitorId, hashDraftId } from './ids';
-import { LocalBufferSink, clearTelemetryEvents, funnelSnapshot, readTelemetryEvents } from './localBufferSink';
+import {
+  LocalBufferSink,
+  clearTelemetryEvents,
+  funnelSnapshot,
+  readTelemetryEvents,
+} from './localBufferSink';
 import type { TelemetryEvent, TelemetryEventName, TelemetryProp, TelemetrySink } from './types';
 
 let sink: TelemetrySink = new LocalBufferSink();

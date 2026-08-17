@@ -24,6 +24,7 @@ Represents user-created team.
 Fields:
 
 - id
+- owner_token (anonymous browser identity; required on new drafts)
 - heroes[]
 - roles[]
 - created_at

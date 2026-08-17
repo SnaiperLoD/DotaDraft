@@ -182,7 +182,11 @@ function LaneMatchups({ lanes }: { lanes: BattleLaneResult[] }) {
               <span className="battle-lane-vs">{t('battle.matchupVs')}</span>
               <span className="battle-lane-side">
                 {lane.opponent.map((name, i) => (
-                  <HeroChip key={`o-${lane.opponentIds[i] ?? name}`} heroId={lane.opponentIds[i] ?? 0} name={name} />
+                  <HeroChip
+                    key={`o-${lane.opponentIds[i] ?? name}`}
+                    heroId={lane.opponentIds[i] ?? 0}
+                    name={name}
+                  />
                 ))}
               </span>
             </div>
@@ -324,7 +328,13 @@ function TiFinalsMark() {
   const { t } = useTranslation();
   const label = t('battle.tiFinals');
   return (
-    <span className="battle-ti-finals" title={label} aria-label={label} role="img" data-testid="battle-ti-finals">
+    <span
+      className="battle-ti-finals"
+      title={label}
+      aria-label={label}
+      role="img"
+      data-testid="battle-ti-finals"
+    >
       <svg viewBox="0 0 16 16" width="12" height="12" fill="none" aria-hidden="true">
         <path
           d="M3.2 2.2h9.6v1.4c0 2.7-2.15 4.9-4.8 4.9S3.2 6.3 3.2 3.6V2.2Z"
@@ -332,8 +342,18 @@ function TiFinalsMark() {
           strokeWidth="1.35"
           strokeLinejoin="round"
         />
-        <path d="M3.2 3.4H2.1A2.1 2.1 0 0 0 4.2 5.5" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
-        <path d="M12.8 3.4h1.1A2.1 2.1 0 0 1 11.8 5.5" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
+        <path
+          d="M3.2 3.4H2.1A2.1 2.1 0 0 0 4.2 5.5"
+          stroke="currentColor"
+          strokeWidth="1.35"
+          strokeLinecap="round"
+        />
+        <path
+          d="M12.8 3.4h1.1A2.1 2.1 0 0 1 11.8 5.5"
+          stroke="currentColor"
+          strokeWidth="1.35"
+          strokeLinecap="round"
+        />
         <path d="M8 8.5v2.2" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
         <path d="M5.6 12.4h4.8" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
         <path d="M4.8 14.2h6.4" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
@@ -633,8 +653,7 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
           </div>
 
           <p className="battle-vs">
-            {t('battle.vs')}{' '}
-            {tiFinals && <TiFinalsMark />}
+            {t('battle.vs')} {tiFinals && <TiFinalsMark />}
             {result.opponent.teamName
               ? `${result.opponent.teamName}${result.opponent.leagueName ? ` (${result.opponent.leagueName})` : ''}`
               : result.opponent.source === 'pro'
