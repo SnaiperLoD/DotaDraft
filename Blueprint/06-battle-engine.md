@@ -34,7 +34,11 @@ Closed before Milestone 4 code, per `01-core-rules.md` MVP Rule / Data Rule exce
 
 One draft per visit, no persistent cross-session progress in the MVP (no accounts, no currency, no unlocks — see `00-project-overview.md` Future Possibilities for when that might change). Replayability within a visit comes from running a **series of battles** with the same committed draft against different pulled opponents, not from meta-progression.
 
-Monetization note (see `00-project-overview.md`): the series-of-battles loop must not introduce interstitial/rewarded-video breakpoints between battles — ads are static banner slots reserved in the screen layout (Draft/Evaluation/Battle result), not triggered by flow events.
+Monetization is not planned for the foreseeable future (see
+`00-project-overview.md`). Do not reserve ad slots or introduce
+interstitial/rewarded-video breakpoints. The series-of-battles loop should stay
+uninterrupted because replayability is the core product value, not because the
+UI is being shaped around a future advertising model.
 
 ## Factors
 

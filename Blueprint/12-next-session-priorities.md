@@ -1,32 +1,84 @@
 # Next Session Priorities
 
-Updated 2026-08-17 after the i18n + TI-finals + late-split-pusher pass.
+Updated 2026-08-17 after the architecture / engineering / product audit.
 Handoff / triage; `10-tech-debt-backlog.md` is the detailed source of truth.
 Deploy notes: `13-deploy.md`.
 
-**Status check:** hosting files are in-repo — pick a host and finish DNS/TLS.
-Live Eval/Battle copy is RU/EN via `I18nLine`. `npm run lint` / `format:check`
-may still be red on an old scripts pile — do not mass-format as a drive-by.
+**Status check:** the product is a strong closed-alpha MVP, not yet safe for
+public multi-user hosting. Docker files exist, but the main SQLite database has
+no per-visitor ownership boundary, the Compose Opponent Pool is unconfigured,
+and the real Battle path is mocked in Playwright. Do not reduce this to
+"pick a host and finish DNS/TLS."
 
 ---
 
 ## Next session — priorities in order
 
-### 1. Read the funnel (now that it exists)
+### 1. Establish a clean Git baseline
 
-Use `window.__DOTADRAFT_TELEMETRY__.dump()` after real play sessions, and/or
-SQLite History aggregates (completed drafts, % evaluated, fights per draft).
-Decide from signal — not taste — whether Story/Explanation still needs work
-or whether hosting/instrumented multi-user analytics is the next step.
+The audit started with dozens of source/config/data files shown as untracked.
+Before more feature work, verify the live `git status`, separate source from
+generated/local files, and create a reviewable baseline. Never include
+`database/dev.db`, `.env`, `shared/dist`, generated Prisma clients, or raw
+research artifacts merely to make the tree look clean.
 
-### 2. Product validation before more surface area
+### 2. Fix the Evaluation summary ordering bug
 
-Lock-hero / pool-of-8 / items / build orders stay parked until there is a
-signal they are needed. Avoid another broad feature/UI pass driven only by
-taste.
+`EvaluationService.buildSummary()` sorts percentile ranks ascending but assigns
+the first three rows to `strengths`; `gameplan` likewise receives the lowest
+ranked item as `topStrength`. Correct the ordering and add a focused regression
+test covering strengths, weaknesses, and lean-on / cover-for direction. This is
+a logic bug, not calibration work.
 
-### 3. Calibration work: pause by default
+### 3. Add anonymous ownership before public hosting
 
+The hosted Nest server uses one SQLite volume. Today `/history` returns every
+completed draft and Draft / Evaluation / Battle operations are scoped only by
+`draftId`. Add an anonymous owner token to `Draft`, require it on private
+reads/writes, scope History and Best Runs, and stop returning raw
+`submitterToken` values in the public leaderboard response. Accounts remain
+out of scope; an anonymous browser identity is enough for the MVP.
+
+### 4. Exercise the real deployed Battle path
+
+Provision the Postgres Opponent Pool, run its migrations/seed from existing
+snapshots, and add an integration or E2E smoke path that does not mock Battle.
+`docker-compose.yml` currently sets `POOL_DATABASE_URL` empty, so the advertised
+core loop is unavailable on the documented quick-start deployment.
+
+### 5. Launch hardening
+
+In this order:
+
+1. runtime request validation and payload limits;
+2. transactions / idempotency around picks, fights, and pool commits;
+3. rate limits on write-heavy public endpoints;
+4. run the existing integration suite in CI;
+5. make lint blocking for production source without mass-formatting research
+   scripts;
+6. structured logging for best-effort persistence failures, database readiness,
+   SQLite backup and restore instructions.
+
+### 6. Closed-alpha product validation
+
+Only after priorities 1–5: deploy to a small audience and replace the
+developer-only local telemetry buffer with a privacy-safe aggregate sink.
+Measure session → first pick → draft complete → evaluate → battle enter →
+second fight → pool commit. Use the funnel and observed sessions to decide
+whether Evaluation needs progressive disclosure or first-session guidance.
+
+### 7. Restore architectural and explainability boundaries
+
+Move pure axis / Fundamentals primitives out of `battle/*` into a neutral
+domain/common layer; remove Hero → Evaluation analyzer imports; make Battle
+story/explanation consume the same assessment snapshot and role assignment as
+resolution. Add model/data version metadata to persisted Evaluation/Battle
+snapshots before another calibration pass.
+
+### 8. Product and calibration work: pause by default
+
+Lock-hero, pool-of-8, items, build orders, new draft modes, new tags/axes, broad
+visual redesign, and pool expansion stay parked until there is user signal.
 Do not start another coefficient/tag/weight pass merely because an outlier
 looks ugly. Pick one hypothesis, define a holdout and acceptance metric, get
 explicit user approval, run reproducible seeds into `artifacts/` (not
@@ -83,7 +135,9 @@ explicit user approval, run reproducible seeds into `artifacts/` (not
   current TI data. The old generic “100 -> 1000” pool target is no longer an
   immediate task.
 - **UI quick wins** — draft copying, history metadata, full-width selection,
-  light-theme cleanup and advertising removal are shipped.
+  light-theme cleanup and removal of obsolete advertising placeholders are
+  shipped. Monetization is not planned for the foreseeable future; see
+  `00-project-overview.md`.
 
 ## Superseded priority snapshot (historical)
 
@@ -139,10 +193,11 @@ User's request (2026-08-06): heroes who genuinely play both a core and a support
 
 ## Where to start
 
-Start with current priority 1 (Git as calibration artifact store) for repository
-health, or priority 2 if the goal is to learn from real play before adding
-surface. Do not begin with another calibration sweep or broad visual redesign
-without a narrower question and explicit acceptance criteria.
+Start with current priority 1, then fix the self-contained Evaluation ordering
+bug before touching hosting. Do not expose the current SQLite-backed server to
+multiple users until priority 3 establishes ownership and History scoping. Do
+not begin with another calibration sweep, new mechanic, or broad visual
+redesign.
 
 ---
 
