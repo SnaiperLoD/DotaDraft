@@ -215,6 +215,9 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
       // becomes a wave that heals allies — a real ally heal, not just Chakra
       // Magic's mana restore.
       'Keeper of the Light',
+      // Added 2026-08-17 (user): Soul Rip heals an ally (or Tombstone).
+      // Statstealer stays — a hero can carry both.
+      'Undying',
     ],
   },
   // Gold Generator — added 2026-08-12 (user-approved research batch). Team

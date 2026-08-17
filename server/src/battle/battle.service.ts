@@ -10,6 +10,7 @@ import { buildLaneResults } from './battle-lanes';
 import { ROLES } from 'shared';
 import type { BattleResultResponse, ResolvedOutcome } from 'shared';
 import { logPersistenceFailure } from '../common/log';
+import { classifyPicksArchetype } from '../evaluation/draft-archetype';
 
 @Injectable()
 export class BattleService {
@@ -131,6 +132,12 @@ export class BattleService {
       logPersistenceFailure('battle.recordDraftOutcome', err, { draftId, opponentId: opponent.id });
     });
 
+    // Display-only Evaluate headline (Tempo / Late / 4+1 / …). Computed after
+    // resolveBattle so it cannot change who wins. Pool-stored roles for the
+    // opponent — same role-aware axis path Evaluate uses on a submitted draft.
+    const archetype = classifyPicksArchetype(teamA);
+    const opponentArchetype = classifyPicksArchetype(teamB);
+
     return {
       resolvedOutcome: result.resolvedOutcome,
       advantageDirection: result.advantageDirection,
@@ -146,6 +153,7 @@ export class BattleService {
       shutdownNotes: result.shutdownNotes,
       lanes,
       story,
+      archetype,
       opponent: {
         source: opponent.source,
         heroes: teamBAligned.map((h, index) => ({
@@ -157,6 +165,7 @@ export class BattleService {
         teamName: opponent.teamName,
         leagueName: opponent.leagueName,
         matchId: opponent.matchId,
+        archetype: opponentArchetype,
       },
     };
   }

@@ -23,7 +23,7 @@
 
 .axis-radar-svg {
   width: 100%;
-  max-width: 420px;
+  max-width: 520px;
   height: auto;
   overflow: visible;
 }
@@ -63,7 +63,7 @@
 .axis-radar-plot {
   position: relative;
   width: 100%;
-  max-width: 420px;
+  max-width: 520px;
   aspect-ratio: 1;
 }
 

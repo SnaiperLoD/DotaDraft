@@ -1,5 +1,6 @@
-import type { AnalyzerResult, Hero } from 'shared';
-import { classifyDraftArchetype } from './draft-archetype';
+import type { AnalyzerResult, DraftArchetypeId, Hero } from 'shared';
+import { classifyDraftArchetype, classifyPicksArchetype } from './draft-archetype';
+import { makeHero, DEFAULT_EVALUATION_VALUES, picks } from '../test-utils/hero-factory';
 
 function axis(key: string, percentile: number): AnalyzerResult {
   return {
@@ -212,5 +213,51 @@ describe('classifyDraftArchetype', () => {
       axis('teamfight', 50),
     ];
     expect(classifyDraftArchetype(heroes, breakdown).id).toBe('balance');
+  });
+});
+
+const ARCHETYPE_IDS: DraftArchetypeId[] = [
+  'four_plus_one',
+  'split_push',
+  'push',
+  'tempo',
+  'deathball',
+  'scaling',
+  'balance',
+];
+
+describe('classifyPicksArchetype', () => {
+  it('returns four_plus_one when exactly one dedicated Carry is present', () => {
+    const team = picks([
+      makeHero({
+        id: 1,
+        name: 'Anti-Mage',
+        presumed_positions: [{ position: 'Carry', share: 0.9 }],
+        evaluation_values: { ...DEFAULT_EVALUATION_VALUES, tempo: 10, objectives: 10, mobility: 10 },
+      }),
+      makeHero({ id: 2, name: 'Crystal Maiden', presumed_positions: [{ position: 'Support', share: 0.8 }] }),
+      makeHero({ id: 3, name: 'Lion', presumed_positions: [{ position: 'Support', share: 0.7 }] }),
+      makeHero({ id: 4, name: 'Tidehunter', presumed_positions: [{ position: 'Offlane', share: 0.6 }] }),
+      makeHero({ id: 5, name: 'Invoker', presumed_positions: [{ position: 'Mid', share: 0.7 }] }),
+    ]);
+    expect(classifyPicksArchetype(team).id).toBe('four_plus_one');
+  });
+
+  it('returns tempo when axis analyzers spike tempo with soft scaling', () => {
+    const team = picks(
+      [1, 2, 3, 4, 5].map((id) =>
+        makeHero({
+          id,
+          name: `H${id}`,
+          evaluation_values: { ...DEFAULT_EVALUATION_VALUES, tempo: 10, scaling: 0, objectives: 1 },
+        }),
+      ),
+    );
+    expect(classifyPicksArchetype(team).id).toBe('tempo');
+  });
+
+  it('returns a known Evaluate headline, never an invented id', () => {
+    const team = picks([1, 2, 3, 4, 5].map((id) => makeHero({ id, name: `H${id}` })));
+    expect(ARCHETYPE_IDS).toContain(classifyPicksArchetype(team).id);
   });
 });

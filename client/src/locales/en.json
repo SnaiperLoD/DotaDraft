@@ -341,6 +341,7 @@
         "theirs": "On the sheet, the opponent's draft is the one leading in {{theirs}}."
       },
       "lanes": {
+        "even": "Lanes stood even.",
         "wash": "Lanes weren't a wash.",
         "uneven": "Lanes weren't even."
       },

@@ -316,7 +316,6 @@
 
 .portrait-card {
   width: 100%;
-  max-width: 130px;
   text-align: center;
   position: relative;
 }
@@ -362,6 +361,7 @@
   text-transform: uppercase;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: var(--sp-2);
 }
 

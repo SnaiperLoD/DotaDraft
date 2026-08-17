@@ -187,15 +187,37 @@
   border-color: color-mix(in srgb, var(--danger) 45%, transparent);
 }
 
-/* Wider than the old 760px: Evaluation now lays the radar and the
-   strengths/weaknesses lists side by side, and the axis breakdown is a
-   two-column grid — both were single columns when 760 was chosen. */
+/* Stretch to `.page` width (`--page-max`). 940px left Evaluation/Battle as a
+   skinny centre column on a wide screen. */
 .completed-section {
   display: flex;
   flex-direction: column;
   gap: var(--sp-5);
-  max-width: 940px;
-  margin: 0 auto;
+  width: 100%;
+}
+
+.completed-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+}
+
+.completed-head .ledger {
+  flex: 1 1 36rem;
+  min-width: 0;
+}
+
+.completed-head-fight {
+  flex-shrink: 0;
+  min-width: 11em;
+}
+
+@media (max-width: 760px) {
+  .completed-head-fight {
+    width: 100%;
+  }
 }
 
 .completed-tools {

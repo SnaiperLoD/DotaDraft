@@ -242,6 +242,13 @@ describe('Healer', () => {
     expect(effects.axisMultiplier.durability).toBeCloseTo(1.02);
   });
 
+  it('includes Undying (Soul Rip) without dropping Statstealer', () => {
+    const undying = makeHero({ id: 85, name: 'Undying' });
+    const effects = blessingEffectsFor([undying], {});
+    expect(effects.axisMultiplier.durability).toBeCloseTo(1.02);
+    expect(effects.heroPowerMultiplier.get(undying.id)).toBeCloseTo(1.02);
+  });
+
   it('grows the per-hero magnitude with stack count (+3% each at 2 -> +6% combined)', () => {
     const dazzle = makeHero({ id: 1, name: 'Dazzle' });
     const omni = makeHero({ id: 2, name: 'Omniknight' });

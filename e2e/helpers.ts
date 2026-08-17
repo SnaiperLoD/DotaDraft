@@ -121,6 +121,7 @@ export const battleFixture: BattleResultResponse = {
     teamName: 'E2E Opponent',
     leagueName: 'Test League',
     matchId: null,
+    archetype: { id: 'tempo' },
     heroes: [
       { heroId: 2, heroName: 'Axe', assignedRole: 'Carry' },
       { heroId: 11, heroName: 'Shadow Fiend', assignedRole: 'Mid' },
@@ -129,6 +130,7 @@ export const battleFixture: BattleResultResponse = {
       { heroId: 26, heroName: 'Lion', assignedRole: 'Hard Support' },
     ],
   },
+  archetype: { id: 'four_plus_one' },
 };
 
 export async function seedClientPrefs(page: Page, theme: 'light' | 'dark' = 'dark') {

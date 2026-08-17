@@ -96,38 +96,6 @@
   color: var(--ink);
 }
 
-.evaluation-archetype-seal {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  align-self: flex-start;
-  margin-top: 4px;
-  min-width: 7.5em;
-  padding: 6px 14px;
-  font-family: var(--font-ui);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gold-bright);
-}
-
-.evaluation-archetype-seal-ring {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  border: 1px solid var(--bronze);
-  background: color-mix(in srgb, var(--gold) 8%, transparent);
-  clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 8px 100%, 0 50%);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 25%, transparent);
-}
-
-.evaluation-archetype-seal-label {
-  position: relative;
-  z-index: 1;
-}
-
 .star-rating {
   position: relative;
   display: inline-block;
@@ -187,7 +155,7 @@
 
 .evaluation-columns {
   display: grid;
-  grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 520px) minmax(0, 1fr);
   gap: var(--sp-4);
   align-items: start;
   margin-bottom: var(--sp-5);

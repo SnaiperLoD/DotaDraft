@@ -281,7 +281,18 @@ export default function DraftPage() {
           {/* Evaluation screen — kept mounted while the battle screen is up
               (hidden, not unmounted) so returning preserves its state. */}
           <div className="completed-view" hidden={battleView}>
-            <DraftLedger heroes={draft.heroes} totalSlots={5} title={t('draft.yourTeam')} />
+            <div className="completed-head">
+              <DraftLedger heroes={draft.heroes} totalSlots={5} title={t('draft.yourTeam')} layout="rail" />
+              <button
+                className="btn btn-primary completed-head-fight"
+                onClick={() => {
+                  track('battle_enter', undefined, draft.id);
+                  setBattleView(true);
+                }}
+              >
+                {t('battle.enterBattleMode')}
+              </button>
+            </div>
             <EvaluationPanel draftId={draft.id} heroes={draft.heroes} />
             <div className="completed-tools">
               <CommitToPoolButton draftId={draft.id} />

@@ -1,6 +1,22 @@
 // Named draft archetype for Evaluation — display label only (no Battle math).
 // First-match-wins rules using axis percentiles + hero tags / dedicated Carry.
-import type { AnalyzerResult, DraftArchetype, Hero } from 'shared';
+import type { AnalyzerResult, DraftArchetype, Hero, HeroEvaluationValues } from 'shared';
+import type { DraftPick } from './analyzer.interface';
+import { createAxisAnalyzer } from './analyzers/axis.analyzer';
+
+// Axes the classifier actually reads. Same createAxisAnalyzer factories
+// Evaluate uses — Battle's display payload must not invent a parallel score.
+const ARCHETYPE_AXIS_KEYS: (keyof HeroEvaluationValues)[] = [
+  'mobility',
+  'objectives',
+  'tempo',
+  'scaling',
+  'teamfight',
+  'durability',
+  'initiating',
+];
+
+const ARCHETYPE_AXIS_ANALYZERS = ARCHETYPE_AXIS_KEYS.map((key) => createAxisAnalyzer(key, key));
 
 function pct(breakdown: AnalyzerResult[], key: string): number | null {
   const row = breakdown.find((b) => b.key === key);
@@ -73,4 +89,25 @@ export function classifyDraftArchetype(heroes: Hero[], breakdown: AnalyzerResult
   }
 
   return { id: 'balance' };
+}
+
+/**
+ * Run Evaluate's axis analyzers, then the same first-match-wins headline.
+ * Display-only — BattleService must not feed this into resolveBattle.
+ */
+export function classifyPicksArchetype(picks: DraftPick[]): DraftArchetype {
+  const breakdown: AnalyzerResult[] = ARCHETYPE_AXIS_ANALYZERS.map((analyzer) => {
+    const result = analyzer.analyze(picks);
+    return {
+      key: analyzer.key,
+      label: analyzer.label,
+      score: result.score,
+      percentile: result.percentile,
+      explanation: result.explanation,
+    };
+  });
+  return classifyDraftArchetype(
+    picks.map((p) => p.hero),
+    breakdown,
+  );
 }

@@ -576,4 +576,92 @@ describe('buildExplanation', () => {
     expect(text).toMatch(/battle.explain.carry.scaleTension/);
     expect(text).toMatch(/Anti-Mage/);
   });
+
+  function explainLanes(lanes: BattleLaneResult[]): string {
+    return flattenLocalized(
+      buildExplanation({
+        advantageDirection: 'A',
+        confidenceTier: 'Moderate',
+        resolvedOutcome: 'Win',
+        teamA: mine,
+        teamB: opponent,
+        lookup: noData,
+        topAxisDelta: emptyDeltas[3],
+        axisDeltas: emptyDeltas,
+        highSkillSwingHero: null,
+        lanes,
+      }),
+    );
+  }
+
+  function laneAt(
+    lane: BattleLaneResult['lane'],
+    winRate: number,
+    pairHero: string,
+    pairVs: string,
+  ): BattleLaneResult {
+    const winner: BattleLaneResult['winner'] = winRate > 0.5 ? 'mine' : winRate < 0.5 ? 'opponent' : 'even';
+    return {
+      lane,
+      mine: [pairHero],
+      opponent: [pairVs],
+      winner,
+      winRate,
+      mineIds: [1],
+      opponentIds: [11],
+      topPair:
+        winner === 'even'
+          ? null
+          : {
+              hero: pairHero,
+              heroId: 1,
+              vs: pairVs,
+              vsId: 11,
+              winRate: winner === 'mine' ? winRate : 1 - winRate,
+            },
+    };
+  }
+
+  it('calls even lanes even when every lane % is within 3.5pp of 50%', () => {
+    const text = explainLanes([
+      laneAt('safe', 0.535, 'Anti-Mage', 'Axe'),
+      laneAt('mid', 0.512, 'Storm Spirit', 'Shadow Fiend'),
+      laneAt('off', 0.465, 'Tidehunter', 'Phantom Assassin'),
+    ]);
+
+    expect(text).toMatch(/battle.explain.lanes.even/);
+    expect(text).not.toMatch(/battle.explain.lanes.uneven/);
+    expect(text).not.toMatch(/battle.explain.lanes.wash/);
+    expect(text).not.toMatch(/battle.explain.lane.mineLean/);
+    expect(text).not.toMatch(/battle.explain.lane.oppHole/);
+    expect(text).not.toMatch(/battle.explain.lane.mineEdge/);
+    expect(text).not.toMatch(/battle.explain.lane.oppEdge/);
+  });
+
+  it('keeps won/lost lane wording when a lean sits just outside 3.5pp', () => {
+    const text = explainLanes([
+      laneAt('safe', 0.536, 'Anti-Mage', 'Axe'),
+      laneAt('mid', 0.536, 'Storm Spirit', 'Shadow Fiend'),
+      laneAt('off', 0.536, 'Tidehunter', 'Phantom Assassin'),
+    ]);
+
+    expect(text).toMatch(/battle.explain.lanes.uneven/);
+    expect(text).toMatch(/battle.explain.lane.mineLean/);
+    expect(text).not.toMatch(/battle.explain.lanes.even/);
+  });
+
+  it('does not use the all-even phrase when only some lanes are within 3.5pp', () => {
+    const text = explainLanes([
+      laneAt('safe', 0.512, 'Anti-Mage', 'Axe'),
+      laneAt('mid', 0.62, 'Storm Spirit', 'Shadow Fiend'),
+      laneAt('off', 0.41, 'Tidehunter', 'Phantom Assassin'),
+    ]);
+
+    expect(text).not.toMatch(/battle.explain.lanes.even/);
+    expect(text).toMatch(/battle.explain.lanes.uneven/);
+    expect(text).toMatch(/battle.explain.lane.mineLean/);
+    expect(text).toMatch(/battle.explain.lane.oppHole/);
+    expect(text).toMatch(/Storm Spirit/);
+    expect(text).toMatch(/Tidehunter/);
+  });
 });

@@ -4,7 +4,7 @@ Slim open list. Calibration history lives in `09-hero-knowledge-base.md`,
 `05-evaluation-engine.md`, `06-battle-engine.md`. Session order lives in
 `12-next-session-priorities.md`.
 
-Last slim: 2026-08-17. Statuses: `open` | `partial` | `parked` | `rejected`.
+Last slim: 2026-08-18. Statuses: `open` | `partial` | `parked` | `rejected`.
 
 ---
 
@@ -23,7 +23,15 @@ CI PR/build/Docker (lint/format still soft) · Client + server narrative i18n
 (`I18nLine` keys, RU/EN catalogs) · TI grand-finals opponent badge ·
 Phantom Lancer / Tinker `late_game_scaling` (split-push is their late plan,
 not an early close) · Anonymous draft ownership (`ownerToken` / `X-Owner-Token`)
-· Compose Postgres Opponent Pool + live Battle e2e smoke.
+· Compose Postgres Opponent Pool + live Battle e2e smoke
+· Docker Compose live + Prisma OpenSSL 3 slim (`46b4e1c`)
+· Friends-alpha Cloudflare quick-tunnel overlay (stopped 2026-08-18;
+  volumes kept)
+· Even-lanes copy (`|WR−50%| ≤ 3.5pp` → «Линии постояли ровно.»)
+· Undying on Healer (Statstealer kept)
+· Eval/Battle layout stretch + Fight button top+bottom
+· Archetype seals on Eval + Battle faceoff
+· Radar vs 50k Ancient+Divine unique drafts (`2a9ddf9`).
 
 ---
 
@@ -77,24 +85,56 @@ with already-overrated cluster — don't ship that shape.
 
 ## Product / Post-MVP
 
+Playtest park 2026-08-18 is the next-session order (`12-next-session-priorities.md`).
+Razor `saving` and any other coefficient/tag/weight change still needs
+Nick's number first.
+
+### Leaderboard: global all-runs + personal own runs — `open`
+Playtest. Current board is pool-opponent + Best Runs (`RUN_MIN_FIGHTS=5`).
+### TI / pro names in pool — `open`
+Playtest. TI team names + most pro player names.
+### Captains Mode (friend lobby OR CM vs AI) — `open`
+Playtest. One shape, not both. Other draft modes stay parked.
+### Tournament / TI-run mode — `open`
+### Battle Custom Tags chips + fight contribution — `open`
+Playtest. Tags that fired and what they did. Not composition Badges.
+### Razor `saving` 3.6 too high — `open`
+Needs Nick's number. Do not guess.
+### Top-contributor floor (bottom 35% of pool) — `open`
+Don't call a hero top on an axis if they're bottom 35% of the pool.
+### Visage carry/mid, Tiny carry role data — `open`
+Playtest. Don't refetch unless asked.
+### Draft hero names overlapped by tags — `open`
+Names must stay visible on the draft card.
+### Async clash (copy draft → fight that draft) — `open`
+Playtest. After fight, copy; fight a friend's copied draft, not a random
+pool pull. Related to fight-own-history below.
+### Backfill null-token host drafts into Docker pool — `parked`
+304 COMPLETED in host `database/dev.db`, `ownerToken=null`. Not in the
+live Docker pool (764 pro + today's player commits). Optional later.
+
 ### Opponent difficulty brackets — `open`
 ### Persistent progress / accounts — `open`
 ### Draft modes (constrained, Captains AI, Pure Draft) — `open`
+Captains Mode is now the playtest-shaped item above; don't also invent a
+third CM.
 ### Lock hero / pool-of-8 / random pick — `parked`
 Wait for funnel signal (`client/src/telemetry/`).
 ### Fight own history drafts — `open`
+See async clash above — that's the playtest loop.
 ### Pooled draft as opponent — win streak — `open`
 Session streak shipped; opponent-side streak not.
 ### More archetypes beyond current set — `partial`
+Archetype seals shipped on Eval + Battle faceoff (2026-08-18).
 ### Badges & lore tags — `open`
 Calibrate All Melee/Ranged numbers · Split Pushers · Void/Undead/Demon ·
 Spirits (feasibility done, pending build) · jungler anti-synergy
 (Chen/Enchantress membership research next).
 ### Laning Efficiency axis — `partial`
 Per-lane Battle cards + story shipped. New Eval axis still research-only.
-### Fundamentals Active Combos names boosted axes — `done` (2026-08-17)
-Eval Active Combos now lists the same weakest-axis set Battle boosts
-(`fundamentalsTargetAxes` + `formatFundamentalsDescription`).
+### Fundamentals Active Combos names boosted axes — `partial`
+Eval Active Combos lists Battle's weakest-axis set (2026-08-17). Playtest
+still wants that weakest buffed axis obvious — next-session item 9.
 ### Humorous 404 — `open`
 ### Radar axis reorder by correlation — `open`
 ### Pool core/support guarantee audit — `partial`
@@ -140,10 +180,11 @@ anti-synergy no longer calls them an early-end plan. Rest of HKB still open.
 Long-horizon; freshness/TI covers immediate need.
 ### Hosting / release process — `partial`
 Docker Compose + Dockerfiles + `.env.example` + `Blueprint/13-deploy.md` +
-`start:prod` + `/health` (`sqlite`/`pool`). Friends-alpha TLS is a
-Cloudflare **quick** tunnel (`docker-compose.tunnel.yml`); named tunnel +
-domain + VPS stay deferred until a stable URL is needed. SQLite
-backup/restore commands are in `13-deploy.md`.
+`start:prod` + `/health` (`sqlite`/`pool`). Friends-alpha TLS overlay
+(`docker-compose.tunnel.yml`) shipped; **tunnel stopped 2026-08-18**,
+volumes kept (no `down -v`). Local compose at `:8080` is how to bring it
+back. Named tunnel + domain + VPS stay deferred — not next-session P0.
+SQLite backup/restore commands are in `13-deploy.md`.
 ### CI hardening — `partial`
 PR trigger, full monorepo build, Playwright cache, Docker build, server
 integration suite. Lint and Prettier are blocking for production source
@@ -162,7 +203,7 @@ Full suite (2026-08-17): **69.92%** total. Re-run on
 2. Position-weighted scaling axis — `open` (validated, not built)
 3. `saving` diminishing returns — `open`
 4. Humorous 404 — `open`
-5. Fundamentals names boosted axes — `done` (2026-08-17)
+5. Fundamentals names boosted axes — `partial` (Eval shipped 2026-08-17; playtest still wants it obvious)
 6. Calibrate All Melee / All Ranged — `open`
 7. Radar reorder — `open`
 8. Pool core/support audit — `partial` (Jest smoke shipped)

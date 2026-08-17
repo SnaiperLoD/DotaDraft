@@ -7,6 +7,7 @@ import { detectBadges, type ActiveBadge } from '../data/badges';
 import BadgeRow from './BadgeRow';
 import AxisRadar from './AxisRadar';
 import TopContributorHighlight from './TopContributorHighlight';
+import ArchetypeSeal from './ArchetypeSeal';
 import { track } from '../telemetry';
 import {
   axisLabel,
@@ -161,8 +162,6 @@ function ScoreHeadline({
   const shownValue = (score * progress).toFixed(decimals);
   const fraction = Math.max(0, Math.min(1, score / 10)) * progress;
   const starPercent = Math.max(0, Math.min(100, (score / 10) * 100)) * progress;
-  const archetypeLabel =
-    archetypeId != null ? t(`evaluation.archetype.${archetypeId}`, { defaultValue: '' }) : '';
 
   return (
     <div className="panel evaluation-hero">
@@ -176,12 +175,7 @@ function ScoreHeadline({
       <div className="evaluation-hero-copy">
         <div className="evaluation-hero-label">{t('evaluation.totalScoreShort')}</div>
         <div className="evaluation-hero-verdict">{t(`evaluation.verdict.${verdictKey(score)}`)}</div>
-        {archetypeLabel ? (
-          <div className="evaluation-archetype-seal" title={t(`evaluation.archetypeHint.${archetypeId}`)}>
-            <span className="evaluation-archetype-seal-ring" aria-hidden="true" />
-            <span className="evaluation-archetype-seal-label">{archetypeLabel}</span>
-          </div>
-        ) : null}
+        <ArchetypeSeal archetypeId={archetypeId} />
         <StarRating score={score} fillPercent={starPercent} />
       </div>
       <BadgeRow badges={badges} />

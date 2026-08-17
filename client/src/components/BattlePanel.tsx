@@ -18,6 +18,8 @@ import {
 import { track } from '../telemetry';
 import { formatBattleAxisLine } from '../i18n/display';
 import { renderLocalizedLine } from '../i18n/narrative';
+import ArchetypeSeal from './ArchetypeSeal';
+import DraftLedger from './DraftLedger';
 import './BattlePanel.css';
 
 function sleep(ms: number): Promise<void> {
@@ -364,9 +366,8 @@ function TiFinalsMark() {
 
 // Two rows of full portraits, ordered by role slot (Carry, Mid, Offlane,
 // Soft Support, Hard Support) so the hero facing each of the user's picks
-// lines up in the same column. No score/evaluation here on either side —
-// Battle Mode is a separate system from the Evaluation Engine (Core Rules
-// Separation) and this view is purely who's facing whom.
+// lines up in the same column. Archetype seals are Evaluate's display
+// headline (Tempo / Late / 4+1) — not Battle math.
 // collisionKey remounts both rows (React key trick, same pattern as
 // ScreenFlash's flashKey) so the slide-in-and-clash animation replays on
 // every fight, not just the first one. Blueprint/10-tech-debt-backlog.md,
@@ -379,12 +380,16 @@ function FaceOff({
   collisionKey,
   shutdownHeroIds,
   tiFinals,
+  mineArchetypeId,
+  opponentArchetypeId,
 }: {
   myHeroes: DraftHeroView[];
   opponentHeroes: BattleOpponentHero[];
   collisionKey: number;
   shutdownHeroIds: number[];
   tiFinals: boolean;
+  mineArchetypeId: string | null | undefined;
+  opponentArchetypeId: string | null | undefined;
 }) {
   const { t } = useTranslation();
   const roleOrder = ROLES as readonly string[];
@@ -400,7 +405,10 @@ function FaceOff({
           actually on a side of the map, so borrowing the colours is fair
           but borrowing the names would be a lie. */}
       <div className="faceoff-side faceoff-side--mine">
-        <span className="faceoff-side-label">{t('battle.sideYours')}</span>
+        <span className="faceoff-side-label">
+          {t('battle.sideYours')}
+          <ArchetypeSeal archetypeId={mineArchetypeId} compact side="mine" />
+        </span>
         <div className="faceoff-row faceoff-row--mine">
           {sortedMine.map((h) => (
             <PortraitCard
@@ -431,6 +439,7 @@ function FaceOff({
         </div>
         <span className="faceoff-side-label">
           {t('battle.sideOpponent')}
+          <ArchetypeSeal archetypeId={opponentArchetypeId} compact side="opponent" />
           {tiFinals && <TiFinalsMark />}
         </span>
       </div>
@@ -589,14 +598,23 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
         )}
       </div>
 
-      {!result && !loading && !revealing && (
-        <>
-          <p className="battle-screen-intro">{t('battle.screenIntro')}</p>
-          <button className="btn btn-primary" onClick={() => void handleFight()} disabled={loading}>
-            {t('battle.enterBattle')}
-          </button>
-        </>
-      )}
+      <div className="completed-head">
+        <DraftLedger heroes={heroes} totalSlots={5} title={t('draft.yourTeam')} layout="rail" />
+        <button
+          className="btn btn-primary completed-head-fight"
+          onClick={() => void handleFight()}
+          disabled={loading || revealing}
+        >
+          {(loading || revealing) && <span className="btn-spinner" aria-hidden="true" />}
+          {loading || revealing
+            ? t('battle.findingOpponent')
+            : result
+              ? t('battle.fightAgain')
+              : t('battle.enterBattle')}
+        </button>
+      </div>
+
+      {!result && !loading && !revealing && <p className="battle-screen-intro">{t('battle.screenIntro')}</p>}
 
       {/* One roll instance spans both phases: it spins while `loading`
           (opponentHeroes null = searching), then locks the real opponent in
@@ -680,6 +698,8 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
             collisionKey={battleCount}
             shutdownHeroIds={result.shutdownHeroIds}
             tiFinals={tiFinals}
+            mineArchetypeId={result.archetype?.id}
+            opponentArchetypeId={result.opponent.archetype?.id}
           />
 
           <LaneMatchups lanes={result.lanes ?? []} />
@@ -800,21 +820,33 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
               </div>
             </>
           )}
-
-          <button className="btn btn-primary" onClick={() => void handleFight()} disabled={loading}>
-            {loading && <span className="btn-spinner" aria-hidden="true" />}
-            {loading ? t('battle.findingOpponent') : t('battle.fightAgain')}
-          </button>
-          <p className="battle-count">
-            {t('battle.battlesThisVisit', { count: battleCount })}
-            {peakWinStreak >= 2 && (
-              <>
-                {' · '}
-                {t('battle.bestWinStreak', { count: peakWinStreak })}
-              </>
-            )}
-          </p>
         </div>
+      )}
+
+      <div className="completed-actions">
+        <button
+          className="btn btn-primary"
+          onClick={() => void handleFight()}
+          disabled={loading || revealing}
+        >
+          {(loading || revealing) && <span className="btn-spinner" aria-hidden="true" />}
+          {loading || revealing
+            ? t('battle.findingOpponent')
+            : result
+              ? t('battle.fightAgain')
+              : t('battle.enterBattle')}
+        </button>
+      </div>
+      {result && !loading && !revealing && (
+        <p className="battle-count">
+          {t('battle.battlesThisVisit', { count: battleCount })}
+          {peakWinStreak >= 2 && (
+            <>
+              {' · '}
+              {t('battle.bestWinStreak', { count: peakWinStreak })}
+            </>
+          )}
+        </p>
       )}
     </div>
   );

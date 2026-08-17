@@ -217,13 +217,26 @@ function axisPictureLine(
   });
 }
 
+// Copy-only: a lane is even when |winRate − 0.5| × 100 ≤ 3.5 (max abs from 50%, not max−min across lanes).
+const LANE_COPY_EVEN_SPREAD_PP = 3.5;
+
+function isLaneCopyEven(lane: BattleLaneResult): boolean {
+  if (lane.winRate === null) return false;
+  return Math.abs(lane.winRate - 0.5) * 100 <= LANE_COPY_EVEN_SPREAD_PP + 1e-9;
+}
+
 function laneLines(lanes: BattleLaneResult[] | undefined): LocalizedLine[] {
   if (!lanes || lanes.length === 0) return [];
+  const numeric = lanes.filter((lane) => lane.winRate !== null);
+  const allNumericEven = numeric.length > 0 && numeric.every(isLaneCopyEven);
   const decided = lanes
-    .filter((lane) => lane.winner !== 'even' && lane.topPair)
+    .filter((lane) => lane.winner !== 'even' && lane.topPair && !isLaneCopyEven(lane))
     .slice()
     .sort((a, b) => Math.abs((b.topPair?.winRate ?? 0.5) - 0.5) - Math.abs((a.topPair?.winRate ?? 0.5) - 0.5))
     .slice(0, 3);
+  if (allNumericEven && decided.length === 0) {
+    return [i18nLine('battle.explain.lanes.even')];
+  }
   if (decided.length === 0) return [];
 
   const intro = i18nLine(decided.length === 1 ? 'battle.explain.lanes.wash' : 'battle.explain.lanes.uneven');

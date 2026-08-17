@@ -1,83 +1,112 @@
 # Next Session Priorities
 
-Updated 2026-08-17 after the architecture / engineering / product audit.
+Updated 2026-08-18 after friends-alpha playtest (tunnel now OFF).
 Handoff / triage; `10-tech-debt-backlog.md` is the detailed source of truth.
 Deploy notes: `13-deploy.md`.
 
-**Status check:** the product is a strong closed-alpha MVP. Funnel events
-land in SQLite. Next is a small-audience deploy (host/DNS/TLS), not another
-calibration sweep.
+**Status check:** closed-alpha host is done enough for this week. Funnel
+events land in SQLite. Compose + `docker-compose.tunnel.yml` exist; the
+quick tunnel is stopped and the trycloudflare URL is dead until someone
+brings the overlay back. Next is the playtest product park below, not a
+domain/VPS buy and not another calibration sweep.
 
 ---
 
 ## Next session — priorities in order
 
-### 1. Establish a clean Git baseline — done (2026-08-17)
+Playtest park. Do not implement in this close-out. P6 host is done;
+domain/VPS is not P0.
 
-Working tree was already clean (`master` == `origin/master`, no untracked).
-`.gitignore` covers `database/dev.db`, `.env`, `dist/`, Prisma generate, and
-research dumps. Do not re-open unless `git status` is dirty again.
+### 1. Leaderboard: global all-runs + personal own runs
 
-### 2. Fix the Evaluation summary ordering bug — done (2026-08-17)
+Current board is pool-opponent + Best Runs (session drafts,
+`RUN_MIN_FIGHTS=5`). Want a global all-runs board and a personal "my
+runs" board. Accounts still out of scope — `ownerToken` is enough.
 
-Audit claim was stale: `buildSummary()` already sorted descending (July).
-Added `evaluation-summary.spec.ts` locking strengths / weaknesses / lean-on /
-cover-for direction so an inverted comparator cannot land again.
+### 2. Fix TI team names + most pro player names in the pool
 
-### 3. Add anonymous ownership before public hosting — done (2026-08-17)
+Pool rows show garbage / missing names for TI teams and most pro players.
 
-`Draft.ownerToken` stores the same UUID the client already kept as
-`submitterToken`. Private Draft / Evaluation / Battle / History / Best Runs
-require `X-Owner-Token`; mismatch is 404. Leaderboard pool rows expose
-`isMine` instead of the raw token. Pre-ownership SQLite rows stay in the
-DB but are invisible (null token never matches). Accounts remain out of
-scope.
+### 3. Captains Mode: friend lobby OR CM vs AI
 
-### 4. Exercise the real deployed Battle path — done (2026-08-17)
+Pick one shape; don't build both. Other draft modes stay parked.
 
-Compose runs Postgres (`pool`) and the API entrypoint migrates + seeds the
-Opponent Pool from `server/data/pro-matches.json` when empty. CI stands up
-Postgres and runs `live Battle path pulls a pool opponent…` without mocking
-`POST /battle`. Local `npm run test:e2e` without `POOL_DATABASE_URL` still
-skips that one test. Mocked Playwright tests remain for story-copy assertions.
+### 4. Tournament / TI-run mode
 
-### 5. Launch hardening — done (2026-08-17)
+A run structured like TI, not a random pool slog.
 
-JSON bodies capped at 64kb; create/pick/roles/battle/commit/synergy-preview
-and draft ids are type-guarded (400 on junk). Pick + role assignment run in
-an interactive transaction; retried picks/roles/commits are idempotent;
-concurrent fights on one draft serialize. Writes are 60/min per owner token
-(skipped in `NODE_ENV=test`). CI runs `test:integration` and blocking lint +
-Prettier on production source (`server/scripts`, Blueprint, generated data,
-gltf ignored). `/health`
-reports `{ status, sqlite, pool }`; persistence `.catch` paths log; SQLite
-backup/restore is in `13-deploy.md`.
+### 5. Battle: Custom Tags chips + their fight contribution
 
-### 6. Closed-alpha product validation — in progress (2026-08-17)
+Show the tags that actually fired and what they did in the fight. Not
+composition Badges (All Melee / All Ranged).
 
-Funnel sink is in: events batch to `POST /telemetry` (SQLite `FunnelEvent`)
-and still buffer locally. `draft_first_pick` is on the path. Dump:
-`GET /telemetry/funnel` behind `TELEMETRY_READ_TOKEN`. This week is two
-friends over a Cloudflare **quick** tunnel from the laptop
-(`13-deploy.md`, `docker-compose.tunnel.yml`) — no domain, no VPS. Named
-tunnel + box is the later step. Don't start another calibration pass.
+### 6. Razor `saving` 3.6 is too high — lower
 
-### 7. Restore architectural and explainability boundaries
+Needs Nick's number before any coefficient edit. Do not guess.
 
-Move pure axis / Fundamentals primitives out of `battle/*` into a neutral
-domain/common layer; remove Hero → Evaluation analyzer imports; make Battle
-story/explanation consume the same assessment snapshot and role assignment as
-resolution. Add model/data version metadata to persisted Evaluation/Battle
-snapshots before another calibration pass.
+### 7. Don't call a hero "top contributor" on an axis if they're bottom 35% of the pool on that axis
 
-### 8. Product and calibration work: pause by default
+Display/ranking floor, not a weight change.
 
-Lock-hero, pool-of-8, items, build orders, new draft modes, new tags/axes, broad
-visual redesign, and pool expansion stay parked until there is user signal.
-Do not start another coefficient/tag/weight pass merely because an outlier
-looks ugly. Pick one hypothesis, define a holdout and acceptance metric, get
-explicit user approval, run reproducible seeds into `artifacts/` (not
-`server/data/` commits), and compare with the production baseline.
+### 8. Visage carry/mid and Tiny carry undervalued / no good role data
+
+Role-fit / `presumed_positions` gap. Don't refetch unless asked.
+
+### 9. The Fundamentals: show the weakest axis the tag buffs
+
+Eval Active Combos already lists Battle's weakest-axis set (2026-08-17).
+Playtest still didn't see it — make the buffed weakest axis obvious.
+
+### 10. Draft stage: hero names overlapped by tags — names always visible
+
+CSS/layout. Names must stay readable when tags sit on the card.
+
+### 11. Async clash: after fight, copy draft; fight a friend's copied draft
+
+Not a random pool pull. Related to "Fight own history drafts" but the
+loop is share → paste → fight that draft.
+
+### 12. Optional later: backfill old null-token drafts into the opponent pool
+
+304 COMPLETED drafts sit in host `database/dev.db` with `ownerToken=null`.
+They are **not** in the live Docker pool (764 pro + today's player
+commits). Nick: if they were in the pool locally, good. Player drafts
+currently drown in 764 pro (~0.3% with 1 human). Not P0.
+
+## Still true, not this session's P0
+
+- Architectural / explainability boundaries (pure axis primitives out of
+  `battle/*`, shared assessment snapshot, model/data version on persisted
+  Eval/Battle) — parked engineering.
+- Calibration pause: don't change coefficients / tags / weights without
+  asking; don't refetch unless asked. `realWinRateWeight` stays 2.
+- Named tunnel / domain / VPS — later, when a stable URL is actually
+  needed (`13-deploy.md`).
+
+## Completed this pass (2026-08-18)
+
+- **Docker Desktop + Compose live** — Prisma OpenSSL 3 slim-image fix
+  (`46b4e1c`).
+- **Funnel telemetry** — SQLite `FunnelEvent`, `POST /telemetry`,
+  `GET /telemetry/funnel` behind `TELEMETRY_READ_TOKEN` (`d651a0b`).
+- **Friends alpha via Cloudflare quick tunnel** — overlay
+  `docker-compose.tunnel.yml` remains; URL dies when the tunnel stops.
+  Stopped 2026-08-18 (`compose stop`, volumes kept, no `-v`).
+- **Even-lanes copy** — if all lanes `|WR−50%| ≤ 3.5pp` →
+  «Линии постояли ровно.»
+- **Undying → Healer** — Statstealer kept (a hero can carry both).
+- **Eval/Battle layout stretch** — Fight button top + bottom on both
+  stages.
+- **Battle archetype/style seals** — `ArchetypeSeal` on Eval + Battle
+  faceoff; `BattleResultResponse.archetype` and opponent archetype
+  optional for old History snapshots.
+- **Radar recalibrated** — 50k unique Ancient+Divine OpenDota drafts
+  (`2a9ddf9`).
+- **Old Nick pool** — 304 COMPLETED in host `database/dev.db`,
+  `ownerToken=null`; not in the live Docker pool. Backfill not done.
+- **Tests** — server 465 unit + 14 integration green. Client has no
+  test script.
+- **Closed-alpha host (P6)** — done enough for this week. Tunnel off.
 
 ## Completed this pass (2026-08-17, later still)
 
@@ -205,9 +234,11 @@ User's request (2026-08-06): heroes who genuinely play both a core and a support
 
 ## Where to start
 
-Priorities 1–5 are done. Funnel sink is in. Next is a scheduled playtest
-with two friends via quick tunnel (`13-deploy.md`) — not a public launch
-and not another calibration sweep.
+Playtest park above, in order: leaderboard (global + personal), then TI /
+pro names in the pool. Don't buy a domain. Don't start a calibration
+pass. Tunnel is off; `docker compose up` still brings back `:8080`,
+overlay `docker-compose.tunnel.yml` still brings back a trycloudflare
+URL.
 
 ---
 
@@ -438,7 +469,7 @@ absolute win rate (a 51% lane for a 52% hero is now correctly "worst").
 **Custom tags (all user-directed, magnitudes NOT yet self-play calibrated).**
 Wired Mechanical (upset + curse immunity), Healer (team durability, scaling
 count), Gold Generator (team scaling). Expanded Global (Clockwerk, KotL, Storm,
-AA, Spirit Breaker, Underlord), Healer (Phoenix, Pugna, Dawnbreaker). Added
+AA, Spirit Breaker, Underlord), Healer (Phoenix, Pugna, Dawnbreaker; +Undying 2026-08-17, Statstealer kept). Added
 All Melee / All Ranged badges (display-only). Fundamentals/Fundamentals-axis
 and Split Pushers left in backlog.
 

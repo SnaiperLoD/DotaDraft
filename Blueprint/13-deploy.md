@@ -1,6 +1,12 @@
 # Deploy / hosting prep
 
-Last updated: 2026-08-17.
+Last updated: 2026-08-18.
+
+Status 2026-08-18: friends-alpha **tunnel is OFF**. Stack stopped with
+`docker compose -f docker-compose.yml -f docker-compose.tunnel.yml stop`
+(volumes kept — no `-v`). Overlay still the way to bring a trycloudflare
+URL back. Local compose at http://localhost:8080 is how to bring the
+private stack back.
 
 ## What ships
 
@@ -103,10 +109,12 @@ older pool dump will not duplicate those rows on the next commit.
 
 ## Friends-alpha this week (2 people, laptop)
 
-No public launch. No domain, no VPS, no inbound 80/443. Keep the local
-Docker Desktop stack at http://localhost:8080 and share a **Cloudflare
-quick tunnel** so two friends get a temporary `https://*.trycloudflare.com`
-URL. TLS terminates at the Cloudflare edge; `cloudflared` dials out.
+Playtest happened. Tunnel is **currently OFF** (2026-08-18). Overlay and
+compose files stay. No public launch. No domain, no VPS, no inbound
+80/443. Keep the local Docker Desktop stack at http://localhost:8080 and
+share a **Cloudflare quick tunnel** so two friends get a temporary
+`https://*.trycloudflare.com` URL. TLS terminates at the Cloudflare
+edge; `cloudflared` dials out.
 
 `:8080` is bound to loopback only (`127.0.0.1:8080:80`). The laptop does
 not advertise LAN:8080. Friends never hit that port — they hit the

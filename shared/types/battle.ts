@@ -1,5 +1,6 @@
 import type { PooledDraftSource } from './opponent-pool';
 import type { LocalizedLine } from './i18n';
+import type { DraftArchetype } from './evaluation';
 
 export type ConfidenceTier = 'Low' | 'Moderate' | 'High';
 export type AdvantageDirection = 'A' | 'B' | 'Even';
@@ -48,6 +49,9 @@ export interface BattleOpponent {
   // OpenDota matchId, present only for 'pro' opponents. See
   // Blueprint/10-tech-debt-backlog.md, "Ссылка на исходный матч для про-пиков".
   matchId: string | null;
+  // Same Evaluate classifier as the player's draft. Display-only; optional
+  // on older History snapshots that never stored it.
+  archetype?: DraftArchetype;
 }
 
 export interface BattleRequest {
@@ -165,4 +169,7 @@ export interface BattleResultResponse {
   // renders `beats` through i18n — it does not pick farmers or phases.
   story: BattleStory;
   opponent: BattleOpponent;
+  // Player's draft shape from Evaluate's classifier. Display-only; optional
+  // on older clients / History snapshots.
+  archetype?: DraftArchetype;
 }
