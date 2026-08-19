@@ -6,6 +6,7 @@ import DraftPage from './pages/DraftPage';
 import AboutPage from './pages/AboutPage';
 import HistoryPage from './pages/HistoryPage';
 import LeaderboardPage from './pages/LeaderboardPage';
+import CaptainsPage from './pages/CaptainsPage';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import ThemeToggle from './components/ThemeToggle';
 import Footer from './components/Footer';
@@ -56,6 +57,7 @@ function RootLayout() {
 
 const NAV_ITEMS = [
   { to: '/draft', key: 'app.nav.draft' },
+  { to: '/captains', key: 'app.nav.captains' },
   { to: '/about', key: 'app.nav.about' },
   { to: '/history', key: 'app.nav.history' },
   { to: '/leaderboard', key: 'app.nav.leaderboard' },
@@ -206,6 +208,7 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <LandingPage /> },
       { path: '/draft', element: <DraftPage /> },
+      { path: '/captains', element: <CaptainsPage /> },
       { path: '/about', element: <AboutPage /> },
       { path: '/history', element: <HistoryPage /> },
       { path: '/leaderboard', element: <LeaderboardPage /> },

@@ -1,5 +1,5 @@
 import type { Hero, HeroEvaluationValues } from 'shared';
-import { MANA_BOOSTER_BENEFICIARIES, heroNameSetForTag } from 'shared';
+import { MANA_BOOSTER_BENEFICIARIES, heroNameSetForTag, activeCustomTagsForTeam } from 'shared';
 import type { GamePhase } from './battle-resolution';
 import { isHardCarry } from '../common/hard-carry';
 
@@ -36,6 +36,32 @@ export function fundamentalsBoostMagnitude(carrierCount: number): number {
   if (carrierCount >= 4) return 1.25;
   if (carrierCount >= 2) return 1.2;
   return 1;
+}
+
+export function publicBattleTagChips(
+  mine: Hero[],
+  opponent: Hero[],
+  rawMine: Partial<Record<Axis, number>>,
+  rawOpponent: Partial<Record<Axis, number>>,
+): { name: string; rarity: string; side: 'mine' | 'opponent'; fundamentalsAxes?: string[] }[] {
+  const chips: { name: string; rarity: string; side: 'mine' | 'opponent'; fundamentalsAxes?: string[] }[] =
+    [];
+  const pushSide = (side: 'mine' | 'opponent', team: Hero[], raw: Partial<Record<Axis, number>>) => {
+    const names = team.map((h) => h.name);
+    const fundCount = names.filter((n) => FUNDAMENTALS.has(n)).length;
+    const fundAxes = fundamentalsTargetAxes(raw, fundCount);
+    for (const tag of activeCustomTagsForTeam(names)) {
+      chips.push({
+        name: tag.name,
+        rarity: tag.rarity,
+        side,
+        ...(tag.name === 'The Fundamentals' && fundAxes.length > 0 ? { fundamentalsAxes: fundAxes } : {}),
+      });
+    }
+  };
+  pushSide('mine', mine, rawMine);
+  pushSide('opponent', opponent, rawOpponent);
+  return chips;
 }
 
 function joinAxisLabels(labels: string[]): string {

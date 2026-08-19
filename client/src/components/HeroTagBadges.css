@@ -18,8 +18,11 @@
   left: 6px;
   /* Stops short of the right edge: the attribute chip (HeroPool.css
      .hero-attr) occupies that corner, and a hero with two or three tags
-     would otherwise run straight under it. */
+     would otherwise run straight under it. Caps height so wrapping tags
+     cannot cover the name plate at the bottom of the portrait. */
   right: 32px;
+  max-height: 42%;
+  overflow: hidden;
   z-index: 2;
   pointer-events: none;
 }

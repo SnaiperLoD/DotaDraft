@@ -77,6 +77,61 @@
   max-width: 60ch;
 }
 
+.battle-run-chip--ti {
+  margin-left: 0;
+}
+
+.completed-head-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  flex-shrink: 0;
+}
+
+.battle-extra-modes {
+  margin: 0 0 var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.battle-ti-flavor {
+  margin: 0;
+  font-size: 13px;
+  color: var(--win-bright);
+}
+
+.battle-challenge {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  max-width: 36rem;
+  padding: var(--sp-3);
+  border: 1px solid var(--line);
+}
+
+.battle-challenge-head {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.battle-challenge-hint {
+  margin: 0;
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
+.battle-challenge-paste {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  resize: vertical;
+  min-height: 6.5rem;
+  padding: 8px 10px;
+  background: color-mix(in srgb, var(--panel) 80%, transparent);
+  border: 1px solid var(--bronze);
+  color: inherit;
+}
+
 /* Sibling screens under .completed-section are toggled with the `hidden`
    attribute (kept mounted to preserve state). Guard against a stray
    `display` from a more specific rule re-showing a hidden screen. */
@@ -931,4 +986,49 @@
   .portrait-card .name {
     font-size: 10px;
   }
+}
+
+.battle-tag-chips {
+  margin: var(--sp-4) 0;
+  padding: var(--sp-4);
+}
+
+.battle-tag-chips-heading {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  margin-bottom: var(--sp-3);
+}
+
+.battle-tag-chips-side {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: var(--sp-3) 0 var(--sp-2);
+}
+
+.battle-tag-chips ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.battle-tag-chip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+}
+
+.battle-tag-chip-effect {
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+  line-height: 1.35;
 }

@@ -36,6 +36,9 @@ export default function LandingPage() {
             <Link to="/draft" className="btn btn-primary" viewTransition>
               {t('landing.cta')}
             </Link>
+            <Link to="/captains" className="btn btn-secondary" viewTransition>
+              {t('landing.ctaCaptains')}
+            </Link>
             <Link to="/about" className="btn btn-secondary" viewTransition>
               {t('landing.aboutLink')}
             </Link>

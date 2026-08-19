@@ -117,3 +117,18 @@ model FunnelEvent {
   @@index([sessionId])
   @@index([name])
 }
+
+model CaptainsSession {
+  id              String   @id @default(uuid())
+  ownerToken      String
+  status          String   @default("DRAFTING")
+  stepIndex       Int      @default(0)
+  playerReserveMs Int
+  aiReserveMs     Int
+  stepStartedAt   DateTime
+  actionsJson     String
+  draftId         String?
+  createdAt       DateTime @default(now())
+
+  @@index([ownerToken])
+}

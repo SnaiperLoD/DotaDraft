@@ -215,7 +215,8 @@
 }
 
 @media (max-width: 760px) {
-  .completed-head-fight {
+  .completed-head-fight,
+  .completed-head-actions {
     width: 100%;
   }
 }

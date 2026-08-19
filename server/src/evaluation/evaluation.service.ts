@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { DraftService } from '../draft/draft.service';
 import { ProMatchService } from '../pro-match/pro-match.service';
 import { HeroMetaService } from '../hero-meta/hero-meta.service';
+import { HeroService } from '../hero/hero.service';
 import { createSynergyAnalyzer } from './analyzers/synergy.analyzer';
 import { counterAnalyzer } from './analyzers/counter.analyzer';
 import { createAxisAnalyzer } from './analyzers/axis.analyzer';
@@ -9,7 +10,14 @@ import { createProSimilarityAnalyzer } from './analyzers/pro-similarity.analyzer
 import { percentileBracket } from './score-narrative';
 import { percentileFor } from './axis-percentiles';
 import type { Analyzer, DraftPick } from './analyzer.interface';
-import type { EvaluationResult, EvaluationSummary, AnalyzerResult, LocalizedLine } from 'shared';
+import type {
+  EvaluationResult,
+  EvaluationSummary,
+  AnalyzerResult,
+  LocalizedLine,
+  Hero,
+  HeroEvaluationValues,
+} from 'shared';
 import { i18nLine, isI18nLine } from 'shared';
 import { classifyDraftArchetype } from './draft-archetype';
 import { activeCustomTagsForTeam, heroNameSetForTag } from 'shared';
@@ -85,30 +93,37 @@ const SUMMARY_KEYS = [
 // Lancer scored near-zero on "farm_priority" despite being maximally
 // farm-dependent, because he doesn't stack camps, he just farms efficiently
 // himself. New names describe the actual measured behavior.
-const BASE_ANALYZERS: Analyzer[] = [
-  counterAnalyzer,
-  // Label "Damage Output", not "Teamfight" — see score-narrative.ts's
-  // AXIS_NARRATIVE.teamfight comment for why (real per-minute personal
-  // damage, not overall fight-winning potential). Key stays `teamfight`.
-  createAxisAnalyzer('teamfight', 'Damage Output'),
-  createAxisAnalyzer('tempo', 'Tempo'),
-  createAxisAnalyzer('scaling', 'Scaling'),
-  createAxisAnalyzer('burst', 'Burst'),
-  createAxisAnalyzer('control', 'Control'),
-  createAxisAnalyzer('durability', 'Durability'),
-  createAxisAnalyzer('initiating', 'Initiating'),
-  createAxisAnalyzer('skirmish_rate', 'Skirmish Rate'),
-  // camp_stacking deliberately NOT in this list — muted artifact (Battle
-  // weight 0, no Eval card/note). Data still calibrated into heroes.json
-  // for a possible future return.
-  createAxisAnalyzer('mobility', 'Mobility'),
-  // map_control deliberately NOT in this list — same dead-artifact posture
-  // as camp_stacking (Battle weight 0; not shown as a strength axis).
-  createAxisAnalyzer('saving', 'Saving'),
-  createAxisAnalyzer('objectives', 'Objectives'),
-  // Damage per team-networth-share — also in Battle AXES/axis-weights now.
-  createAxisAnalyzer('resource_efficiency', 'Resource Efficiency'),
+// camp_stacking and map_control stay out of the card list (Battle weight 0).
+const AXIS_ANALYZER_DEFS: [keyof HeroEvaluationValues, string][] = [
+  ['teamfight', 'Damage Output'],
+  ['tempo', 'Tempo'],
+  ['scaling', 'Scaling'],
+  ['burst', 'Burst'],
+  ['control', 'Control'],
+  ['durability', 'Durability'],
+  ['initiating', 'Initiating'],
+  ['skirmish_rate', 'Skirmish Rate'],
+  ['mobility', 'Mobility'],
+  ['saving', 'Saving'],
+  ['objectives', 'Objectives'],
+  ['resource_efficiency', 'Resource Efficiency'],
 ];
+
+function axisAnalyzersForRoster(roster: Hero[]): Analyzer[] {
+  const pool: Partial<Record<keyof HeroEvaluationValues, number[]>> = {};
+  for (const hero of roster) {
+    for (const [axis, value] of Object.entries(hero.evaluation_values) as [
+      keyof HeroEvaluationValues,
+      number,
+    ][]) {
+      (pool[axis] ??= []).push(value);
+    }
+  }
+  return AXIS_ANALYZER_DEFS.map(([key, label]) => createAxisAnalyzer(key, label, pool[key] ?? []));
+}
+
+// Categories eligible for the strengths/weaknesses summary. map_control and
+// camp_stacking deliberately absent — see AXIS_ANALYZER_DEFS below.
 
 // Mid-axis proportions come from server/data/axis-weights.json via
 // common/axis-weights-config.ts (shared skeleton with Battle mid). Synergy /
@@ -227,6 +242,7 @@ export class EvaluationService {
     private readonly draftService: DraftService,
     private readonly proMatchService: ProMatchService,
     private readonly heroMetaService: HeroMetaService,
+    private readonly heroService: HeroService,
   ) {}
 
   async evaluate(draftId: string, ownerToken: string): Promise<EvaluationResult> {
@@ -238,9 +254,11 @@ export class EvaluationService {
 
     const picks: DraftPick[] = draft.heroes.map((dh) => ({ hero: dh.hero, assignedRole: dh.assignedRole }));
     const compositions = await this.proMatchService.getWinningCompositions();
+    const roster = await this.heroService.findAll();
     const analyzers: Analyzer[] = [
       createSynergyAnalyzer(this.heroMetaService),
-      ...BASE_ANALYZERS,
+      counterAnalyzer,
+      ...axisAnalyzersForRoster(roster),
       createProSimilarityAnalyzer(compositions),
     ];
     const breakdown: AnalyzerResult[] = analyzers.map((analyzer) => {

@@ -73,7 +73,7 @@ function rolesForSide(
     .map((p, i) => ({
       heroId: p.hero_id,
       role: RANK_TO_ROLE[i + 1],
-      playerName: p.personaname ?? p.name ?? null,
+      playerName: p.name?.trim() || p.personaname?.trim() || null,
     }));
 }
 

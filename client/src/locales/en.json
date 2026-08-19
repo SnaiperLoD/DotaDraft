@@ -3,6 +3,7 @@
     "skipToContent": "Skip to content",
     "nav": {
       "draft": "Draft",
+      "captains": "Captains",
       "about": "About",
       "history": "History",
       "leaderboard": "Leaderboard",
@@ -27,6 +28,7 @@
     "tagline": "Draft five heroes. Get honest analysis. Fight for the win.",
     "pitch": "DotaDraft is a browser strategy game built around the Dota 2 draft — pick a team, get a real evaluation of its strengths and weaknesses, then send it into Battle Mode against another player's draft or a professional lineup. No accounts, no downloads — just the draft.",
     "cta": "Start Draft",
+    "ctaCaptains": "Captains Mode vs AI",
     "aboutLink": "How scoring works",
     "howItWorks": "How it works",
     "facts": {
@@ -48,6 +50,19 @@
         "text": "Face another player's committed draft or a professional lineup. Win or lose, with a confidence tier — never a fake precise percentage."
       }
     }
+  },
+  "captains": {
+    "title": "Captains Mode",
+    "note": "Dota 2 Captains Mode vs AI. 7.40 pick/ban order, 15s first bans, 30s later, 130s reserve. You are Radiant / first pick. After five picks you assign roles as usual.",
+    "radiant": "Radiant (you)",
+    "dire": "Dire (AI)",
+    "search": "Search heroes",
+    "reserve": "Reserve",
+    "you": "You",
+    "ai": "AI",
+    "banTurn": "Ban — {{who}} ({{n}}/{{total}})",
+    "pickTurn": "Pick — {{who}} ({{n}}/{{total}})",
+    "done": "Draft complete"
   },
   "about": {
     "title": "How This Works",
@@ -169,6 +184,7 @@
     "activeCombos": "Active Combos",
     "combosBattleNote": "These combos do not change the Evaluation score above — they apply in Battle.",
     "combosBattleSummary": "In Battle, active tags can buff or debuff your draft (and curse the opponent). Treat them as part of the fight, not this score.",
+    "fundamentalsBoosts": "Boosts weakest:",
     "percentile": {
       "bottom": "Bottom {{pct}}%",
       "mid": "{{ordinal}} percentile",
@@ -217,6 +233,9 @@
     "disadvantages": "Disadvantages",
     "explanation": "Explanation",
     "explanationBlurb": "Why this matchup resolved this way — lanes, pairs, axes, tags, and the carry late from this fight. Not a reconstructed replay.",
+    "tagChipsTitle": "Custom Tags in this fight",
+    "tagChipsMine": "Yours",
+    "tagChipsOpponent": "Opponent",
     "laneWinnerYours": "Yours",
     "laneWinnerOpponent": "Opponent",
     "laneEven": "Even",
@@ -290,6 +309,16 @@
     "loseStreak": "Loss streak {{count}}",
     "bestWinStreak": "Best streak {{count}}",
     "runHint": "Record for this Battle Mode run (resets on a new draft)",
+    "tiRunStart": "Start TI Run",
+    "tiRunNext": "Next TI fight ({{n}}/5)",
+    "tiRunHint": "Five fights against International-tagged pool drafts. Win 3 to “advance”. First version — not a visual bracket.",
+    "tiRunChip": "TI {{wins}}–{{losses}}",
+    "tiAdvance": "You would advance (3 wins in this TI run).",
+    "tiComplete": "TI run over: {{wins}}–{{losses}}.",
+    "challengeTitle": "Challenge a copied draft",
+    "challengeHint": "Paste a Copy Draft block (Role: Hero, five lines). Fights that lineup without touching the opponent pool.",
+    "challengePaste": "Paste draft…",
+    "challengeFight": "Challenge",
     "tier": {
       "Low": "Low",
       "Moderate": "Moderate",
@@ -466,9 +495,12 @@
   },
   "leaderboard": {
     "title": "Leaderboard",
-    "runsTitle": "Best Runs",
-    "runsNote": "Your best single-session drafts, ranked by wins and win rate across the battles you fought with them.",
-    "runsEmpty": "No runs yet — draft a team and fight at least 5 battles with it in one session to make the board.",
+    "globalTitle": "All Runs",
+    "globalNote": "Every qualifying run on this host — ranked by win rate (then wins). A run needs at least 10 battles.",
+    "globalEmpty": "No qualifying runs yet — fight at least 10 battles with a draft to land here.",
+    "runsTitle": "My Runs",
+    "runsNote": "Your own single-session drafts, ranked by win rate (then wins) across the battles you fought with them. Needs at least 10 battles.",
+    "runsEmpty": "No runs yet — draft a team and fight at least 10 battles with it in one session to make the board.",
     "poolTitle": "Pool Opponents",
     "note": "Ranks committed drafts by how they perform as the opponent in other players' battles — not your own personal win/loss record.",
     "empty": "No drafts have been fought yet — commit one to the pool and start battling.",

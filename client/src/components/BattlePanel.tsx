@@ -3,7 +3,13 @@ import { useTranslation } from 'react-i18next';
 import ScreenFlash from './ScreenFlash';
 import OpponentRollAnimation from './OpponentRollAnimation';
 import { ROLES, isTiFinalsOpponent } from 'shared';
-import type { BattleResultResponse, BattleOpponentHero, BattleMatchup, BattleLaneResult } from 'shared';
+import type {
+  BattleResultResponse,
+  BattleOpponentHero,
+  BattleMatchup,
+  BattleLaneResult,
+  BattleTagChip,
+} from 'shared';
 import { api } from '../api/client';
 import { getSubmitterToken } from '../utils/submitterToken';
 import { heroPortraitUrl, heroIconUrl } from '../utils/heroIcon';
@@ -16,7 +22,7 @@ import {
   type FightOutcome,
 } from '../utils/runStreak';
 import { track } from '../telemetry';
-import { formatBattleAxisLine } from '../i18n/display';
+import { formatBattleAxisLine, customTagName, customTagDescription, axisLabel } from '../i18n/display';
 import { renderLocalizedLine } from '../i18n/narrative';
 import ArchetypeSeal from './ArchetypeSeal';
 import DraftLedger from './DraftLedger';
@@ -280,6 +286,8 @@ function BattleStory({ result, heroNames }: { result: BattleResultResponse; hero
 // opponent." Runs in parallel with the real request, not sequentially
 // after it — a slow request never waits on this on top of its own latency.
 const MIN_ROLL_DURATION_MS = 1200;
+const TI_RUN_FIGHTS = 5;
+const TI_RUN_ADVANCE_WINS = 3;
 
 function PortraitCard({
   heroId,
@@ -371,6 +379,66 @@ function TiFinalsMark() {
 // collisionKey remounts both rows (React key trick, same pattern as
 // ScreenFlash's flashKey) so the slide-in-and-clash animation replays on
 // every fight, not just the first one. Blueprint/10-tech-debt-backlog.md,
+function BattleTagChips({
+  chips,
+  mineNames,
+  opponentNames,
+}: {
+  chips: BattleTagChip[];
+  mineNames: string[];
+  opponentNames: string[];
+}) {
+  const { t } = useTranslation();
+  if (chips.length === 0) return null;
+
+  const renderChip = (chip: BattleTagChip) => (
+    <li key={`${chip.side}-${chip.name}`} className="battle-tag-chip">
+      <span className={`hero-tag-badge rarity-${chip.rarity}`}>{customTagName(t, chip.name)}</span>
+      {chip.name === 'The Fundamentals' && chip.fundamentalsAxes && chip.fundamentalsAxes.length > 0 && (
+        <span className="fundamentals-axis-row">
+          <span className="fundamentals-axis-label">{t('evaluation.fundamentalsBoosts')}</span>
+          {chip.fundamentalsAxes.map((axis) => (
+            <span key={axis} className="fundamentals-axis-chip">
+              {axisLabel(t, axis)}
+            </span>
+          ))}
+        </span>
+      )}
+      <span className="battle-tag-chip-effect">
+        {customTagDescription(
+          t,
+          { name: chip.name, description: '' },
+          {
+            teamHeroNames: chip.side === 'mine' ? mineNames : opponentNames,
+            fundamentalsAxes: chip.fundamentalsAxes,
+          },
+        )}
+      </span>
+    </li>
+  );
+
+  const mine = chips.filter((c) => c.side === 'mine');
+  const opponent = chips.filter((c) => c.side === 'opponent');
+
+  return (
+    <div className="battle-tag-chips panel">
+      <div className="battle-tag-chips-heading">{t('battle.tagChipsTitle')}</div>
+      {mine.length > 0 && (
+        <>
+          <div className="battle-tag-chips-side">{t('battle.tagChipsMine')}</div>
+          <ul>{mine.map(renderChip)}</ul>
+        </>
+      )}
+      {opponent.length > 0 && (
+        <>
+          <div className="battle-tag-chips-side">{t('battle.tagChipsOpponent')}</div>
+          <ul>{opponent.map(renderChip)}</ul>
+        </>
+      )}
+    </div>
+  );
+}
+
 // "Анимация столкновения в Battle" — first-pass draft: each row slides in
 // from its own side and the impact beat is timed to land under
 // ScreenFlash's flash rather than choreographed against it precisely.
@@ -477,6 +545,9 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
   // fight's spin flows straight into its settle without remounting, while a
   // fresh "Fight Again" gets a clean roll.
   const [fightSeq, setFightSeq] = useState(0);
+  const [pasteText, setPasteText] = useState('');
+  const [tiRunOutcomes, setTiRunOutcomes] = useState<FightOutcome[]>([]);
+  const pendingKindRef = useRef<'pool' | 'ti' | 'challenge'>('pool');
 
   // Both drafts' hero names, for bolding them in the outcome write-up (same as
   // the portraits). Empty until a fight resolves.
@@ -486,15 +557,20 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
     [heroes, result],
   );
 
-  const handleFight = async () => {
+  const handleFight = async (opts: { tiRun?: boolean; copiedDraft?: string } = {}) => {
     const fightIndex = battleCount;
     setFightSeq((s) => s + 1);
     setLoading(true);
     setError(null);
-    track('battle_fight', { n: fightIndex + 1, auto: fightIndex === 0 }, draftId);
+    pendingKindRef.current = opts.copiedDraft ? 'challenge' : opts.tiRun ? 'ti' : 'pool';
+    track(
+      'battle_fight',
+      { n: fightIndex + 1, auto: fightIndex === 0, tiRun: !!opts.tiRun, challenge: !!opts.copiedDraft },
+      draftId,
+    );
     try {
       const [res] = await Promise.all([
-        api.fightBattle(draftId, getSubmitterToken()),
+        api.fightBattle(draftId, getSubmitterToken(), opts),
         sleep(MIN_ROLL_DURATION_MS),
       ]);
       setResult(res);
@@ -544,6 +620,8 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
   }, [revealing, battleCount]);
 
   const { wins: runWins, losses: runLosses } = runRecord(runOutcomes);
+  const { wins: tiWins, losses: tiLosses } = runRecord(tiRunOutcomes);
+  const tiRunDone = tiRunOutcomes.length >= TI_RUN_FIGHTS;
   const winStreak = currentWinStreak(runOutcomes);
   const loseStreak = currentLoseStreak(runOutcomes);
   const peakWinStreak = bestWinStreak(runOutcomes);
@@ -596,25 +674,78 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
             )}
           </div>
         )}
+        {tiRunOutcomes.length > 0 && (
+          <div
+            className="battle-run-chip battle-run-chip--ti"
+            title={t('battle.tiRunHint')}
+            data-testid="battle-ti-chip"
+          >
+            {t('battle.tiRunChip', { wins: tiWins, losses: tiLosses })}
+          </div>
+        )}
       </div>
 
       <div className="completed-head">
         <DraftLedger heroes={heroes} totalSlots={5} title={t('draft.yourTeam')} layout="rail" />
-        <button
-          className="btn btn-primary completed-head-fight"
-          onClick={() => void handleFight()}
-          disabled={loading || revealing}
-        >
-          {(loading || revealing) && <span className="btn-spinner" aria-hidden="true" />}
-          {loading || revealing
-            ? t('battle.findingOpponent')
-            : result
-              ? t('battle.fightAgain')
-              : t('battle.enterBattle')}
-        </button>
+        <div className="completed-head-actions">
+          <button
+            className="btn btn-primary completed-head-fight"
+            onClick={() => void handleFight()}
+            disabled={loading || revealing}
+          >
+            {(loading || revealing) && <span className="btn-spinner" aria-hidden="true" />}
+            {loading || revealing
+              ? t('battle.findingOpponent')
+              : result
+                ? t('battle.fightAgain')
+                : t('battle.enterBattle')}
+          </button>
+          <button
+            type="button"
+            className="btn btn-secondary completed-head-fight"
+            onClick={() => void handleFight({ tiRun: true })}
+            disabled={loading || revealing || tiRunDone}
+            title={t('battle.tiRunHint')}
+          >
+            {tiRunOutcomes.length === 0
+              ? t('battle.tiRunStart')
+              : t('battle.tiRunNext', { n: String(Math.min(tiRunOutcomes.length + 1, TI_RUN_FIGHTS)) })}
+          </button>
+        </div>
       </div>
 
       {!result && !loading && !revealing && <p className="battle-screen-intro">{t('battle.screenIntro')}</p>}
+
+      {result && !loading && !revealing && (
+        <div className="battle-extra-modes">
+          {tiWins >= TI_RUN_ADVANCE_WINS && !tiRunDone && (
+            <p className="battle-ti-flavor">{t('battle.tiAdvance')}</p>
+          )}
+          {tiRunDone && (
+            <p className="battle-ti-flavor">{t('battle.tiComplete', { wins: tiWins, losses: tiLosses })}</p>
+          )}
+          <div className="battle-challenge">
+            <div className="battle-challenge-head">{t('battle.challengeTitle')}</div>
+            <p className="battle-challenge-hint">{t('battle.challengeHint')}</p>
+            <textarea
+              className="battle-challenge-paste"
+              value={pasteText}
+              onChange={(e) => setPasteText(e.target.value)}
+              placeholder={t('battle.challengePaste')}
+              rows={5}
+              spellCheck={false}
+            />
+            <button
+              type="button"
+              className="btn btn-secondary"
+              disabled={loading || revealing || pasteText.trim().length === 0}
+              onClick={() => void handleFight({ copiedDraft: pasteText })}
+            >
+              {t('battle.challengeFight')}
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* One roll instance spans both phases: it spins while `loading`
           (opponentHeroes null = searching), then locks the real opponent in
@@ -631,6 +762,9 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
             if (pending) {
               pendingRunOutcomeRef.current = null;
               setRunOutcomes((prev) => [...prev, pending]);
+              if (pendingKindRef.current === 'ti') {
+                setTiRunOutcomes((prev) => [...prev, pending]);
+              }
               track(
                 'battle_outcome',
                 {
@@ -700,6 +834,12 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
             tiFinals={tiFinals}
             mineArchetypeId={result.archetype?.id}
             opponentArchetypeId={result.opponent.archetype?.id}
+          />
+
+          <BattleTagChips
+            chips={result.tagChips ?? []}
+            mineNames={heroes.map((h) => h.hero.name)}
+            opponentNames={result.opponent.heroes.map((h) => h.heroName)}
           />
 
           <LaneMatchups lanes={result.lanes ?? []} />

@@ -7,6 +7,7 @@ import { HistoryModule } from './history/history.module';
 import { EvaluationModule } from './evaluation/evaluation.module';
 import { OpponentPoolModule } from './opponent-pool/opponent-pool.module';
 import { BattleModule } from './battle/battle.module';
+import { CaptainsModule } from './captains/captains.module';
 import { DevModule } from './dev/dev.module';
 import { HealthModule } from './health/health.module';
 import { TelemetryModule } from './telemetry/telemetry.module';
@@ -29,6 +30,7 @@ const IS_PRODUCTION = process.env.NODE_ENV === 'production';
     EvaluationModule,
     OpponentPoolModule,
     BattleModule,
+    CaptainsModule,
     ...(IS_PRODUCTION ? [] : [DevModule]),
   ],
   providers: [{ provide: APP_INTERCEPTOR, useClass: WriteRateLimitInterceptor }],

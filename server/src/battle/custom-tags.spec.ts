@@ -7,6 +7,7 @@ import {
   fundamentalsTargetAxes,
   fundamentalsBoostMagnitude,
   formatFundamentalsDescription,
+  publicBattleTagChips,
 } from './custom-tags';
 
 describe('blessingEffectsFor', () => {
@@ -141,6 +142,15 @@ describe('blessingEffectsFor', () => {
       expect(formatFundamentalsDescription(['tempo', 'mobility', 'control'], 4)).toBe(
         "Boosts this draft's weakest axes: tempo, mobility, and control.",
       );
+    });
+
+    it('emits public Fundamentals chips for both sides', () => {
+      const io = makeHero({ id: 1, name: 'Io' });
+      const ck = makeHero({ id: 2, name: 'Chaos Knight' });
+      const sniper = makeHero({ id: 3, name: 'Sniper' });
+      const chips = publicBattleTagChips([io, ck], [sniper], { tempo: 2, control: 8 }, { tempo: 8 });
+      expect(chips.some((c) => c.side === 'mine' && c.name === 'The Fundamentals')).toBe(true);
+      expect(chips.find((c) => c.name === 'The Fundamentals')?.fundamentalsAxes).toEqual(['tempo']);
     });
   });
 });

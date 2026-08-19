@@ -63,12 +63,14 @@ export interface LeaderboardEntryView {
   winRate: number;
 }
 
-// One "run" on the Best Runs board — a player's own single-session draft and
-// how it did across the Battle Mode fights they played WITH it (the caller's
+// One "run" on the all-runs / my-runs boards — a single-session draft and
+// how it did across the Battle Mode fights played WITH it (player
 // perspective, aggregated from BattleResult rows keyed by draftId). This is
 // the counterpart to LeaderboardEntryView: that one ranks a pooled draft by
-// how it does AS AN OPPONENT other players pull; this one ranks the player's
-// own active session. Scoped to the anonymous ownerToken on Draft.
+// how it does AS AN OPPONENT other players pull; this one ranks a draft as
+// the attacker. Global board is every qualifying draft; personal board is
+// scoped to the anonymous ownerToken. No accounts — `isMine` is computed
+// server-side so the raw token never leaves the DB.
 export interface RunLeaderboardEntry {
   draftId: string;
   heroIds: number[];
@@ -79,15 +81,16 @@ export interface RunLeaderboardEntry {
   // Draft's most recent Evaluation total score (from Draft.evaluationResult) —
   // null if the player never clicked Evaluate before fighting.
   evaluationScore: number | null;
+  isMine: boolean;
   wins: number;
   losses: number;
   winRate: number;
 }
 
-// GET /leaderboard now returns both boards in one response — the two "parts"
-// of the leaderboard: `runs` (the player's best single-session runs) and
-// `pool` (pooled drafts ranked by their passive opponent record).
+// GET /leaderboard: `globalRuns` (every qualifying run), `runs` (caller's
+// own runs), `pool` (pooled drafts ranked by passive opponent record).
 export interface LeaderboardResponse {
+  globalRuns: RunLeaderboardEntry[];
   runs: RunLeaderboardEntry[];
   pool: LeaderboardEntryView[];
 }

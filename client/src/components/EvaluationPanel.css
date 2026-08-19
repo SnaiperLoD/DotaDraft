@@ -329,6 +329,35 @@
   gap: 6px 12px;
 }
 
+.fundamentals-axis-row {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.fundamentals-axis-label {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  font-weight: 700;
+}
+
+.fundamentals-axis-chip {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--gold);
+  color: var(--gold-bright);
+  background: color-mix(in srgb, var(--gold) 16%, transparent);
+}
+
 /* Bigger than the default .hero-tag-badge (HeroTagBadges.css, 9px — sized
    for a tiny overlay on a hero-card portrait) — scoped to this section
    only, not a global size bump, since the hero-card badges elsewhere stay

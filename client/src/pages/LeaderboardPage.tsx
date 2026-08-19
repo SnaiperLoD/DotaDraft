@@ -1,19 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { LeaderboardResponse } from 'shared';
+import type { LeaderboardResponse, RunLeaderboardEntry } from 'shared';
 import { api } from '../api/client';
 import { heroIconUrl } from '../utils/heroIcon';
 import './LeaderboardPage.css';
 
-// Two-part leaderboard (Blueprint/10-tech-debt-backlog.md, "Лидерборд
-// драфтов"): "Best Runs" is the calling player's own best single-session
-// drafts (wins/win rate across the battles they fought with each), "Pool
-// Opponents" is the older weak board — committed drafts ranked by how they do
-// as the OPPONENT other players pull (not a personal record). No accounts; a
-// pool row this browser committed is highlighted via server-computed `isMine`.
+// Three-part leaderboard (playtest 2026-08-19): All Runs (global qualifying
+// Battle runs), My Runs (this browser's ownerToken), Pool Opponents (committed
+// drafts ranked as the opponent other players pull). No accounts; own rows
+// are highlighted via server-computed `isMine`. Assumption: keep the pool
+// board — it measures a different loop than all-runs.
 
-// One normalized row for the shared table — both boards render the same
-// columns; only the pool board carries a team name / own-row highlight.
 interface Row {
   key: string;
   heroIds: number[];
@@ -44,9 +41,6 @@ function LeaderboardTable({ rows }: { rows: Row[] }) {
         <tbody>
           {rows.map((row, i) => (
             <tr key={row.key} className={row.isMine ? 'leaderboard-row-me' : undefined}>
-              {/* Top three get a medal disc instead of a bare number — a
-                  leaderboard whose first rows look identical to its fortieth
-                  isn't doing its one job. */}
               <td className="col-rank">
                 <span className={`leaderboard-rank${i < 3 ? ` is-medal is-medal-${i + 1}` : ''}`}>
                   {i + 1}
@@ -95,6 +89,18 @@ function LeaderboardTable({ rows }: { rows: Row[] }) {
   );
 }
 
+function runRows(runs: RunLeaderboardEntry[]): Row[] {
+  return runs.map((r) => ({
+    key: r.draftId,
+    heroIds: r.heroIds,
+    evaluationScore: r.evaluationScore,
+    wins: r.wins,
+    losses: r.losses,
+    winRate: r.winRate,
+    isMine: r.isMine,
+  }));
+}
+
 export default function LeaderboardPage() {
   const { t } = useTranslation();
   const [data, setData] = useState<LeaderboardResponse | null>(null);
@@ -131,15 +137,6 @@ export default function LeaderboardPage() {
     );
   }
 
-  const runRows: Row[] = data.runs.map((r) => ({
-    key: r.draftId,
-    heroIds: r.heroIds,
-    evaluationScore: r.evaluationScore,
-    wins: r.wins,
-    losses: r.losses,
-    winRate: r.winRate,
-  }));
-
   const poolRows: Row[] = data.pool.map((p) => ({
     key: p.id,
     heroIds: p.heroIds,
@@ -157,12 +154,22 @@ export default function LeaderboardPage() {
       {head}
 
       <section className="leaderboard-section">
+        <h3 className="leaderboard-subtitle">{t('leaderboard.globalTitle')}</h3>
+        <p className="leaderboard-note">{t('leaderboard.globalNote')}</p>
+        {data.globalRuns.length === 0 ? (
+          <p className="empty-text">{t('leaderboard.globalEmpty')}</p>
+        ) : (
+          <LeaderboardTable rows={runRows(data.globalRuns)} />
+        )}
+      </section>
+
+      <section className="leaderboard-section">
         <h3 className="leaderboard-subtitle">{t('leaderboard.runsTitle')}</h3>
         <p className="leaderboard-note">{t('leaderboard.runsNote')}</p>
-        {runRows.length === 0 ? (
+        {data.runs.length === 0 ? (
           <p className="empty-text">{t('leaderboard.runsEmpty')}</p>
         ) : (
-          <LeaderboardTable rows={runRows} />
+          <LeaderboardTable rows={runRows(data.runs)} />
         )}
       </section>
 

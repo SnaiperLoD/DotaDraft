@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { BattleService } from './battle.service';
 import { OwnerToken } from '../common/owner-token';
-import { assertDraftActionBody } from '../common/request-validation';
+import { assertBattleBody } from '../common/request-validation';
 
 @Controller('battle')
 export class BattleController {
@@ -9,6 +9,10 @@ export class BattleController {
 
   @Post()
   fight(@OwnerToken() ownerToken: string, @Body() body: unknown) {
-    return this.battleService.fight(assertDraftActionBody(body).draftId, ownerToken);
+    const parsed = assertBattleBody(body);
+    return this.battleService.fight(parsed.draftId, ownerToken, {
+      tiRun: parsed.tiRun,
+      copiedDraft: parsed.copiedDraft,
+    });
   }
 }

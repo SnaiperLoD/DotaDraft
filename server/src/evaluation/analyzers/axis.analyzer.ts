@@ -35,7 +35,14 @@ export function axisNarrativeLine(key: string, ctx: NarrativeContext): Localized
   });
 }
 
-export function createAxisAnalyzer(key: AxisKey, label: string): Analyzer {
+/** True when `value` sits in the bottom `cutoff` share of `pool` (CDF). */
+export function isBottomPoolShare(value: number, pool: number[], cutoff = 0.35): boolean {
+  if (pool.length === 0) return false;
+  const atOrBelow = pool.filter((v) => v <= value).length;
+  return atOrBelow / pool.length <= cutoff;
+}
+
+export function createAxisAnalyzer(key: AxisKey, label: string, poolValues: number[] = []): Analyzer {
   return {
     key,
     label,
@@ -107,7 +114,11 @@ export function createAxisAnalyzer(key: AxisKey, label: string): Analyzer {
 
       explanation.push(axisNarrativeLine(key, ctx));
 
-      return { score, percentile, explanation, topContributorHeroId: top[0]?.hero.id ?? null };
+      const rawTop = top[0]?.hero.evaluation_values[key];
+      const topContributorHeroId =
+        top[0] && rawTop != null && !isBottomPoolShare(rawTop, poolValues) ? top[0].hero.id : null;
+
+      return { score, percentile, explanation, topContributorHeroId };
     },
   };
 }

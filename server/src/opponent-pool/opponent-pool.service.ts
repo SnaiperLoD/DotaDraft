@@ -112,6 +112,7 @@ export class OpponentPoolService {
     excludeSubmitterToken?: string,
     excludeHeroIds: number[] = [],
     excludeFacedHeroSets: number[][] = [],
+    leagueContains?: string,
   ): Promise<PooledDraftSummary> {
     const heroSetKey = (ids: number[]): string => [...ids].sort((a, b) => a - b).join(',');
     return this.runPoolQuery(async () => {
@@ -122,6 +123,14 @@ export class OpponentPoolService {
       let rows = await this.pool.pooledDraft.findMany({ where: excludingOwn });
       if (rows.length === 0) {
         rows = await this.pool.pooledDraft.findMany({ where: {} });
+      }
+      if (leagueContains) {
+        const needle = leagueContains.toLowerCase();
+        const filtered = rows.filter((r) => (r.leagueName ?? '').toLowerCase().includes(needle));
+        if (filtered.length === 0) {
+          throw new NotFoundException('No matching league drafts in the opponent pool for this TI run');
+        }
+        rows = filtered;
       }
       if (rows.length === 0) {
         throw new NotFoundException('Opponent Pool is empty — no opponent available yet');

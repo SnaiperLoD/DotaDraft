@@ -6,6 +6,8 @@ import {
   assertDraftId,
   assertPickBody,
   assertSynergyPreviewBody,
+  assertBattleBody,
+  assertCaptainsActBody,
 } from './request-validation';
 
 describe('request validation', () => {
@@ -58,5 +60,21 @@ describe('request validation', () => {
         candidateHeroIds: [],
       }),
     ).toThrow(BadRequestException);
+  });
+
+  it('parses optional TI-run / copied-draft flags on a battle body', () => {
+    const id = '2c1a0b8e-4d3f-4a11-9c22-abcdeffedcba';
+    expect(assertBattleBody({ draftId: id })).toEqual({ draftId: id, tiRun: false, copiedDraft: null });
+    expect(assertBattleBody({ draftId: id, tiRun: true, copiedDraft: '  Carry: Axe  ' }).copiedDraft).toBe(
+      '  Carry: Axe  ',
+    );
+    expect(assertBattleBody({ draftId: id, copiedDraft: '   ' }).copiedDraft).toBeNull();
+  });
+
+  it('parses a captains act body, including timeout skips', () => {
+    expect(assertCaptainsActBody({ heroId: 12 })).toEqual({ heroId: 12, timedOut: false });
+    expect(assertCaptainsActBody({ timedOut: true, heroId: 12 })).toEqual({ heroId: null, timedOut: true });
+    expect(assertCaptainsActBody({ heroId: null })).toEqual({ heroId: null, timedOut: false });
+    expect(() => assertCaptainsActBody({ heroId: 0 })).toThrow(BadRequestException);
   });
 });

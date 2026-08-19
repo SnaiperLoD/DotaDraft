@@ -13,6 +13,7 @@ import type {
   TopAbility,
   AbilityCategory,
   LeaderboardResponse,
+  CaptainsStateView,
 } from 'shared';
 import { OWNER_TOKEN_HEADER } from 'shared';
 import type { DraftStateView, TiFormResponse } from './types';
@@ -80,10 +81,19 @@ export const api = {
       body: JSON.stringify({ draftId, submitterToken }),
     }),
 
-  fightBattle: (draftId: string, submitterToken: string) =>
+  fightBattle: (
+    draftId: string,
+    submitterToken: string,
+    opts: { tiRun?: boolean; copiedDraft?: string } = {},
+  ) =>
     request<BattleResultResponse>('/battle', {
       method: 'POST',
-      body: JSON.stringify({ draftId, submitterToken }),
+      body: JSON.stringify({
+        draftId,
+        submitterToken,
+        ...(opts.tiRun ? { tiRun: true } : {}),
+        ...(opts.copiedDraft ? { copiedDraft: opts.copiedDraft } : {}),
+      }),
     }),
 
   getSynergyPreview: (pickedHeroIds: number[], candidateHeroIds: number[]) =>
@@ -96,4 +106,12 @@ export const api = {
     request<TopAbility[]>(`/heroes/${heroId}/top-abilities?category=${category}&limit=${limit}`),
 
   getLeaderboard: (limit = 20) => request<LeaderboardResponse>(`/leaderboard?limit=${limit}`),
+
+  startCaptains: () => request<CaptainsStateView>('/captains', { method: 'POST' }),
+  getCaptains: (id: string) => request<CaptainsStateView>(`/captains/${id}`),
+  actCaptains: (id: string, heroId: number | null, timedOut = false) =>
+    request<CaptainsStateView>(`/captains/${id}/act`, {
+      method: 'POST',
+      body: JSON.stringify({ heroId, timedOut }),
+    }),
 };

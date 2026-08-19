@@ -144,4 +144,22 @@ describe('createAxisAnalyzer', () => {
     const result = analyzer.analyze(picks([medusa]));
     expect(result.score).toBeCloseTo(5 * 1.18, 5);
   });
+
+  it('omits topContributorHeroId when that hero is bottom 35% of the pool on the axis', () => {
+    const weak = heroWithAxis(1, 'Weak', 'saving', 1);
+    const alsoWeak = heroWithAxis(2, 'AlsoWeak', 'saving', 0.5);
+    const pool = [0.5, 1, 2, 3, 4, 5, 6, 7, 8, 9]; // 1 sits at 20th percentile
+    const analyzer = createAxisAnalyzer('saving', 'Saving', pool);
+    const result = analyzer.analyze(picks([weak, alsoWeak]));
+    expect(result.topContributorHeroId).toBeNull();
+  });
+
+  it('keeps topContributorHeroId when the hero is above the pool floor', () => {
+    const strong = heroWithAxis(1, 'Strong', 'saving', 8);
+    const filler = heroWithAxis(2, 'Filler', 'saving', 4);
+    const pool = [0.5, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const analyzer = createAxisAnalyzer('saving', 'Saving', pool);
+    const result = analyzer.analyze(picks([strong, filler]));
+    expect(result.topContributorHeroId).toBe(1);
+  });
 });

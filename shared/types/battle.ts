@@ -57,6 +57,10 @@ export interface BattleOpponent {
 export interface BattleRequest {
   draftId: string;
   submitterToken: string;
+  // Playtest: TI-run pulls only International-tagged pool drafts.
+  tiRun?: boolean;
+  // Playtest async clash: pasted Copy Draft text (role: hero per line).
+  copiedDraft?: string;
 }
 
 // Real (OpenDota) win-rate rows surfaced in the battle result, always from
@@ -172,4 +176,15 @@ export interface BattleResultResponse {
   // Player's draft shape from Evaluate's classifier. Display-only; optional
   // on older clients / History snapshots.
   archetype?: DraftArchetype;
+  // Public custom tags that were active for either side this fight, plus
+  // what they did. Hidden calibration tags stay out. Optional on History.
+  tagChips?: BattleTagChip[];
+}
+
+export interface BattleTagChip {
+  name: string;
+  rarity: string;
+  side: 'mine' | 'opponent';
+  // Axis keys The Fundamentals boosted this fight. Client localizes.
+  fundamentalsAxes?: string[];
 }

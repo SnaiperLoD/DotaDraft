@@ -217,14 +217,27 @@
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 20px 10px 8px;
-  background: linear-gradient(to top, rgba(21, 16, 12, 0.92) 0%, rgba(21, 16, 12, 0.4) 55%, transparent 100%);
+  z-index: 3;
+  padding: 28px 10px 8px;
+  background: linear-gradient(
+    to top,
+    rgba(21, 16, 12, 0.94) 0%,
+    rgba(21, 16, 12, 0.55) 55%,
+    transparent 100%
+  );
+  pointer-events: none;
 }
 
 .hero-card .hero-name {
+  position: relative;
+  z-index: 4;
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 15px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   /* Fixed light color + hard dark outline, not var(--ink)/var(--shadow-deep)
      — this text always sits on .portrait-shade's fixed dark gradient
      regardless of theme, but --ink flips dark in light mode and

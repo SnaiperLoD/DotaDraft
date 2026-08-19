@@ -6,6 +6,7 @@ import type {
   BattlePair,
   BattleMatchup,
   BattleLaneResult,
+  BattleTagChip,
   LocalizedLine,
 } from 'shared';
 import { i18nLine } from 'shared';
@@ -25,6 +26,7 @@ import {
   mechanicalHeroesOn,
   HIGH_SKILL_UPSET_SHIFT,
   isTagDisabled,
+  publicBattleTagChips,
 } from './custom-tags';
 import { axisWeightsConfig, type AxisWeightsConfig } from '../common/axis-weights-config';
 
@@ -77,6 +79,7 @@ export interface BattleResult {
   // Largest |axis delta| this fight, winner-agnostic. Story names it
   // instead of inventing a catch/smoke/Roshan sequence.
   topAxis: keyof HeroEvaluationValues | null;
+  tagChips: BattleTagChip[];
 }
 
 export const AXES: (keyof HeroEvaluationValues)[] = [
@@ -805,6 +808,13 @@ export function resolveBattle(
   const bestMatchups = rankedMatchupsByDelta(heroesA, heroesB, lookup, 3, 'best');
   const worstMatchups = rankedMatchupsByDelta(heroesA, heroesB, lookup, 3, 'worst');
 
+  const rawAxisAveragesA = Object.fromEntries(
+    AXES.map((axis) => [axis, axisAverage(teamA, axis)]),
+  ) as Partial<Record<keyof HeroEvaluationValues, number>>;
+  const rawAxisAveragesB = Object.fromEntries(
+    AXES.map((axis) => [axis, axisAverage(teamB, axis)]),
+  ) as Partial<Record<keyof HeroEvaluationValues, number>>;
+
   return {
     resolvedOutcome,
     advantageDirection,
@@ -820,5 +830,6 @@ export function resolveBattle(
     shutdownNotes,
     highSkillSwingHeroName: highSkillSwingHero?.name ?? null,
     topAxis: axisDeltas[0]?.axis ?? null,
+    tagChips: publicBattleTagChips(heroesA, heroesB, rawAxisAveragesA, rawAxisAveragesB),
   };
 }

@@ -229,6 +229,33 @@ describe('OpponentPoolService.pullRandom', () => {
       'No new opponents left in the pool for this run',
     );
   });
+
+  it('restricts a TI run to International league rows and fails closed if none exist', async () => {
+    const pool = makeMockPool();
+    pool.pooledDraft.findMany.mockResolvedValue([
+      { id: 'pub', source: 'player', heroIds: [1, 2, 3, 4, 5], teamName: null, leagueName: null },
+      {
+        id: 'ti',
+        source: 'pro',
+        heroIds: [10, 11, 12, 13, 14],
+        teamName: 'Team Spirit',
+        leagueName: 'The International 2025',
+      },
+    ]);
+    const service = new OpponentPoolService(pool as any, {} as any);
+
+    for (let i = 0; i < 8; i++) {
+      const result = await service.pullRandom(undefined, [], [], 'International');
+      expect(result.id).toBe('ti');
+    }
+
+    pool.pooledDraft.findMany.mockResolvedValue([
+      { id: 'pub', source: 'player', heroIds: [1, 2, 3, 4, 5], teamName: null, leagueName: 'DreamLeague' },
+    ]);
+    await expect(service.pullRandom(undefined, [], [], 'International')).rejects.toThrow(
+      'No matching league drafts in the opponent pool',
+    );
+  });
 });
 
 describe('OpponentPoolService.recordDraftOutcome', () => {

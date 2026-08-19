@@ -281,6 +281,16 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
               return (
                 <li key={tag.name}>
                   <span className={`hero-tag-badge rarity-${tag.rarity}`}>{customTagName(t, tag.name)}</span>
+                  {tag.name === 'The Fundamentals' && fundamentalsAxes && fundamentalsAxes.length > 0 && (
+                    <span className="fundamentals-axis-row">
+                      <span className="fundamentals-axis-label">{t('evaluation.fundamentalsBoosts')}</span>
+                      {fundamentalsAxes.map((axis) => (
+                        <span key={axis} className="fundamentals-axis-chip">
+                          {axisLabel(t, axis)}
+                        </span>
+                      ))}
+                    </span>
+                  )}
                   <span className="evaluation-combos-description">
                     {customTagDescription(t, tag, {
                       teamHeroNames: heroNames,

@@ -67,6 +67,27 @@ export function assertDraftActionBody(body: unknown): { draftId: string } {
   return { draftId: assertDraftId(b.draftId) };
 }
 
+export function assertBattleBody(body: unknown): {
+  draftId: string;
+  tiRun: boolean;
+  copiedDraft: string | null;
+} {
+  const { draftId } = assertDraftActionBody(body);
+  const b = body as Record<string, unknown>;
+  const copiedDraft = typeof b.copiedDraft === 'string' && b.copiedDraft.trim() ? b.copiedDraft : null;
+  return { draftId, tiRun: b.tiRun === true, copiedDraft };
+}
+
+export function assertCaptainsActBody(body: unknown): { heroId: number | null; timedOut: boolean } {
+  if (!body || typeof body !== 'object') throw new BadRequestException('Invalid body');
+  const b = body as Record<string, unknown>;
+  const timedOut = b.timedOut === true;
+  if (timedOut || b.heroId == null) {
+    return { heroId: null, timedOut };
+  }
+  return { heroId: assertIntId(b.heroId, 'heroId'), timedOut: false };
+}
+
 export function assertSynergyPreviewBody(body: unknown): {
   pickedHeroIds: number[];
   candidateHeroIds: number[];

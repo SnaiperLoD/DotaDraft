@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import type { Hero } from 'shared';
 import { api } from '../api/client';
@@ -56,6 +57,8 @@ interface PendingDraft {
 
 export default function DraftPage() {
   const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
+  const resumeId = searchParams.get('resume');
   const [pending, setPending] = useState<PendingDraft | null>(null);
   const [draft, setDraft] = useState<DraftStateView | null>(null);
   const [loading, setLoading] = useState(false);
@@ -80,7 +83,19 @@ export default function DraftPage() {
   // request and nothing else. That idempotence is the actual fix for the
   // duplicate-draft bug — the old effect called a non-idempotent
   // /draft/start and left an orphan row behind on every mount.
-  useEffect(loadPool, []);
+  useEffect(() => {
+    if (resumeId) {
+      api
+        .getDraft(resumeId)
+        .then((loaded) => {
+          setDraft(loaded);
+          setPending(null);
+        })
+        .catch((err) => setError(err.message));
+      return;
+    }
+    loadPool();
+  }, [resumeId]);
   useEffect(() => {
     api
       .getTiForm()

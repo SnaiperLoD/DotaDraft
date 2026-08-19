@@ -534,10 +534,34 @@ describe('DraftService', () => {
     });
   });
 
-  // getBestRuns backs the "Best Runs" half of the two-part leaderboard —
+  // getBestRuns backs the all-runs / my-runs halves of the leaderboard —
   // aggregates a draftId's BattleResult rows (player-perspective outcomes)
-  // into wins/losses, gates by minFights, ranks wins-first then win rate.
+  // into wins/losses, gates by minFights, ranks win-rate first then wins.
   // A purpose-built fake prisma (the shared one has no battleResult.groupBy).
+  describe('createFromHeroIds()', () => {
+    it('opens a Captains finish draft in ASSIGNING_ROLES with five nested heroes', async () => {
+      const { service, prisma } = makeService();
+      const draft = await service.createFromHeroIds([1, 2, 3, 4, 5], OWNER);
+      expect(draft.status).toBe('ASSIGNING_ROLES');
+      expect(draft.heroes.map((h) => h.heroId)).toEqual([1, 2, 3, 4, 5]);
+      expect(prisma.draft.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({ status: 'ASSIGNING_ROLES', rerollsRemaining: 0 }),
+        }),
+      );
+    });
+
+    it('rejects a short or duplicated pick list', async () => {
+      const { service } = makeService();
+      await expect(service.createFromHeroIds([1, 2, 3, 4], OWNER)).rejects.toThrow(
+        'Captains Mode needs 5 distinct heroes',
+      );
+      await expect(service.createFromHeroIds([1, 2, 3, 4, 1], OWNER)).rejects.toThrow(
+        'Captains Mode needs 5 distinct heroes',
+      );
+    });
+  });
+
   describe('getBestRuns()', () => {
     // grouped rows as prisma.battleResult.groupBy(by: [draftId, resolvedOutcome])
     // would return them.
@@ -561,6 +585,7 @@ describe('DraftService', () => {
             const ids: string[] = where.id.in;
             return ids.map((id) => ({
               id,
+              ownerToken: OWNER,
               evaluationResult: evalByDraft[id] ?? null,
               heroes: draftHeroes[id] ?? [],
             }));
@@ -571,19 +596,20 @@ describe('DraftService', () => {
       return { service, prisma };
     }
 
-    it('tallies wins/losses per draft and ranks wins-first, then win rate', async () => {
+    it('tallies wins/losses per draft and ranks win-rate first, then wins', async () => {
       const { service } = makeRunService([
         { draftId: 'a', resolvedOutcome: 'Win', count: 6 },
-        { draftId: 'a', resolvedOutcome: 'Lose', count: 1 },
-        { draftId: 'b', resolvedOutcome: 'Win', count: 2 },
-        { draftId: 'b', resolvedOutcome: 'Lose', count: 3 },
-        { draftId: 'c', resolvedOutcome: 'Win', count: 2 },
-        { draftId: 'c', resolvedOutcome: 'Lose', count: 4 },
+        { draftId: 'a', resolvedOutcome: 'Lose', count: 4 },
+        { draftId: 'b', resolvedOutcome: 'Win', count: 5 },
+        { draftId: 'b', resolvedOutcome: 'Lose', count: 1 },
+        { draftId: 'c', resolvedOutcome: 'Win', count: 8 },
+        { draftId: 'c', resolvedOutcome: 'Lose', count: 2 },
       ]);
       const runs = await service.getBestRuns(10, 5, OWNER);
-      expect(runs.map((r) => `${r.draftId}:${r.wins}-${r.losses}`)).toEqual(['a:6-1', 'b:2-3', 'c:2-4']);
-      // b before c: equal 2 wins, b's win rate (0.4) beats c's (0.33).
-      expect(runs[1].winRate).toBeCloseTo(0.4);
+      // b 5-1 (83%) beats c 8-2 (80%) beats a 6-4 (60%) — WR over raw wins.
+      expect(runs.map((r) => `${r.draftId}:${r.wins}-${r.losses}`)).toEqual(['b:5-1', 'c:8-2', 'a:6-4']);
+      expect(runs[0].winRate).toBeCloseTo(5 / 6);
+      expect(runs.every((r) => r.isMine)).toBe(true);
     });
 
     it('excludes runs below minFights', async () => {
@@ -604,7 +630,7 @@ describe('DraftService', () => {
       const { service } = makeRunService(groups);
       const runs = await service.getBestRuns(2, 5, OWNER);
       expect(runs).toHaveLength(2);
-      expect(runs[0].draftId).toBe('c'); // 7 wins, highest
+      expect(runs[0].draftId).toBe('c'); // 7-1 beats 6-1 beats 5-1
     });
 
     it('surfaces heroes in pickOrder, roles, and the parsed evaluation score', async () => {
@@ -647,6 +673,12 @@ describe('DraftService', () => {
       expect(prisma.draft.findMany).not.toHaveBeenCalled();
     });
 
+    it('returns an empty personal board when the caller has no ownerToken', async () => {
+      const { service, prisma } = makeRunService([{ draftId: 'a', resolvedOutcome: 'Win', count: 6 }]);
+      expect(await service.getBestRuns(10, 5, null, 'mine')).toEqual([]);
+      expect(prisma.battleResult.groupBy).not.toHaveBeenCalled();
+    });
+
     it('scopes the tally to the calling ownerToken', async () => {
       const { service, prisma } = makeRunService([
         { draftId: 'a', resolvedOutcome: 'Win', count: 6 },
@@ -658,6 +690,20 @@ describe('DraftService', () => {
           where: { draft: { ownerToken: OWNER } },
         }),
       );
+    });
+
+    it('global scope does not filter by ownerToken and still marks isMine', async () => {
+      const { service, prisma } = makeRunService([
+        { draftId: 'a', resolvedOutcome: 'Win', count: 6 },
+        { draftId: 'a', resolvedOutcome: 'Lose', count: 1 },
+      ]);
+      const runs = await service.getBestRuns(10, 5, OWNER, 'global');
+      expect(prisma.battleResult.groupBy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: undefined,
+        }),
+      );
+      expect(runs[0].isMine).toBe(true);
     });
   });
 });

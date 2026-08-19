@@ -155,6 +155,33 @@ export class DraftService {
     return this.toView(draft);
   }
 
+  // Captains Mode finish: five locked picks skip the 5-from-5 pool and land
+  // in role assignment. Nested create still guarantees no empty Draft row.
+  async createFromHeroIds(heroIds: number[], ownerToken: string): Promise<DraftStateView> {
+    const token = this.requireOwnerToken(ownerToken);
+    if (heroIds.length !== 5 || new Set(heroIds).size !== 5) {
+      throw new BadRequestException('Captains Mode needs 5 distinct heroes');
+    }
+    const found = await this.heroService.findByIds(heroIds);
+    if (found.length !== 5) {
+      throw new BadRequestException('Unknown hero in Captains Mode picks');
+    }
+    const draft = await this.prisma.draft.create({
+      data: {
+        seed: 0,
+        pool: '[]',
+        status: 'ASSIGNING_ROLES',
+        rerollsRemaining: 0,
+        ownerToken: token,
+        heroes: {
+          create: heroIds.map((heroId, i) => ({ heroId, pickOrder: i + 1 })),
+        },
+      },
+      include: { heroes: true },
+    });
+    return this.toView(draft);
+  }
+
   async getById(draftId: string, ownerToken: string): Promise<DraftStateView> {
     return this.toView(await this.loadOwned(draftId, ownerToken));
   }
@@ -212,25 +239,25 @@ export class DraftService {
     });
   }
 
-  // "Best Runs" leaderboard (Blueprint/10-tech-debt-backlog.md, "Лидерборд
-  // драфтов" — two-part split): the calling-player side the pool board does
-  // NOT track. A "run" is one draft the player fought Battle Mode with in a
-  // session; its record is aggregated from that draftId's BattleResult rows
-  // (resolvedOutcome is stored from the CALLING player's perspective, see
-  // BattleService.fight()). Scoped to the anonymous ownerToken — this is
-  // the caller's board, not a global dump of every visitor's runs.
-  //
-  // minFights gates out noisy short runs (a 1-fight 100% run isn't a "run") —
-  // set high (5) deliberately, this board is meant to reward sustained
-  // sessions, not one-offs. Ranked wins-first then win rate, same shape as the
-  // pool board's getLeaderboard(). resolvedOutcome is only ever 'Win'/'Lose'
-  // (Battle Mode always coin-flips to one, never 'Even' at this layer), so a
-  // non-'Win' row is counted as a loss.
-  async getBestRuns(limit: number, minFights: number, ownerToken: string): Promise<RunLeaderboardEntry[]> {
-    const token = this.requireOwnerToken(ownerToken);
+  // Run leaderboards (playtest 2026-08-18): a "run" is one draft the player
+  // fought Battle Mode with; its record is aggregated from that draftId's
+  // BattleResult rows (player-perspective outcomes, see BattleService.fight()).
+  // `scope: 'mine'` filters to the calling ownerToken; `scope: 'global'` is
+  // every qualifying draft. Ranked win-rate first, then wins (playtest).
+  // minFights gates one-offs — production uses 10. resolvedOutcome is only
+  // ever 'Win'/'Lose' at this layer, so a non-'Win' row is a loss.
+  async getBestRuns(
+    limit: number,
+    minFights: number,
+    ownerToken: string | null,
+    scope: 'mine' | 'global' = 'mine',
+  ): Promise<RunLeaderboardEntry[]> {
+    const caller = ownerToken?.trim() ? ownerToken.trim() : null;
+    if (scope === 'mine' && !caller) return [];
+
     const grouped = await this.prisma.battleResult.groupBy({
       by: ['draftId', 'resolvedOutcome'],
-      where: { draft: { ownerToken: token } },
+      where: scope === 'mine' ? { draft: { ownerToken: caller! } } : undefined,
       _count: { _all: true },
     });
 
@@ -251,14 +278,16 @@ export class DraftService {
         winRate: r.wins / (r.wins + r.losses),
       }))
       .filter((r) => r.total >= minFights)
-      .sort((a, b) => b.wins - a.wins || b.winRate - a.winRate)
+      .sort((a, b) => b.winRate - a.winRate || b.wins - a.wins)
       .slice(0, limit);
 
     if (qualifying.length === 0) return [];
 
-    // Fetch draft details only for the winners (heroes + roles + eval score).
     const drafts = await this.prisma.draft.findMany({
-      where: { id: { in: qualifying.map((r) => r.draftId) }, ownerToken: token },
+      where: {
+        id: { in: qualifying.map((r) => r.draftId) },
+        ...(scope === 'mine' ? { ownerToken: caller! } : {}),
+      },
       include: { heroes: true },
     });
     const draftById = new Map(drafts.map((d) => [d.id, d]));
@@ -277,11 +306,13 @@ export class DraftService {
           evaluationScore = null;
         }
       }
+      const draftOwner = draft?.ownerToken ?? null;
       return {
         draftId: r.draftId,
         heroIds: heroes.map((h) => h.heroId),
         heroRoles,
         evaluationScore,
+        isMine: Boolean(caller && draftOwner && caller === draftOwner),
         wins: r.wins,
         losses: r.losses,
         winRate: r.winRate,
