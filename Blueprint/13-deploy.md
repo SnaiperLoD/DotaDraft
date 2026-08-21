@@ -1,6 +1,6 @@
 # Deploy / hosting prep
 
-Last updated: 2026-08-18.
+Last updated: 2026-08-21.
 
 Status 2026-08-18: friends-alpha **tunnel is OFF**. Stack stopped with
 `docker compose -f docker-compose.yml -f docker-compose.tunnel.yml stop`
@@ -44,7 +44,8 @@ Health checks:
   `disabled`, or `error`. HTTP 503 only if SQLite is down; a dead pool is
   `degraded` + 200 so Compose still considers the API healthy
 - Compose healthcheck on the API image probes `/health` (start period is
-  120s — first-boot pool seed of ~764 pro drafts is slow)
+  120s — first-boot pool seed of ~2356 pro drafts is slow; nonempty pools
+  also upsert the 304-row `legacy-player-pool.json` snapshot)
 
 Request limits (launch hardening):
 

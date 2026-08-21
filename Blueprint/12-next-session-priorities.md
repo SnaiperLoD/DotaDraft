@@ -1,77 +1,45 @@
 # Next Session Priorities
 
-Updated 2026-08-18 after friends-alpha playtest (tunnel now OFF).
+Updated 2026-08-21 after the friends-alpha playtest park landed.
 Handoff / triage; `10-tech-debt-backlog.md` is the detailed source of truth.
 Deploy notes: `13-deploy.md`.
 
-**Status check:** closed-alpha host is done enough for this week. Funnel
-events land in SQLite. Compose + `docker-compose.tunnel.yml` exist; the
-quick tunnel is stopped and the trycloudflare URL is dead until someone
-brings the overlay back. Next is the playtest product park below, not a
-domain/VPS buy and not another calibration sweep.
+**Status check:** playtest park (leaderboard, CM vs AI, TI-run, clash, chips,
+floor, Fundamentals, card CSS, Razor/Tiny, 304-archive backfill) is on
+`master`. Pro pool is TI main-event (groups + playoffs) + live TI 2026:
+2356 pro + 396 player in the live Postgres pool. Tunnel still OFF.
+Next is leftovers below, not a domain/VPS buy and not a calibration sweep.
 
 ---
 
 ## Next session — priorities in order
 
-Playtest park. Do not implement in this close-out. P6 host is done;
-domain/VPS is not P0.
+Park is shipped. Don't rebuild it. Domain/VPS is not P0.
 
-### 1. Leaderboard: global all-runs + personal own runs
+### 1. Keep TI 2026 current through the grand final
 
-Current board is pool-opponent + Best Runs (session drafts,
-`RUN_MIN_FIGHTS=5`). Want a global all-runs board and a personal "my
-runs" board. Accounts still out of scope — `ownerToken` is enough.
+Playoffs run through 2026-08-23. Mechanical:
+`npm run fetch-pro-matches-ti` → `seed` → `seed-opponent-pool`.
+Already approved this session. Do not import regionals.
 
-### 2. Fix TI team names + most pro player names in the pool
+### 2. Visage carry / mid still `no_info`
 
-Pool rows show garbage / missing names for TI teams and most pro players.
+Tiny Carry was copied from aggregate (2026-08-20). Visage Carry/Mid
+remain `no_info`. Don't invent numbers. Don't refetch OpenDota unless
+Nick asks.
 
-### 3. Captains Mode: friend lobby OR CM vs AI
+### 3. TI / pro names on reused cached rows — `partial`
 
-Pick one shape; don't build both. Other draft modes stay parked.
+Sanitizer + official `name` on new fetches shipped. ~567 historical
+playoff rows were reused as-is; graffiti/missing handles can still show.
+Rewrite only if it still looks broken in the pool. Not a live refetch of
+match IDs we already have complete roles for unless asked.
 
-### 4. Tournament / TI-run mode
+### 4. Captains friend lobby — parked
 
-A run structured like TI, not a random pool slog.
-
-### 5. Battle: Custom Tags chips + their fight contribution
-
-Show the tags that actually fired and what they did in the fight. Not
-composition Badges (All Melee / All Ranged).
-
-### 6. Razor `saving` 3.6 is too high — lower
-
-Needs Nick's number before any coefficient edit. Do not guess.
-
-### 7. Don't call a hero "top contributor" on an axis if they're bottom 35% of the pool on that axis
-
-Display/ranking floor, not a weight change.
-
-### 8. Visage carry/mid and Tiny carry undervalued / no good role data
-
-Role-fit / `presumed_positions` gap. Don't refetch unless asked.
-
-### 9. The Fundamentals: show the weakest axis the tag buffs
-
-Eval Active Combos already lists Battle's weakest-axis set (2026-08-17).
-Playtest still didn't see it — make the buffed weakest axis obvious.
-
-### 10. Draft stage: hero names overlapped by tags — names always visible
-
-CSS/layout. Names must stay readable when tags sit on the card.
-
-### 11. Async clash: after fight, copy draft; fight a friend's copied draft
-
-Not a random pool pull. Related to "Fight own history drafts" but the
-loop is share → paste → fight that draft.
-
-### 12. Optional later: backfill old null-token drafts into the opponent pool
-
-304 COMPLETED drafts sit in host `database/dev.db` with `ownerToken=null`.
-They are **not** in the live Docker pool (764 pro + today's player
-commits). Nick: if they were in the pool locally, good. Player drafts
-currently drown in 764 pro (~0.3% with 1 human). Not P0.
+CM vs AI shipped (player always Radiant / first pick, 7.40 24-step,
+AI fills instantly). Don't also build a friend lobby unless Nick picks
+that shape.
 
 ## Still true, not this session's P0
 
@@ -82,6 +50,30 @@ currently drown in 764 pro (~0.3% with 1 human). Not P0.
   asking; don't refetch unless asked. `realWinRateWeight` stays 2.
 - Named tunnel / domain / VPS — later, when a stable URL is actually
   needed (`13-deploy.md`).
+- Heterogeneous tags (`Army of Clones` / `Unseen` / `Prone To Burst`) —
+  still the calibration leftover, still needs an isolated hypothesis.
+
+## Completed this pass (2026-08-21)
+
+- **304 host-archive backfill** — COMPLETED `ownerToken=null` drafts in
+  the live opponent pool as `player` rows, `leagueName` null (TI-run
+  fail-closed stays clean). `createdAt` spread so tokened live commits
+  stay strictly newer (`0145b07`). Snapshot
+  `server/data/legacy-player-pool.json`; Compose entrypoint upserts even
+  when the pool is nonempty.
+- **TI main event expanded** — historical groups + playoffs (not quals).
+  Ghost league `11625` skipped; TI10/2021 is `13256`. Live TI 2026 league
+  `19719`: 97 → 129. Snapshot 764 → 2356 (`bf2be35`). Live pool
+  2356 pro + 396 player.
+- **Playtest park (2026-08-20, `c94d59e`)** — global + personal run
+  boards (`RUN_MIN_FIGHTS=10`, rank WR then wins); CM vs AI; TI-run
+  (5 fights, International substring, fail closed); async clash (Copy
+  Draft paste, no `recordDraftOutcome`); Battle custom-tag chips;
+  top-contributor floor (bottom 35%); Fundamentals weakest-axis chips;
+  draft-card names not covered by tags; Razor role `saving` Carry
+  2.7→1.7 / Mid 3.5→2.5 / Offlane 3.6→2.6 (aggregate 1.2 untouched);
+  Tiny Carry copied from aggregate. Pro-name sanitizer shipped; old
+  cached playoff rows not rewritten.
 
 ## Completed this pass (2026-08-18)
 
@@ -103,7 +95,7 @@ currently drown in 764 pro (~0.3% with 1 human). Not P0.
 - **Radar recalibrated** — 50k unique Ancient+Divine OpenDota drafts
   (`2a9ddf9`).
 - **Old Nick pool** — 304 COMPLETED in host `database/dev.db`,
-  `ownerToken=null`; not in the live Docker pool. Backfill not done.
+  `ownerToken=null`. Backfill landed 2026-08-21 (`0145b07`).
 - **Tests** — server 465 unit + 14 integration green. Client has no
   test script.
 - **Closed-alpha host (P6)** — done enough for this week. Tunnel off.
@@ -234,11 +226,11 @@ User's request (2026-08-06): heroes who genuinely play both a core and a support
 
 ## Where to start
 
-Playtest park above, in order: leaderboard (global + personal), then TI /
-pro names in the pool. Don't buy a domain. Don't start a calibration
-pass. Tunnel is off; `docker compose up` still brings back `:8080`,
-overlay `docker-compose.tunnel.yml` still brings back a trycloudflare
-URL.
+Keep TI 2026 current if the GF isn't in the snapshot yet, then Visage
+carry/mid only with real role data (don't invent). Don't buy a domain.
+Don't start a calibration pass. Tunnel is off; `docker compose up` still
+brings back `:8080`, overlay `docker-compose.tunnel.yml` still brings
+back a trycloudflare URL.
 
 ---
 
