@@ -104,6 +104,20 @@ function loadExisting(): StoredProMatch[] {
   return Array.isArray(parsed.matches) ? parsed.matches : [];
 }
 
+function hasCompleteRoles(m: StoredProMatch | undefined): boolean {
+  return Boolean(
+    m &&
+      Array.isArray(m.radiantHeroRoles) &&
+      m.radiantHeroRoles.length === 5 &&
+      Array.isArray(m.direHeroRoles) &&
+      m.direHeroRoles.length === 5 &&
+      Array.isArray(m.radiantHeroIds) &&
+      m.radiantHeroIds.length === 5 &&
+      Array.isArray(m.direHeroIds) &&
+      m.direHeroIds.length === 5,
+  );
+}
+
 async function main() {
   console.log(`Fetching league ${TI_LEAGUE_ID} (${TI_LEAGUE_NAME}) match list...`);
   const rows = await withRetry(async () => {
@@ -129,8 +143,19 @@ async function main() {
   let added = 0;
   let updated = 0;
   let skipped = 0;
+  let reused = 0;
 
   for (const [index, row] of candidates.entries()) {
+    const matchId = String(row.match_id);
+    const existingRow = byId.get(matchId);
+    if (hasCompleteRoles(existingRow) && existingRow!.leagueName === TI_LEAGUE_NAME) {
+      reused++;
+      if ((index + 1) % 25 === 0) {
+        console.log(`[${index + 1}/${candidates.length}] reused cached details through ${matchId}`);
+      }
+      continue;
+    }
+
     console.log(`[${index + 1}/${candidates.length}] match ${row.match_id}`);
 
     const detail = await withRetry(async () => {
@@ -155,14 +180,14 @@ async function main() {
       continue;
     }
 
-    const matchId = String(detail.match_id ?? row.match_id);
-    const had = byId.has(matchId);
+    const storedId = String(detail.match_id ?? row.match_id);
+    const had = byId.has(storedId);
     const trimName = (v: string | null | undefined) => {
       const t = v?.trim();
       return t ? t : null;
     };
     const stored: StoredProMatch = {
-      matchId,
+      matchId: storedId,
       radiantName: trimName(
         detail.radiant_name ?? detail.radiant_team?.name ?? row.radiant_name,
       ),
@@ -176,7 +201,7 @@ async function main() {
       startTime: new Date((detail.start_time ?? row.start_time) * 1000).toISOString(),
     };
 
-    byId.set(matchId, stored);
+    byId.set(storedId, stored);
     if (had) updated++;
     else added++;
 
@@ -193,7 +218,7 @@ async function main() {
 
   console.log(`\nDone.`);
   console.log(`  TI candidates kept: ${candidates.length}`);
-  console.log(`  added: ${added}, updated: ${updated}, skipped: ${skipped}`);
+  console.log(`  added: ${added}, updated: ${updated}, reused cached: ${reused}, skipped: ${skipped}`);
   console.log(`  pro-matches.json total: ${matches.length} (was ${existing.length})`);
   console.log(`  wrote ${OUTPUT_PATH}`);
 }

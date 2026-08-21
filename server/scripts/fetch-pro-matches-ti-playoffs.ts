@@ -1,113 +1,112 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-// Imports playoff (main-event bracket) matches from every past The International
-// that OpenDota still has, and MERGES them into pro-matches.json.
+// Imports group-stage + playoff (main-event) matches from every past The
+// International that OpenDota still has, and MERGES them into pro-matches.json.
 //
-// OpenDota has no playoff flag — each TI's leagueid also holds group stage
-// and (for older years) regionals. We filter by Liquipedia main-event /
-// playoff date windows, cross-checked against daily match density on
-// /leagues/{id}/matches (group days spike to 20–50 games; playoff days
-// sit around 5–12).
+// OpenDota has no stage flag — each TI's leagueid also holds regionals /
+// wildcards weeks earlier. We keep the on-site cluster (groups + bracket),
+// cross-checked against daily match density on /leagues/{id}/matches
+// (group days spike to 20–50 games; playoff days sit around 5–12; quals
+// are a separate earlier blob).
 //
 // Unavailable / skipped:
-// - TI10 (league 11625): OpenDota returns 0 matches
-// - TI 2026: playoffs not started yet at time of writing (groups only);
-//   use fetch-pro-matches-ti.ts for the live main-event import
+// - TI10 (league 11625): ghost id, 0 matches. Real TI 2021 is 13256.
+// - TI 2026: live main-event import via fetch-pro-matches-ti.ts
+// - Regional quals / wildcards sitting in the same leagueid
 // - Fake / practice / DOGO leagues: excluded by the curated list below
 const OUTPUT_PATH = path.join(__dirname, '..', 'data', 'pro-matches.json');
 const MIN_DURATION_SECONDS = 600;
-const REQUEST_GAP_MS = 350;
+const REQUEST_GAP_MS = 900;
 
-interface TiPlayoffWindow {
+interface TiMainEventWindow {
   leagueId: number;
   name: string;
-  // Inclusive UTC day bounds for the playoff / main-event bracket.
-  playoffStartUtc: string;
-  playoffEndUtc: string;
+  // Inclusive UTC bounds for groups + playoffs (not regionals).
+  startUtc: string;
+  endUtc: string;
 }
 
 // End dates are end-of-day UTC so late-timezone grand finals still land inside.
-const TI_PLAYOFFS: TiPlayoffWindow[] = [
+const TI_MAIN_EVENTS: TiMainEventWindow[] = [
   {
     leagueId: 65001,
     name: 'The International 2012',
-    playoffStartUtc: '2012-08-31T00:00:00.000Z',
-    playoffEndUtc: '2012-09-03T23:59:59.999Z',
+    startUtc: '2012-08-26T00:00:00.000Z',
+    endUtc: '2012-09-03T23:59:59.999Z',
   },
   {
     leagueId: 65006,
     name: 'The International 2013',
-    playoffStartUtc: '2013-08-07T00:00:00.000Z',
-    playoffEndUtc: '2013-08-12T23:59:59.999Z',
+    startUtc: '2013-08-02T00:00:00.000Z',
+    endUtc: '2013-08-12T23:59:59.999Z',
   },
   {
     leagueId: 600,
     name: 'The International 2014',
-    playoffStartUtc: '2014-07-18T00:00:00.000Z',
-    playoffEndUtc: '2014-07-21T23:59:59.999Z',
+    startUtc: '2014-07-08T00:00:00.000Z',
+    endUtc: '2014-07-21T23:59:59.999Z',
   },
   {
     leagueId: 2733,
     name: 'The International 2015',
-    playoffStartUtc: '2015-08-06T00:00:00.000Z',
-    playoffEndUtc: '2015-08-09T23:59:59.999Z',
+    startUtc: '2015-08-03T00:00:00.000Z',
+    endUtc: '2015-08-09T23:59:59.999Z',
   },
   {
     leagueId: 4664,
     name: 'The International 2016',
-    playoffStartUtc: '2016-08-08T00:00:00.000Z',
-    playoffEndUtc: '2016-08-14T23:59:59.999Z',
+    startUtc: '2016-08-02T00:00:00.000Z',
+    endUtc: '2016-08-14T23:59:59.999Z',
   },
   {
     leagueId: 5401,
     name: 'The International 2017',
-    playoffStartUtc: '2017-08-07T00:00:00.000Z',
-    playoffEndUtc: '2017-08-13T23:59:59.999Z',
+    startUtc: '2017-08-02T00:00:00.000Z',
+    endUtc: '2017-08-13T23:59:59.999Z',
   },
   {
     leagueId: 9870,
     name: 'The International 2018',
-    playoffStartUtc: '2018-08-20T00:00:00.000Z',
-    playoffEndUtc: '2018-08-26T23:59:59.999Z',
+    startUtc: '2018-08-15T00:00:00.000Z',
+    endUtc: '2018-08-26T23:59:59.999Z',
   },
   {
     leagueId: 10749,
     name: 'The International 2019',
-    playoffStartUtc: '2019-08-20T00:00:00.000Z',
-    playoffEndUtc: '2019-08-25T23:59:59.999Z',
+    startUtc: '2019-08-15T00:00:00.000Z',
+    endUtc: '2019-08-25T23:59:59.999Z',
   },
-  // TI10 (11625): no matches in OpenDota — intentionally omitted
+  // TI10 (11625): ghost league id — use 13256 (The International 2021).
   {
     leagueId: 13256,
     name: 'The International 2021',
-    playoffStartUtc: '2021-10-12T00:00:00.000Z',
-    playoffEndUtc: '2021-10-17T23:59:59.999Z',
+    startUtc: '2021-10-07T00:00:00.000Z',
+    endUtc: '2021-10-17T23:59:59.999Z',
   },
   {
     leagueId: 14268,
     name: 'The International 2022',
-    playoffStartUtc: '2022-10-20T00:00:00.000Z',
-    playoffEndUtc: '2022-10-30T23:59:59.999Z',
+    startUtc: '2022-10-15T00:00:00.000Z',
+    endUtc: '2022-10-30T23:59:59.999Z',
   },
   {
     leagueId: 15728,
     name: 'The International 2023',
-    playoffStartUtc: '2023-10-20T00:00:00.000Z',
-    playoffEndUtc: '2023-10-29T23:59:59.999Z',
+    startUtc: '2023-10-12T00:00:00.000Z',
+    endUtc: '2023-10-29T23:59:59.999Z',
   },
   {
-    // Post-group elimination + playoffs (Swiss ended Sep 7; bracket from Sep 8).
     leagueId: 16935,
     name: 'The International 2024',
-    playoffStartUtc: '2024-09-08T00:00:00.000Z',
-    playoffEndUtc: '2024-09-15T23:59:59.999Z',
+    startUtc: '2024-09-04T00:00:00.000Z',
+    endUtc: '2024-09-15T23:59:59.999Z',
   },
   {
     leagueId: 18324,
     name: 'The International 2025',
-    playoffStartUtc: '2025-09-11T00:00:00.000Z',
-    playoffEndUtc: '2025-09-14T23:59:59.999Z',
+    startUtc: '2025-09-04T00:00:00.000Z',
+    endUtc: '2025-09-14T23:59:59.999Z',
   },
 ];
 
@@ -251,9 +250,9 @@ async function collectCandidates(): Promise<{ candidates: Candidate[]; perLeague
   const candidates: Candidate[] = [];
   const perLeague: Record<string, number> = {};
 
-  for (const ti of TI_PLAYOFFS) {
-    const startSec = Math.floor(Date.parse(ti.playoffStartUtc) / 1000);
-    const endSec = Math.floor(Date.parse(ti.playoffEndUtc) / 1000);
+  for (const ti of TI_MAIN_EVENTS) {
+    const startSec = Math.floor(Date.parse(ti.startUtc) / 1000);
+    const endSec = Math.floor(Date.parse(ti.endUtc) / 1000);
 
     console.log(`Listing ${ti.name} (league ${ti.leagueId})...`);
     const rows = await withRetry(async () => {
@@ -276,7 +275,7 @@ async function collectCandidates(): Promise<{ candidates: Candidate[]; perLeague
         r.start_time <= endSec,
     );
     perLeague[ti.name] = kept.length;
-    console.log(`  league total ${rows.length}, playoff window ${kept.length}`);
+    console.log(`  league total ${rows.length}, main-event window ${kept.length}`);
 
     for (const row of kept) {
       candidates.push({ row, leagueName: ti.name });
@@ -293,11 +292,11 @@ async function collectCandidates(): Promise<{ candidates: Candidate[]; perLeague
 
 async function main() {
   const { candidates, perLeague } = await collectCandidates();
-  console.log(`\nPlayoff candidates across all TIs: ${candidates.length}`);
+  console.log(`\nMain-event candidates across all TIs: ${candidates.length}`);
   for (const [name, n] of Object.entries(perLeague)) {
     console.log(`  ${name}: ${n}`);
   }
-  console.log('  The International 10: unavailable on OpenDota (0 matches)');
+  console.log('  The International 10: ghost league 11625 — imported as 2021 / 13256');
   console.log('  The International 2026: skipped here (live import via fetch-pro-matches-ti)\n');
 
   const existing = loadExisting();
