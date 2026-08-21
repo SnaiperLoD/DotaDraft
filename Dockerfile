@@ -44,6 +44,8 @@ COPY --from=build /app/server/prisma ./server/prisma
 COPY --from=build /app/server/prisma-pool ./server/prisma-pool
 COPY --from=build /app/server/package.json ./server/package.json
 COPY --from=build /app/server/scripts/seed-opponent-pool.ts ./server/scripts/seed-opponent-pool.ts
+COPY --from=build /app/server/scripts/backfill-legacy-player-pool.ts ./server/scripts/backfill-legacy-player-pool.ts
+COPY --from=build /app/server/src/opponent-pool/legacy-created-at.ts ./server/src/opponent-pool/legacy-created-at.ts
 COPY --from=build /app/server/tsconfig.json ./server/tsconfig.json
 COPY --from=build /app/tsconfig.base.json ./tsconfig.base.json
 COPY server/data ./server/data

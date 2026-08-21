@@ -51,8 +51,20 @@ async function main() {
   }
 
   console.log('Done.');
+  await seedLegacyPlayerRows(pool);
   await local.$disconnect();
   await pool.$disconnect();
+}
+
+async function seedLegacyPlayerRows(pool: PoolPrismaClient) {
+  const { loadLegacySnapshot, upsertLegacyPlayerDrafts } = await import('./backfill-legacy-player-pool');
+  const drafts = loadLegacySnapshot();
+  if (drafts.length === 0) {
+    console.log('No legacy-player-pool.json snapshot — skip host-archive player rows.');
+    return;
+  }
+  const { written } = await upsertLegacyPlayerDrafts(pool, drafts);
+  console.log(`Upserted ${written} legacy host-archive player drafts.`);
 }
 
 main().catch((err) => {

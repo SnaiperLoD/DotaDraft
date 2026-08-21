@@ -21,6 +21,9 @@ if [ -n "${POOL_DATABASE_URL:-}" ]; then
   if [ "$POOL_COUNT" = "0" ]; then
     echo "Empty opponent pool — seeding pro drafts from the local snapshot..."
     npx ts-node --transpile-only scripts/seed-opponent-pool.ts
+  else
+    echo "Opponent pool already has rows — upserting legacy host-archive player drafts..."
+    npx ts-node --transpile-only scripts/backfill-legacy-player-pool.ts
   fi
 fi
 
