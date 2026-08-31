@@ -10,6 +10,7 @@ database/e2e.db
 database/e2e.db-journal
 server/reports/
 server/.stryker-tmp/
+server/shared-src/
 /playwright-report/
 /test-results/
 *.log

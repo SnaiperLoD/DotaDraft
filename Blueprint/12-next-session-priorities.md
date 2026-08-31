@@ -1,28 +1,24 @@
 # Next Session Priorities
 
-Updated 2026-09-01 after isolated Battle / Captains / TI Run, Challenge
-short codes, and the coin-flip easter egg landed.
+Updated 2026-09-01 after live TI Run bracket projection, Challenge paste
+CSS containment, Liquipedia slug logos, and Stryker `copiedDraft`.
 Handoff / triage; `10-tech-debt-backlog.md` is the detailed source of truth.
 Deploy notes: `13-deploy.md`.
 
 **Status check:** three isolated modes are on `master` (`/draft`,
-`/captains`, `/ti-run`). Park still ships; don't rebuild the old funnel.
-Pro snapshot unchanged (**2374** rows). Tunnel still OFF. Next is
-leftovers below, not a domain/VPS buy and not a calibration sweep.
+`/captains`, `/ti-run`). Live occupy-slot tree is on `/ti-run`. Park
+still ships; don't rebuild the old funnel. Pro snapshot unchanged
+(**2374** rows). Tunnel still OFF. Next is leftovers below, not a
+domain/VPS buy and not a calibration sweep.
 
 ---
 
 ## Next session — priorities in order
 
-Don't merge the three modes. Domain/VPS is not P0.
+Don't merge the three modes. Domain/VPS is not P0. Valve-pixel CM is
+not a goal.
 
-### 1. TI Run live bracket projection — not landed
-
-Occupy-slot BO1 fights work. `TiBracket` still dumps historical
-`bracket.matches`. Live tree from the user's fights was planned and is
-**not** shipped.
-
-### 2. Dual-role Support presumed shares — ask first
+### 1. Dual-role Support presumed shares — ask first
 
 Visage Support `no_info` is plugged (aggregate copy + hero-meta Support
 0.605 / Offlane 0.395). Tiny / Sand King / Night Stalker / Naga got the
@@ -31,27 +27,27 @@ Battle still applies the support-miscast −10% if you put them on 4/5.
 Don't rewrite those shares without Nick. Visage Carry stays `no_info`
 (too rare). Visage Mid stays `no_info` (GPM #2 is offlane farm, not mid).
 
-### 3. TI 2026 GF badge IDs
+### 2. TI 2026 GF badge IDs
 
 `shared/utils/tiFinalsOpponent.ts` still says TI 2026 was groups-only.
 GF match IDs are in `pro-matches.json` now — append them when Nick wants
 the Finals badge on those opponents. Don't infer from `leagueName`.
 
-### 4. 89 pro rows still missing a team name
+### 3. 89 pro rows still missing a team name
 
 OpenDota has no `radiant_name` / `dire_name` on those matches. UI already
 falls back to league via `opponentTeamCaption`. Not a refetch problem.
 
-### 5. Captains friend lobby — parked
+### 4. Captains friend lobby — parked
 
 Isolated `/captains` homage CM HUD shipped. Don't also build a lobby
-unless Nick picks that shape. Valve-pixel CM is not a goal.
+unless Nick picks that shape.
 
-### 6. Team logos + Challenge CSS — leftover polish
+### 5. Team Steam logos — leftover polish
 
-Some orgs have no Steam logo (initials fallback). Challenge paste
-sanitizes; CSS containment / «экранировать строчку» may still leak.
-No client Jest/Vitest. `copiedDraft.ts` is not in Stryker mutate.
+Keyd Stars alias + Liquipedia slug PNGs shipped (T1, Quincy Crew, Team
+Undying, RNG, G2 x iG, BoomBoys). Steam still empty for those orgs;
+initials fallback if a slug miss. **No client Jest/Vitest.**
 
 ## Still true, not this session's P0
 
@@ -65,6 +61,20 @@ No client Jest/Vitest. `copiedDraft.ts` is not in Stryker mutate.
 - Heterogeneous tags (`Army of Clones` / `Unseen` / `Prone To Burst`) —
   still the calibration leftover, still needs an isolated hypothesis.
 
+## Completed this pass (2026-09-01, later)
+
+- **TI Run live bracket** — `projectLiveBracket` over the template;
+  `toView` no longer dumps historical `bracket.matches`. Occupy-slot
+  BO1 results drive the tree.
+- **Challenge paste CSS** — row containment (`min-width: 0`, overflow
+  hidden, `size={1}`); paste no longer blows the Battle layout.
+- **Team logos** — Keyd Stars alias; Liquipedia slug PNGs for T1,
+  Quincy Crew, Team Undying, RNG, G2 x iG, BoomBoys (not recycled
+  Steam ids). Steam still empty for those orgs.
+- **Stryker** — mutate `copiedDraft.ts` via gitignored
+  `server/shared-src` copy (`stryker.conf.js`); scoped score ~95%;
+  `challenge-mirror` 13/13.
+
 ## Completed this pass (2026-09-01)
 
 - **Isolated modes** — Battle `/draft`, Captains `/captains`, TI Run
@@ -75,8 +85,8 @@ No client Jest/Vitest. `copiedDraft.ts` is not in Stryker mutate.
   starts a **new** CM (no sessionStorage persist).
 - **TI Run** — occupy-slot double-elim BO1, `TiBracket` tree, team
   logos, eval/fight split views, opponent copy from that team's TI
-  drafts. Persists `sessionStorage['ti-run-id']`. Bracket **display**
-  still historical — live projection not landed.
+  drafts. Persists `sessionStorage['ti-run-id']`. Live projection
+  landed in the later 2026-09-01 pass.
 - **Challenge** — button under Fight Again; short code `dd1` + Crockford
   base32 + checksum (`shared/utils/copiedDraft.ts`); sanitize paste;
   Copy Draft emits the short code.
@@ -281,11 +291,12 @@ User's request (2026-08-06): heroes who genuinely play both a core and a support
 
 Friend lobby stays parked. Dual-role Support presumed shares only if
 Nick asks. Don't invent Visage Mid/Carry. Don't buy a domain. Don't
-start a calibration pass. Tunnel is off; `docker compose up` still
-brings back `:8080`, overlay `docker-compose.tunnel.yml` still brings
-back a trycloudflare URL. Nonempty Docker volumes do **not** pick up a
-new `pro-matches.json` / `heroes.json` until you exec `seed` +
-`seed-opponent-pool` in the api container.
+start a calibration pass. Valve-pixel CM is not a goal. Tunnel is off;
+`docker compose up` still brings back `:8080`, overlay
+`docker-compose.tunnel.yml` still brings back a trycloudflare URL.
+Nonempty Docker volumes do **not** pick up a new `pro-matches.json` /
+`heroes.json` until you exec `seed` + `seed-opponent-pool` in the api
+container.
 
 ---
 

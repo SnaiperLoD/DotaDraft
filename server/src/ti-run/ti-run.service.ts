@@ -15,6 +15,7 @@ import {
   openingMatch,
   otherTeam,
   playoffTeams,
+  projectLiveBracket,
   teamsMatch,
   tiBracketById,
   type PooledDraftSummary,
@@ -196,6 +197,7 @@ export class TiRunService {
     const bracket = this.bracketOf(row.bracketId);
     const choice = parseChoice(row.choiceJson);
     const occupyAs = choice.occupyAs ?? row.teamName;
+    const path = parsePath(row.pathJson);
     const match = row.currentMatchId
       ? (bracket.matches.find((m) => m.id === row.currentMatchId) ?? null)
       : null;
@@ -220,8 +222,13 @@ export class TiRunService {
       currentRound: match?.round ?? null,
       opponentName,
       losses: row.losses,
-      path: parsePath(row.pathJson),
-      matches: bracket.matches,
+      path,
+      matches: projectLiveBracket(bracket.matches, {
+        playerTeam: row.teamName,
+        path,
+        currentMatchId: row.currentMatchId,
+        aliases: bracket.aliases,
+      }),
     };
   }
 

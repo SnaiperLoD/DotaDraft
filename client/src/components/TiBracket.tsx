@@ -34,9 +34,13 @@ function MatchCard({
   current: boolean;
   playerTeam: string | null;
 }) {
+  const trophy = Boolean(
+    match.bracket === 'grand' && match.winner && playerTeam && match.winner === playerTeam,
+  );
+  const empty = !match.teamA && !match.teamB && !match.winner;
   return (
     <article
-      className={`ti-match${current ? ' is-current' : ''}${match.winner ? ' is-played' : ''}`}
+      className={`ti-match${current ? ' is-current' : ''}${match.winner ? ' is-played' : ''}${trophy ? ' is-trophy' : ''}${empty ? ' is-empty' : ''}`}
       data-match-id={match.id}
     >
       <Seed name={match.teamA} winner={match.winner} playerTeam={playerTeam} />
@@ -88,6 +92,7 @@ export default function TiBracket({
   upperLabel,
   lowerLabel,
   grandLabel,
+  finale,
 }: {
   matches: TiBracketMatch[];
   currentMatchId: string | null;
@@ -95,14 +100,17 @@ export default function TiBracket({
   upperLabel: string;
   lowerLabel: string;
   grandLabel: string;
+  finale?: 'champion' | 'eliminated' | null;
 }) {
   const upper = groupRounds(matches, 'upper');
   const lower = groupRounds(matches, 'lower');
   const grand = matches.filter((m) => m.bracket === 'grand');
+  const finaleClass =
+    finale === 'champion' ? ' is-champion' : finale === 'eliminated' ? ' is-eliminated' : '';
 
   return (
-    <div className="ti-tree-scroll" data-testid="ti-bracket">
-      <div className="ti-tree">
+    <div className="ti-tree-scroll" data-testid="ti-bracket" data-finale={finale ?? ''}>
+      <div className={`ti-tree${finaleClass}`}>
         <div className="ti-tree-body">
           <Lane label={upperLabel} rounds={upper} currentMatchId={currentMatchId} playerTeam={playerTeam} />
           <Lane label={lowerLabel} rounds={lower} currentMatchId={currentMatchId} playerTeam={playerTeam} />

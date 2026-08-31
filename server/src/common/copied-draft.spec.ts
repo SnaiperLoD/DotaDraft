@@ -6,7 +6,24 @@ import {
   resolveCopiedDraft,
   sameHeroSet,
   sanitizeDraftCodeInput,
-} from 'shared';
+} from '../../shared-src/utils/copiedDraft'; // path Stryker --findRelatedTests can see
+
+/** Bit-pack like encodeCopiedDraft without role/range checks — for illegal id codes. */
+function encodeUnchecked(ids: number[]): string {
+  const alph = '0123456789abcdefghjkmnpqrstvwxyz';
+  let bits = 0n;
+  for (const id of ids) bits = (bits << 12n) | BigInt(id);
+  const chars: string[] = [];
+  let rest = bits;
+  for (let i = 0; i < 12; i++) {
+    chars.push(alph[Number(rest & 31n)]);
+    rest >>= 5n;
+  }
+  chars.reverse();
+  let check = 0;
+  for (const id of ids) check ^= id;
+  return `dd1${chars.join('')}${alph[check & 31]}`;
+}
 
 describe('parseCopiedDraft', () => {
   it('parses English Copy Draft lines into the five roles', () => {
@@ -45,6 +62,19 @@ describe('parseCopiedDraft', () => {
 
   it('skips junk lines that are not Role: Hero', () => {
     expect(parseCopiedDraft('hello\nCarry: Axe\n')).toEqual([{ role: 'Carry', heroName: 'Axe' }]);
+    expect(parseCopiedDraft('prefix Carry: Axe')).toEqual([]);
+    expect(parseCopiedDraft('Nope: Axe')).toEqual([]);
+  });
+
+  it('accepts hyphen/space aliases, trims fields, and allows no space after the colon', () => {
+    expect(parseCopiedDraft('  Carry:Axe  ')).toEqual([{ role: 'Carry', heroName: 'Axe' }]);
+    expect(parseCopiedDraft('Carry: Axe  ')).toEqual([{ role: 'Carry', heroName: 'Axe' }]);
+    expect(parseCopiedDraft('Carry : Axe')).toEqual([{ role: 'Carry', heroName: 'Axe' }]);
+    expect(
+      parseCopiedDraft(
+        ['soft-support: CM', 'софт саппорт: WD', 'hard-support: Lion', 'хард саппорт: CM'].join('\n'),
+      ).map((r) => r.role),
+    ).toEqual(['Soft Support', 'Soft Support', 'Hard Support', 'Hard Support']);
   });
 });
 
@@ -52,6 +82,9 @@ describe('matchHeroName', () => {
   it('ignores apostrophes and case', () => {
     expect(matchHeroName("Nature's Prophet", 'natures prophet')).toBe(true);
     expect(matchHeroName('Anti-Mage', 'anti mage')).toBe(true);
+    expect(matchHeroName('Anti-Mage', 'anti--mage')).toBe(true);
+    expect(matchHeroName('Anti-Mage', 'AntiMage')).toBe(false);
+    expect(matchHeroName('Axe', 'Axe  ')).toBe(true);
     expect(matchHeroName('Axe', 'Invoker')).toBe(false);
   });
 });
@@ -116,6 +149,9 @@ describe('resolveCopiedDraft', () => {
     ).toThrow('duplicate or missing roles');
     expect(() => resolveCopiedDraft(fiveLines.replace('Axe', 'Not A Hero'), roster)).toThrow('Unknown hero');
     expect(() => resolveCopiedDraft(fiveLines.replace('Invoker', 'Axe'), roster)).toThrow('duplicate heroes');
+    expect(() => resolveCopiedDraft('hello there', roster)).toThrow(
+      'Copied draft must list all 5 roles as Role: Hero',
+    );
   });
 
   it('round-trips a short draft code and ignores spaces/dashes', () => {
@@ -151,6 +187,23 @@ describe('resolveCopiedDraft', () => {
     expect(decodeCopiedDraft(flipped)).toBeNull();
     expect(() => resolveCopiedDraft(flipped, roster)).toThrow('Invalid draft code');
     expect(() => resolveCopiedDraft('dd1notacode!!!!', roster)).toThrow('Invalid draft code');
+    expect(decodeCopiedDraft(`${code}x`)).toBeNull();
+    expect(decodeCopiedDraft(`${code.slice(0, 8)}i${code.slice(9)}`)).toBeNull();
+    expect(decodeCopiedDraft(encodeUnchecked([0, 2, 3, 4, 5]))).toBeNull();
+    expect(decodeCopiedDraft(encodeUnchecked([1, 1, 3, 4, 5]))).toBeNull();
+    const missingFromRoster = encodeCopiedDraft([
+      { heroId: 1, role: 'Carry' },
+      { heroId: 2, role: 'Mid' },
+      { heroId: 3, role: 'Offlane' },
+      { heroId: 4, role: 'Soft Support' },
+      { heroId: 6, role: 'Hard Support' },
+    ]);
+    expect(() =>
+      resolveCopiedDraft(
+        missingFromRoster,
+        roster.filter((h) => h.id !== 6),
+      ),
+    ).toThrow('Unknown hero: 6');
   });
 
   it('encodes by role order, not array order', () => {
@@ -207,6 +260,15 @@ describe('resolveCopiedDraft', () => {
         { heroId: 5, role: 'Hard Support' },
       ]),
     ).toThrow('Invalid hero id');
+    expect(
+      encodeCopiedDraft([
+        { heroId: 4095, role: 'Carry' },
+        { heroId: 2, role: 'Mid' },
+        { heroId: 3, role: 'Offlane' },
+        { heroId: 4, role: 'Soft Support' },
+        { heroId: 5, role: 'Hard Support' },
+      ]),
+    ).toMatch(/^dd1/);
   });
 
   it('rejects a dd2 prefix and an unknown checksum', () => {
@@ -226,9 +288,14 @@ describe('resolveCopiedDraft', () => {
 describe('sameHeroSet', () => {
   it('is order-independent for exactly five ids', () => {
     expect(sameHeroSet([1, 2, 3, 4, 5], [5, 4, 3, 2, 1])).toBe(true);
+    expect(sameHeroSet([5, 4, 3, 2, 1], [1, 2, 3, 4, 5])).toBe(true);
     expect(sameHeroSet([1, 2, 3, 4, 5], [1, 2, 3, 4, 6])).toBe(false);
     expect(sameHeroSet([1, 2, 3, 4], [1, 2, 3, 4])).toBe(false);
     expect(sameHeroSet([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6])).toBe(false);
+    expect(sameHeroSet([1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 6])).toBe(false);
+    expect(sameHeroSet([1, 2, 3, 4], [1, 2, 3, 4, 5])).toBe(false);
+    expect(sameHeroSet([1, 2, 3, 4, 5], [1, 2, 3, 4])).toBe(false);
+    expect(sameHeroSet([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5])).toBe(false);
     expect(sameHeroSet([], [])).toBe(false);
   });
 });

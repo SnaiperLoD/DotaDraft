@@ -99,11 +99,30 @@
   background: color-mix(in srgb, var(--gold) 38%, transparent);
 }
 
+.ti-match.is-empty {
+  opacity: 0.42;
+}
+
 .ti-match.is-current {
   border-color: var(--gold-bright);
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--gold-bright) 55%, transparent),
     0 0 18px color-mix(in srgb, var(--gold) 28%, transparent);
+}
+
+.ti-match.is-trophy {
+  border-color: var(--gold-bright);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--gold-bright) 70%, transparent),
+    0 0 22px color-mix(in srgb, var(--gold) 40%, transparent);
+}
+
+.ti-tree.is-eliminated .ti-match.is-played {
+  border-color: color-mix(in srgb, var(--danger) 55%, #4a3820);
+}
+
+.ti-tree.is-champion .ti-tree-grand .ti-lane-label {
+  color: var(--gold-bright);
 }
 
 .ti-tree-grand .ti-match {

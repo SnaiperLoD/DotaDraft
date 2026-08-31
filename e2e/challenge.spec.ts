@@ -23,6 +23,18 @@ test('challenge paste strips markup', async ({ page }) => {
   await page.keyboard.insertText('<script>alert(1)</script>');
   await expect(paste).toHaveValue(/^[0-9a-hjkmnp-tv-zA-Z\s-]*$/);
   await expect(paste).not.toHaveValue(/[<>]/);
+
+  await paste.fill(`${'z'.repeat(80)}-${'z'.repeat(80)}`);
+  const row = page.getByTestId('battle-challenge-row');
+  const rowBox = await row.boundingBox();
+  const pasteBox = await paste.boundingBox();
+  const viewport = page.viewportSize();
+  expect(rowBox).not.toBeNull();
+  expect(pasteBox).not.toBeNull();
+  expect(viewport).not.toBeNull();
+  if (!rowBox || !pasteBox || !viewport) return;
+  expect(rowBox.width).toBeLessThanOrEqual(viewport.width);
+  expect(pasteBox.width).toBeLessThanOrEqual(rowBox.width + 1);
 });
 
 test('coin-flip challenge never shows the battle story', async ({ page }) => {

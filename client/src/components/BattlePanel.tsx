@@ -789,6 +789,7 @@ export default function BattlePanel({
               <input
                 className="battle-challenge-paste"
                 data-testid="battle-challenge-paste"
+                size={1}
                 value={pasteText}
                 onChange={(e) => setPasteText(sanitizeDraftCodeInput(e.target.value))}
                 onPaste={(e) => {

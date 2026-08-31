@@ -1,5 +1,12 @@
-import { advanceBracket, linkSeries, openingMatch, otherTeam } from 'shared';
-import type { TiSeries } from 'shared';
+import {
+  advanceBracket,
+  linkSeries,
+  openingMatch,
+  otherTeam,
+  projectLiveBracket,
+  type TiPathFight,
+  type TiSeries,
+} from 'shared';
 
 const s = (
   id: string,
@@ -48,5 +55,87 @@ describe('occupy-slot double-elim', () => {
 
   it('throws on an unknown match id', () => {
     expect(() => advanceBracket(matches, 'nope', true)).toThrow('Unknown match nope');
+  });
+});
+
+describe('projectLiveBracket', () => {
+  const template = linkSeries([
+    s('ub_qf', 'UB QF', 'upper', 'Spirit', 'Liquid', 'Spirit'),
+    s('lb_r1', 'LB R1', 'lower', 'Liquid', 'OG', 'Liquid'),
+    s('ub_f', 'UB Final', 'upper', 'Spirit', 'Falcons', 'Falcons'),
+    s('lb_f', 'LB Final', 'lower', 'Spirit', 'Liquid', 'Spirit'),
+    s('gf', 'Grand Final', 'grand', 'Falcons', 'Spirit', 'Spirit'),
+  ]);
+
+  const fight = (matchId: string, opponent: string, outcome: TiPathFight['outcome']): TiPathFight => ({
+    matchId,
+    round: matchId,
+    opponent,
+    outcome,
+    advantageDirection: 'A',
+    confidenceTier: 'Moderate',
+  });
+
+  const byId = (rows: ReturnType<typeof projectLiveBracket>, id: string) => rows.find((m) => m.id === id)!;
+
+  it('keeps the slot graph but blanks historical results before any fight', () => {
+    const live = projectLiveBracket(template, {
+      playerTeam: 'Spirit',
+      path: [],
+      currentMatchId: 'ub_qf',
+    });
+    expect(byId(live, 'ub_qf')).toMatchObject({ teamA: 'Spirit', teamB: 'Liquid', winner: '' });
+    expect(byId(live, 'ub_f')).toMatchObject({ teamA: '', teamB: '', winner: '' });
+    expect(byId(live, 'gf')).toMatchObject({ teamA: '', teamB: '', winner: '' });
+    expect(template.find((m) => m.id === 'gf')?.winner).toBe('Spirit');
+    expect(byId(live, 'ub_qf').nextWin).toBe('ub_f');
+  });
+
+  it('paints the user path after an upper-bracket win and leaves the rest TBD', () => {
+    const live = projectLiveBracket(template, {
+      playerTeam: 'Spirit',
+      path: [fight('ub_qf', 'Liquid', 'Win')],
+      currentMatchId: 'ub_f',
+    });
+    expect(byId(live, 'ub_qf')).toMatchObject({ teamA: 'Spirit', teamB: 'Liquid', winner: 'Spirit' });
+    expect(byId(live, 'ub_f')).toMatchObject({ teamA: 'Spirit', teamB: 'Falcons', winner: '' });
+    expect(byId(live, 'lb_r1').teamA).toBe('');
+    expect(byId(live, 'gf').winner).toBe('');
+  });
+
+  it('drops the user into the historical loser slot after a loss', () => {
+    const live = projectLiveBracket(template, {
+      playerTeam: 'Spirit',
+      path: [fight('ub_qf', 'Liquid', 'Lose')],
+      currentMatchId: 'lb_r1',
+    });
+    expect(byId(live, 'ub_qf').winner).toBe('Liquid');
+    expect(byId(live, 'lb_r1')).toMatchObject({ teamA: 'Spirit', teamB: 'OG', winner: '' });
+    expect(byId(live, 'ub_f').teamA).toBe('');
+  });
+
+  it('shows the player as GF champion without filling unused slots', () => {
+    const live = projectLiveBracket(template, {
+      playerTeam: 'Spirit',
+      path: [
+        fight('ub_qf', 'Liquid', 'Lose'),
+        fight('lb_r1', 'OG', 'Win'),
+        fight('lb_f', 'Spirit', 'Win'),
+        fight('gf', 'Falcons', 'Win'),
+      ],
+      currentMatchId: null,
+    });
+    expect(byId(live, 'gf')).toMatchObject({ teamA: 'Falcons', teamB: 'Spirit', winner: 'Spirit' });
+    expect(byId(live, 'ub_f')).toMatchObject({ teamA: '', teamB: '', winner: '' });
+  });
+
+  it('marks GF elim when the user loses the final', () => {
+    const live = projectLiveBracket(template, {
+      playerTeam: 'Spirit',
+      path: [fight('gf', 'Falcons', 'Lose')],
+      currentMatchId: null,
+    });
+    expect(byId(live, 'gf').winner).toBe('Falcons');
+    expect(byId(live, 'gf').teamB).toBe('Spirit');
   });
 });

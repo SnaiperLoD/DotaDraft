@@ -1,4 +1,4 @@
-import type { TiBracketMatch, TiSeries, TiSlot } from '../types/ti-run';
+import type { TiBracketMatch, TiPathFight, TiSeries, TiSlot } from '../types/ti-run';
 
 function norm(name: string): string {
   return name.trim().toLowerCase().replace(/\s+/g, ' ');
@@ -105,4 +105,63 @@ export function advanceBracket(
   const mover = historicalMover(match, won);
   const opponent = next.teamA === mover ? next.teamB : next.teamA;
   return { nextMatchId: nextId, opponent, champion: false, eliminated: false };
+}
+
+export function projectLiveBracket(
+  template: TiBracketMatch[],
+  input: {
+    playerTeam: string | null;
+    path: TiPathFight[];
+    currentMatchId: string | null;
+    aliases?: Record<string, string[]>;
+  },
+): TiBracketMatch[] {
+  const aliases = input.aliases ?? {};
+  const projected = template.map((match) => ({ ...match, teamA: '', teamB: '', winner: '' }));
+  const live = new Map(projected.map((match) => [match.id, match]));
+  const source = new Map(template.map((match) => [match.id, match]));
+  const player = input.playerTeam?.trim() ?? '';
+  if (!player) return projected;
+
+  const paint = (matchId: string, occupyAs: string, opponent: string, winner: string) => {
+    const src = source.get(matchId);
+    const dst = live.get(matchId);
+    if (!src || !dst) return;
+    if (teamsMatch(src.teamA, occupyAs, aliases)) {
+      dst.teamA = player;
+      dst.teamB = opponent;
+    } else if (teamsMatch(src.teamB, occupyAs, aliases)) {
+      dst.teamB = player;
+      dst.teamA = opponent;
+    } else {
+      dst.teamA = player;
+      dst.teamB = opponent;
+    }
+    dst.winner = winner;
+  };
+
+  let occupyAs = player;
+  for (const fight of input.path) {
+    const src = source.get(fight.matchId);
+    if (!src) continue;
+    const won = fight.outcome === 'Win';
+    paint(fight.matchId, occupyAs, fight.opponent, won ? player : fight.opponent);
+    occupyAs = historicalMover(src, won);
+  }
+
+  const currentId = input.currentMatchId;
+  if (currentId && !input.path.some((fight) => fight.matchId === currentId)) {
+    const src = source.get(currentId);
+    if (src) {
+      let opponent = '';
+      try {
+        opponent = otherTeam(src, occupyAs, aliases);
+      } catch {
+        opponent = '';
+      }
+      paint(currentId, occupyAs, opponent, '');
+    }
+  }
+
+  return projected;
 }

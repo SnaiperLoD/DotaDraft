@@ -58,6 +58,14 @@ not an early close) · Anonymous draft ownership (`ownerToken` / `X-Owner-Token`
 · Tests: `copiedDraft` + `challenge-mirror` + BattleService coin +
   captains/TI gaps; Stryker `challenge-mirror` 13/13 killed; e2e
   `challenge.spec.ts` + landing 3 CTAs + captains splash reset
+· TI Run live bracket projection (`projectLiveBracket` over template;
+  `toView` no longer dumps historical `bracket.matches`)
+· Challenge paste CSS containment (row `min-width: 0` / overflow hidden)
+· Team logos: Keyd Stars alias; Liquipedia slug PNGs for T1, Quincy Crew,
+  Team Undying, RNG, G2 x iG, BoomBoys (not recycled Steam ids). Steam
+  still empty for those orgs
+· Stryker mutate `copiedDraft.ts` via gitignored `server/shared-src`
+  copy (`stryker.conf.js`); scoped score ~95%; challenge-mirror 13/13
 
 ---
 
@@ -141,15 +149,10 @@ Wait for funnel signal (`client/src/telemetry/`).
 ### Fight own history drafts — `open`
 Challenge paste is Battle-only (`dd1` short code). Fighting own History
 rows is still separate.
-### TI Run live bracket projection — `open`
-`TiBracket` still dumps historical `bracket.matches`. Occupy-slot BO1
-fights land; live tree from user results was planned and **not** shipped.
 ### Team Steam logos — `partial`
-Local `client/public/team-logos/` + initials fallback. Some orgs have no
-Steam logo.
-### Challenge paste CSS containment — `partial`
-Sanitize + short code shipped. UI «экранировать строчку» / CSS wrap may
-still leak.
+Local `client/public/team-logos/` + initials fallback. Keyd Stars alias
++ Liquipedia slug PNGs for T1 / Quincy Crew / Team Undying / RNG /
+G2 x iG / BoomBoys. Steam still empty for those orgs.
 ### Pooled draft as opponent — win streak — `open`
 Session streak shipped; opponent-side streak not.
 ### More archetypes beyond current set — `partial`
@@ -227,8 +230,9 @@ weekly + `npm audit` in CI (`continue-on-error`).
 Full suite (2026-08-17): **69.92%** total. Re-run on
 `battle-explanation.ts` after deeper Jest: **~65%** on that file alone
 (was **38.55%**). `challenge-mirror.ts` mutate: **13/13 killed**.
-Shared `copiedDraft.ts` is **not** in Stryker mutate (sandbox mapping).
-Next: keep killing survivors / optional CI mutation job.
+`copiedDraft.ts` mutates via gitignored `server/shared-src` copy
+(`stryker.conf.js`); scoped score **~95%**. Next: keep killing survivors
+/ optional CI mutation job. **No client Jest/Vitest.**
 
 ---
 

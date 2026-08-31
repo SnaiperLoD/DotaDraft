@@ -77,7 +77,7 @@
   "tiRun": {
     "title": "TI Run",
     "loading": "Drawing a tournament…",
-    "pickTeam": "Pick your jersey. The rest of the bracket stays frozen to history.",
+    "pickTeam": "Pick your jersey. The tree follows your run; everyone else is TBD until you get there.",
     "yourTeam": "You wear {{team}}",
     "startDraft": "Draft your five",
     "nextMatch": "Next match",

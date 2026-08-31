@@ -287,6 +287,9 @@ export default function TiRunPage() {
                 upperLabel={t('tiRun.bracketUpper')}
                 lowerLabel={t('tiRun.bracketLower')}
                 grandLabel={t('tiRun.bracketGrand')}
+                finale={
+                  run.status === 'CHAMPION' ? 'champion' : run.status === 'ELIMINATED' ? 'eliminated' : null
+                }
               />
             </>
           )}
