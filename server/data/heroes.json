@@ -1221,7 +1221,20 @@
         "resource_efficiency": 6.9
       },
       "Support": {
-        "no_info": true
+        "teamfight": 7.5,
+        "burst": 4.4,
+        "scaling": 4.8,
+        "objectives": 1.7,
+        "durability": 3.3,
+        "tempo": 5.5,
+        "control": 5.9,
+        "mobility": 7,
+        "map_control": 4.9,
+        "saving": 0,
+        "initiating": 5.5,
+        "skirmish_rate": 6.2,
+        "camp_stacking": 4.5,
+        "resource_efficiency": 8.5
       }
     }
   },
@@ -1446,7 +1459,20 @@
         "no_info": true
       },
       "Support": {
-        "no_info": true
+        "teamfight": 5.6,
+        "burst": 4.7,
+        "scaling": 4.8,
+        "objectives": 6,
+        "durability": 6.5,
+        "tempo": 7.3,
+        "control": 5.2,
+        "mobility": 0,
+        "map_control": 0.3,
+        "saving": 0,
+        "initiating": 5,
+        "skirmish_rate": 5.3,
+        "camp_stacking": 3.8,
+        "resource_efficiency": 5.3
       }
     }
   },
@@ -4537,7 +4563,20 @@
         "resource_efficiency": 3.4
       },
       "Support": {
-        "no_info": true
+        "teamfight": 4.1,
+        "burst": 8.1,
+        "scaling": 5.3,
+        "objectives": 6.6,
+        "durability": 5.6,
+        "tempo": 5.7,
+        "control": 3.5,
+        "mobility": 7.5,
+        "map_control": 4.3,
+        "saving": 2.2,
+        "initiating": 6,
+        "skirmish_rate": 4.4,
+        "camp_stacking": 0.8,
+        "resource_efficiency": 3.4
       }
     }
   },
@@ -6728,7 +6767,20 @@
         "no_info": true
       },
       "Support": {
-        "no_info": true
+        "teamfight": 2.5,
+        "burst": 2.5,
+        "scaling": 6.5,
+        "objectives": 7.1,
+        "durability": 6.2,
+        "tempo": 3.2,
+        "control": 6.7,
+        "mobility": 7.1,
+        "map_control": 5.8,
+        "saving": 3.6,
+        "initiating": 5.1,
+        "skirmish_rate": 0.4,
+        "camp_stacking": 6.6,
+        "resource_efficiency": 0.6
       }
     }
   },
@@ -6944,7 +6996,20 @@
         "resource_efficiency": 4.3
       },
       "Support": {
-        "no_info": true
+        "teamfight": 4.4,
+        "burst": 6.8,
+        "scaling": 2.9,
+        "objectives": 9.4,
+        "durability": 3,
+        "tempo": 8.8,
+        "control": 5.6,
+        "mobility": 6.7,
+        "map_control": 9.1,
+        "saving": 2.4,
+        "initiating": 5.4,
+        "skirmish_rate": 6.6,
+        "camp_stacking": 0.5,
+        "resource_efficiency": 4
       }
     }
   },

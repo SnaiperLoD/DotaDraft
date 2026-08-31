@@ -1,14 +1,16 @@
 # Next Session Priorities
 
-Updated 2026-08-21 after the friends-alpha playtest park landed.
+Updated 2026-08-31 after TI 2026 through the grand final, Visage Support,
+and pro-name identity backfill landed.
 Handoff / triage; `10-tech-debt-backlog.md` is the detailed source of truth.
 Deploy notes: `13-deploy.md`.
 
-**Status check:** playtest park (leaderboard, CM vs AI, TI-run, clash, chips,
-floor, Fundamentals, card CSS, Razor/Tiny, 304-archive backfill) is on
-`master`. Pro pool is TI main-event (groups + playoffs) + live TI 2026:
-2356 pro + 396 player in the live Postgres pool. Tunnel still OFF.
-Next is leftovers below, not a domain/VPS buy and not a calibration sweep.
+**Status check:** playtest park is on `master`. Pro snapshot is TI
+main-event (groups + playoffs, 2012–2025) + live TI 2026 through GF
+(2026-08-23, Spirit vs TEAM VISION): **2374** pro rows. Names on those
+rows are OpenDota `proPlayers[account_id]`, not Steam graffiti. Tunnel
+still OFF. Next is leftovers below, not a domain/VPS buy and not a
+calibration sweep.
 
 ---
 
@@ -16,30 +18,31 @@ Next is leftovers below, not a domain/VPS buy and not a calibration sweep.
 
 Park is shipped. Don't rebuild it. Domain/VPS is not P0.
 
-### 1. Keep TI 2026 current through the grand final
-
-Playoffs run through 2026-08-23. Mechanical:
-`npm run fetch-pro-matches-ti` → `seed` → `seed-opponent-pool`.
-Already approved this session. Do not import regionals.
-
-### 2. Visage carry / mid still `no_info`
-
-Tiny Carry was copied from aggregate (2026-08-20). Visage Carry/Mid
-remain `no_info`. Don't invent numbers. Don't refetch OpenDota unless
-Nick asks.
-
-### 3. TI / pro names on reused cached rows — `partial`
-
-Sanitizer + official `name` on new fetches shipped. ~567 historical
-playoff rows were reused as-is; graffiti/missing handles can still show.
-Rewrite only if it still looks broken in the pool. Not a live refetch of
-match IDs we already have complete roles for unless asked.
-
-### 4. Captains friend lobby — parked
+### 1. Captains friend lobby — parked
 
 CM vs AI shipped (player always Radiant / first pick, 7.40 24-step,
 AI fills instantly). Don't also build a friend lobby unless Nick picks
 that shape.
+
+### 2. Dual-role Support presumed shares — ask first
+
+Visage Support `no_info` is plugged (aggregate copy + hero-meta Support
+0.605 / Offlane 0.395). Tiny / Sand King / Night Stalker / Naga got the
+same Support eval copy; their `hero-meta` Support share is still 0, so
+Battle still applies the support-miscast −10% if you put them on 4/5.
+Don't rewrite those shares without Nick. Visage Carry stays `no_info`
+(too rare). Visage Mid stays `no_info` (GPM #2 is offlane farm, not mid).
+
+### 3. TI 2026 GF badge IDs
+
+`shared/utils/tiFinalsOpponent.ts` still says TI 2026 was groups-only.
+GF match IDs are in `pro-matches.json` now — append them when Nick wants
+the Finals badge on those opponents. Don't infer from `leagueName`.
+
+### 4. 89 pro rows still missing a team name
+
+OpenDota has no `radiant_name` / `dire_name` on those matches. UI already
+falls back to league via `opponentTeamCaption`. Not a refetch problem.
 
 ## Still true, not this session's P0
 
@@ -52,6 +55,24 @@ that shape.
   needed (`13-deploy.md`).
 - Heterogeneous tags (`Army of Clones` / `Unseen` / `Prone To Burst`) —
   still the calibration leftover, still needs an isolated hypothesis.
+
+## Completed this pass (2026-08-31)
+
+- **TI 2026 through GF** — league `19719` 129 → 147 (+18), newest
+  2026-08-23 Spirit vs TEAM VISION. Snapshot 2356 → **2374**. Quals still
+  out.
+- **Visage Support `no_info`** — aggregate copied onto Support (Tiny Carry
+  pattern). `hero-meta` presumed flipped from 100% Offlane to Support
+  0.605 / Offlane 0.395 so miscast stops firing on 4/5. Carry/Mid still
+  `no_info`. Same Support eval copy on Tiny, Sand King, Night Stalker,
+  Naga (presumed Support share left 0).
+- **Pro names 1:1** — `account_id` → OpenDota `/api/proPlayers` (curated
+  list OD already syncs, including Liquipedia). Fuzzy LP string match
+  not used. All 2374 matches overlaid; `accountId` stored on roles.
+  20850/23740 slots have a handle (rest hidden profiles). Display keeps
+  official CJK (`天鸽`, `医者watson\``). Fetch TI / playoffs skip cache
+  only when identity is already stamped.
+  `npm run backfill-pro-player-names`.
 
 ## Completed this pass (2026-08-21)
 
@@ -226,11 +247,13 @@ User's request (2026-08-06): heroes who genuinely play both a core and a support
 
 ## Where to start
 
-Keep TI 2026 current if the GF isn't in the snapshot yet, then Visage
-carry/mid only with real role data (don't invent). Don't buy a domain.
-Don't start a calibration pass. Tunnel is off; `docker compose up` still
+Friend lobby stays parked. Dual-role Support presumed shares only if
+Nick asks. Don't invent Visage Mid/Carry. Don't buy a domain. Don't
+start a calibration pass. Tunnel is off; `docker compose up` still
 brings back `:8080`, overlay `docker-compose.tunnel.yml` still brings
-back a trycloudflare URL.
+back a trycloudflare URL. Nonempty Docker volumes do **not** pick up a
+new `pro-matches.json` / `heroes.json` until you exec `seed` +
+`seed-opponent-pool` in the api container.
 
 ---
 

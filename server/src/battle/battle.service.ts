@@ -7,7 +7,7 @@ import { resolveBattle, type BattlePick } from './battle-resolution';
 import { alignOpponentToRoles } from './opponent-alignment';
 import { buildBattleStory } from './battle-story';
 import { buildLaneResults } from './battle-lanes';
-import { ROLES, resolveCopiedDraft, sanitizeProPlayerName, opponentTeamCaption } from 'shared';
+import { ROLES, resolveCopiedDraft, displayProPlayerName, opponentTeamCaption } from 'shared';
 import type { BattleResultResponse, Hero, PooledDraftSummary, PooledHeroRole, ResolvedOutcome } from 'shared';
 import { logPersistenceFailure } from '../common/log';
 import { classifyPicksArchetype } from '../evaluation/draft-archetype';
@@ -174,7 +174,7 @@ export class BattleService {
           heroId: h.id,
           heroName: h.name,
           assignedRole: ROLES[index],
-          playerName: sanitizeProPlayerName(playerNameByHeroId.get(h.id) ?? null),
+          playerName: displayProPlayerName(playerNameByHeroId.get(h.id) ?? null),
         })),
         teamName: caption.teamName,
         leagueName: caption.leagueName,

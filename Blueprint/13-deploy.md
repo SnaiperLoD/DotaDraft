@@ -1,6 +1,6 @@
 # Deploy / hosting prep
 
-Last updated: 2026-08-21.
+Last updated: 2026-08-31.
 
 Status 2026-08-18: friends-alpha **tunnel is OFF**. Stack stopped with
 `docker compose -f docker-compose.yml -f docker-compose.tunnel.yml stop`
@@ -44,8 +44,11 @@ Health checks:
   `disabled`, or `error`. HTTP 503 only if SQLite is down; a dead pool is
   `degraded` + 200 so Compose still considers the API healthy
 - Compose healthcheck on the API image probes `/health` (start period is
-  120s — first-boot pool seed of ~2356 pro drafts is slow; nonempty pools
-  also upsert the 304-row `legacy-player-pool.json` snapshot)
+  120s — first-boot pool seed of ~2374 pro drafts is slow; nonempty pools
+  also upsert the 304-row `legacy-player-pool.json` snapshot. A new
+  `pro-matches.json` / `heroes.json` does **not** land in an existing
+  volume until you `docker compose exec api` run `node dist/seed.js`
+  and `npx ts-node --transpile-only scripts/seed-opponent-pool.ts`)
 
 Request limits (launch hardening):
 

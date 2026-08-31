@@ -105103,8 +105103,12 @@
       "heroId": 92,
       "positions": [
         {
+          "position": "Support",
+          "share": 0.605
+        },
+        {
           "position": "Offlane",
-          "share": 1
+          "share": 0.395
         }
       ],
       "winRate": 0.5494900250176407,

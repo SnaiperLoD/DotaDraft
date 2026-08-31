@@ -4,7 +4,7 @@ Slim open list. Calibration history lives in `09-hero-knowledge-base.md`,
 `05-evaluation-engine.md`, `06-battle-engine.md`. Session order lives in
 `12-next-session-priorities.md`.
 
-Last slim: 2026-08-21. Statuses: `open` | `partial` | `parked` | `rejected`.
+Last slim: 2026-08-31. Statuses: `open` | `partial` | `parked` | `rejected`.
 Shipped items live in the footnote, not this list.
 
 ---
@@ -39,7 +39,9 @@ not an early close) · Anonymous draft ownership (`ownerToken` / `X-Owner-Token`
   Razor role `saving` cuts, Tiny Carry aggregate copy, pro-name sanitizer
 · 304 null-token host drafts in the live player pool, spread `createdAt`
   (`0145b07`)
-· TI main-event groups+playoffs + live TI 2026 (`bf2be35`; 2356 pro rows).
+· TI main-event groups+playoffs + live TI 2026 (`bf2be35`; 2356 pro rows)
+· TI 2026 through GF, Visage Support hole, pro-name `account_id` backfill
+  (2026-08-31; snapshot **2374** pro rows)
 
 ---
 
@@ -97,12 +99,17 @@ Playtest park shipped 2026-08-20/21 — Shipped footnote +
 `12-next-session-priorities.md`. Further coefficient/tag/weight changes
 still need approve.
 
-### TI / pro names in pool — `partial`
-Sanitizer + official `name` on new fetches. ~567 reused historical
-playoff rows were not rewritten.
-### Visage carry/mid role data — `open`
-Tiny Carry copied from aggregate. Visage Carry/Mid still `no_info`.
-Don't invent; don't refetch unless asked.
+### TI / pro names in pool — shipped (2026-08-31)
+OpenDota `proPlayers[account_id]` overlay on all 2374 snapshot rows;
+`accountId` stored on `PooledHeroRole`. Display keeps official CJK
+handles. 89 matches still have no team name (OpenDota empty) — league
+fallback already handles that.
+### Visage / dual-role Support holes — `partial`
+Visage Support plugged (aggregate copy + presumed Support 0.605 /
+Offlane 0.395). Carry/Mid still `no_info` on purpose. Tiny / Sand King /
+Night Stalker / Naga Support eval copied; their presumed Support share
+is still 0 (miscast still fires). Don't rewrite those shares without
+Nick.
 ### Captains friend lobby — `parked`
 CM vs AI shipped. Don't also build a lobby unless Nick picks that shape.
 ### Opponent difficulty brackets — `open`
@@ -165,10 +172,10 @@ PL and Tinker gained `late_game_scaling` (2026-08-17) so split-push × late
 anti-synergy no longer calls them an early-end plan. Rest of HKB still open.
 ### Ability-tag coverage expansion — `partial`
 ### Pro pool expand 100→1000 — `partial`
-TI main-event (groups + playoffs, 2012–2025) + live TI 2026 landed
-2026-08-21: **2356** pro rows. Regionals/quals still excluded. Tier1
-non-TI pubs are not the 1000-target path anymore; freshness/TI covers
-the immediate need.
+TI main-event (groups + playoffs, 2012–2025) + live TI 2026 through GF
+landed 2026-08-31: **2374** pro rows. Regionals/quals still excluded.
+Tier1 non-TI pubs are not the 1000-target path anymore; freshness/TI
+covers the immediate need.
 ### Hosting / release process — `partial`
 Docker Compose + Dockerfiles + `.env.example` + `Blueprint/13-deploy.md` +
 `start:prod` + `/health` (`sqlite`/`pool`). Friends-alpha TLS overlay
@@ -176,7 +183,9 @@ Docker Compose + Dockerfiles + `.env.example` + `Blueprint/13-deploy.md` +
 volumes kept (no `down -v`). Local compose at `:8080` is how to bring it
 back. Named tunnel + domain + VPS stay deferred — not next-session P0.
 SQLite backup/restore commands are in `13-deploy.md`. Nonempty pool
-entrypoint now upserts `legacy-player-pool.json` (`0145b07`).
+entrypoint upserts `legacy-player-pool.json` (`0145b07`) but does **not**
+re-seed pro rows / heroes — after a snapshot bump, exec `seed` +
+`seed-opponent-pool` in the api container (or recreate volumes).
 ### CI hardening — `partial`
 PR trigger, full monorepo build, Playwright cache, Docker build, server
 integration suite. Lint and Prettier are blocking for production source

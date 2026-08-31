@@ -1,4 +1,9 @@
-import { sanitizeProPlayerName, opponentTeamCaption } from 'shared';
+import {
+  sanitizeProPlayerName,
+  displayProPlayerName,
+  opponentTeamCaption,
+  resolveOfficialPlayerName,
+} from 'shared';
 
 describe('sanitizeProPlayerName', () => {
   it('keeps short latin handles', () => {
@@ -23,5 +28,46 @@ describe('sanitizeProPlayerName', () => {
       teamName: 'Team Spirit',
       leagueName: 'The International 2026',
     });
+  });
+});
+
+describe('resolveOfficialPlayerName', () => {
+  const pro = new Map<number, string>([
+    [87278757, 'Puppey'],
+    [183719386, 'Yatoro'],
+  ]);
+
+  it('wins with the curated proPlayers handle over Steam graffiti', () => {
+    expect(
+      resolveOfficialPlayerName(
+        { account_id: 183719386, name: null, personaname: 'road to dream (9k)' },
+        pro,
+      ),
+    ).toBe('Yatoro');
+  });
+
+  it('uses the match verified name when the account is not on the pro list', () => {
+    expect(resolveOfficialPlayerName({ account_id: 1, name: 'gh', personaname: 'trash nick' }, pro)).toBe(
+      'gh',
+    );
+  });
+
+  it('drops Steam graffiti when that is the only string available', () => {
+    expect(
+      resolveOfficialPlayerName({ account_id: 1, name: null, personaname: 'road to dream (9k)' }, pro),
+    ).toBeNull();
+  });
+});
+
+describe('displayProPlayerName', () => {
+  it('keeps mixed CJK+latin official handles the graffiti filter would hide', () => {
+    expect(displayProPlayerName('医者watson`')).toBe('医者watson`');
+    expect(displayProPlayerName('天鸽')).toBe('天鸽');
+    expect(displayProPlayerName('Yatoro')).toBe('Yatoro');
+  });
+
+  it('still hides Steam graffiti and CJK sentences', () => {
+    expect(displayProPlayerName('road to dream (9k)')).toBeNull();
+    expect(displayProPlayerName('别浪费我的时间。')).toBeNull();
   });
 });

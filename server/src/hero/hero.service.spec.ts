@@ -1,6 +1,6 @@
 import { HeroService, ensureRoleCoverage } from './hero.service';
 import { makeHero } from '../test-utils/hero-factory';
-import type { Hero } from 'shared';
+import { hasRoleEvaluationData, type Hero } from 'shared';
 
 function rawRow(hero: Hero) {
   return {
@@ -220,6 +220,14 @@ describe('pool coverage smoke (heroes.json + hero-meta roster)', () => {
     expect(all.filter((h) => h.presumed_positions.length > 0).length).toBeGreaterThan(100);
     expect(all.some(isSupport)).toBe(true);
     expect(all.some((h) => !isSupport(h))).toBe(true);
+  });
+
+  it('does not leave Visage Support as no_info when presumed Support is real', () => {
+    const visage = all.find((h) => h.id === 92);
+    expect(visage).toBeDefined();
+    expect(hasRoleEvaluationData(visage!, 'Support')).toBe(true);
+    const supportShare = visage!.presumed_positions.find((p) => p.position === 'Support')?.share ?? 0;
+    expect(supportShare).toBeGreaterThan(0.5);
   });
 
   it('never violates Support/core guarantee across 300 pools and 200 five-round drafts', () => {

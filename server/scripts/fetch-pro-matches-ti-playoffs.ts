@@ -1,5 +1,14 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import type { PooledHeroRole } from 'shared';
+import {
+  fetchProPlayerNameMap,
+  matchHasResolvedIdentities,
+  opendotaUrl,
+  pooledRolesForSide,
+  trimTeamName,
+  type OpenDotaMatchPlayerRow,
+} from './opendota-pro-identity';
 
 // Imports group-stage + playoff (main-event) matches from every past The
 // International that OpenDota still has, and MERGES them into pro-matches.json.
@@ -110,14 +119,6 @@ const TI_MAIN_EVENTS: TiMainEventWindow[] = [
   },
 ];
 
-const RANK_TO_ROLE: Record<number, string> = {
-  1: 'Carry',
-  2: 'Mid',
-  3: 'Offlane',
-  4: 'Soft Support',
-  5: 'Hard Support',
-};
-
 interface LeagueMatchRow {
   match_id: number;
   duration: number;
@@ -125,12 +126,6 @@ interface LeagueMatchRow {
   radiant_win: boolean;
   radiant_name: string | null;
   dire_name: string | null;
-}
-
-interface PooledHeroRole {
-  heroId: number;
-  role: string;
-  playerName?: string | null;
 }
 
 interface StoredProMatch {
@@ -155,13 +150,7 @@ interface MatchDetail {
   dire_name?: string | null;
   radiant_team?: { name?: string | null } | null;
   dire_team?: { name?: string | null } | null;
-  players: {
-    hero_id: number;
-    player_slot: number;
-    gold_per_min?: number | null;
-    personaname?: string | null;
-    name?: string | null;
-  }[];
+  players: (OpenDotaMatchPlayerRow & { player_slot: number; gold_per_min?: number | null })[];
 }
 
 interface Candidate {
@@ -188,31 +177,6 @@ async function withRetry<T>(fn: () => Promise<T>, retries = 5): Promise<T | null
     }
   }
   return null;
-}
-
-function trimName(v: string | null | undefined): string | null {
-  const t = v?.trim();
-  return t ? t : null;
-}
-
-function rolesForSide(
-  players: {
-    hero_id: number;
-    gold_per_min?: number | null;
-    personaname?: string | null;
-    name?: string | null;
-  }[],
-): PooledHeroRole[] | null {
-  if (players.some((p) => p.gold_per_min == null || Number.isNaN(p.gold_per_min))) {
-    return null;
-  }
-  return [...players]
-    .sort((a, b) => (b.gold_per_min as number) - (a.gold_per_min as number))
-    .map((p, i) => ({
-      heroId: p.hero_id,
-      role: RANK_TO_ROLE[i + 1],
-      playerName: p.name?.trim() || p.personaname?.trim() || null,
-    }));
 }
 
 function loadExisting(): StoredProMatch[] {
@@ -256,7 +220,7 @@ async function collectCandidates(): Promise<{ candidates: Candidate[]; perLeague
 
     console.log(`Listing ${ti.name} (league ${ti.leagueId})...`);
     const rows = await withRetry(async () => {
-      const res = await fetch(`https://api.opendota.com/api/leagues/${ti.leagueId}/matches`);
+      const res = await fetch(opendotaUrl(`leagues/${ti.leagueId}/matches`));
       if (!res.ok) throw new Error(`leagues/matches HTTP ${res.status}`);
       return (await res.json()) as LeagueMatchRow[];
     });
@@ -291,6 +255,10 @@ async function collectCandidates(): Promise<{ candidates: Candidate[]; perLeague
 }
 
 async function main() {
+  console.log(`Loading OpenDota proPlayers map...`);
+  const proNameByAccountId = await fetchProPlayerNameMap();
+  console.log(`  ${proNameByAccountId.size} curated account_id → name rows`);
+
   const { candidates, perLeague } = await collectCandidates();
   console.log(`\nMain-event candidates across all TIs: ${candidates.length}`);
   for (const [name, n] of Object.entries(perLeague)) {
@@ -310,7 +278,7 @@ async function main() {
     const matchId = String(candidate.row.match_id);
     const existingRow = byId.get(matchId);
 
-    if (hasCompleteRoles(existingRow)) {
+    if (hasCompleteRoles(existingRow) && matchHasResolvedIdentities(existingRow!)) {
       // Refresh league label if this is a TI playoff we just classified.
       if (existingRow!.leagueName !== candidate.leagueName) {
         byId.set(matchId, { ...existingRow!, leagueName: candidate.leagueName });
@@ -329,7 +297,7 @@ async function main() {
     );
 
     const detail = await withRetry(async () => {
-      const res = await fetch(`https://api.opendota.com/api/matches/${candidate.row.match_id}`);
+      const res = await fetch(opendotaUrl(`matches/${candidate.row.match_id}`));
       if (!res.ok) throw new Error(`matches HTTP ${res.status}`);
       return (await res.json()) as MatchDetail;
     });
@@ -350,8 +318,8 @@ async function main() {
       continue;
     }
 
-    const radiantHeroRoles = rolesForSide(radiantPlayers);
-    const direHeroRoles = rolesForSide(direPlayers);
+    const radiantHeroRoles = pooledRolesForSide(radiantPlayers, proNameByAccountId, { requireGpm: true });
+    const direHeroRoles = pooledRolesForSide(direPlayers, proNameByAccountId, { requireGpm: true });
     if (!radiantHeroRoles || !direHeroRoles) {
       console.warn('  missing gold_per_min — storing without roles');
     }
@@ -359,10 +327,10 @@ async function main() {
     const had = byId.has(matchId);
     const stored: StoredProMatch = {
       matchId,
-      radiantName: trimName(
+      radiantName: trimTeamName(
         detail.radiant_name ?? detail.radiant_team?.name ?? candidate.row.radiant_name,
       ),
-      direName: trimName(detail.dire_name ?? detail.dire_team?.name ?? candidate.row.dire_name),
+      direName: trimTeamName(detail.dire_name ?? detail.dire_team?.name ?? candidate.row.dire_name),
       leagueName: candidate.leagueName,
       radiantWin: detail.radiant_win ?? candidate.row.radiant_win,
       radiantHeroIds: radiantPlayers.map((p) => p.hero_id),

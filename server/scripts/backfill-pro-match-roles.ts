@@ -1,37 +1,20 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import type { PooledHeroRole } from 'shared';
+import {
+  fetchProPlayerNameMap,
+  matchHasResolvedIdentities,
+  opendotaUrl,
+  pooledRolesForSide,
+  type OpenDotaMatchPlayerRow,
+} from './opendota-pro-identity';
 
 // Backfills radiantHeroRoles/direHeroRoles onto the existing pro-matches.json
-// snapshot (Blueprint/10-tech-debt-backlog.md, "Role-fit in Battle Engine" —
-// user explicitly asked for pro-match compositions to carry role data too,
-// same as player drafts). Re-fetches only /api/matches/{id} per already-
-// selected match (not the team-discovery phase in fetch-pro-matches-tier1.ts)
-// so the curated 100-match set stays exactly as-is; only adds role data.
-//
-// Same GPM-rank convention as research-role-fit-gpm-rank.ts and
-// fetch-hero-meta.ts's classifyPositions: rank by gold_per_min within each
-// side (radiant/dire) of the SAME match — 1=highest GPM ... 5=lowest GPM
-// maps to Carry/Mid/Offlane/Soft Support/Hard Support.
+// snapshot (Blueprint/10-tech-debt-backlog.md, "Role-fit in Battle Engine").
+// Names resolve via OpenDota proPlayers[account_id] — same path as
+// backfill-pro-player-names.ts. Prefer that script if you only need identity
+// overlay on rows that already have roles.
 const DATA_PATH = path.join(__dirname, '..', 'data', 'pro-matches.json');
-
-const RANK_TO_ROLE: Record<number, string> = {
-  1: 'Carry',
-  2: 'Mid',
-  3: 'Offlane',
-  4: 'Soft Support',
-  5: 'Hard Support',
-};
-
-interface PooledHeroRole {
-  heroId: number;
-  role: string;
-  // Blueprint/10-tech-debt-backlog.md, "Имена про-игроков под портретами
-  // героев в Battle" — same /api/matches/{id} response this script already
-  // fetches for gold_per_min, personaname/name just weren't extracted
-  // before. null when a pro player has hidden their profile (personaname
-  // AND name both absent) rather than a fetch failure.
-  playerName?: string | null;
-}
 
 interface StoredProMatch {
   matchId: string;
@@ -65,38 +48,35 @@ async function withRetry<T>(fn: () => Promise<T>, retries = 3): Promise<T | null
   return null;
 }
 
-function rolesForSide(
-  players: { hero_id: number; gold_per_min: number; personaname?: string | null; name?: string | null }[],
-): PooledHeroRole[] {
-  return [...players]
-    .sort((a, b) => b.gold_per_min - a.gold_per_min)
-    .map((p, i) => ({
-      heroId: p.hero_id,
-      role: RANK_TO_ROLE[i + 1],
-      playerName: p.name?.trim() || p.personaname?.trim() || null,
-    }));
-}
-
 async function main() {
   const { generatedAt, matches } = JSON.parse(fs.readFileSync(DATA_PATH, 'utf-8')) as {
     generatedAt: string;
     matches: StoredProMatch[];
   };
 
+  console.log(`Loading OpenDota proPlayers map...`);
+  const proNameByAccountId = await fetchProPlayerNameMap();
+  console.log(`  ${proNameByAccountId.size} curated account_id → name rows`);
+
   for (const [index, match] of matches.entries()) {
+    if (
+      match.radiantHeroRoles?.length === 5 &&
+      match.direHeroRoles?.length === 5 &&
+      matchHasResolvedIdentities(match)
+    ) {
+      if ((index + 1) % 50 === 0) {
+        console.log(`[${index + 1}/${matches.length}] already resolved through ${match.matchId}`);
+      }
+      continue;
+    }
+
     console.log(`[${index + 1}/${matches.length}] match ${match.matchId}`);
 
     const detail = await withRetry(async () => {
-      const res = await fetch(`https://api.opendota.com/api/matches/${match.matchId}`);
+      const res = await fetch(opendotaUrl(`matches/${match.matchId}`));
       if (!res.ok) throw new Error(`matches HTTP ${res.status}`);
       return (await res.json()) as {
-        players: {
-          hero_id: number;
-          player_slot: number;
-          gold_per_min: number;
-          personaname?: string | null;
-          name?: string | null;
-        }[];
+        players: (OpenDotaMatchPlayerRow & { player_slot: number; gold_per_min: number })[];
       };
     });
 
@@ -115,8 +95,12 @@ async function main() {
       continue;
     }
 
-    match.radiantHeroRoles = rolesForSide(radiantPlayers);
-    match.direHeroRoles = rolesForSide(direPlayers);
+    const radiantHeroRoles = pooledRolesForSide(radiantPlayers, proNameByAccountId);
+    const direHeroRoles = pooledRolesForSide(direPlayers, proNameByAccountId);
+    if (radiantHeroRoles && direHeroRoles) {
+      match.radiantHeroRoles = radiantHeroRoles;
+      match.direHeroRoles = direHeroRoles;
+    }
 
     await sleep(300);
   }
