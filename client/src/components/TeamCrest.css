@@ -1,0 +1,20 @@
+.team-crest {
+  display: inline-block;
+  flex-shrink: 0;
+  object-fit: contain;
+  object-position: center;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
+.team-crest--fallback {
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent);
+  color: var(--gold-bright);
+  font-family: var(--font-ui);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  font-weight: 600;
+}

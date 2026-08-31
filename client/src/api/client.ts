@@ -14,10 +14,10 @@ import type {
   AbilityCategory,
   LeaderboardResponse,
   CaptainsStateView,
+  TiRunStateView,
 } from 'shared';
-import { OWNER_TOKEN_HEADER } from 'shared';
 import type { DraftStateView, TiFormResponse } from './types';
-import { getSubmitterToken } from '../utils/submitterToken';
+import { getSubmitterToken, OWNER_TOKEN_HEADER } from '../utils/submitterToken';
 
 const BASE_URL = '/api';
 
@@ -49,10 +49,10 @@ export const api = {
   // createDraft() below lands the first pick (server: DraftService.create).
   getDraftPool: () => request<DraftPoolResponse>('/draft/pool', { method: 'POST' }),
 
-  createDraft: (seed: number, heroId: number, rerollUsed: boolean) =>
+  createDraft: (seed: number, heroId: number, rerollUsed: boolean, mode: 'battle' | 'ti' = 'battle') =>
     request<DraftStateView>('/draft', {
       method: 'POST',
-      body: JSON.stringify({ seed, heroId, rerollUsed } satisfies CreateDraftRequest),
+      body: JSON.stringify({ seed, heroId, rerollUsed, mode } satisfies CreateDraftRequest),
     }),
 
   getDraft: (id: string) => request<DraftStateView>(`/draft/${id}`),
@@ -84,15 +84,16 @@ export const api = {
   fightBattle: (
     draftId: string,
     submitterToken: string,
-    opts: { tiRun?: boolean; copiedDraft?: string } = {},
+    opts: { copiedDraft?: string; captainsSessionId?: string; tiRunId?: string } = {},
   ) =>
     request<BattleResultResponse>('/battle', {
       method: 'POST',
       body: JSON.stringify({
         draftId,
         submitterToken,
-        ...(opts.tiRun ? { tiRun: true } : {}),
         ...(opts.copiedDraft ? { copiedDraft: opts.copiedDraft } : {}),
+        ...(opts.captainsSessionId ? { captainsSessionId: opts.captainsSessionId } : {}),
+        ...(opts.tiRunId ? { tiRunId: opts.tiRunId } : {}),
       }),
     }),
 
@@ -113,5 +114,23 @@ export const api = {
     request<CaptainsStateView>(`/captains/${id}/act`, {
       method: 'POST',
       body: JSON.stringify({ heroId, timedOut }),
+    }),
+  assignCaptainsRoles: (id: string, assignments: AssignRolesRequest['assignments']) =>
+    request<CaptainsStateView>(`/captains/${id}/roles`, {
+      method: 'POST',
+      body: JSON.stringify({ assignments } satisfies AssignRolesRequest),
+    }),
+
+  startTiRun: () => request<TiRunStateView>('/ti-run', { method: 'POST' }),
+  getTiRun: (id: string) => request<TiRunStateView>(`/ti-run/${id}`),
+  chooseTiRunTeam: (id: string, teamName: string) =>
+    request<TiRunStateView>(`/ti-run/${id}/choose`, {
+      method: 'POST',
+      body: JSON.stringify({ teamName }),
+    }),
+  attachTiRunDraft: (id: string, draftId: string) =>
+    request<TiRunStateView>(`/ti-run/${id}/attach`, {
+      method: 'POST',
+      body: JSON.stringify({ draftId }),
     }),
 };

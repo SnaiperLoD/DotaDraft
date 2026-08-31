@@ -30,6 +30,7 @@ function makePrisma(row: Record<string, unknown>) {
           id: 'cm-1',
           createdAt: new Date(),
           draftId: null,
+          aiDraftId: null,
           ...data,
         };
         return store.row;
@@ -55,15 +56,25 @@ function makeService(row?: Record<string, unknown>) {
       stepStartedAt: new Date(),
       actionsJson: emptyActions(),
       draftId: null,
+      aiDraftId: null,
       createdAt: new Date(),
     },
   );
   const heroService = { findAll: jest.fn(async () => ROSTER) };
   const draftService = {
-    createFromHeroIds: jest.fn(async () => ({ id: 'draft-from-cm' })),
+    createFromHeroIds: jest.fn(async (_ids: number[], _token: string, opts: { mode?: string } = {}) => ({
+      id: opts.mode === 'captains_ai' ? 'ai-draft' : 'draft-from-cm',
+    })),
+    assignRoles: jest.fn(async () => ({ id: 'draft-from-cm', status: 'COMPLETED' })),
   };
-  const service = new CaptainsService(prisma as any, heroService as any, draftService as any);
-  return { service, prisma, draftService };
+  const evaluationService = { evaluate: jest.fn(async () => ({ totalScore: 5 })) };
+  const service = new CaptainsService(
+    prisma as any,
+    heroService as any,
+    draftService as any,
+    evaluationService as any,
+  );
+  return { service, prisma, draftService, evaluationService };
 }
 
 describe('CaptainsService', () => {
@@ -80,6 +91,13 @@ describe('CaptainsService', () => {
   it('rejects a missing owner token', async () => {
     const { service } = makeService();
     await expect(service.start('  ')).rejects.toThrow(UnauthorizedException);
+  });
+
+  it('starts a fresh session every time rather than resuming', async () => {
+    const { service, prisma } = makeService();
+    await service.start(OWNER);
+    await service.start(OWNER);
+    expect(prisma.captainsSession.create).toHaveBeenCalledTimes(2);
   });
 
   it("hides another player's session", async () => {
@@ -128,16 +146,24 @@ describe('CaptainsService', () => {
       stepStartedAt: new Date(),
       actionsJson: JSON.stringify(filled),
       draftId: null,
+      aiDraftId: null,
       createdAt: new Date(),
     });
 
     const view = await service.act('cm-1', OWNER, 23, false);
 
-    expect(draftService.createFromHeroIds).toHaveBeenCalled();
+    expect(draftService.createFromHeroIds).toHaveBeenCalledTimes(2);
     const playerPicks = (draftService.createFromHeroIds as jest.Mock).mock.calls[0][0];
     expect(playerPicks).toHaveLength(5);
+    expect((draftService.createFromHeroIds as jest.Mock).mock.calls[0][2]).toEqual(
+      expect.objectContaining({ mode: 'captains', status: 'ASSIGNING_ROLES' }),
+    );
+    expect((draftService.createFromHeroIds as jest.Mock).mock.calls[1][2]).toEqual(
+      expect.objectContaining({ mode: 'captains_ai', status: 'COMPLETED' }),
+    );
     expect(view.status).toBe('ASSIGNING_ROLES');
     expect(view.draftId).toBe('draft-from-cm');
+    expect(view.aiDraftId).toBe('ai-draft');
     expect(prisma.store.row.stepIndex).toBe(CM_STEPS.length);
   });
 });

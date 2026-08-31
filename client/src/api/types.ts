@@ -1,4 +1,4 @@
-import type { Hero, HeroEvaluationValues } from 'shared';
+import type { Hero, HeroEvaluationValues, DraftMode } from 'shared';
 
 export interface TiFormHero {
   heroId: number;
@@ -55,6 +55,7 @@ export interface DraftHeroView {
 export interface DraftStateView {
   id: string;
   status: 'PICKING' | 'ASSIGNING_ROLES' | 'COMPLETED';
+  mode: DraftMode;
   heroes: DraftHeroView[];
   pool: Hero[];
   createdAt: string;

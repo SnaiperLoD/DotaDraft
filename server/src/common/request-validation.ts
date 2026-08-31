@@ -34,7 +34,15 @@ export function assertCreateDraftBody(body: unknown): CreateDraftRequest {
   if (typeof b.rerollUsed !== 'boolean') {
     throw new BadRequestException('Invalid rerollUsed');
   }
-  return { seed: b.seed, heroId: assertIntId(b.heroId, 'heroId'), rerollUsed: b.rerollUsed };
+  let mode: CreateDraftRequest['mode'];
+  if (b.mode === 'ti' || b.mode === 'battle') mode = b.mode;
+  else if (b.mode != null) throw new BadRequestException('Invalid mode');
+  return {
+    seed: b.seed,
+    heroId: assertIntId(b.heroId, 'heroId'),
+    rerollUsed: b.rerollUsed,
+    ...(mode ? { mode } : {}),
+  };
 }
 
 export function assertPickBody(body: unknown): PickRequest {
@@ -69,13 +77,28 @@ export function assertDraftActionBody(body: unknown): { draftId: string } {
 
 export function assertBattleBody(body: unknown): {
   draftId: string;
-  tiRun: boolean;
   copiedDraft: string | null;
+  captainsSessionId: string | null;
+  tiRunId: string | null;
 } {
   const { draftId } = assertDraftActionBody(body);
   const b = body as Record<string, unknown>;
   const copiedDraft = typeof b.copiedDraft === 'string' && b.copiedDraft.trim() ? b.copiedDraft : null;
-  return { draftId, tiRun: b.tiRun === true, copiedDraft };
+  const captainsSessionId =
+    typeof b.captainsSessionId === 'string' && b.captainsSessionId.trim()
+      ? assertDraftId(b.captainsSessionId)
+      : null;
+  const tiRunId = typeof b.tiRunId === 'string' && b.tiRunId.trim() ? assertDraftId(b.tiRunId) : null;
+  return { draftId, copiedDraft, captainsSessionId, tiRunId };
+}
+
+export function assertTiRunChooseBody(body: unknown): { teamName: string } {
+  if (!body || typeof body !== 'object') throw new BadRequestException('Invalid body');
+  const b = body as Record<string, unknown>;
+  if (typeof b.teamName !== 'string') throw new BadRequestException('Invalid teamName');
+  const teamName = b.teamName.trim();
+  if (teamName.length < 1 || teamName.length > 80) throw new BadRequestException('Invalid teamName');
+  return { teamName };
 }
 
 export function assertCaptainsActBody(body: unknown): { heroId: number | null; timedOut: boolean } {

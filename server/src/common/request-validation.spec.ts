@@ -62,13 +62,20 @@ describe('request validation', () => {
     ).toThrow(BadRequestException);
   });
 
-  it('parses optional TI-run / copied-draft flags on a battle body', () => {
+  it('parses optional copied-draft / captains / TI-run ids on a battle body', () => {
     const id = '2c1a0b8e-4d3f-4a11-9c22-abcdeffedcba';
-    expect(assertBattleBody({ draftId: id })).toEqual({ draftId: id, tiRun: false, copiedDraft: null });
-    expect(assertBattleBody({ draftId: id, tiRun: true, copiedDraft: '  Carry: Axe  ' }).copiedDraft).toBe(
+    expect(assertBattleBody({ draftId: id })).toEqual({
+      draftId: id,
+      copiedDraft: null,
+      captainsSessionId: null,
+      tiRunId: null,
+    });
+    expect(assertBattleBody({ draftId: id, copiedDraft: '  Carry: Axe  ' }).copiedDraft).toBe(
       '  Carry: Axe  ',
     );
     expect(assertBattleBody({ draftId: id, copiedDraft: '   ' }).copiedDraft).toBeNull();
+    expect(assertBattleBody({ draftId: id, captainsSessionId: id }).captainsSessionId).toBe(id);
+    expect(assertBattleBody({ draftId: id, tiRunId: id }).tiRunId).toBe(id);
   });
 
   it('parses a captains act body, including timeout skips', () => {

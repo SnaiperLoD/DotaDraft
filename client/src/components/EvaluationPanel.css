@@ -2,6 +2,10 @@
   margin-top: var(--sp-5);
 }
 
+.evaluation-panel--compact {
+  margin-top: var(--sp-3);
+}
+
 /* ---------- headline score ---------- */
 
 .evaluation-hero {

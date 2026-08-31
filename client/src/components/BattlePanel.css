@@ -88,44 +88,27 @@
   flex-shrink: 0;
 }
 
-.battle-extra-modes {
-  margin: 0 0 var(--sp-4);
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-3);
+.battle-challenge-toggle {
+  min-width: 11em;
 }
 
-.battle-ti-flavor {
-  margin: 0;
-  font-size: 13px;
-  color: var(--win-bright);
-}
-
-.battle-challenge {
+.battle-challenge-row {
   display: flex;
-  flex-direction: column;
   gap: var(--sp-2);
-  max-width: 36rem;
-  padding: var(--sp-3);
-  border: 1px solid var(--line);
-}
-
-.battle-challenge-head {
-  font-weight: 600;
-  font-size: 13px;
-}
-
-.battle-challenge-hint {
-  margin: 0;
-  font-size: 12px;
-  color: var(--ink-muted);
+  align-items: center;
+  width: 100%;
+  margin: 0 0 var(--sp-3);
 }
 
 .battle-challenge-paste {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: min(22rem, 100%);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-family: var(--font-ui);
   font-size: 13px;
-  resize: vertical;
-  min-height: 6.5rem;
   padding: 8px 10px;
   background: color-mix(in srgb, var(--panel) 80%, transparent);
   border: 1px solid var(--bronze);
@@ -242,6 +225,11 @@
 }
 
 .battle-vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
   text-align: center;
   font-family: var(--font-ui);
   font-size: 12px;
@@ -1031,4 +1019,46 @@
   color: var(--ink-muted);
   font-size: 0.9rem;
   line-height: 1.35;
+}
+
+.battle-coin-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: min(72vh, 560px);
+  margin: var(--sp-4) 0 var(--sp-3);
+  padding: var(--sp-4) 0;
+  background:
+    radial-gradient(ellipse at 50% 42%, color-mix(in srgb, var(--gold) 22%, transparent), transparent 58%),
+    radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--danger) 12%, transparent), transparent 46%);
+}
+
+.battle-coin-verdict {
+  position: absolute;
+  bottom: 12%;
+  left: 0;
+  right: 0;
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  font-size: clamp(40px, 9vw, 88px);
+  line-height: 1;
+  text-shadow: 0 0 28px color-mix(in srgb, var(--gold) 45%, transparent);
+}
+
+.battle-coin-verdict--win {
+  color: var(--win-bright);
+}
+
+.battle-coin-verdict--lose {
+  color: var(--danger);
+}
+
+.battle-coin-note {
+  margin: 0 0 var(--sp-4);
+  text-align: center;
+  color: var(--ink-muted);
+  font-size: 14px;
 }

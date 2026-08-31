@@ -1,0 +1,46 @@
+.battle-coin-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: min(72vh, 560px);
+  margin: var(--sp-4) 0 var(--sp-3);
+  padding: var(--sp-4) 0;
+  background:
+    radial-gradient(ellipse at 50% 42%, color-mix(in srgb, var(--gold) 22%, transparent), transparent 58%),
+    radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--danger) 12%, transparent), transparent 46%);
+}
+
+.battle-coin-canvas {
+  width: min(100%, 560px);
+  height: min(72vh, 560px);
+}
+
+.battle-coin-verdict {
+  position: absolute;
+  bottom: 12%;
+  left: 0;
+  right: 0;
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  font-size: clamp(40px, 9vw, 88px);
+  line-height: 1;
+  text-shadow: 0 0 28px color-mix(in srgb, var(--gold) 45%, transparent);
+}
+
+.battle-coin-verdict--win {
+  color: var(--win-bright);
+}
+
+.battle-coin-verdict--lose {
+  color: var(--danger);
+}
+
+.battle-coin-note {
+  margin: 0 0 var(--sp-4);
+  text-align: center;
+  color: var(--ink-muted);
+  font-size: 14px;
+}

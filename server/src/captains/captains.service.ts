@@ -2,9 +2,19 @@ import { BadRequestException, Injectable, NotFoundException, UnauthorizedExcepti
 import { PrismaService } from '../prisma/prisma.service';
 import { HeroService } from '../hero/hero.service';
 import { DraftService } from '../draft/draft.service';
-import { CM_RESERVE_MS, CM_STEPS, type CaptainsStateView, type CmSlot } from 'shared';
+import { EvaluationService } from '../evaluation/evaluation.service';
+import {
+  CM_RESERVE_MS,
+  CM_STEPS,
+  assignUniqueRoles,
+  type CaptainsStateView,
+  type CmSlot,
+  type PooledDraftSummary,
+  type PooledHeroRole,
+} from 'shared';
 import { chooseAiBan, chooseAiPick } from './captains-ai';
 import type { Hero } from 'shared';
+import { logPersistenceFailure } from '../common/log';
 
 @Injectable()
 export class CaptainsService {
@@ -12,6 +22,7 @@ export class CaptainsService {
     private readonly prisma: PrismaService,
     private readonly heroService: HeroService,
     private readonly draftService: DraftService,
+    private readonly evaluationService: EvaluationService,
   ) {}
 
   async start(ownerToken: string): Promise<CaptainsStateView> {
@@ -55,9 +66,71 @@ export class CaptainsService {
     row = await this.applyCurrentIfPlayer(row, roster, heroId, timedOut);
     row = await this.resolveAiUntilPlayer(row, roster);
     if (row.stepIndex >= CM_STEPS.length && !row.draftId) {
-      row = await this.finish(row, token);
+      row = await this.finish(row, token, roster);
     }
     return this.toView(row, roster);
+  }
+
+  async assignRoles(
+    id: string,
+    ownerToken: string,
+    assignments: { heroId: number; role: string }[],
+  ): Promise<CaptainsStateView> {
+    const token = this.requireToken(ownerToken);
+    const row = await this.loadOwned(id, token);
+    if (row.status !== 'ASSIGNING_ROLES' || !row.draftId) {
+      throw new BadRequestException('Captains session is not assigning roles');
+    }
+    await this.draftService.assignRoles(row.draftId, assignments, token);
+    if (row.aiDraftId) {
+      await this.evaluationService.evaluate(row.aiDraftId, token).catch((err) => {
+        logPersistenceFailure('captains.evaluateAi', err, { sessionId: row.id });
+      });
+    }
+    await this.evaluationService.evaluate(row.draftId, token).catch((err) => {
+      logPersistenceFailure('captains.evaluatePlayer', err, { sessionId: row.id });
+    });
+    const updated = await this.prisma.captainsSession.update({
+      where: { id: row.id },
+      data: { status: 'READY' },
+    });
+    return this.toView(updated, await this.heroService.findAll());
+  }
+
+  async getAiOpponent(sessionId: string, ownerToken: string): Promise<PooledDraftSummary> {
+    const row = await this.loadOwned(sessionId, ownerToken);
+    if (row.status !== 'READY' && row.status !== 'COMPLETED') {
+      throw new BadRequestException('Captains fight is not ready');
+    }
+    if (!row.aiDraftId) {
+      throw new BadRequestException('Captains AI lineup is missing');
+    }
+    const draft = await this.draftService.getById(row.aiDraftId, ownerToken);
+    const heroRoles: PooledHeroRole[] = draft.heroes.map((h) => ({
+      heroId: h.heroId,
+      role: h.assignedRole!,
+    }));
+    return {
+      id: `captains-ai-${sessionId}`,
+      source: 'player',
+      heroIds: draft.heroes.map((h) => h.heroId),
+      heroRoles,
+      teamName: 'Dire',
+      leagueName: 'Captains Mode',
+      matchId: null,
+    };
+  }
+
+  async markFought(sessionId: string, ownerToken: string): Promise<void> {
+    const row = await this.loadOwned(sessionId, ownerToken);
+    if (row.status === 'COMPLETED') return;
+    if (row.status !== 'READY') {
+      throw new BadRequestException('Captains session cannot record a fight yet');
+    }
+    await this.prisma.captainsSession.update({
+      where: { id: row.id },
+      data: { status: 'COMPLETED' },
+    });
   }
 
   private applyClock(row: CaptainsRow): CaptainsRow {
@@ -137,15 +210,31 @@ export class CaptainsService {
     return current;
   }
 
-  private async finish(row: CaptainsRow, token: string): Promise<CaptainsRow> {
+  private async finish(row: CaptainsRow, token: string, roster: Hero[]): Promise<CaptainsRow> {
     const slots = parseSlots(row.actionsJson);
     const playerHeroIds = slots
       .filter((s) => s.lane === 'first' && s.type === 'pick' && s.heroId != null)
       .map((s) => s.heroId as number);
-    const draft = await this.draftService.createFromHeroIds(playerHeroIds, token);
+    const aiHeroIds = slots
+      .filter((s) => s.lane === 'second' && s.type === 'pick' && s.heroId != null)
+      .map((s) => s.heroId as number);
+    if (playerHeroIds.length !== 5 || aiHeroIds.length !== 5) {
+      throw new BadRequestException('Need 5 distinct heroes');
+    }
+    const aiHeroes = aiHeroIds.map((id) => roster.find((h) => h.id === id)!);
+    const aiRoles = assignUniqueRoles(aiHeroes);
+    const playerDraft = await this.draftService.createFromHeroIds(playerHeroIds, token, {
+      mode: 'captains',
+      status: 'ASSIGNING_ROLES',
+    });
+    const aiDraft = await this.draftService.createFromHeroIds(aiHeroIds, token, {
+      mode: 'captains_ai',
+      status: 'COMPLETED',
+      roles: aiRoles,
+    });
     return this.prisma.captainsSession.update({
       where: { id: row.id },
-      data: { status: 'ASSIGNING_ROLES', draftId: draft.id },
+      data: { status: 'ASSIGNING_ROLES', draftId: playerDraft.id, aiDraftId: aiDraft.id },
     });
   }
 
@@ -171,6 +260,7 @@ export class CaptainsService {
       aiReserveMs: row.aiReserveMs,
       stepEndsAt,
       draftId: row.draftId,
+      aiDraftId: row.aiDraftId,
     };
   }
 
@@ -198,6 +288,7 @@ type CaptainsRow = {
   stepStartedAt: Date;
   actionsJson: string;
   draftId: string | null;
+  aiDraftId: string | null;
   createdAt: Date;
 };
 

@@ -313,6 +313,7 @@ export default function DraftPage() {
               <CommitToPoolButton draftId={draft.id} />
               <CopyDraftButton
                 heroes={draft.heroes.map((h) => ({
+                  heroId: h.heroId,
                   heroName: h.hero.name,
                   assignedRole: h.assignedRole,
                   pickOrder: h.pickOrder,

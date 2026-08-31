@@ -10,5 +10,6 @@ import { HeroModule } from '../hero/hero.module';
   imports: [DraftModule, ProMatchModule, HeroMetaModule, HeroModule],
   controllers: [EvaluationController],
   providers: [EvaluationService],
+  exports: [EvaluationService],
 })
 export class EvaluationModule {}

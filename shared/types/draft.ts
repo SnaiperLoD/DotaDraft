@@ -3,6 +3,8 @@ import type { Hero } from './hero';
 
 export type DraftStatus = 'PICKING' | 'ASSIGNING_ROLES' | 'COMPLETED';
 
+export type DraftMode = 'battle' | 'captains' | 'captains_ai' | 'ti';
+
 // Round 1's offered pool, generated without persisting anything — the
 // Draft row is not written until the first pick (see CreateDraftRequest
 // and DraftService.create). `seed` is what the client hands back to
@@ -22,6 +24,9 @@ export interface CreateDraftRequest {
   // and no weaker than before in practice, since reloading the page has
   // always produced a fresh pool with a fresh allowance.
   rerollUsed: boolean;
+  // Isolated product mode. This endpoint only accepts battle (default) or
+  // ti — Captains creates drafts via createFromHeroIds, not POST /draft.
+  mode?: Extract<DraftMode, 'battle' | 'ti'>;
 }
 
 export interface DraftHero {
@@ -68,15 +73,25 @@ export interface HistoryBattleSummary {
   opponentSource: string;
   opponentTeamName: string | null;
   opponentLeagueName: string | null;
+  opponentHeroIds: number[];
+  stage: string | null;
   createdAt: string;
+}
+
+export interface HistoryTiSummary {
+  leagueName: string;
+  teamName: string;
+  status: 'PLAYING' | 'CHAMPION' | 'ELIMINATED';
 }
 
 export interface HistoryEntry {
   id: string;
+  mode: DraftMode;
   heroes: HistoryDraftHero[];
   createdAt: string;
   // Most recent EvaluationResult for this draft, null until "Evaluate
   // Draft" has been clicked at least once.
   evaluation: EvaluationResult | null;
   battles: HistoryBattleSummary[];
+  ti: HistoryTiSummary | null;
 }

@@ -23,6 +23,7 @@ function makeFakePrisma() {
     createdAt: Date;
     rerollsRemaining: number;
     ownerToken: string | null;
+    mode?: string;
   } | null = null;
   const heroRows: {
     id: number;
@@ -47,6 +48,7 @@ function makeFakePrisma() {
           createdAt: new Date(),
           rerollsRemaining: data.rerollsRemaining ?? 1,
           ownerToken: data.ownerToken ?? null,
+          mode: data.mode ?? 'battle',
         };
         // Nested hero create — DraftService.create() writes the draft and
         // its first hero in a single statement, which is what makes "no
@@ -58,7 +60,7 @@ function makeFakePrisma() {
               id: nextRowId++,
               draftId: id,
               heroId: h.heroId,
-              assignedRole: null,
+              assignedRole: h.assignedRole ?? null,
               pickOrder: h.pickOrder,
             });
           }
@@ -510,6 +512,7 @@ describe('DraftService', () => {
           opponentTeamName: 'Team Secret',
           opponentLeagueName: 'The International',
           opponentHeroIds: '[1,2,3,4,5]',
+          stage: null,
         },
       });
     });
@@ -553,11 +556,9 @@ describe('DraftService', () => {
 
     it('rejects a short or duplicated pick list', async () => {
       const { service } = makeService();
-      await expect(service.createFromHeroIds([1, 2, 3, 4], OWNER)).rejects.toThrow(
-        'Captains Mode needs 5 distinct heroes',
-      );
+      await expect(service.createFromHeroIds([1, 2, 3, 4], OWNER)).rejects.toThrow('Need 5 distinct heroes');
       await expect(service.createFromHeroIds([1, 2, 3, 4, 1], OWNER)).rejects.toThrow(
-        'Captains Mode needs 5 distinct heroes',
+        'Need 5 distinct heroes',
       );
     });
   });
@@ -687,7 +688,7 @@ describe('DraftService', () => {
       await service.getBestRuns(10, 5, OWNER);
       expect(prisma.battleResult.groupBy).toHaveBeenCalledWith(
         expect.objectContaining({
-          where: { draft: { ownerToken: OWNER } },
+          where: { draft: { mode: 'battle', ownerToken: OWNER } },
         }),
       );
     });
@@ -700,7 +701,7 @@ describe('DraftService', () => {
       const runs = await service.getBestRuns(10, 5, OWNER, 'global');
       expect(prisma.battleResult.groupBy).toHaveBeenCalledWith(
         expect.objectContaining({
-          where: undefined,
+          where: { draft: { mode: 'battle' } },
         }),
       );
       expect(runs[0].isMine).toBe(true);

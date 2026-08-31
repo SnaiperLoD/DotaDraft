@@ -46,6 +46,10 @@ model Draft {
   // feature this backs wants "what does this draft evaluate as", not a
   // point-in-time snapshot per past calibration.
   evaluationResult String?
+  // Isolated product mode. battle = pool fights + leaderboard; captains /
+  // captains_ai = CM; ti = TI Run. captains_ai is the hidden AI lineup
+  // and never appears in History.
+  mode             String       @default("battle")
   battleResults    BattleResult[]
 
   @@index([ownerToken])
@@ -70,6 +74,7 @@ model BattleResult {
   opponentTeamName   String?
   opponentLeagueName String?
   opponentHeroIds    String
+  stage              String?
   createdAt          DateTime @default(now())
 }
 
@@ -128,7 +133,26 @@ model CaptainsSession {
   stepStartedAt   DateTime
   actionsJson     String
   draftId         String?
+  aiDraftId       String?
   createdAt       DateTime @default(now())
 
   @@index([ownerToken])
+}
+
+model TiRun {
+  id             String   @id @default(uuid())
+  ownerToken     String
+  bracketId      String
+  leagueName     String
+  teamName       String?
+  draftId        String?
+  status         String   @default("PICKING_TEAM")
+  losses         Int      @default(0)
+  currentMatchId String?
+  choiceJson     String
+  pathJson       String   @default("[]")
+  createdAt      DateTime @default(now())
+
+  @@index([ownerToken])
+  @@index([draftId])
 }

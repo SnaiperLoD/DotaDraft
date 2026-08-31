@@ -11,8 +11,9 @@ export class BattleController {
   fight(@OwnerToken() ownerToken: string, @Body() body: unknown) {
     const parsed = assertBattleBody(body);
     return this.battleService.fight(parsed.draftId, ownerToken, {
-      tiRun: parsed.tiRun,
       copiedDraft: parsed.copiedDraft,
+      captainsSessionId: parsed.captainsSessionId,
+      tiRunId: parsed.tiRunId,
     });
   }
 }

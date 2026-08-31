@@ -33,11 +33,19 @@ export default function LandingPage() {
           </h1>
           <p className="landing-pitch">{t('landing.pitch')}</p>
           <div className="landing-actions">
-            <Link to="/draft" className="btn btn-primary" viewTransition>
+            <Link to="/draft" className="btn btn-primary" viewTransition data-testid="landing-cta-battle">
               {t('landing.cta')}
             </Link>
-            <Link to="/captains" className="btn btn-secondary" viewTransition>
+            <Link
+              to="/captains"
+              className="btn btn-secondary"
+              viewTransition
+              data-testid="landing-cta-captains"
+            >
               {t('landing.ctaCaptains')}
+            </Link>
+            <Link to="/ti-run" className="btn btn-secondary" viewTransition data-testid="landing-cta-ti">
+              {t('landing.ctaTiRun')}
             </Link>
             <Link to="/about" className="btn btn-secondary" viewTransition>
               {t('landing.aboutLink')}

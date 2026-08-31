@@ -13,11 +13,11 @@ function makeMockPool() {
 }
 
 function makeMockDraftService(
-  draft: { status: string; heroes: { heroId: number; assignedRole?: string }[] },
+  draft: { status: string; mode?: string; heroes: { heroId: number; assignedRole?: string }[] },
   evaluationScore: number | null = null,
 ) {
   return {
-    getById: jest.fn().mockResolvedValue(draft),
+    getById: jest.fn().mockResolvedValue({ mode: 'battle', ...draft }),
     getEvaluationScore: jest.fn().mockResolvedValue(evaluationScore),
   };
 }
@@ -108,6 +108,26 @@ describe('OpponentPoolService.commit', () => {
 
     expect(pool.pooledDraft.create).not.toHaveBeenCalled();
     expect(result).toEqual({ id: 'pool-existing', committedAt: '2026-01-02T00:00:00.000Z' });
+  });
+
+  it('rejects a non-battle draft', async () => {
+    const pool = makeMockPool();
+    const draftService = makeMockDraftService({
+      status: 'COMPLETED',
+      mode: 'captains',
+      heroes: [
+        { heroId: 1, assignedRole: 'Carry' },
+        { heroId: 2, assignedRole: 'Mid' },
+        { heroId: 3, assignedRole: 'Offlane' },
+        { heroId: 4, assignedRole: 'Soft Support' },
+        { heroId: 5, assignedRole: 'Hard Support' },
+      ],
+    });
+    const service = new OpponentPoolService(pool as any, draftService as any);
+    await expect(service.commit('draft-1', 'token')).rejects.toThrow(
+      'Only Battle Mode drafts can be committed to the pool',
+    );
+    expect(pool.pooledDraft.create).not.toHaveBeenCalled();
   });
 
   it('reports storage as unreachable rather than a raw Prisma error when POOL_DATABASE_URL is unset', async () => {

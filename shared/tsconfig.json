@@ -4,5 +4,5 @@
     "outDir": "dist",
     "rootDir": "."
   },
-  "include": ["types", "constants", "index.ts"]
+  "include": ["types", "constants", "utils", "data", "customTags.ts", "index.ts"]
 }

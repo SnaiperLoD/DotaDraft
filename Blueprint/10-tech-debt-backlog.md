@@ -4,7 +4,7 @@ Slim open list. Calibration history lives in `09-hero-knowledge-base.md`,
 `05-evaluation-engine.md`, `06-battle-engine.md`. Session order lives in
 `12-next-session-priorities.md`.
 
-Last slim: 2026-08-31. Statuses: `open` | `partial` | `parked` | `rejected`.
+Last slim: 2026-09-01. Statuses: `open` | `partial` | `parked` | `rejected`.
 Shipped items live in the footnote, not this list.
 
 ---
@@ -42,6 +42,22 @@ not an early close) · Anonymous draft ownership (`ownerToken` / `X-Owner-Token`
 · TI main-event groups+playoffs + live TI 2026 (`bf2be35`; 2356 pro rows)
 · TI 2026 through GF, Visage Support hole, pro-name `account_id` backfill
   (2026-08-31; snapshot **2374** pro rows)
+· Isolated modes (2026-09-01): Battle `/draft`, Captains `/captains`,
+  TI Run `/ti-run` — no shared funnel. Challenge-paste Battle-only.
+  History mode chip + filters. Leaderboard battle-only.
+· Captains homage CM HUD + splash ~2s + `startCaptains`; roles; dual
+  eval; one fight vs AI; no pool/leaderboard/Fight Again. Reload/Home
+  starts a **new** CM (no sessionStorage persist)
+· TI Run occupy-slot double-elim BO1, `TiBracket` tree, team logos,
+  eval/fight split views, opponent copy from that team's TI drafts.
+  Persists `sessionStorage['ti-run-id']`
+· Challenge short draft code (`dd1` + Crockford base32 + checksum in
+  `shared/utils/copiedDraft.ts`); sanitize paste; Copy Draft emits short
+  code. Coin-flip easter egg: same 5 heroes → skip battle math, 3D coin,
+  server 50/50 YOU WIN/YOU LOSE
+· Tests: `copiedDraft` + `challenge-mirror` + BattleService coin +
+  captains/TI gaps; Stryker `challenge-mirror` 13/13 killed; e2e
+  `challenge.spec.ts` + landing 3 CTAs + captains splash reset
 
 ---
 
@@ -111,15 +127,29 @@ Night Stalker / Naga Support eval copied; their presumed Support share
 is still 0 (miscast still fires). Don't rewrite those shares without
 Nick.
 ### Captains friend lobby — `parked`
-CM vs AI shipped. Don't also build a lobby unless Nick picks that shape.
+CM vs AI shipped on isolated `/captains` (homage HUD, not Valve-pixel).
+Don't also build a lobby unless Nick picks that shape.
+### Captains HUD pixel-parity — `open`
+Homage layout only. Valve-pixel CM is not a goal unless Nick asks.
 ### Opponent difficulty brackets — `open`
 ### Persistent progress / accounts — `open`
 ### Draft modes (constrained, Pure Draft) — `open`
-Captains vs AI shipped. Don't invent a third CM.
+Battle / Captains / TI Run are isolated routes. Don't invent a third CM.
+Pure Draft / constrained still not built.
 ### Lock hero / pool-of-8 / random pick — `parked`
 Wait for funnel signal (`client/src/telemetry/`).
 ### Fight own history drafts — `open`
-Async clash covers share→paste; fighting own History rows is still separate.
+Challenge paste is Battle-only (`dd1` short code). Fighting own History
+rows is still separate.
+### TI Run live bracket projection — `open`
+`TiBracket` still dumps historical `bracket.matches`. Occupy-slot BO1
+fights land; live tree from user results was planned and **not** shipped.
+### Team Steam logos — `partial`
+Local `client/public/team-logos/` + initials fallback. Some orgs have no
+Steam logo.
+### Challenge paste CSS containment — `partial`
+Sanitize + short code shipped. UI «экранировать строчку» / CSS wrap may
+still leak.
 ### Pooled draft as opponent — win streak — `open`
 Session streak shipped; opponent-side streak not.
 ### More archetypes beyond current set — `partial`
@@ -155,7 +185,9 @@ Prefer `GET /telemetry/funnel` (plus hosting) over more survey guesswork.
 
 ### Broader unit coverage (controllers/services) — `partial`
 Health + pool smoke + Fundamentals helpers + battle-cast + expanded
-`battle-explanation` branch coverage landed; controller gaps remain.
+`battle-explanation` + `copiedDraft` + `challenge-mirror` + BattleService
+coin path + captains/TI gaps. **No client Jest/Vitest.** Controller
+gaps remain.
 ### Server narrative i18n — `partial`
 Product chrome + Eval/Battle live copy go through client i18n (`eval.*`,
 `battle.explain.*`, `battle.highlight.*`, axes/tags/badges). Remaining:
@@ -194,7 +226,9 @@ weekly + `npm audit` in CI (`continue-on-error`).
 ### Mutation testing — `partial`
 Full suite (2026-08-17): **69.92%** total. Re-run on
 `battle-explanation.ts` after deeper Jest: **~65%** on that file alone
-(was **38.55%**). Next: keep killing survivors / optional CI mutation job.
+(was **38.55%**). `challenge-mirror.ts` mutate: **13/13 killed**.
+Shared `copiedDraft.ts` is **not** in Stryker mutate (sandbox mapping).
+Next: keep killing survivors / optional CI mutation job.
 
 ---
 

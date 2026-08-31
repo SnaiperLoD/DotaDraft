@@ -24,13 +24,30 @@ test('mobile nav opens, then Escape returns focus to the burger', async ({ page 
   await expect(burger).toHaveAttribute('aria-expanded', 'true');
   await expect(page.getByTestId('primary-nav')).toHaveClass(/command-nav--open/);
   await expect(
-    page.getByTestId('primary-nav').getByRole('link', { name: 'Draft', exact: true }),
+    page.getByTestId('primary-nav').getByRole('link', { name: 'Battle Mode', exact: true }),
   ).toBeVisible();
 
   await page.keyboard.press('Escape');
   await expect(burger).toHaveAttribute('aria-expanded', 'false');
   await expect(page.getByTestId('primary-nav')).not.toHaveClass(/command-nav--open/);
   await expect(burger).toBeFocused();
+});
+
+test('landing shows the three mode CTAs', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByTestId('landing-cta-battle')).toBeVisible();
+  await expect(page.getByTestId('landing-cta-captains')).toBeVisible();
+  await expect(page.getByTestId('landing-cta-ti')).toBeVisible();
+});
+
+test('captains splash remounts after leaving for Home', async ({ page }) => {
+  await page.goto('/captains');
+  await expect(page.getByTestId('cm-splash')).toBeVisible();
+  await expect(page.getByTestId('cm-board')).toBeVisible({ timeout: 20_000 });
+  await page.locator('a.wordmark').click();
+  await expect(page).toHaveURL('/');
+  await page.goto('/captains');
+  await expect(page.getByTestId('cm-splash')).toBeVisible();
 });
 
 test('History and Leaderboard shells render on a narrow viewport', async ({ page }) => {

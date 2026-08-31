@@ -57,10 +57,10 @@ export interface BattleOpponent {
 export interface BattleRequest {
   draftId: string;
   submitterToken: string;
-  // Playtest: TI-run pulls only International-tagged pool drafts.
-  tiRun?: boolean;
   // Playtest async clash: pasted Copy Draft text (role: hero per line).
   copiedDraft?: string;
+  captainsSessionId?: string;
+  tiRunId?: string;
 }
 
 // Real (OpenDota) win-rate rows surfaced in the battle result, always from
@@ -179,6 +179,9 @@ export interface BattleResultResponse {
   // Public custom tags that were active for either side this fight, plus
   // what they did. Hidden calibration tags stay out. Optional on History.
   tagChips?: BattleTagChip[];
+  // Challenge vs the same five heroes (including pasting your own code).
+  // Client skips axes/story and plays a coin toss after the 5v5 face-off.
+  coinFlip?: boolean;
 }
 
 export interface BattleTagChip {

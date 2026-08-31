@@ -3,6 +3,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { HeroService } from '../hero/hero.service';
 import {
   ROLES,
+  type DraftMode,
   type DraftPoolResponse,
   type Hero,
   type PooledHeroRole,
@@ -22,6 +23,7 @@ export interface DraftHeroView {
 export interface DraftStateView {
   id: string;
   status: string;
+  mode: DraftMode;
   heroes: DraftHeroView[];
   pool: Hero[];
   createdAt: Date;
@@ -38,6 +40,7 @@ export class DraftService {
   private async toView(draft: {
     id: string;
     status: string;
+    mode?: string | null;
     pool: unknown;
     createdAt: Date;
     rerollsRemaining: number;
@@ -54,6 +57,7 @@ export class DraftService {
     return {
       id: draft.id,
       status: draft.status,
+      mode: (draft.mode as DraftMode) || 'battle',
       pool: poolHeroes,
       createdAt: draft.createdAt,
       rerollsRemaining: draft.rerollsRemaining,
@@ -120,6 +124,7 @@ export class DraftService {
     heroId: number,
     rerollUsed: boolean,
     ownerToken: string,
+    mode: DraftMode = 'battle',
   ): Promise<DraftStateView> {
     const token = this.requireOwnerToken(ownerToken);
     const pool = await this.heroService.randomPool([], POOL_SIZE, seed);
@@ -145,6 +150,7 @@ export class DraftService {
         seed,
         pool: JSON.stringify(nextPool),
         status: 'PICKING',
+        mode,
         rerollsRemaining: rerollUsed ? 0 : 1,
         ownerToken: token,
         heroes: { create: { heroId, pickOrder: 1 } },
@@ -155,26 +161,39 @@ export class DraftService {
     return this.toView(draft);
   }
 
-  // Captains Mode finish: five locked picks skip the 5-from-5 pool and land
-  // in role assignment. Nested create still guarantees no empty Draft row.
-  async createFromHeroIds(heroIds: number[], ownerToken: string): Promise<DraftStateView> {
+  // Five locked picks skip the 5-from-5 pool. Used by Captains (player +
+  // hidden AI) and TI Run (create happens via create() with mode=ti; this
+  // helper is the CM path).
+  async createFromHeroIds(
+    heroIds: number[],
+    ownerToken: string,
+    opts: { mode?: DraftMode; status?: 'ASSIGNING_ROLES' | 'COMPLETED'; roles?: PooledHeroRole[] } = {},
+  ): Promise<DraftStateView> {
     const token = this.requireOwnerToken(ownerToken);
     if (heroIds.length !== 5 || new Set(heroIds).size !== 5) {
-      throw new BadRequestException('Captains Mode needs 5 distinct heroes');
+      throw new BadRequestException('Need 5 distinct heroes');
     }
     const found = await this.heroService.findByIds(heroIds);
     if (found.length !== 5) {
-      throw new BadRequestException('Unknown hero in Captains Mode picks');
+      throw new BadRequestException('Unknown hero in locked picks');
     }
+    const mode = opts.mode ?? 'captains';
+    const status = opts.status ?? 'ASSIGNING_ROLES';
+    const roleByHero = new Map((opts.roles ?? []).map((r) => [r.heroId, r.role]));
     const draft = await this.prisma.draft.create({
       data: {
         seed: 0,
         pool: '[]',
-        status: 'ASSIGNING_ROLES',
+        status,
+        mode,
         rerollsRemaining: 0,
         ownerToken: token,
         heroes: {
-          create: heroIds.map((heroId, i) => ({ heroId, pickOrder: i + 1 })),
+          create: heroIds.map((heroId, i) => ({
+            heroId,
+            pickOrder: i + 1,
+            assignedRole: roleByHero.get(heroId) ?? null,
+          })),
         },
       },
       include: { heroes: true },
@@ -223,6 +242,7 @@ export class DraftService {
       opponentTeamName: string | null;
       opponentLeagueName: string | null;
       opponentHeroIds: number[];
+      stage?: string | null;
     },
   ): Promise<void> {
     await this.prisma.battleResult.create({
@@ -235,6 +255,7 @@ export class DraftService {
         opponentTeamName: result.opponentTeamName,
         opponentLeagueName: result.opponentLeagueName,
         opponentHeroIds: JSON.stringify(result.opponentHeroIds),
+        stage: result.stage ?? null,
       },
     });
   }
@@ -257,7 +278,12 @@ export class DraftService {
 
     const grouped = await this.prisma.battleResult.groupBy({
       by: ['draftId', 'resolvedOutcome'],
-      where: scope === 'mine' ? { draft: { ownerToken: caller! } } : undefined,
+      where: {
+        draft: {
+          mode: 'battle',
+          ...(scope === 'mine' ? { ownerToken: caller! } : {}),
+        },
+      },
       _count: { _all: true },
     });
 
@@ -286,6 +312,7 @@ export class DraftService {
     const drafts = await this.prisma.draft.findMany({
       where: {
         id: { in: qualifying.map((r) => r.draftId) },
+        mode: 'battle',
         ...(scope === 'mine' ? { ownerToken: caller! } : {}),
       },
       include: { heroes: true },

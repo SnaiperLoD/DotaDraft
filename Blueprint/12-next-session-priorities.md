@@ -1,28 +1,26 @@
 # Next Session Priorities
 
-Updated 2026-08-31 after TI 2026 through the grand final, Visage Support,
-and pro-name identity backfill landed.
+Updated 2026-09-01 after isolated Battle / Captains / TI Run, Challenge
+short codes, and the coin-flip easter egg landed.
 Handoff / triage; `10-tech-debt-backlog.md` is the detailed source of truth.
 Deploy notes: `13-deploy.md`.
 
-**Status check:** playtest park is on `master`. Pro snapshot is TI
-main-event (groups + playoffs, 2012–2025) + live TI 2026 through GF
-(2026-08-23, Spirit vs TEAM VISION): **2374** pro rows. Names on those
-rows are OpenDota `proPlayers[account_id]`, not Steam graffiti. Tunnel
-still OFF. Next is leftovers below, not a domain/VPS buy and not a
-calibration sweep.
+**Status check:** three isolated modes are on `master` (`/draft`,
+`/captains`, `/ti-run`). Park still ships; don't rebuild the old funnel.
+Pro snapshot unchanged (**2374** rows). Tunnel still OFF. Next is
+leftovers below, not a domain/VPS buy and not a calibration sweep.
 
 ---
 
 ## Next session — priorities in order
 
-Park is shipped. Don't rebuild it. Domain/VPS is not P0.
+Don't merge the three modes. Domain/VPS is not P0.
 
-### 1. Captains friend lobby — parked
+### 1. TI Run live bracket projection — not landed
 
-CM vs AI shipped (player always Radiant / first pick, 7.40 24-step,
-AI fills instantly). Don't also build a friend lobby unless Nick picks
-that shape.
+Occupy-slot BO1 fights work. `TiBracket` still dumps historical
+`bracket.matches`. Live tree from the user's fights was planned and is
+**not** shipped.
 
 ### 2. Dual-role Support presumed shares — ask first
 
@@ -44,6 +42,17 @@ the Finals badge on those opponents. Don't infer from `leagueName`.
 OpenDota has no `radiant_name` / `dire_name` on those matches. UI already
 falls back to league via `opponentTeamCaption`. Not a refetch problem.
 
+### 5. Captains friend lobby — parked
+
+Isolated `/captains` homage CM HUD shipped. Don't also build a lobby
+unless Nick picks that shape. Valve-pixel CM is not a goal.
+
+### 6. Team logos + Challenge CSS — leftover polish
+
+Some orgs have no Steam logo (initials fallback). Challenge paste
+sanitizes; CSS containment / «экранировать строчку» may still leak.
+No client Jest/Vitest. `copiedDraft.ts` is not in Stryker mutate.
+
 ## Still true, not this session's P0
 
 - Architectural / explainability boundaries (pure axis primitives out of
@@ -55,6 +64,29 @@ falls back to league via `opponentTeamCaption`. Not a refetch problem.
   needed (`13-deploy.md`).
 - Heterogeneous tags (`Army of Clones` / `Unseen` / `Prone To Burst`) —
   still the calibration leftover, still needs an isolated hypothesis.
+
+## Completed this pass (2026-09-01)
+
+- **Isolated modes** — Battle `/draft`, Captains `/captains`, TI Run
+  `/ti-run`. No shared funnel. Challenge-paste is Battle-only. History
+  mode chip + filters. Leaderboard battle-only.
+- **Captains** — splash ~2s, `startCaptains`, homage CM HUD, roles, dual
+  eval, one fight vs AI, no pool/leaderboard/Fight Again. Reload/Home
+  starts a **new** CM (no sessionStorage persist).
+- **TI Run** — occupy-slot double-elim BO1, `TiBracket` tree, team
+  logos, eval/fight split views, opponent copy from that team's TI
+  drafts. Persists `sessionStorage['ti-run-id']`. Bracket **display**
+  still historical — live projection not landed.
+- **Challenge** — button under Fight Again; short code `dd1` + Crockford
+  base32 + checksum (`shared/utils/copiedDraft.ts`); sanitize paste;
+  Copy Draft emits the short code.
+- **Coin-flip easter egg** — same 5 heroes in Challenge skips battle
+  math; 3D coin; server 50/50 YOU WIN/YOU LOSE; client animates to the
+  server outcome.
+- **Tests** — unit: `copiedDraft`, `challenge-mirror`, BattleService
+  coin, captains/TI gaps. Stryker `challenge-mirror` 13/13 killed. E2E
+  `challenge.spec.ts` (sanitize, coin no story, copy `^dd1`), landing 3
+  CTAs, captains splash reset.
 
 ## Completed this pass (2026-08-31)
 

@@ -1,4 +1,12 @@
-import { matchHeroName, parseCopiedDraft, resolveCopiedDraft } from 'shared';
+import {
+  decodeCopiedDraft,
+  encodeCopiedDraft,
+  matchHeroName,
+  parseCopiedDraft,
+  resolveCopiedDraft,
+  sameHeroSet,
+  sanitizeDraftCodeInput,
+} from 'shared';
 
 describe('parseCopiedDraft', () => {
   it('parses English Copy Draft lines into the five roles', () => {
@@ -108,5 +116,128 @@ describe('resolveCopiedDraft', () => {
     ).toThrow('duplicate or missing roles');
     expect(() => resolveCopiedDraft(fiveLines.replace('Axe', 'Not A Hero'), roster)).toThrow('Unknown hero');
     expect(() => resolveCopiedDraft(fiveLines.replace('Invoker', 'Axe'), roster)).toThrow('duplicate heroes');
+  });
+
+  it('round-trips a short draft code and ignores spaces/dashes', () => {
+    const heroRoles = [
+      { heroId: 1, role: 'Carry' },
+      { heroId: 2, role: 'Mid' },
+      { heroId: 3, role: 'Offlane' },
+      { heroId: 4, role: 'Soft Support' },
+      { heroId: 5, role: 'Hard Support' },
+    ];
+    const code = encodeCopiedDraft(heroRoles);
+    expect(code).toMatch(/^dd1[0-9a-hjkmnp-tv-z]{13}$/);
+    expect(code.length).toBeLessThan(20);
+    expect(decodeCopiedDraft(code)).toEqual({
+      heroIds: [1, 2, 3, 4, 5],
+      heroRoles,
+    });
+    expect(resolveCopiedDraft(` ${code.slice(0, 8)}-${code.slice(8)} `, roster)).toEqual({
+      heroIds: [1, 2, 3, 4, 5],
+      heroRoles,
+    });
+  });
+
+  it('rejects a tampered or truncated draft code', () => {
+    const code = encodeCopiedDraft([
+      { heroId: 1, role: 'Carry' },
+      { heroId: 2, role: 'Mid' },
+      { heroId: 3, role: 'Offlane' },
+      { heroId: 4, role: 'Soft Support' },
+      { heroId: 5, role: 'Hard Support' },
+    ]);
+    const flipped = `${code.slice(0, -1)}${code.endsWith('0') ? '1' : '0'}`;
+    expect(decodeCopiedDraft(flipped)).toBeNull();
+    expect(() => resolveCopiedDraft(flipped, roster)).toThrow('Invalid draft code');
+    expect(() => resolveCopiedDraft('dd1notacode!!!!', roster)).toThrow('Invalid draft code');
+  });
+
+  it('encodes by role order, not array order', () => {
+    const byRole = [
+      { heroId: 1, role: 'Carry' },
+      { heroId: 2, role: 'Mid' },
+      { heroId: 3, role: 'Offlane' },
+      { heroId: 4, role: 'Soft Support' },
+      { heroId: 5, role: 'Hard Support' },
+    ];
+    const shuffled = [
+      { heroId: 5, role: 'Hard Support' },
+      { heroId: 3, role: 'Offlane' },
+      { heroId: 1, role: 'Carry' },
+      { heroId: 4, role: 'Soft Support' },
+      { heroId: 2, role: 'Mid' },
+    ];
+    expect(encodeCopiedDraft(shuffled)).toBe(encodeCopiedDraft(byRole));
+  });
+
+  it('rejects missing roles, duplicate heroes, and out-of-range ids', () => {
+    expect(() =>
+      encodeCopiedDraft([
+        { heroId: 1, role: 'Carry' },
+        { heroId: 2, role: 'Mid' },
+        { heroId: 3, role: 'Offlane' },
+        { heroId: 4, role: 'Soft Support' },
+      ]),
+    ).toThrow('Copied draft must list all 5 roles');
+    expect(() =>
+      encodeCopiedDraft([
+        { heroId: 1, role: 'Carry' },
+        { heroId: 1, role: 'Mid' },
+        { heroId: 3, role: 'Offlane' },
+        { heroId: 4, role: 'Soft Support' },
+        { heroId: 5, role: 'Hard Support' },
+      ]),
+    ).toThrow('Copied draft has duplicate heroes');
+    expect(() =>
+      encodeCopiedDraft([
+        { heroId: 0, role: 'Carry' },
+        { heroId: 2, role: 'Mid' },
+        { heroId: 3, role: 'Offlane' },
+        { heroId: 4, role: 'Soft Support' },
+        { heroId: 5, role: 'Hard Support' },
+      ]),
+    ).toThrow('Invalid hero id');
+    expect(() =>
+      encodeCopiedDraft([
+        { heroId: 4096, role: 'Carry' },
+        { heroId: 2, role: 'Mid' },
+        { heroId: 3, role: 'Offlane' },
+        { heroId: 4, role: 'Soft Support' },
+        { heroId: 5, role: 'Hard Support' },
+      ]),
+    ).toThrow('Invalid hero id');
+  });
+
+  it('rejects a dd2 prefix and an unknown checksum', () => {
+    const code = encodeCopiedDraft([
+      { heroId: 1, role: 'Carry' },
+      { heroId: 2, role: 'Mid' },
+      { heroId: 3, role: 'Offlane' },
+      { heroId: 4, role: 'Soft Support' },
+      { heroId: 5, role: 'Hard Support' },
+    ]);
+    expect(decodeCopiedDraft(`dd2${code.slice(3)}`)).toBeNull();
+    const badCheck = code.endsWith('a') ? 'b' : 'a';
+    expect(decodeCopiedDraft(`${code.slice(0, -1)}${badCheck}`)).toBeNull();
+  });
+});
+
+describe('sameHeroSet', () => {
+  it('is order-independent for exactly five ids', () => {
+    expect(sameHeroSet([1, 2, 3, 4, 5], [5, 4, 3, 2, 1])).toBe(true);
+    expect(sameHeroSet([1, 2, 3, 4, 5], [1, 2, 3, 4, 6])).toBe(false);
+    expect(sameHeroSet([1, 2, 3, 4], [1, 2, 3, 4])).toBe(false);
+    expect(sameHeroSet([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6])).toBe(false);
+    expect(sameHeroSet([], [])).toBe(false);
+  });
+});
+
+describe('sanitizeDraftCodeInput', () => {
+  it('maps Crockford lookalikes, strips markup, and caps length', () => {
+    expect(sanitizeDraftCodeInput('ILO')).toBe('110');
+    expect(sanitizeDraftCodeInput('<script>alert(1)</script>')).not.toMatch(/[<>]/);
+    expect(sanitizeDraftCodeInput('<script>alert(1)</script>')).toBe('scr1pta1ert1scr1pt');
+    expect(sanitizeDraftCodeInput('a'.repeat(40)).length).toBe(24);
   });
 });

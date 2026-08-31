@@ -26,7 +26,13 @@ export class DraftController {
   @Post()
   create(@OwnerToken() ownerToken: string, @Body() body: unknown) {
     const parsed = assertCreateDraftBody(body);
-    return this.draftService.create(parsed.seed, parsed.heroId, parsed.rerollUsed, ownerToken);
+    return this.draftService.create(
+      parsed.seed,
+      parsed.heroId,
+      parsed.rerollUsed,
+      ownerToken,
+      parsed.mode === 'ti' ? 'ti' : 'battle',
+    );
   }
 
   @Get(':id')

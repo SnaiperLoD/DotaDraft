@@ -22,6 +22,8 @@ import './EvaluationPanel.css';
 interface Props {
   draftId: string;
   heroes: DraftHeroView[];
+  autoEvaluate?: boolean;
+  compact?: boolean;
 }
 
 function escapeRegExp(value: string): string {
@@ -183,7 +185,7 @@ function ScoreHeadline({
   );
 }
 
-export default function EvaluationPanel({ draftId, heroes }: Props) {
+export default function EvaluationPanel({ draftId, heroes, autoEvaluate = false, compact = false }: Props) {
   const { t } = useTranslation();
   const [result, setResult] = useState<EvaluationResult | null>(null);
   const [loading, setLoading] = useState(false);
@@ -207,6 +209,13 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
     }
   };
 
+  useEffect(() => {
+    if (!autoEvaluate || result || loading) return;
+    void handleEvaluate();
+    // One-shot on mount / draftId change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoEvaluate, draftId]);
+
   if (!result) {
     return (
       <div className="evaluation-panel">
@@ -228,129 +237,140 @@ export default function EvaluationPanel({ draftId, heroes }: Props) {
   const heroNames = heroes.map((h) => h.hero.name);
 
   return (
-    <div className="evaluation-panel" data-testid="evaluation-result">
+    <div
+      className={`evaluation-panel${compact ? ' evaluation-panel--compact' : ''}`}
+      data-testid="evaluation-result"
+    >
       <ScoreHeadline score={result.totalScore} archetypeId={result.archetype?.id} badges={badges} />
 
       <p className="evaluation-gameplan bracketed">
         {boldHeroNames(renderLocalizedLines(t, result.summary.gameplan), heroNames)}
       </p>
 
-      <div className="evaluation-columns">
-        <div className="panel bracketed evaluation-radar-panel">
-          <AxisRadar breakdown={result.breakdown} />
-        </div>
-
-        <div className="evaluation-summary">
-          <div className="evaluation-summary-col">
-            <div className="evaluation-summary-heading evaluation-summary-heading--good">
-              {t('evaluation.strengths')}
+      {!compact && (
+        <>
+          <div className="evaluation-columns">
+            <div className="panel bracketed evaluation-radar-panel">
+              <AxisRadar breakdown={result.breakdown} />
             </div>
-            <ul>
-              {result.summary.strengths.map((line, i) => (
-                <li key={i}>{boldHeroNames(renderLocalizedLine(t, line), heroNames)}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="evaluation-summary-col">
-            <div className="evaluation-summary-heading evaluation-summary-heading--bad">
-              {t('evaluation.weaknesses')}
+
+            <div className="evaluation-summary">
+              <div className="evaluation-summary-col">
+                <div className="evaluation-summary-heading evaluation-summary-heading--good">
+                  {t('evaluation.strengths')}
+                </div>
+                <ul>
+                  {result.summary.strengths.map((line, i) => (
+                    <li key={i}>{boldHeroNames(renderLocalizedLine(t, line), heroNames)}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="evaluation-summary-col">
+                <div className="evaluation-summary-heading evaluation-summary-heading--bad">
+                  {t('evaluation.weaknesses')}
+                </div>
+                <ul>
+                  {result.summary.weaknesses.map((line, i) => (
+                    <li key={i}>{boldHeroNames(renderLocalizedLine(t, line), heroNames)}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
-            <ul>
-              {result.summary.weaknesses.map((line, i) => (
-                <li key={i}>{boldHeroNames(renderLocalizedLine(t, line), heroNames)}</li>
-              ))}
-            </ul>
           </div>
-        </div>
-      </div>
 
-      <TopContributorHighlight breakdown={result.breakdown} heroes={heroes} />
+          <TopContributorHighlight breakdown={result.breakdown} heroes={heroes} />
 
-      {result.customTags.length > 0 && (
-        <div className="panel bracketed evaluation-combos">
-          <div className="evaluation-combos-heading">{t('evaluation.activeCombos')}</div>
-          <p className="evaluation-combos-note">{t('evaluation.combosBattleNote')}</p>
-          <ul>
-            {result.customTags.map((tag) => {
-              const fundamentalsAxes =
-                tag.name === 'The Fundamentals'
-                  ? tag.fundamentalsAxes?.length
-                    ? tag.fundamentalsAxes
-                    : parseFundamentalsAxesFromDescription(tag.description)
-                  : undefined;
-              return (
-                <li key={tag.name}>
-                  <span className={`hero-tag-badge rarity-${tag.rarity}`}>{customTagName(t, tag.name)}</span>
-                  {tag.name === 'The Fundamentals' && fundamentalsAxes && fundamentalsAxes.length > 0 && (
-                    <span className="fundamentals-axis-row">
-                      <span className="fundamentals-axis-label">{t('evaluation.fundamentalsBoosts')}</span>
-                      {fundamentalsAxes.map((axis) => (
-                        <span key={axis} className="fundamentals-axis-chip">
-                          {axisLabel(t, axis)}
+          {result.customTags.length > 0 && (
+            <div className="panel bracketed evaluation-combos">
+              <div className="evaluation-combos-heading">{t('evaluation.activeCombos')}</div>
+              <p className="evaluation-combos-note">{t('evaluation.combosBattleNote')}</p>
+              <ul>
+                {result.customTags.map((tag) => {
+                  const fundamentalsAxes =
+                    tag.name === 'The Fundamentals'
+                      ? tag.fundamentalsAxes?.length
+                        ? tag.fundamentalsAxes
+                        : parseFundamentalsAxesFromDescription(tag.description)
+                      : undefined;
+                  return (
+                    <li key={tag.name}>
+                      <span className={`hero-tag-badge rarity-${tag.rarity}`}>
+                        {customTagName(t, tag.name)}
+                      </span>
+                      {tag.name === 'The Fundamentals' && fundamentalsAxes && fundamentalsAxes.length > 0 && (
+                        <span className="fundamentals-axis-row">
+                          <span className="fundamentals-axis-label">
+                            {t('evaluation.fundamentalsBoosts')}
+                          </span>
+                          {fundamentalsAxes.map((axis) => (
+                            <span key={axis} className="fundamentals-axis-chip">
+                              {axisLabel(t, axis)}
+                            </span>
+                          ))}
                         </span>
-                      ))}
-                    </span>
-                  )}
-                  <span className="evaluation-combos-description">
-                    {customTagDescription(t, tag, {
-                      teamHeroNames: heroNames,
-                      fundamentalsAxes,
-                    })}
-                  </span>
-                </li>
-              );
-            })}{' '}
-          </ul>
-          <p className="evaluation-combos-footnote">{t('evaluation.combosBattleSummary')}</p>
-        </div>
-      )}
-
-      <div className="evaluation-breakdown">
-        {result.breakdown.map((item) => (
-          <div key={item.key} className="panel evaluation-item">
-            <div className="evaluation-item-header">
-              <span>{axisLabel(t, item.key, item.label)}</span>
-              <span className="evaluation-item-scores">
-                {item.percentile !== null && (
-                  <span className={`percentile-pill ${percentileClass(item.percentile)}`}>
-                    {formatPercentileLabel(t, item.percentile)}
-                  </span>
-                )}{' '}
-                <span className="score">
-                  {item.score === null ? t('evaluation.notAvailable') : `${item.score}/10`}
-                </span>
-              </span>
+                      )}
+                      <span className="evaluation-combos-description">
+                        {customTagDescription(t, tag, {
+                          teamHeroNames: heroNames,
+                          fundamentalsAxes,
+                        })}
+                      </span>
+                    </li>
+                  );
+                })}{' '}
+              </ul>
+              <p className="evaluation-combos-footnote">{t('evaluation.combosBattleSummary')}</p>
             </div>
+          )}
 
-            {/* Where this axis sits against the reference population, as a
+          <div className="evaluation-breakdown">
+            {result.breakdown.map((item) => (
+              <div key={item.key} className="panel evaluation-item">
+                <div className="evaluation-item-header">
+                  <span>{axisLabel(t, item.key, item.label)}</span>
+                  <span className="evaluation-item-scores">
+                    {item.percentile !== null && (
+                      <span className={`percentile-pill ${percentileClass(item.percentile)}`}>
+                        {formatPercentileLabel(t, item.percentile)}
+                      </span>
+                    )}{' '}
+                    <span className="score">
+                      {item.score === null ? t('evaluation.notAvailable') : `${item.score}/10`}
+                    </span>
+                  </span>
+                </div>
+
+                {/* Where this axis sits against the reference population, as a
                 bar rather than only as a pill of words. The notch is the
                 median — the eye finds "left or right of centre" faster
                 than it parses "42nd percentile". */}
-            {item.percentile !== null && (
-              <div className={`percentile-bar ${percentileClass(item.percentile)}`}>
-                <span className="percentile-bar-fill" style={{ width: `${item.percentile}%` }} />
-                <span className="percentile-bar-median" />
-              </div>
-            )}
+                {item.percentile !== null && (
+                  <div className={`percentile-bar ${percentileClass(item.percentile)}`}>
+                    <span className="percentile-bar-fill" style={{ width: `${item.percentile}%` }} />
+                    <span className="percentile-bar-median" />
+                  </div>
+                )}
 
-            <ul>
-              {item.explanation.map((line, i) => (
-                <li key={i}>{boldHeroNames(renderLocalizedLine(t, line), heroNames)}</li>
-              ))}
-            </ul>
-            {item.matchUrl && (
-              <a
-                className="evaluation-match-link"
-                href={item.matchUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {t('evaluation.viewMatch')}
-              </a>
-            )}
+                <ul>
+                  {item.explanation.map((line, i) => (
+                    <li key={i}>{boldHeroNames(renderLocalizedLine(t, line), heroNames)}</li>
+                  ))}
+                </ul>
+                {item.matchUrl && (
+                  <a
+                    className="evaluation-match-link"
+                    href={item.matchUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {t('evaluation.viewMatch')}
+                  </a>
+                )}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </>
+      )}
     </div>
   );
 }

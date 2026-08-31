@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import ScreenFlash from './ScreenFlash';
 import OpponentRollAnimation from './OpponentRollAnimation';
-import { ROLES, isTiFinalsOpponent } from 'shared';
+import { ROLES, isTiFinalsOpponent, sanitizeDraftCodeInput } from 'shared';
 import type {
   BattleResultResponse,
   BattleOpponentHero,
@@ -14,6 +14,7 @@ import { api } from '../api/client';
 import { getSubmitterToken } from '../utils/submitterToken';
 import { heroPortraitUrl, heroIconUrl } from '../utils/heroIcon';
 import type { DraftHeroView } from '../api/types';
+import TeamCrest from './TeamCrest';
 import {
   bestWinStreak,
   currentLoseStreak,
@@ -26,7 +27,10 @@ import { formatBattleAxisLine, customTagName, customTagDescription, axisLabel } 
 import { renderLocalizedLine } from '../i18n/narrative';
 import ArchetypeSeal from './ArchetypeSeal';
 import DraftLedger from './DraftLedger';
+import CoinFlip3D from './CoinFlip3D';
 import './BattlePanel.css';
+
+const COIN_FACEOFF_MS = 1600;
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -286,8 +290,6 @@ function BattleStory({ result, heroNames }: { result: BattleResultResponse; hero
 // opponent." Runs in parallel with the real request, not sequentially
 // after it — a slow request never waits on this on top of its own latency.
 const MIN_ROLL_DURATION_MS = 1200;
-const TI_RUN_FIGHTS = 5;
-const TI_RUN_ADVANCE_WINS = 3;
 
 function PortraitCard({
   heroId,
@@ -450,6 +452,7 @@ function FaceOff({
   tiFinals,
   mineArchetypeId,
   opponentArchetypeId,
+  opponentTeam,
 }: {
   myHeroes: DraftHeroView[];
   opponentHeroes: BattleOpponentHero[];
@@ -458,6 +461,7 @@ function FaceOff({
   tiFinals: boolean;
   mineArchetypeId: string | null | undefined;
   opponentArchetypeId: string | null | undefined;
+  opponentTeam?: string | null;
 }) {
   const { t } = useTranslation();
   const roleOrder = ROLES as readonly string[];
@@ -506,6 +510,7 @@ function FaceOff({
           ))}
         </div>
         <span className="faceoff-side-label">
+          {opponentTeam && <TeamCrest name={opponentTeam} size={20} />}
           {t('battle.sideOpponent')}
           <ArchetypeSeal archetypeId={opponentArchetypeId} compact side="opponent" />
           {tiFinals && <TiFinalsMark />}
@@ -523,9 +528,27 @@ interface Props {
   // keeps the roll from firing while the panel is mounted-but-hidden.
   active?: boolean;
   onBack?: () => void;
+  variant?: 'pool' | 'once';
+  autoStart?: boolean;
+  captainsSessionId?: string;
+  tiRunId?: string;
+  backLabel?: string;
+  onFought?: (result: BattleResultResponse) => void;
 }
 
-export default function BattlePanel({ draftId, heroes, active = true, onBack }: Props) {
+export default function BattlePanel({
+  draftId,
+  heroes,
+  active = true,
+  onBack,
+  variant = 'pool',
+  autoStart,
+  captainsSessionId,
+  tiRunId,
+  backLabel,
+  onFought,
+}: Props) {
+  const shouldAutoStart = autoStart ?? variant === 'pool';
   const { t } = useTranslation();
   const [result, setResult] = useState<BattleResultResponse | null>(null);
   const [loading, setLoading] = useState(false);
@@ -546,8 +569,10 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
   // fresh "Fight Again" gets a clean roll.
   const [fightSeq, setFightSeq] = useState(0);
   const [pasteText, setPasteText] = useState('');
-  const [tiRunOutcomes, setTiRunOutcomes] = useState<FightOutcome[]>([]);
-  const pendingKindRef = useRef<'pool' | 'ti' | 'challenge'>('pool');
+  const [challengeOpen, setChallengeOpen] = useState(false);
+  const [coinPhase, setCoinPhase] = useState<'faceoff' | 'spin' | 'done' | null>(null);
+  const resultRef = useRef<BattleResultResponse | null>(null);
+  const coinLandedRef = useRef(false);
 
   // Both drafts' hero names, for bolding them in the outcome write-up (same as
   // the portraits). Empty until a fight resolves.
@@ -557,23 +582,33 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
     [heroes, result],
   );
 
-  const handleFight = async (opts: { tiRun?: boolean; copiedDraft?: string } = {}) => {
+  useEffect(() => {
+    resultRef.current = result;
+  }, [result]);
+
+  const handleFight = async (opts: { copiedDraft?: string } = {}) => {
     const fightIndex = battleCount;
     setFightSeq((s) => s + 1);
+    setCoinPhase(null);
+    coinLandedRef.current = false;
     setLoading(true);
     setError(null);
-    pendingKindRef.current = opts.copiedDraft ? 'challenge' : opts.tiRun ? 'ti' : 'pool';
     track(
       'battle_fight',
-      { n: fightIndex + 1, auto: fightIndex === 0, tiRun: !!opts.tiRun, challenge: !!opts.copiedDraft },
+      { n: fightIndex + 1, auto: fightIndex === 0, challenge: !!opts.copiedDraft, variant },
       draftId,
     );
     try {
       const [res] = await Promise.all([
-        api.fightBattle(draftId, getSubmitterToken(), opts),
+        api.fightBattle(draftId, getSubmitterToken(), {
+          ...opts,
+          ...(captainsSessionId ? { captainsSessionId } : {}),
+          ...(tiRunId ? { tiRunId } : {}),
+        }),
         sleep(MIN_ROLL_DURATION_MS),
       ]);
       setResult(res);
+      resultRef.current = res;
       setBattleCount((c) => c + 1);
       pendingRunOutcomeRef.current =
         res.resolvedOutcome === 'Win' || res.resolvedOutcome === 'Lose' ? res.resolvedOutcome : null;
@@ -598,7 +633,7 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
       autoStartedRef.current = false;
       return;
     }
-    if (!autoStartedRef.current && !result && !loading && !revealing && !error) {
+    if (!autoStartedRef.current && !result && !loading && !revealing && !error && shouldAutoStart) {
       autoStartedRef.current = true;
       void handleFight();
     }
@@ -608,24 +643,62 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active]);
 
+  useEffect(() => {
+    if (coinPhase !== 'faceoff') return;
+    const t = window.setTimeout(() => setCoinPhase('spin'), COIN_FACEOFF_MS);
+    return () => window.clearTimeout(t);
+  }, [coinPhase]);
+
+  const settleCoin = () => {
+    if (coinLandedRef.current) return;
+    coinLandedRef.current = true;
+    setCoinPhase('done');
+    const pending = pendingRunOutcomeRef.current;
+    const res = resultRef.current;
+    if (pending) {
+      pendingRunOutcomeRef.current = null;
+      setRunOutcomes((prev) => [...prev, pending]);
+      track(
+        'battle_outcome',
+        {
+          outcome: pending,
+          confidenceTier: res?.confidenceTier ?? null,
+          opponentSource: res?.opponent.source ?? null,
+          coinFlip: true,
+        },
+        draftId,
+      );
+      if (res) onFought?.(res);
+    }
+  };
+
   // When the fight resolves (the settle finishes and the verdict appears),
   // jump the page to the top so the Victory/Defeat headline is what the player
   // lands on — the roll leaves them scrolled down (user). Keyed on battleCount
   // so it fires once per fight, only after the reveal (not during the roll).
   useEffect(() => {
-    if (battleCount > 0 && result && !loading && !revealing) {
+    if (
+      battleCount > 0 &&
+      result &&
+      !loading &&
+      !revealing &&
+      coinPhase !== 'faceoff' &&
+      coinPhase !== 'spin'
+    ) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [revealing, battleCount]);
+  }, [revealing, battleCount, coinPhase]);
 
   const { wins: runWins, losses: runLosses } = runRecord(runOutcomes);
-  const { wins: tiWins, losses: tiLosses } = runRecord(tiRunOutcomes);
-  const tiRunDone = tiRunOutcomes.length >= TI_RUN_FIGHTS;
   const winStreak = currentWinStreak(runOutcomes);
   const loseStreak = currentLoseStreak(runOutcomes);
   const peakWinStreak = bestWinStreak(runOutcomes);
   const tiFinals = isTiFinalsOpponent(result?.opponent);
+  const inCeremony = loading || revealing || coinPhase === 'faceoff' || coinPhase === 'spin';
+  const showCoinFaceoff = Boolean(result?.coinFlip && coinPhase === 'faceoff');
+  const showCoin = Boolean(result?.coinFlip && (coinPhase === 'spin' || coinPhase === 'done'));
+  const showStandardResult = Boolean(result && !loading && !revealing && !result.coinFlip);
 
   return (
     <div className="battle-panel">
@@ -645,7 +718,7 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
             >
               <path d="M15 18l-6-6 6-6" />
             </svg>
-            {t('battle.backToEvaluation')}
+            {backLabel ?? t('battle.backToEvaluation')}
           </button>
         )}
         <h3>{t('battle.title')}</h3>
@@ -674,78 +747,76 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
             )}
           </div>
         )}
-        {tiRunOutcomes.length > 0 && (
-          <div
-            className="battle-run-chip battle-run-chip--ti"
-            title={t('battle.tiRunHint')}
-            data-testid="battle-ti-chip"
-          >
-            {t('battle.tiRunChip', { wins: tiWins, losses: tiLosses })}
-          </div>
-        )}
       </div>
 
       <div className="completed-head">
         <DraftLedger heroes={heroes} totalSlots={5} title={t('draft.yourTeam')} layout="rail" />
         <div className="completed-head-actions">
-          <button
-            className="btn btn-primary completed-head-fight"
-            onClick={() => void handleFight()}
-            disabled={loading || revealing}
-          >
-            {(loading || revealing) && <span className="btn-spinner" aria-hidden="true" />}
-            {loading || revealing
-              ? t('battle.findingOpponent')
-              : result
-                ? t('battle.fightAgain')
-                : t('battle.enterBattle')}
-          </button>
-          <button
-            type="button"
-            className="btn btn-secondary completed-head-fight"
-            onClick={() => void handleFight({ tiRun: true })}
-            disabled={loading || revealing || tiRunDone}
-            title={t('battle.tiRunHint')}
-          >
-            {tiRunOutcomes.length === 0
-              ? t('battle.tiRunStart')
-              : t('battle.tiRunNext', { n: String(Math.min(tiRunOutcomes.length + 1, TI_RUN_FIGHTS)) })}
-          </button>
+          {!(variant === 'once' && result) && (
+            <button
+              className="btn btn-primary completed-head-fight"
+              onClick={() => void handleFight()}
+              disabled={inCeremony}
+            >
+              {(loading || revealing) && <span className="btn-spinner" aria-hidden="true" />}
+              {loading || revealing
+                ? t('battle.findingOpponent')
+                : result
+                  ? t('battle.fightAgain')
+                  : t('battle.enterBattle')}
+            </button>
+          )}
+          {variant === 'pool' && !inCeremony && (
+            <button
+              type="button"
+              className="btn btn-secondary btn-sm battle-challenge-toggle"
+              data-testid="battle-challenge-toggle"
+              aria-expanded={challengeOpen}
+              onClick={() => setChallengeOpen((open) => !open)}
+            >
+              {t('battle.challengeTitle')}
+            </button>
+          )}
+          {variant === 'pool' && challengeOpen && !inCeremony && (
+            <form
+              className="battle-challenge-row"
+              data-testid="battle-challenge-row"
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (pasteText.trim()) void handleFight({ copiedDraft: pasteText });
+              }}
+            >
+              <input
+                className="battle-challenge-paste"
+                data-testid="battle-challenge-paste"
+                value={pasteText}
+                onChange={(e) => setPasteText(sanitizeDraftCodeInput(e.target.value))}
+                onPaste={(e) => {
+                  e.preventDefault();
+                  setPasteText(sanitizeDraftCodeInput(e.clipboardData.getData('text/plain')));
+                }}
+                placeholder={t('battle.challengePaste')}
+                spellCheck={false}
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
+                autoFocus
+                aria-label={t('battle.challengePaste')}
+                title={t('battle.challengeHint')}
+              />
+              <button
+                type="submit"
+                className="btn btn-secondary btn-sm"
+                disabled={pasteText.trim().length === 0}
+              >
+                {t('battle.challengeFight')}
+              </button>
+            </form>
+          )}
         </div>
       </div>
 
       {!result && !loading && !revealing && <p className="battle-screen-intro">{t('battle.screenIntro')}</p>}
-
-      {result && !loading && !revealing && (
-        <div className="battle-extra-modes">
-          {tiWins >= TI_RUN_ADVANCE_WINS && !tiRunDone && (
-            <p className="battle-ti-flavor">{t('battle.tiAdvance')}</p>
-          )}
-          {tiRunDone && (
-            <p className="battle-ti-flavor">{t('battle.tiComplete', { wins: tiWins, losses: tiLosses })}</p>
-          )}
-          <div className="battle-challenge">
-            <div className="battle-challenge-head">{t('battle.challengeTitle')}</div>
-            <p className="battle-challenge-hint">{t('battle.challengeHint')}</p>
-            <textarea
-              className="battle-challenge-paste"
-              value={pasteText}
-              onChange={(e) => setPasteText(e.target.value)}
-              placeholder={t('battle.challengePaste')}
-              rows={5}
-              spellCheck={false}
-            />
-            <button
-              type="button"
-              className="btn btn-secondary"
-              disabled={loading || revealing || pasteText.trim().length === 0}
-              onClick={() => void handleFight({ copiedDraft: pasteText })}
-            >
-              {t('battle.challengeFight')}
-            </button>
-          </div>
-        </div>
-      )}
 
       {/* One roll instance spans both phases: it spins while `loading`
           (opponentHeroes null = searching), then locks the real opponent in
@@ -757,14 +828,17 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
           key={fightSeq}
           opponentHeroes={revealing ? (result?.opponent.heroes ?? null) : null}
           onSettled={() => {
+            const res = resultRef.current;
+            if (res?.coinFlip) {
+              setRevealing(false);
+              setCoinPhase('faceoff');
+              return;
+            }
             setRevealing(false);
             const pending = pendingRunOutcomeRef.current;
             if (pending) {
               pendingRunOutcomeRef.current = null;
               setRunOutcomes((prev) => [...prev, pending]);
-              if (pendingKindRef.current === 'ti') {
-                setTiRunOutcomes((prev) => [...prev, pending]);
-              }
               track(
                 'battle_outcome',
                 {
@@ -774,6 +848,7 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
                 },
                 draftId,
               );
+              if (result) onFought?.(result);
             }
           }}
         />
@@ -781,7 +856,40 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
 
       {error && <p className="error-text">{error}</p>}
 
-      {result && !loading && !revealing && (
+      {showCoinFaceoff && result && (
+        <div data-testid="battle-coin-faceoff">
+          <FaceOff
+            myHeroes={heroes}
+            opponentHeroes={result.opponent.heroes}
+            collisionKey={battleCount}
+            shutdownHeroIds={result.shutdownHeroIds}
+            tiFinals={tiFinals}
+            mineArchetypeId={result.archetype?.id}
+            opponentArchetypeId={result.opponent.archetype?.id}
+            opponentTeam={result.opponent.source === 'pro' ? result.opponent.teamName : null}
+          />
+        </div>
+      )}
+
+      {showCoin && result && (
+        <div className="battle-coin-stage">
+          <CoinFlip3D outcome={result.resolvedOutcome} onLanded={settleCoin} />
+          {coinPhase === 'done' && (
+            <>
+              <p
+                className={`battle-coin-verdict battle-coin-verdict--${result.resolvedOutcome === 'Win' ? 'win' : 'lose'}`}
+                data-testid="battle-coin-verdict"
+                data-outcome={result.resolvedOutcome}
+              >
+                {result.resolvedOutcome === 'Win' ? t('battle.youWin') : t('battle.youLose')}
+              </p>
+              <p className="battle-coin-note">{t('battle.coinFlipNote')}</p>
+            </>
+          )}
+        </div>
+      )}
+
+      {showStandardResult && result && (
         <div
           className={`battle-result bracketed battle-result--${result.resolvedOutcome === 'Win' ? 'win' : 'lose'}`}
         >
@@ -806,6 +914,7 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
 
           <p className="battle-vs">
             {t('battle.vs')} {tiFinals && <TiFinalsMark />}
+            {result.opponent.teamName && <TeamCrest name={result.opponent.teamName} size={22} />}
             {result.opponent.teamName
               ? `${result.opponent.teamName}${result.opponent.leagueName ? ` (${result.opponent.leagueName})` : ''}`
               : result.opponent.source === 'pro'
@@ -834,6 +943,7 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
             tiFinals={tiFinals}
             mineArchetypeId={result.archetype?.id}
             opponentArchetypeId={result.opponent.archetype?.id}
+            opponentTeam={result.opponent.source === 'pro' ? result.opponent.teamName : null}
           />
 
           <BattleTagChips
@@ -963,20 +1073,18 @@ export default function BattlePanel({ draftId, heroes, active = true, onBack }: 
         </div>
       )}
 
-      <div className="completed-actions">
-        <button
-          className="btn btn-primary"
-          onClick={() => void handleFight()}
-          disabled={loading || revealing}
-        >
-          {(loading || revealing) && <span className="btn-spinner" aria-hidden="true" />}
-          {loading || revealing
-            ? t('battle.findingOpponent')
-            : result
-              ? t('battle.fightAgain')
-              : t('battle.enterBattle')}
-        </button>
-      </div>
+      {!(variant === 'once' && result) && (
+        <div className="completed-actions">
+          <button className="btn btn-primary" onClick={() => void handleFight()} disabled={inCeremony}>
+            {(loading || revealing) && <span className="btn-spinner" aria-hidden="true" />}
+            {loading || revealing
+              ? t('battle.findingOpponent')
+              : result
+                ? t('battle.fightAgain')
+                : t('battle.enterBattle')}
+          </button>
+        </div>
+      )}
       {result && !loading && !revealing && (
         <p className="battle-count">
           {t('battle.battlesThisVisit', { count: battleCount })}

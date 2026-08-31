@@ -1,0 +1,92 @@
+.ti-run-page {
+  max-width: min(1600px, 100%);
+}
+
+.ti-copy {
+  color: var(--ink-faint);
+  max-width: 72ch;
+}
+
+.ti-copy--emphasis {
+  color: var(--ink);
+  font-size: 15px;
+}
+
+.ti-you,
+.ti-match-now {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ti-team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--sp-4);
+  margin: var(--sp-5) 0;
+}
+
+.ti-team-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: var(--sp-4);
+  text-align: left;
+  background: var(--panel);
+  border: 1px solid var(--bronze-dim);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.ti-team-card:hover {
+  border-color: var(--gold);
+}
+
+.ti-team-card ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+  color: var(--ink-faint);
+}
+
+.ti-match-now {
+  font-family: var(--font-ui);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+}
+
+.ti-play-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: var(--sp-4) 0 var(--sp-5);
+}
+
+.ti-play-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ti-eval-screen,
+.ti-fight-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-4);
+}
+
+.ti-eval-screen[hidden] {
+  display: none;
+}
+
+.ti-path {
+  padding-left: 1.2em;
+}
+
+.ti-end {
+  margin-top: var(--sp-5);
+  padding: var(--sp-5);
+}

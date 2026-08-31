@@ -6,6 +6,9 @@ describe('HistoryService.findAll', () => {
       draft: {
         findMany: jest.fn(async () => []),
       },
+      tiRun: {
+        findMany: jest.fn(async () => []),
+      },
     };
     const heroService = { findByIds: jest.fn(async () => []) };
     const service = new HistoryService(prisma as any, heroService as any);
@@ -13,7 +16,7 @@ describe('HistoryService.findAll', () => {
     await service.findAll('owner-a');
 
     expect(prisma.draft.findMany).toHaveBeenCalledWith({
-      where: { status: 'COMPLETED', ownerToken: 'owner-a' },
+      where: { status: 'COMPLETED', ownerToken: 'owner-a', NOT: { mode: 'captains_ai' } },
       include: { heroes: true, battleResults: { orderBy: { createdAt: 'desc' } } },
       orderBy: { createdAt: 'desc' },
     });

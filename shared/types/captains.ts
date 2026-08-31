@@ -48,7 +48,7 @@ export interface CmSlot {
   heroId: number | null;
 }
 
-export type CaptainsStatus = 'DRAFTING' | 'ASSIGNING_ROLES' | 'COMPLETED';
+export type CaptainsStatus = 'DRAFTING' | 'ASSIGNING_ROLES' | 'READY' | 'COMPLETED';
 
 export interface CaptainsStateView {
   id: string;
@@ -64,6 +64,7 @@ export interface CaptainsStateView {
   aiReserveMs: number;
   stepEndsAt: string;
   draftId: string | null;
+  aiDraftId: string | null;
 }
 
 export interface CaptainsActRequest {

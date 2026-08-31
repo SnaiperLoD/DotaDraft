@@ -7,6 +7,7 @@
     "configFile": "jest.stryker.config.js"
   },
   "coverageAnalysis": "perTest",
+  "timeoutMS": 20000,
   "tsconfigFile": "tsconfig.json",
   "thresholds": {
     "high": 80,
@@ -36,6 +37,7 @@
     "src/hero/hero-abilities.service.ts",
     "src/hero/hero.controller.ts",
     "src/hero/hero.service.ts",
-    "src/opponent-pool/opponent-pool.service.ts"
+    "src/opponent-pool/opponent-pool.service.ts",
+    "src/battle/challenge-mirror.ts"
   ]
 }

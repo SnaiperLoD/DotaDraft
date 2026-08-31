@@ -1,5 +1,4 @@
-import { getSubmitterToken } from '../utils/submitterToken';
-import { OWNER_TOKEN_HEADER } from 'shared';
+import { getSubmitterToken, OWNER_TOKEN_HEADER } from '../utils/submitterToken';
 import type { TelemetryEvent, TelemetrySink } from './types';
 
 const MAX_BATCH = 20;

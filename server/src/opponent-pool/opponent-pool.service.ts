@@ -7,13 +7,16 @@ import {
 import { PoolPrismaService } from './pool-prisma.service';
 import type { Prisma } from '../../generated/pool-client';
 import { DraftService } from '../draft/draft.service';
-import type {
+import {
   CommitDraftResponse,
   PooledDraftSummary,
   PooledDraftSource,
   PooledHeroRole,
   LeaderboardEntryView,
   ResolvedOutcome,
+  teamInitials,
+  teamsMatch,
+  type TiTeamCard,
 } from 'shared';
 import { pickWeightedOpponent } from './opponent-pool-pick';
 import type { PoolPickRow } from './opponent-pool-pick';
@@ -29,6 +32,9 @@ export class OpponentPoolService {
     const draft = await this.draftService.getById(draftId, submitterToken);
     if (draft.status !== 'COMPLETED') {
       throw new BadRequestException('Draft must be completed before it can be committed to the pool');
+    }
+    if (draft.mode !== 'battle') {
+      throw new BadRequestException('Only Battle Mode drafts can be committed to the pool');
     }
 
     const heroIds = draft.heroes.map((h) => h.heroId);
@@ -169,6 +175,102 @@ export class OpponentPoolService {
         matchId: row.source === 'pro' ? row.id.replace(/^pro-/, '') : null,
       };
     });
+  }
+
+  async pullForTeam(
+    teamName: string,
+    leagueName: string,
+    aliases: Record<string, string[]>,
+    matchIds: string[],
+    excludeHeroIds: number[] = [],
+    excludeFacedHeroSets: number[][] = [],
+  ): Promise<PooledDraftSummary> {
+    const heroSetKey = (ids: number[]): string => [...ids].sort((a, b) => a - b).join(',');
+    return this.runPoolQuery(async () => {
+      let rows = await this.leagueRows(leagueName);
+      const ofTeam = rows.filter((r) => teamsMatch(r.teamName ?? '', teamName, aliases));
+      if (ofTeam.length === 0) {
+        throw new NotFoundException(`No pool drafts for ${teamName} at ${leagueName}`);
+      }
+      rows = ofTeam;
+
+      if (matchIds.length > 0) {
+        const idSet = new Set(matchIds.map((id) => `pro-${id}`));
+        const staged = rows.filter((r) => idSet.has(r.id));
+        if (staged.length > 0) rows = staged;
+      }
+
+      if (excludeFacedHeroSets.length > 0) {
+        const facedKeys = new Set(excludeFacedHeroSets.map(heroSetKey));
+        const fresh = rows.filter((r) => !facedKeys.has(heroSetKey(r.heroIds as number[])));
+        if (fresh.length > 0) rows = fresh;
+      }
+
+      if (excludeHeroIds.length > 0) {
+        const excludeSet = new Set(excludeHeroIds);
+        const noOverlap = rows.filter((r) => !(r.heroIds as number[]).some((id) => excludeSet.has(id)));
+        if (noOverlap.length > 0) rows = noOverlap;
+      }
+
+      if (rows.length === 0) {
+        throw new NotFoundException(`No pool drafts for ${teamName} at ${leagueName}`);
+      }
+
+      const row = pickWeightedOpponent(rows as PoolPickRow[]);
+      return {
+        id: row.id,
+        source: row.source as PooledDraftSource,
+        heroIds: row.heroIds,
+        heroRoles: (row.heroRoles as PooledHeroRole[] | null) ?? null,
+        teamName: row.teamName ?? null,
+        leagueName: row.leagueName ?? null,
+        matchId: row.source === 'pro' ? row.id.replace(/^pro-/, '') : null,
+      };
+    });
+  }
+
+  async summarizeTeams(
+    leagueName: string,
+    teamNames: string[],
+    aliases: Record<string, string[]>,
+  ): Promise<TiTeamCard[]> {
+    return this.runPoolQuery(async () => {
+      const rows = await this.leagueRows(leagueName);
+      const cards: TiTeamCard[] = [];
+      for (const name of teamNames) {
+        const ofTeam = rows.filter((r) => teamsMatch(r.teamName ?? '', name, aliases));
+        if (ofTeam.length === 0) continue;
+        const counts = new Map<string, number>();
+        for (const row of ofTeam) {
+          for (const role of (row.heroRoles as PooledHeroRole[] | null) ?? []) {
+            const player = role.playerName?.trim();
+            if (!player) continue;
+            counts.set(player, (counts.get(player) ?? 0) + 1);
+          }
+        }
+        const players = [...counts.entries()]
+          .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+          .slice(0, 5)
+          .map(([player]) => player);
+        cards.push({ name, players, initials: teamInitials(name) });
+      }
+      return cards;
+    });
+  }
+
+  private async leagueRows(leagueName: string) {
+    let rows = await this.pool.pooledDraft.findMany({
+      where: { leagueName: { contains: leagueName } },
+    });
+    if (rows.length === 0) {
+      const year = /\b(20\d{2})\b/.exec(leagueName)?.[1];
+      if (year) {
+        rows = await this.pool.pooledDraft.findMany({
+          where: { leagueName: { contains: `International ${year}` } },
+        });
+      }
+    }
+    return rows;
   }
 
   // "Weak" leaderboard, v2 — Blueprint/10-tech-debt-backlog.md, "Лидерборд
