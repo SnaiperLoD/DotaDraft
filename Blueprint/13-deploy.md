@@ -207,6 +207,14 @@ Use this before sending a link outside localhost.
 5. Set `TELEMETRY_READ_TOKEN` in `.env`; after ~10 sessions verify
    `GET /api/telemetry/funnel` with `X-Telemetry-Read-Token`.
 
+Fast local gate before sharing a link:
+
+```bash
+npm run pre-release:check
+# full browser smoke (needs Playwright + POOL_DATABASE_URL):
+POOL_DATABASE_URL=postgresql://... npm run test:e2e
+```
+
 ### URL strategy — pick one
 
 | Mode | Cost | When |

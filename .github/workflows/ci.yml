@@ -58,6 +58,9 @@ jobs:
         env:
           POOL_DATABASE_URL: ''
 
+      - name: Client unit tests
+        run: npm test --workspace client
+
       - name: Server integration tests
         run: npm run test:integration --workspace server
         env:

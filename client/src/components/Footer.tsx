@@ -15,7 +15,7 @@ export default function Footer() {
         <span className="app-footer-brand">DotaDraft</span>
         <nav className="app-footer-links">
           {tip && (
-            <a href={tip} target="_blank" rel="noopener noreferrer">
+            <a href={tip} target="_blank" rel="noopener noreferrer" data-testid="footer-tip-jar">
               {t('footer.tipJar')}
             </a>
           )}

@@ -37,6 +37,7 @@ export default function AboutPage() {
               href={tip}
               target="_blank"
               rel="noopener noreferrer"
+              data-testid="about-tip-jar"
             >
               {t('about.tipJarLink')}
             </a>

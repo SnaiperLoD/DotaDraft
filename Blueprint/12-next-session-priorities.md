@@ -32,8 +32,10 @@ is **in progress** (Nick asked); don't finish it in the same sitting as Battle n
 
 ### 1. TI occupy-slot: one live browser run — `partial`
 
-Automated: `e2e/ti-run.spec.ts`, `ti-bracket.spec.ts`, `ti-run.service.spec.ts`.
-Still needed: real API run (pick team → draft → win/loss/GF) without mocks.
+Automated: `e2e/ti-run.spec.ts` (mocked UI), `e2e/ti-run-live.spec.ts`
+(real API when pool seeded — runs in CI), `ti-bracket.spec.ts`,
+`ti-run.service.spec.ts`. Manual: one full run through draft → fight → GF
+if you want eyes on the fight screen.
 
 ### 2. Client Vitest for the new UI — shipped (2026-09-01)
 
