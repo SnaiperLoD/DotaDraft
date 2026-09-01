@@ -1,15 +1,16 @@
 # Next Session Priorities
 
-Updated 2026-09-01 night after honest Battle recap grammar (lead /
-thin / pit-window / no-ramp) without a second simulator. Handoff /
-triage; `10-tech-debt-backlog.md` is the detailed source of truth.
-Deploy notes: `13-deploy.md`.
+Updated 2026-09-01 evening after pre-release gate + live TI e2e in CI.
+Handoff / triage; `10-tech-debt-backlog.md` is the detailed source of
+truth. Deploy notes: `13-deploy.md`.
 
 **Status check:** three isolated modes on `master` (`/draft`,
-`/captains`, `/ti-run`). Occupy-slot copy + GF self-vs-self fix are in
-the tree. Playoff attach is **116/116** nodes. Pro snapshot still
-**2374** rows (relabeled names, no new OpenDota pull). Tunnel still
-OFF. Calibration pause still on.
+`/captains`, `/ti-run`). **Pre-release automation shipped**
+(`pre-release:check`, tip-jar/pre-release e2e, `ti-run-live` in CI,
+client Vitest in CI). **Soft-launch code-ready** — link share blocked
+only on Nick manual (URL, telemetry token, backup destination, Ko-fi
+confirm). Playoff attach **116/116**. Pro snapshot **2374** rows (no new
+OpenDota pull). Tunnel OFF. Calibration pause on.
 
 **Session working rules:** one invariant per session before UI. Don't
 mix Stryker into the same commit as a new client spectacle. Don't
@@ -21,39 +22,37 @@ is no longer the contract. Don't refetch OpenDota without Nick.
 
 ## Next session — priorities in order
 
-Pre-release P0/P1 (2026-09-01): landing/about statistical-matchup copy,
-tip jar (footer + About), backup/telemetry scripts, TI recordFight service
-spec. **Still manual before link share:** one live TI browser run + pick
-URL strategy (tunnel vs VPS).
+Pre-release **code** is done (2026-09-01). Before sharing a link, Nick
+manual only — see **Soft launch — manual blockers** in
+`10-tech-debt-backlog.md` and **Pre-launch checklist** in `13-deploy.md`.
 
-Don't merge the three modes. Domain/VPS is not P0 unless launching.
-Dual-role Support shares still need Nick's ask — not P0. Valve-pixel CM
-is **in progress** (Nick asked); don't finish it in the same sitting as Battle narrative.
+Don't merge the three modes. Dual-role Support shares still need Nick's
+ask — not P0. Valve-pixel CM is **in progress** (Nick asked); not a
+launch blocker.
 
-### 1. TI occupy-slot: one live browser run — `partial`
+### 1. Launch manual — URL + ops — `open` (Nick)
 
-Automated: `e2e/ti-run.spec.ts` (mocked UI), `e2e/ti-run-live.spec.ts`
-(real API when pool seeded — runs in CI), `ti-bracket.spec.ts`,
-`ti-run.service.spec.ts`. Manual: one full run through draft → fight → GF
-if you want eyes on the fight screen.
+Pick quick tunnel vs VPS + named tunnel. Set `TELEMETRY_READ_TOKEN`.
+Confirm Ko-fi or `VITE_TIP_JAR_URL`. Run `npm run backup:compose` once;
+store `./backups/` off-box. Fast gate: `npm run pre-release:check`.
 
-### 2. Client Vitest for the new UI — shipped (2026-09-01)
+### 2. TI occupy-slot: optional eyes-on — `partial`
 
-`npm test --workspace client` — Challenge sanitize, coin visibility
-gating, TeamCrest slug lookup (T1 / Quincy / Undying). Playwright still
-covers row containment and live coin UI.
+Automated: `e2e/ti-run.spec.ts`, `e2e/ti-run-live.spec.ts` (CI),
+`ti-bracket.spec.ts`, `ti-run.service.spec.ts`. Optional manual: one full
+run draft → fight → GF if you want to see the fight screen yourself.
 
-## New (2026-09-01 night)
+### 3. Client Vitest + pre-release gate — shipped (2026-09-01)
 
-Same ordered queue. Occupy-slot QA + Vitest stay #1/#2. Valve-pixel CM
-is Nick's ask — `partial`, not parked. Calibration pause still on.
+`npm run pre-release:check` — shared build + client Vitest + server unit
+(clears `POOL_DATABASE_URL`). CI runs client Vitest + full e2e with pool.
 
-### 3. Captains AI + Valve HUD — `partial`
+### 4. Captains AI + Valve HUD — `partial`
 
 Adaptive bans/picks (roles + matchups) started. HUD 1:1 Valve not done.
 Don't retag Medusa.
 
-### 4. Dual-role Support presumed shares — ask first
+### 5. Dual-role Support presumed shares — ask first
 
 Visage Support `no_info` is plugged (aggregate copy + hero-meta Support
 0.605 / Offlane 0.395). Tiny / Sand King / Night Stalker / Naga got the
@@ -62,18 +61,18 @@ Battle still applies the support-miscast −10% if you put them on 4/5.
 Don't rewrite those shares without Nick. Visage Carry stays `no_info`
 (too rare). Visage Mid stays `no_info` (GPM #2 is offlane farm, not mid).
 
-### 5. TI 2026 GF badge IDs
+### 6. TI 2026 GF badge IDs
 
 `shared/utils/tiFinalsOpponent.ts` still says TI 2026 was groups-only.
 GF match IDs are in `pro-matches.json` now — append them when Nick wants
 the Finals badge on those opponents. Don't infer from `leagueName`.
 
-### 6. 89 pro rows still missing a team name
+### 7. 89 pro rows still missing a team name
 
 OpenDota has no `radiant_name` / `dire_name` on those matches. UI already
 falls back to league via `opponentTeamCaption`. Not a refetch problem.
 
-### 7. Realtime match-feed narration — `open` (research only)
+### 8. Realtime match-feed narration — `open` (research only)
 
 Honest four-beat recap **shipped** (lead after lanes/turn/finish, pit
 window not a take, thin beat, no-ramp). Remaining question: do we need
@@ -82,7 +81,7 @@ event source without a second sim. Don't invent 18:39. Don't retune
 coefficients. Don't build the feed this session — research
 possibility/necessity first (`10-tech-debt-backlog.md`).
 
-### 8. Captains friend lobby — parked
+### 9. Captains friend lobby — parked
 
 Isolated `/captains`. Don't also build a lobby unless Nick picks that
 shape.
@@ -383,16 +382,16 @@ User's request (2026-08-06): heroes who genuinely play both a core and a support
 
 ## Where to start
 
-Start on **§1**: a real TI win/loss in the browser (copy is already
-there). Then **§2** client Vitest. Then Valve HUD / adaptive CM if Nick
-is still on that thread, or Battle recap structure from DotaCaptain
-research (**§7**). Dual-role Support shares only if Nick asks. Don't
-invent Visage Mid/Carry. Don't buy a domain. Don't start a calibration
-pass. Don't refetch TA. Tunnel is off; `docker compose up` still brings back `:8080`,
-overlay `docker-compose.tunnel.yml` still brings back a trycloudflare
-URL. Nonempty Docker volumes do **not** pick up a new `pro-matches.json`
-/ `heroes.json` until you exec `seed` + `seed-opponent-pool` in the api
-container.
+Start on **§1 launch manual**: URL strategy + telemetry token + backup
+destination + Ko-fi confirm. Optional **§2** TI eyes-on. Valve HUD /
+adaptive CM (**§4**) if Nick is still on that thread — not before link
+share unless he wants polish first. DotaCaptain tick log stays research
+(**§8**). Dual-role Support shares only if Nick asks. Don't invent Visage
+Mid/Carry. Don't start a calibration pass. Don't refetch TA. Tunnel is
+off; `docker compose up` → `:8080`; overlay `docker-compose.tunnel.yml`
+→ trycloudflare URL. Nonempty Docker volumes do **not** pick up a new
+`pro-matches.json` / `heroes.json` until you exec `seed` +
+`seed-opponent-pool` in the api container.
 
 ---
 

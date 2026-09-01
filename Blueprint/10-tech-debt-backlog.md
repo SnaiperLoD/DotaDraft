@@ -4,7 +4,8 @@ Slim open list. Calibration history lives in `09-hero-knowledge-base.md`,
 `05-evaluation-engine.md`, `06-battle-engine.md`. Session order lives in
 `12-next-session-priorities.md`.
 
-Last slim: 2026-09-01 night (honest Battle recap grammar). Statuses: `open` | `partial` | `parked` | `rejected`.
+Last slim: 2026-09-01 evening (pre-release gate + soft-launch handoff).
+Statuses: `open` | `partial` | `parked` | `rejected`.
 Shipped items live in the footnote, not this list.
 
 ---
@@ -91,8 +92,28 @@ not an early close) · Anonymous draft ownership (`ownerToken` / `X-Owner-Token`
 · Pre-release P0/P1: landing+about statistical-matchup copy, tip jar
   (footer + About, `VITE_TIP_JAR_URL`), backup/telemetry scripts,
   `ti-run.service.spec.ts` recordFight paths
-· Pre-release gate: `npm run pre-release:check`, `e2e/pre-release.spec.ts`,
+· Pre-release gate: `npm run pre-release:check` (exit codes + clears
+  `POOL_DATABASE_URL` like CI), `e2e/pre-release.spec.ts`,
   `e2e/ti-run-live.spec.ts`, CI client Vitest step
+
+---
+
+## Soft launch — manual blockers (Nick, not code)
+
+Code path is **ready for a friends-alpha link**. Still manual before share:
+
+1. **URL** — quick tunnel ($0, ephemeral) vs VPS + named tunnel (~$7–16/mo).
+   Runbook: `13-deploy.md`.
+2. **Optional eyes-on** — one full TI Run (draft → fight → GF). Automated
+   coverage is already in e2e + service specs.
+3. **`TELEMETRY_READ_TOKEN`** in `.env`; after ~10 sessions:
+   `scripts/telemetry-funnel.sh`.
+4. **Ko-fi** — confirm default or set `VITE_TIP_JAR_URL` / `"false"` to hide.
+5. **Off-box backup** — pick destination; `npm run backup:compose` once to
+   verify.
+
+Not launch blockers: auth, achievements, calibration retune, tick log,
+Valve-pixel CM (Nick ask, `partial`).
 
 ---
 
@@ -290,14 +311,18 @@ covers the immediate need.
 Docker Compose + Dockerfiles + `.env.example` + `Blueprint/13-deploy.md` +
 `start:prod` + `/health` (`sqlite`/`pool`). Friends-alpha TLS overlay
 (`docker-compose.tunnel.yml`) shipped; **tunnel stopped 2026-08-18**,
-volumes kept (no `down -v`). **Pre-launch checklist + backup runbook**
-added to `13-deploy.md` (2026-09-01). Named tunnel + domain + VPS still
-deferred until a stable URL is needed.
+volumes kept (no `down -v`). Pre-launch checklist + backup runbook +
+**`npm run pre-release:check`** gate (2026-09-01). **Soft-launch
+code-ready** — remaining work is manual (URL, telemetry token, backup
+destination, Ko-fi confirm). Named tunnel + domain + VPS when a stable
+URL is needed.
 ### CI hardening — `partial`
-PR trigger, full monorepo build, Playwright cache, Docker build, server
-integration suite. Lint and Prettier are blocking for production source
-(`server/scripts`, Blueprint, generated data, gltf ignored). Dependabot
-weekly + `npm audit` in CI (`continue-on-error`).
+PR trigger, full monorepo build, **client Vitest**, Playwright cache,
+**pre-release + TI live e2e** (`e2e/pre-release.spec.ts`,
+`e2e/ti-run-live.spec.ts`), Docker build, server integration suite. Lint
+and Prettier are blocking for production source (`server/scripts`, Blueprint,
+generated data, gltf ignored). Dependabot weekly + `npm audit` in CI
+(`continue-on-error`).
 ### Mutation testing — `partial`
 Full suite (2026-08-17): **69.92%** total. Re-run on
 `battle-explanation.ts` after deeper Jest: **~65%** on that file alone
