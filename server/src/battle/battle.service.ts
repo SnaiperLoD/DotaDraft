@@ -140,6 +140,7 @@ export class BattleService {
     const story = buildBattleStory({
       resolvedOutcome: result.resolvedOutcome,
       advantageDirection: result.advantageDirection,
+      confidenceTier: result.confidenceTier,
       lanes,
       mine: teamA,
       opponent: opponentPicks,

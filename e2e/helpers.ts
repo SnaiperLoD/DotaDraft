@@ -29,6 +29,10 @@ const storyParams = {
   openingPairHero: 'Anti-Mage',
   openingPairVs: 'Axe',
   openingPairWinRate: '62',
+  openingLead: 'yours',
+  turnLead: 'yours',
+  conversionLead: 'yours',
+  finishLead: 'yours',
 };
 
 export const battleFixture: BattleResultResponse = {
@@ -82,6 +86,8 @@ export const battleFixture: BattleResultResponse = {
   story: {
     cameFromBehind: false,
     isUpset: false,
+    hingePhase: 'turn',
+    thinPhase: '',
     beats: [
       {
         phase: 'opening',

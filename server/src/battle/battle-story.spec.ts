@@ -400,4 +400,76 @@ describe('buildBattleStory', () => {
       openingPairWinRate: '67',
     });
   });
+
+  it('names lead after each beat from lanes + outcome, without resolving the pit', () => {
+    const held = buildBattleStory({
+      resolvedOutcome: 'Win',
+      advantageDirection: 'A',
+      confidenceTier: 'High',
+      lanes: aheadLanes,
+      mine,
+      opponent,
+      lookup: noData,
+    });
+    expect(held.hingePhase).toBe('turn');
+    expect(held.thinPhase).toBe('');
+    expect(held.beats[0].params).toMatchObject({
+      openingLead: 'yours',
+      turnLead: 'yours',
+      conversionLead: 'yours',
+      finishLead: 'yours',
+    });
+
+    const invert = buildBattleStory({
+      resolvedOutcome: 'Win',
+      advantageDirection: 'A',
+      lanes: behindLanes,
+      mine,
+      opponent,
+      lookup: noData,
+    });
+    expect(invert.thinPhase).toBe('turn');
+    expect(invert.beats[0].params).toMatchObject({
+      openingLead: 'theirs',
+      turnLead: 'yours',
+      conversionLead: 'yours',
+      finishLead: 'yours',
+    });
+
+    const even = buildBattleStory({
+      resolvedOutcome: 'Win',
+      advantageDirection: 'A',
+      lanes: evenLanes,
+      mine,
+      opponent,
+      lookup: noData,
+    });
+    expect(even.thinPhase).toBe('opening');
+    expect(even.beats[0].params.openingLead).toBe('even');
+    expect(even.beats[0].params.turnLead).toBe('yours');
+  });
+
+  it('marks opening as thin when the favorite is Even or Low even if lanes held', () => {
+    const evenFav = buildBattleStory({
+      resolvedOutcome: 'Win',
+      advantageDirection: 'Even',
+      confidenceTier: 'High',
+      lanes: aheadLanes,
+      mine,
+      opponent,
+      lookup: noData,
+    });
+    expect(evenFav.thinPhase).toBe('opening');
+
+    const low = buildBattleStory({
+      resolvedOutcome: 'Win',
+      advantageDirection: 'A',
+      confidenceTier: 'Low',
+      lanes: aheadLanes,
+      mine,
+      opponent,
+      lookup: noData,
+    });
+    expect(low.thinPhase).toBe('opening');
+  });
 });

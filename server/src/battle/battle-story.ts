@@ -4,6 +4,8 @@ import type {
   BattleStory,
   BattleStoryBeat,
   BattleStoryBeatKey,
+  BattleStoryPhase,
+  ConfidenceTier,
   HeroEvaluationValues,
   ResolvedOutcome,
 } from 'shared';
@@ -43,9 +45,41 @@ function pct(winRate: number | null | undefined): string {
   return typeof winRate === 'number' ? String(Math.round(winRate * 100)) : '';
 }
 
+type SheetLead = 'yours' | 'theirs' | 'even';
+
+function openingLeadFromLanes(lanes: BattleLaneResult[]): SheetLead {
+  const mine = lanes.filter((lane) => lane.winner === 'mine').length;
+  const opp = lanes.filter((lane) => lane.winner === 'opponent').length;
+  if (mine > opp) return 'yours';
+  if (opp > mine) return 'theirs';
+  return 'even';
+}
+
+function sheetLeads(opening: SheetLead, final: 'yours' | 'theirs'): Record<BattleStoryPhase, SheetLead> {
+  return {
+    opening,
+    turn: final,
+    conversion: final,
+    finish: final,
+  };
+}
+
+function thinPhaseOf(input: {
+  opening: SheetLead;
+  final: 'yours' | 'theirs';
+  advantageDirection: AdvantageDirection;
+  confidenceTier: ConfidenceTier;
+}): BattleStoryPhase | '' {
+  if (input.opening === 'even') return 'opening';
+  if (input.opening !== input.final) return 'turn';
+  if (input.advantageDirection === 'Even' || input.confidenceTier === 'Low') return 'opening';
+  return '';
+}
+
 export function buildBattleStory(input: {
   resolvedOutcome: ResolvedOutcome;
   advantageDirection: AdvantageDirection;
+  confidenceTier?: ConfidenceTier;
   lanes: BattleLaneResult[];
   mine: BattlePick[];
   opponent: BattlePick[];
@@ -124,6 +158,16 @@ export function buildBattleStory(input: {
   const lanesEven = tally.winnerWins === tally.loserWins;
   const roshan = roshanBand(winners);
   const standout = standoutWonLane(input.lanes, input.resolvedOutcome);
+  const openingLead = openingLeadFromLanes(input.lanes);
+  const finalLead: 'yours' | 'theirs' = won ? 'yours' : 'theirs';
+  const leads = sheetLeads(openingLead, finalLead);
+  const hingePhase: BattleStoryPhase = 'turn';
+  const thinPhase = thinPhaseOf({
+    opening: openingLead,
+    final: finalLead,
+    advantageDirection: input.advantageDirection,
+    confidenceTier: input.confidenceTier ?? 'Moderate',
+  });
 
   const openingKey: BattleStoryBeatKey = isUpset
     ? 'openingUpset'
@@ -173,6 +217,12 @@ export function buildBattleStory(input: {
     openingPairHero: standout?.topPair?.hero ?? '',
     openingPairVs: standout?.topPair?.vs ?? '',
     openingPairWinRate: pct(standout?.topPair?.winRate),
+    openingLead: leads.opening,
+    turnLead: leads.turn,
+    conversionLead: leads.conversion,
+    finishLead: leads.finish,
+    hingePhase,
+    thinPhase,
   };
 
   const heroIds = idsOf(
@@ -219,5 +269,5 @@ export function buildBattleStory(input: {
     },
   ];
 
-  return { cameFromBehind, isUpset, beats };
+  return { cameFromBehind, isUpset, hingePhase, thinPhase, beats };
 }

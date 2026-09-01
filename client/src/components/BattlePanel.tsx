@@ -257,14 +257,27 @@ function BattleStory({ result, heroNames }: { result: BattleResultResponse; hero
           if (beat.phase === 'opening' && interpolated.turner) {
             chunks.push(t('battle.story.turnerLine', interpolated));
           }
-          if (beat.phase === 'finish' && interpolated.myCarry && interpolated.theirCarry) {
-            if (interpolated.lateMatchupWinner && interpolated.carryWinRate) {
-              chunks.push(t('battle.story.carryLateMatchup', interpolated));
-            } else {
-              chunks.push(t('battle.story.carryLate', interpolated));
-            }
-            if (interpolated.scaleLeader) {
-              chunks.push(t('battle.story.carryScale', interpolated));
+          const leadKey = `${beat.phase}Lead`;
+          const lead = beat.params[leadKey];
+          if (beat.phase === 'conversion') {
+            chunks.push(t('battle.story.pitWindowOnly'));
+          } else if (lead === 'yours' || lead === 'theirs' || lead === 'even') {
+            chunks.push(t(`battle.story.lead.${lead}`));
+          }
+          if (story.thinPhase && story.thinPhase === beat.phase) {
+            chunks.push(t('battle.story.thinHere'));
+          }
+          if (beat.phase === 'finish') {
+            chunks.push(t('battle.story.noRamp'));
+            if (interpolated.myCarry && interpolated.theirCarry) {
+              if (interpolated.lateMatchupWinner && interpolated.carryWinRate) {
+                chunks.push(t('battle.story.carryLateMatchup', interpolated));
+              } else {
+                chunks.push(t('battle.story.carryLate', interpolated));
+              }
+              if (interpolated.scaleLeader) {
+                chunks.push(t('battle.story.carryScale', interpolated));
+              }
             }
           }
           return (

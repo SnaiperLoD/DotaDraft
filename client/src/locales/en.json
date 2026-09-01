@@ -319,12 +319,20 @@
       "turningCombo": "{{posture}}{{comboA}} + {{comboB}} ({{comboWinRate}}%) is not a vibe. Together they win games, and the turn is tied to that pair.",
       "turningAxis": "{{posture}}There's no pretty catch on the sheet. The winning side's real edge is {{topAxis}} — the thing the other draft doesn't answer.",
       "turningUpsetHighSkill": "{{swingHero}} is the kind of hero who steals games the sheet can't price. This one went the wrong way for the favorite.",
-      "conversionRoshanEarly": "This is a tempo draft. The game they want ends in the {{roshanBand}} window — after that, they're playing against the other roster's late game.",
-      "conversionRoshanMid": "Neither side has a sharp clock. The fight lives in the {{roshanBand}} window, where Roshan is the prize if someone can actually take the map.",
-      "conversionRoshanLate": "This draft is playing for the {{roshanBand}} window. If the game gets there, the late game is the actual win condition.",
+      "conversionRoshanEarly": "This is a tempo draft. The prize in the {{roshanBand}} window is the pit — this read does not resolve who took Roshan.",
+      "conversionRoshanMid": "Neither side has a sharp clock. In the {{roshanBand}} window the pit is the place that matters. This read does not resolve a take.",
+      "conversionRoshanLate": "This draft is playing for the {{roshanBand}} window. If the game gets there, the late game is the win condition. The pit is still a window, not a recorded kill.",
       "finishHeld": "The pre-fight read held. This was their game if they didn't give the clock away.",
       "finishComeback": "The lanes lied about the ending. They didn't win the lane phase — they won the game anyway.",
       "finishUpset": "The underdog closed it. The pre-fight favorite was supposed to be the story. They weren't.",
+      "pitWindowOnly": "Lead is unchanged here: we do not simulate walking into the pit.",
+      "thinHere": "This is the thinnest beat the sheet can name — the invert, or the lanes that didn't decide.",
+      "noRamp": "This read does not walk high ground. The game ends when the sheet says it ends.",
+      "lead": {
+        "yours": "Lead after this beat: yours.",
+        "theirs": "Lead after this beat: theirs.",
+        "even": "Lead after this beat: still even."
+      },
       "axes": {
         "teamfight": "damage output",
         "tempo": "tempo",

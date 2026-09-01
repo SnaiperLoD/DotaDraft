@@ -4,7 +4,7 @@ Slim open list. Calibration history lives in `09-hero-knowledge-base.md`,
 `05-evaluation-engine.md`, `06-battle-engine.md`. Session order lives in
 `12-next-session-priorities.md`.
 
-Last slim: 2026-09-01 evening (TI attach + Battle ledger). Statuses: `open` | `partial` | `parked` | `rejected`.
+Last slim: 2026-09-01 night (honest Battle recap grammar). Statuses: `open` | `partial` | `parked` | `rejected`.
 Shipped items live in the footnote, not this list.
 
 ---
@@ -81,6 +81,10 @@ not an early close) · Anonymous draft ownership (`ownerToken` / `X-Owner-Token`
 · Captains: splash portraits `/heroes/{id}.png`; AI started using matchups
   + remaining roles (not only `heroPower`). HUD still not Valve-pixel
   complete. Don't retag Medusa `illusion_based`
+· Honest Battle recap grammar (no second sim): four-beat lead
+  (yours/theirs/even), pit as a window not a take, named thin beat,
+  explicit no-ramp on finish. History without the new fields still
+  renders. Not a tick log.
 
 ---
 
@@ -165,11 +169,21 @@ same pair as the playoff series — don't treat that as empty nodes.
 `chooseAiBan` / `chooseAiPick` now take opponent picks + remaining role
 slots + OpenDota matchups. Still deterministic (no session seed). Finish
 HUD before another AI rewrite.
-### Battle result narrative vs living-sim log — `open` (research 2026-09-01)
-DotaCaptain sells a tick-level match log (vision/smoke/Rosh/HG), not a
-four-beat recap. Steal **structure** (plan vs stress vs off-script;
-named calls with clock), not their sim. Don't retune Battle coefficients
-to make the story "feel" like a live match.
+### Battle result narrative (honest four-beat recap) — shipped (2026-09-01)
+Sheet grammar only: lane tally → lead after opening; invert lives on
+`turn`; conversion does **not** resolve Roshan; finish does **not** walk
+high ground. `thinPhase` is empty when High/A held the lanes. No clocks,
+no smoke, no second HG. Don't retune coefficients to juice the copy.
+### Realtime match-feed narration (DotaCaptain-style tick log) — `open` (research)
+**Possibility / necessity — not a build.** Their public feed is
+`[clock] [hero] [motion] [place] — [result]` over verified in-game
+events (Pixel Stage). We do not have those events. Honest recap above
+is four samples of the lead, not a curve. Research questions before any
+code: (1) do we need a living log at all if the sheet recap is honest;
+(2) if yes, what event source exists without inventing a second Battle
+simulator; (3) would a fake 18:39 clock destroy trust faster than
+silence. Plan-status / on-plan / draft-fit meters stay **rejected**.
+Don't start a tick UI as a side quest.
 ### Templar Assassin Mid presumed overlay — shipped (2026-09-01)
 One-hero exception: Carry 0.759 / Mid 0.216 in `hero-meta.json`
 positions. Eval Mid already existed. Global 0.25 threshold unchanged.
@@ -211,7 +225,9 @@ manual 50k check — not a CI job.
 ## Research (no build without signal)
 
 ### Full match timeline simulation — `parked`
-Accuracy Ceiling / MVP boundary — likely never.
+Accuracy Ceiling / MVP boundary — likely never. Distinct from the
+**research** item on a DotaCaptain-style tick log: that one is
+"do we even want a feed"; this one is "don't build a second sim."
 ### Items / build orders / pro-player persona — `parked`
 ### Supportless-lineup synergy half-check — `partial`
 Axes checked; synergy half never run (weight now 0.25).

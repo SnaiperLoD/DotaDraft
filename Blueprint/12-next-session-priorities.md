@@ -1,7 +1,7 @@
 # Next Session Priorities
 
-Updated 2026-09-01 evening after TI playoff attach, occupy GF jersey
-fix, opponent-pool lose-sides, and Battle ledger layout. Handoff /
+Updated 2026-09-01 night after honest Battle recap grammar (lead /
+thin / pit-window / no-ramp) without a second simulator. Handoff /
 triage; `10-tech-debt-backlog.md` is the detailed source of truth.
 Deploy notes: `13-deploy.md`.
 
@@ -75,13 +75,14 @@ the Finals badge on those opponents. Don't infer from `leagueName`.
 OpenDota has no `radiant_name` / `dire_name` on those matches. UI already
 falls back to league via `opponentTeamCaption`. Not a refetch problem.
 
-### 7. Battle result narrative (DotaCaptain research) — `open`
+### 7. Realtime match-feed narration — `open` (research only)
 
-Four-beat `battle-story.ts` already exists. DotaCaptain's product is a
-clocked living-sim log + captain report (on-plan / plan-stress /
-off-script), with Pixel Stage as a **slave** of verified events — not a
-second sim. Steal report structure for Battle recap; don't invent
-vision/smoke/Rosh state we don't compute; don't retune coefficients.
+Honest four-beat recap **shipped** (lead after lanes/turn/finish, pit
+window not a take, thin beat, no-ramp). Remaining question: do we need
+a DotaCaptain-style tick log (`[clock] [hero] [motion] [place]`). No
+event source without a second sim. Don't invent 18:39. Don't retune
+coefficients. Don't build the feed this session — research
+possibility/necessity first (`10-tech-debt-backlog.md`).
 
 ### 8. Captains friend lobby — parked
 
@@ -107,6 +108,15 @@ shape.
   needed (`13-deploy.md`).
 - Heterogeneous tags (`Army of Clones` / `Unseen` / `Prone To Burst`) —
   still the calibration leftover, still needs an isolated hypothesis.
+
+## Completed this pass (2026-09-01, recap grammar)
+
+- **Honest Battle recap** — `openingLead`/`turnLead`/`conversionLead`/
+  `finishLead`, `hingePhase=turn`, `thinPhase` (empty if High/A held
+  lanes). Conversion copy: pit window, lead unchanged. Finish: no ramp.
+  Old History without the fields still renders.
+- **Realtime tick log** — not built. Parked as research (possibility /
+  necessity), not as a second simulator.
 
 ## Completed this pass (2026-09-01 night)
 

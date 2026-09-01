@@ -138,6 +138,10 @@ export interface BattleStoryBeat {
 export interface BattleStory {
   cameFromBehind: boolean;
   isUpset: boolean;
+  /** Phase where the named invert lives. Always a real beat we already emit. */
+  hingePhase?: BattleStoryPhase;
+  /** Thinnest beat we can name without a tick log. Empty if the favorite held lanes. */
+  thinPhase?: BattleStoryPhase | '';
   beats: BattleStoryBeat[];
 }
 
