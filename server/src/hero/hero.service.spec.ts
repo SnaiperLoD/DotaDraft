@@ -222,6 +222,16 @@ describe('pool coverage smoke (heroes.json + hero-meta roster)', () => {
     expect(all.some((h) => !isSupport(h))).toBe(true);
   });
 
+  it('keeps Templar Assassin Mid as a presumed second role under the 0.25 gate', () => {
+    const ta = all.find((h) => h.id === 46);
+    expect(ta).toBeDefined();
+    expect(hasRoleEvaluationData(ta!, 'Mid')).toBe(true);
+    const midShare = ta!.presumed_positions.find((p) => p.position === 'Mid')?.share ?? 0;
+    const carryShare = ta!.presumed_positions.find((p) => p.position === 'Carry')?.share ?? 0;
+    expect(midShare).toBe(0.216);
+    expect(carryShare).toBe(0.759);
+  });
+
   it('does not leave Visage Support as no_info when presumed Support is real', () => {
     const visage = all.find((h) => h.id === 92);
     expect(visage).toBeDefined();

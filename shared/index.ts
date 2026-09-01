@@ -15,6 +15,7 @@ export * from './utils/proDisplayName';
 export * from './utils/copiedDraft';
 export * from './utils/assignUniqueRoles';
 export * from './utils/tiBracket';
+export * from './utils/tiPlacement';
 export * from './types/ti-run';
 export * from './data/tiBrackets';
 export * from './customTags';

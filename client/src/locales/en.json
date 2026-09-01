@@ -490,6 +490,12 @@
     "yourLineup": "You",
     "theirLineup": "Dire",
     "tiChampion": "Champion",
+    "tiSecond": "2nd",
+    "tiThird": "3rd",
+    "tiFourth": "4th",
+    "tiTop4": "Top 4",
+    "tiTop8": "Top 8",
+    "tiRound": "Out in {{round}}",
     "tiEliminated": "Eliminated",
     "tiPlaying": "In progress",
     "emptyFilter": "Nothing in this mode yet."

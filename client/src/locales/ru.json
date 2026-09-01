@@ -498,6 +498,12 @@
     "yourLineup": "Ты",
     "theirLineup": "Dire",
     "tiChampion": "Чемпион",
+    "tiSecond": "2-е место",
+    "tiThird": "3-е место",
+    "tiFourth": "4-е место",
+    "tiTop4": "Топ-4",
+    "tiTop8": "Топ-8",
+    "tiRound": "Вылет: {{round}}",
     "tiEliminated": "Вылет",
     "tiPlaying": "В сетке",
     "emptyFilter": "В этом режиме пока пусто."

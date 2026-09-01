@@ -15,6 +15,8 @@ not a domain/VPS buy and not a calibration sweep.
 session before UI. Don't mix Stryker into the same commit as a new
 client spectacle. Don't retune Battle coefficients to make TI "feel
 fair." Homage CM is homage — Valve-pixel is not a goal.
+Calibration pause still on: no coefficients / tags / weights / OpenDota
+refetch without Nick.
 
 ---
 
@@ -48,7 +50,21 @@ sanitize + row containment, coin-phase gating (no `battle-story` when
 initials). Don't stand up a second Stryker. Don't block this on a full
 component-library rewrite.
 
-### 3. Dual-role Support presumed shares — ask first
+## New (2026-09-01 night)
+
+Same ordered queue. Occupy-slot + Vitest stay #1/#2 — Nick did not
+cancel them. Valve-pixel CM still not a goal. Calibration pause still
+on.
+
+### 3. Captains AI draft diversity — `open`
+
+Suspicion the CM opponent always drafts the same heroes/pattern.
+Investigate `server/src/captains/captains-ai.ts` (`chooseAiBan` /
+`chooseAiPick` rank the whole roster by a fixed `heroPower` mean — no
+session seed, no pool shuffle). This session: record only. Fix later if
+it's a seed/pool bug.
+
+### 4. Dual-role Support presumed shares — ask first
 
 Visage Support `no_info` is plugged (aggregate copy + hero-meta Support
 0.605 / Offlane 0.395). Tiny / Sand King / Night Stalker / Naga got the
@@ -57,18 +73,18 @@ Battle still applies the support-miscast −10% if you put them on 4/5.
 Don't rewrite those shares without Nick. Visage Carry stays `no_info`
 (too rare). Visage Mid stays `no_info` (GPM #2 is offlane farm, not mid).
 
-### 4. TI 2026 GF badge IDs
+### 5. TI 2026 GF badge IDs
 
 `shared/utils/tiFinalsOpponent.ts` still says TI 2026 was groups-only.
 GF match IDs are in `pro-matches.json` now — append them when Nick wants
 the Finals badge on those opponents. Don't infer from `leagueName`.
 
-### 5. 89 pro rows still missing a team name
+### 6. 89 pro rows still missing a team name
 
 OpenDota has no `radiant_name` / `dire_name` on those matches. UI already
 falls back to league via `opponentTeamCaption`. Not a refetch problem.
 
-### 6. Captains friend lobby — parked
+### 7. Captains friend lobby — parked
 
 Isolated `/captains` homage CM HUD shipped. Don't also build a lobby
 unless Nick picks that shape.
@@ -93,6 +109,18 @@ unless Nick picks that shape.
   needed (`13-deploy.md`).
 - Heterogeneous tags (`Army of Clones` / `Unseen` / `Prone To Burst`) —
   still the calibration leftover, still needs an isolated hypothesis.
+
+## Completed this pass (2026-09-01 night)
+
+- **TI History placement** — finished TI runs show Champion / 2nd / 3rd
+  / 4th / Top 8 / out-in-round from the occupy-slot graph (`deriveTiPlacement`),
+  not a generic Eliminated chip.
+- **Champion trophy in History** — cup SVG next to Champion only
+  (`data-testid="history-ti-trophy"`).
+- **Templar Assassin Mid overlay** — one-hero presumed Carry 0.759 /
+  Mid 0.216 (pro 21.6%, under the 0.25 gate). Eval Mid already existed.
+  Global `SHARE_THRESHOLD` unchanged. Overlay survives
+  `apply-role-classification` / `recompute-presumed-positions`.
 
 ## Completed this pass (2026-09-01, later)
 
@@ -323,10 +351,10 @@ User's request (2026-08-06): heroes who genuinely play both a core and a support
 ## Where to start
 
 Start on **§1**: occupy-slot contract copy + a real TI win/loss in the
-browser, then leftover tree bugs. Then **§2** client Vitest. Dual-role
-Support shares only if Nick asks. Don't invent Visage Mid/Carry. Don't
-buy a domain. Don't start a calibration pass. Valve-pixel CM is not a
-goal. Tunnel is off; `docker compose up` still brings back `:8080`,
+browser, then leftover tree bugs. Then **§2** client Vitest. Then
+Captains AI diversity. Dual-role Support shares only if Nick asks. Don't
+invent Visage Mid/Carry. Don't buy a domain. Don't start a calibration
+pass. Don't refetch TA. Valve-pixel CM is not a goal. Tunnel is off; `docker compose up` still brings back `:8080`,
 overlay `docker-compose.tunnel.yml` still brings back a trycloudflare
 URL. Nonempty Docker volumes do **not** pick up a new `pro-matches.json`
 / `heroes.json` until you exec `seed` + `seed-opponent-pool` in the api

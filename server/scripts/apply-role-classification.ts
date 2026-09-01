@@ -29,6 +29,16 @@ const INPUT_PATH = path.join(__dirname, '..', 'data', 'research-role-classificat
 const HERO_META_PATH = path.join(__dirname, '..', 'data', 'hero-meta.json');
 const SHARE_THRESHOLD = 0.25;
 
+// Templar Assassin Mid is a real second role in pro (~21.6%) but sits
+// under SHARE_THRESHOLD. Nick 2026-09-01: one-hero overlay, do not lower
+// the global 0.25 gate.
+const POSITION_OVERRIDES: Record<number, { position: Position; share: number }[]> = {
+  46: [
+    { position: 'Carry', share: 0.759 },
+    { position: 'Mid', share: 0.216 },
+  ],
+};
+
 type Position = 'Carry' | 'Mid' | 'Offlane' | 'Support';
 
 interface PositionRow {
@@ -71,6 +81,8 @@ function main() {
       .filter((r) => r.share >= SHARE_THRESHOLD)
       .sort((a, b) => b.share - a.share)
       .map((r) => ({ position: r.position, share: Math.round(r.share * 1000) / 1000 }));
+    const override = POSITION_OVERRIDES[hero.heroId];
+    if (override) hero.positions = override;
     updated++;
   }
 

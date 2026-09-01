@@ -1,5 +1,6 @@
 import type { EvaluationResult } from './evaluation';
 import type { Hero } from './hero';
+import type { TiPlacementKind } from './ti-run';
 
 export type DraftStatus = 'PICKING' | 'ASSIGNING_ROLES' | 'COMPLETED';
 
@@ -78,10 +79,15 @@ export interface HistoryBattleSummary {
   createdAt: string;
 }
 
+export type HistoryTiStatus = 'PLAYING' | 'CHAMPION' | 'ELIMINATED';
+
 export interface HistoryTiSummary {
   leagueName: string;
   teamName: string;
-  status: 'PLAYING' | 'CHAMPION' | 'ELIMINATED';
+  status: HistoryTiStatus;
+  /** Coarse finish from the occupy-slot graph; never a fake 16-team table. */
+  placement: TiPlacementKind;
+  lastRound: string | null;
 }
 
 export interface HistoryEntry {

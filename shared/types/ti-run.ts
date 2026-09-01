@@ -45,6 +45,10 @@ export interface TiPathFight {
   confidenceTier?: string;
 }
 
+/** Coarse double-elim finish — only labels the occupy-slot graph can honestly support. */
+export type TiPlacementKind =
+  'playing' | 'champion' | 'second' | 'third' | 'fourth' | 'top4' | 'top8' | 'round';
+
 export interface TiRunStateView {
   id: string;
   status: TiRunStatus;

@@ -1,7 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { HeroService } from '../hero/hero.service';
-import type { HistoryEntry, EvaluationResult, DraftMode, HistoryTiSummary } from 'shared';
+import {
+  deriveTiPlacement,
+  tiBracketById,
+  type DraftMode,
+  type EvaluationResult,
+  type HistoryEntry,
+  type HistoryTiSummary,
+  type TiPathFight,
+} from 'shared';
 
 @Injectable()
 export class HistoryService {
@@ -45,7 +53,16 @@ export class HistoryService {
           tiRow.status === 'CHAMPION' || tiRow.status === 'ELIMINATED' || tiRow.status === 'PLAYING'
             ? tiRow.status
             : 'PLAYING';
-        ti = { leagueName: tiRow.leagueName, teamName: tiRow.teamName, status };
+        const path = parseTiPath(tiRow.pathJson);
+        const matches = tiBracketById(tiRow.bracketId)?.matches ?? [];
+        const placement = deriveTiPlacement({ status, path, matches });
+        ti = {
+          leagueName: tiRow.leagueName,
+          teamName: tiRow.teamName,
+          status,
+          placement: placement.kind,
+          lastRound: placement.lastRound,
+        };
       }
       return {
         id: draft.id,
@@ -83,5 +100,15 @@ export class HistoryService {
         ti,
       };
     });
+  }
+}
+
+function parseTiPath(json: string | null | undefined): TiPathFight[] {
+  if (!json) return [];
+  try {
+    const parsed = JSON.parse(json) as TiPathFight[];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
   }
 }

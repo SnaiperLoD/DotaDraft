@@ -4,7 +4,7 @@ Slim open list. Calibration history lives in `09-hero-knowledge-base.md`,
 `05-evaluation-engine.md`, `06-battle-engine.md`. Session order lives in
 `12-next-session-priorities.md`.
 
-Last slim: 2026-09-01. Statuses: `open` | `partial` | `parked` | `rejected`.
+Last slim: 2026-09-01 night. Statuses: `open` | `partial` | `parked` | `rejected`.
 Shipped items live in the footnote, not this list.
 
 ---
@@ -66,6 +66,9 @@ not an early close) · Anonymous draft ownership (`ownerToken` / `X-Owner-Token`
   still empty for those orgs
 · Stryker mutate `copiedDraft.ts` via gitignored `server/shared-src`
   copy (`stryker.conf.js`); scoped score ~95%; challenge-mirror 13/13
+· TI History placement (`deriveTiPlacement`) + champion trophy icon
+· Templar Assassin Mid presumed overlay Carry 0.759 / Mid 0.216 (one-hero,
+  0.25 gate kept)
 
 ---
 
@@ -144,6 +147,16 @@ Homage layout shipped. Valve-pixel CM is not a goal unless Nick asks.
 stay historical decoration. Next: say that in the UI, then QA a real
 win and a real loss (not only a fresh pick). Don't treat leftover
 historical winners on other branches as a display bug.
+### Captains AI draft diversity — `open` (2026-09-01 night)
+Suspicion the homage CM AI always bans/picks the same heroes. Pointer:
+`server/src/captains/captains-ai.ts` — `chooseAiBan` / `chooseAiPick`
+sort remaining roster by a deterministic `heroPower` average. No seed.
+Recorded only; don't "fix" this session.
+### Templar Assassin Mid presumed overlay — shipped (2026-09-01)
+One-hero exception: Carry 0.759 / Mid 0.216 in `hero-meta.json`
+positions. Eval Mid already existed. Global 0.25 threshold unchanged.
+`POSITION_OVERRIDES[46]` in `apply-role-classification.ts` and
+`recompute-presumed-positions.ts` so a recompute does not wipe it.
 ### Opponent difficulty brackets — `open`
 ### Persistent progress / accounts — `open`
 ### Draft modes (constrained, Pure Draft) — `open`

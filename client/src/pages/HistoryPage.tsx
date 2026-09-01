@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import type { TFunction } from 'i18next';
 import { api } from '../api/client';
-import type { HistoryEntry, ConfidenceTier } from 'shared';
+import type { HistoryEntry, ConfidenceTier, HistoryTiSummary, TiPlacementKind } from 'shared';
 import { heroIconUrl } from '../utils/heroIcon';
 import { renderLocalizedLines } from '../i18n/narrative';
 import { currentWinStreakNewestFirst, runRecord, type FightOutcome } from '../utils/runStreak';
@@ -13,6 +14,60 @@ function scoreClass(score: number): string {
   if (score < 4) return 'is-low';
   if (score < 7) return 'is-mid';
   return 'is-high';
+}
+
+const TI_PLACEMENT_KEYS: Record<TiPlacementKind, string> = {
+  playing: 'history.tiPlaying',
+  champion: 'history.tiChampion',
+  second: 'history.tiSecond',
+  third: 'history.tiThird',
+  fourth: 'history.tiFourth',
+  top4: 'history.tiTop4',
+  top8: 'history.tiTop8',
+  round: 'history.tiRound',
+};
+
+function tiPlacementCopy(t: TFunction, ti: HistoryTiSummary): string {
+  if (ti.placement === 'round') {
+    return t('history.tiRound', { round: ti.lastRound ?? '—' });
+  }
+  return t(TI_PLACEMENT_KEYS[ti.placement] ?? 'history.tiPlaying');
+}
+
+function HistoryChampionTrophy({ label }: { label: string }) {
+  return (
+    <span
+      className="history-ti-trophy"
+      title={label}
+      aria-label={label}
+      role="img"
+      data-testid="history-ti-trophy"
+    >
+      <svg viewBox="0 0 16 16" width="16" height="16" fill="none" aria-hidden="true">
+        <path
+          d="M3.2 2.2h9.6v1.4c0 2.7-2.15 4.9-4.8 4.9S3.2 6.3 3.2 3.6V2.2Z"
+          stroke="currentColor"
+          strokeWidth="1.35"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M3.2 3.4H2.1A2.1 2.1 0 0 0 4.2 5.5"
+          stroke="currentColor"
+          strokeWidth="1.35"
+          strokeLinecap="round"
+        />
+        <path
+          d="M12.8 3.4h1.1A2.1 2.1 0 0 1 11.8 5.5"
+          stroke="currentColor"
+          strokeWidth="1.35"
+          strokeLinecap="round"
+        />
+        <path d="M8 8.5v2.2" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
+        <path d="M5.6 12.4h4.8" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
+        <path d="M4.8 14.2h6.4" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
+      </svg>
+    </span>
+  );
 }
 
 function battleOutcomes(entry: HistoryEntry): FightOutcome[] {
@@ -158,14 +213,17 @@ export default function HistoryPage() {
                     </span>
                     {entry.ti && (
                       <span className="history-ti-status">
-                        {entry.ti.leagueName} · {entry.ti.teamName} ·{' '}
-                        {t(
-                          entry.ti.status === 'CHAMPION'
-                            ? 'history.tiChampion'
-                            : entry.ti.status === 'ELIMINATED'
-                              ? 'history.tiEliminated'
-                              : 'history.tiPlaying',
+                        {entry.ti.placement === 'champion' && (
+                          <HistoryChampionTrophy label={t('history.tiChampion')} />
                         )}
+                        {entry.ti.leagueName} · {entry.ti.teamName} ·{' '}
+                        <span
+                          className={`history-ti-placement${entry.ti.placement === 'champion' ? ' is-champion' : ''}`}
+                          data-testid="history-ti-placement"
+                          data-placement={entry.ti.placement}
+                        >
+                          {tiPlacementCopy(t, entry.ti)}
+                        </span>
                       </span>
                     )}
                     {entry.evaluation ? (

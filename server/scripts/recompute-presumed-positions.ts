@@ -31,6 +31,15 @@ const GPM_PATH = path.join(__dirname, '..', 'data', 'research-role-fit-gpm-outpu
 const LANE_PATH = path.join(__dirname, '..', 'data', 'research-role-fit-output.json');
 const SHARE_THRESHOLD = 0.25;
 
+// Templar Assassin Mid: see apply-role-classification.ts. Keep the same
+// overlay so this script doesn't wipe the one-hero exception.
+const POSITION_OVERRIDES: Record<number, { position: Position; share: number }[]> = {
+  46: [
+    { position: 'Carry', share: 0.759 },
+    { position: 'Mid', share: 0.216 },
+  ],
+};
+
 type Position = 'Carry' | 'Mid' | 'Offlane' | 'Support';
 type CorePosition = 'Carry' | 'Mid' | 'Offlane';
 
@@ -133,6 +142,8 @@ function main() {
       .map((p) => ({ position: p.position, share: Math.round(p.share * 1000) / 1000 }))
       .filter((p) => p.share >= SHARE_THRESHOLD)
       .sort((a, b) => b.share - a.share);
+    const override = POSITION_OVERRIDES[hero.heroId];
+    if (override) hero.positions = override;
     updated++;
   }
 
