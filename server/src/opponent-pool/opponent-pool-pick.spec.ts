@@ -24,6 +24,16 @@ describe('opponent-pool-pick', () => {
     expect(newW).toBeGreaterThan(oldW * 2);
   });
 
+  it('treats TI loser pool ids as the same match recency as the winner row', () => {
+    const rows: PoolPickRow[] = [
+      { id: 'pro-100', source: 'pro', heroIds: [1, 2, 3, 4, 5] },
+      { id: 'pro-900-lose', source: 'pro', heroIds: [6, 7, 8, 9, 10], leagueName: 'The International 2022' },
+    ];
+    const ranges = buildOpponentPickRanges(rows);
+    expect(ranges.maxMatchId).toBe(900);
+    expect(opponentPickWeight(rows[1]!, ranges)).toBeGreaterThan(opponentPickWeight(rows[0]!, ranges));
+  });
+
   it('boosts player-sourced rows over comparable pro rows', () => {
     const now = new Date().toISOString();
     const rows: PoolPickRow[] = [

@@ -84,6 +84,37 @@ export function historicalMover(match: TiBracketMatch, won: boolean): string {
   return match.winner === match.teamA ? match.teamB : match.teamA;
 }
 
+/** Historical foe of the occupied chair. Never the player's own jersey. */
+export function liveOpponent(
+  match: TiBracketMatch,
+  occupyAs: string,
+  playerTeam: string,
+  aliases: Record<string, string[]> = {},
+): string {
+  const other = otherTeam(match, occupyAs, aliases);
+  if (teamsMatch(other, playerTeam, aliases) && !teamsMatch(occupyAs, playerTeam, aliases)) {
+    return occupyAs;
+  }
+  return other;
+}
+
+export function reachableMatchIds(matches: TiBracketMatch[], startId: string | null): Set<string> {
+  const ids = new Set<string>();
+  if (!startId) return ids;
+  const byId = new Map(matches.map((match) => [match.id, match]));
+  const stack = [startId];
+  while (stack.length > 0) {
+    const id = stack.pop()!;
+    if (ids.has(id)) continue;
+    ids.add(id);
+    const match = byId.get(id);
+    if (!match) continue;
+    if (match.nextWin) stack.push(match.nextWin);
+    if (match.nextLose) stack.push(match.nextLose);
+  }
+  return ids;
+}
+
 export function advanceBracket(
   matches: TiBracketMatch[],
   currentMatchId: string,
@@ -116,12 +147,25 @@ export function projectLiveBracket(
     aliases?: Record<string, string[]>;
   },
 ): TiBracketMatch[] {
+  // Keep completed other branches as that TI's flavor. Blank later series
+  // on the player's remaining path — those have not been played yet.
   const aliases = input.aliases ?? {};
-  const projected = template.map((match) => ({ ...match, teamA: '', teamB: '', winner: '' }));
+  const projected = template.map((match) => ({ ...match }));
   const live = new Map(projected.map((match) => [match.id, match]));
   const source = new Map(template.map((match) => [match.id, match]));
   const player = input.playerTeam?.trim() ?? '';
   if (!player) return projected;
+
+  const played = new Set(input.path.map((fight) => fight.matchId));
+  const remaining = reachableMatchIds(template, input.currentMatchId);
+  for (const match of projected) {
+    if (!remaining.has(match.id) || played.has(match.id)) continue;
+    match.winner = '';
+    if (match.id !== input.currentMatchId) {
+      match.teamA = '';
+      match.teamB = '';
+    }
+  }
 
   const paint = (matchId: string, occupyAs: string, opponent: string, winner: string) => {
     const src = source.get(matchId);
@@ -145,17 +189,23 @@ export function projectLiveBracket(
     const src = source.get(fight.matchId);
     if (!src) continue;
     const won = fight.outcome === 'Win';
-    paint(fight.matchId, occupyAs, fight.opponent, won ? player : fight.opponent);
+    let vs = fight.opponent;
+    try {
+      vs = liveOpponent(src, occupyAs, player, aliases);
+    } catch {
+      vs = fight.opponent;
+    }
+    paint(fight.matchId, occupyAs, vs, won ? player : vs);
     occupyAs = historicalMover(src, won);
   }
 
   const currentId = input.currentMatchId;
-  if (currentId && !input.path.some((fight) => fight.matchId === currentId)) {
+  if (currentId && !played.has(currentId)) {
     const src = source.get(currentId);
     if (src) {
       let opponent = '';
       try {
-        opponent = otherTeam(src, occupyAs, aliases);
+        opponent = liveOpponent(src, occupyAs, player, aliases);
       } catch {
         opponent = '';
       }

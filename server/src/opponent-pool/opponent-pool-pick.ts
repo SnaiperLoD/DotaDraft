@@ -4,6 +4,8 @@
 // Nest/Prisma. Recency for pro rows uses OpenDota match ids (roughly
 // monotonic with time) parsed from `pro-${matchId}` ids — no ProMatch join.
 
+import { parsePooledProMatchId } from './pooled-pro-id';
+
 export interface PoolPickRow {
   id: string;
   source: string;
@@ -21,7 +23,8 @@ const MIN_WEIGHT = 0.05;
 
 function proMatchId(row: PoolPickRow): number | null {
   if (row.source !== 'pro') return null;
-  const raw = row.id.replace(/^pro-/, '');
+  const raw = parsePooledProMatchId(row.id);
+  if (!raw) return null;
   const n = Number(raw);
   return Number.isFinite(n) ? n : null;
 }

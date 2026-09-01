@@ -68,11 +68,13 @@ function makeService(row?: Record<string, unknown>) {
     assignRoles: jest.fn(async () => ({ id: 'draft-from-cm', status: 'COMPLETED' })),
   };
   const evaluationService = { evaluate: jest.fn(async () => ({ totalScore: 5 })) };
+  const heroMeta = { getMatchupWinRate: jest.fn(() => null) };
   const service = new CaptainsService(
     prisma as any,
     heroService as any,
     draftService as any,
     evaluationService as any,
+    heroMeta as any,
   );
   return { service, prisma, draftService, evaluationService };
 }

@@ -4,7 +4,7 @@ Slim open list. Calibration history lives in `09-hero-knowledge-base.md`,
 `05-evaluation-engine.md`, `06-battle-engine.md`. Session order lives in
 `12-next-session-priorities.md`.
 
-Last slim: 2026-09-01 night. Statuses: `open` | `partial` | `parked` | `rejected`.
+Last slim: 2026-09-01 evening (TI attach + Battle ledger). Statuses: `open` | `partial` | `parked` | `rejected`.
 Shipped items live in the footnote, not this list.
 
 ---
@@ -69,6 +69,18 @@ not an early close) · Anonymous draft ownership (`ownerToken` / `X-Owner-Token`
 · TI History placement (`deriveTiPlacement`) + champion trophy icon
 · Templar Assassin Mid presumed overlay Carry 0.759 / Mid 0.216 (one-hero,
   0.25 gate kept)
+· TI Run GF jersey collision (`liveOpponent`: if the historical foe is the
+  player jersey, fight `occupyAs` instead). Remaining-path blanking stays.
+  Copy: `tiRun.pickTeam` / `treeNote`
+· Opponent pool TI lose-sides (`pro-{id}-lose`) + any-league / SQLite
+  fallback. Relabel playoff Steam successor names
+  (`relabel-ti-playoff-teams`). Attach: **116/116** bracket nodes have ids.
+  TI 2026 UB QF pairings corrected (Yandex–Liquid, Nigma–Falcons)
+· Battle DraftLedger rail: tags on a second row, fight screen full-width
+  (no more name/tag overlap)
+· Captains: splash portraits `/heroes/{id}.png`; AI started using matchups
+  + remaining roles (not only `heroPower`). HUD still not Valve-pixel
+  complete. Don't retag Medusa `illusion_based`
 
 ---
 
@@ -140,18 +152,24 @@ Nick.
 ### Captains friend lobby — `parked`
 CM vs AI shipped on isolated `/captains` (homage HUD, not Valve-pixel).
 Don't also build a lobby unless Nick picks that shape.
-### Captains HUD pixel-parity — `parked`
-Homage layout shipped. Valve-pixel CM is not a goal unless Nick asks.
+### Captains HUD pixel-parity — `partial` (Nick asked 2026-09-01)
+Homage is no longer the contract. Valve 1:1 + splash. Side columns and
+icon grid started; not pixel-complete. Don't mix this with a calibration
+pass.
 ### TI occupy-slot live-tree contract — `partial`
-`projectLiveBracket` overlays the player's path. Non-player branches
-stay historical decoration. Next: say that in the UI, then QA a real
-win and a real loss (not only a fresh pick). Don't treat leftover
-historical winners on other branches as a display bug.
-### Captains AI draft diversity — `open` (2026-09-01 night)
-Suspicion the homage CM AI always bans/picks the same heroes. Pointer:
-`server/src/captains/captains-ai.ts` — `chooseAiBan` / `chooseAiPick`
-sort remaining roster by a deterministic `heroPower` average. No seed.
-Recorded only; don't "fix" this session.
+Copy + GF self-vs-self fix shipped. Playoff match ids attached (incl.
+TI10 holes + TI 2026 QF). Next: real browser QA win → upper / loss →
+lower / champ / elim. Attach still mixes some **group** games into the
+same pair as the playoff series — don't treat that as empty nodes.
+### Captains AI draft diversity — `partial`
+`chooseAiBan` / `chooseAiPick` now take opponent picks + remaining role
+slots + OpenDota matchups. Still deterministic (no session seed). Finish
+HUD before another AI rewrite.
+### Battle result narrative vs living-sim log — `open` (research 2026-09-01)
+DotaCaptain sells a tick-level match log (vision/smoke/Rosh/HG), not a
+four-beat recap. Steal **structure** (plan vs stress vs off-script;
+named calls with clock), not their sim. Don't retune Battle coefficients
+to make the story "feel" like a live match.
 ### Templar Assassin Mid presumed overlay — shipped (2026-09-01)
 One-hero exception: Carry 0.759 / Mid 0.216 in `hero-meta.json`
 positions. Eval Mid already existed. Global 0.25 threshold unchanged.

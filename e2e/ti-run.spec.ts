@@ -41,9 +41,17 @@ const liveView: TiRunStateView = {
       teamA: 'Invictus Gaming',
       teamB: 'Team Spirit',
     }),
-    blank('ub_r1_2', 'Upper Bracket Round 1', 'upper'),
+    blank('ub_r1_2', 'Upper Bracket Round 1', 'upper', {
+      teamA: 'PSG.LGD',
+      teamB: 'Evil Geniuses',
+      winner: 'PSG.LGD',
+    }),
     blank('ub_f', 'Upper Bracket Final', 'upper'),
-    blank('lb_r1_1', 'Lower Bracket Round 1', 'lower'),
+    blank('lb_r1_1', 'Lower Bracket Round 1', 'lower', {
+      teamA: 'Invictus Gaming',
+      teamB: 'OG',
+      winner: 'Invictus Gaming',
+    }),
     blank('gf', 'Grand Final', 'grand'),
   ],
 };
@@ -56,13 +64,16 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
-test('TI bracket shows the live opening slot and TBD elsewhere', async ({ page }) => {
+test('TI bracket keeps original pairings on other branches', async ({ page }) => {
   await page.goto('/ti-run');
   const tree = page.getByTestId('ti-bracket');
   await expect(tree).toBeVisible();
   await expect(page.locator('.ti-match.is-current')).toHaveCount(1);
-  await expect(page.locator('.ti-match.is-played')).toHaveCount(0);
-  await expect(page.locator('.ti-match.is-empty')).toHaveCount(4);
+  await expect(page.locator('.ti-match.is-played')).toHaveCount(2);
+  await expect(page.locator('.ti-match.is-empty')).toHaveCount(2);
   await expect(page.locator('[data-match-id="ub_r1_1"]')).toContainText('Team Spirit');
+  await expect(page.locator('[data-match-id="ub_r1_2"]')).toContainText('PSG.LGD');
   await expect(page.locator('[data-match-id="gf"]')).toContainText('TBD');
+  await expect(page.getByTestId('ti-tree-note')).toBeVisible();
+  await expect(page.getByTestId('ti-tree-note')).toContainText('stay empty until you play them');
 });

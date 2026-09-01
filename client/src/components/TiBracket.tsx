@@ -11,10 +11,20 @@ function groupRounds(matches: TiBracketMatch[], side: TiBracketMatch['bracket'])
   return order.map((round) => ({ round, matches: rows.filter((m) => m.round === round) }));
 }
 
-function Seed({ name, winner, playerTeam }: { name: string; winner: string; playerTeam: string | null }) {
+function Seed({
+  name,
+  winner,
+  playerTeam,
+  liveJersey,
+}: {
+  name: string;
+  winner: string;
+  playerTeam: string | null;
+  liveJersey: boolean;
+}) {
   const isWinner = name.length > 0 && name === winner;
   const isLoser = name.length > 0 && winner.length > 0 && name !== winner;
-  const isPlayer = Boolean(playerTeam && name === playerTeam);
+  const isPlayer = Boolean(liveJersey && playerTeam && name === playerTeam);
   return (
     <div
       className={`ti-seed${isWinner ? ' is-winner' : ''}${isLoser ? ' is-loser' : ''}${isPlayer ? ' is-you' : ''}`}
@@ -38,13 +48,14 @@ function MatchCard({
     match.bracket === 'grand' && match.winner && playerTeam && match.winner === playerTeam,
   );
   const empty = !match.teamA && !match.teamB && !match.winner;
+  const liveJersey = current || Boolean(match.winner);
   return (
     <article
       className={`ti-match${current ? ' is-current' : ''}${match.winner ? ' is-played' : ''}${trophy ? ' is-trophy' : ''}${empty ? ' is-empty' : ''}`}
       data-match-id={match.id}
     >
-      <Seed name={match.teamA} winner={match.winner} playerTeam={playerTeam} />
-      <Seed name={match.teamB} winner={match.winner} playerTeam={playerTeam} />
+      <Seed name={match.teamA} winner={match.winner} playerTeam={playerTeam} liveJersey={liveJersey} />
+      <Seed name={match.teamB} winner={match.winner} playerTeam={playerTeam} liveJersey={liveJersey} />
     </article>
   );
 }

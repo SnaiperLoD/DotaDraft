@@ -391,6 +391,36 @@ describe('OpponentPoolService.getLeaderboard', () => {
   });
 });
 
+describe('OpponentPoolService.pullForTeam', () => {
+  it('falls back to local ProMatch drafts when the league pool has no rows for the team', async () => {
+    const pool = makeMockPool();
+    pool.pooledDraft.findMany.mockResolvedValue([]);
+    const prisma = {
+      proMatch: {
+        findMany: jest.fn().mockResolvedValue([
+          {
+            id: '7395420827',
+            radiantName: 'Entity',
+            direName: 'Virtus.pro',
+            leagueName: 'The International 2023',
+            radiantHeroIds: '[1,2,3,4,5]',
+            direHeroIds: '[6,7,8,9,10]',
+            radiantHeroRoles: null,
+            direHeroRoles: null,
+          },
+        ]),
+      },
+    };
+    const service = new OpponentPoolService(pool as any, {} as any, prisma as any);
+
+    const result = await service.pullForTeam('Entity', 'The International 2022', {}, []);
+
+    expect(result.teamName).toBe('Entity');
+    expect(result.heroIds).toEqual([1, 2, 3, 4, 5]);
+    expect(result.id).toBe('pro-7395420827');
+  });
+});
+
 // Live regression test for the actual bug: `NOT: { submitterToken: token }`
 // alone excludes every row where submitterToken IS NULL under SQL's
 // three-valued logic, silently dropping the entire pro tier. A mocked

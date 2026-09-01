@@ -1,45 +1,40 @@
 # Next Session Priorities
 
-Updated 2026-09-01 after session retro (modes + Challenge + coin + live
-TI tree + Liquipedia logos + Stryker `copiedDraft`). Handoff / triage;
-`10-tech-debt-backlog.md` is the detailed source of truth. Deploy notes:
-`13-deploy.md`.
+Updated 2026-09-01 evening after TI playoff attach, occupy GF jersey
+fix, opponent-pool lose-sides, and Battle ledger layout. Handoff /
+triage; `10-tech-debt-backlog.md` is the detailed source of truth.
+Deploy notes: `13-deploy.md`.
 
-**Status check:** three isolated modes are on `master` (`/draft`,
-`/captains`, `/ti-run`). Live occupy-slot tree is on `/ti-run`. Park
-still ships; don't rebuild the old funnel. Pro snapshot unchanged
-(**2374** rows). Tunnel still OFF. Next is **one product contract + QA**,
-not a domain/VPS buy and not a calibration sweep.
+**Status check:** three isolated modes on `master` (`/draft`,
+`/captains`, `/ti-run`). Occupy-slot copy + GF self-vs-self fix are in
+the tree. Playoff attach is **116/116** nodes. Pro snapshot still
+**2374** rows (relabeled names, no new OpenDota pull). Tunnel still
+OFF. Calibration pause still on.
 
-**Session working rules (from 2026-09-01 retro):** one invariant per
-session before UI. Don't mix Stryker into the same commit as a new
-client spectacle. Don't retune Battle coefficients to make TI "feel
-fair." Homage CM is homage — Valve-pixel is not a goal.
-Calibration pause still on: no coefficients / tags / weights / OpenDota
-refetch without Nick.
+**Session working rules:** one invariant per session before UI. Don't
+mix Stryker into the same commit as a new client spectacle. Don't
+retune Battle coefficients to make TI or a DotaCaptain-style log
+"feel fair." Nick **did** ask for Valve-pixel CM this session — homage
+is no longer the contract. Don't refetch OpenDota without Nick.
 
 ---
 
 ## Next session — priorities in order
 
-Don't merge the three modes. Domain/VPS is not P0. Valve-pixel CM is
-not a goal. Dual-role Support shares still need Nick's ask — not P0.
+Don't merge the three modes. Domain/VPS is not P0. Dual-role Support
+shares still need Nick's ask — not P0. Valve-pixel CM is **in progress**
+(Nick asked); don't finish it in the same sitting as Battle narrative.
 
-### 1. TI occupy-slot: name the contract, then QA the tree
+### 1. TI occupy-slot: QA the tree in a real run
 
-`projectLiveBracket` shipped. The **product** contract did not: the
-player's path is live; **non-player branches stay historical
-decoration** (occupy-slot, not a simulated rest-of-tournament). Write
-that down in code comments / `TiBracket` copy if the UI still implies
-otherwise.
+Contract copy is in `tiRun.treeNote`. `liveOpponent` stops painting the
+jersey on both GF sides. Playoff holes are attached.
 
-Then play a real run in the browser: win → next upper slot with *your*
-jersey; loss → lower-bracket slot; champion / elim / GF trophy match
-status. The last pass only checked a fresh pick (Spirit vs VP, 0
-played). Fix leftover display lies if overlay still shows a 202X
-champion on the player's route.
-
-Don't rebuild the template. Don't refetch brackets.
+Still needed: play a real run in the browser — win → next upper slot
+with *your* jersey; loss → lower-bracket slot; champion / elim / GF
+trophy. Don't rebuild the template. Don't refetch brackets. If a node
+has extra group-stage ids for the same pair, that's attach-by-names,
+not a missing series.
 
 ### 2. Client Vitest for the new UI
 
@@ -52,17 +47,13 @@ component-library rewrite.
 
 ## New (2026-09-01 night)
 
-Same ordered queue. Occupy-slot + Vitest stay #1/#2 — Nick did not
-cancel them. Valve-pixel CM still not a goal. Calibration pause still
-on.
+Same ordered queue. Occupy-slot QA + Vitest stay #1/#2. Valve-pixel CM
+is Nick's ask — `partial`, not parked. Calibration pause still on.
 
-### 3. Captains AI draft diversity — `open`
+### 3. Captains AI + Valve HUD — `partial`
 
-Suspicion the CM opponent always drafts the same heroes/pattern.
-Investigate `server/src/captains/captains-ai.ts` (`chooseAiBan` /
-`chooseAiPick` rank the whole roster by a fixed `heroPower` mean — no
-session seed, no pool shuffle). This session: record only. Fix later if
-it's a seed/pool bug.
+Adaptive bans/picks (roles + matchups) started. HUD 1:1 Valve not done.
+Don't retag Medusa.
 
 ### 4. Dual-role Support presumed shares — ask first
 
@@ -84,14 +75,21 @@ the Finals badge on those opponents. Don't infer from `leagueName`.
 OpenDota has no `radiant_name` / `dire_name` on those matches. UI already
 falls back to league via `opponentTeamCaption`. Not a refetch problem.
 
-### 7. Captains friend lobby — parked
+### 7. Battle result narrative (DotaCaptain research) — `open`
 
-Isolated `/captains` homage CM HUD shipped. Don't also build a lobby
-unless Nick picks that shape.
+Four-beat `battle-story.ts` already exists. DotaCaptain's product is a
+clocked living-sim log + captain report (on-plan / plan-stress /
+off-script), with Pixel Stage as a **slave** of verified events — not a
+second sim. Steal report structure for Battle recap; don't invent
+vision/smoke/Rosh state we don't compute; don't retune coefficients.
+
+### 8. Captains friend lobby — parked
+
+Isolated `/captains`. Don't also build a lobby unless Nick picks that
+shape.
 
 ### Not this session
 
-- Valve-pixel CM — not a goal (homage HUD is the product).
 - Steam logo refetch for T1 / Quincy / Undying — Liquipedia slugs
   shipped; Steam ids recycled. Don't map Oversight onto T1.
 - Full-suite Stryker / CI mutation job — `copiedDraft` scoped ~95% is
@@ -350,15 +348,39 @@ User's request (2026-08-06): heroes who genuinely play both a core and a support
 
 ## Where to start
 
-Start on **§1**: occupy-slot contract copy + a real TI win/loss in the
-browser, then leftover tree bugs. Then **§2** client Vitest. Then
-Captains AI diversity. Dual-role Support shares only if Nick asks. Don't
+Start on **§1**: a real TI win/loss in the browser (copy is already
+there). Then **§2** client Vitest. Then Valve HUD / adaptive CM if Nick
+is still on that thread, or Battle recap structure from DotaCaptain
+research (**§7**). Dual-role Support shares only if Nick asks. Don't
 invent Visage Mid/Carry. Don't buy a domain. Don't start a calibration
-pass. Don't refetch TA. Valve-pixel CM is not a goal. Tunnel is off; `docker compose up` still brings back `:8080`,
+pass. Don't refetch TA. Tunnel is off; `docker compose up` still brings back `:8080`,
 overlay `docker-compose.tunnel.yml` still brings back a trycloudflare
 URL. Nonempty Docker volumes do **not** pick up a new `pro-matches.json`
 / `heroes.json` until you exec `seed` + `seed-opponent-pool` in the api
 container.
+
+---
+
+## Session log — 2026-09-01 evening (TI attach, GF jersey, ledger)
+
+Scoped **out**: coefficients / tags / weights; live OpenDota refetch
+(holes were already in `pro-matches.json` under successor org names).
+
+**TI Run.** `liveOpponent` if historical foe == player jersey → fight
+`occupyAs`. Remaining path still blanks unplayed future series. Relabel
+script + TI10 playoff seeds (Undying/Fnatic, QC/Aster, EG/Elephant,
+LGD/T1, …). TI 2026 UB QF template was wrong (Yandex–Falcons); real
+series are Yandex–Liquid and Nigma–Falcons. Attach 116/116. Pool upserts
+`pro-{id}-lose` for TI losers.
+
+**Battle UI.** DraftLedger rail on the fight screen: tags under the
+name, full-width panel. Nick signed off visually.
+
+**Captains.** Nick asked Valve 1:1. Splash `/heroes/{id}.png` + matchup
+AI started. Not done.
+
+**Don't.** Attach still glues group-stage maps of the same pair onto
+playoff nodes. Don't treat that as missing data.
 
 ---
 

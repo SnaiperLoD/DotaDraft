@@ -14,6 +14,7 @@ import {
 } from 'shared';
 import { chooseAiBan, chooseAiPick } from './captains-ai';
 import type { Hero } from 'shared';
+import { HeroMetaService } from '../hero-meta/hero-meta.service';
 import { logPersistenceFailure } from '../common/log';
 
 @Injectable()
@@ -23,6 +24,7 @@ export class CaptainsService {
     private readonly heroService: HeroService,
     private readonly draftService: DraftService,
     private readonly evaluationService: EvaluationService,
+    private readonly heroMeta: HeroMetaService,
   ) {}
 
   async start(ownerToken: string): Promise<CaptainsStateView> {
@@ -192,9 +194,10 @@ export class CaptainsService {
       if (step.lane === 'first') break;
       const slots = parseSlots(current.actionsJson);
       const taken = takenIds(slots);
-      const aiPicked = slots.filter((s) => s.lane === 'second' && s.type === 'pick' && s.heroId != null);
-      const aiHeroes = roster.filter((h) => aiPicked.some((s) => s.heroId === h.id));
-      const chosen = step.type === 'ban' ? chooseAiBan(roster, taken) : chooseAiPick(roster, taken, aiHeroes);
+      const aiHeroes = heroesFromSlots(roster, slots, 'second');
+      const playerHeroes = heroesFromSlots(roster, slots, 'first');
+      const ctx = { ownPicks: aiHeroes, opponentPicks: playerHeroes, lookup: this.heroMeta };
+      const chosen = step.type === 'ban' ? chooseAiBan(roster, taken, ctx) : chooseAiPick(roster, taken, ctx);
       slots[current.stepIndex] = { type: step.type, lane: step.lane, heroId: chosen };
       current = await this.prisma.captainsSession.update({
         where: { id: current.id },
@@ -298,4 +301,11 @@ function parseSlots(json: string): CmSlot[] {
 
 function takenIds(slots: CmSlot[]): Set<number> {
   return new Set(slots.map((s) => s.heroId).filter((id): id is number => id != null));
+}
+
+function heroesFromSlots(roster: Hero[], slots: CmSlot[], lane: CmSlot['lane']): Hero[] {
+  const ids = slots
+    .filter((s) => s.lane === lane && s.type === 'pick' && s.heroId != null)
+    .map((s) => s.heroId as number);
+  return ids.map((id) => roster.find((h) => h.id === id)).filter((h): h is Hero => Boolean(h));
 }

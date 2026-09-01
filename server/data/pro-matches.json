@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T15:21:36.977Z",
+  "generatedAt": "2026-09-01T13:13:53.087Z",
   "matches": [
     {
       "matchId": "8960991322",
@@ -36640,7 +36640,7 @@
     {
       "matchId": "7935519998",
       "radiantName": "BB Team",
-      "direName": "nouns",
+      "direName": "Nouns Esports",
       "leagueName": "The International 2024",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -36725,7 +36725,7 @@
     },
     {
       "matchId": "7935409271",
-      "radiantName": "nouns",
+      "radiantName": "Nouns Esports",
       "direName": "BB Team",
       "leagueName": "The International 2024",
       "radiantWin": false,
@@ -37242,7 +37242,7 @@
     {
       "matchId": "7934359821",
       "radiantName": "Gaimin Gladiators",
-      "direName": "nouns",
+      "direName": "Nouns Esports",
       "leagueName": "The International 2024",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -37328,7 +37328,7 @@
     {
       "matchId": "7934252472",
       "radiantName": "Gaimin Gladiators",
-      "direName": "nouns",
+      "direName": "Nouns Esports",
       "leagueName": "The International 2024",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -37413,7 +37413,7 @@
     },
     {
       "matchId": "7934129660",
-      "radiantName": "nouns",
+      "radiantName": "Nouns Esports",
       "direName": "Gaimin Gladiators",
       "leagueName": "The International 2024",
       "radiantWin": true,
@@ -38274,7 +38274,7 @@
     {
       "matchId": "7932411449",
       "radiantName": "Team Spirit",
-      "direName": "nouns",
+      "direName": "Nouns Esports",
       "leagueName": "The International 2024",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -38359,7 +38359,7 @@
     },
     {
       "matchId": "7932276041",
-      "radiantName": "nouns",
+      "radiantName": "Nouns Esports",
       "direName": "Team Spirit",
       "leagueName": "The International 2024",
       "radiantWin": true,
@@ -40595,7 +40595,7 @@
     },
     {
       "matchId": "7929057445",
-      "radiantName": "nouns",
+      "radiantName": "Nouns Esports",
       "direName": "Team Zero",
       "leagueName": "The International 2024",
       "radiantWin": true,
@@ -40854,7 +40854,7 @@
     {
       "matchId": "7929005346",
       "radiantName": "Team Zero",
-      "direName": "nouns",
+      "direName": "Nouns Esports",
       "leagueName": "The International 2024",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -41972,7 +41972,7 @@
     {
       "matchId": "7928200136",
       "radiantName": "Team Falcons",
-      "direName": "nouns",
+      "direName": "Nouns Esports",
       "leagueName": "The International 2024",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -42230,7 +42230,7 @@
     {
       "matchId": "7928100793",
       "radiantName": "Team Falcons",
-      "direName": "nouns",
+      "direName": "Nouns Esports",
       "leagueName": "The International 2024",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -43003,7 +43003,7 @@
     },
     {
       "matchId": "7927826080",
-      "radiantName": "nouns",
+      "radiantName": "Nouns Esports",
       "direName": "BB Team",
       "leagueName": "The International 2024",
       "radiantWin": false,
@@ -43176,7 +43176,7 @@
     {
       "matchId": "7927758213",
       "radiantName": "BB Team",
-      "direName": "nouns",
+      "direName": "Nouns Esports",
       "leagueName": "The International 2024",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -58225,7 +58225,7 @@
     },
     {
       "matchId": "6818876789",
-      "radiantName": "LGD Gaming",
+      "radiantName": "PSG.LGD",
       "direName": "Team Aster",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -58311,7 +58311,7 @@
     },
     {
       "matchId": "6818781180",
-      "radiantName": "LGD Gaming",
+      "radiantName": "PSG.LGD",
       "direName": "Team Aster",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -58570,7 +58570,7 @@
     {
       "matchId": "6818576227",
       "radiantName": "beastcoast",
-      "direName": "LGD Gaming",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -58656,7 +58656,7 @@
     {
       "matchId": "6818528391",
       "radiantName": "beastcoast",
-      "direName": "LGD Gaming",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -58741,7 +58741,7 @@
     },
     {
       "matchId": "6818469926",
-      "radiantName": "LGD Gaming",
+      "radiantName": "PSG.LGD",
       "direName": "beastcoast",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -59172,7 +59172,7 @@
     {
       "matchId": "6817021418",
       "radiantName": "Team Liquid",
-      "direName": "Cloud9",
+      "direName": "Entity",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -59258,7 +59258,7 @@
     {
       "matchId": "6816943535",
       "radiantName": "Team Liquid",
-      "direName": "Cloud9",
+      "direName": "Entity",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -59343,7 +59343,7 @@
     },
     {
       "matchId": "6816889894",
-      "radiantName": "Cloud9",
+      "radiantName": "Entity",
       "direName": "Team Liquid",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -59687,7 +59687,7 @@
     },
     {
       "matchId": "6815465825",
-      "radiantName": "LGD Gaming",
+      "radiantName": "PSG.LGD",
       "direName": "BOOM Esports",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -59774,7 +59774,7 @@
     {
       "matchId": "6815420310",
       "radiantName": "BOOM Esports",
-      "direName": "LGD Gaming",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -59860,7 +59860,7 @@
     {
       "matchId": "6815355000",
       "radiantName": "beastcoast",
-      "direName": "Shopify Rebellion",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -59946,7 +59946,7 @@
     {
       "matchId": "6815303281",
       "radiantName": "beastcoast",
-      "direName": "Shopify Rebellion",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -60375,8 +60375,8 @@
     },
     {
       "matchId": "6814073054",
-      "radiantName": "Antarctic Penguins",
-      "direName": "Cloud9",
+      "radiantName": "Royal Never Give Up",
+      "direName": "Entity",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -60461,7 +60461,7 @@
     },
     {
       "matchId": "6814001211",
-      "radiantName": "Ascent Esports",
+      "radiantName": "Fnatic",
       "direName": "Gaimin Gladiators",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -60634,7 +60634,7 @@
     {
       "matchId": "6813896391",
       "radiantName": "beastcoast",
-      "direName": "Ukumari",
+      "direName": "Hokori",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -60720,7 +60720,7 @@
     {
       "matchId": "6813846659",
       "radiantName": "Team Secret",
-      "direName": "LGD Gaming",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -60805,7 +60805,7 @@
     },
     {
       "matchId": "6813815540",
-      "radiantName": "LGD Gaming",
+      "radiantName": "PSG.LGD",
       "direName": "Team Secret",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -60892,7 +60892,7 @@
     {
       "matchId": "6813782414",
       "radiantName": "Thunder Awaken",
-      "direName": "Shopify Rebellion",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -60978,7 +60978,7 @@
     {
       "matchId": "6813739089",
       "radiantName": "Thunder Awaken",
-      "direName": "Shopify Rebellion",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -61063,7 +61063,7 @@
     },
     {
       "matchId": "6811221669",
-      "radiantName": "Cloud9",
+      "radiantName": "Entity",
       "direName": "Talon",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -61150,7 +61150,7 @@
     {
       "matchId": "6811142966",
       "radiantName": "Talon",
-      "direName": "Cloud9",
+      "direName": "Entity",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -61407,7 +61407,7 @@
     },
     {
       "matchId": "6811058155",
-      "radiantName": "Ascent Esports",
+      "radiantName": "Fnatic",
       "direName": "TSM",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -61752,7 +61752,7 @@
     {
       "matchId": "6811014822",
       "radiantName": "Tundra Esports",
-      "direName": "Cloud9",
+      "direName": "Entity",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -61923,7 +61923,7 @@
     },
     {
       "matchId": "6811000638",
-      "radiantName": "Ascent Esports",
+      "radiantName": "Fnatic",
       "direName": "TSM",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -62181,7 +62181,7 @@
     },
     {
       "matchId": "6810974000",
-      "radiantName": "Cloud9",
+      "radiantName": "Entity",
       "direName": "Tundra Esports",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -62268,7 +62268,7 @@
     {
       "matchId": "6810950150",
       "radiantName": "BOOM Esports",
-      "direName": "Shopify Rebellion",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -62439,7 +62439,7 @@
     },
     {
       "matchId": "6810944275",
-      "radiantName": "LGD Gaming",
+      "radiantName": "PSG.LGD",
       "direName": "Darkside",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -62526,7 +62526,7 @@
     {
       "matchId": "6810942576",
       "radiantName": "OG",
-      "direName": "Antarctic Penguins",
+      "direName": "Royal Never Give Up",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -62612,7 +62612,7 @@
     {
       "matchId": "6810932324",
       "radiantName": "Team Liquid",
-      "direName": "Ukumari",
+      "direName": "Hokori",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -62698,7 +62698,7 @@
     {
       "matchId": "6810906509",
       "radiantName": "BOOM Esports",
-      "direName": "Shopify Rebellion",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -62783,7 +62783,7 @@
     },
     {
       "matchId": "6810903559",
-      "radiantName": "Antarctic Penguins",
+      "radiantName": "Royal Never Give Up",
       "direName": "OG",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -62956,7 +62956,7 @@
     {
       "matchId": "6810903010",
       "radiantName": "Darkside",
-      "direName": "LGD Gaming",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -63042,7 +63042,7 @@
     {
       "matchId": "6810895741",
       "radiantName": "Team Liquid",
-      "direName": "Ukumari",
+      "direName": "Hokori",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -63214,7 +63214,7 @@
     {
       "matchId": "6810862193",
       "radiantName": "Talon",
-      "direName": "Cloud9",
+      "direName": "Entity",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -63299,7 +63299,7 @@
     },
     {
       "matchId": "6810862848",
-      "radiantName": "Ascent Esports",
+      "radiantName": "Fnatic",
       "direName": "Tundra Esports",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -63815,7 +63815,7 @@
     },
     {
       "matchId": "6810818538",
-      "radiantName": "Ascent Esports",
+      "radiantName": "Fnatic",
       "direName": "Tundra Esports",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -63902,7 +63902,7 @@
     {
       "matchId": "6810821982",
       "radiantName": "Talon",
-      "direName": "Cloud9",
+      "direName": "Entity",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -64159,7 +64159,7 @@
     },
     {
       "matchId": "6809991048",
-      "radiantName": "LGD Gaming",
+      "radiantName": "PSG.LGD",
       "direName": "Gaimin Gladiators",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -64332,7 +64332,7 @@
     {
       "matchId": "6809895411",
       "radiantName": "Team Secret",
-      "direName": "Cloud9",
+      "direName": "Entity",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -64417,7 +64417,7 @@
     },
     {
       "matchId": "6809894646",
-      "radiantName": "Ukumari",
+      "radiantName": "Hokori",
       "direName": "The Oversight",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -64503,7 +64503,7 @@
     },
     {
       "matchId": "6809888330",
-      "radiantName": "LGD Gaming",
+      "radiantName": "PSG.LGD",
       "direName": "Gaimin Gladiators",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -64589,8 +64589,8 @@
     },
     {
       "matchId": "6809875296",
-      "radiantName": "Antarctic Penguins",
-      "direName": "Shopify Rebellion",
+      "radiantName": "Royal Never Give Up",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -64762,7 +64762,7 @@
     {
       "matchId": "6809815986",
       "radiantName": "Team Secret",
-      "direName": "Cloud9",
+      "direName": "Entity",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -64847,8 +64847,8 @@
     },
     {
       "matchId": "6809812984",
-      "radiantName": "Shopify Rebellion",
-      "direName": "Antarctic Penguins",
+      "radiantName": "Evil Geniuses",
+      "direName": "Royal Never Give Up",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -64934,7 +64934,7 @@
     {
       "matchId": "6809806814",
       "radiantName": "The Oversight",
-      "direName": "Ukumari",
+      "direName": "Hokori",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -65277,7 +65277,7 @@
     },
     {
       "matchId": "6809742301",
-      "radiantName": "Ascent Esports",
+      "radiantName": "Fnatic",
       "direName": "Talon",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -65707,7 +65707,7 @@
     },
     {
       "matchId": "6809665094",
-      "radiantName": "Ascent Esports",
+      "radiantName": "Fnatic",
       "direName": "Talon",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -65793,7 +65793,7 @@
     },
     {
       "matchId": "6809660879",
-      "radiantName": "Shopify Rebellion",
+      "radiantName": "Evil Geniuses",
       "direName": "Gaimin Gladiators",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -65965,8 +65965,8 @@
     },
     {
       "matchId": "6809638522",
-      "radiantName": "Antarctic Penguins",
-      "direName": "Ukumari",
+      "radiantName": "Royal Never Give Up",
+      "direName": "Hokori",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -66052,7 +66052,7 @@
     {
       "matchId": "6809621786",
       "radiantName": "BOOM Esports",
-      "direName": "LGD Gaming",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -66137,7 +66137,7 @@
     },
     {
       "matchId": "6809612544",
-      "radiantName": "Shopify Rebellion",
+      "radiantName": "Evil Geniuses",
       "direName": "Gaimin Gladiators",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -66223,7 +66223,7 @@
     },
     {
       "matchId": "6809585544",
-      "radiantName": "LGD Gaming",
+      "radiantName": "PSG.LGD",
       "direName": "BOOM Esports",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -66481,8 +66481,8 @@
     },
     {
       "matchId": "6809561963",
-      "radiantName": "Antarctic Penguins",
-      "direName": "Ukumari",
+      "radiantName": "Royal Never Give Up",
+      "direName": "Hokori",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -66567,7 +66567,7 @@
     },
     {
       "matchId": "6809556554",
-      "radiantName": "Ascent Esports",
+      "radiantName": "Fnatic",
       "direName": "Team Aster",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -66740,7 +66740,7 @@
     {
       "matchId": "6809539681",
       "radiantName": "TSM",
-      "direName": "Cloud9",
+      "direName": "Entity",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -67083,7 +67083,7 @@
     },
     {
       "matchId": "6809499025",
-      "radiantName": "Ascent Esports",
+      "radiantName": "Fnatic",
       "direName": "Team Aster",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -67170,7 +67170,7 @@
     {
       "matchId": "6809501366",
       "radiantName": "TSM",
-      "direName": "Cloud9",
+      "direName": "Entity",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -67600,7 +67600,7 @@
     {
       "matchId": "6809454703",
       "radiantName": "Darkside",
-      "direName": "Shopify Rebellion",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -67686,7 +67686,7 @@
     {
       "matchId": "6809455169",
       "radiantName": "OG",
-      "direName": "Ukumari",
+      "direName": "Hokori",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -67772,7 +67772,7 @@
     {
       "matchId": "6809419010",
       "radiantName": "OG",
-      "direName": "Ukumari",
+      "direName": "Hokori",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -67943,8 +67943,8 @@
     },
     {
       "matchId": "6809420587",
-      "radiantName": "LGD Gaming",
-      "direName": "Antarctic Penguins",
+      "radiantName": "PSG.LGD",
+      "direName": "Royal Never Give Up",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -68029,7 +68029,7 @@
     },
     {
       "matchId": "6809417360",
-      "radiantName": "Shopify Rebellion",
+      "radiantName": "Evil Geniuses",
       "direName": "Darkside",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -68373,8 +68373,8 @@
     },
     {
       "matchId": "6808416013",
-      "radiantName": "Ascent Esports",
-      "direName": "Cloud9",
+      "radiantName": "Fnatic",
+      "direName": "Entity",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -68803,8 +68803,8 @@
     },
     {
       "matchId": "6808300252",
-      "radiantName": "Cloud9",
-      "direName": "Ascent Esports",
+      "radiantName": "Entity",
+      "direName": "Fnatic",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -69148,7 +69148,7 @@
     {
       "matchId": "6808212619",
       "radiantName": "Gaimin Gladiators",
-      "direName": "Antarctic Penguins",
+      "direName": "Royal Never Give Up",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -69233,7 +69233,7 @@
     },
     {
       "matchId": "6808199906",
-      "radiantName": "LGD Gaming",
+      "radiantName": "PSG.LGD",
       "direName": "Team Liquid",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -69405,8 +69405,8 @@
     },
     {
       "matchId": "6808167860",
-      "radiantName": "Shopify Rebellion",
-      "direName": "Ukumari",
+      "radiantName": "Evil Geniuses",
+      "direName": "Hokori",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -69577,7 +69577,7 @@
     },
     {
       "matchId": "6808122743",
-      "radiantName": "Antarctic Penguins",
+      "radiantName": "Royal Never Give Up",
       "direName": "Gaimin Gladiators",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -69663,7 +69663,7 @@
     },
     {
       "matchId": "6808106195",
-      "radiantName": "LGD Gaming",
+      "radiantName": "PSG.LGD",
       "direName": "Team Liquid",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -69749,8 +69749,8 @@
     },
     {
       "matchId": "6808093837",
-      "radiantName": "Ukumari",
-      "direName": "Shopify Rebellion",
+      "radiantName": "Hokori",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -70093,7 +70093,7 @@
     },
     {
       "matchId": "6808028757",
-      "radiantName": "Cloud9",
+      "radiantName": "Entity",
       "direName": "Team Aster",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -70180,7 +70180,7 @@
     {
       "matchId": "6808011785",
       "radiantName": "beastcoast",
-      "direName": "Ascent Esports",
+      "direName": "Fnatic",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -70438,7 +70438,7 @@
     {
       "matchId": "6807938213",
       "radiantName": "Team Aster",
-      "direName": "Cloud9",
+      "direName": "Entity",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -70610,7 +70610,7 @@
     {
       "matchId": "6807939991",
       "radiantName": "beastcoast",
-      "direName": "Ascent Esports",
+      "direName": "Fnatic",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -70782,7 +70782,7 @@
     {
       "matchId": "6807900926",
       "radiantName": "The Oversight",
-      "direName": "Antarctic Penguins",
+      "direName": "Royal Never Give Up",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -70953,7 +70953,7 @@
     },
     {
       "matchId": "6807886186",
-      "radiantName": "Shopify Rebellion",
+      "radiantName": "Evil Geniuses",
       "direName": "Team Liquid",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -71039,7 +71039,7 @@
     },
     {
       "matchId": "6807886590",
-      "radiantName": "LGD Gaming",
+      "radiantName": "PSG.LGD",
       "direName": "OG",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -71125,7 +71125,7 @@
     },
     {
       "matchId": "6807880611",
-      "radiantName": "Ukumari",
+      "radiantName": "Hokori",
       "direName": "Darkside",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -71211,7 +71211,7 @@
     },
     {
       "matchId": "6807837834",
-      "radiantName": "LGD Gaming",
+      "radiantName": "PSG.LGD",
       "direName": "OG",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -71384,7 +71384,7 @@
     {
       "matchId": "6807826682",
       "radiantName": "The Oversight",
-      "direName": "Antarctic Penguins",
+      "direName": "Royal Never Give Up",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -71469,7 +71469,7 @@
     },
     {
       "matchId": "6807818563",
-      "radiantName": "Ukumari",
+      "radiantName": "Hokori",
       "direName": "Darkside",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -71556,7 +71556,7 @@
     {
       "matchId": "6807805121",
       "radiantName": "Team Liquid",
-      "direName": "Shopify Rebellion",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -71641,7 +71641,7 @@
     },
     {
       "matchId": "6807776673",
-      "radiantName": "Ascent Esports",
+      "radiantName": "Fnatic",
       "direName": "Team Secret",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -71728,7 +71728,7 @@
     {
       "matchId": "6807772753",
       "radiantName": "Thunder Awaken",
-      "direName": "Cloud9",
+      "direName": "Entity",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -72072,7 +72072,7 @@
     {
       "matchId": "6807722622",
       "radiantName": "Thunder Awaken",
-      "direName": "Cloud9",
+      "direName": "Entity",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -72330,7 +72330,7 @@
     {
       "matchId": "6807718331",
       "radiantName": "Team Secret",
-      "direName": "Ascent Esports",
+      "direName": "Fnatic",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -72501,7 +72501,7 @@
     },
     {
       "matchId": "6806790160",
-      "radiantName": "LGD Gaming",
+      "radiantName": "PSG.LGD",
       "direName": "The Oversight",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -72588,7 +72588,7 @@
     {
       "matchId": "6806767627",
       "radiantName": "BOOM Esports",
-      "direName": "Antarctic Penguins",
+      "direName": "Royal Never Give Up",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -72673,7 +72673,7 @@
     },
     {
       "matchId": "6806751717",
-      "radiantName": "Ukumari",
+      "radiantName": "Hokori",
       "direName": "Gaimin Gladiators",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -72760,7 +72760,7 @@
     {
       "matchId": "6806663153",
       "radiantName": "The Oversight",
-      "direName": "LGD Gaming",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -72846,7 +72846,7 @@
     {
       "matchId": "6806662696",
       "radiantName": "OG",
-      "direName": "Shopify Rebellion",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -72931,7 +72931,7 @@
     },
     {
       "matchId": "6806648571",
-      "radiantName": "Ukumari",
+      "radiantName": "Hokori",
       "direName": "Gaimin Gladiators",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -73018,7 +73018,7 @@
     {
       "matchId": "6806638898",
       "radiantName": "BOOM Esports",
-      "direName": "Antarctic Penguins",
+      "direName": "Royal Never Give Up",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -73189,7 +73189,7 @@
     },
     {
       "matchId": "6806566779",
-      "radiantName": "Ascent Esports",
+      "radiantName": "Fnatic",
       "direName": "Thunder Awaken",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -73533,7 +73533,7 @@
     },
     {
       "matchId": "6806534528",
-      "radiantName": "Shopify Rebellion",
+      "radiantName": "Evil Geniuses",
       "direName": "OG",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -73619,7 +73619,7 @@
     },
     {
       "matchId": "6806472970",
-      "radiantName": "Ascent Esports",
+      "radiantName": "Fnatic",
       "direName": "Thunder Awaken",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -73963,7 +73963,7 @@
     },
     {
       "matchId": "6806454246",
-      "radiantName": "Cloud9",
+      "radiantName": "Entity",
       "direName": "Team Spirit",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -74136,7 +74136,7 @@
     {
       "matchId": "6806377510",
       "radiantName": "Darkside",
-      "direName": "Antarctic Penguins",
+      "direName": "Royal Never Give Up",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -74221,7 +74221,7 @@
     },
     {
       "matchId": "6806364123",
-      "radiantName": "Cloud9",
+      "radiantName": "Entity",
       "direName": "Team Spirit",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -74480,7 +74480,7 @@
     {
       "matchId": "6806322784",
       "radiantName": "BOOM Esports",
-      "direName": "Ukumari",
+      "direName": "Hokori",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -74737,7 +74737,7 @@
     },
     {
       "matchId": "6806278486",
-      "radiantName": "Antarctic Penguins",
+      "radiantName": "Royal Never Give Up",
       "direName": "Darkside",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -74823,8 +74823,8 @@
     },
     {
       "matchId": "6806282012",
-      "radiantName": "LGD Gaming",
-      "direName": "Shopify Rebellion",
+      "radiantName": "PSG.LGD",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -74909,7 +74909,7 @@
     },
     {
       "matchId": "6806244566",
-      "radiantName": "Ukumari",
+      "radiantName": "Hokori",
       "direName": "BOOM Esports",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -74995,8 +74995,8 @@
     },
     {
       "matchId": "6806228770",
-      "radiantName": "LGD Gaming",
-      "direName": "Shopify Rebellion",
+      "radiantName": "PSG.LGD",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -75253,7 +75253,7 @@
     },
     {
       "matchId": "6806203596",
-      "radiantName": "Ascent Esports",
+      "radiantName": "Fnatic",
       "direName": "Team Spirit",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -75340,7 +75340,7 @@
     {
       "matchId": "6806191928",
       "radiantName": "beastcoast",
-      "direName": "Cloud9",
+      "direName": "Entity",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -75683,7 +75683,7 @@
     },
     {
       "matchId": "6806146943",
-      "radiantName": "Ascent Esports",
+      "radiantName": "Fnatic",
       "direName": "Team Spirit",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -75770,7 +75770,7 @@
     {
       "matchId": "6806142086",
       "radiantName": "beastcoast",
-      "direName": "Cloud9",
+      "direName": "Entity",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -75941,7 +75941,7 @@
     },
     {
       "matchId": "6806112746",
-      "radiantName": "Antarctic Penguins",
+      "radiantName": "Royal Never Give Up",
       "direName": "Team Liquid",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -76113,8 +76113,8 @@
     },
     {
       "matchId": "6806097974",
-      "radiantName": "Ukumari",
-      "direName": "LGD Gaming",
+      "radiantName": "Hokori",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2022",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -76286,7 +76286,7 @@
     {
       "matchId": "6806094304",
       "radiantName": "The Oversight",
-      "direName": "Shopify Rebellion",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -76371,7 +76371,7 @@
     },
     {
       "matchId": "6806047119",
-      "radiantName": "Antarctic Penguins",
+      "radiantName": "Royal Never Give Up",
       "direName": "Team Liquid",
       "leagueName": "The International 2022",
       "radiantWin": false,
@@ -76543,7 +76543,7 @@
     },
     {
       "matchId": "6806047539",
-      "radiantName": "Shopify Rebellion",
+      "radiantName": "Evil Geniuses",
       "direName": "The Oversight",
       "leagueName": "The International 2022",
       "radiantWin": true,
@@ -76715,8 +76715,8 @@
     },
     {
       "matchId": "6806047579",
-      "radiantName": "Ukumari",
-      "direName": "LGD Gaming",
+      "radiantName": "Hokori",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2022",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -76802,7 +76802,7 @@
     {
       "matchId": "6227492909",
       "radiantName": "Team Spirit",
-      "direName": "LGD Gaming",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -76887,7 +76887,7 @@
     },
     {
       "matchId": "6227419633",
-      "radiantName": "LGD Gaming",
+      "radiantName": "PSG.LGD",
       "direName": "Team Spirit",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -76974,7 +76974,7 @@
     {
       "matchId": "6227305557",
       "radiantName": "Team Spirit",
-      "direName": "LGD Gaming",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -77059,7 +77059,7 @@
     },
     {
       "matchId": "6227203516",
-      "radiantName": "LGD Gaming",
+      "radiantName": "PSG.LGD",
       "direName": "Team Spirit",
       "leagueName": "The International 2021",
       "radiantWin": false,
@@ -77146,7 +77146,7 @@
     {
       "matchId": "6227105229",
       "radiantName": "Team Spirit",
-      "direName": "LGD Gaming",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -77662,7 +77662,7 @@
     {
       "matchId": "6225233668",
       "radiantName": "Team Secret",
-      "direName": "LGD Gaming",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -77748,7 +77748,7 @@
     {
       "matchId": "6225151294",
       "radiantName": "Team Secret",
-      "direName": "LGD Gaming",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -78263,7 +78263,7 @@
     },
     {
       "matchId": "6223662107",
-      "radiantName": "BLEED",
+      "radiantName": "T1",
       "direName": "Vici Gaming",
       "leagueName": "The International 2021",
       "radiantWin": false,
@@ -78350,7 +78350,7 @@
     {
       "matchId": "6223583227",
       "radiantName": "Vici Gaming",
-      "direName": "BLEED",
+      "direName": "T1",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -78436,7 +78436,7 @@
     {
       "matchId": "6223515865",
       "radiantName": "Vici Gaming",
-      "direName": "BLEED",
+      "direName": "T1",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -78694,7 +78694,7 @@
     {
       "matchId": "6222850462",
       "radiantName": "Virtus.pro",
-      "direName": "LGD Gaming",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -78779,7 +78779,7 @@
     },
     {
       "matchId": "6222759193",
-      "radiantName": "LGD Gaming",
+      "radiantName": "PSG.LGD",
       "direName": "Virtus.pro",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -79038,7 +79038,7 @@
     {
       "matchId": "6222355816",
       "radiantName": "Vici Gaming",
-      "direName": "Shopify Rebellion",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -79124,7 +79124,7 @@
     {
       "matchId": "6222256714",
       "radiantName": "Vici Gaming",
-      "direName": "Shopify Rebellion",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -79210,7 +79210,7 @@
     {
       "matchId": "6222200561",
       "radiantName": "Vici Gaming",
-      "direName": "Shopify Rebellion",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -79295,7 +79295,7 @@
     },
     {
       "matchId": "6222126346",
-      "radiantName": "BLEED",
+      "radiantName": "T1",
       "direName": "Alliance",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -79382,7 +79382,7 @@
     {
       "matchId": "6222023409",
       "radiantName": "Alliance",
-      "direName": "BLEED",
+      "direName": "T1",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -79467,7 +79467,7 @@
     },
     {
       "matchId": "6221491372",
-      "radiantName": "The Oversight",
+      "radiantName": "Quincy Crew",
       "direName": "OG",
       "leagueName": "The International 2021",
       "radiantWin": false,
@@ -79554,7 +79554,7 @@
     {
       "matchId": "6221412840",
       "radiantName": "OG",
-      "direName": "The Oversight",
+      "direName": "Quincy Crew",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -79639,7 +79639,7 @@
     },
     {
       "matchId": "6221296920",
-      "radiantName": "Ascent Esports",
+      "radiantName": "Fnatic",
       "direName": "Team Spirit",
       "leagueName": "The International 2021",
       "radiantWin": false,
@@ -79726,7 +79726,7 @@
     {
       "matchId": "6221203314",
       "radiantName": "Team Spirit",
-      "direName": "Ascent Esports",
+      "direName": "Fnatic",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -80069,8 +80069,8 @@
     },
     {
       "matchId": "6220816055",
-      "radiantName": "LGD Gaming",
-      "direName": "BLEED",
+      "radiantName": "PSG.LGD",
+      "direName": "T1",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -80155,8 +80155,8 @@
     },
     {
       "matchId": "6220754493",
-      "radiantName": "LGD Gaming",
-      "direName": "BLEED",
+      "radiantName": "PSG.LGD",
+      "direName": "T1",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -80241,8 +80241,8 @@
     },
     {
       "matchId": "6220692458",
-      "radiantName": "LGD Gaming",
-      "direName": "BLEED",
+      "radiantName": "PSG.LGD",
+      "direName": "T1",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -80327,8 +80327,8 @@
     },
     {
       "matchId": "6220239665",
-      "radiantName": "Neptune Gaming",
-      "direName": "Shopify Rebellion",
+      "radiantName": "Elephant",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -80500,7 +80500,7 @@
     {
       "matchId": "6220007628",
       "radiantName": "Team Aster",
-      "direName": "The Oversight",
+      "direName": "Quincy Crew",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -80585,8 +80585,8 @@
     },
     {
       "matchId": "6219875084",
-      "radiantName": "Ascent Esports",
-      "direName": "TSM",
+      "radiantName": "Fnatic",
+      "direName": "Team Undying",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -81102,7 +81102,7 @@
     {
       "matchId": "6216911349",
       "radiantName": "beastcoast",
-      "direName": "LGD Gaming",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -81359,7 +81359,7 @@
     },
     {
       "matchId": "6216810253",
-      "radiantName": "LGD Gaming",
+      "radiantName": "PSG.LGD",
       "direName": "beastcoast",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -81445,8 +81445,8 @@
     },
     {
       "matchId": "6216792975",
-      "radiantName": "The Oversight",
-      "direName": "Neptune Gaming",
+      "radiantName": "Quincy Crew",
+      "direName": "Elephant",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -81703,8 +81703,8 @@
     },
     {
       "matchId": "6216715837",
-      "radiantName": "Neptune Gaming",
-      "direName": "The Oversight",
+      "radiantName": "Elephant",
+      "direName": "Quincy Crew",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -81789,8 +81789,8 @@
     },
     {
       "matchId": "6216713037",
-      "radiantName": "TSM",
-      "direName": "Shopify Rebellion",
+      "radiantName": "Team Undying",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -81962,7 +81962,7 @@
     {
       "matchId": "6216664448",
       "radiantName": "Thunder Awaken",
-      "direName": "BLEED",
+      "direName": "T1",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -82133,8 +82133,8 @@
     },
     {
       "matchId": "6216644781",
-      "radiantName": "Shopify Rebellion",
-      "direName": "TSM",
+      "radiantName": "Evil Geniuses",
+      "direName": "Team Undying",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -82220,7 +82220,7 @@
     {
       "matchId": "6216594228",
       "radiantName": "Thunder Awaken",
-      "direName": "BLEED",
+      "direName": "T1",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -82478,7 +82478,7 @@
     {
       "matchId": "6216545156",
       "radiantName": "Evil Geniuses",
-      "direName": "The Oversight",
+      "direName": "Quincy Crew",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -82563,8 +82563,8 @@
     },
     {
       "matchId": "6216526891",
-      "radiantName": "Neptune Gaming",
-      "direName": "LGD Gaming",
+      "radiantName": "Elephant",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -82649,7 +82649,7 @@
     },
     {
       "matchId": "6216525355",
-      "radiantName": "Ascent Esports",
+      "radiantName": "Fnatic",
       "direName": "Team Secret",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -82821,7 +82821,7 @@
     },
     {
       "matchId": "6216470391",
-      "radiantName": "The Oversight",
+      "radiantName": "Quincy Crew",
       "direName": "Evil Geniuses",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -82993,8 +82993,8 @@
     },
     {
       "matchId": "6216446594",
-      "radiantName": "Neptune Gaming",
-      "direName": "LGD Gaming",
+      "radiantName": "Elephant",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -83080,7 +83080,7 @@
     {
       "matchId": "6216450138",
       "radiantName": "Team Secret",
-      "direName": "Ascent Esports",
+      "direName": "Fnatic",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -83165,8 +83165,8 @@
     },
     {
       "matchId": "6215818267",
-      "radiantName": "BLEED",
-      "direName": "TSM",
+      "radiantName": "T1",
+      "direName": "Team Undying",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -83337,8 +83337,8 @@
     },
     {
       "matchId": "6215702671",
-      "radiantName": "TSM",
-      "direName": "BLEED",
+      "radiantName": "Team Undying",
+      "direName": "T1",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -83509,7 +83509,7 @@
     },
     {
       "matchId": "6215646049",
-      "radiantName": "Shopify Rebellion",
+      "radiantName": "Evil Geniuses",
       "direName": "Virtus.pro",
       "leagueName": "The International 2021",
       "radiantWin": false,
@@ -83682,7 +83682,7 @@
     {
       "matchId": "6215594590",
       "radiantName": "Team Secret",
-      "direName": "The Oversight",
+      "direName": "Quincy Crew",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -83767,7 +83767,7 @@
     },
     {
       "matchId": "6215546470",
-      "radiantName": "Shopify Rebellion",
+      "radiantName": "Evil Geniuses",
       "direName": "Virtus.pro",
       "leagueName": "The International 2021",
       "radiantWin": false,
@@ -83939,7 +83939,7 @@
     },
     {
       "matchId": "6215521275",
-      "radiantName": "Ascent Esports",
+      "radiantName": "Fnatic",
       "direName": "Team Spirit",
       "leagueName": "The International 2021",
       "radiantWin": false,
@@ -84025,7 +84025,7 @@
     },
     {
       "matchId": "6215461985",
-      "radiantName": "The Oversight",
+      "radiantName": "Quincy Crew",
       "direName": "Team Secret",
       "leagueName": "The International 2021",
       "radiantWin": false,
@@ -84112,7 +84112,7 @@
     {
       "matchId": "6215457761",
       "radiantName": "Evil Geniuses",
-      "direName": "LGD Gaming",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -84284,7 +84284,7 @@
     {
       "matchId": "6215413370",
       "radiantName": "Team Spirit",
-      "direName": "Ascent Esports",
+      "direName": "Fnatic",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -84369,7 +84369,7 @@
     },
     {
       "matchId": "6215346651",
-      "radiantName": "LGD Gaming",
+      "radiantName": "PSG.LGD",
       "direName": "Evil Geniuses",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -84456,7 +84456,7 @@
     {
       "matchId": "6215317749",
       "radiantName": "Alliance",
-      "direName": "BLEED",
+      "direName": "T1",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -84713,7 +84713,7 @@
     },
     {
       "matchId": "6215235786",
-      "radiantName": "BLEED",
+      "radiantName": "T1",
       "direName": "Alliance",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -84885,7 +84885,7 @@
     },
     {
       "matchId": "6215226977",
-      "radiantName": "Shopify Rebellion",
+      "radiantName": "Evil Geniuses",
       "direName": "Thunder Awaken",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -84971,7 +84971,7 @@
     },
     {
       "matchId": "6215201229",
-      "radiantName": "TSM",
+      "radiantName": "Team Undying",
       "direName": "OG",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -85057,7 +85057,7 @@
     },
     {
       "matchId": "6215155071",
-      "radiantName": "Shopify Rebellion",
+      "radiantName": "Evil Geniuses",
       "direName": "Thunder Awaken",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -85143,7 +85143,7 @@
     },
     {
       "matchId": "6215148622",
-      "radiantName": "Ascent Esports",
+      "radiantName": "Fnatic",
       "direName": "beastcoast",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -85230,7 +85230,7 @@
     {
       "matchId": "6215145875",
       "radiantName": "OG",
-      "direName": "TSM",
+      "direName": "Team Undying",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -85316,7 +85316,7 @@
     {
       "matchId": "6215130639",
       "radiantName": "Team Spirit",
-      "direName": "The Oversight",
+      "direName": "Quincy Crew",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -85402,7 +85402,7 @@
     {
       "matchId": "6215098191",
       "radiantName": "Evil Geniuses",
-      "direName": "Neptune Gaming",
+      "direName": "Elephant",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -85487,7 +85487,7 @@
     },
     {
       "matchId": "6215091624",
-      "radiantName": "LGD Gaming",
+      "radiantName": "PSG.LGD",
       "direName": "Vici Gaming",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -85574,7 +85574,7 @@
     {
       "matchId": "6215070154",
       "radiantName": "beastcoast",
-      "direName": "Ascent Esports",
+      "direName": "Fnatic",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -85659,7 +85659,7 @@
     },
     {
       "matchId": "6215059388",
-      "radiantName": "The Oversight",
+      "radiantName": "Quincy Crew",
       "direName": "Team Spirit",
       "leagueName": "The International 2021",
       "radiantWin": false,
@@ -85746,7 +85746,7 @@
     {
       "matchId": "6215020578",
       "radiantName": "Vici Gaming",
-      "direName": "LGD Gaming",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -85832,7 +85832,7 @@
     {
       "matchId": "6215021963",
       "radiantName": "Evil Geniuses",
-      "direName": "Neptune Gaming",
+      "direName": "Elephant",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -85917,7 +85917,7 @@
     },
     {
       "matchId": "6215003374",
-      "radiantName": "TSM",
+      "radiantName": "Team Undying",
       "direName": "Alliance",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -86003,7 +86003,7 @@
     },
     {
       "matchId": "6214985832",
-      "radiantName": "BLEED",
+      "radiantName": "T1",
       "direName": "Team Aster",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -86175,7 +86175,7 @@
     },
     {
       "matchId": "6214970840",
-      "radiantName": "Shopify Rebellion",
+      "radiantName": "Evil Geniuses",
       "direName": "OG",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -86262,7 +86262,7 @@
     {
       "matchId": "6214924317",
       "radiantName": "Alliance",
-      "direName": "TSM",
+      "direName": "Team Undying",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -86348,7 +86348,7 @@
     {
       "matchId": "6214919117",
       "radiantName": "Team Aster",
-      "direName": "BLEED",
+      "direName": "T1",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -86434,7 +86434,7 @@
     {
       "matchId": "6214921308",
       "radiantName": "OG",
-      "direName": "Shopify Rebellion",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -86605,8 +86605,8 @@
     },
     {
       "matchId": "6214313607",
-      "radiantName": "The Oversight",
-      "direName": "Ascent Esports",
+      "radiantName": "Quincy Crew",
+      "direName": "Fnatic",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -86691,7 +86691,7 @@
     },
     {
       "matchId": "6214302529",
-      "radiantName": "Neptune Gaming",
+      "radiantName": "Elephant",
       "direName": "Team Secret",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -86949,8 +86949,8 @@
     },
     {
       "matchId": "6214221942",
-      "radiantName": "The Oversight",
-      "direName": "Ascent Esports",
+      "radiantName": "Quincy Crew",
+      "direName": "Fnatic",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -87122,7 +87122,7 @@
     {
       "matchId": "6214179880",
       "radiantName": "Team Secret",
-      "direName": "Neptune Gaming",
+      "direName": "Elephant",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -87294,7 +87294,7 @@
     {
       "matchId": "6214131970",
       "radiantName": "OG",
-      "direName": "BLEED",
+      "direName": "T1",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -87551,7 +87551,7 @@
     },
     {
       "matchId": "6214070564",
-      "radiantName": "TSM",
+      "radiantName": "Team Undying",
       "direName": "Thunder Awaken",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -87638,7 +87638,7 @@
     {
       "matchId": "6214049386",
       "radiantName": "OG",
-      "direName": "BLEED",
+      "direName": "T1",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -87896,7 +87896,7 @@
     {
       "matchId": "6213959825",
       "radiantName": "Thunder Awaken",
-      "direName": "TSM",
+      "direName": "Team Undying",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -88067,8 +88067,8 @@
     },
     {
       "matchId": "6213928949",
-      "radiantName": "Ascent Esports",
-      "direName": "LGD Gaming",
+      "radiantName": "Fnatic",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -88154,7 +88154,7 @@
     {
       "matchId": "6213917770",
       "radiantName": "Team Spirit",
-      "direName": "Neptune Gaming",
+      "direName": "Elephant",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -88326,7 +88326,7 @@
     {
       "matchId": "6213874030",
       "radiantName": "Vici Gaming",
-      "direName": "The Oversight",
+      "direName": "Quincy Crew",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -88412,7 +88412,7 @@
     {
       "matchId": "6213850836",
       "radiantName": "Team Spirit",
-      "direName": "Neptune Gaming",
+      "direName": "Elephant",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -88497,8 +88497,8 @@
     },
     {
       "matchId": "6213829716",
-      "radiantName": "Ascent Esports",
-      "direName": "LGD Gaming",
+      "radiantName": "Fnatic",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -88583,7 +88583,7 @@
     },
     {
       "matchId": "6213807406",
-      "radiantName": "The Oversight",
+      "radiantName": "Quincy Crew",
       "direName": "Vici Gaming",
       "leagueName": "The International 2021",
       "radiantWin": false,
@@ -88842,7 +88842,7 @@
     {
       "matchId": "6213780995",
       "radiantName": "Virtus.pro",
-      "direName": "BLEED",
+      "direName": "T1",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -89014,7 +89014,7 @@
     {
       "matchId": "6213756711",
       "radiantName": "Alliance",
-      "direName": "Shopify Rebellion",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -89100,7 +89100,7 @@
     {
       "matchId": "6213724196",
       "radiantName": "Virtus.pro",
-      "direName": "BLEED",
+      "direName": "T1",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -89271,7 +89271,7 @@
     },
     {
       "matchId": "6213705633",
-      "radiantName": "Shopify Rebellion",
+      "radiantName": "Evil Geniuses",
       "direName": "Alliance",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -89358,7 +89358,7 @@
     {
       "matchId": "6213685234",
       "radiantName": "Evil Geniuses",
-      "direName": "Ascent Esports",
+      "direName": "Fnatic",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -89444,7 +89444,7 @@
     {
       "matchId": "6213684910",
       "radiantName": "Team Secret",
-      "direName": "LGD Gaming",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -89529,7 +89529,7 @@
     },
     {
       "matchId": "6213674858",
-      "radiantName": "Neptune Gaming",
+      "radiantName": "Elephant",
       "direName": "Vici Gaming",
       "leagueName": "The International 2021",
       "radiantWin": false,
@@ -89616,7 +89616,7 @@
     {
       "matchId": "6213662751",
       "radiantName": "beastcoast",
-      "direName": "The Oversight",
+      "direName": "Quincy Crew",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -89701,7 +89701,7 @@
     },
     {
       "matchId": "6213612887",
-      "radiantName": "Ascent Esports",
+      "radiantName": "Fnatic",
       "direName": "Evil Geniuses",
       "leagueName": "The International 2021",
       "radiantWin": false,
@@ -89788,7 +89788,7 @@
     {
       "matchId": "6213620610",
       "radiantName": "Vici Gaming",
-      "direName": "Neptune Gaming",
+      "direName": "Elephant",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -89874,7 +89874,7 @@
     {
       "matchId": "6213621537",
       "radiantName": "Team Secret",
-      "direName": "LGD Gaming",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -89959,7 +89959,7 @@
     },
     {
       "matchId": "6213619890",
-      "radiantName": "The Oversight",
+      "radiantName": "Quincy Crew",
       "direName": "beastcoast",
       "leagueName": "The International 2021",
       "radiantWin": false,
@@ -90131,7 +90131,7 @@
     },
     {
       "matchId": "6213155110",
-      "radiantName": "TSM",
+      "radiantName": "Team Undying",
       "direName": "Team Aster",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -90303,7 +90303,7 @@
     },
     {
       "matchId": "6213136339",
-      "radiantName": "Shopify Rebellion",
+      "radiantName": "Evil Geniuses",
       "direName": "Invictus Gaming",
       "leagueName": "The International 2021",
       "radiantWin": false,
@@ -90476,7 +90476,7 @@
     {
       "matchId": "6213087580",
       "radiantName": "Team Aster",
-      "direName": "TSM",
+      "direName": "Team Undying",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -90648,7 +90648,7 @@
     {
       "matchId": "6213048431",
       "radiantName": "Invictus Gaming",
-      "direName": "Shopify Rebellion",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -90905,8 +90905,8 @@
     },
     {
       "matchId": "6212985654",
-      "radiantName": "Ascent Esports",
-      "direName": "Neptune Gaming",
+      "radiantName": "Fnatic",
+      "direName": "Elephant",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -90991,7 +90991,7 @@
     },
     {
       "matchId": "6212978366",
-      "radiantName": "LGD Gaming",
+      "radiantName": "PSG.LGD",
       "direName": "Team Spirit",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -91250,7 +91250,7 @@
     {
       "matchId": "6212903550",
       "radiantName": "Team Spirit",
-      "direName": "LGD Gaming",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -91335,8 +91335,8 @@
     },
     {
       "matchId": "6212903656",
-      "radiantName": "Neptune Gaming",
-      "direName": "Ascent Esports",
+      "radiantName": "Elephant",
+      "direName": "Fnatic",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -91421,8 +91421,8 @@
     },
     {
       "matchId": "6212858704",
-      "radiantName": "Shopify Rebellion",
-      "direName": "BLEED",
+      "radiantName": "Evil Geniuses",
+      "direName": "T1",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -91679,7 +91679,7 @@
     },
     {
       "matchId": "6212811820",
-      "radiantName": "TSM",
+      "radiantName": "Team Undying",
       "direName": "Invictus Gaming",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -91851,8 +91851,8 @@
     },
     {
       "matchId": "6212747363",
-      "radiantName": "BLEED",
-      "direName": "Shopify Rebellion",
+      "radiantName": "T1",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -92024,7 +92024,7 @@
     {
       "matchId": "6212734541",
       "radiantName": "Invictus Gaming",
-      "direName": "TSM",
+      "direName": "Team Undying",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -92110,7 +92110,7 @@
     {
       "matchId": "6212683916",
       "radiantName": "beastcoast",
-      "direName": "Neptune Gaming",
+      "direName": "Elephant",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -92195,8 +92195,8 @@
     },
     {
       "matchId": "6212662330",
-      "radiantName": "The Oversight",
-      "direName": "LGD Gaming",
+      "radiantName": "Quincy Crew",
+      "direName": "PSG.LGD",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -92281,7 +92281,7 @@
     },
     {
       "matchId": "6212664546",
-      "radiantName": "Ascent Esports",
+      "radiantName": "Fnatic",
       "direName": "Vici Gaming",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -92453,7 +92453,7 @@
     },
     {
       "matchId": "6212621657",
-      "radiantName": "Neptune Gaming",
+      "radiantName": "Elephant",
       "direName": "beastcoast",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -92539,8 +92539,8 @@
     },
     {
       "matchId": "6212616141",
-      "radiantName": "LGD Gaming",
-      "direName": "The Oversight",
+      "radiantName": "PSG.LGD",
+      "direName": "Quincy Crew",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -92712,7 +92712,7 @@
     {
       "matchId": "6212599176",
       "radiantName": "Vici Gaming",
-      "direName": "Ascent Esports",
+      "direName": "Fnatic",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -92797,7 +92797,7 @@
     },
     {
       "matchId": "6212550529",
-      "radiantName": "TSM",
+      "radiantName": "Team Undying",
       "direName": "Virtus.pro",
       "leagueName": "The International 2021",
       "radiantWin": false,
@@ -92884,7 +92884,7 @@
     {
       "matchId": "6212552870",
       "radiantName": "Invictus Gaming",
-      "direName": "BLEED",
+      "direName": "T1",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -92969,7 +92969,7 @@
     },
     {
       "matchId": "6212554150",
-      "radiantName": "Shopify Rebellion",
+      "radiantName": "Evil Geniuses",
       "direName": "Team Aster",
       "leagueName": "The International 2021",
       "radiantWin": true,
@@ -93142,7 +93142,7 @@
     {
       "matchId": "6212511010",
       "radiantName": "Team Aster",
-      "direName": "Shopify Rebellion",
+      "direName": "Evil Geniuses",
       "leagueName": "The International 2021",
       "radiantWin": false,
       "radiantHeroIds": [
@@ -93228,7 +93228,7 @@
     {
       "matchId": "6212505407",
       "radiantName": "Invictus Gaming",
-      "direName": "BLEED",
+      "direName": "T1",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [
@@ -93400,7 +93400,7 @@
     {
       "matchId": "6212505052",
       "radiantName": "Virtus.pro",
-      "direName": "TSM",
+      "direName": "Team Undying",
       "leagueName": "The International 2021",
       "radiantWin": true,
       "radiantHeroIds": [

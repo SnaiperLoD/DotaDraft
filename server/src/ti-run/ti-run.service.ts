@@ -13,8 +13,8 @@ import {
   advanceBracket,
   historicalMover,
   openingMatch,
-  otherTeam,
   playoffTeams,
+  liveOpponent,
   projectLiveBracket,
   teamsMatch,
   tiBracketById,
@@ -125,7 +125,7 @@ export class TiRunService {
     const match = bracket.matches.find((m) => m.id === row.currentMatchId);
     if (!match) throw new NotFoundException('Unknown match');
     const occupyAs = parseChoice(row.choiceJson).occupyAs ?? row.teamName;
-    const opponentName = otherTeam(match, occupyAs, bracket.aliases);
+    const opponentName = liveOpponent(match, occupyAs, row.teamName, bracket.aliases);
     const draft = await this.draftService.getById(row.draftId, ownerToken);
     const faced = await this.draftService.getFacedOpponentHeroSets(row.draftId);
     const opponent = await this.opponentPoolService.pullForTeam(
@@ -157,7 +157,7 @@ export class TiRunService {
     if (!match) throw new NotFoundException('Unknown match');
     const choice = parseChoice(row.choiceJson);
     const occupyAs = choice.occupyAs ?? row.teamName;
-    const opponentName = otherTeam(match, occupyAs, bracket.aliases);
+    const opponentName = liveOpponent(match, occupyAs, row.teamName, bracket.aliases);
     const won = result.outcome === 'Win';
     const advanced = advanceBracket(bracket.matches, row.currentMatchId, won);
     path.push({
@@ -202,9 +202,9 @@ export class TiRunService {
       ? (bracket.matches.find((m) => m.id === row.currentMatchId) ?? null)
       : null;
     let opponentName: string | null = null;
-    if (match && occupyAs) {
+    if (match && occupyAs && row.teamName) {
       try {
-        opponentName = otherTeam(match, occupyAs, bracket.aliases);
+        opponentName = liveOpponent(match, occupyAs, row.teamName, bracket.aliases);
       } catch {
         opponentName = null;
       }

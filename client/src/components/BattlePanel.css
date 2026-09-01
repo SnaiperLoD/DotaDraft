@@ -1,7 +1,27 @@
 .battle-panel {
+  width: 100%;
   margin-top: var(--sp-5);
   padding-top: var(--sp-4);
   border-top: 2px solid var(--bronze);
+}
+
+/* Don't let the Fight button steal width from the 5-hero rail — that's
+   what crushed icon + name + tags into one overlapping row. */
+.battle-panel .completed-head {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.battle-panel .completed-head .ledger {
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+.battle-panel .completed-head-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  align-self: flex-start;
 }
 
 .battle-panel h3 {

@@ -77,7 +77,8 @@
   "tiRun": {
     "title": "TI Run",
     "loading": "Drawing a tournament…",
-    "pickTeam": "Pick your jersey. The tree follows your run; everyone else is TBD until you get there.",
+    "pickTeam": "Pick your jersey. The tree is the original TI bracket; your path overwrites the slots you occupy.",
+    "treeNote": "Other branches keep that TI's results. Later series on your remaining path stay empty until you play them — you never face your own jersey.",
     "yourTeam": "You wear {{team}}",
     "startDraft": "Draft your five",
     "nextMatch": "Next match",

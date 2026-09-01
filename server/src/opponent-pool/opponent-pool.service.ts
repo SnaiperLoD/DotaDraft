@@ -2,11 +2,13 @@ import {
   BadRequestException,
   Injectable,
   NotFoundException,
+  Optional,
   ServiceUnavailableException,
 } from '@nestjs/common';
 import { PoolPrismaService } from './pool-prisma.service';
 import type { Prisma } from '../../generated/pool-client';
 import { DraftService } from '../draft/draft.service';
+import { PrismaService } from '../prisma/prisma.service';
 import {
   CommitDraftResponse,
   PooledDraftSummary,
@@ -20,12 +22,14 @@ import {
 } from 'shared';
 import { pickWeightedOpponent } from './opponent-pool-pick';
 import type { PoolPickRow } from './opponent-pool-pick';
+import { parsePooledProMatchId, pooledProIdsForOpenDotaMatch } from './pooled-pro-id';
 
 @Injectable()
 export class OpponentPoolService {
   constructor(
     private readonly pool: PoolPrismaService,
     private readonly draftService: DraftService,
+    @Optional() private readonly prisma?: PrismaService,
   ) {}
 
   async commit(draftId: string, submitterToken: string): Promise<CommitDraftResponse> {
@@ -172,7 +176,7 @@ export class OpponentPoolService {
         leagueName: row.leagueName ?? null,
         // Derived from the id, not a stored column — see seed-opponent-pool.ts
         // (`pro-${matchId}`) and PooledDraftSummary's matchId doc comment.
-        matchId: row.source === 'pro' ? row.id.replace(/^pro-/, '') : null,
+        matchId: row.source === 'pro' ? parsePooledProMatchId(row.id) : null,
       };
     });
   }
@@ -185,48 +189,68 @@ export class OpponentPoolService {
     excludeHeroIds: number[] = [],
     excludeFacedHeroSets: number[][] = [],
   ): Promise<PooledDraftSummary> {
-    const heroSetKey = (ids: number[]): string => [...ids].sort((a, b) => a - b).join(',');
-    return this.runPoolQuery(async () => {
-      let rows = await this.leagueRows(leagueName);
-      const ofTeam = rows.filter((r) => teamsMatch(r.teamName ?? '', teamName, aliases));
+    const refine = (rows: PoolPickRow[]): PoolPickRow[] =>
+      refineTeamRows(rows, matchIds, excludeHeroIds, excludeFacedHeroSets);
+
+    const fromPool = await this.runPoolQuery(async () => {
+      let ofTeam = (await this.leagueRows(leagueName)).filter((r) =>
+        teamsMatch(r.teamName ?? '', teamName, aliases),
+      );
       if (ofTeam.length === 0) {
-        throw new NotFoundException(`No pool drafts for ${teamName} at ${leagueName}`);
+        const loose = await this.pool.pooledDraft.findMany({
+          where: { teamName: { contains: teamName } },
+        });
+        ofTeam = loose.filter((r) => teamsMatch(r.teamName ?? '', teamName, aliases));
       }
-      rows = ofTeam;
-
-      if (matchIds.length > 0) {
-        const idSet = new Set(matchIds.map((id) => `pro-${id}`));
-        const staged = rows.filter((r) => idSet.has(r.id));
-        if (staged.length > 0) rows = staged;
-      }
-
-      if (excludeFacedHeroSets.length > 0) {
-        const facedKeys = new Set(excludeFacedHeroSets.map(heroSetKey));
-        const fresh = rows.filter((r) => !facedKeys.has(heroSetKey(r.heroIds as number[])));
-        if (fresh.length > 0) rows = fresh;
-      }
-
-      if (excludeHeroIds.length > 0) {
-        const excludeSet = new Set(excludeHeroIds);
-        const noOverlap = rows.filter((r) => !(r.heroIds as number[]).some((id) => excludeSet.has(id)));
-        if (noOverlap.length > 0) rows = noOverlap;
-      }
-
-      if (rows.length === 0) {
-        throw new NotFoundException(`No pool drafts for ${teamName} at ${leagueName}`);
-      }
-
-      const row = pickWeightedOpponent(rows as PoolPickRow[]);
-      return {
-        id: row.id,
-        source: row.source as PooledDraftSource,
-        heroIds: row.heroIds,
-        heroRoles: (row.heroRoles as PooledHeroRole[] | null) ?? null,
-        teamName: row.teamName ?? null,
-        leagueName: row.leagueName ?? null,
-        matchId: row.source === 'pro' ? row.id.replace(/^pro-/, '') : null,
-      };
+      const rows = refine(ofTeam as PoolPickRow[]);
+      return rows.length > 0 ? pickWeightedOpponent(rows) : null;
     });
+    if (fromPool) return toPooledSummary(fromPool);
+
+    const local = refine(await this.localProTeamRows(teamName, leagueName, aliases));
+    if (local.length > 0) return toPooledSummary(pickWeightedOpponent(local));
+
+    throw new NotFoundException(`No pool drafts for ${teamName} at ${leagueName}`);
+  }
+
+  private async localProTeamRows(
+    teamName: string,
+    leagueName: string,
+    aliases: Record<string, string[]>,
+  ): Promise<PoolPickRow[]> {
+    if (!this.prisma) return [];
+    const matches = await this.prisma.proMatch.findMany({
+      where: {
+        OR: [{ radiantName: { contains: teamName } }, { direName: { contains: teamName } }],
+      },
+    });
+    const mapped: PoolPickRow[] = [];
+    for (const match of matches) {
+      const radiant = teamsMatch(match.radiantName ?? '', teamName, aliases);
+      const dire = teamsMatch(match.direName ?? '', teamName, aliases);
+      if (!radiant && !dire) continue;
+      const useRadiant = radiant;
+      mapped.push({
+        id: `pro-${match.id}`,
+        source: 'pro',
+        heroIds: JSON.parse(useRadiant ? match.radiantHeroIds : match.direHeroIds) as number[],
+        heroRoles: parseJsonRoles(useRadiant ? match.radiantHeroRoles : match.direHeroRoles),
+        teamName: useRadiant ? match.radiantName : match.direName,
+        leagueName: match.leagueName,
+      });
+    }
+    const sameLeague = mapped.filter((row) => {
+      const name = row.leagueName ?? '';
+      if (!name) return false;
+      return name === leagueName || name.includes(leagueName) || leagueName.includes(name);
+    });
+    const year = /\b(20\d{2})\b/.exec(leagueName)?.[1];
+    const sameYear = year
+      ? mapped.filter((row) => (row.leagueName ?? '').includes(`International ${year}`))
+      : [];
+    if (sameLeague.length > 0) return sameLeague;
+    if (sameYear.length > 0) return sameYear;
+    return mapped;
   }
 
   async summarizeTeams(
@@ -333,6 +357,56 @@ export class OpponentPoolService {
       throw err;
     }
   }
+}
+
+function parseJsonRoles(raw: string | null): PooledHeroRole[] | null {
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw) as PooledHeroRole[];
+  } catch {
+    return null;
+  }
+}
+
+function heroSetKey(ids: number[]): string {
+  return [...ids].sort((a, b) => a - b).join(',');
+}
+
+function refineTeamRows(
+  rows: PoolPickRow[],
+  matchIds: string[],
+  excludeHeroIds: number[],
+  excludeFacedHeroSets: number[][],
+): PoolPickRow[] {
+  let next = rows;
+  if (matchIds.length > 0) {
+    const idSet = new Set(matchIds.flatMap((id) => pooledProIdsForOpenDotaMatch(id)));
+    const staged = next.filter((r) => idSet.has(r.id));
+    if (staged.length > 0) next = staged;
+  }
+  if (excludeFacedHeroSets.length > 0) {
+    const facedKeys = new Set(excludeFacedHeroSets.map(heroSetKey));
+    const fresh = next.filter((r) => !facedKeys.has(heroSetKey(r.heroIds)));
+    if (fresh.length > 0) next = fresh;
+  }
+  if (excludeHeroIds.length > 0) {
+    const excludeSet = new Set(excludeHeroIds);
+    const noOverlap = next.filter((r) => !r.heroIds.some((id) => excludeSet.has(id)));
+    if (noOverlap.length > 0) next = noOverlap;
+  }
+  return next;
+}
+
+function toPooledSummary(row: PoolPickRow): PooledDraftSummary {
+  return {
+    id: row.id,
+    source: row.source as PooledDraftSource,
+    heroIds: row.heroIds,
+    heroRoles: (row.heroRoles as PooledHeroRole[] | null) ?? null,
+    teamName: row.teamName ?? null,
+    leagueName: row.leagueName ?? null,
+    matchId: row.source === 'pro' ? parsePooledProMatchId(row.id) : null,
+  };
 }
 
 function isUniqueConflict(err: unknown): boolean {

@@ -11,6 +11,7 @@ const HEROES_PATH = path.join(__dirname, '..', 'data', 'heroes.json');
 const CLIENT_PUBLIC = path.join(__dirname, '..', '..', 'client', 'public');
 const ICONS_DIR = path.join(CLIENT_PUBLIC, 'icons');
 const PORTRAITS_DIR = path.join(CLIENT_PUBLIC, 'portraits');
+const SPLASH_DIR = path.join(CLIENT_PUBLIC, 'heroes');
 const CONSTANTS_URL = 'https://api.opendota.com/api/constants/heroes';
 const CDN_BASE = 'https://cdn.cloudflare.steamstatic.com';
 
@@ -45,6 +46,7 @@ async function main() {
 
   fs.mkdirSync(ICONS_DIR, { recursive: true });
   fs.mkdirSync(PORTRAITS_DIR, { recursive: true });
+  fs.mkdirSync(SPLASH_DIR, { recursive: true });
 
   let downloaded = 0;
   let skipped = 0;
@@ -53,6 +55,7 @@ async function main() {
   for (const hero of heroes) {
     const iconOut = path.join(ICONS_DIR, `${hero.id}.png`);
     const portraitOut = path.join(PORTRAITS_DIR, `${hero.id}.png`);
+    const splashOut = path.join(SPLASH_DIR, `${hero.id}.png`);
 
     const constant = constants[String(hero.id)];
     if (!constant) {
@@ -63,6 +66,7 @@ async function main() {
 
     const iconPath = constant.icon.replace(/\?$/, '');
     const portraitPath = iconPath.replace('/icons/', '/crops/');
+    const splashPath = iconPath.replace('/heroes/icons/', '/heroes/');
 
     if (!fs.existsSync(iconOut)) {
       const ok = await downloadTo(`${CDN_BASE}${iconPath}`, iconOut);
@@ -80,6 +84,17 @@ async function main() {
       if (ok) downloaded++;
       else {
         console.warn(`Failed to download portrait for ${hero.name} (${portraitPath})`);
+        failed++;
+      }
+    } else {
+      skipped++;
+    }
+
+    if (!fs.existsSync(splashOut)) {
+      const ok = await downloadTo(`${CDN_BASE}${splashPath}`, splashOut);
+      if (ok) downloaded++;
+      else {
+        console.warn(`Failed to download splash for ${hero.name} (${splashPath})`);
         failed++;
       }
     } else {

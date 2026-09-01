@@ -42,6 +42,41 @@
 
 .ledger--rail .ledger-slot {
   min-width: 0;
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  grid-template-areas:
+    'idx pic text'
+    'tags tags tags';
+  align-items: center;
+  column-gap: 8px;
+  row-gap: 6px;
+}
+
+.ledger--rail .slot-index {
+  grid-area: idx;
+}
+
+.ledger--rail .role-tooltip,
+.ledger--rail .slot-portrait.placeholder {
+  grid-area: pic;
+}
+
+.ledger--rail .slot-text {
+  grid-area: text;
+}
+
+.ledger--rail .hero-tag-row--inline {
+  grid-area: tags;
+  margin-left: 0;
+  max-width: none;
+  justify-content: flex-start;
+  flex-shrink: 1;
+}
+
+.ledger--rail .slot-name {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
 }
 
 .ledger-slot {

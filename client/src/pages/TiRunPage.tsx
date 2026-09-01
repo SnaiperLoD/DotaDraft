@@ -264,6 +264,9 @@ export default function TiRunPage() {
           {run.status === 'PICKING_TEAM' && (
             <>
               <p className="ti-copy">{t('tiRun.pickTeam')}</p>
+              <p className="ti-copy ti-tree-note" data-testid="ti-tree-note">
+                {t('tiRun.treeNote')}
+              </p>
               <div className="ti-team-grid">
                 {run.teams.map((team) => (
                   <TeamCard key={team.name} team={team} onPick={(name) => void chooseTeam(name)} />
@@ -280,6 +283,9 @@ export default function TiRunPage() {
                   {t('tiRun.yourTeam', { team: run.teamName })}
                 </p>
               )}
+              <p className="ti-copy ti-tree-note" data-testid="ti-tree-note">
+                {t('tiRun.treeNote')}
+              </p>
               <TiBracket
                 matches={run.matches}
                 currentMatchId={run.currentMatchId}

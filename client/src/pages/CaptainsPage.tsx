@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import type { CaptainsStateView, CmSlot, Hero } from 'shared';
+import type { CaptainsStateView, CmLane, CmSlot, Hero } from 'shared';
 import { CM_STEPS } from 'shared';
 import { api } from '../api/client';
 import type { DraftStateView } from '../api/types';
-import { heroPortraitUrl } from '../utils/heroIcon';
+import { heroSplashUrl } from '../utils/heroIcon';
 import { attributeLabel } from '../i18n/display';
 import RoleAssignment from '../components/RoleAssignment';
 import EvaluationPanel from '../components/EvaluationPanel';
@@ -22,70 +22,86 @@ function formatMs(ms: number): string {
   return `${m}:${r.toString().padStart(2, '0')}`;
 }
 
-function BanStrip({ slots, activeIndex }: { slots: CmSlot[]; activeIndex: number }) {
-  const bans = slots.filter((s) => s.type === 'ban');
+/** 7.40 CM: ban1 / pick1 / ban2 / pick2 / ban3 / pick3 */
+function cmPhase(stepIndex: number): number {
+  if (stepIndex <= 6) return 0;
+  if (stepIndex <= 8) return 1;
+  if (stepIndex <= 11) return 2;
+  if (stepIndex <= 17) return 3;
+  if (stepIndex <= 21) return 4;
+  return 5;
+}
+
+function SequenceBar({ currentIndex }: { currentIndex: number }) {
   return (
-    <div className="cm-bans">
-      {bans.map((slot, i) => {
-        const filled = slot.heroId != null;
+    <ol className="cm-seq" data-testid="cm-seq">
+      {CM_STEPS.map((step, i) => {
+        const gap = i > 0 && cmPhase(i) !== cmPhase(i - 1);
         return (
-          <div
-            key={`ban-${i}`}
-            className={`cm-ban${filled ? ' is-filled' : ''}${i === activeIndex ? ' is-active' : ''}`}
+          <li
+            key={i}
+            className={`cm-seq-tick cm-seq-tick--${step.type} cm-seq-tick--${step.lane}${
+              gap ? ' is-phase' : ''
+            }${i === currentIndex ? ' is-now' : ''}${i < currentIndex ? ' is-done' : ''}`}
           >
-            {filled ? (
-              <>
-                <img src={heroPortraitUrl(slot.heroId!)} alt="" />
-                <span className="cm-ban-x" aria-hidden="true">
-                  ✕
-                </span>
-              </>
-            ) : (
-              <span className="cm-ban-empty" />
-            )}
-          </div>
+            {step.type === 'ban' ? 'B' : 'P'}
+          </li>
         );
       })}
-    </div>
+    </ol>
   );
 }
 
-function PickColumn({
+function TeamColumn({
+  lane,
   slots,
-  activeIndex,
+  currentIndex,
   heroes,
 }: {
+  lane: CmLane;
   slots: CmSlot[];
-  activeIndex: number;
+  currentIndex: number;
   heroes: Map<number, Hero>;
 }) {
-  const picks = slots.filter((s) => s.type === 'pick');
+  const items = slots.map((slot, index) => ({ slot, index })).filter((row) => row.slot.lane === lane);
+  const side = lane === 'first' ? 'radiant' : 'dire';
+
   return (
-    <div className="cm-picks">
-      {picks.map((slot, i) => {
-        const hero = slot.heroId != null ? heroes.get(slot.heroId) : null;
+    <aside className={`cm-col cm-col--${side}`} data-testid={`cm-col-${side}`}>
+      {items.map((row, n) => {
+        const gap = n > 0 && cmPhase(items[n - 1].index) !== cmPhase(row.index);
+        const hero = row.slot.heroId != null ? heroes.get(row.slot.heroId) : null;
+        const active = row.index === currentIndex;
         return (
-          <div
-            key={`pick-${i}`}
-            className={`cm-pick${hero ? ' is-filled' : ''}${i === activeIndex ? ' is-active' : ''}`}
-          >
-            {hero ? (
-              <>
-                <img src={heroPortraitUrl(hero.id)} alt={hero.name} />
-                <span className="cm-pick-name">{hero.name}</span>
-              </>
-            ) : (
-              <span className="cm-pick-empty">{i + 1}</span>
-            )}
-          </div>
+          <Fragment key={row.index}>
+            {gap ? <div className="cm-phase-break" /> : null}
+            <div
+              className={`cm-slot cm-slot--${row.slot.type}${hero ? ' is-filled' : ''}${
+                active ? ' is-active' : ''
+              }`}
+              data-step={row.index + 1}
+            >
+              <span className="cm-slot-n">{row.index + 1}</span>
+              {hero ? (
+                <>
+                  <img src={heroSplashUrl(hero.id)} alt={hero.name} />
+                  {row.slot.type === 'ban' ? (
+                    <span className="cm-ban-x" aria-hidden="true">
+                      ✕
+                    </span>
+                  ) : (
+                    <span className="cm-pick-name">{hero.name}</span>
+                  )}
+                </>
+              ) : (
+                <span className="cm-slot-label">{row.slot.type === 'ban' ? 'BAN' : 'PICK'}</span>
+              )}
+            </div>
+          </Fragment>
         );
       })}
-    </div>
+    </aside>
   );
-}
-
-function firstEmpty(slots: CmSlot[], type: 'ban' | 'pick'): number {
-  return slots.filter((s) => s.type === type).findIndex((s) => s.heroId == null);
 }
 
 export default function CaptainsPage() {
@@ -208,10 +224,9 @@ export default function CaptainsPage() {
   };
 
   const q = query.trim().toLowerCase();
-  const visible = roster.filter((h) => !picked.has(h.id) && h.name.toLowerCase().includes(q));
   const byAttr = ATTR_ORDER.map((attr) => ({
     attr,
-    heroes: visible.filter((h) => h.primary_attribute === attr),
+    heroes: roster.filter((h) => h.primary_attribute === attr && h.name.toLowerCase().includes(q)),
   }));
   const step = state?.current;
   const phaseWord = step
@@ -293,9 +308,6 @@ export default function CaptainsPage() {
             <div className="cm-hud-phase">
               <div className="cm-hud-phase-type">{phaseWord}</div>
               <div className="cm-hud-phase-who">{whoWord}</div>
-              <div className="cm-hud-phase-n">
-                {(state.stepIndex ?? 0) + 1}/{CM_STEPS.length}
-              </div>
             </div>
             <div className={`cm-hud-side cm-hud-side--dire${state.acting === 'ai' ? ' is-acting' : ''}`}>
               <div className="cm-hud-name">{t('captains.dire')}</div>
@@ -306,58 +318,59 @@ export default function CaptainsPage() {
             </div>
           </header>
 
-          <div className="cm-draft">
+          <div className="cm-lanes">
             <aside className="cm-col cm-col--radiant">
               <BanStrip slots={playerSlots} activeIndex={radiantBanActive} />
-              <PickColumn slots={playerSlots} activeIndex={radiantPickActive} heroes={heroesById} />
+              <PickRow slots={playerSlots} activeIndex={radiantPickActive} heroes={heroesById} />
             </aside>
-
-            <div className="cm-pool">
-              <input
-                className="cm-search"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder={t('captains.search')}
-                aria-label={t('captains.search')}
-              />
-              <div className="cm-attr-grid">
-                {byAttr.map((col) => (
-                  <div key={col.attr} className="cm-attr-col">
-                    <div className={`cm-attr-head cm-attr-head--${col.attr}`}>
-                      {attributeLabel(t, col.attr)}
-                    </div>
-                    <div className="cm-attr-heroes">
-                      {col.heroes.map((hero) => {
-                        const isBanned = banned.has(hero.id);
-                        return (
-                          <button
-                            key={hero.id}
-                            type="button"
-                            className={`cm-hero${isBanned ? ' is-banned' : ''}`}
-                            disabled={isBanned || busy || state.acting !== 'player'}
-                            onClick={() => void handlePick(hero.id)}
-                            title={hero.name}
-                          >
-                            <img src={heroPortraitUrl(hero.id)} alt={hero.name} />
-                            {isBanned && (
-                              <span className="cm-hero-x" aria-hidden="true">
-                                ✕
-                              </span>
-                            )}
-                            <span className="cm-hero-name">{hero.name}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
             <aside className="cm-col cm-col--dire">
               <BanStrip slots={aiSlots} activeIndex={direBanActive} />
-              <PickColumn slots={aiSlots} activeIndex={direPickActive} heroes={heroesById} />
+              <PickRow slots={aiSlots} activeIndex={direPickActive} heroes={heroesById} />
             </aside>
+          </div>
+
+          <div className="cm-pool">
+            <div className="cm-attr-grid" data-testid="cm-hero-grid">
+              {byAttr.map((col) => (
+                <div key={col.attr} className="cm-attr-col">
+                  <div className={`cm-attr-head cm-attr-head--${col.attr}`}>
+                    {attributeLabel(t, col.attr)}
+                  </div>
+                  <div className="cm-attr-heroes">
+                    {col.heroes.map((hero) => {
+                      const isBanned = banned.has(hero.id);
+                      const isPicked = picked.has(hero.id);
+                      const locked = isBanned || isPicked;
+                      return (
+                        <button
+                          key={hero.id}
+                          type="button"
+                          data-testid={`cm-hero-${hero.id}`}
+                          className={`cm-hero${isBanned ? ' is-banned' : ''}${isPicked ? ' is-picked' : ''}`}
+                          disabled={locked || busy || state.acting !== 'player'}
+                          onClick={() => void handlePick(hero.id)}
+                          title={hero.name}
+                        >
+                          <img src={heroSplashUrl(hero.id)} alt={hero.name} />
+                          {isBanned && (
+                            <span className="cm-hero-x" aria-hidden="true">
+                              ✕
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <input
+              className="cm-search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={t('captains.search')}
+              aria-label={t('captains.search')}
+            />
           </div>
         </div>
       )}

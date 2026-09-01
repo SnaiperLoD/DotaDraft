@@ -299,6 +299,15 @@ html {
   flex: 1;
 }
 
+body:has(.captains-page--live) .app-main {
+  padding-top: 8px;
+}
+
+body:has(.captains-page--live) .app-footer,
+body:has(.captains-page--live) .legend-widget {
+  display: none;
+}
+
 /* ---------- route transitions ---------- */
 
 /* Navigation is wrapped in document.startViewTransition by React Router

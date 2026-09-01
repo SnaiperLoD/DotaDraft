@@ -24,15 +24,27 @@ function leagueRows(matches: ProMatch[], bracket: TiBracket): ProMatch[] {
   return matches.filter((m) => (m.leagueName ?? '').includes(`International ${bracket.year}`));
 }
 
+function stripTeamPrefix(name: string): string {
+  return name.replace(/^team\s+/i, '').trim();
+}
+
+function sidesMatch(opendotaName: string, bracketName: string, aliases: Record<string, string[]>): boolean {
+  if (teamsMatch(opendotaName, bracketName, aliases)) return true;
+  const stripped = stripTeamPrefix(opendotaName);
+  const want = stripTeamPrefix(bracketName);
+  if (stripped && teamsMatch(stripped, bracketName, aliases)) return true;
+  if (want && teamsMatch(opendotaName, want, aliases)) return true;
+  if (stripped && want && teamsMatch(stripped, want, aliases)) return true;
+  return false;
+}
+
 function pairMatches(rows: ProMatch[], bracket: TiBracket, teamA: string, teamB: string): string[] {
   const ids: string[] = [];
   for (const row of rows) {
     const radiant = row.radiantName ?? '';
     const dire = row.direName ?? '';
-    const aVsB =
-      teamsMatch(radiant, teamA, bracket.aliases) && teamsMatch(dire, teamB, bracket.aliases);
-    const bVsA =
-      teamsMatch(radiant, teamB, bracket.aliases) && teamsMatch(dire, teamA, bracket.aliases);
+    const aVsB = sidesMatch(radiant, teamA, bracket.aliases) && sidesMatch(dire, teamB, bracket.aliases);
+    const bVsA = sidesMatch(radiant, teamB, bracket.aliases) && sidesMatch(dire, teamA, bracket.aliases);
     if (aVsB || bVsA) ids.push(row.matchId);
   }
   return [...new Set(ids)];

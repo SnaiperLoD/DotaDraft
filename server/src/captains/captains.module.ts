@@ -4,9 +4,10 @@ import { CaptainsController } from './captains.controller';
 import { HeroModule } from '../hero/hero.module';
 import { DraftModule } from '../draft/draft.module';
 import { EvaluationModule } from '../evaluation/evaluation.module';
+import { HeroMetaModule } from '../hero-meta/hero-meta.module';
 
 @Module({
-  imports: [HeroModule, DraftModule, EvaluationModule],
+  imports: [HeroModule, DraftModule, EvaluationModule, HeroMetaModule],
   controllers: [CaptainsController],
   providers: [CaptainsService],
   exports: [CaptainsService],

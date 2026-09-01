@@ -96,7 +96,7 @@ const TI_MAIN_EVENTS: TiMainEventWindow[] = [
   {
     leagueId: 14268,
     name: 'The International 2022',
-    startUtc: '2022-10-15T00:00:00.000Z',
+    startUtc: '2022-10-14T00:00:00.000Z',
     endUtc: '2022-10-30T23:59:59.999Z',
   },
   {

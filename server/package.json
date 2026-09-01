@@ -28,6 +28,7 @@
     "fetch-pro-matches-ti-playoffs": "ts-node scripts/fetch-pro-matches-ti-playoffs.ts",
     "seed-opponent-pool": "ts-node scripts/seed-opponent-pool.ts",
     "attach-ti-bracket-match-ids": "ts-node scripts/attach-ti-bracket-match-ids.ts",
+    "relabel-ti-playoff-teams": "ts-node scripts/relabel-ti-playoff-teams.ts",
     "backfill-legacy-player-pool": "ts-node scripts/backfill-legacy-player-pool.ts",
     "backfill-pro-player-names": "ts-node scripts/backfill-pro-player-names.ts",
     "compute-axis-percentiles": "ts-node scripts/compute-axis-percentiles.ts",
