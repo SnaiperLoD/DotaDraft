@@ -203,7 +203,10 @@ Use this before sending a link outside localhost.
 3. Challenge: paste `dd1…` code → fight resolves; coin-flip path shows no
    `battle-story`.
 4. TI Run: one win path, one loss path, GF win (champion) and GF loss
-   (eliminated). Automated: `e2e/ti-run.spec.ts` + `server/src/ti-run/ti-bracket.spec.ts`.
+   (eliminated). Automated: `e2e/ti-run.spec.ts` (mocked UI),
+   `e2e/ti-run-live.spec.ts` (real API when pool seeded — CI),
+   `server/src/ti-run/ti-bracket.spec.ts`, `ti-run.service.spec.ts`.
+   Tip jar + landing pitch: `e2e/pre-release.spec.ts`.
 5. Set `TELEMETRY_READ_TOKEN` in `.env`; after ~10 sessions verify
    `GET /api/telemetry/funnel` with `X-Telemetry-Read-Token`.
 

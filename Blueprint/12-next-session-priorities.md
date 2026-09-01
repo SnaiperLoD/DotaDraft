@@ -107,6 +107,16 @@ shape.
 - Heterogeneous tags (`Army of Clones` / `Unseen` / `Prone To Burst`) —
   still the calibration leftover, still needs an isolated hypothesis.
 
+## Completed this pass (2026-09-01, pre-release gate)
+
+- **`npm run pre-release:check`** — shared build + client Vitest + server unit
+  (clears `POOL_DATABASE_URL` like CI). Full browser: `npm run test:e2e` with pool.
+- **Pre-release e2e** — tip jar links + landing statistical-matchup pitch
+  (`e2e/pre-release.spec.ts`).
+- **TI live API e2e** — `e2e/ti-run-live.spec.ts` (skipped locally without pool;
+  runs in CI with Postgres service).
+- **CI** — client Vitest step in `.github/workflows/ci.yml`.
+
 ## Completed this pass (2026-09-01, pre-release P0/P1)
 
 - **Landing + About copy** — statistical matchup / not a replay / no tick log.

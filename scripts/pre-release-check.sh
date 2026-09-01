@@ -3,5 +3,6 @@
 set -euo pipefail
 npm run build --workspace shared
 npm test --workspace client
-npm test --workspace server -- --ci --testPathIgnorePatterns=integration
+# Match CI: optional pool regression tests only when Postgres is actually up.
+POOL_DATABASE_URL='' npm test --workspace server -- --ci --testPathIgnorePatterns=integration
 echo "pre-release:check OK (run npm run test:e2e with POOL_DATABASE_URL for full smoke)"

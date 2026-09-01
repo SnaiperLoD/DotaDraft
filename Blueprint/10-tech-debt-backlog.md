@@ -91,6 +91,8 @@ not an early close) · Anonymous draft ownership (`ownerToken` / `X-Owner-Token`
 · Pre-release P0/P1: landing+about statistical-matchup copy, tip jar
   (footer + About, `VITE_TIP_JAR_URL`), backup/telemetry scripts,
   `ti-run.service.spec.ts` recordFight paths
+· Pre-release gate: `npm run pre-release:check`, `e2e/pre-release.spec.ts`,
+  `e2e/ti-run-live.spec.ts`, CI client Vitest step
 
 ---
 
