@@ -11,6 +11,7 @@
     "dev": "npm run dev --workspace client",
     "start": "npm run start --workspace server",
     "build": "npm run build --workspace shared && npm run build --workspace server && npm run build --workspace client",
+    "test:client": "npm test --workspace client",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

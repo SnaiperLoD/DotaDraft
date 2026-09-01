@@ -1,6 +1,6 @@
 # Deploy / hosting prep
 
-Last updated: 2026-08-31.
+Last updated: 2026-09-01.
 
 Status 2026-08-18: friends-alpha **tunnel is OFF**. Stack stopped with
 `docker compose -f docker-compose.yml -f docker-compose.tunnel.yml stop`
@@ -190,6 +190,67 @@ onto Fly/Railway.
 If testers are mostly on RU ISPs and Cloudflare is flaky, fallback is the
 same VPS with an A record + Caddy/Let's Encrypt in front of
 `127.0.0.1:8080`. That is a second proxy — don't start there.
+
+## Pre-launch checklist (2026-09-01)
+
+Use this before sending a link outside localhost.
+
+### Product smoke (local compose or dev)
+
+1. `docker compose up --build` → http://localhost:8080/api/health returns
+   `{ status: "ok", sqlite: "ok", pool: "ok" }`.
+2. Battle: draft → roles → eval → fight → history row appears.
+3. Challenge: paste `dd1…` code → fight resolves; coin-flip path shows no
+   `battle-story`.
+4. TI Run: one win path, one loss path, GF win (champion) and GF loss
+   (eliminated). Automated: `e2e/ti-run.spec.ts` + `server/src/ti-run/ti-bracket.spec.ts`.
+5. Set `TELEMETRY_READ_TOKEN` in `.env`; after ~10 sessions verify
+   `GET /api/telemetry/funnel` with `X-Telemetry-Read-Token`.
+
+### URL strategy — pick one
+
+| Mode | Cost | When |
+|------|------|------|
+| **Quick tunnel** | $0 | Scheduled playtest; URL dies on laptop sleep |
+| **VPS + named tunnel** | ~$6–15/mo + domain | Public soft launch; stable hostname |
+
+Quick tunnel (friends-alpha):
+
+```bash
+docker compose up -d --build
+docker compose -f docker-compose.yml -f docker-compose.tunnel.yml up tunnel
+```
+
+Named tunnel (stable URL): see **Later: stable URL** below; paste
+`CLOUDFLARE_TUNNEL_TOKEN` into gitignored `.env`.
+
+### Off-box backup runbook
+
+**SQLite** (`dota-draft-data` volume — drafts, history, telemetry):
+
+```bash
+# Weekly (or before any deploy that touches schema)
+docker compose cp api:/data/prod.db ./backups/prod-$(date +%F).db
+```
+
+**Postgres pool** (`dota-draft-pool` volume — opponent commits):
+
+```bash
+docker compose exec -T pool pg_dump -U dota opponent_pool > ./backups/pool-$(date +%F).sql
+```
+
+Store `./backups/` off the VPS (S3, second disk, gitignored local copy).
+Restore commands are in **SQLite backup and restore** above and standard
+`pg_restore` for the pool dump.
+
+**After snapshot bump** (`pro-matches.json` / `heroes.json` changed):
+
+```bash
+docker compose exec api node dist/seed.js
+docker compose exec api npx ts-node --transpile-only scripts/seed-opponent-pool.ts
+```
+
+Existing volumes do **not** auto-reseed pro rows on image rebuild alone.
 
 ## Still manual after this prep
 

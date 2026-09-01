@@ -25,6 +25,7 @@ import {
 import { track } from '../telemetry';
 import { formatBattleAxisLine, customTagName, customTagDescription, axisLabel } from '../i18n/display';
 import { renderLocalizedLine } from '../i18n/narrative';
+import { battleCoinVisibility } from '../utils/battleCoinVisibility';
 import ArchetypeSeal from './ArchetypeSeal';
 import DraftLedger from './DraftLedger';
 import CoinFlip3D from './CoinFlip3D';
@@ -709,9 +710,12 @@ export default function BattlePanel({
   const peakWinStreak = bestWinStreak(runOutcomes);
   const tiFinals = isTiFinalsOpponent(result?.opponent);
   const inCeremony = loading || revealing || coinPhase === 'faceoff' || coinPhase === 'spin';
-  const showCoinFaceoff = Boolean(result?.coinFlip && coinPhase === 'faceoff');
-  const showCoin = Boolean(result?.coinFlip && (coinPhase === 'spin' || coinPhase === 'done'));
-  const showStandardResult = Boolean(result && !loading && !revealing && !result.coinFlip);
+  const { showCoinFaceoff, showCoin, showStandardResult } = battleCoinVisibility({
+    result,
+    loading,
+    revealing,
+    coinPhase,
+  });
 
   return (
     <div className="battle-panel">

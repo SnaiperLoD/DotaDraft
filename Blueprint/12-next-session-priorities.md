@@ -25,25 +25,21 @@ Don't merge the three modes. Domain/VPS is not P0. Dual-role Support
 shares still need Nick's ask — not P0. Valve-pixel CM is **in progress**
 (Nick asked); don't finish it in the same sitting as Battle narrative.
 
-### 1. TI occupy-slot: QA the tree in a real run
+### 1. TI occupy-slot: QA the tree in a real run — `partial`
 
 Contract copy is in `tiRun.treeNote`. `liveOpponent` stops painting the
-jersey on both GF sides. Playoff holes are attached.
+jersey on both GF sides. Playoff holes are attached. Automated bracket
+states: `e2e/ti-run.spec.ts` + `server/src/ti-run/ti-bracket.spec.ts`.
 
-Still needed: play a real run in the browser — win → next upper slot
-with *your* jersey; loss → lower-bracket slot; champion / elim / GF
-trophy. Don't rebuild the template. Don't refetch brackets. If a node
-has extra group-stage ids for the same pair, that's attach-by-names,
-not a missing series.
+Still needed: one **live** browser run (not mocked API) — win → next
+upper slot with *your* jersey; loss → lower-bracket slot; champion / elim
+/ GF trophy.
 
-### 2. Client Vitest for the new UI
+### 2. Client Vitest for the new UI — shipped (2026-09-01)
 
-Server units + Playwright cover coin/Challenge; **client has no test
-script.** Add a thin Vitest (or Jest) runner and lock: Challenge
-sanitize + row containment, coin-phase gating (no `battle-story` when
-`coinFlip`), TeamCrest slug lookup (T1 / Quincy / Undying → files, not
-initials). Don't stand up a second Stryker. Don't block this on a full
-component-library rewrite.
+`npm test --workspace client` — Challenge sanitize, coin visibility
+gating, TeamCrest slug lookup (T1 / Quincy / Undying). Playwright still
+covers row containment and live coin UI.
 
 ## New (2026-09-01 night)
 
@@ -108,6 +104,15 @@ shape.
   needed (`13-deploy.md`).
 - Heterogeneous tags (`Army of Clones` / `Unseen` / `Prone To Burst`) —
   still the calibration leftover, still needs an isolated hypothesis.
+
+## Completed this pass (2026-09-01, release prep)
+
+- **Pre-launch checklist + backup runbook** — `Blueprint/13-deploy.md`
+  (product smoke, URL strategy, weekly backup commands).
+- **TI bracket e2e** — win / loss / champion / eliminated mocked views.
+- **Client Vitest** — sanitize, coin visibility, TeamCrest slugs.
+- **Post-launch fork** — documented in backlog: pick one of auth /
+  History-fight / difficulty brackets after telemetry (default #2).
 
 ## Completed this pass (2026-09-01, recap grammar)
 

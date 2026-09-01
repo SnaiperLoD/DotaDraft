@@ -85,6 +85,9 @@ not an early close) · Anonymous draft ownership (`ownerToken` / `X-Owner-Token`
   (yours/theirs/even), pit as a window not a take, named thin beat,
   explicit no-ramp on finish. History without the new fields still
   renders. Not a tick log.
+· Pre-launch ops: checklist + backup runbook in `13-deploy.md`
+· Client Vitest (thin): Challenge sanitize, coin visibility, TeamCrest slugs
+· TI occupy-slot e2e: win / loss / champion / eliminated bracket states
 
 ---
 
@@ -199,6 +202,17 @@ Wait for funnel signal (`client/src/telemetry/`).
 ### Fight own history drafts — `open`
 Challenge paste is Battle-only (`dd1` short code). Fighting own History
 rows is still separate.
+### Post-launch product fork — `open` (decision 2026-09-01)
+After first telemetry from a public soft launch, pick **one** retention
+track — do not build all three in parallel:
+1. **Auth** (Steam OpenID or magic link) — if cross-device History /
+   trusted leaderboard is the top ask.
+2. **Fight own History rows** — if Challenge viral works but people want
+   to re-run past drafts without auth.
+3. **Opponent difficulty brackets** — if fights feel too random/easy.
+Default if telemetry is inconclusive: **#2 first** (no accounts, keeps
+the zero-friction pitch). Auth only when progress/monetization needs it.
+Achievements platform waits on auth + retention signal.
 ### Team Steam logos — `partial`
 Local `client/public/team-logos/` + initials fallback. Keyd Stars alias
 + Liquipedia slug PNGs for T1 / Quincy Crew / Team Undying / RNG /
@@ -241,8 +255,8 @@ Prefer `GET /telemetry/funnel` (plus hosting) over more survey guesswork.
 ### Broader unit coverage (controllers/services) — `partial`
 Health + pool smoke + Fundamentals helpers + battle-cast + expanded
 `battle-explanation` + `copiedDraft` + `challenge-mirror` + BattleService
-coin path + captains/TI gaps. **No client Jest/Vitest** — next session
-§2 in `12-next-session-priorities.md`. Controller gaps remain.
+coin path + captains/TI gaps. **Client Vitest shipped** (2026-09-01):
+Challenge sanitize, coin visibility, TeamCrest slugs — `npm test --workspace client`.
 ### Server narrative i18n — `partial`
 Product chrome + Eval/Battle live copy go through client i18n (`eval.*`,
 `battle.explain.*`, `battle.highlight.*`, axes/tags/badges). Remaining:
@@ -267,12 +281,9 @@ covers the immediate need.
 Docker Compose + Dockerfiles + `.env.example` + `Blueprint/13-deploy.md` +
 `start:prod` + `/health` (`sqlite`/`pool`). Friends-alpha TLS overlay
 (`docker-compose.tunnel.yml`) shipped; **tunnel stopped 2026-08-18**,
-volumes kept (no `down -v`). Local compose at `:8080` is how to bring it
-back. Named tunnel + domain + VPS stay deferred — not next-session P0.
-SQLite backup/restore commands are in `13-deploy.md`. Nonempty pool
-entrypoint upserts `legacy-player-pool.json` (`0145b07`) but does **not**
-re-seed pro rows / heroes — after a snapshot bump, exec `seed` +
-`seed-opponent-pool` in the api container (or recreate volumes).
+volumes kept (no `down -v`). **Pre-launch checklist + backup runbook**
+added to `13-deploy.md` (2026-09-01). Named tunnel + domain + VPS still
+deferred until a stable URL is needed.
 ### CI hardening — `partial`
 PR trigger, full monorepo build, Playwright cache, Docker build, server
 integration suite. Lint and Prettier are blocking for production source
@@ -284,7 +295,7 @@ Full suite (2026-08-17): **69.92%** total. Re-run on
 (was **38.55%**). `challenge-mirror.ts` mutate: **13/13 killed**.
 `copiedDraft.ts` mutates via gitignored `server/shared-src` copy
 (`stryker.conf.js`); scoped score **~95%**. Next: keep killing survivors
-/ optional CI mutation job. **No client Jest/Vitest.**
+/ optional CI mutation job. Client Vitest shipped (see Broader unit coverage).
 
 ---
 
