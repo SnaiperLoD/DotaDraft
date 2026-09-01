@@ -1,24 +1,54 @@
 # Next Session Priorities
 
-Updated 2026-09-01 after live TI Run bracket projection, Challenge paste
-CSS containment, Liquipedia slug logos, and Stryker `copiedDraft`.
-Handoff / triage; `10-tech-debt-backlog.md` is the detailed source of truth.
-Deploy notes: `13-deploy.md`.
+Updated 2026-09-01 after session retro (modes + Challenge + coin + live
+TI tree + Liquipedia logos + Stryker `copiedDraft`). Handoff / triage;
+`10-tech-debt-backlog.md` is the detailed source of truth. Deploy notes:
+`13-deploy.md`.
 
 **Status check:** three isolated modes are on `master` (`/draft`,
 `/captains`, `/ti-run`). Live occupy-slot tree is on `/ti-run`. Park
 still ships; don't rebuild the old funnel. Pro snapshot unchanged
-(**2374** rows). Tunnel still OFF. Next is leftovers below, not a
-domain/VPS buy and not a calibration sweep.
+(**2374** rows). Tunnel still OFF. Next is **one product contract + QA**,
+not a domain/VPS buy and not a calibration sweep.
+
+**Session working rules (from 2026-09-01 retro):** one invariant per
+session before UI. Don't mix Stryker into the same commit as a new
+client spectacle. Don't retune Battle coefficients to make TI "feel
+fair." Homage CM is homage — Valve-pixel is not a goal.
 
 ---
 
 ## Next session — priorities in order
 
 Don't merge the three modes. Domain/VPS is not P0. Valve-pixel CM is
-not a goal.
+not a goal. Dual-role Support shares still need Nick's ask — not P0.
 
-### 1. Dual-role Support presumed shares — ask first
+### 1. TI occupy-slot: name the contract, then QA the tree
+
+`projectLiveBracket` shipped. The **product** contract did not: the
+player's path is live; **non-player branches stay historical
+decoration** (occupy-slot, not a simulated rest-of-tournament). Write
+that down in code comments / `TiBracket` copy if the UI still implies
+otherwise.
+
+Then play a real run in the browser: win → next upper slot with *your*
+jersey; loss → lower-bracket slot; champion / elim / GF trophy match
+status. The last pass only checked a fresh pick (Spirit vs VP, 0
+played). Fix leftover display lies if overlay still shows a 202X
+champion on the player's route.
+
+Don't rebuild the template. Don't refetch brackets.
+
+### 2. Client Vitest for the new UI
+
+Server units + Playwright cover coin/Challenge; **client has no test
+script.** Add a thin Vitest (or Jest) runner and lock: Challenge
+sanitize + row containment, coin-phase gating (no `battle-story` when
+`coinFlip`), TeamCrest slug lookup (T1 / Quincy / Undying → files, not
+initials). Don't stand up a second Stryker. Don't block this on a full
+component-library rewrite.
+
+### 3. Dual-role Support presumed shares — ask first
 
 Visage Support `no_info` is plugged (aggregate copy + hero-meta Support
 0.605 / Offlane 0.395). Tiny / Sand King / Night Stalker / Naga got the
@@ -27,27 +57,30 @@ Battle still applies the support-miscast −10% if you put them on 4/5.
 Don't rewrite those shares without Nick. Visage Carry stays `no_info`
 (too rare). Visage Mid stays `no_info` (GPM #2 is offlane farm, not mid).
 
-### 2. TI 2026 GF badge IDs
+### 4. TI 2026 GF badge IDs
 
 `shared/utils/tiFinalsOpponent.ts` still says TI 2026 was groups-only.
 GF match IDs are in `pro-matches.json` now — append them when Nick wants
 the Finals badge on those opponents. Don't infer from `leagueName`.
 
-### 3. 89 pro rows still missing a team name
+### 5. 89 pro rows still missing a team name
 
 OpenDota has no `radiant_name` / `dire_name` on those matches. UI already
 falls back to league via `opponentTeamCaption`. Not a refetch problem.
 
-### 4. Captains friend lobby — parked
+### 6. Captains friend lobby — parked
 
 Isolated `/captains` homage CM HUD shipped. Don't also build a lobby
 unless Nick picks that shape.
 
-### 5. Team Steam logos — leftover polish
+### Not this session
 
-Keyd Stars alias + Liquipedia slug PNGs shipped (T1, Quincy Crew, Team
-Undying, RNG, G2 x iG, BoomBoys). Steam still empty for those orgs;
-initials fallback if a slug miss. **No client Jest/Vitest.**
+- Valve-pixel CM — not a goal (homage HUD is the product).
+- Steam logo refetch for T1 / Quincy / Undying — Liquipedia slugs
+  shipped; Steam ids recycled. Don't map Oversight onto T1.
+- Full-suite Stryker / CI mutation job — `copiedDraft` scoped ~95% is
+  enough until the next isolated server change.
+- Calibration / `realWinRateWeight` / heterogeneous tags — ask first.
 
 ## Still true, not this session's P0
 
@@ -289,13 +322,14 @@ User's request (2026-08-06): heroes who genuinely play both a core and a support
 
 ## Where to start
 
-Friend lobby stays parked. Dual-role Support presumed shares only if
-Nick asks. Don't invent Visage Mid/Carry. Don't buy a domain. Don't
-start a calibration pass. Valve-pixel CM is not a goal. Tunnel is off;
-`docker compose up` still brings back `:8080`, overlay
-`docker-compose.tunnel.yml` still brings back a trycloudflare URL.
-Nonempty Docker volumes do **not** pick up a new `pro-matches.json` /
-`heroes.json` until you exec `seed` + `seed-opponent-pool` in the api
+Start on **§1**: occupy-slot contract copy + a real TI win/loss in the
+browser, then leftover tree bugs. Then **§2** client Vitest. Dual-role
+Support shares only if Nick asks. Don't invent Visage Mid/Carry. Don't
+buy a domain. Don't start a calibration pass. Valve-pixel CM is not a
+goal. Tunnel is off; `docker compose up` still brings back `:8080`,
+overlay `docker-compose.tunnel.yml` still brings back a trycloudflare
+URL. Nonempty Docker volumes do **not** pick up a new `pro-matches.json`
+/ `heroes.json` until you exec `seed` + `seed-opponent-pool` in the api
 container.
 
 ---

@@ -137,8 +137,13 @@ Nick.
 ### Captains friend lobby — `parked`
 CM vs AI shipped on isolated `/captains` (homage HUD, not Valve-pixel).
 Don't also build a lobby unless Nick picks that shape.
-### Captains HUD pixel-parity — `open`
-Homage layout only. Valve-pixel CM is not a goal unless Nick asks.
+### Captains HUD pixel-parity — `parked`
+Homage layout shipped. Valve-pixel CM is not a goal unless Nick asks.
+### TI occupy-slot live-tree contract — `partial`
+`projectLiveBracket` overlays the player's path. Non-player branches
+stay historical decoration. Next: say that in the UI, then QA a real
+win and a real loss (not only a fresh pick). Don't treat leftover
+historical winners on other branches as a display bug.
 ### Opponent difficulty brackets — `open`
 ### Persistent progress / accounts — `open`
 ### Draft modes (constrained, Pure Draft) — `open`
@@ -189,8 +194,8 @@ Prefer `GET /telemetry/funnel` (plus hosting) over more survey guesswork.
 ### Broader unit coverage (controllers/services) — `partial`
 Health + pool smoke + Fundamentals helpers + battle-cast + expanded
 `battle-explanation` + `copiedDraft` + `challenge-mirror` + BattleService
-coin path + captains/TI gaps. **No client Jest/Vitest.** Controller
-gaps remain.
+coin path + captains/TI gaps. **No client Jest/Vitest** — next session
+§2 in `12-next-session-priorities.md`. Controller gaps remain.
 ### Server narrative i18n — `partial`
 Product chrome + Eval/Battle live copy go through client i18n (`eval.*`,
 `battle.explain.*`, `battle.highlight.*`, axes/tags/badges). Remaining:
