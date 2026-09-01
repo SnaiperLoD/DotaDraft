@@ -27,7 +27,7 @@
   "landing": {
     "title": "DotaDraft",
     "tagline": "Draft five heroes. Get honest analysis. Fight for the win.",
-    "pitch": "DotaDraft is a browser strategy game built around the Dota 2 draft — pick a team, get a real evaluation of its strengths and weaknesses, then send it into Battle Mode against another player's draft or a professional lineup. No accounts, no downloads — just the draft.",
+    "pitch": "DotaDraft is a browser strategy game built around the Dota 2 draft — pick a team, get a real evaluation of its strengths and weaknesses, then send it into Battle Mode against another player's draft or a professional lineup. Battle resolves a statistical matchup from lanes, axes, and OpenDota pairs — not a replay of a real game. No accounts, no downloads — just the draft.",
     "cta": "Battle Mode",
     "ctaCaptains": "Captains Mode",
     "ctaTiRun": "TI Run",
@@ -49,7 +49,7 @@
       },
       "battle": {
         "title": "Send it into battle",
-        "text": "Face another player's committed draft or a professional lineup. Win or lose, with a confidence tier — never a fake precise percentage."
+        "text": "Face another player's committed draft or a professional lineup. The result is a statistical matchup read — lanes, catch pairs, and axes — not a minute-by-minute replay. Win or lose with a confidence tier, never a fake precise percentage."
       }
     }
   },
@@ -106,13 +106,17 @@
     "evaluationTitle": "Evaluation",
     "evaluationText": "Your draft gets scored on things like synergy, tempo, control, and scaling — each axis is calibrated against real win-rate data from thousands of matches, not just a hand-picked formula.",
     "battleTitle": "Battle Mode",
-    "battleText": "Your draft faces another lineup. The outcome uses DotaDraft axes and tags — and also real OpenDota hero win rates plus how those heroes actually perform against each other, not only in-app stats.",
+    "battleText": "Your draft faces another lineup. The outcome uses DotaDraft axes and tags — and real OpenDota hero win rates plus head-to-head pairs. The post-fight story names lanes, lead, and turning matchups; it does not walk high ground or invent a game clock.",
     "ceilingTitle": "What we don't claim",
-    "ceilingText": "A draft alone can't fully predict a real match — execution matters more than any stat sheet. We'd rather be honest about that uncertainty than pretend to false precision."
+    "ceilingText": "A draft alone can't fully predict a real match — execution matters more than any stat sheet. Battle is a statistical matchup, not a DotaCaptain-style live feed or a second simulator. We'd rather be honest about that than pretend to false precision.",
+    "tipJarTitle": "Support the project",
+    "tipJarText": "DotaDraft is a fan project — no ads, no paywall. If it helped your draft brain, a coffee on Ko-fi keeps the server lights on.",
+    "tipJarLink": "Tip on Ko-fi"
   },
   "footer": {
     "email": "Email",
-    "github": "GitHub"
+    "github": "GitHub",
+    "tipJar": "Ko-fi"
   },
   "draft": {
     "restart": "Restart",

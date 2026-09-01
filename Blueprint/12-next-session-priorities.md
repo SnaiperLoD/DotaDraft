@@ -21,19 +21,19 @@ is no longer the contract. Don't refetch OpenDota without Nick.
 
 ## Next session — priorities in order
 
-Don't merge the three modes. Domain/VPS is not P0. Dual-role Support
-shares still need Nick's ask — not P0. Valve-pixel CM is **in progress**
-(Nick asked); don't finish it in the same sitting as Battle narrative.
+Pre-release P0/P1 (2026-09-01): landing/about statistical-matchup copy,
+tip jar (footer + About), backup/telemetry scripts, TI recordFight service
+spec. **Still manual before link share:** one live TI browser run + pick
+URL strategy (tunnel vs VPS).
 
-### 1. TI occupy-slot: QA the tree in a real run — `partial`
+Don't merge the three modes. Domain/VPS is not P0 unless launching.
+Dual-role Support shares still need Nick's ask — not P0. Valve-pixel CM
+is **in progress** (Nick asked); don't finish it in the same sitting as Battle narrative.
 
-Contract copy is in `tiRun.treeNote`. `liveOpponent` stops painting the
-jersey on both GF sides. Playoff holes are attached. Automated bracket
-states: `e2e/ti-run.spec.ts` + `server/src/ti-run/ti-bracket.spec.ts`.
+### 1. TI occupy-slot: one live browser run — `partial`
 
-Still needed: one **live** browser run (not mocked API) — win → next
-upper slot with *your* jersey; loss → lower-bracket slot; champion / elim
-/ GF trophy.
+Automated: `e2e/ti-run.spec.ts`, `ti-bracket.spec.ts`, `ti-run.service.spec.ts`.
+Still needed: real API run (pick team → draft → win/loss/GF) without mocks.
 
 ### 2. Client Vitest for the new UI — shipped (2026-09-01)
 
@@ -104,6 +104,14 @@ shape.
   needed (`13-deploy.md`).
 - Heterogeneous tags (`Army of Clones` / `Unseen` / `Prone To Burst`) —
   still the calibration leftover, still needs an isolated hypothesis.
+
+## Completed this pass (2026-09-01, pre-release P0/P1)
+
+- **Landing + About copy** — statistical matchup / not a replay / no tick log.
+- **Tip jar** — footer + About (`VITE_TIP_JAR_URL`, default Ko-fi).
+- **Ops scripts** — `scripts/backup-compose-volumes.*`, `telemetry-funnel.sh`,
+  `npm run backup:compose`, `backups/` gitignored stash.
+- **TI recordFight** — `ti-run.service.spec.ts` (win / loss / champion / elim).
 
 ## Completed this pass (2026-09-01, release prep)
 

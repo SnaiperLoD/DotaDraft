@@ -44,3 +44,12 @@
 .about-cta {
   margin-top: var(--sp-6);
 }
+
+.about-section--tip {
+  border-left: 3px solid color-mix(in srgb, var(--gold) 55%, transparent);
+}
+
+.about-tip-link {
+  margin-top: var(--sp-3);
+  display: inline-flex;
+}

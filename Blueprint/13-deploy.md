@@ -243,6 +243,19 @@ Store `./backups/` off the VPS (S3, second disk, gitignored local copy).
 Restore commands are in **SQLite backup and restore** above and standard
 `pg_restore` for the pool dump.
 
+One-liner from repo root (compose must be up):
+
+```bash
+npm run backup:compose
+# or: bash scripts/backup-compose-volumes.sh
+```
+
+Telemetry funnel dump after launch:
+
+```bash
+TELEMETRY_READ_TOKEN=... bash scripts/telemetry-funnel.sh https://your-host
+```
+
 **After snapshot bump** (`pro-matches.json` / `heroes.json` changed):
 
 ```bash

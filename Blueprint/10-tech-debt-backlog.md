@@ -88,6 +88,9 @@ not an early close) · Anonymous draft ownership (`ownerToken` / `X-Owner-Token`
 · Pre-launch ops: checklist + backup runbook in `13-deploy.md`
 · Client Vitest (thin): Challenge sanitize, coin visibility, TeamCrest slugs
 · TI occupy-slot e2e: win / loss / champion / eliminated bracket states
+· Pre-release P0/P1: landing+about statistical-matchup copy, tip jar
+  (footer + About, `VITE_TIP_JAR_URL`), backup/telemetry scripts,
+  `ti-run.service.spec.ts` recordFight paths
 
 ---
 
@@ -194,6 +197,10 @@ positions. Eval Mid already existed. Global 0.25 threshold unchanged.
 `recompute-presumed-positions.ts` so a recompute does not wipe it.
 ### Opponent difficulty brackets — `open`
 ### Persistent progress / accounts — `open`
+### Tip jar (Ko-fi) — shipped (2026-09-01)
+Footer + About; `client/src/utils/tipJar.ts`, `VITE_TIP_JAR_URL` in
+`.env.example`. Not monetization — voluntary support only per
+`00-project-overview.md`.
 ### Draft modes (constrained, Pure Draft) — `open`
 Battle / Captains / TI Run are isolated routes. Don't invent a third CM.
 Pure Draft / constrained still not built.

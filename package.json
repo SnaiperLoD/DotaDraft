@@ -12,6 +12,7 @@
     "start": "npm run start --workspace server",
     "build": "npm run build --workspace shared && npm run build --workspace server && npm run build --workspace client",
     "test:client": "npm test --workspace client",
+    "backup:compose": "powershell -ExecutionPolicy Bypass -File scripts/backup-compose-volumes.ps1",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
