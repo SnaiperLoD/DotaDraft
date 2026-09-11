@@ -4,7 +4,7 @@ Slim open list. Calibration history lives in `09-hero-knowledge-base.md`,
 `05-evaluation-engine.md`, `06-battle-engine.md`. Session order lives in
 `12-next-session-priorities.md`.
 
-Last slim: 2026-09-11 (optional accounts + friends-alpha hole pass).
+Last slim: 2026-09-11 (Valve CM draft + tests; optional accounts).
 Statuses: `open` | `partial` | `parked` | `rejected`.
 Shipped items live in the footnote, not this list.
 
@@ -46,8 +46,9 @@ not an early close) · Anonymous draft ownership (`ownerToken` / `X-Owner-Token`
 · Isolated modes (2026-09-01): Battle `/draft`, Captains `/captains`,
   TI Run `/ti-run` — no shared funnel. Challenge-paste Battle-only.
   History mode chip + filters. Leaderboard battle-only.
-· Captains Valve pick-screen HUD (side picks, 7-ban strips, attribute
-  grid, sequence bar; chrome hidden while drafting) (2026-09-11)
+· Captains Valve draft: 7.40 order, `HeroOrderID` 2-wide grid, splash
+  crops, type-to-filter, coin-flip first pick; tests for filter / order /
+  4-1-2 cadence / inverted finish (2026-09-11)
 · TI 2026 GF badge IDs (Spirit vs TEAM VISION, 5 maps in
   `tiFinalsOpponent.ts`) (2026-09-11)
 · Captains splash ~2s on a **new** session; F5/Home resume the live
@@ -84,9 +85,9 @@ not an early close) · Anonymous draft ownership (`ownerToken` / `X-Owner-Token`
   TI 2026 UB QF pairings corrected (Yandex–Liquid, Nigma–Falcons)
 · Battle DraftLedger rail: tags on a second row, fight screen full-width
   (no more name/tag overlap)
-· Captains: splash portraits `/heroes/{id}.png`; AI started using matchups
-  + remaining roles (not only `heroPower`). HUD still not Valve-pixel
-  complete. Don't retag Medusa `illusion_based`
+· Captains: splash portraits `/heroes/{id}.png`; AI matchups + remaining
+  roles. Valve grid/`HeroOrderID`/coin-flip first pick landed later the
+  same day. Don't retag Medusa `illusion_based`
 · Honest Battle recap grammar (no second sim): four-beat lead
   (yours/theirs/even), pit as a window not a take, named thin beat,
   explicit no-ramp on finish. History without the new fields still
@@ -204,13 +205,15 @@ Nick.
 ### Captains friend lobby — `parked`
 CM vs AI shipped on isolated `/captains` (Valve pick-screen HUD).
 Don't also build a lobby unless Nick picks that shape.
-### Captains HUD pixel-parity — shipped (2026-09-11)
-In-game CM pick screen (side picks, ban strips, attribute grid, sequence).
-Don't mix this with a calibration pass.
+### Captains Valve draft — shipped (2026-09-11)
+7.40 order, Valve `HeroOrderID` 2-wide grid, splash crops, type-to-filter,
+coin-flip first pick (player stays Radiant). Tests: `cmFilter` /
+`valveHeroOrder` / captains sequence + service coin-flip. Not a
+screenshot overlay. Don't mix this with a calibration pass.
 ### Captains AI draft diversity — `partial`
 `chooseAiBan` / `chooseAiPick` take opponent picks + remaining role
-slots + OpenDota matchups. Still deterministic (no session seed). HUD is
-done; don't rewrite AI unless a concrete draft looks wrong.
+slots + OpenDota matchups. Still deterministic (no session seed). Don't
+rewrite AI unless a concrete draft looks wrong.
 ### TI occupy-slot live-tree contract — `partial`
 Copy + GF self-vs-self fix shipped. Playoff match ids attached (incl.
 TI10 holes + TI 2026 QF). Next: real browser QA win → upper / loss →

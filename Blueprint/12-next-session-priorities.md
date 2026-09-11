@@ -1,16 +1,18 @@
 # Next Session Priorities
 
-Updated 2026-09-11 after optional accounts + friends-alpha hole pass.
+Updated 2026-09-11 after Valve CM draft (grid + coin flip + tests).
 Handoff / triage; `10-tech-debt-backlog.md` is the detailed source of
 truth. Deploy notes: `13-deploy.md`.
 
 **Status check:** three isolated modes on `master` (`/draft`,
 `/captains`, `/ti-run`). **Optional accounts shipped** (email+password;
-Google off until Console secrets). **Pre-release automation shipped**.
-**Soft-launch code-ready** — link share blocked only on Nick manual
-(URL, telemetry token, backup destination, Ko-fi confirm). Playoff
-attach **116/116**. Pro snapshot **2374** rows (no new OpenDota pull).
-Tunnel OFF. Calibration pause on.
+Google off until Console secrets). **Valve CM draft shipped** (7.40
+order, `HeroOrderID` grid, coin-flip first pick — client layout, not a
+screenshot). **Pre-release automation shipped**. **Soft-launch
+code-ready** — link share blocked only on Nick manual (URL, telemetry
+token, backup destination, Ko-fi confirm). Playoff attach **116/116**.
+Pro snapshot **2374** rows (no new OpenDota pull). Tunnel OFF.
+Calibration pause on.
 
 **Session working rules:** one invariant per session before UI. Don't
 mix Stryker into the same commit as a new client spectacle. Don't
@@ -22,9 +24,10 @@ three modes.
 
 ## Next session — priorities in order
 
-Pre-release **code** is done. Auth is done. Before sharing a link, Nick
-manual only — see **Soft launch — manual blockers** in
-`10-tech-debt-backlog.md` and **Pre-launch checklist** in `13-deploy.md`.
+Pre-release **code** is done. Auth is done. Valve CM draft is done.
+Before sharing a link, Nick manual only — see **Soft launch — manual
+blockers** in `10-tech-debt-backlog.md` and **Pre-launch checklist** in
+`13-deploy.md`.
 
 Dual-role Support shares still need Nick's ask — not P0.
 
@@ -48,12 +51,16 @@ run draft → fight → GF if you want to see the fight screen yourself.
 `npm run pre-release:check` — shared build + client Vitest + server unit
 (clears `POOL_DATABASE_URL`). CI runs client Vitest + full e2e with pool.
 
-### 4. Captains AI + Valve HUD — HUD shipped (2026-09-11)
+### 4. Captains Mode — Valve draft — shipped (2026-09-11)
 
-In-game CM pick screen: side pick columns, 7-ban strips, 4-attribute splash
-grid, sequence bar, clocks/reserve, chrome hidden while drafting. AI already
-adaptive (roles + OpenDota matchups). Don't retag Medusa. Don't rewrite AI
-again unless a concrete draft looks wrong.
+Pick/ban order is 7.40. Grid is Valve `HeroOrderID`, two portraits wide,
+splash crops, type-to-filter (no search box). First pick is a coin flip;
+player stays Radiant. Bonus 130s. Client layout, not a screenshot overlay.
+Tests: client Vitest (`cmFilter`, `valveHeroOrder`, 2-wide grid), server
+captains Jest (3-2-2 / 4-1-2, coin flip, inverted finish), e2e filter +
+Bonus (Chromium install still local-machine). Don't rewrite AI unless a
+concrete draft looks wrong. Don't retag Medusa. Don't call the old
+alphabetical+search HUD 1:1.
 
 ### 5. Dual-role Support presumed shares — ask first
 
@@ -398,11 +405,24 @@ User's request (2026-08-06): heroes who genuinely play both a core and a support
 
 ## Where to start
 
-Start on remaining product leftovers only if Nick is coding: dual-role
-Support shares still need an ask (calibration-adjacent). 89 nameless pro
-rows are a display fallback, not a refetch. Tick log stays research.
-Lobby stays parked. Soft-launch URL/ops stays Nick-manual — don't share
-a link this pass.
+Valve CM draft is closed. Next coding session is leftover product only
+if Nick is not launching: dual-role Support shares still need an ask
+(calibration-adjacent). 89 nameless pro rows are a display fallback, not
+a refetch. Tick log stays research. Lobby stays parked. Soft-launch
+URL/ops stays Nick-manual — don't share a link this pass. Remaining
+fork track if telemetry exists: opponent difficulty brackets.
+
+---
+
+## Session log — 2026-09-11 (Valve CM draft, not homage)
+
+Previous HUD pass was a web layout with alphabetical grid, a search box,
+always-first-pick, and icon tiles. This pass: Valve `HeroOrderID` 2-wide
+grid, splash crops, type-to-filter, 7.40 lanes with a coin flip (player
+stays Radiant). Sequence ticks have no B/P letters. Bonus, not Reserve.
+Not a Source 2 screenshot. Tests landed the same night (filter / order /
+coin flip / 4-1-2 cadence / inverted finish). Nest `start` is still
+ts-node without nodemon — coin flip on a live process needs a restart.
 
 ---
 
