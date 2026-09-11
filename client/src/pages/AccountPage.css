@@ -1,0 +1,83 @@
+.account-page {
+  max-width: 760px;
+}
+
+.account-lead,
+.account-note,
+.account-form-note {
+  color: var(--ink-muted);
+  line-height: 1.55;
+  margin: 0 0 var(--sp-5);
+}
+
+.account-ok {
+  color: var(--gold-bright);
+  margin: 0 0 var(--sp-4);
+}
+
+.account-google {
+  width: 100%;
+  margin-bottom: var(--sp-5);
+}
+
+.account-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-4);
+}
+
+.account-form,
+.account-signed-in {
+  padding: var(--sp-4) var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.account-form h3 {
+  margin: 0;
+  font-size: 17px;
+  color: var(--gold-bright);
+}
+
+.account-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.account-field input {
+  padding: 10px 12px;
+  border: 1px solid var(--bronze-dim);
+  border-radius: var(--r-sm);
+  background: var(--panel-raised);
+  color: var(--ink);
+  font-size: 15px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.account-email {
+  margin: 0;
+  font-size: 18px;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.account-signed-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+}
+
+@media (max-width: 700px) {
+  .account-grid {
+    grid-template-columns: 1fr;
+  }
+}

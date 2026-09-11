@@ -10,6 +10,7 @@ import type { Observable } from 'rxjs';
 
 const WINDOW_MS = 60_000;
 const WRITE_LIMIT = 60;
+const AUTH_WRITE_LIMIT = 10;
 
 @Injectable()
 export class WriteRateLimitInterceptor implements NestInterceptor {
@@ -29,10 +30,12 @@ export class WriteRateLimitInterceptor implements NestInterceptor {
     if (method === 'GET' || url.startsWith('/health')) return next.handle();
 
     const token = header(req.headers['x-owner-token']);
-    const key = `${token || req.ip || 'anon'}:${method}`;
+    const authWrite = isAuthWrite(url);
+    const key = `${token || req.ip || 'anon'}:${method}:${authWrite ? 'auth' : 'write'}`;
     const now = Date.now();
     const recent = (this.hits.get(key) ?? []).filter((t) => now - t < WINDOW_MS);
-    if (recent.length >= WRITE_LIMIT) {
+    const limit = authWrite ? AUTH_WRITE_LIMIT : WRITE_LIMIT;
+    if (recent.length >= limit) {
       throw new HttpException('Too many requests', HttpStatus.TOO_MANY_REQUESTS);
     }
     recent.push(now);
@@ -44,4 +47,9 @@ export class WriteRateLimitInterceptor implements NestInterceptor {
 function header(raw: string | string[] | undefined): string {
   const value = Array.isArray(raw) ? raw[0] : raw;
   return typeof value === 'string' ? value.trim() : '';
+}
+
+function isAuthWrite(url: string): boolean {
+  const path = url.split('?')[0] ?? '';
+  return /\/auth\/(register|login|google\/start)\/?$/.test(path);
 }

@@ -1,3 +1,13 @@
+.history-account-link {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.history-account-link:hover {
+  color: var(--gold-bright);
+  text-decoration: underline;
+}
+
 .history-filters {
   display: flex;
   flex-wrap: wrap;
@@ -239,6 +249,10 @@
   color: var(--ink-faint);
 }
 
+.history-entry-meta .btn {
+  white-space: nowrap;
+}
+
 /* ---------- narrative ---------- */
 
 .history-evaluation-gameplan {
@@ -318,6 +332,15 @@
   color: var(--ink-faint);
   font-family: var(--font-ui);
   font-size: 10px;
+}
+
+.history-match-link {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.history-match-link:hover {
+  text-decoration: underline;
 }
 
 @media (max-width: 560px) {

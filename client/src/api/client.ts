@@ -15,9 +15,13 @@ import type {
   LeaderboardResponse,
   CaptainsStateView,
   TiRunStateView,
+  AuthMeResponse,
+  AuthSessionResponse,
+  AuthGoogleStartResponse,
 } from 'shared';
 import type { DraftStateView, TiFormResponse } from './types';
 import { getSubmitterToken, OWNER_TOKEN_HEADER } from '../utils/submitterToken';
+import { parseApiError } from './parseApiError';
 
 const BASE_URL = '/api';
 
@@ -28,6 +32,7 @@ const BASE_URL = '/api';
 export async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, {
     ...options,
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
       [OWNER_TOKEN_HEADER]: getSubmitterToken(),
@@ -35,8 +40,7 @@ export async function request<T>(path: string, options?: RequestInit): Promise<T
     },
   });
   if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`Request failed: ${res.status} ${text}`);
+    throw new Error(await parseApiError(res));
   }
   return res.json() as Promise<T>;
 }
@@ -133,4 +137,18 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ draftId }),
     }),
+
+  authMe: () => request<AuthMeResponse>('/auth/me'),
+  authRegister: (email: string, password: string) =>
+    request<AuthSessionResponse>('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+    }),
+  authLogin: (email: string, password: string) =>
+    request<AuthSessionResponse>('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+    }),
+  authLogout: () => request<{ ok: true }>('/auth/logout', { method: 'POST' }),
+  authGoogleStart: () => request<AuthGoogleStartResponse>('/auth/google/start', { method: 'POST' }),
 };

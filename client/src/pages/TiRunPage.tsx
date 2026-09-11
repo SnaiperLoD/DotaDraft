@@ -1,19 +1,21 @@
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import type { Hero, TiPathFight, TiRunStateView, TiTeamCard } from 'shared';
 import { api } from '../api/client';
+import { TI_RUN_SESSION_KEY } from '../utils/submitterToken';
 import type { DraftStateView } from '../api/types';
 import HeroPool from '../components/HeroPool';
 import RoleAssignment from '../components/RoleAssignment';
 import DraftLedger from '../components/DraftLedger';
 import DraftProgress from '../components/DraftProgress';
 import EvaluationPanel from '../components/EvaluationPanel';
-import BattlePanel from '../components/BattlePanel';
 import TiBracket from '../components/TiBracket';
 import TeamCrest from '../components/TeamCrest';
 import './TiRunPage.css';
 
-const SESSION_KEY = 'ti-run-id';
+const BattlePanel = lazy(() => import('../components/BattlePanel'));
+const SESSION_KEY = TI_RUN_SESSION_KEY;
 
 function strongestFight(path: TiPathFight[]): TiPathFight | null {
   if (path.length === 0) return null;
@@ -54,6 +56,8 @@ function PathNote({ fight, label }: { fight: TiPathFight | null; label: string }
 
 export default function TiRunPage() {
   const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
+  const resumeParam = searchParams.get('resume');
   const [run, setRun] = useState<TiRunStateView | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -66,16 +70,17 @@ export default function TiRunPage() {
     try {
       if (existingId) {
         const view = await api.getTiRun(existingId);
+        localStorage.setItem(SESSION_KEY, view.id);
         setRun(view);
         if (view.draftId) setDraft(await api.getDraft(view.draftId));
         return;
       }
       const view = await api.startTiRun();
-      sessionStorage.setItem(SESSION_KEY, view.id);
+      localStorage.setItem(SESSION_KEY, view.id);
       setRun(view);
     } catch (err) {
       if (existingId) {
-        sessionStorage.removeItem(SESSION_KEY);
+        localStorage.removeItem(SESSION_KEY);
         await boot(null);
         return;
       }
@@ -84,9 +89,9 @@ export default function TiRunPage() {
   };
 
   useEffect(() => {
-    void boot(sessionStorage.getItem(SESSION_KEY));
+    void boot(resumeParam ?? localStorage.getItem(SESSION_KEY));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [resumeParam]);
 
   const syncDraft = async (next: DraftStateView) => {
     setDraft(next);
@@ -176,7 +181,7 @@ export default function TiRunPage() {
   };
 
   const newRun = () => {
-    sessionStorage.removeItem(SESSION_KEY);
+    localStorage.removeItem(SESSION_KEY);
     setRun(null);
     setDraft(null);
     setPending(null);
@@ -238,19 +243,21 @@ export default function TiRunPage() {
               })}
             </p>
           )}
-          <BattlePanel
-            key={fightMatchId ?? 'fight'}
-            draftId={draft.id}
-            heroes={draft.heroes}
-            variant="once"
-            autoStart
-            tiRunId={run.id}
-            backLabel={t('tiRun.backToRun')}
-            onBack={() => setPlayView('bracket')}
-            onFought={async () => {
-              setRun(await api.getTiRun(run.id));
-            }}
-          />
+          <Suspense fallback={<p className="ti-copy">{t('tiRun.loading')}</p>}>
+            <BattlePanel
+              key={fightMatchId ?? 'fight'}
+              draftId={draft.id}
+              heroes={draft.heroes}
+              variant="once"
+              autoStart
+              tiRunId={run.id}
+              backLabel={t('tiRun.backToRun')}
+              onBack={() => setPlayView('bracket')}
+              onFought={async () => {
+                setRun(await api.getTiRun(run.id));
+              }}
+            />
+          </Suspense>
           {run.status === 'PLAYING' && run.currentMatchId && run.currentMatchId !== fightMatchId && (
             <button type="button" className="btn btn-primary" onClick={startFight}>
               {t('tiRun.nextMatch')}

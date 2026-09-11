@@ -33,10 +33,20 @@ function headerFrom(ctx: ExecutionContext): string | string[] | undefined {
   return request.headers[OWNER_TOKEN_HEADER.toLowerCase()];
 }
 
-export const OwnerToken = createParamDecorator((_data: unknown, ctx: ExecutionContext) =>
-  parseOwnerToken(headerFrom(ctx)),
-);
+export const OwnerToken = createParamDecorator((_data: unknown, ctx: ExecutionContext) => {
+  const request = ctx.switchToHttp().getRequest<{
+    ownerToken?: string | null;
+    headers: Record<string, string | string[] | undefined>;
+  }>();
+  if (request.ownerToken) return request.ownerToken;
+  return parseOwnerToken(headerFrom(ctx));
+});
 
-export const OptionalOwnerToken = createParamDecorator((_data: unknown, ctx: ExecutionContext) =>
-  readOwnerToken(headerFrom(ctx)),
-);
+export const OptionalOwnerToken = createParamDecorator((_data: unknown, ctx: ExecutionContext) => {
+  const request = ctx.switchToHttp().getRequest<{
+    ownerToken?: string | null;
+    headers: Record<string, string | string[] | undefined>;
+  }>();
+  if (request.ownerToken) return request.ownerToken;
+  return readOwnerToken(headerFrom(ctx));
+});

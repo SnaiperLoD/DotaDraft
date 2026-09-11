@@ -32,6 +32,14 @@ describe('WriteRateLimitInterceptor', () => {
     expect(() => interceptor.intercept(ctx, next)).toThrow(HttpException);
   });
 
+  it('caps auth writes tighter than ordinary writes', () => {
+    process.env.NODE_ENV = 'production';
+    const interceptor = new WriteRateLimitInterceptor();
+    const ctx = mockContext('POST', '/auth/login');
+    for (let i = 0; i < 10; i++) interceptor.intercept(ctx, next);
+    expect(() => interceptor.intercept(ctx, next)).toThrow(HttpException);
+  });
+
   it('does not count GET or /health', () => {
     process.env.NODE_ENV = 'production';
     const interceptor = new WriteRateLimitInterceptor();

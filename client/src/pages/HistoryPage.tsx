@@ -1,8 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
+import type { KeyboardEvent } from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import type { TFunction } from 'i18next';
 import { api } from '../api/client';
+import { useAuth } from '../auth/AuthProvider';
 import type { HistoryEntry, ConfidenceTier, HistoryTiSummary, TiPlacementKind } from 'shared';
+import { isTiFinalsOpponent } from 'shared';
 import { heroIconUrl } from '../utils/heroIcon';
 import { renderLocalizedLines } from '../i18n/narrative';
 import { currentWinStreakNewestFirst, runRecord, type FightOutcome } from '../utils/runStreak';
@@ -15,6 +19,9 @@ function scoreClass(score: number): string {
   if (score < 7) return 'is-mid';
   return 'is-high';
 }
+
+const HISTORY_FILTERS = ['all', 'battle', 'captains', 'ti'] as const;
+type HistoryFilter = (typeof HISTORY_FILTERS)[number];
 
 const TI_PLACEMENT_KEYS: Record<TiPlacementKind, string> = {
   playing: 'history.tiPlaying',
@@ -76,11 +83,55 @@ function battleOutcomes(entry: HistoryEntry): FightOutcome[] {
     .filter((o): o is FightOutcome => o === 'Win' || o === 'Lose');
 }
 
+function canRefight(entry: HistoryEntry): boolean {
+  return (
+    entry.mode === 'battle' && entry.heroes.length === 5 && entry.heroes.every((h) => Boolean(h.assignedRole))
+  );
+}
+
+function isOpenDotaMatchId(id: string | null | undefined): boolean {
+  return Boolean(id && /^\d{5,}$/.test(id));
+}
+
+function HistoryIdentityHint({ signedIn }: { signedIn: boolean }) {
+  const { t } = useTranslation();
+  if (signedIn) {
+    return <p className="empty-text">{t('history.accountHint')}</p>;
+  }
+  return (
+    <p className="empty-text">
+      {t('history.deviceHint')}{' '}
+      <Link to="/account" className="history-account-link" data-testid="history-sign-in" viewTransition>
+        {t('app.nav.signIn')}
+      </Link>
+    </p>
+  );
+}
+
 export default function HistoryPage() {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const [entries, setEntries] = useState<HistoryEntry[] | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [filter, setFilter] = useState<'all' | 'battle' | 'captains' | 'ti'>('all');
+  const [filter, setFilter] = useState<HistoryFilter>('all');
+
+  const onFilterKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+    event.preventDefault();
+    const i = HISTORY_FILTERS.indexOf(filter);
+    const next =
+      HISTORY_FILTERS[
+        event.key === 'ArrowRight'
+          ? (i + 1) % HISTORY_FILTERS.length
+          : (i - 1 + HISTORY_FILTERS.length) % HISTORY_FILTERS.length
+      ];
+    const list = event.currentTarget;
+    setFilter(next);
+    window.requestAnimationFrame(() => {
+      const tab = list.querySelector(`[data-history-filter="${next}"]`);
+      if (tab instanceof HTMLElement) tab.focus();
+    });
+  };
 
   useEffect(() => {
     api
@@ -127,6 +178,7 @@ export default function HistoryPage() {
           <div className="rule" />
         </div>
         <p className="empty-text">{t('history.empty')}</p>
+        <HistoryIdentityHint signedIn={Boolean(user)} />
       </div>
     );
   }
@@ -138,13 +190,23 @@ export default function HistoryPage() {
         <div className="rule" />
         <span className="history-count">{t('history.draftCount', { count: entries.length })}</span>
       </div>
+      <HistoryIdentityHint signedIn={Boolean(user)} />
 
-      <div className="history-filters" role="tablist" aria-label={t('history.title')}>
-        {(['all', 'battle', 'captains', 'ti'] as const).map((key) => (
+      <div
+        className="history-filters"
+        role="tablist"
+        aria-label={t('history.title')}
+        onKeyDown={onFilterKeyDown}
+      >
+        {HISTORY_FILTERS.map((key) => (
           <button
             key={key}
             type="button"
             className={`history-filter${filter === key ? ' is-active' : ''}`}
+            role="tab"
+            aria-selected={filter === key}
+            tabIndex={filter === key ? 0 : -1}
+            data-history-filter={key}
             onClick={() => setFilter(key)}
           >
             {t(
@@ -268,6 +330,27 @@ export default function HistoryPage() {
 
                     <span className="history-date">{new Date(entry.createdAt).toLocaleString()}</span>
 
+                    {canRefight(entry) && (
+                      <Link
+                        to={`/draft?resume=${encodeURIComponent(entry.id)}&fight=1`}
+                        className="btn btn-primary btn-sm"
+                        data-testid="history-refight"
+                        viewTransition
+                      >
+                        {t('history.fightAgain')}
+                      </Link>
+                    )}
+                    {entry.ti?.status === 'PLAYING' && entry.ti.runId && (
+                      <Link
+                        to={`/ti-run?resume=${encodeURIComponent(entry.ti.runId)}`}
+                        className="btn btn-primary btn-sm"
+                        data-testid="history-continue-ti"
+                        viewTransition
+                      >
+                        {t('history.continueTi')}
+                      </Link>
+                    )}
+
                     <CopyDraftButton
                       compact
                       heroes={entry.heroes.map((h) => ({
@@ -312,6 +395,25 @@ export default function HistoryPage() {
                               : b.opponentSource === 'pro'
                                 ? t('battle.proDraft')
                                 : t('battle.anotherPlayer')}
+                            {isTiFinalsOpponent({
+                              source: b.opponentSource,
+                              matchId: b.opponentMatchId,
+                            })
+                              ? ` · ${t('battle.tiFinals')}`
+                              : ''}
+                            {isOpenDotaMatchId(b.opponentMatchId) && (
+                              <>
+                                {' '}
+                                <a
+                                  className="history-match-link"
+                                  href={`https://www.opendota.com/matches/${b.opponentMatchId}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  {t('battle.viewMatch')}
+                                </a>
+                              </>
+                            )}
                           </span>
                           <span className="history-battle-date">
                             {new Date(b.createdAt).toLocaleString()}

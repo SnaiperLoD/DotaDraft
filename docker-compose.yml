@@ -27,6 +27,9 @@ services:
       CORS_ORIGIN: ''
       POOL_DATABASE_URL: postgresql://dota:dota@pool:5432/opponent_pool
       TELEMETRY_READ_TOKEN: ${TELEMETRY_READ_TOKEN:-}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+      AUTH_PUBLIC_ORIGIN: ${AUTH_PUBLIC_ORIGIN:-}
     volumes:
       - dota-draft-data:/data
     expose:

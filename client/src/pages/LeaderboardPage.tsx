@@ -7,9 +7,9 @@ import './LeaderboardPage.css';
 
 // Three-part leaderboard (playtest 2026-08-19): All Runs (global qualifying
 // Battle runs), My Runs (this browser's ownerToken), Pool Opponents (committed
-// drafts ranked as the opponent other players pull). No accounts; own rows
-// are highlighted via server-computed `isMine`. Assumption: keep the pool
-// board — it measures a different loop than all-runs.
+// drafts ranked as the opponent other players pull). Own rows are
+// highlighted via server-computed `isMine` (cookie session or guest token).
+// Keep the pool board — it measures a different loop than all-runs.
 
 interface Row {
   key: string;

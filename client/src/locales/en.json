@@ -10,7 +10,9 @@
       "leaderboard": "Leaderboard",
       "reportBug": "Report a Bug",
       "menu": "Menu",
-      "primary": "Primary"
+      "primary": "Primary",
+      "signIn": "Sign in",
+      "signOut": "Sign out"
     },
     "languageLabel": "Language",
     "language": {
@@ -18,16 +20,50 @@
       "ru": "Russian"
     }
   },
+  "api": {
+    "tooManyRequests": "Too many requests. Wait a moment and try again.",
+    "poolOffline": "Battle pool is offline. Draft and evaluation still work.",
+    "missingToken": "This browser is missing its draft token. Refresh the page.",
+    "requestFailed": "Request failed ({{status}})"
+  },
   "theme": {
     "toggle": "Theme: {{mode}} — click to change",
     "system": "System",
     "light": "Light",
     "dark": "Dark"
   },
+  "account": {
+    "title": "Account",
+    "lead": "Play as a guest anytime. Sign in if you want History on another device.",
+    "loginTitle": "Sign in",
+    "registerTitle": "Create account",
+    "registerNote": "Claims this browser’s drafts. If this browser already has an account, log in instead.",
+    "email": "Email",
+    "password": "Password",
+    "loginSubmit": "Sign in",
+    "registerSubmit": "Create account",
+    "google": "Continue with Google",
+    "googleOk": "Google sign-in worked.",
+    "signedInNote": "This browser keeps the same drafts after you sign out. Another device needs this account.",
+    "toHistory": "Open History",
+    "errors": {
+      "failed": "Could not sign in.",
+      "emailTaken": "An account with this email already exists.",
+      "alreadyOnThisBrowser": "This browser already has an account. Log in instead.",
+      "googleOnly": "This email uses Google sign-in.",
+      "invalidCredentials": "Invalid email or password.",
+      "passwordLength": "Password must be 8–128 characters.",
+      "invalidEmail": "Invalid email.",
+      "required": "Email and password required.",
+      "googleDisabled": "Google sign-in is not configured.",
+      "googleExpired": "Google sign-in expired. Try again.",
+      "googleFailed": "Google sign-in failed."
+    }
+  },
   "landing": {
     "title": "DotaDraft",
     "tagline": "Draft five heroes. Get honest analysis. Fight for the win.",
-    "pitch": "DotaDraft is a browser strategy game built around the Dota 2 draft — pick a team, get a real evaluation of its strengths and weaknesses, then send it into Battle Mode against another player's draft or a professional lineup. Battle resolves a statistical matchup from lanes, axes, and OpenDota pairs — not a replay of a real game. No accounts, no downloads — just the draft.",
+    "pitch": "DotaDraft is a browser strategy game built around the Dota 2 draft — pick a team, get a real evaluation of its strengths and weaknesses, then send it into Battle Mode against another player's draft or a professional lineup. Battle resolves a statistical matchup from lanes, axes, and OpenDota pairs — not a replay of a real game. Play as a guest or sign in. No downloads — just the draft.",
     "cta": "Battle Mode",
     "ctaCaptains": "Captains Mode",
     "ctaTiRun": "TI Run",
@@ -36,12 +72,12 @@
     "facts": {
       "heroes": "Heroes in the pool",
       "picks": "Picks per draft",
-      "accounts": "Accounts needed"
+      "accounts": "Sign-in optional"
     },
     "steps": {
       "draft": {
         "title": "Draft five heroes",
-        "text": "Five rounds, five candidates each. Live synergy highlighting shows which pick fits what you already have — and which one fights it."
+        "text": "Battle Mode: five rounds, five candidates each. Captains Mode is 7.40 vs AI. TI Run is occupy-slot through a real International bracket. Live synergy highlighting shows which pick fits what you already have — and which one fights it."
       },
       "evaluate": {
         "title": "Get an honest read",
@@ -56,20 +92,24 @@
   "captains": {
     "title": "Captains Mode",
     "note": "Dota 2 Captains Mode vs AI. 7.40 pick/ban order, 15s first bans, 30s later, 130s reserve. You are Radiant / first pick. After five picks you assign roles as usual.",
-    "radiant": "Radiant (you)",
-    "dire": "Dire (AI)",
+    "radiant": "Radiant",
+    "dire": "Dire",
     "vs": "VS",
     "splashNote": "Captains Mode. You are Radiant, first pick.",
+    "loading": "Loading the board…",
     "yourEval": "Your draft",
     "aiEval": "Dire (AI)",
     "fight": "Fight the AI",
     "fought": "This match is in History. One fight, no rematch.",
     "search": "Search heroes",
+    "exit": "Leave Captains Mode",
     "reserve": "Reserve",
     "you": "You",
     "ai": "AI",
     "ban": "Ban",
     "pick": "Pick",
+    "banning": "Banning",
+    "picking": "Picking",
     "banTurn": "Ban — {{who}} ({{n}}/{{total}})",
     "pickTurn": "Pick — {{who}} ({{n}}/{{total}})",
     "done": "Draft complete"
@@ -483,6 +523,8 @@
   "history": {
     "title": "History",
     "empty": "No completed drafts yet.",
+    "deviceHint": "Guest History stays on this browser. Another device is a different identity until you sign in.",
+    "accountHint": "Signed in — History follows this account on other devices.",
     "evaluationScore": "Evaluation: {{score}}/10",
     "notEvaluated": "Not evaluated.",
     "battleCount_one": "{{count}} battle",
@@ -511,7 +553,15 @@
     "tiRound": "Out in {{round}}",
     "tiEliminated": "Eliminated",
     "tiPlaying": "In progress",
-    "emptyFilter": "Nothing in this mode yet."
+    "emptyFilter": "Nothing in this mode yet.",
+    "fightAgain": "Fight this draft",
+    "continueTi": "Continue TI Run"
+  },
+  "notFound": {
+    "kicker": "404",
+    "title": "Denied.",
+    "copy": "This lane was never warded. The courier died on the way, or you typed a rune that isn't there.",
+    "home": "Back to the fountain"
   },
   "tapalka": {
     "heading": "Waiting Room",

@@ -17,5 +17,6 @@ export * from './utils/assignUniqueRoles';
 export * from './utils/tiBracket';
 export * from './utils/tiPlacement';
 export * from './types/ti-run';
+export * from './types/auth';
 export * from './data/tiBrackets';
 export * from './customTags';

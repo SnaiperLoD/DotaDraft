@@ -61,7 +61,7 @@ export default function LandingPage() {
               <dd>{t('landing.facts.picks')}</dd>
             </div>
             <div>
-              <dt>0</dt>
+              <dt>opt</dt>
               <dd>{t('landing.facts.accounts')}</dd>
             </div>
           </dl>

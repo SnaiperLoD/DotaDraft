@@ -37,6 +37,11 @@ export function getVisitorId(): Promise<string> {
   return visitorIdPromise;
 }
 
+export function resetVisitorId(): void {
+  visitorIdPromise = null;
+  localStorage.removeItem(VISITOR_KEY);
+}
+
 export async function hashDraftId(draftId: string): Promise<string> {
   return sha256Short(draftId);
 }

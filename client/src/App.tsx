@@ -8,10 +8,13 @@ import HistoryPage from './pages/HistoryPage';
 import LeaderboardPage from './pages/LeaderboardPage';
 import CaptainsPage from './pages/CaptainsPage';
 import TiRunPage from './pages/TiRunPage';
+import AccountPage from './pages/AccountPage';
+import NotFoundPage from './pages/NotFoundPage';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import ThemeToggle from './components/ThemeToggle';
 import Footer from './components/Footer';
 import LegendPanel from './components/LegendPanel';
+import { AuthProvider, useAuth } from './auth/AuthProvider';
 import { bugReportMailtoHref } from './utils/bugReport';
 import './App.css';
 
@@ -42,7 +45,7 @@ function SkipLink() {
 function RootLayout() {
   const location = useLocation();
   return (
-    <>
+    <AuthProvider>
       <SkipLink />
       <SiteHeader />
       <main id="main-content" className="app-main" tabIndex={-1}>
@@ -52,7 +55,7 @@ function RootLayout() {
       </main>
       <Footer />
       <LegendPanel />
-    </>
+    </AuthProvider>
   );
 }
 
@@ -86,6 +89,7 @@ function Mark() {
 
 function SiteHeader() {
   const { t, i18n } = useTranslation();
+  const { user, logout, ready } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const barRef = useRef<HTMLElement>(null);
@@ -173,6 +177,39 @@ function SiteHeader() {
         </nav>
 
         <div className="command-tools">
+          {ready ? (
+            user ? (
+              <div className="command-auth">
+                <NavLink
+                  to="/account"
+                  className="command-auth-email"
+                  data-testid="header-account"
+                  onClick={closeMenu}
+                  viewTransition
+                >
+                  {user.email}
+                </NavLink>
+                <button
+                  type="button"
+                  className="command-auth-out"
+                  data-testid="header-sign-out"
+                  onClick={() => void logout()}
+                >
+                  {t('app.nav.signOut')}
+                </button>
+              </div>
+            ) : (
+              <NavLink
+                to="/account"
+                className="command-auth-in"
+                data-testid="header-sign-in"
+                onClick={closeMenu}
+                viewTransition
+              >
+                {t('app.nav.signIn')}
+              </NavLink>
+            )
+          ) : null}
           <LanguageSwitcher />
           <ThemeToggle />
           <button
@@ -215,6 +252,7 @@ const router = createBrowserRouter([
       { path: '/about', element: <AboutPage /> },
       { path: '/history', element: <HistoryPage /> },
       { path: '/leaderboard', element: <LeaderboardPage /> },
+      { path: '/account', element: <AccountPage /> },
       // Testing-only calibration matrix. import.meta.env.DEV is statically
       // false in a production build, so this branch is dead code Rollup drops.
       // The page is pulled in with a DYNAMIC import (not a static top-level
@@ -233,6 +271,7 @@ const router = createBrowserRouter([
             },
           ]
         : []),
+      { path: '*', element: <NotFoundPage /> },
     ],
   },
 ]);

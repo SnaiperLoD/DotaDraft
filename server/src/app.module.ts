@@ -1,6 +1,7 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { PrismaModule } from './prisma/prisma.module';
+import { AuthModule } from './auth/auth.module';
+import { AuthSessionMiddleware } from './auth/auth.middleware';
 import { HeroModule } from './hero/hero.module';
 import { DraftModule } from './draft/draft.module';
 import { HistoryModule } from './history/history.module';
@@ -12,6 +13,7 @@ import { TiRunModule } from './ti-run/ti-run.module';
 import { DevModule } from './dev/dev.module';
 import { HealthModule } from './health/health.module';
 import { TelemetryModule } from './telemetry/telemetry.module';
+import { PrismaModule } from './prisma/prisma.module';
 import { WriteRateLimitInterceptor } from './common/write-rate-limit';
 
 // DevModule is testing-only — it serves the hero calibration matrix (raw axis
@@ -22,9 +24,10 @@ const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 @Module({
   imports: [
-    HealthModule,
-    TelemetryModule,
     PrismaModule,
+    HealthModule,
+    AuthModule,
+    TelemetryModule,
     HeroModule,
     DraftModule,
     HistoryModule,
@@ -37,4 +40,8 @@ const IS_PRODUCTION = process.env.NODE_ENV === 'production';
   ],
   providers: [{ provide: APP_INTERCEPTOR, useClass: WriteRateLimitInterceptor }],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(AuthSessionMiddleware).forRoutes('*');
+  }
+}

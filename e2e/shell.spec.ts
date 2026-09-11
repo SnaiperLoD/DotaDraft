@@ -38,22 +38,33 @@ test('landing shows the three mode CTAs', async ({ page }) => {
   await expect(page.getByTestId('landing-cta-battle')).toBeVisible();
   await expect(page.getByTestId('landing-cta-captains')).toBeVisible();
   await expect(page.getByTestId('landing-cta-ti')).toBeVisible();
+  await expect(page.getByText('Sign-in optional')).toBeVisible();
 });
 
-test('captains splash remounts after leaving for Home', async ({ page }) => {
+test('captains board resumes after leaving for Home', async ({ page }) => {
   await page.goto('/captains');
   await expect(page.getByTestId('cm-splash')).toBeVisible();
   await expect(page.getByTestId('cm-board')).toBeVisible({ timeout: 20_000 });
   await page.locator('a.wordmark').click();
   await expect(page).toHaveURL('/');
   await page.goto('/captains');
-  await expect(page.getByTestId('cm-splash')).toBeVisible();
+  await expect(page.getByTestId('cm-board')).toBeVisible({ timeout: 10_000 });
+  await expect(page.getByTestId('cm-splash')).toHaveCount(0);
+});
+
+test('unknown route shows the 404 page and returns to the fountain', async ({ page }) => {
+  await page.goto('/this-lane-was-never-warded');
+  await expect(page.getByTestId('not-found')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Denied.' })).toBeVisible();
+  await page.getByTestId('not-found-home').click();
+  await expect(page).toHaveURL('/');
 });
 
 test('History and Leaderboard shells render on a narrow viewport', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/history');
   await expect(page.getByRole('heading', { name: 'History' })).toBeVisible();
+  await expect(page.getByTestId('history-sign-in')).toBeVisible();
 
   await page.goto('/leaderboard');
   await expect(page.getByRole('heading', { name: 'Leaderboard' })).toBeVisible();

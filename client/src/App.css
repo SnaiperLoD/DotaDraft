@@ -178,6 +178,50 @@ html {
   flex-shrink: 0;
 }
 
+.command-auth {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  max-width: 220px;
+}
+
+.command-auth-email,
+.command-auth-in {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.command-auth-email:hover,
+.command-auth-in:hover {
+  color: var(--gold-bright);
+}
+
+.command-auth-out {
+  flex-shrink: 0;
+  padding: 4px 8px;
+  border: 1px solid var(--bronze-dim);
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--ink-muted);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.command-auth-out:hover {
+  color: var(--gold-bright);
+  border-color: var(--gold);
+}
+
 .nav-burger {
   display: none;
   align-items: center;
@@ -288,6 +332,10 @@ html {
     background: var(--wash);
     box-shadow: inset 3px 0 0 var(--gold);
   }
+
+  .command-auth {
+    max-width: 120px;
+  }
 }
 
 /* ---------- main ---------- */
@@ -299,8 +347,12 @@ html {
   flex: 1;
 }
 
+body:has(.captains-page--live) .command-bar {
+  display: none;
+}
+
 body:has(.captains-page--live) .app-main {
-  padding-top: 8px;
+  padding-top: 0;
 }
 
 body:has(.captains-page--live) .app-footer,
