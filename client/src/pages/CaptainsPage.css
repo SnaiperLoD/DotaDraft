@@ -132,6 +132,15 @@
   font-size: 11px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.cm-hud-fp {
+  letter-spacing: 0.12em;
+  font-size: 9px;
+  color: #f0d48a;
 }
 
 .cm-hud-side--radiant .cm-hud-name {
@@ -195,16 +204,9 @@
 }
 
 .cm-seq-tick {
-  width: 16px;
-  height: 16px;
-  display: grid;
-  place-items: center;
-  font-family: var(--font-ui);
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 0;
+  width: 14px;
+  height: 10px;
   border: 1px solid #3a3428;
-  color: #6a655c;
   background: #12140f;
 }
 
@@ -213,15 +215,13 @@
 }
 
 .cm-seq-tick--ban.is-done {
-  color: #e24b3c;
   border-color: #6a2820;
-  background: #2a1210;
+  background: #8a2a22;
 }
 
 .cm-seq-tick--pick.is-done {
-  color: #f0d48a;
   border-color: #6a5a28;
-  background: #2a2410;
+  background: #c4a24a;
 }
 
 .cm-seq-tick.is-now {
@@ -351,17 +351,6 @@
   gap: 6px;
 }
 
-.cm-search {
-  width: min(420px, 100%);
-  margin: 0 auto;
-  padding: 6px 10px;
-  background: #070806;
-  border: 1px solid #3a3428;
-  color: #e8e0d0;
-  font-family: var(--font-ui);
-  letter-spacing: 0.04em;
-}
-
 .cm-attr-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -414,8 +403,8 @@
 
 .cm-attr-heroes {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 2px;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
   align-content: start;
   overflow-y: auto;
   min-height: 0;
@@ -451,9 +440,23 @@
   display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
-  object-fit: contain;
-  object-position: center;
+  object-fit: cover;
+  object-position: center 18%;
   background: #070806;
+}
+
+.cm-hero.is-dim:not(.is-banned):not(.is-picked) img {
+  filter: grayscale(0.35) brightness(0.28);
+}
+
+.cm-filter {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #f0d48a;
 }
 
 .cm-hero.is-banned,
@@ -490,12 +493,6 @@
   font-size: 14px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-}
-
-@media (max-width: 1200px) {
-  .cm-attr-heroes {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 @media (max-width: 800px) {

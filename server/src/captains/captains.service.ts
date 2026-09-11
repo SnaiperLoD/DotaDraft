@@ -13,6 +13,7 @@ import {
   type PooledHeroRole,
 } from 'shared';
 import { chooseAiBan, chooseAiPick } from './captains-ai';
+import { currentCmStep, emptyCmSlots } from './captains-sequence';
 import type { Hero } from 'shared';
 import { HeroMetaService } from '../hero-meta/hero-meta.service';
 import { logPersistenceFailure } from '../common/log';
@@ -29,10 +30,11 @@ export class CaptainsService {
     private readonly heroMeta: HeroMetaService,
   ) {}
 
-  async start(ownerToken: string): Promise<CaptainsStateView> {
+  async start(ownerToken: string, playerIsFirst = Math.random() < 0.5): Promise<CaptainsStateView> {
     const token = this.requireToken(ownerToken);
     const now = new Date();
-    const row = await this.prisma.captainsSession.create({
+    const slots = emptyCmSlots(playerIsFirst);
+    let row = await this.prisma.captainsSession.create({
       data: {
         ownerToken: token,
         status: 'DRAFTING',
@@ -40,12 +42,14 @@ export class CaptainsService {
         playerReserveMs: CM_RESERVE_MS,
         aiReserveMs: CM_RESERVE_MS,
         stepStartedAt: now,
-        actionsJson: JSON.stringify(
-          CM_STEPS.map((step) => ({ type: step.type, lane: step.lane, heroId: null })),
-        ),
+        actionsJson: JSON.stringify(slots),
       },
     });
-    return this.toView(row, await this.heroService.findAll());
+    const roster = await this.heroService.findAll();
+    if (!playerIsFirst) {
+      row = await this.resolveAiUntilPlayer(row, roster);
+    }
+    return this.toView(row, roster);
   }
 
   async get(id: string, ownerToken: string): Promise<CaptainsStateView> {
@@ -161,8 +165,8 @@ export class CaptainsService {
   }
 
   private applyClock(row: CaptainsRow): CaptainsRow {
-    if (row.stepIndex >= CM_STEPS.length) return row;
-    const step = CM_STEPS[row.stepIndex];
+    const step = currentCmStep(parseSlots(row.actionsJson), row.stepIndex);
+    if (!step) return row;
     const elapsed = Date.now() - row.stepStartedAt.getTime();
     const overtime = Math.max(0, elapsed - step.timeMs);
     if (overtime === 0) return row;
@@ -180,8 +184,8 @@ export class CaptainsService {
     heroId: number | null,
     timedOut: boolean,
   ): Promise<CaptainsRow | null> {
-    if (row.stepIndex >= CM_STEPS.length) return row;
-    const step = CM_STEPS[row.stepIndex];
+    const step = currentCmStep(parseSlots(row.actionsJson), row.stepIndex);
+    if (!step) return row;
     if (step.lane !== 'first') {
       throw new BadRequestException('Not your turn');
     }
@@ -210,9 +214,9 @@ export class CaptainsService {
   private async resolveAiUntilPlayer(row: CaptainsRow, roster: Hero[]): Promise<CaptainsRow> {
     let current = row;
     while (current.status === 'DRAFTING' && current.stepIndex < CM_STEPS.length) {
-      const step = CM_STEPS[current.stepIndex];
-      if (step.lane === 'first') break;
       const slots = parseSlots(current.actionsJson);
+      const step = currentCmStep(slots, current.stepIndex);
+      if (!step || step.lane === 'first') break;
       const taken = takenIds(slots);
       const aiHeroes = heroesFromSlots(roster, slots, 'second');
       const playerHeroes = heroesFromSlots(roster, slots, 'first');
@@ -276,7 +280,7 @@ export class CaptainsService {
 
   private toView(row: CaptainsRow, _roster: Hero[]): CaptainsStateView {
     const slots = parseSlots(row.actionsJson);
-    const step = row.stepIndex < CM_STEPS.length ? CM_STEPS[row.stepIndex] : null;
+    const step = currentCmStep(slots, row.stepIndex);
     const stepEndsAt = new Date(row.stepStartedAt.getTime() + (step?.timeMs ?? 0)).toISOString();
     return {
       id: row.id,

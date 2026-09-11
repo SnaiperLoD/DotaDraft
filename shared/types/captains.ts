@@ -1,6 +1,7 @@
 // Dota 2 Captains Mode, patch 7.40 order (Liquipedia Game Modes).
-// First-pick side = Radiant in the UI. Player is first pick (assumption).
-// Timers: 15s first ban phase, 30s later bans and all picks, 130s reserve.
+// Player is Radiant (left). First pick is a coin flip: if the player is
+// second, stored slot lanes are inverted so `first` still means the player.
+// Timers: 15s first ban phase, 30s later bans and all picks, 130s bonus.
 
 export type CmLane = 'first' | 'second';
 export type CmActionType = 'ban' | 'pick';

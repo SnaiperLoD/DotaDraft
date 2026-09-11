@@ -3,11 +3,12 @@ import type { KeyboardEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import type { CaptainsStateView, CmActionType, CmSlot, Hero } from 'shared';
-import { CM_STEPS } from 'shared';
 import { api } from '../api/client';
 import type { DraftStateView } from '../api/types';
-import { heroIconUrl, heroSplashUrl } from '../utils/heroIcon';
-import { firstEnabledHero, moveHeroCursor, type HeroGridDir } from '../utils/cmHeroGrid';
+import { heroSplashUrl } from '../utils/heroIcon';
+import { firstEnabledHero, moveHeroCursor, valvePickColumns, type HeroGridDir } from '../utils/cmHeroGrid';
+import { heroMatchesFilter } from '../utils/cmFilter';
+import { compareValveHeroOrder } from '../data/valveHeroOrder';
 import { CAPTAINS_SESSION_KEY } from '../utils/submitterToken';
 import { attributeLabel } from '../i18n/display';
 import RoleAssignment from '../components/RoleAssignment';
@@ -73,10 +74,10 @@ function firstEmpty(slots: CmSlot[], type: CmActionType): number {
   return slots.filter((s) => s.type === type).findIndex((s) => s.heroId == null);
 }
 
-function SequenceBar({ currentIndex }: { currentIndex: number }) {
+function SequenceBar({ slots, currentIndex }: { slots: CmSlot[]; currentIndex: number }) {
   return (
     <ol className="cm-seq" data-testid="cm-seq">
-      {CM_STEPS.map((step, i) => {
+      {slots.map((step, i) => {
         const gap = i > 0 && cmPhase(i) !== cmPhase(i - 1);
         return (
           <li
@@ -84,9 +85,8 @@ function SequenceBar({ currentIndex }: { currentIndex: number }) {
             className={`cm-seq-tick cm-seq-tick--${step.type} cm-seq-tick--${step.lane}${
               gap ? ' is-phase' : ''
             }${i === currentIndex ? ' is-now' : ''}${i < currentIndex ? ' is-done' : ''}`}
-          >
-            {step.type === 'ban' ? 'B' : 'P'}
-          </li>
+            aria-label={`${step.type} ${step.lane}`}
+          />
         );
       })}
     </ol>
@@ -313,22 +313,26 @@ export default function CaptainsPage() {
   };
 
   const byAttr = useMemo(() => {
-    const q = query.trim().toLowerCase();
     return ATTR_ORDER.map((attr) => ({
       attr,
-      heroes: roster.filter((h) => h.primary_attribute === attr && h.name.toLowerCase().includes(q)),
+      heroes: roster.filter((h) => h.primary_attribute === attr).sort(compareValveHeroOrder),
     }));
-  }, [roster, query]);
-  const columns = useMemo(() => byAttr.map((col) => col.heroes.map((h) => h.id)), [byAttr]);
+  }, [roster]);
+  const columns = useMemo(
+    () => byAttr.flatMap((col) => valvePickColumns(col.heroes.map((h) => h.id))),
+    [byAttr],
+  );
   const enabledHeroes = useMemo(() => {
     const next = new Set<number>();
     for (const col of byAttr) {
       for (const hero of col.heroes) {
-        if (!banned.has(hero.id) && !picked.has(hero.id)) next.add(hero.id);
+        if (banned.has(hero.id) || picked.has(hero.id)) continue;
+        if (!heroMatchesFilter(hero.name, query)) continue;
+        next.add(hero.id);
       }
     }
     return next;
-  }, [byAttr, banned, picked]);
+  }, [byAttr, banned, picked, query]);
 
   useEffect(() => {
     if (cursorId != null && enabledHeroes.has(cursorId)) return;
@@ -352,6 +356,11 @@ export default function CaptainsPage() {
                 : event.key === 'End'
                   ? 'end'
                   : null;
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      if (canAct && cursorId != null) void handlePick(cursorId);
+      return;
+    }
     if (!dir) return;
     event.preventDefault();
     const next = moveHeroCursor(columns, enabledHeroes, cursorId, dir);
@@ -364,10 +373,26 @@ export default function CaptainsPage() {
   };
 
   const onStageKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key !== 'Escape') return;
-    event.preventDefault();
-    const exit = event.currentTarget.querySelector('.cm-exit');
-    if (exit instanceof HTMLElement) exit.focus();
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      if (query) {
+        setQuery('');
+        return;
+      }
+      const exit = event.currentTarget.querySelector('.cm-exit');
+      if (exit instanceof HTMLElement) exit.focus();
+      return;
+    }
+    if (event.key === 'Backspace' && query) {
+      event.preventDefault();
+      setQuery((prev) => prev.slice(0, -1));
+      return;
+    }
+    if (event.ctrlKey || event.metaKey || event.altKey) return;
+    if (event.key.length === 1 && /[\p{L}\p{N}]/u.test(event.key)) {
+      event.preventDefault();
+      setQuery((prev) => prev + event.key);
+    }
   };
   const step = state?.current;
   const phaseWord = step
@@ -451,7 +476,12 @@ export default function CaptainsPage() {
               <Link to="/" className="wordmark cm-exit" aria-label={t('captains.exit')} viewTransition>
                 DotaDraft
               </Link>
-              <div className="cm-hud-name">{t('captains.radiant')}</div>
+              <div className="cm-hud-name">
+                {t('captains.radiant')}
+                {state.slots[0]?.lane === 'first' ? (
+                  <span className="cm-hud-fp">{t('captains.firstPick')}</span>
+                ) : null}
+              </div>
               <CmTimer
                 endsAt={state.stepEndsAt}
                 reserveMs={state.playerReserveMs}
@@ -462,10 +492,15 @@ export default function CaptainsPage() {
             <div className="cm-hud-phase">
               <div className="cm-hud-phase-type">{phaseWord}</div>
               <div className="cm-hud-phase-who">{whoWord}</div>
-              <SequenceBar currentIndex={state.stepIndex} />
+              <SequenceBar slots={state.slots} currentIndex={state.stepIndex} />
             </div>
             <div className={`cm-hud-side cm-hud-side--dire${state.acting === 'ai' ? ' is-acting' : ''}`}>
-              <div className="cm-hud-name">{t('captains.dire')}</div>
+              <div className="cm-hud-name">
+                {t('captains.dire')}
+                {state.slots[0]?.lane === 'second' ? (
+                  <span className="cm-hud-fp">{t('captains.firstPick')}</span>
+                ) : null}
+              </div>
               <CmTimer
                 endsAt={state.stepEndsAt}
                 reserveMs={state.aiReserveMs}
@@ -492,12 +527,15 @@ export default function CaptainsPage() {
                         const isBanned = banned.has(hero.id);
                         const isPicked = picked.has(hero.id);
                         const locked = isBanned || isPicked;
+                        const dimmed = !heroMatchesFilter(hero.name, query);
                         return (
                           <button
                             key={hero.id}
                             type="button"
                             data-testid={`cm-hero-${hero.id}`}
-                            className={`cm-hero${isBanned ? ' is-banned' : ''}${isPicked ? ' is-picked' : ''}`}
+                            className={`cm-hero${isBanned ? ' is-banned' : ''}${isPicked ? ' is-picked' : ''}${
+                              dimmed ? ' is-dim' : ''
+                            }`}
                             disabled={locked}
                             aria-disabled={!canAct || locked}
                             tabIndex={cursorId === hero.id && !locked ? 0 : -1}
@@ -510,10 +548,10 @@ export default function CaptainsPage() {
                             title={hero.name}
                           >
                             <img
-                              src={heroIconUrl(hero.id)}
+                              src={heroSplashUrl(hero.id)}
                               alt={hero.name}
-                              width={64}
-                              height={36}
+                              width={90}
+                              height={51}
                               loading="lazy"
                               decoding="async"
                               draggable={false}
@@ -530,13 +568,11 @@ export default function CaptainsPage() {
                   </div>
                 ))}
               </div>
-              <input
-                className="cm-search"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder={t('captains.search')}
-                aria-label={t('captains.search')}
-              />
+              {query.trim() ? (
+                <p className="cm-filter" data-testid="cm-filter">
+                  {t('captains.filter', { query })}
+                </p>
+              ) : null}
             </div>
 
             <aside className="cm-col cm-col--dire" data-testid="cm-col-dire">

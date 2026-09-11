@@ -1,5 +1,15 @@
 export type HeroGridDir = 'left' | 'right' | 'up' | 'down' | 'home' | 'end';
 
+/** Valve pick screen: two portraits wide, row-major within an attribute. */
+export function valvePickColumns(heroIds: number[]): number[][] {
+  const left: number[] = [];
+  const right: number[] = [];
+  for (let i = 0; i < heroIds.length; i++) {
+    (i % 2 === 0 ? left : right).push(heroIds[i]);
+  }
+  return [left, right];
+}
+
 export function firstEnabledHero(columns: number[][], enabled: ReadonlySet<number>): number | null {
   for (const col of columns) {
     for (const id of col) {
@@ -17,7 +27,7 @@ function locate(columns: number[][], id: number): { col: number; row: number } |
   return null;
 }
 
-/** Roving cursor for the 4-attribute CM grid. Skips disabled ids, wraps. */
+/** Roving cursor for the Valve 8-column CM grid (2 per attribute). Skips disabled ids, wraps. */
 export function moveHeroCursor(
   columns: number[][],
   enabled: ReadonlySet<number>,
