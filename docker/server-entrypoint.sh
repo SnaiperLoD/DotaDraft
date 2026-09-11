@@ -27,4 +27,4 @@ if [ -n "${POOL_DATABASE_URL:-}" ]; then
   fi
 fi
 
-exec node /app/server/dist/main.js
+exec env NODE_ENV=production node /app/server/dist/main.js

@@ -10,6 +10,11 @@ describe('isTiFinalsOpponent', () => {
     expect(isTiFinalsOpponent({ source: 'pro', matchId: '7943810234' })).toBe(false);
   });
 
+  it('marks TI 2026 grand-finals games from the last Spirit–VISION series', () => {
+    expect(isTiFinalsOpponent({ source: 'pro', matchId: '8960991322' })).toBe(true);
+    expect(isTiFinalsOpponent({ source: 'pro', matchId: '8960577698' })).toBe(true);
+  });
+
   it('does not treat a TI 2026 group-stage match as a final', () => {
     expect(isTiFinalsOpponent({ source: 'pro', matchId: '8947050343' })).toBe(false);
   });

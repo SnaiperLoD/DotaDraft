@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import ScreenFlash from './ScreenFlash';
 import OpponentRollAnimation from './OpponentRollAnimation';
@@ -28,8 +28,9 @@ import { renderLocalizedLine } from '../i18n/narrative';
 import { battleCoinVisibility } from '../utils/battleCoinVisibility';
 import ArchetypeSeal from './ArchetypeSeal';
 import DraftLedger from './DraftLedger';
-import CoinFlip3D from './CoinFlip3D';
 import './BattlePanel.css';
+
+const CoinFlip3D = lazy(() => import('./CoinFlip3D'));
 
 const COIN_FACEOFF_MS = 1600;
 
@@ -890,21 +891,23 @@ export default function BattlePanel({
       )}
 
       {showCoin && result && (
-        <div className="battle-coin-stage">
-          <CoinFlip3D outcome={result.resolvedOutcome} onLanded={settleCoin} />
-          {coinPhase === 'done' && (
-            <>
-              <p
-                className={`battle-coin-verdict battle-coin-verdict--${result.resolvedOutcome === 'Win' ? 'win' : 'lose'}`}
-                data-testid="battle-coin-verdict"
-                data-outcome={result.resolvedOutcome}
-              >
-                {result.resolvedOutcome === 'Win' ? t('battle.youWin') : t('battle.youLose')}
-              </p>
-              <p className="battle-coin-note">{t('battle.coinFlipNote')}</p>
-            </>
-          )}
-        </div>
+        <Suspense fallback={<div className="battle-coin-stage" />}>
+          <div className="battle-coin-stage">
+            <CoinFlip3D outcome={result.resolvedOutcome} onLanded={settleCoin} />
+            {coinPhase === 'done' && (
+              <>
+                <p
+                  className={`battle-coin-verdict battle-coin-verdict--${result.resolvedOutcome === 'Win' ? 'win' : 'lose'}`}
+                  data-testid="battle-coin-verdict"
+                  data-outcome={result.resolvedOutcome}
+                >
+                  {result.resolvedOutcome === 'Win' ? t('battle.youWin') : t('battle.youLose')}
+                </p>
+                <p className="battle-coin-note">{t('battle.coinFlipNote')}</p>
+              </>
+            )}
+          </div>
+        </Suspense>
       )}
 
       {showStandardResult && result && (

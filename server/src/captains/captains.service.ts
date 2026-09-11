@@ -19,6 +19,8 @@ import { logPersistenceFailure } from '../common/log';
 
 @Injectable()
 export class CaptainsService {
+  private readonly acting = new Map<string, Promise<CaptainsStateView>>();
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly heroService: HeroService,
@@ -57,6 +59,23 @@ export class CaptainsService {
     heroId: number | null,
     timedOut: boolean,
   ): Promise<CaptainsStateView> {
+    const running = this.acting.get(id);
+    if (running) return running;
+    const pending = this.doAct(id, ownerToken, heroId, timedOut);
+    this.acting.set(id, pending);
+    try {
+      return await pending;
+    } finally {
+      if (this.acting.get(id) === pending) this.acting.delete(id);
+    }
+  }
+
+  private async doAct(
+    id: string,
+    ownerToken: string,
+    heroId: number | null,
+    timedOut: boolean,
+  ): Promise<CaptainsStateView> {
     const token = this.requireToken(ownerToken);
     let row = await this.loadOwned(id, token);
     if (row.status !== 'DRAFTING') {
@@ -65,7 +84,11 @@ export class CaptainsService {
 
     const roster = await this.heroService.findAll();
     row = this.applyClock(row);
-    row = await this.applyCurrentIfPlayer(row, roster, heroId, timedOut);
+    const afterPlayer = await this.applyCurrentIfPlayer(row, roster, heroId, timedOut);
+    if (!afterPlayer) {
+      return this.toView(await this.loadOwned(id, token), roster);
+    }
+    row = afterPlayer;
     row = await this.resolveAiUntilPlayer(row, roster);
     if (row.stepIndex >= CM_STEPS.length && !row.draftId) {
       row = await this.finish(row, token, roster);
@@ -101,7 +124,7 @@ export class CaptainsService {
 
   async getAiOpponent(sessionId: string, ownerToken: string): Promise<PooledDraftSummary> {
     const row = await this.loadOwned(sessionId, ownerToken);
-    if (row.status !== 'READY' && row.status !== 'COMPLETED') {
+    if (row.status !== 'READY') {
       throw new BadRequestException('Captains fight is not ready');
     }
     if (!row.aiDraftId) {
@@ -125,7 +148,9 @@ export class CaptainsService {
 
   async markFought(sessionId: string, ownerToken: string): Promise<void> {
     const row = await this.loadOwned(sessionId, ownerToken);
-    if (row.status === 'COMPLETED') return;
+    if (row.status === 'COMPLETED') {
+      throw new BadRequestException('Captains fight already recorded');
+    }
     if (row.status !== 'READY') {
       throw new BadRequestException('Captains session cannot record a fight yet');
     }
@@ -154,7 +179,7 @@ export class CaptainsService {
     roster: Hero[],
     heroId: number | null,
     timedOut: boolean,
-  ): Promise<CaptainsRow> {
+  ): Promise<CaptainsRow | null> {
     if (row.stepIndex >= CM_STEPS.length) return row;
     const step = CM_STEPS[row.stepIndex];
     if (step.lane !== 'first') {
@@ -175,15 +200,10 @@ export class CaptainsService {
       chosen = leftover[Math.floor(Math.random() * leftover.length)]?.id ?? null;
     }
     slots[row.stepIndex] = { type: step.type, lane: step.lane, heroId: chosen };
-    return this.prisma.captainsSession.update({
-      where: { id: row.id },
-      data: {
-        stepIndex: row.stepIndex + 1,
-        stepStartedAt: new Date(),
-        actionsJson: JSON.stringify(slots),
-        playerReserveMs: row.playerReserveMs,
-        aiReserveMs: row.aiReserveMs,
-      },
+    return this.commitStep(row, {
+      actionsJson: JSON.stringify(slots),
+      playerReserveMs: row.playerReserveMs,
+      aiReserveMs: row.aiReserveMs,
     });
   }
 
@@ -199,18 +219,31 @@ export class CaptainsService {
       const ctx = { ownPicks: aiHeroes, opponentPicks: playerHeroes, lookup: this.heroMeta };
       const chosen = step.type === 'ban' ? chooseAiBan(roster, taken, ctx) : chooseAiPick(roster, taken, ctx);
       slots[current.stepIndex] = { type: step.type, lane: step.lane, heroId: chosen };
-      current = await this.prisma.captainsSession.update({
-        where: { id: current.id },
-        data: {
-          stepIndex: current.stepIndex + 1,
-          stepStartedAt: new Date(),
-          actionsJson: JSON.stringify(slots),
-          playerReserveMs: current.playerReserveMs,
-          aiReserveMs: current.aiReserveMs,
-        },
+      const advanced = await this.commitStep(current, {
+        actionsJson: JSON.stringify(slots),
+        playerReserveMs: current.playerReserveMs,
+        aiReserveMs: current.aiReserveMs,
       });
+      if (!advanced) return this.loadOwned(current.id, current.ownerToken);
+      current = advanced;
     }
     return current;
+  }
+
+  private async commitStep(
+    row: CaptainsRow,
+    data: { actionsJson: string; playerReserveMs: number; aiReserveMs: number },
+  ): Promise<CaptainsRow | null> {
+    const result = await this.prisma.captainsSession.updateMany({
+      where: { id: row.id, stepIndex: row.stepIndex, status: 'DRAFTING' },
+      data: {
+        ...data,
+        stepIndex: row.stepIndex + 1,
+        stepStartedAt: new Date(),
+      },
+    });
+    if (result.count === 0) return null;
+    return this.loadOwned(row.id, row.ownerToken);
   }
 
   private async finish(row: CaptainsRow, token: string, roster: Hero[]): Promise<CaptainsRow> {

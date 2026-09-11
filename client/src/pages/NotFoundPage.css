@@ -1,0 +1,30 @@
+.not-found-page {
+  max-width: 36rem;
+  padding-top: clamp(48px, 12vh, 120px);
+  text-align: center;
+}
+
+.not-found-kicker {
+  margin: 0 0 var(--sp-3);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.not-found-title {
+  margin: 0 0 var(--sp-4);
+  font-family: var(--font-display);
+  font-size: clamp(42px, 8vw, 72px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+}
+
+.not-found-copy {
+  margin: 0 0 var(--sp-6);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}

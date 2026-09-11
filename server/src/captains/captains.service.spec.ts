@@ -40,6 +40,12 @@ function makePrisma(row: Record<string, unknown>) {
         Object.assign(store.row, data);
         return store.row;
       }),
+      updateMany: jest.fn(async ({ where, data }: any) => {
+        if (where.stepIndex != null && store.row.stepIndex !== where.stepIndex) return { count: 0 };
+        if (where.status && store.row.status !== where.status) return { count: 0 };
+        Object.assign(store.row, data);
+        return { count: 1 };
+      }),
     },
   };
 }
@@ -116,6 +122,15 @@ describe('CaptainsService', () => {
     expect(afterSecond.acting).toBe('player');
     expect(afterSecond.stepIndex).toBe(4);
     expect(new Set(afterSecond.bannedHeroIds).size).toBe(afterSecond.bannedHeroIds.length);
+  });
+
+  it('returns the in-flight act instead of applying a second pick on the same step', async () => {
+    const { service } = makeService();
+    const first = service.act('cm-1', OWNER, 1, false);
+    const second = service.act('cm-1', OWNER, 2, false);
+    const [a, b] = await Promise.all([first, second]);
+    expect(a).toEqual(b);
+    expect(a.bannedHeroIds).toContain(1);
   });
 
   it('skips a timed-out ban instead of locking a random hero', async () => {

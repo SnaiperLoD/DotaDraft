@@ -34,11 +34,7 @@ export class BattleService {
     opts: { copiedDraft?: string | null; captainsSessionId?: string | null; tiRunId?: string | null } = {},
   ): Promise<BattleResultResponse> {
     const running = this.inflight.get(draftId);
-    if (running) {
-      // Serialize fights on the same draft. Fight Again is a new fight, not
-      // a replay of the in-flight one — wait, then run.
-      await running.catch(() => undefined);
-    }
+    if (running) return running;
     const pending = this.doFight(draftId, submitterToken, opts);
     this.inflight.set(draftId, pending);
     try {
@@ -61,6 +57,17 @@ export class BattleService {
     if (!draft) throw new NotFoundException('Draft not found');
     if (draft.status !== 'COMPLETED') {
       throw new BadRequestException('Draft must be completed before entering Battle Mode');
+    }
+    if (opts.captainsSessionId) {
+      if (draft.mode !== 'captains') {
+        throw new BadRequestException('Captains session does not match this draft');
+      }
+    } else if (opts.tiRunId) {
+      if (draft.mode !== 'ti') {
+        throw new BadRequestException('TI Run does not match this draft');
+      }
+    } else if (draft.mode !== 'battle') {
+      throw new BadRequestException('This mode cannot fight the opponent pool');
     }
 
     const teamA: BattlePick[] = draft.heroes.map((h) => ({ hero: h.hero, assignedRole: h.assignedRole }));
@@ -162,6 +169,7 @@ export class BattleService {
         opponentLeagueName: opponent.leagueName,
         opponentHeroIds: opponent.heroIds,
         stage,
+        opponentMatchId: opponent.matchId,
       })
       .catch((err) => {
         logPersistenceFailure('battle.saveResult', err, { draftId });
@@ -255,6 +263,8 @@ export class BattleService {
         opponentLeagueName: args.opponent.leagueName,
         opponentHeroIds: args.opponent.heroIds,
         stage: null,
+        coinFlip: true,
+        opponentMatchId: args.opponent.matchId,
       })
       .catch((err) => {
         logPersistenceFailure('battle.saveResult', err, { draftId: args.draftId });

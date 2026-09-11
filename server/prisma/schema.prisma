@@ -75,7 +75,34 @@ model BattleResult {
   opponentLeagueName String?
   opponentHeroIds    String
   stage              String?
+  coinFlip           Boolean  @default(false)
+  opponentMatchId    String?
   createdAt          DateTime @default(now())
+
+  @@index([draftId])
+}
+
+model User {
+  id           String        @id @default(uuid())
+  email        String        @unique
+  passwordHash String?
+  googleId     String?       @unique
+  // Same UUID the client already sends as X-Owner-Token. Register claims
+  // the current guest token so this-browser History survives sign-up.
+  ownerToken   String        @unique
+  createdAt    DateTime      @default(now())
+  sessions     AuthSession[]
+}
+
+model AuthSession {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
 }
 
 model DraftHero {

@@ -243,6 +243,8 @@ export class DraftService {
       opponentLeagueName: string | null;
       opponentHeroIds: number[];
       stage?: string | null;
+      coinFlip?: boolean;
+      opponentMatchId?: string | null;
     },
   ): Promise<void> {
     await this.prisma.battleResult.create({
@@ -256,6 +258,8 @@ export class DraftService {
         opponentLeagueName: result.opponentLeagueName,
         opponentHeroIds: JSON.stringify(result.opponentHeroIds),
         stage: result.stage ?? null,
+        coinFlip: result.coinFlip ?? false,
+        opponentMatchId: result.opponentMatchId ?? null,
       },
     });
   }
@@ -279,6 +283,7 @@ export class DraftService {
     const grouped = await this.prisma.battleResult.groupBy({
       by: ['draftId', 'resolvedOutcome'],
       where: {
+        coinFlip: false,
         draft: {
           mode: 'battle',
           ...(scope === 'mine' ? { ownerToken: caller! } : {}),

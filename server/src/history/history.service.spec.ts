@@ -48,6 +48,7 @@ describe('HistoryService.findAll', () => {
         findMany: jest.fn(async () => [
           {
             draftId: 'd-gf',
+            id: 'run-gf',
             teamName: 'Team Spirit',
             leagueName: 'The International 2021',
             bracketId: 'ti-2021',
@@ -64,6 +65,7 @@ describe('HistoryService.findAll', () => {
           },
           {
             draftId: 'd-cup',
+            id: 'run-cup',
             teamName: 'PSG.LGD',
             leagueName: 'The International 2021',
             bracketId: 'ti-2021',
@@ -86,11 +88,13 @@ describe('HistoryService.findAll', () => {
     const rows = await service.findAll('owner-a');
 
     expect(rows.find((r) => r.id === 'd-gf')?.ti).toMatchObject({
+      runId: 'run-gf',
       status: 'ELIMINATED',
       placement: 'second',
       lastRound: 'Grand Final',
     });
     expect(rows.find((r) => r.id === 'd-cup')?.ti).toMatchObject({
+      runId: 'run-cup',
       status: 'CHAMPION',
       placement: 'champion',
     });

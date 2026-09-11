@@ -1,10 +1,34 @@
 import { TelemetryService } from './telemetry.service';
 
-function makePrisma(rows: unknown[] = []) {
+function makePrisma(
+  rows: { name: string; sessionId: string; visitorId: string; props: string | null }[] = [],
+) {
+  const byName = new Map<string, number>();
+  const bySessionName = new Map<string, number>();
+  const visitors = new Set<string>();
+  for (const row of rows) {
+    byName.set(row.name, (byName.get(row.name) ?? 0) + 1);
+    const sk = `${row.sessionId}\0${row.name}`;
+    bySessionName.set(sk, (bySessionName.get(sk) ?? 0) + 1);
+    visitors.add(row.visitorId);
+  }
   return {
     funnelEvent: {
       createMany: jest.fn().mockResolvedValue({ count: 0 }),
-      findMany: jest.fn().mockResolvedValue(rows),
+      count: jest.fn().mockResolvedValue(rows.length),
+      groupBy: jest.fn(async ({ by }: { by: string[] }) => {
+        if (by.length === 1 && by[0] === 'name') {
+          return [...byName.entries()].map(([name, n]) => ({ name, _count: { _all: n } }));
+        }
+        if (by.length === 1 && by[0] === 'visitorId') {
+          return [...visitors].map((visitorId) => ({ visitorId, _count: { _all: 1 } }));
+        }
+        return [...bySessionName.entries()].map(([key, n]) => {
+          const [sessionId, name] = key.split('\0');
+          return { sessionId, name, _count: { _all: n } };
+        });
+      }),
+      findMany: jest.fn().mockResolvedValue(rows.filter((r) => r.name === 'pool_commit')),
     },
   };
 }

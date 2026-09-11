@@ -1,6 +1,6 @@
 // Frozen OpenDota match IDs for The International *grand finals* games
 // (every game of the last series of each completed TI in the local
-// pro-matches.json snapshot, generatedAt 2026-08-15).
+// pro-matches.json snapshot, generatedAt 2026-09-01).
 //
 // Why a frozen ID set, not leagueName / "last series at runtime":
 // OpenDota and our snapshot have no stage flag. `leagueName` containing
@@ -8,19 +8,18 @@
 // qualifiers (see fetch-pro-matches-ti-playoffs.ts). A live "last series
 // of this league" walk would label a TI 2026 group series as a final.
 //
-// How the IDs were chosen: for each completed TI 2012–2025 present in
+// How the IDs were chosen: for each completed TI 2012–2026 present in
 // the snapshot, take the chronological last series (same two teams at
 // the end of the playoff window). Those pairings/dates/lengths match the
 // known grand finals (iG–Na'Vi, Alliance–Na'Vi, Newbee–VG, EG–CDEC,
 // Wings–DC, Liquid–Newbee, OG–LGD, OG–Liquid, Spirit–LGD, Tundra–Secret,
-// Spirit–GG, Liquid–GG, Falcons–XG). OpenDota sometimes rewrites org
+// Spirit–GG, Liquid–GG, Falcons–XG, Spirit–VISION). OpenDota sometimes rewrites org
 // names on old rows (TI5 "GGGGGGGG"/"Shopify Rebellion", TI6 "123"/
 // "the wings gaming") — IDs and dates still match the finals.
 //
-// Not in this set: TI10 (no OpenDota matches), TI 2026 (groups only at
-// snapshot time), regional qualifiers, and any playoff game before the
-// last series. Append new IDs only after a completed TI grand finals
-// lands in the snapshot — do not infer from league name.
+// Not in this set: TI10 (no OpenDota matches), regional qualifiers, and any
+// playoff game before the last series. Append new IDs only after a completed
+// TI grand finals lands in the snapshot — do not infer from league name.
 
 const TI_FINALS_MATCH_IDS: ReadonlySet<string> = new Set([
   // TI 2012 — Invictus Gaming vs Natus Vincere
@@ -88,6 +87,12 @@ const TI_FINALS_MATCH_IDS: ReadonlySet<string> = new Set([
   '8461735141',
   '8461854486',
   '8461956309',
+  // TI 2026 — Team Spirit vs TEAM VISION (last series in the snapshot)
+  '8960577698',
+  '8960655084',
+  '8960762254',
+  '8960882635',
+  '8960991322',
 ]);
 
 export interface TiFinalsOpponentInput {

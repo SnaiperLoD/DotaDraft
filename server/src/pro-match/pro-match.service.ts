@@ -10,15 +10,19 @@ export interface ProComposition {
 
 @Injectable()
 export class ProMatchService {
+  private winningCache: ProComposition[] | null = null;
+
   constructor(private readonly prisma: PrismaService) {}
 
   async getWinningCompositions(): Promise<ProComposition[]> {
+    if (this.winningCache) return this.winningCache;
     const matches = await this.prisma.proMatch.findMany();
-    return matches.map((m) => ({
+    this.winningCache = matches.map((m) => ({
       matchId: m.id,
       heroIds: JSON.parse(m.radiantWin ? m.radiantHeroIds : m.direHeroIds) as number[],
       teamName: m.radiantWin ? m.radiantName : m.direName,
       leagueName: m.leagueName,
     }));
+    return this.winningCache;
   }
 }

@@ -57,6 +57,7 @@ export class HistoryService {
         const matches = tiBracketById(tiRow.bracketId)?.matches ?? [];
         const placement = deriveTiPlacement({ status, path, matches });
         ti = {
+          runId: tiRow.id,
           leagueName: tiRow.leagueName,
           teamName: tiRow.teamName,
           status,
@@ -94,6 +95,7 @@ export class HistoryService {
             opponentLeagueName: b.opponentLeagueName,
             opponentHeroIds,
             stage: b.stage ?? null,
+            opponentMatchId: b.opponentMatchId ?? null,
             createdAt: b.createdAt.toISOString(),
           };
         }),

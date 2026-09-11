@@ -76,12 +76,14 @@ export interface HistoryBattleSummary {
   opponentLeagueName: string | null;
   opponentHeroIds: number[];
   stage: string | null;
+  opponentMatchId: string | null;
   createdAt: string;
 }
 
 export type HistoryTiStatus = 'PLAYING' | 'CHAMPION' | 'ELIMINATED';
 
 export interface HistoryTiSummary {
+  runId: string;
   leagueName: string;
   teamName: string;
   status: HistoryTiStatus;

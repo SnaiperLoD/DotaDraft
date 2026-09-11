@@ -75,22 +75,31 @@ export class TelemetryService {
   }
 
   async snapshot(): Promise<FunnelSnapshot> {
-    const rows = await this.prisma.funnelEvent.findMany({
-      select: { name: true, sessionId: true, visitorId: true, props: true },
-    });
+    const [events, byName, bySessionName, byVisitor, commits] = await Promise.all([
+      this.prisma.funnelEvent.count(),
+      this.prisma.funnelEvent.groupBy({ by: ['name'], _count: { _all: true } }),
+      this.prisma.funnelEvent.groupBy({ by: ['sessionId', 'name'], _count: { _all: true } }),
+      this.prisma.funnelEvent.groupBy({ by: ['visitorId'], _count: { _all: true } }),
+      this.prisma.funnelEvent.findMany({
+        where: { name: 'pool_commit' },
+        select: { sessionId: true, props: true },
+      }),
+    ]);
     const counts = emptyCounts();
-    const visitors = new Set<string>();
+    for (const row of byName) {
+      if (row.name in counts) counts[row.name as FunnelEventName] += row._count._all;
+    }
     const perSession = new Map<string, { names: Set<string>; fights: number; commitOk: boolean }>();
-
-    for (const row of rows) {
-      visitors.add(row.visitorId);
-      if (row.name in counts) counts[row.name as FunnelEventName] += 1;
+    for (const row of bySessionName) {
       const rec = perSession.get(row.sessionId) ?? { names: new Set(), fights: 0, commitOk: false };
       rec.names.add(row.name);
-      if (row.name === 'battle_fight') rec.fights += 1;
-      if (row.name === 'pool_commit') {
-        rec.commitOk = rec.commitOk || propOk(row.props);
-      }
+      if (row.name === 'battle_fight') rec.fights += row._count._all;
+      perSession.set(row.sessionId, rec);
+    }
+    for (const row of commits) {
+      const rec = perSession.get(row.sessionId) ?? { names: new Set(), fights: 0, commitOk: false };
+      rec.names.add('pool_commit');
+      rec.commitOk = rec.commitOk || propOk(row.props);
       perSession.set(row.sessionId, rec);
     }
 
@@ -114,9 +123,9 @@ export class TelemetryService {
     }
 
     return {
-      events: rows.length,
+      events,
       sessions: perSession.size,
-      visitors: visitors.size,
+      visitors: byVisitor.length,
       counts,
       sessionsReached: reached,
     };

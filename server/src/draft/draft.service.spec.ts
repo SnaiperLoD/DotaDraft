@@ -513,6 +513,8 @@ describe('DraftService', () => {
           opponentLeagueName: 'The International',
           opponentHeroIds: '[1,2,3,4,5]',
           stage: null,
+          coinFlip: false,
+          opponentMatchId: null,
         },
       });
     });
@@ -688,7 +690,7 @@ describe('DraftService', () => {
       await service.getBestRuns(10, 5, OWNER);
       expect(prisma.battleResult.groupBy).toHaveBeenCalledWith(
         expect.objectContaining({
-          where: { draft: { mode: 'battle', ownerToken: OWNER } },
+          where: { coinFlip: false, draft: { mode: 'battle', ownerToken: OWNER } },
         }),
       );
     });
@@ -701,7 +703,7 @@ describe('DraftService', () => {
       const runs = await service.getBestRuns(10, 5, OWNER, 'global');
       expect(prisma.battleResult.groupBy).toHaveBeenCalledWith(
         expect.objectContaining({
-          where: { draft: { mode: 'battle' } },
+          where: { coinFlip: false, draft: { mode: 'battle' } },
         }),
       );
       expect(runs[0].isMine).toBe(true);

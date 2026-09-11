@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import type { Hero } from 'shared';
 import { api } from '../api/client';
@@ -57,8 +57,10 @@ interface PendingDraft {
 
 export default function DraftPage() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const resumeId = searchParams.get('resume');
+  const openFight = searchParams.get('fight') === '1';
   const [pending, setPending] = useState<PendingDraft | null>(null);
   const [draft, setDraft] = useState<DraftStateView | null>(null);
   const [loading, setLoading] = useState(false);
@@ -90,12 +92,18 @@ export default function DraftPage() {
         .then((loaded) => {
           setDraft(loaded);
           setPending(null);
+          const jumpToFight = openFight && loaded.status === 'COMPLETED' && loaded.mode === 'battle';
+          if (jumpToFight) {
+            track('battle_enter', { source: 'history' }, loaded.id);
+          }
+          setBattleView(jumpToFight);
         })
         .catch((err) => setError(err.message));
       return;
     }
+    setBattleView(false);
     loadPool();
-  }, [resumeId]);
+  }, [resumeId, openFight]);
   useEffect(() => {
     api
       .getTiForm()
@@ -164,6 +172,13 @@ export default function DraftPage() {
     setPending(null);
     setError(null);
     setBattleView(false);
+    // Pathname is still `/draft` with ?resume=… — RootLayout keys only on
+    // pathname, so this page does not remount. Clear the query or the
+    // resume effect would just load the same completed draft again.
+    if (resumeId) {
+      navigate('/draft', { replace: true });
+      return;
+    }
     loadPool();
   };
 
@@ -298,15 +313,17 @@ export default function DraftPage() {
           <div className="completed-view" hidden={battleView}>
             <div className="completed-head">
               <DraftLedger heroes={draft.heroes} totalSlots={5} title={t('draft.yourTeam')} layout="rail" />
-              <button
-                className="btn btn-primary completed-head-fight"
-                onClick={() => {
-                  track('battle_enter', undefined, draft.id);
-                  setBattleView(true);
-                }}
-              >
-                {t('battle.enterBattleMode')}
-              </button>
+              {draft.mode === 'battle' && (
+                <button
+                  className="btn btn-primary completed-head-fight"
+                  onClick={() => {
+                    track('battle_enter', undefined, draft.id);
+                    setBattleView(true);
+                  }}
+                >
+                  {t('battle.enterBattleMode')}
+                </button>
+              )}
             </div>
             <EvaluationPanel draftId={draft.id} heroes={draft.heroes} />
             <div className="completed-tools">
@@ -321,16 +338,18 @@ export default function DraftPage() {
               />
             </div>
             <div className="completed-actions">
-              <button
-                className="btn btn-primary"
-                data-testid="enter-battle-mode"
-                onClick={() => {
-                  track('battle_enter', undefined, draft.id);
-                  setBattleView(true);
-                }}
-              >
-                {t('battle.enterBattleMode')}
-              </button>
+              {draft.mode === 'battle' && (
+                <button
+                  className="btn btn-primary"
+                  data-testid="enter-battle-mode"
+                  onClick={() => {
+                    track('battle_enter', undefined, draft.id);
+                    setBattleView(true);
+                  }}
+                >
+                  {t('battle.enterBattleMode')}
+                </button>
+              )}
               <button className="btn btn-secondary" onClick={handleRestart}>
                 {t('draft.startNewDraft')}
               </button>

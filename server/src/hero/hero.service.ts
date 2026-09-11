@@ -65,6 +65,8 @@ export interface TiFormResponse {
 
 @Injectable()
 export class HeroService {
+  private tiFormCache: TiFormResponse | null = null;
+
   constructor(private readonly prisma: PrismaService) {}
 
   private toHero(row: any): Hero {
@@ -94,6 +96,12 @@ export class HeroService {
   }
 
   async tiForm(limit = 5): Promise<TiFormResponse> {
+    if (this.tiFormCache && this.tiFormCache.heroes.length >= limit) {
+      return {
+        ...this.tiFormCache,
+        heroes: this.tiFormCache.heroes.slice(0, Math.max(1, limit)),
+      };
+    }
     const matches = await this.prisma.proMatch.findMany({
       where: { leagueName: { contains: 'The International' } },
       orderBy: { startTime: 'desc' },
@@ -138,10 +146,14 @@ export class HeroService {
       }))
       // "Form" is deliberately transparent rather than a hidden composite:
       // most wins first, then win rate and sample size as tie-breakers.
-      .sort((a, b) => b.wins - a.wins || b.winRate - a.winRate || b.games - a.games || a.heroId - b.heroId)
-      .slice(0, Math.max(1, limit));
+      .sort((a, b) => b.wins - a.wins || b.winRate - a.winRate || b.games - a.games || a.heroId - b.heroId);
 
-    return { leagueName, matchCount: current.length, heroes };
+    const full: TiFormResponse = { leagueName, matchCount: current.length, heroes };
+    this.tiFormCache = full;
+    return {
+      ...full,
+      heroes: full.heroes.slice(0, Math.max(1, limit)),
+    };
   }
 
   async randomPool(excludeIds: number[], size: number, seed: number): Promise<Hero[]> {

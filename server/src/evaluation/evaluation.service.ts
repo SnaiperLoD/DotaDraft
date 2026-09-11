@@ -251,6 +251,9 @@ export class EvaluationService {
     if (draft.heroes.length < 5) {
       throw new BadRequestException('Draft must have all 5 heroes picked before evaluation');
     }
+    if (draft.status !== 'COMPLETED') {
+      throw new BadRequestException('Draft must be completed before evaluation');
+    }
 
     const picks: DraftPick[] = draft.heroes.map((dh) => ({ hero: dh.hero, assignedRole: dh.assignedRole }));
     const compositions = await this.proMatchService.getWinningCompositions();

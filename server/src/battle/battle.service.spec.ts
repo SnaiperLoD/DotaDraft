@@ -73,6 +73,7 @@ describe('BattleService coin-flip challenge', () => {
         advantageDirection: 'Even',
         confidenceTier: 'Low',
         opponentSource: 'player',
+        coinFlip: true,
       }),
     );
     expect(opponentPoolService.pullRandom).not.toHaveBeenCalled();
@@ -88,5 +89,38 @@ describe('BattleService coin-flip challenge', () => {
 
     expect(result.coinFlip).toBe(true);
     expect(result.resolvedOutcome).toBe('Lose');
+  });
+
+  it('replays an in-flight fight instead of starting a second one', async () => {
+    const { service, draftService } = makeService();
+    let release!: () => void;
+    const gate = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    draftService.getById.mockImplementation(async () => {
+      await gate;
+      throw new Error('gated');
+    });
+
+    const first = service.fight('d1', 'owner');
+    const second = service.fight('d1', 'owner');
+    release();
+    await expect(first).rejects.toThrow('gated');
+    await expect(second).rejects.toThrow('gated');
+    expect(draftService.getById).toHaveBeenCalledTimes(1);
+  });
+
+  it('refuses a Captains draft against the opponent pool', async () => {
+    const { service, draftService } = makeService();
+    draftService.getById.mockResolvedValueOnce({
+      id: 'd1',
+      status: 'COMPLETED',
+      mode: 'captains',
+      heroes: makeTeam(),
+      pool: [],
+      createdAt: new Date(),
+      rerollsRemaining: 0,
+    });
+    await expect(service.fight('d1', 'owner')).rejects.toThrow(/cannot fight the opponent pool/);
   });
 });
