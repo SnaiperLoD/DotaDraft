@@ -26,13 +26,23 @@ Difficulty brackets / strength-based rating of pooled drafts (so stronger drafts
 Closed before Milestone 4 code, per `01-core-rules.md` MVP Rule / Data Rule exception:
 
 - **Hosting:** no new VPS, no separate microservice (keeps MVP Rule intact). Opponent Pool lives inside the existing NestJS server, but reads/writes through a second, isolated Prisma client pointed at a managed free-tier Postgres (e.g. Neon/Supabase) — not the local SQLite datasource used by `Draft`/`Hero`/`History`. Keeps the exception contained to this one subsystem rather than migrating the rest of the app off SQLite.
-- **Anonymous identification:** no accounts. A random UUID token is generated client-side on first visit, stored in `localStorage`, and sent as `submitterToken` on commit. It exists only as a loose anti-abuse handle (e.g. future per-token rate limiting), not an identity system.
+- **Anonymous identification:** guest play is a random UUID in
+  `localStorage` (`dotadraft.submitterToken`), sent as `X-Owner-Token`
+  and as `submitterToken` on pool commit. Optional accounts (email +
+  password or Google) claim that same UUID as `User.ownerToken`. A valid
+  session cookie (`dotadraft.sid`) wins over the header. Logout keeps
+  the token on this device; login on another device replaces that
+  browser's token (no merge of guest drafts).
 - **Moderation/anti-spam:** none at MVP. The only guard is structural — only a `Draft` already in `COMPLETED` status (5 heroes, all roles assigned, enforced by existing `draft.service.ts` validation) can be committed. Low user count at launch means low risk; revisit if abuse actually shows up. Tracked as a deferred item in `10-tech-debt-backlog.md`, not built now.
 - **UI:** a separate, optional "Commit to Pool" action, shown after Evaluation results (not required to view them) — same idle-button → request → confirmation pattern as `EvaluationPanel`, placed directly after it on the completed-draft screen.
 
 ## Session Shape
 
-One draft per visit, no persistent cross-session progress in the MVP (no accounts, no currency, no unlocks — see `00-project-overview.md` Future Possibilities for when that might change). Replayability within a visit comes from running a **series of battles** with the same committed draft against different pulled opponents, not from meta-progression.
+Guest play is still one browser until you sign in. Optional accounts
+claim that browser's `ownerToken` so History follows the account.
+No currency, no unlocks. Replayability within a visit still comes from
+running a **series of battles** with the same committed draft against
+different pulled opponents, not from meta-progression.
 
 Monetization is not planned for the foreseeable future (see
 `00-project-overview.md`). Do not reserve ad slots or introduce

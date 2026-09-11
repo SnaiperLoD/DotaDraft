@@ -1,40 +1,41 @@
 # Next Session Priorities
 
-Updated 2026-09-01 evening after pre-release gate + live TI e2e in CI.
+Updated 2026-09-11 after optional accounts + friends-alpha hole pass.
 Handoff / triage; `10-tech-debt-backlog.md` is the detailed source of
 truth. Deploy notes: `13-deploy.md`.
 
 **Status check:** three isolated modes on `master` (`/draft`,
-`/captains`, `/ti-run`). **Pre-release automation shipped**
-(`pre-release:check`, tip-jar/pre-release e2e, `ti-run-live` in CI,
-client Vitest in CI). **Soft-launch code-ready** — link share blocked
-only on Nick manual (URL, telemetry token, backup destination, Ko-fi
-confirm). Playoff attach **116/116**. Pro snapshot **2374** rows (no new
-OpenDota pull). Tunnel OFF. Calibration pause on.
+`/captains`, `/ti-run`). **Optional accounts shipped** (email+password;
+Google off until Console secrets). **Pre-release automation shipped**.
+**Soft-launch code-ready** — link share blocked only on Nick manual
+(URL, telemetry token, backup destination, Ko-fi confirm). Playoff
+attach **116/116**. Pro snapshot **2374** rows (no new OpenDota pull).
+Tunnel OFF. Calibration pause on.
 
 **Session working rules:** one invariant per session before UI. Don't
 mix Stryker into the same commit as a new client spectacle. Don't
 retune Battle coefficients to make TI or a DotaCaptain-style log
-"feel fair." Nick **did** ask for Valve-pixel CM this session — homage
-is no longer the contract. Don't refetch OpenDota without Nick.
+"feel fair." Don't refetch OpenDota without Nick. Don't merge the
+three modes.
 
 ---
 
 ## Next session — priorities in order
 
-Pre-release **code** is done (2026-09-01). Before sharing a link, Nick
+Pre-release **code** is done. Auth is done. Before sharing a link, Nick
 manual only — see **Soft launch — manual blockers** in
 `10-tech-debt-backlog.md` and **Pre-launch checklist** in `13-deploy.md`.
 
-Don't merge the three modes. Dual-role Support shares still need Nick's
-ask — not P0. Valve-pixel CM is **in progress** (Nick asked); not a
-launch blocker.
+Dual-role Support shares still need Nick's ask — not P0.
 
 ### 1. Launch manual — URL + ops — `open` (Nick)
 
 Pick quick tunnel vs VPS + named tunnel. Set `TELEMETRY_READ_TOKEN`.
 Confirm Ko-fi or `VITE_TIP_JAR_URL`. Run `npm run backup:compose` once;
 store `./backups/` off-box. Fast gate: `npm run pre-release:check`.
+If you want the Google button, add `GOOGLE_CLIENT_ID` /
+`GOOGLE_CLIENT_SECRET` / `AUTH_PUBLIC_ORIGIN` and the Console redirect
+`{origin}/api/auth/google/callback`.
 
 ### 2. TI occupy-slot: optional eyes-on — `partial`
 
@@ -47,10 +48,12 @@ run draft → fight → GF if you want to see the fight screen yourself.
 `npm run pre-release:check` — shared build + client Vitest + server unit
 (clears `POOL_DATABASE_URL`). CI runs client Vitest + full e2e with pool.
 
-### 4. Captains AI + Valve HUD — `partial`
+### 4. Captains AI + Valve HUD — HUD shipped (2026-09-11)
 
-Adaptive bans/picks (roles + matchups) started. HUD 1:1 Valve not done.
-Don't retag Medusa.
+In-game CM pick screen: side pick columns, 7-ban strips, 4-attribute splash
+grid, sequence bar, clocks/reserve, chrome hidden while drafting. AI already
+adaptive (roles + OpenDota matchups). Don't retag Medusa. Don't rewrite AI
+again unless a concrete draft looks wrong.
 
 ### 5. Dual-role Support presumed shares — ask first
 
@@ -61,11 +64,24 @@ Battle still applies the support-miscast −10% if you put them on 4/5.
 Don't rewrite those shares without Nick. Visage Carry stays `no_info`
 (too rare). Visage Mid stays `no_info` (GPM #2 is offlane farm, not mid).
 
-### 6. TI 2026 GF badge IDs
+### 6. TI 2026 GF badge IDs — shipped (2026-09-11)
 
-`shared/utils/tiFinalsOpponent.ts` still says TI 2026 was groups-only.
-GF match IDs are in `pro-matches.json` now — append them when Nick wants
-the Finals badge on those opponents. Don't infer from `leagueName`.
+Last snapshot series Spirit vs TEAM VISION (5 maps) appended to
+`tiFinalsOpponent.ts`. Still frozen IDs, not `leagueName`.
+
+### 6b. Humorous 404 + Fight own History — shipped (2026-09-11)
+
+Catch-all 404. Battle History rematch via `?resume=&fight=1`. Captains
+stays one fight. Don't add a new telemetry event name.
+
+### 6c. Optional accounts — shipped (2026-09-11)
+
+Email+password and Google. Guest UUID stays the ownership key. Register
+claims this browser; login on another device replaces localStorage and
+drops CM/TI persist. Cookie `dotadraft.sid`. Landing no longer says
+“0 accounts.” History guest hint links to `/account`. Remaining fork
+track: opponent difficulty brackets (wait for telemetry). Steam OpenID
+only if email+Google is not enough.
 
 ### 7. 89 pro rows still missing a team name
 
@@ -382,16 +398,66 @@ User's request (2026-08-06): heroes who genuinely play both a core and a support
 
 ## Where to start
 
-Start on **§1 launch manual**: URL strategy + telemetry token + backup
-destination + Ko-fi confirm. Optional **§2** TI eyes-on. Valve HUD /
-adaptive CM (**§4**) if Nick is still on that thread — not before link
-share unless he wants polish first. DotaCaptain tick log stays research
-(**§8**). Dual-role Support shares only if Nick asks. Don't invent Visage
-Mid/Carry. Don't start a calibration pass. Don't refetch TA. Tunnel is
-off; `docker compose up` → `:8080`; overlay `docker-compose.tunnel.yml`
-→ trycloudflare URL. Nonempty Docker volumes do **not** pick up a new
-`pro-matches.json` / `heroes.json` until you exec `seed` +
-`seed-opponent-pool` in the api container.
+Start on remaining product leftovers only if Nick is coding: dual-role
+Support shares still need an ask (calibration-adjacent). 89 nameless pro
+rows are a display fallback, not a refetch. Tick log stays research.
+Lobby stays parked. Soft-launch URL/ops stays Nick-manual — don't share
+a link this pass.
+
+---
+
+## Session log — 2026-09-11 (auth identity switch)
+
+Login that actually changes `ownerToken` clears CM + TI persist keys so
+this browser does not resume another identity's live session. Register
+that claims the same guest UUID keeps them. History guest hint links to
+`/account`.
+
+---
+
+## Session log — 2026-09-11 (optional accounts)
+
+Email+password and Google. Guest UUID stays `ownerToken`. Register
+claims this browser; other-device login replaces localStorage (no
+merge). Cookie `dotadraft.sid` wins over `X-Owner-Token`. `GET /auth/me`
+is 200 for guests. Google hidden until env secrets exist. Landing no
+longer says “0 accounts.”
+
+---
+
+## Session log — 2026-09-11 (Valve CM HUD + TI 2026 GF badge)
+
+Scoped **out**: launch/share link; coefficients / tags / weights;
+OpenDota refetch; dual-role Support shares; tick log; captains lobby.
+
+**Captains HUD.** In-game pick screen 1:1 layout: Radiant/Dire side
+columns (7 bans + 5 picks), center 4-attribute splash grid, sequence
+bar, clocks + reserve. Site chrome hidden while `DRAFTING`. Home via
+HUD wordmark. Ban/pick still 7.40. AI left as-is (roles + matchups).
+
+**TI Finals badge.** Appended Spirit vs TEAM VISION maps
+`8960577698`–`8960991322` from the local snapshot last series. Frozen
+IDs, not leagueName.
+
+**404.** Catch-all `*` → `NotFoundPage` (after `/debug` in DEV). EN
+Denied. / RU Денай. Fountain CTA. e2e in `shell.spec.ts`.
+
+**Fight own History.** Battle rows with 5 roles →
+`/draft?resume=&fight=1`, auto-enter Battle, `battle_enter` source
+`history`. Restart clears the query (pathname key does not remount).
+Captains/TI/incomplete Battle: no rematch button. e2e
+`history.spec.ts`.
+
+**Hole pass.** CM persist in localStorage (F5/Home resume; COMPLETED
+starts new). Resume skips the ceremonial splash. TI localStorage +
+History Continue. Battle in-flight replays; pool fights battle-only.
+Captains READY-only fight + act lock. CM grid uses icons and is **one
+tab stop** (arrows, Escape focuses HUD exit). History filter tabs
+arrow-key. BattlePanel lazy on CM/TI; CoinFlip3D lazy. ProMatch + TI
+form cached. Funnel snapshot groupBy. nginx cache/gzip. API errors
+parse Nest `message`. Status 429/503/401 go through i18n. History
+OpenDota + TI Finals chip on stored `opponentMatchId`. Bug report mailto
+appends URL/lang/UA. Coin-flip rows skip run leaderboards.
 
 ---
 

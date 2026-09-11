@@ -4,7 +4,7 @@ Slim open list. Calibration history lives in `09-hero-knowledge-base.md`,
 `05-evaluation-engine.md`, `06-battle-engine.md`. Session order lives in
 `12-next-session-priorities.md`.
 
-Last slim: 2026-09-01 evening (pre-release gate + soft-launch handoff).
+Last slim: 2026-09-11 (optional accounts + friends-alpha hole pass).
 Statuses: `open` | `partial` | `parked` | `rejected`.
 Shipped items live in the footnote, not this list.
 
@@ -21,7 +21,7 @@ Tempo) · Battle lanes + server story/explanation · Session win streak ·
 History / leaderboards · Tapalka (static + 3D) · Hidden calibration tags in
 Eval · Synergy Total Score weight 0.25 · Opponent freshness / TI context ·
 Fundamentals Active Combos names boosted axes · Hosting Docker prep ·
-CI PR/build/Docker (lint/format still soft) · Client + server narrative i18n
+CI PR/build/Docker (lint/format **blocking**; npm audit soft) · Client + server narrative i18n
 (`I18nLine` keys, RU/EN catalogs) · TI grand-finals opponent badge ·
 Phantom Lancer / Tinker `late_game_scaling` (split-push is their late plan,
 not an early close) · Anonymous draft ownership (`ownerToken` / `X-Owner-Token`)
@@ -46,12 +46,17 @@ not an early close) · Anonymous draft ownership (`ownerToken` / `X-Owner-Token`
 · Isolated modes (2026-09-01): Battle `/draft`, Captains `/captains`,
   TI Run `/ti-run` — no shared funnel. Challenge-paste Battle-only.
   History mode chip + filters. Leaderboard battle-only.
-· Captains homage CM HUD + splash ~2s + `startCaptains`; roles; dual
-  eval; one fight vs AI; no pool/leaderboard/Fight Again. Reload/Home
-  starts a **new** CM (no sessionStorage persist)
+· Captains Valve pick-screen HUD (side picks, 7-ban strips, attribute
+  grid, sequence bar; chrome hidden while drafting) (2026-09-11)
+· TI 2026 GF badge IDs (Spirit vs TEAM VISION, 5 maps in
+  `tiFinalsOpponent.ts`) (2026-09-11)
+· Captains splash ~2s on a **new** session; F5/Home resume the live
+  draft from `localStorage['dotadraft.captains-id']`. COMPLETED clears
+  the key. Roles; dual eval; one fight vs AI; no pool/leaderboard/Fight
+  Again. Grid is one tab stop (arrows, Escape focuses HUD exit).
 · TI Run occupy-slot double-elim BO1, `TiBracket` tree, team logos,
   eval/fight split views, opponent copy from that team's TI drafts.
-  Persists `sessionStorage['ti-run-id']`
+  Persists `localStorage['ti-run-id']`; History Continue on PLAYING.
 · Challenge short draft code (`dd1` + Crockford base32 + checksum in
   `shared/utils/copiedDraft.ts`); sanitize paste; Copy Draft emits short
   code. Coin-flip easter egg: same 5 heroes → skip battle math, 3D coin,
@@ -95,6 +100,20 @@ not an early close) · Anonymous draft ownership (`ownerToken` / `X-Owner-Token`
 · Pre-release gate: `npm run pre-release:check` (exit codes + clears
   `POOL_DATABASE_URL` like CI), `e2e/pre-release.spec.ts`,
   `e2e/ti-run-live.spec.ts`, CI client Vitest step
+· Humorous 404 (`NotFoundPage`, catch-all `*`) (2026-09-11)
+· Fight own History Battle rows (`?resume=&fight=1`, `battle_enter`
+  source `history`) (2026-09-11)
+· Friends-alpha hole pass (2026-09-11): CM session persist; TI
+  localStorage + History continue; Battle in-flight replay + mode gate;
+  Captains one-fight + act() lock; CM grid icons + one tab stop (arrows /
+  Escape → HUD exit); History filter tabs; lazy CoinFlip3D / BattlePanel
+  on CM+TI; ProMatch/ti-form cache; funnel groupBy; nginx cache/gzip;
+  friendlier API errors; coin-flip excluded from run boards
+· Optional accounts (2026-09-11): email+password and Google. Guest UUID
+  stays `ownerToken`. Register claims this browser; other-device login
+  replaces localStorage and drops CM/TI persist keys. Cookie
+  `dotadraft.sid` wins over `X-Owner-Token`. `GET /auth/me` is 200 for
+  guests. Google button hidden until `GOOGLE_CLIENT_ID`/`SECRET` exist.
 
 ---
 
@@ -112,8 +131,8 @@ Code path is **ready for a friends-alpha link**. Still manual before share:
 5. **Off-box backup** — pick destination; `npm run backup:compose` once to
    verify.
 
-Not launch blockers: auth, achievements, calibration retune, tick log,
-Valve-pixel CM (Nick ask, `partial`).
+Not launch blockers: Steam extras, achievements, calibration retune,
+tick log. Email+Google accounts already shipped.
 
 ---
 
@@ -183,21 +202,20 @@ Night Stalker / Naga Support eval copied; their presumed Support share
 is still 0 (miscast still fires). Don't rewrite those shares without
 Nick.
 ### Captains friend lobby — `parked`
-CM vs AI shipped on isolated `/captains` (homage HUD, not Valve-pixel).
+CM vs AI shipped on isolated `/captains` (Valve pick-screen HUD).
 Don't also build a lobby unless Nick picks that shape.
-### Captains HUD pixel-parity — `partial` (Nick asked 2026-09-01)
-Homage is no longer the contract. Valve 1:1 + splash. Side columns and
-icon grid started; not pixel-complete. Don't mix this with a calibration
-pass.
+### Captains HUD pixel-parity — shipped (2026-09-11)
+In-game CM pick screen (side picks, ban strips, attribute grid, sequence).
+Don't mix this with a calibration pass.
+### Captains AI draft diversity — `partial`
+`chooseAiBan` / `chooseAiPick` take opponent picks + remaining role
+slots + OpenDota matchups. Still deterministic (no session seed). HUD is
+done; don't rewrite AI unless a concrete draft looks wrong.
 ### TI occupy-slot live-tree contract — `partial`
 Copy + GF self-vs-self fix shipped. Playoff match ids attached (incl.
 TI10 holes + TI 2026 QF). Next: real browser QA win → upper / loss →
 lower / champ / elim. Attach still mixes some **group** games into the
 same pair as the playoff series — don't treat that as empty nodes.
-### Captains AI draft diversity — `partial`
-`chooseAiBan` / `chooseAiPick` now take opponent picks + remaining role
-slots + OpenDota matchups. Still deterministic (no session seed). Finish
-HUD before another AI rewrite.
 ### Battle result narrative (honest four-beat recap) — shipped (2026-09-01)
 Sheet grammar only: lane tally → lead after opening; invert lives on
 `turn`; conversion does **not** resolve Roshan; finish does **not** walk
@@ -219,7 +237,15 @@ positions. Eval Mid already existed. Global 0.25 threshold unchanged.
 `POSITION_OVERRIDES[46]` in `apply-role-classification.ts` and
 `recompute-presumed-positions.ts` so a recompute does not wipe it.
 ### Opponent difficulty brackets — `open`
-### Persistent progress / accounts — `open`
+### Persistent progress / accounts — shipped (2026-09-11)
+Optional accounts. Email+password and Google. Guest UUID stays the ownership key
+(`Draft` / `CaptainsSession` / `TiRun.ownerToken`). Register claims the
+current browser token; login on another device replaces localStorage
+and drops `dotadraft.captains-id` / `ti-run-id` (those sessions belong
+to the old guest). Session is SQLite `AuthSession` + httpOnly cookie
+`dotadraft.sid` (30d).
+`GET /auth/me` is 200 for guests. Google off until
+`GOOGLE_CLIENT_ID`/`SECRET` are set.
 ### Tip jar (Ko-fi) — shipped (2026-09-01)
 Footer + About; `client/src/utils/tipJar.ts`, `VITE_TIP_JAR_URL` in
 `.env.example`. Not monetization — voluntary support only per
@@ -229,20 +255,19 @@ Battle / Captains / TI Run are isolated routes. Don't invent a third CM.
 Pure Draft / constrained still not built.
 ### Lock hero / pool-of-8 / random pick — `parked`
 Wait for funnel signal (`client/src/telemetry/`).
-### Fight own history drafts — `open`
-Challenge paste is Battle-only (`dd1` short code). Fighting own History
-rows is still separate.
+### Fight own history drafts — shipped (2026-09-11)
+Battle History rows with 5 assigned roles link to
+`/draft?resume=<id>&fight=1`. Reuses `battle_enter` (`source: history`).
+Captains = one fight, no rematch. TI stays on its own persist.
+Incomplete Battle rows (missing a role) stay copy-only.
 ### Post-launch product fork — `open` (decision 2026-09-01)
-After first telemetry from a public soft launch, pick **one** retention
-track — do not build all three in parallel:
-1. **Auth** (Steam OpenID or magic link) — if cross-device History /
-   trusted leaderboard is the top ask.
-2. **Fight own History rows** — if Challenge viral works but people want
-   to re-run past drafts without auth.
+#2 (Fight own History) shipped 2026-09-11 without waiting on telemetry.
+Auth (email + Google) shipped 2026-09-11. Steam OpenID still not built.
+After first public telemetry, pick **one** remaining track — do not
+build both in parallel:
+1. **Steam OpenID / magic link extras** — only if email+Google is not
+   enough for cross-device History.
 3. **Opponent difficulty brackets** — if fights feel too random/easy.
-Default if telemetry is inconclusive: **#2 first** (no accounts, keeps
-the zero-friction pitch). Auth only when progress/monetization needs it.
-Achievements platform waits on auth + retention signal.
 ### Team Steam logos — `partial`
 Local `client/public/team-logos/` + initials fallback. Keyd Stars alias
 + Liquipedia slug PNGs for T1 / Quincy Crew / Team Undying / RNG /
@@ -257,12 +282,12 @@ Spirits (feasibility done, pending build) · jungler anti-synergy
 (Chen/Enchantress membership research next).
 ### Laning Efficiency axis — `partial`
 Per-lane Battle cards + story shipped. New Eval axis still research-only.
-### Humorous 404 — `open`
+### Humorous 404 — shipped (2026-09-11)
+Catch-all `*` → `NotFoundPage`. Copy: Denied. / Денай. CTA fountain.
 ### Radar axis reorder by correlation — `open`
-### Pool core/support guarantee audit — `partial`
-`ensureRoleCoverage` + Jest smoke (300 pools / 200 drafts on heroes.json +
-hero-meta). Deep `npm run audit-pool-coverage` remains the occasional
-manual 50k check — not a CI job.
+### Pool core/support guarantee audit — `shipped` (2026-08-15)
+`ensureRoleCoverage` + Jest smoke. Deep `npm run audit-pool-coverage` is
+an occasional manual 50k check — not a CI job, not a bug.
 
 ---
 
@@ -286,7 +311,9 @@ Prefer `GET /telemetry/funnel` (plus hosting) over more survey guesswork.
 Health + pool smoke + Fundamentals helpers + battle-cast + expanded
 `battle-explanation` + `copiedDraft` + `challenge-mirror` + BattleService
 coin path + captains/TI gaps. **Client Vitest shipped** (2026-09-01):
-Challenge sanitize, coin visibility, TeamCrest slugs — `npm test --workspace client`.
+Challenge sanitize, coin visibility, TeamCrest slugs, `submitterToken`
+identity-switch — `npm test --workspace client`. Auth unit specs
+(`password` / cookie / register-claim / login) shipped 2026-09-11.
 ### Server narrative i18n — `partial`
 Product chrome + Eval/Battle live copy go through client i18n (`eval.*`,
 `battle.explain.*`, `battle.highlight.*`, axes/tags/badges). Remaining:
@@ -294,10 +321,13 @@ legacy History snapshots stored as English strings; `AXIS_NARRATIVE` English
 fixtures (tests only). Debug matrix stays untranslated on purpose.
 ### Tapalka skeletal animation — `partial`
 ### Report-a-bug pre-release — `partial`
-mailto shipped.
+mailto shipped. Body now appends URL / lang / UA. Inbox is still the
+personal Gmail until Nick names a public alias.
 ### History eval backfill after percentile regen — `open`
-Also: History fights have no `matchId`, so the TI Finals badge cannot show
-there without a schema add.
+Stored `evaluationResult` JSON goes stale if percentiles are regenerated.
+Don't rewrite History scores without an explicit backfill pass.
+History fights persist `opponentMatchId` (2026-09-11); TI Finals badge +
+OpenDota link render when the id is a real match.
 ### HKB tag revision (`heroes.json`) — `partial`
 PL and Tinker gained `late_game_scaling` (2026-08-17) so split-push × late
 anti-synergy no longer calls them an early-end plan. Rest of HKB still open.
@@ -314,12 +344,13 @@ Docker Compose + Dockerfiles + `.env.example` + `Blueprint/13-deploy.md` +
 volumes kept (no `down -v`). Pre-launch checklist + backup runbook +
 **`npm run pre-release:check`** gate (2026-09-01). **Soft-launch
 code-ready** — remaining work is manual (URL, telemetry token, backup
-destination, Ko-fi confirm). Named tunnel + domain + VPS when a stable
-URL is needed.
+destination, Ko-fi confirm). Google sign-in also needs Console secrets +
+`AUTH_PUBLIC_ORIGIN` if you want that button. Named tunnel + domain +
+VPS when a stable URL is needed.
 ### CI hardening — `partial`
 PR trigger, full monorepo build, **client Vitest**, Playwright cache,
 **pre-release + TI live e2e** (`e2e/pre-release.spec.ts`,
-`e2e/ti-run-live.spec.ts`), Docker build, server integration suite. Lint
+`e2e/ti-run-live.spec.ts`), `e2e/account.spec.ts` (register/logout/login), Docker build, server integration suite. Lint
 and Prettier are blocking for production source (`server/scripts`, Blueprint,
 generated data, gltf ignored). Dependabot weekly + `npm audit` in CI
 (`continue-on-error`).
@@ -338,11 +369,11 @@ Full suite (2026-08-17): **69.92%** total. Re-run on
 1. Edge-case drafts / role-fit underweight on total — `open`
 2. Position-weighted scaling axis — `open` (validated, not built)
 3. `saving` diminishing returns — `open`
-4. Humorous 404 — `open`
+4. Humorous 404 — shipped (2026-09-11)
 5. Fundamentals names boosted axes — shipped (2026-08-20)
 6. Calibrate All Melee / All Ranged — `open`
 7. Radar reorder — `open`
-8. Pool core/support audit — `partial` (Jest smoke shipped)
+8. Pool core/support audit — shipped (Jest smoke; 50k optional)
 9. Rework role-fit scheme — `open`
 10. New draft modes — `open`
 11. Split Pushers badge — `open`

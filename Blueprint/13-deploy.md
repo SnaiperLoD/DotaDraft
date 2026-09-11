@@ -85,6 +85,11 @@ See `.env.example`. Important:
   Compose sets it to the `pool` service. Empty disables pool features.
 - `TELEMETRY_READ_TOKEN` — read `GET /api/telemetry/funnel`. Unset = 404.
   Events still ingest on `POST /api/telemetry`.
+- `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` — optional Google sign-in.
+  Unset = Google button hidden. Authorized redirect:
+  `https://<host>/api/auth/google/callback`.
+- `AUTH_PUBLIC_ORIGIN` — public site origin used to build that redirect
+  (no trailing slash). Local Vite: `http://localhost:5173`.
 - `CLOUDFLARE_TUNNEL_TOKEN` — named tunnel only (`--profile named`). Quick
   tunnel for friends-alpha does not need it.
 - Do not point production at `database/dev.db` from a laptop path
