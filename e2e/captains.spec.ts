@@ -5,7 +5,9 @@ test.beforeEach(async ({ page }) => {
   await seedClientPrefs(page, 'dark');
 });
 
-test('CM board uses portraits, five pick slots and seven ban portraits per side', async ({ page }) => {
+test('CM board uses Valve portraits, two-wide attribute columns, five picks and seven bans per side', async ({
+  page,
+}) => {
   await page.goto('/captains');
   await expect(page.getByTestId('cm-splash')).toBeVisible();
   const board = page.getByTestId('cm-board');
@@ -14,7 +16,20 @@ test('CM board uses portraits, five pick slots and seven ban portraits per side'
   await expect(page.getByTestId('cm-seq')).toBeVisible();
   await expect(page.getByTestId('cm-hero-grid')).toBeVisible();
   await expect(page.locator('.cm-attr-head')).toHaveCount(4);
-  await expect(page.locator('.cm-hero img').first()).toHaveAttribute('src', /\/icons\//);
+  await expect(page.locator('.cm-hero img').first()).toHaveAttribute('src', /\/heroes\//);
+  await expect(page.locator('.cm-search')).toHaveCount(0);
+  await expect(page.locator('.cm-attr-col').first().locator('.cm-hero').first()).toHaveAttribute(
+    'data-testid',
+    'cm-hero-2',
+  );
+  await expect(page.locator('.cm-attr-col').nth(1).locator('.cm-hero').first()).toHaveAttribute(
+    'data-testid',
+    'cm-hero-1',
+  );
+  await expect(page.getByText('First Pick')).toHaveCount(1);
+  await expect(page.getByText(/^Bonus /).first()).toBeVisible();
+  await expect(page.getByTestId('cm-seq')).not.toContainText('B');
+  await expect(page.getByTestId('cm-seq')).not.toContainText('P');
   await expect(page.locator('.cm-hero[tabindex="0"]')).toHaveCount(1);
   await expect(page.locator('.cm-col--radiant .cm-pick')).toHaveCount(5);
   await expect(page.locator('.cm-col--dire .cm-pick')).toHaveCount(5);
@@ -55,4 +70,21 @@ test('Captains hero grid is one tab stop; arrows move, Escape focuses exit', asy
   await expect(page.locator('.cm-hero:focus')).not.toHaveAttribute('data-testid', from!);
   await page.keyboard.press('Escape');
   await expect(page.getByRole('link', { name: 'Leave Captains Mode' })).toBeFocused();
+});
+
+test('CM type-to-filter dims non-matches without removing them, Escape clears', async ({ page }) => {
+  await page.goto('/captains');
+  await expect(page.getByTestId('cm-board')).toBeVisible({ timeout: 20_000 });
+  const axe = page.getByTestId('cm-hero-2');
+  const antiMage = page.getByTestId('cm-hero-1');
+  await expect(axe).toBeVisible();
+  await page.locator('.cm-hero[tabindex="0"]').focus();
+  await page.keyboard.type('anti');
+  await expect(page.getByTestId('cm-filter')).toHaveText(/anti/i);
+  await expect(antiMage).not.toHaveClass(/is-dim/);
+  await expect(axe).toHaveClass(/is-dim/);
+  await expect(axe).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(page.getByTestId('cm-filter')).toHaveCount(0);
+  await expect(axe).not.toHaveClass(/is-dim/);
 });

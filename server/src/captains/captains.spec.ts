@@ -1,6 +1,7 @@
 import { CM_BAN_PHASE1_MS, CM_STEP_MS, CM_STEPS } from 'shared';
 import { makeHero } from '../test-utils/hero-factory';
 import { chooseAiBan, chooseAiPick, heroPower, remainingRoleSlots, tagCounterHits } from './captains-ai';
+import { cmStepsForPlayer, currentCmStep, emptyCmSlots } from './captains-sequence';
 
 describe('Captains Mode sequence (7.40)', () => {
   it('has 24 steps, 7 bans and 5 picks per lane', () => {
@@ -14,6 +15,23 @@ describe('Captains Mode sequence (7.40)', () => {
   it('uses 15s on the first ban phase and 30s afterwards', () => {
     expect(CM_STEPS.slice(0, 7).every((s) => s.type === 'ban' && s.timeMs === CM_BAN_PHASE1_MS)).toBe(true);
     expect(CM_STEPS.slice(7).every((s) => s.timeMs === CM_STEP_MS)).toBe(true);
+  });
+
+  it('gives first pick 3-2-2 bans and second pick 4-1-2', () => {
+    const first = cmStepsForPlayer(true);
+    const second = cmStepsForPlayer(false);
+    expect(first.slice(0, 7).filter((s) => s.lane === 'first')).toHaveLength(3);
+    expect(first.slice(0, 7).filter((s) => s.lane === 'second')).toHaveLength(4);
+    expect(second.slice(0, 7).filter((s) => s.lane === 'first')).toHaveLength(4);
+    expect(second.slice(0, 7).filter((s) => s.lane === 'second')).toHaveLength(3);
+  });
+
+  it('inverts stored lanes so `first` still means the player after a lost coin flip', () => {
+    const slots = emptyCmSlots(false);
+    expect(slots[0]).toEqual({ type: 'ban', lane: 'second', heroId: null });
+    expect(currentCmStep(slots, 0)?.lane).toBe('second');
+    expect(currentCmStep(slots, 2)?.lane).toBe('first');
+    expect(currentCmStep(slots, CM_STEPS.length)).toBeNull();
   });
 });
 
