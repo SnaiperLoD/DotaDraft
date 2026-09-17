@@ -37,6 +37,9 @@ jobs:
         run: npm audit --omit=dev --audit-level=high
         continue-on-error: true
 
+      - name: Generate Prisma clients
+        run: npm run prisma:generate
+
       - name: Build (shared + server + client)
         run: npm run build
 
@@ -47,7 +50,7 @@ jobs:
         run: npm run format:check
 
       - name: Typecheck server
-        run: npx tsc -p server/tsconfig.json --noEmit
+        run: npx tsc -p server/tsconfig.build.json --noEmit
 
       - name: Typecheck client
         run: npx tsc -p client/tsconfig.json --noEmit

@@ -1,6 +1,6 @@
 # Deploy / hosting prep
 
-Last updated: 2026-09-01.
+Last updated: 2026-09-18.
 
 Status 2026-08-18: friends-alpha **tunnel is OFF**. Stack stopped with
 `docker compose -f docker-compose.yml -f docker-compose.tunnel.yml stop`
@@ -57,18 +57,39 @@ Request limits (launch hardening):
   owner token (or IP if the header is missing). Disabled when
   `NODE_ENV=test`
 
+## Scaling constraint: one API instance
+
+The current deployment supports **one NestJS API process**. Keep the Compose
+`api` service at one replica.
+
+Process-local state currently includes:
+
+- write-rate-limit buckets;
+- pending Google OAuth states;
+- in-flight Battle deduplication;
+- small service caches.
+
+SQLite is also operated as a single-writer application database. Adding a
+second API replica would make OAuth/rate-limit/dedup behavior inconsistent and
+introduce multiple writers without a tested coordination strategy.
+
+Before horizontal scaling, move transient shared state to Redis or the
+database, revisit the primary datastore, and add multi-instance tests. Do not
+put multiple API replicas behind nginx before that work.
+
 ## Without Docker
 
 1. `npm ci`
-2. Set `DATABASE_URL` (SQLite file path)
-3. Provision Postgres and set `POOL_DATABASE_URL` (Battle Mode needs it)
-4. `npm run build`
-5. `npm run prisma:migrate:deploy --workspace server`
-6. `npm run pool:migrate:deploy --workspace server`
-7. `npm run seed --workspace server` (once, from existing snapshots)
-8. `npm run seed-opponent-pool --workspace server`
-9. `NODE_ENV=production npm run start:prod --workspace server`
-10. Serve `client/dist` with any static host; reverse-proxy `/api` → Nest with
+2. `npm run prisma:generate --workspace server`
+3. Set `DATABASE_URL` (SQLite file path)
+4. Provision Postgres and set `POOL_DATABASE_URL` (Battle Mode needs it)
+5. `npm run build`
+6. `npm run prisma:migrate:deploy --workspace server`
+7. `npm run pool:migrate:deploy --workspace server`
+8. `npm run seed --workspace server` (once, from existing snapshots)
+9. `npm run seed-opponent-pool --workspace server`
+10. `NODE_ENV=production npm run start:prod --workspace server`
+11. Serve `client/dist` with any static host; reverse-proxy `/api` → Nest with
     path strip, same as nginx.conf
 
 `npm start` without `POOL_DATABASE_URL` still runs Draft / Evaluation /

@@ -4,8 +4,6 @@ set -eu
 mkdir -p /data
 
 cd /app/server
-npx prisma generate
-npx prisma generate --schema=prisma-pool/schema.prisma
 npx prisma migrate deploy
 
 HERO_COUNT="$(node -e "const {PrismaClient}=require('@prisma/client'); const p=new PrismaClient(); p.hero.count().then(c=>{console.log(c); return p.\$disconnect();}).catch(e=>{console.error(e); process.exit(1);})")"

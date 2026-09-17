@@ -67,7 +67,7 @@ export class HistoryService {
       }
       return {
         id: draft.id,
-        mode: ((draft.mode as DraftMode) || 'battle') as DraftMode,
+        mode: (draft.mode || 'battle') as DraftMode,
         createdAt: draft.createdAt.toISOString(),
         heroes: draft.heroes
           .sort((a, b) => a.pickOrder - b.pickOrder)

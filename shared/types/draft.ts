@@ -44,6 +44,22 @@ export interface Draft {
   createdAt: string;
 }
 
+// HTTP response contract for the interactive draft flow. Keep the wire shape
+// in shared so Nest and React cannot silently disagree about status/date types.
+export interface DraftHeroView extends DraftHero {
+  hero: Hero;
+}
+
+export interface DraftStateView {
+  id: string;
+  status: DraftStatus;
+  mode: DraftMode;
+  heroes: DraftHeroView[];
+  pool: Hero[];
+  createdAt: string;
+  rerollsRemaining: number;
+}
+
 export interface PickRequest {
   heroId: number;
 }

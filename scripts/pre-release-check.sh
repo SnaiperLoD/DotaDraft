@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Fast local gate before sharing a link. Full e2e needs Playwright + pool.
 set -euo pipefail
+npm run prisma:generate --workspace server
 npm run build --workspace shared
 npm test --workspace client
 # Match CI: optional pool regression tests only when Postgres is actually up.
