@@ -20,6 +20,7 @@ import { activeCustomTagsForTeam, heroNameSetForTag } from 'shared';
 import { teamHasHiddenCalibrationTags } from '../common/calibration-tags';
 import { buildEvaluationScoreWeights } from '../common/axis-weights-config';
 import { logPersistenceFailure } from '../common/log';
+import { persistWithRetry } from '../common/persist-retry';
 import {
   AXES,
   AXIS_LABEL,
@@ -322,7 +323,9 @@ export class EvaluationService {
     // reason (e.g. draft already deleted between getById above and now,
     // which shouldn't happen in practice but isn't worth failing the whole
     // request over).
-    await this.draftService.saveEvaluationResult(draftId, JSON.stringify(result)).catch((err) => {
+    await persistWithRetry(() => this.draftService.saveEvaluationResult(draftId, JSON.stringify(result)), {
+      label: 'evaluation.saveResult',
+    }).catch((err) => {
       logPersistenceFailure('evaluation.saveResult', err, { draftId });
     });
 

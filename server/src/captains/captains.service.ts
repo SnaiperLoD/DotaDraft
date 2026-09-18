@@ -17,6 +17,7 @@ import { currentCmStep, emptyCmSlots } from './captains-sequence';
 import type { Hero } from 'shared';
 import { HeroMetaService } from '../hero-meta/hero-meta.service';
 import { logPersistenceFailure } from '../common/log';
+import { persistWithRetry } from '../common/persist-retry';
 
 @Injectable()
 export class CaptainsService {
@@ -158,10 +159,14 @@ export class CaptainsService {
     if (row.status !== 'READY') {
       throw new BadRequestException('Captains session cannot record a fight yet');
     }
-    await this.prisma.captainsSession.update({
-      where: { id: row.id },
-      data: { status: 'COMPLETED' },
-    });
+    await persistWithRetry(
+      () =>
+        this.prisma.captainsSession.update({
+          where: { id: row.id },
+          data: { status: 'COMPLETED' },
+        }),
+      { label: 'captains.markFought' },
+    );
   }
 
   private applyClock(row: CaptainsRow): CaptainsRow {

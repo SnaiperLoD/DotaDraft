@@ -1,3 +1,13 @@
+import {
+  axisNarrativeBracket,
+  type AxisBracket,
+  type Contributor,
+  type NarrativeContext,
+} from '../assessment-core/axis-narrative';
+
+export type { AxisBracket, Contributor, NarrativeContext };
+export { axisNarrativeBracket };
+
 export type ScoreBracket = 'low' | 'mid' | 'high';
 
 // The axis-narrative bracket adds two EXTREME bands on top of the 3-value
@@ -7,8 +17,8 @@ export type ScoreBracket = 'low' | 'mid' | 'high';
 // ScoreBracket on purpose — evaluation.service.ts's win-condition summary
 // branches on `tempoBracket === 'high'` etc., and must keep seeing the 3-value
 // bracket, so percentileBracket() below is unchanged and only the axis
-// narrative (axis.analyzer.ts) switches to this 5-value one.
-export type AxisBracket = 'veryLow' | 'low' | 'mid' | 'high' | 'veryHigh';
+// narrative (axis.analyzer.ts) switches to this 5-value one. The 5-value
+// helper itself lives in assessment-core so core does not import evaluation.
 
 // Percentile-driven, not a fixed 0-10 cutoff — "average" means "near the
 // middle of how unique Ancient+Divine 5-hero drafts from OpenDota score on
@@ -22,29 +32,6 @@ export function percentileBracket(percentile: number): ScoreBracket {
   if (percentile < 30) return 'low';
   if (percentile < 70) return 'mid';
   return 'high';
-}
-
-// 5-value variant for axis descriptions: the extreme <10 / >90 bands read as a
-// serious weakness / defining strength (see percentileClause). The inner
-// 30/70 boundaries match percentileBracket so mid/low/high stay consistent
-// between the summary logic and the narrative.
-export function axisNarrativeBracket(percentile: number): AxisBracket {
-  if (percentile < 10) return 'veryLow';
-  if (percentile < 30) return 'low';
-  if (percentile < 70) return 'mid';
-  if (percentile < 90) return 'high';
-  return 'veryHigh';
-}
-
-export interface Contributor {
-  name: string;
-  value: number;
-}
-
-export interface NarrativeContext {
-  percentile: number;
-  bracket: AxisBracket;
-  top: Contributor[];
 }
 
 function percentileClause(label: string, ctx: NarrativeContext): string {

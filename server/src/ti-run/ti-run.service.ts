@@ -8,6 +8,7 @@ import {
 import { PrismaService } from '../prisma/prisma.service';
 import { DraftService } from '../draft/draft.service';
 import { OpponentPoolService } from '../opponent-pool/opponent-pool.service';
+import { persistWithRetry } from '../common/persist-retry';
 import {
   TI_BRACKETS,
   advanceBracket,
@@ -170,16 +171,20 @@ export class TiRunService {
     });
     const nextOccupy = advanced.champion || advanced.eliminated ? occupyAs : historicalMover(match, won);
     const status = advanced.champion ? 'CHAMPION' : advanced.eliminated ? 'ELIMINATED' : 'PLAYING';
-    const updated = await this.prisma.tiRun.update({
-      where: { id: row.id },
-      data: {
-        currentMatchId: advanced.nextMatchId,
-        losses: row.losses + (won ? 0 : 1),
-        status,
-        pathJson: JSON.stringify(path),
-        choiceJson: JSON.stringify({ ...choice, occupyAs: nextOccupy } satisfies TiChoice),
-      },
-    });
+    const updated = await persistWithRetry(
+      () =>
+        this.prisma.tiRun.update({
+          where: { id: row.id },
+          data: {
+            currentMatchId: advanced.nextMatchId,
+            losses: row.losses + (won ? 0 : 1),
+            status,
+            pathJson: JSON.stringify(path),
+            choiceJson: JSON.stringify({ ...choice, occupyAs: nextOccupy } satisfies TiChoice),
+          },
+        }),
+      { label: 'tiRun.recordFight' },
+    );
     return this.toView(updated);
   }
 

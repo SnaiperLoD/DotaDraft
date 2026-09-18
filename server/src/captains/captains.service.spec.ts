@@ -272,4 +272,50 @@ describe('CaptainsService', () => {
     expect(playerPicks).toHaveLength(5);
     expect(playerPicks).toContain(24);
   });
+
+  it('marks a READY session COMPLETED', async () => {
+    const { service, prisma } = makeService({
+      id: 'cm-1',
+      ownerToken: OWNER,
+      status: 'READY',
+      stepIndex: CM_STEPS.length,
+      playerReserveMs: CM_RESERVE_MS,
+      aiReserveMs: CM_RESERVE_MS,
+      stepStartedAt: new Date(),
+      actionsJson: emptyActions(),
+      draftId: 'draft-from-cm',
+      aiDraftId: 'ai-draft',
+      createdAt: new Date(),
+    });
+
+    await service.markFought('cm-1', OWNER);
+    expect(prisma.store.row.status).toBe('COMPLETED');
+  });
+
+  it('retries markFought update once on transient failure', async () => {
+    const { service, prisma } = makeService({
+      id: 'cm-1',
+      ownerToken: OWNER,
+      status: 'READY',
+      stepIndex: CM_STEPS.length,
+      playerReserveMs: CM_RESERVE_MS,
+      aiReserveMs: CM_RESERVE_MS,
+      stepStartedAt: new Date(),
+      actionsJson: emptyActions(),
+      draftId: 'draft-from-cm',
+      aiDraftId: 'ai-draft',
+      createdAt: new Date(),
+    });
+    const realUpdate = prisma.captainsSession.update.getMockImplementation()!;
+    let calls = 0;
+    prisma.captainsSession.update.mockImplementation(async (args: unknown) => {
+      calls += 1;
+      if (calls === 1) throw new Error('database is locked');
+      return realUpdate(args);
+    });
+
+    await service.markFought('cm-1', OWNER);
+    expect(prisma.store.row.status).toBe('COMPLETED');
+    expect(prisma.captainsSession.update).toHaveBeenCalledTimes(2);
+  });
 });

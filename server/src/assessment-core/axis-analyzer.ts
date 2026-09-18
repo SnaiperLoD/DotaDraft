@@ -1,7 +1,7 @@
 import type { HeroEvaluationValues, LocalizedLine } from 'shared';
 import { i18nLine } from 'shared';
 import type { Analyzer, DraftPick } from './analyzer-types';
-import { axisNarrativeBracket, type NarrativeContext, type AxisBracket } from '../evaluation/score-narrative';
+import { axisNarrativeBracket, type NarrativeContext, type AxisBracket } from './axis-narrative';
 import { percentileFor } from './axis-percentiles';
 import { roleAwareAxisValue, supportMiscastMultiplier, coreMiscastMultiplier } from '../common/role-fit';
 import { hardCarryPenalty, hardCarryAxisMultipliers, isHardCarry } from '../common/hard-carry';

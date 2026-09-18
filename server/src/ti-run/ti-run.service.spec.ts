@@ -29,7 +29,7 @@ function makeService(initial: TiRunRow) {
     },
   };
   const service = new TiRunService(prisma as never, {} as never, {} as never);
-  return { service, getRow: () => stored };
+  return { service, getRow: () => stored, prisma };
 }
 
 const baseRow = (): TiRunRow => ({
@@ -104,5 +104,24 @@ describe('TiRunService recordFight', () => {
     expect(view.status).toBe('ELIMINATED');
     expect(view.currentMatchId).toBeNull();
     expect(view.matches.find((m) => m.id === 'gf')?.winner).not.toBe('Team Spirit');
+  });
+
+  it('retries the tiRun update once on transient failure', async () => {
+    const { service, prisma } = makeService(baseRow());
+    const realUpdate = prisma.tiRun.update.getMockImplementation()!;
+    let calls = 0;
+    prisma.tiRun.update.mockImplementation(async (args) => {
+      calls += 1;
+      if (calls === 1) throw new Error('database is locked');
+      return realUpdate(args);
+    });
+
+    const view = await service.recordFight('run-1', 'owner-tok', {
+      outcome: 'Win',
+      advantageDirection: 'A',
+      confidenceTier: 'Moderate',
+    });
+    expect(view.path).toHaveLength(1);
+    expect(prisma.tiRun.update).toHaveBeenCalledTimes(2);
   });
 });

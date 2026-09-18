@@ -1,6 +1,6 @@
 # Next Session Priorities
 
-Updated 2026-09-11 after Valve CM draft (grid + coin flip + tests).
+Updated 2026-09-18 after P0/P1 engineering hygiene on `master`.
 Handoff / triage; `10-tech-debt-backlog.md` is the detailed source of
 truth. Deploy notes: `13-deploy.md`.
 
@@ -8,11 +8,13 @@ truth. Deploy notes: `13-deploy.md`.
 `/captains`, `/ti-run`). **Optional accounts shipped** (email+password;
 Google off until Console secrets). **Valve CM draft shipped** (7.40
 order, `HeroOrderID` grid, coin-flip first pick — client layout, not a
-screenshot). **Pre-release automation shipped**. **Soft-launch
-code-ready** — link share blocked only on Nick manual (URL, telemetry
-token, backup destination, Ko-fi confirm). Playoff attach **116/116**.
-Pro snapshot **2374** rows (no new OpenDota pull). Tunnel OFF.
-Calibration pause on.
+screenshot). **Pre-release automation shipped**. **P0/P1 engineering
+hygiene shipped** (2026-09-18) — `assessment-core`, eval
+`schemaVersion`, persist retry, request-id envelope, HTTP + Account/
+History RTL. **Soft-launch code-ready** — link share blocked only on
+Nick manual (URL, telemetry token, backup destination, Ko-fi confirm).
+Playoff attach **116/116**. Pro snapshot **2374** rows (no new OpenDota
+pull). Tunnel OFF. Calibration pause on.
 
 **Session working rules:** one invariant per session before UI. Don't
 mix Stryker into the same commit as a new client spectacle. Don't
@@ -25,11 +27,32 @@ three modes.
 ## Next session — priorities in order
 
 Pre-release **code** is done. Auth is done. Valve CM draft is done.
+Eval/Battle no longer import each other. Don't start another coverage
+sweep unless Nick names a page. Don't retune coefficients. Don't
+refetch OpenDota.
+
 Before sharing a link, Nick manual only — see **Soft launch — manual
 blockers** in `10-tech-debt-backlog.md` and **Pre-launch checklist** in
-`13-deploy.md`.
+`13-deploy.md`. Dual-role Support shares still need Nick's ask — not P0.
 
-Dual-role Support shares still need Nick's ask — not P0.
+### 0. Optional leftover engineering — pick one, or skip
+
+Not P0. Hygiene for the shared assessment path is done. Remaining
+bits are display/coverage, not battle math:
+
+- CaptainsPage / TiRunPage RTL — large (timers, Valve grid, splash).
+  Skip unless a concrete bug needs a regression net.
+- `AXIS_NARRATIVE` English copy stays in `evaluation/score-narrative`.
+  Axis brackets already live in `assessment-core`. Don't move copy
+  "for completeness."
+- Battle History still has no versioned full `BattleResultResponse`
+  (deferred). Don't stamp a payload without Nick.
+- HTTP still thin on `/health` and `/telemetry`. Health already has
+  unit specs. Not blocking.
+
+If Nick wants product instead of tests: launch manual (#1) or an
+isolated calibration hypothesis — ask first, don't "fix" WR
+divergence by retuning.
 
 ### 1. Launch manual — URL + ops — `open` (Nick)
 
@@ -119,15 +142,33 @@ shape.
 
 ## Still true, not this session's P0
 
-- Architectural / explainability leftover: Eval `score-narrative` still
-  sits outside `assessment-core` (display, not battle math). Battle
-  History still has no versioned full payload. Don't retune coefficients.
+- Architectural leftover: Eval tactical copy (`AXIS_NARRATIVE`) still
+  lives in `evaluation/score-narrative` (display, not battle math).
+  Axis bracket types live in `assessment-core`. Battle History still
+  has no versioned full payload. CaptainsPage / TiRunPage have no RTL.
+  Don't retune coefficients.
 - Calibration pause: don't change coefficients / tags / weights without
   asking; don't refetch unless asked. `realWinRateWeight` stays 2.
 - Named tunnel / domain / VPS — later, when a stable URL is actually
   needed (`13-deploy.md`).
 - Heterogeneous tags (`Army of Clones` / `Unseen` / `Prone To Burst`) —
   still the calibration leftover, still needs an isolated hypothesis.
+
+## Completed this pass (2026-09-18, engineering hygiene)
+
+- **`assessment-core`** — Eval and Battle depend on
+  `server/src/assessment-core/`, not on each other. Axis narrative
+  brackets live in core; `AXIS_NARRATIVE` copy stays in evaluation.
+- **Eval `schemaVersion`** — writes stamp 1; readers treat missing as 0
+  (`shared/parse-evaluation-result.ts`).
+- **`persistWithRetry`** — Battle History, eval save, Captains
+  `markFought`, TI `recordFight`. Not an outbox. Not Redis.
+- **HTTP integration** — draft / battle / auth / pool / error envelope
+  / evaluation / history / captains / ti-run (503 without pool).
+- **Client RTL** — DraftPage, RoleAssignment, AccountPage, HistoryPage.
+  CaptainsPage / TiRunPage left alone on purpose.
+- **Solo-repo rule** — no PRs unless Nick asks. `ENGINEERING-VERDICT.md`
+  is not in the repo.
 
 ## Completed this pass (2026-09-01, pre-release gate)
 
