@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "npm run dev --workspace client",
     "start": "npm run start --workspace server",
+    "prisma:generate": "npm run prisma:generate --workspace server",
     "build": "npm run build --workspace shared && npm run build --workspace server && npm run build --workspace client",
     "test:client": "npm test --workspace client",
     "pre-release:check": "powershell -ExecutionPolicy Bypass -File scripts/pre-release-check.ps1",

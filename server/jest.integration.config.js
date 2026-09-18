@@ -6,6 +6,8 @@ module.exports = {
   testMatch: ['<rootDir>/test/integration/**/*.integration-spec.ts'],
   globalSetup: '<rootDir>/test/integration/global-setup.ts',
   globalTeardown: '<rootDir>/test/integration/global-teardown.ts',
+  modulePathIgnorePatterns: ['<rootDir>/.stryker-tmp/'],
+  watchPathIgnorePatterns: ['<rootDir>/.stryker-tmp/'],
   // SQLite file-based DB shared across the suite — run test files serially
   // to avoid concurrent writers.
   maxWorkers: 1,

@@ -1,4 +1,5 @@
-import type { Hero, HeroEvaluationValues, DraftMode } from 'shared';
+import type { HeroEvaluationValues } from 'shared';
+export type { DraftHeroView, DraftStateView } from 'shared';
 
 export interface TiFormHero {
   heroId: number;
@@ -43,21 +44,4 @@ export interface DebugDatasetInfo {
 export interface HeroDebugMatrix {
   rows: HeroDebugRow[];
   datasets: DebugDatasetInfo[];
-}
-
-export interface DraftHeroView {
-  heroId: number;
-  hero: Hero;
-  assignedRole: string | null;
-  pickOrder: number;
-}
-
-export interface DraftStateView {
-  id: string;
-  status: 'PICKING' | 'ASSIGNING_ROLES' | 'COMPLETED';
-  mode: DraftMode;
-  heroes: DraftHeroView[];
-  pool: Hero[];
-  createdAt: string;
-  rerollsRemaining: number;
 }

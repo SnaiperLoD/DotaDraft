@@ -29,12 +29,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    refresh()
-      .catch(() => {
-        setUser(null);
+    let cancelled = false;
+    void api
+      .authMe()
+      .then((me) => {
+        if (cancelled) return;
+        setUser(me.user);
+        setGoogleEnabled(me.googleEnabled);
+        if (me.ownerToken && setSubmitterToken(me.ownerToken)) resetVisitorId();
       })
-      .finally(() => setReady(true));
-  }, [refresh]);
+      .catch(() => {
+        if (!cancelled) setUser(null);
+      })
+      .finally(() => {
+        if (!cancelled) setReady(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const applySession = useCallback((body: AuthSessionResponse) => {
     if (setSubmitterToken(body.ownerToken)) resetVisitorId();

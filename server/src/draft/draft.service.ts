@@ -5,6 +5,7 @@ import {
   ROLES,
   type DraftMode,
   type DraftPoolResponse,
+  type DraftStateView,
   type Hero,
   type PooledHeroRole,
   type RunLeaderboardEntry,
@@ -12,23 +13,6 @@ import {
 
 const POOL_SIZE = 5;
 const ROUNDS = 5;
-
-export interface DraftHeroView {
-  heroId: number;
-  hero: Hero;
-  assignedRole: string | null;
-  pickOrder: number;
-}
-
-export interface DraftStateView {
-  id: string;
-  status: string;
-  mode: DraftMode;
-  heroes: DraftHeroView[];
-  pool: Hero[];
-  createdAt: Date;
-  rerollsRemaining: number;
-}
 
 @Injectable()
 export class DraftService {
@@ -56,10 +40,10 @@ export class DraftService {
 
     return {
       id: draft.id,
-      status: draft.status,
+      status: draft.status as DraftStateView['status'],
       mode: (draft.mode as DraftMode) || 'battle',
       pool: poolHeroes,
-      createdAt: draft.createdAt,
+      createdAt: draft.createdAt.toISOString(),
       rerollsRemaining: draft.rerollsRemaining,
       heroes: draft.heroes
         .sort((a, b) => a.pickOrder - b.pickOrder)

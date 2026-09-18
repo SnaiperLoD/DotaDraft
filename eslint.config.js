@@ -20,7 +20,9 @@ module.exports = tseslint.config(
       'test-results/**',
       'server/scripts/**',
       'server/shared-src/**',
+      'server/.stryker-tmp/**',
       'server/test/integration/**',
+      '.cursor/**',
     ],
   },
   js.configs.recommended,
@@ -32,6 +34,7 @@ module.exports = tseslint.config(
           allowDefaultProject: [
             'eslint.config.js',
             'client/vite.config.ts',
+            'client/vitest.config.ts',
             'server/jest.config.js',
             'server/jest.integration.config.js',
             'server/jest.stryker.config.js',
@@ -98,6 +101,7 @@ module.exports = tseslint.config(
       'server/jest.config.js',
       'server/jest.integration.config.js',
       'server/jest.stryker.config.js',
+      'server/stryker.conf.js',
     ],
     languageOptions: {
       globals: globals.node,

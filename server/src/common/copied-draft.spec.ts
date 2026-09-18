@@ -6,7 +6,7 @@ import {
   resolveCopiedDraft,
   sameHeroSet,
   sanitizeDraftCodeInput,
-} from '../../shared-src/utils/copiedDraft'; // path Stryker --findRelatedTests can see
+} from 'shared/utils/copiedDraft';
 
 /** Bit-pack like encodeCopiedDraft without role/range checks — for illegal id codes. */
 function encodeUnchecked(ids: number[]): string {

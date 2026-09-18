@@ -7,6 +7,7 @@ function Invoke-Step([string]$Label, [scriptblock]$Block) {
   }
 }
 
+Invoke-Step 'Prisma clients' { npm run prisma:generate --workspace server }
 Invoke-Step 'shared build' { npm run build --workspace shared }
 Invoke-Step 'client unit tests' { npm test --workspace client }
 # Match CI: optional pool regression tests only when Postgres is actually up.

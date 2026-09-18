@@ -6,7 +6,7 @@
     "start": "ts-node src/main.ts",
     "start:dev": "nodemon --exec ts-node src/main.ts",
     "start:prod": "node dist/main.js",
-    "build": "node scripts/generate-clients.cjs && tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.build.json",
     "prisma:generate": "node scripts/generate-clients.cjs",
     "prisma:migrate": "prisma migrate dev --name init",
     "prisma:migrate:deploy": "prisma migrate deploy",

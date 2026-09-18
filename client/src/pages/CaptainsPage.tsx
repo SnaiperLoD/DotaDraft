@@ -40,12 +40,17 @@ function CmTimer({
   testId?: string;
 }) {
   const { t } = useTranslation();
-  const [now, setNow] = useState(Date.now());
+  const [now, setNow] = useState(0);
   useEffect(() => {
-    const id = window.setInterval(() => setNow(Date.now()), 250);
-    return () => window.clearInterval(id);
+    const tick = () => setNow(Date.now());
+    const kick = window.setTimeout(tick, 0);
+    const id = window.setInterval(tick, 250);
+    return () => {
+      window.clearTimeout(kick);
+      window.clearInterval(id);
+    };
   }, []);
-  const remainingMs = new Date(endsAt).getTime() - now;
+  const remainingMs = now === 0 ? 0 : new Date(endsAt).getTime() - now;
   const stepClock = acting ? Math.max(0, remainingMs) : 0;
   const reserve = acting ? Math.max(0, reserveMs + Math.min(0, remainingMs)) : reserveMs;
   return (
@@ -334,10 +339,8 @@ export default function CaptainsPage() {
     return next;
   }, [byAttr, banned, picked, query]);
 
-  useEffect(() => {
-    if (cursorId != null && enabledHeroes.has(cursorId)) return;
-    setCursorId(firstEnabledHero(columns, enabledHeroes));
-  }, [columns, enabledHeroes, cursorId]);
+  const activeCursorId =
+    cursorId != null && enabledHeroes.has(cursorId) ? cursorId : firstEnabledHero(columns, enabledHeroes);
 
   const canAct = Boolean(state && !busy && state.acting === 'player' && state.status === 'DRAFTING');
 
@@ -358,12 +361,12 @@ export default function CaptainsPage() {
                   : null;
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
-      if (canAct && cursorId != null) void handlePick(cursorId);
+      if (canAct && activeCursorId != null) void handlePick(activeCursorId);
       return;
     }
     if (!dir) return;
     event.preventDefault();
-    const next = moveHeroCursor(columns, enabledHeroes, cursorId, dir);
+    const next = moveHeroCursor(columns, enabledHeroes, activeCursorId, dir);
     if (next == null) return;
     setCursorId(next);
     window.requestAnimationFrame(() => {
@@ -538,7 +541,7 @@ export default function CaptainsPage() {
                             }`}
                             disabled={locked}
                             aria-disabled={!canAct || locked}
-                            tabIndex={cursorId === hero.id && !locked ? 0 : -1}
+                            tabIndex={activeCursorId === hero.id && !locked ? 0 : -1}
                             onFocus={() => {
                               if (!locked) setCursorId(hero.id);
                             }}
@@ -584,7 +587,13 @@ export default function CaptainsPage() {
       )}
 
       {state.status === 'ASSIGNING_ROLES' && playerDraft && (
-        <RoleAssignment heroes={playerDraft.heroes} onSubmit={handleRoles} submitting={busy} />
+        <RoleAssignment
+          heroes={playerDraft.heroes}
+          onSubmit={(assignments) => {
+            void handleRoles(assignments);
+          }}
+          submitting={busy}
+        />
       )}
 
       {(state.status === 'READY' || state.status === 'COMPLETED') && playerDraft && (

@@ -16,7 +16,7 @@ class CompositeSink implements TelemetrySink {
   }
 
   async flush(): Promise<void> {
-    await Promise.all(this.sinks.map((sink) => sink.flush?.()));
+    await Promise.all(this.sinks.map((sink) => Promise.resolve(sink.flush?.())));
   }
 }
 

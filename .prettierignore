@@ -1,9 +1,12 @@
 node_modules
+.cursor
 dist
 server/generated
 server/data
 server/scripts
+server/.stryker-tmp
 shared/dist
+shared/data/*.json
 database
 Blueprint
 playwright-report

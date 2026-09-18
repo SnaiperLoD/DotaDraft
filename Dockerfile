@@ -21,7 +21,9 @@ FROM deps AS build
 COPY shared shared
 COPY server server
 COPY tsconfig.base.json ./
-RUN npm run build --workspace shared && npm run build --workspace server
+RUN npm run prisma:generate --workspace server \
+  && npm run build --workspace shared \
+  && npm run build --workspace server
 
 FROM node:20-bookworm-slim AS runtime
 WORKDIR /app
