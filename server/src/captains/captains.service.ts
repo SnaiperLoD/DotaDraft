@@ -49,12 +49,12 @@ export class CaptainsService {
     if (!playerIsFirst) {
       row = await this.resolveAiUntilPlayer(row, roster);
     }
-    return this.toView(row, roster);
+    return this.toView(row);
   }
 
   async get(id: string, ownerToken: string): Promise<CaptainsStateView> {
     const row = await this.loadOwned(id, ownerToken);
-    return this.toView(row, await this.heroService.findAll());
+    return this.toView(row);
   }
 
   async act(
@@ -83,21 +83,21 @@ export class CaptainsService {
     const token = this.requireToken(ownerToken);
     let row = await this.loadOwned(id, token);
     if (row.status !== 'DRAFTING') {
-      return this.toView(row, await this.heroService.findAll());
+      return this.toView(row);
     }
 
     const roster = await this.heroService.findAll();
     row = this.applyClock(row);
     const afterPlayer = await this.applyCurrentIfPlayer(row, roster, heroId, timedOut);
     if (!afterPlayer) {
-      return this.toView(await this.loadOwned(id, token), roster);
+      return this.toView(await this.loadOwned(id, token));
     }
     row = afterPlayer;
     row = await this.resolveAiUntilPlayer(row, roster);
     if (row.stepIndex >= CM_STEPS.length && !row.draftId) {
       row = await this.finish(row, token, roster);
     }
-    return this.toView(row, roster);
+    return this.toView(row);
   }
 
   async assignRoles(
@@ -123,7 +123,7 @@ export class CaptainsService {
       where: { id: row.id },
       data: { status: 'READY' },
     });
-    return this.toView(updated, await this.heroService.findAll());
+    return this.toView(updated);
   }
 
   async getAiOpponent(sessionId: string, ownerToken: string): Promise<PooledDraftSummary> {
@@ -278,7 +278,7 @@ export class CaptainsService {
     });
   }
 
-  private toView(row: CaptainsRow, _roster: Hero[]): CaptainsStateView {
+  private toView(row: CaptainsRow): CaptainsStateView {
     const slots = parseSlots(row.actionsJson);
     const step = currentCmStep(slots, row.stepIndex);
     const stepEndsAt = new Date(row.stepStartedAt.getTime() + (step?.timeMs ?? 0)).toISOString();

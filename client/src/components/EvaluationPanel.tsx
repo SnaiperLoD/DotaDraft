@@ -210,10 +210,25 @@ export default function EvaluationPanel({ draftId, heroes, autoEvaluate = false,
   };
 
   useEffect(() => {
-    if (!autoEvaluate || result || loading) return;
-    void handleEvaluate();
-    // One-shot on mount / draftId change.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (!autoEvaluate) return;
+    let cancelled = false;
+    void api
+      .getEvaluation(draftId)
+      .then((res) => {
+        if (cancelled) return;
+        setResult(res);
+        track(
+          'evaluate_success',
+          { totalScore: res.totalScore, archetype: res.archetype?.id ?? null },
+          draftId,
+        );
+      })
+      .catch((err) => {
+        if (!cancelled) setError((err as Error).message);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [autoEvaluate, draftId]);
 
   if (!result) {

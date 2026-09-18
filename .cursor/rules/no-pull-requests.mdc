@@ -1,0 +1,12 @@
+---
+description: Do not create GitHub pull requests; solo workflow is branch + push only
+alwaysApply: true
+---
+
+# No pull requests
+
+This is a solo repository. **Do not create pull requests** — not with `gh pr create`, not via the GitHub UI, and not as a "helpful extra" after a push.
+
+After a requested commit, push the branch if the user asked to push. Stop there. Do not open a PR, do not draft PR text, do not offer a PR URL.
+
+If the user explicitly says "create a PR" in that message, then and only then create one.

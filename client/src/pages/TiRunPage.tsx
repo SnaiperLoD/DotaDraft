@@ -253,8 +253,8 @@ export default function TiRunPage() {
               tiRunId={run.id}
               backLabel={t('tiRun.backToRun')}
               onBack={() => setPlayView('bracket')}
-              onFought={async () => {
-                setRun(await api.getTiRun(run.id));
+              onFought={() => {
+                void api.getTiRun(run.id).then(setRun);
               }}
             />
           </Suspense>
@@ -343,7 +343,13 @@ export default function TiRunPage() {
           )}
 
           {draft && status === 'ASSIGNING_ROLES' && (
-            <RoleAssignment heroes={draft.heroes} onSubmit={handleRoles} submitting={busy} />
+            <RoleAssignment
+              heroes={draft.heroes}
+              onSubmit={(assignments) => {
+                void handleRoles(assignments);
+              }}
+              submitting={busy}
+            />
           )}
 
           {readyToPlay && (

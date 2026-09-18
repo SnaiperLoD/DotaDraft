@@ -101,7 +101,7 @@ export default function DraftPage() {
         .catch((err) => setError(err.message));
       return;
     }
-    setBattleView(false);
+    queueMicrotask(() => setBattleView(false));
     loadPool();
   }, [resumeId, openFight]);
   useEffect(() => {

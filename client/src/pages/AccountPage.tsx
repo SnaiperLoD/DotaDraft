@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -34,10 +34,7 @@ export default function AccountPage() {
   const [registerPassword, setRegisterPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-
-  useEffect(() => {
-    if (params.get('error') === 'google') setError(t('account.errors.googleFailed'));
-  }, [params, t]);
+  const shownError = error ?? (params.get('error') === 'google' ? t('account.errors.googleFailed') : null);
 
   const onLogin = async (event: FormEvent) => {
     event.preventDefault();
@@ -115,9 +112,9 @@ export default function AccountPage() {
         <div className="rule" />
       </div>
       <p className="account-lead">{t('account.lead')}</p>
-      {error ? (
+      {shownError ? (
         <p className="error-text" data-testid="account-error">
-          {error}
+          {shownError}
         </p>
       ) : null}
 

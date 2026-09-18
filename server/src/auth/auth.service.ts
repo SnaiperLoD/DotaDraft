@@ -84,10 +84,10 @@ export class AuthService {
     await this.prisma.authSession.deleteMany({ where: { id: sessionId } });
   }
 
-  async startGoogle(
+  startGoogle(
     guestToken: string,
     req: { protocol?: string; headers: Record<string, string | string[] | undefined> },
-  ): Promise<{ url: string }> {
+  ): { url: string } {
     if (!googleEnabled()) throw new NotFoundException('Google sign-in is not configured');
     const origin = publicOrigin(req);
     const redirectUri = googleRedirectUri(origin);
