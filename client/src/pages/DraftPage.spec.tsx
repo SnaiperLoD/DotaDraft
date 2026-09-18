@@ -74,7 +74,7 @@ describe('DraftPage', () => {
       }),
     );
     vi.mocked(api.getDraft).mockResolvedValue(draftState({ id: 'draft-1' }));
-    vi.mocked(api.getTiForm).mockResolvedValue(null);
+    vi.mocked(api.getTiForm).mockRejectedValue(new Error('no ti form'));
     vi.mocked(api.getSynergyPreview).mockResolvedValue([]);
   });
 
