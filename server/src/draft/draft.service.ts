@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, NotFoundException, UnauthorizedExcepti
 import { PrismaService } from '../prisma/prisma.service';
 import { HeroService } from '../hero/hero.service';
 import {
+  parseEvaluationResult,
   ROLES,
   type DraftMode,
   type DraftPoolResponse,
@@ -199,8 +200,7 @@ export class DraftService {
       select: { evaluationResult: true },
     });
     if (!draft?.evaluationResult) return null;
-    const parsed = JSON.parse(draft.evaluationResult) as { totalScore: number };
-    return parsed.totalScore;
+    return parseEvaluationResult(draft.evaluationResult)?.totalScore ?? null;
   }
 
   // Persists the most recent EvaluationResult for History (Blueprint/10-tech-debt-backlog.md,
@@ -314,14 +314,9 @@ export class DraftService {
       const heroRoles: PooledHeroRole[] | null = heroes.every((h) => h.assignedRole)
         ? heroes.map((h) => ({ heroId: h.heroId, role: h.assignedRole as string }))
         : null;
-      let evaluationScore: number | null = null;
-      if (draft?.evaluationResult) {
-        try {
-          evaluationScore = (JSON.parse(draft.evaluationResult) as { totalScore: number }).totalScore;
-        } catch {
-          evaluationScore = null;
-        }
-      }
+      const evaluationScore = draft?.evaluationResult
+        ? (parseEvaluationResult(draft.evaluationResult)?.totalScore ?? null)
+        : null;
       const draftOwner = draft?.ownerToken ?? null;
       return {
         draftId: r.draftId,

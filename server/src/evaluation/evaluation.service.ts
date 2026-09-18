@@ -5,11 +5,8 @@ import { HeroMetaService } from '../hero-meta/hero-meta.service';
 import { HeroService } from '../hero/hero.service';
 import { createSynergyAnalyzer } from './analyzers/synergy.analyzer';
 import { counterAnalyzer } from './analyzers/counter.analyzer';
-import { createAxisAnalyzer } from './analyzers/axis.analyzer';
 import { createProSimilarityAnalyzer } from './analyzers/pro-similarity.analyzer';
 import { percentileBracket } from './score-narrative';
-import { percentileFor } from './axis-percentiles';
-import type { Analyzer, DraftPick } from './analyzer.interface';
 import type {
   EvaluationResult,
   EvaluationSummary,
@@ -18,14 +15,24 @@ import type {
   Hero,
   HeroEvaluationValues,
 } from 'shared';
-import { i18nLine, isI18nLine } from 'shared';
-import { classifyDraftArchetype } from './draft-archetype';
+import { EVAL_RESULT_SCHEMA_VERSION, i18nLine, isI18nLine } from 'shared';
 import { activeCustomTagsForTeam, heroNameSetForTag } from 'shared';
 import { teamHasHiddenCalibrationTags } from '../common/calibration-tags';
 import { buildEvaluationScoreWeights } from '../common/axis-weights-config';
 import { logPersistenceFailure } from '../common/log';
-import { AXES, AXIS_LABEL, axisAverage, type BattlePick } from '../battle/battle-resolution';
-import { formatFundamentalsDescription, fundamentalsTargetAxes } from '../battle/custom-tags';
+import {
+  AXES,
+  AXIS_LABEL,
+  axisAverage,
+  type BattlePick,
+  formatFundamentalsDescription,
+  fundamentalsTargetAxes,
+  createAxisAnalyzer,
+  percentileFor,
+  type Analyzer,
+  type DraftPick,
+  classifyDraftArchetype,
+} from '../assessment-core';
 
 const FUNDAMENTALS = heroNameSetForTag('The Fundamentals');
 
@@ -298,6 +305,7 @@ export class EvaluationService {
     );
 
     const result: EvaluationResult = {
+      schemaVersion: EVAL_RESULT_SCHEMA_VERSION,
       draftId,
       totalScore,
       breakdown,

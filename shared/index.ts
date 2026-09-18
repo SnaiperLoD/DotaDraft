@@ -1,6 +1,7 @@
 export * from './types/hero';
 export * from './types/draft';
 export * from './types/evaluation';
+export { EVAL_RESULT_SCHEMA_VERSION, parseEvaluationResult } from './parse-evaluation-result';
 export * from './types/opponent-pool';
 export * from './types/battle';
 export * from './types/i18n';

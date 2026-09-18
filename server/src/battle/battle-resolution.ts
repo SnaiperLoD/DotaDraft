@@ -11,9 +11,8 @@ import type {
 } from 'shared';
 import { i18nLine } from 'shared';
 import { buildExplanation } from './battle-explanation';
-import { roleAwareAxisValue, supportMiscastMultiplier, coreMiscastMultiplier } from '../common/role-fit';
 import { hardCarryAxisMultipliers, isHardCarry } from '../common/hard-carry';
-import { utilityStackAxisMultipliers, utilityStackBreadth } from '../common/utility-stacking';
+import { utilityStackAxisMultipliers } from '../common/utility-stacking';
 import { manualPowerMultiplier } from '../common/manual-power-overrides';
 import { shutdownHeroes, shutdownHeroMultipliers } from '../common/shutdown';
 import {
@@ -29,22 +28,17 @@ import {
   publicBattleTagChips,
 } from './custom-tags';
 import { axisWeightsConfig, type AxisWeightsConfig } from '../common/axis-weights-config';
+import { AXES, AXIS_LABEL } from '../assessment-core/axes';
+import { axisAverage } from '../assessment-core/axis-average';
+import type { BattlePick } from '../assessment-core/team-pick';
 
 export type { AxisWeightsConfig };
+export { AXES, AXIS_LABEL, axisAverage };
+export type { BattlePick };
 export interface MatchupLookup {
   getMatchupWinRate(heroId: number, opponentHeroId: number): number | null;
   getSynergyWinRate(heroId: number, allyHeroId: number): number | null;
   getWinRate(heroId: number): number | null;
-}
-
-// A team member plus the role they were assigned — assignedRole is null
-// when no role data is available (legacy Opponent Pool rows committed
-// before roles were stored there; see Blueprint/10-tech-debt-backlog.md).
-// roleFitValue() already treats null as "no boost", so this degrades
-// gracefully rather than erroring.
-export interface BattlePick {
-  hero: Hero;
-  assignedRole: string | null;
 }
 
 export type ConfidenceTier = 'Low' | 'Moderate' | 'High';
@@ -81,23 +75,6 @@ export interface BattleResult {
   topAxis: keyof HeroEvaluationValues | null;
   tagChips: BattleTagChip[];
 }
-
-export const AXES: (keyof HeroEvaluationValues)[] = [
-  'teamfight',
-  'tempo',
-  'scaling',
-  'mobility',
-  'objectives',
-  'control',
-  'durability',
-  'burst',
-  'map_control',
-  'saving',
-  'initiating',
-  'skirmish_rate',
-  'camp_stacking',
-  'resource_efficiency',
-];
 
 // Win-weight bands per Blueprint/06-battle-engine.md Resolution — the
 // favored side's win probability at each Confidence Tier. Moderate/Low
@@ -210,44 +187,6 @@ function realWinRateEdge(team: Hero[], lookup: MatchupLookup): number {
     .filter((wr): wr is number => wr !== null)
     .map((wr) => wr - 0.5);
   return edges.length === 0 ? 0 : edges.reduce((s, d) => s + d, 0) / edges.length;
-}
-
-// Role-fit-adjusted: a pick's contribution to the axis average is boosted
-// per common/role-fit.ts if their assigned role cares about this axis and
-// they're already strong on it. assignedRole is null for opponent sides
-// without stored role data (see BattlePick) — roleFitValue no-ops on null.
-// Deliberately NOT axis-weighted — this is the informational "team average
-// on this axis" value (e.g. Evaluation Engine breakdown rows), which should
-// stay the true value even for a temporarily-discounted axis.
-// tagEffects optional and defaults to a no-op — every pre-existing caller
-// (simulate-self-play.ts's Q1 tracking, etc.) keeps working unchanged.
-// heroPowerMultiplier/heroAxisMultiplier are applied per-pick before the
-// team sum (Custom Tags that single out named heroes, either on every axis
-// or one specific axis); axisMultiplier is applied to the whole team's
-// average for that axis after summing (Custom Tags that target an axis,
-// not a hero) — see custom-tags.ts for which tags use which. `phase` is
-// optional and only matters for phaseHeroPowerMultiplier (The Button's
-// late-game-only boost) — omitted, that dimension is a no-op, matching
-// every pre-existing caller that doesn't pass a phase at all.
-export function axisAverage(
-  team: BattlePick[],
-  axis: keyof HeroEvaluationValues,
-  tagEffects?: CustomTagEffects,
-  phase?: GamePhase,
-): number {
-  const raw =
-    team.reduce((sum, p) => {
-      const base =
-        roleAwareAxisValue(axis, p.hero, p.assignedRole, utilityStackBreadth(p.hero)) *
-        supportMiscastMultiplier(p.hero, p.assignedRole) *
-        coreMiscastMultiplier(p.hero, p.assignedRole);
-      const heroMult = tagEffects?.heroPowerMultiplier.get(p.hero.id) ?? 1;
-      const heroAxisMult = tagEffects?.heroAxisMultiplier.get(p.hero.id)?.[axis] ?? 1;
-      const phaseHeroMult = (phase && tagEffects?.phaseHeroPowerMultiplier.get(phase)?.get(p.hero.id)) ?? 1;
-      return sum + base * heroMult * heroAxisMult * phaseHeroMult;
-    }, 0) / team.length;
-  const axisMult = tagEffects?.axisMultiplier[axis] ?? 1;
-  return raw * axisMult;
 }
 
 function overallPowerForPhase(team: BattlePick[], phase: GamePhase, tagEffects?: CustomTagEffects): number {
@@ -435,29 +374,6 @@ function winningHighlights(
     .slice(0, limit)
     .map((h) => h.line);
 }
-
-export const AXIS_LABEL: Record<keyof HeroEvaluationValues, string> = {
-  // "damage output", not "teamfight" — see score-narrative.ts's
-  // AXIS_NARRATIVE.teamfight comment (label-only rename, key unchanged).
-  teamfight: 'damage output',
-  tempo: 'tempo',
-  scaling: 'late-game scaling',
-  mobility: 'mobility',
-  objectives: 'objective pressure',
-  control: 'control',
-  durability: 'durability',
-  burst: 'burst damage',
-  map_control: 'map control',
-  saving: 'ally saving power',
-  initiating: 'initiation potential',
-  skirmish_rate: 'skirmish rate',
-  camp_stacking: 'camp stacking',
-  // Not in AXES below (Evaluation Engine-only axis, see
-  // calibrate-evaluation-values.ts). Entry exists only because AXIS_LABEL's
-  // type is total over HeroEvaluationValues. Battle advantages now send the
-  // raw axis key; AXIS_LABEL still feeds Evaluation Fundamentals copy.
-  resource_efficiency: 'resource efficiency',
-};
 
 export interface BattleResolveExtras {
   // Display-aligned lanes / opponent roles. Fight math still uses the

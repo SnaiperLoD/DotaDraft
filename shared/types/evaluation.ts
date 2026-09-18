@@ -50,6 +50,8 @@ export interface EvaluationCustomTag {
 }
 
 export interface EvaluationResult {
+  // Payload schema version — absent on History rows saved before v1.
+  schemaVersion?: number;
   draftId: string;
   totalScore: number;
   breakdown: AnalyzerResult[];

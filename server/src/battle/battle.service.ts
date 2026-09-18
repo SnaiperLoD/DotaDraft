@@ -12,7 +12,8 @@ import { buildLaneResults } from './battle-lanes';
 import { ROLES, resolveCopiedDraft, displayProPlayerName, opponentTeamCaption } from 'shared';
 import type { BattleResultResponse, Hero, PooledDraftSummary, PooledHeroRole, ResolvedOutcome } from 'shared';
 import { logPersistenceFailure } from '../common/log';
-import { classifyPicksArchetype } from '../evaluation/draft-archetype';
+import { persistWithRetry } from '../common/persist-retry';
+import { classifyPicksArchetype } from '../assessment-core';
 import { flipCoin, shouldCoinFlipChallenge } from './challenge-mirror';
 
 @Injectable()
@@ -159,21 +160,23 @@ export class BattleService {
     // Persisted for History (Blueprint/10-tech-debt-backlog.md, "Сохранять
     // в истории результаты боёв") — best-effort, same reasoning as
     // EvaluationService: a storage hiccup shouldn't fail the fight itself.
-    await this.draftService
-      .saveBattleResult(draftId, {
-        resolvedOutcome: result.resolvedOutcome,
-        advantageDirection: result.advantageDirection,
-        confidenceTier: result.confidenceTier,
-        opponentSource: opponent.source,
-        opponentTeamName: opponent.teamName,
-        opponentLeagueName: opponent.leagueName,
-        opponentHeroIds: opponent.heroIds,
-        stage,
-        opponentMatchId: opponent.matchId,
-      })
-      .catch((err) => {
-        logPersistenceFailure('battle.saveResult', err, { draftId });
-      });
+    await persistWithRetry(
+      () =>
+        this.draftService.saveBattleResult(draftId, {
+          resolvedOutcome: result.resolvedOutcome,
+          advantageDirection: result.advantageDirection,
+          confidenceTier: result.confidenceTier,
+          opponentSource: opponent.source,
+          opponentTeamName: opponent.teamName,
+          opponentLeagueName: opponent.leagueName,
+          opponentHeroIds: opponent.heroIds,
+          stage,
+          opponentMatchId: opponent.matchId,
+        }),
+      { label: 'battle.saveResult' },
+    ).catch((err) => {
+      logPersistenceFailure('battle.saveResult', err, { draftId });
+    });
 
     // Best-effort, same reasoning as saveBattleResult above — the
     // leaderboard (Blueprint/10-tech-debt-backlog.md, "Лидерборд драфтов")
@@ -184,7 +187,10 @@ export class BattleService {
     // won exactly when the caller lost, and vice versa.
     const opponentOutcome: ResolvedOutcome = result.resolvedOutcome === 'Win' ? 'Lose' : 'Win';
     if (!opponent.id.startsWith('challenge-') && !opponent.id.startsWith('captains-ai-')) {
-      await this.opponentPoolService.recordDraftOutcome(opponent.id, opponentOutcome).catch((err) => {
+      await persistWithRetry(
+        () => this.opponentPoolService.recordDraftOutcome(opponent.id, opponentOutcome),
+        { label: 'battle.recordDraftOutcome' },
+      ).catch((err) => {
         logPersistenceFailure('battle.recordDraftOutcome', err, { draftId, opponentId: opponent.id });
       });
     }
@@ -253,22 +259,24 @@ export class BattleService {
     const archetype = classifyPicksArchetype(args.teamA);
     const opponentArchetype = classifyPicksArchetype(args.teamB);
 
-    await this.draftService
-      .saveBattleResult(args.draftId, {
-        resolvedOutcome,
-        advantageDirection: 'Even',
-        confidenceTier: 'Low',
-        opponentSource: args.opponent.source,
-        opponentTeamName: args.opponent.teamName,
-        opponentLeagueName: args.opponent.leagueName,
-        opponentHeroIds: args.opponent.heroIds,
-        stage: null,
-        coinFlip: true,
-        opponentMatchId: args.opponent.matchId,
-      })
-      .catch((err) => {
-        logPersistenceFailure('battle.saveResult', err, { draftId: args.draftId });
-      });
+    await persistWithRetry(
+      () =>
+        this.draftService.saveBattleResult(args.draftId, {
+          resolvedOutcome,
+          advantageDirection: 'Even',
+          confidenceTier: 'Low',
+          opponentSource: args.opponent.source,
+          opponentTeamName: args.opponent.teamName,
+          opponentLeagueName: args.opponent.leagueName,
+          opponentHeroIds: args.opponent.heroIds,
+          stage: null,
+          coinFlip: true,
+          opponentMatchId: args.opponent.matchId,
+        }),
+      { label: 'battle.saveResult' },
+    ).catch((err) => {
+      logPersistenceFailure('battle.saveResult', err, { draftId: args.draftId });
+    });
 
     return {
       resolvedOutcome,

@@ -119,9 +119,9 @@ shape.
 
 ## Still true, not this session's P0
 
-- Architectural / explainability boundaries (pure axis primitives out of
-  `battle/*`, shared assessment snapshot, model/data version on persisted
-  Eval/Battle) — parked engineering.
+- Architectural / explainability leftover: Eval `score-narrative` still
+  sits outside `assessment-core` (display, not battle math). Battle
+  History still has no versioned full payload. Don't retune coefficients.
 - Calibration pause: don't change coefficients / tags / weights without
   asking; don't refetch unless asked. `realWinRateWeight` stays 2.
 - Named tunnel / domain / VPS — later, when a stable URL is actually

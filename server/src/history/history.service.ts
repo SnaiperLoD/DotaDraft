@@ -3,9 +3,9 @@ import { PrismaService } from '../prisma/prisma.service';
 import { HeroService } from '../hero/hero.service';
 import {
   deriveTiPlacement,
+  parseEvaluationResult,
   tiBracketById,
   type DraftMode,
-  type EvaluationResult,
   type HistoryEntry,
   type HistoryTiSummary,
   type TiPathFight,
@@ -77,7 +77,7 @@ export class HistoryService {
             assignedRole: dh.assignedRole,
             pickOrder: dh.pickOrder,
           })),
-        evaluation: draft.evaluationResult ? (JSON.parse(draft.evaluationResult) as EvaluationResult) : null,
+        evaluation: draft.evaluationResult ? parseEvaluationResult(draft.evaluationResult) : null,
         battles: draft.battleResults.map((b) => {
           let opponentHeroIds: number[] = [];
           try {

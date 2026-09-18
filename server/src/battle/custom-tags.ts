@@ -2,6 +2,14 @@ import type { Hero, HeroEvaluationValues } from 'shared';
 import { MANA_BOOSTER_BENEFICIARIES, heroNameSetForTag, activeCustomTagsForTeam } from 'shared';
 import type { GamePhase } from './battle-resolution';
 import { isHardCarry } from '../common/hard-carry';
+import type { CustomTagEffects } from '../assessment-core/analyzer-types';
+import {
+  fundamentalsTargetAxes,
+  formatFundamentalsDescription,
+} from '../assessment-core/fundamentals-display';
+
+export type { CustomTagEffects };
+export { fundamentalsTargetAxes, formatFundamentalsDescription };
 
 // Custom tags — a hand-authored layer on top of the calibrated
 // evaluation_values/axis-weights model (self-play outlier investigation,
@@ -20,17 +28,6 @@ import { isHardCarry } from '../common/hard-carry';
 
 export type TagCategory = 'blessing' | 'curse';
 type Axis = keyof HeroEvaluationValues;
-
-/** Pure Fundamentals target picker — same tiers as blessingEffectsFor. */
-export function fundamentalsTargetAxes(
-  rawAxisAverages: Partial<Record<Axis, number>>,
-  carrierCount: number,
-): Axis[] {
-  if (carrierCount < 2) return [];
-  const ranked = (Object.entries(rawAxisAverages) as [Axis, number][]).sort((a, b) => a[1] - b[1]);
-  const axisCount = carrierCount >= 4 ? 4 : carrierCount === 3 ? 2 : 1;
-  return ranked.slice(0, axisCount).map(([axis]) => axis);
-}
 
 export function fundamentalsBoostMagnitude(carrierCount: number): number {
   if (carrierCount >= 4) return 1.25;
@@ -64,27 +61,6 @@ export function publicBattleTagChips(
   return chips;
 }
 
-function joinAxisLabels(labels: string[]): string {
-  if (labels.length === 0) return '';
-  if (labels.length === 1) return labels[0];
-  if (labels.length === 2) return `${labels[0]} and ${labels[1]}`;
-  return `${labels.slice(0, -1).join(', ')}, and ${labels[labels.length - 1]}`;
-}
-
-/** Eval Active Combos copy — axis labels come from AXIS_LABEL, not raw keys. */
-export function formatFundamentalsDescription(axisLabels: string[], carrierCount: number): string {
-  if (carrierCount < 2) {
-    return "Boosts the team's weakest axis once 2+ Fundamentals heroes are drafted.";
-  }
-  if (axisLabels.length === 0) {
-    return "Boosts the team's weakest axis (or axes) — strength scales with how many Fundamentals heroes are drafted.";
-  }
-  if (axisLabels.length === 1) {
-    return `Boosts this draft's weakest axis: ${axisLabels[0]}.`;
-  }
-  return `Boosts this draft's weakest axes: ${joinAxisLabels(axisLabels)}.`;
-}
-
 // Multiplicative-only, four independent dimensions so effects compose
 // cleanly regardless of order and can never push a value negative:
 //   heroPowerMultiplier      — named hero, every axis, every phase.
@@ -94,13 +70,6 @@ export function formatFundamentalsDescription(axisLabels: string[], carrierCount
 //                              buffs that aren't a flat power change).
 //   phaseHeroPowerMultiplier — named hero, every axis, ONE specific phase
 //                              only (The Button's late-game-only boost).
-export interface CustomTagEffects {
-  heroPowerMultiplier: Map<number, number>;
-  axisMultiplier: Partial<Record<Axis, number>>;
-  heroAxisMultiplier: Map<number, Partial<Record<Axis, number>>>;
-  phaseHeroPowerMultiplier: Map<GamePhase, Map<number, number>>;
-}
-
 export function emptyTagEffects(): CustomTagEffects {
   return {
     heroPowerMultiplier: new Map(),

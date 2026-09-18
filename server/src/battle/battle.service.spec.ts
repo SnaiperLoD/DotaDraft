@@ -80,6 +80,21 @@ describe('BattleService coin-flip challenge', () => {
     expect(opponentPoolService.recordDraftOutcome).not.toHaveBeenCalled();
   });
 
+  it('retries saveBattleResult once on transient failure and still returns the fight result', async () => {
+    const { service, draftService, heroes } = makeService();
+    jest.spyOn(Math, 'random').mockReturnValue(0.1);
+    draftService.saveBattleResult
+      .mockRejectedValueOnce(new Error('transient db'))
+      .mockResolvedValue(undefined);
+    const copiedDraft = encodeCopiedDraft(heroes.map((h) => ({ heroId: h.heroId, role: h.assignedRole })));
+
+    const result = await service.fight('d1', 'owner', { copiedDraft });
+
+    expect(result.coinFlip).toBe(true);
+    expect(result.resolvedOutcome).toBe('Win');
+    expect(draftService.saveBattleResult).toHaveBeenCalledTimes(2);
+  });
+
   it('lands Lose when the coin rng is at or above 0.5', async () => {
     const { service, heroes } = makeService();
     jest.spyOn(Math, 'random').mockReturnValue(0.5);

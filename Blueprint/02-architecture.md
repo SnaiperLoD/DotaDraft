@@ -140,9 +140,9 @@ The pool is optional at process boot. When it is unavailable:
 - opponent pulls, pool commits and pool leaderboards return a controlled 503;
 - `/health` reports `degraded` with HTTP 200 while SQLite remains healthy.
 
-Several SQLite fields intentionally store JSON as strings. This is acceptable
-for the current MVP, but those payloads need explicit versions before their
-shape evolves further.
+Several SQLite fields store JSON as strings. `Draft.evaluationResult`
+now carries `schemaVersion` (1 on write, missing = 0 on read). Other
+JSON blobs still need explicit versions before their shape evolves.
 
 ## Analytical boundaries
 
@@ -151,11 +151,15 @@ Evaluation and Battle are separate product concepts:
 - Evaluation describes one composition and must not decide a battle outcome;
 - Battle compares two compositions and then applies the game resolver.
 
-They currently share role-aware axis math and some tag/archetype behavior.
-Some of that sharing is implemented through direct cross-domain imports. This
-is known architectural debt: shared deterministic assessment functions should
-move to an `assessment-core` layer so Evaluation and Battle depend on the core,
-not on each other.
+They share role-aware axis math and some tag/archetype behavior through
+`server/src/assessment-core/`. Evaluation and Battle both depend on that
+core; they do not import each other. Battle-only resolver logic
+(`resolveBattle`, tag blessings/curses) stays in `battle/*`. Eval-only
+summary copy still lives in `evaluation/score-narrative`.
+
+Persisted `Draft.evaluationResult` JSON is stamped with `schemaVersion`
+(current: 1). Readers treat a missing field as version 0. Battle History
+rows remain scalar summaries, not a versioned full `BattleResultResponse`.
 
 Offline scripts may build data and model artifacts, but runtime code only reads
 committed snapshots. Runtime requests never refetch OpenDota or recompute hero
