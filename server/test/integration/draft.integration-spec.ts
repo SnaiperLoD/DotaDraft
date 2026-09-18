@@ -5,30 +5,8 @@ import { Test } from '@nestjs/testing';
 import request from 'supertest';
 import { AppModule } from '../../src/app.module';
 import { PrismaService } from '../../src/prisma/prisma.service';
-import { OWNER_TOKEN_HEADER, ROLES } from 'shared';
-
-const OWNER = 'integration-owner';
-const OTHER = 'other-owner';
-
-function withOwner(req: request.Test, token = OWNER) {
-  return req.set(OWNER_TOKEN_HEADER, token);
-}
-
-// Round 1 is served by POST /draft/pool, which writes nothing; the Draft
-// row is created by POST /draft, which carries the first pick. Helper so
-// each test below can get to a real draft in one line.
-async function startDraftWithFirstPick(
-  server: ReturnType<INestApplication['getHttpServer']>,
-  rerollUsed = false,
-  token = OWNER,
-) {
-  const poolRes = await request(server).post('/draft/pool').expect(201);
-  const heroId = poolRes.body.pool[0].id as number;
-  const createRes = await withOwner(request(server).post('/draft'), token)
-    .send({ seed: poolRes.body.seed, heroId, rerollUsed })
-    .expect(201);
-  return { draftId: createRes.body.id as string, firstHeroId: heroId, createRes, poolRes };
-}
+import { ROLES } from 'shared';
+import { OTHER, OWNER, startDraftWithFirstPick, withOwner } from './helpers';
 
 // Exercises the real HTTP stack (Controller -> Service -> Prisma -> SQLite)
 // for the Draft flow, against the seeded real hero dataset (see
