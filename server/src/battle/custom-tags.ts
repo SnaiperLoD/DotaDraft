@@ -305,11 +305,8 @@ const DISABLE_BATTERY_BUFF = 1.25;
 const HAUNT_ABSOLUTE = heroNameSetForTag('Haunt Absolute');
 const HAUNT_ABSOLUTE_BUFF = 1.12;
 
-// Mirage Tax — hidden. Naga/TB illusion economy inflates objectives/mobility
-// without a matching real-body contribution (opposite problem to PL). Same
-// flat-power shape as Summoning Sickness. Starting magnitude.
-const MIRAGE_TAX = heroNameSetForTag('Mirage Tax');
-const MIRAGE_TAX_PENALTY = 0.85;
+// Mirage Tax retired 2026-09-21. On r2_f_farm (hidden OFF) Naga/TB mean
+// div ≈ 0, so the −15% was a dead crutch. Army of Clones stays.
 
 // Paper Utility — hidden. KotL/Snapfire/Treant/Batrider/Enchantress read
 // sky-high on utility axes that don't convert. Flat power penalty, same
@@ -517,13 +514,6 @@ export function blessingEffectsFor(
   if (!isTagDisabled('Haunt Absolute')) {
     for (const h of team) {
       if (HAUNT_ABSOLUTE.has(h.name)) mulHeroPower(effects, h.id, HAUNT_ABSOLUTE_BUFF);
-    }
-  }
-
-  // Mirage Tax: hidden flat power penalty (illusion-economy overrate).
-  if (!isTagDisabled('Mirage Tax')) {
-    for (const h of team) {
-      if (MIRAGE_TAX.has(h.name)) mulHeroPower(effects, h.id, MIRAGE_TAX_PENALTY);
     }
   }
 

@@ -945,10 +945,6 @@
       "name": "Haunt Absolute",
       "description": "Haunt is global presence that axes under-count as personal strength (and Global's map-control buff is inert while that axis weighs 0). +12% personal power, always active. Never shown to the player."
     },
-    "Mirage_Tax": {
-      "name": "Mirage Tax",
-      "description": "Illusion farm and body-count inflate objectives/mobility without a matching real-body fight presence. -15% personal power, always active. Never shown to the player."
-    },
     "Paper_Utility": {
       "name": "Paper Utility",
       "description": "Utility axes (stacks, map presence, control) read high without converting to outcomes. -25% personal power, always active. Never shown to the player."

@@ -31,6 +31,7 @@ import { axisWeightsConfig, type AxisWeightsConfig } from '../common/axis-weight
 import { AXES, AXIS_LABEL } from '../assessment-core/axes';
 import { axisAverage } from '../assessment-core/axis-average';
 import type { BattlePick } from '../assessment-core/team-pick';
+import { BATTLE_SHADOW, shadowOverallPowerForPhase } from './battle-shadow';
 
 export type { AxisWeightsConfig };
 export { AXES, AXIS_LABEL, axisAverage };
@@ -190,12 +191,15 @@ function realWinRateEdge(team: Hero[], lookup: MatchupLookup): number {
 }
 
 function overallPowerForPhase(team: BattlePick[], phase: GamePhase, tagEffects?: CustomTagEffects): number {
+  if (BATTLE_SHADOW !== 'off') {
+    return shadowOverallPowerForPhase(team, phase, tagEffects);
+  }
   const axisWeightedSum = AXES.reduce(
     (sum, axis) => sum + axisAverage(team, axis, tagEffects, phase) * axisWeightForPhase(axis, phase),
     0,
   );
   const axisTotalWeight = AXES.reduce((sum, axis) => sum + axisWeightForPhase(axis, phase), 0);
-  return axisWeightedSum / axisTotalWeight;
+  return axisTotalWeight === 0 ? 0 : axisWeightedSum / axisTotalWeight;
 }
 
 // Each phase's overallPower is its own correctly-normalized weighted

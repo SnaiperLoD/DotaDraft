@@ -65,7 +65,7 @@ Battle Engine may consider:
 
 - Hero matchups: `/api/heroes/{id}/matchups` — direct hero-vs-hero win rate, returned by OpenDota already aggregated. No custom querying needed.
 - Strategic conflicts / synergy fit: OpenDota Explorer SQL over `player_matches` (self-joined on `match_id` + team side) for ally win-rate-together data. No built-in endpoint exists for this — queries must be anchored on a specific `hero_id` to stay fast (~1-2s); unfiltered scans over `player_matches`/`public_matches` time out on the shared Explorer.
-- Role matchups / power spikes / scaling / objectives: derived from Hero Knowledge Base `evaluation_values` — all 13 axes (`teamfight`, `tempo`, `scaling`, `mobility`, `objectives`, `control`, `durability`, `burst`, `map_control`, `saving`, `initiating`, `skirmish_rate`, `camp_stacking`) are calibrated against real OpenDota data blended with hand-tagged ability data (benchmarks + Explorer composite queries + per-ability CSV tagging), not the original role-formula, and all are consumed by Battle Engine's `AXES` list; see `09-hero-knowledge-base.md` for the full methodology. `skirmish_rate`/`camp_stacking` were renamed from `aggression`/`farm_priority` mid-session after their real meaning was pinned down more precisely (`10-tech-debt-backlog.md`, "self-play outlier investigation"). `map_control`'s weight is currently 0 (disabled, pending `vision_ability_tier` review) — still computed and shown, just not decision-affecting.
+- Role matchups / power spikes / scaling / objectives: derived from Hero Knowledge Base `evaluation_values`. **Production** `overallPower` still consumes the shared `AXES` list (13 descriptive axes, including `resource_efficiency`) via `axis-weights.json`. That is the live fight. It is no longer the intended win model. See the split below. `map_control` and `camp_stacking` weights are 0. `resource_efficiency` weight is 0 as of 2026-09-21 (all phases). A missing phase/base key still defaults to weight **1**, not 0 — `control` / `mobility` / `initiating` still ride that default wherever a phase block omits them.
 - No reliable Immortal/6000+ MMR-only data exists in OpenDota's public sample — `public_matches.avg_rank_tier >= 80` returned effectively zero rows in testing, most likely because high-MMR players commonly keep match history private. Practical proxy: average `heroStats` brackets 6+7 (Ancient + Divine) rather than Divine alone, for a larger and still high-skill sample.
 
 ## Non-Linearity Rule
@@ -162,12 +162,24 @@ Returns:
 
 Explanation is not optional decoration — it is the primary value of the output. A resolved outcome or confidence tier without explanation is not useful.
 
+## Eval radar vs Battle win formula (2026-09-21)
+
+Eval answers «что это за драфт» and keeps the 13-axis radar, synergy, counters, pro similarity. Battle answers «кто выигрывает». Подсовывать радар в `overallPower` не получилось: честный self-play (open tags ON, hidden calibration OFF, `realWinRateWeight=0`, seed=1 × 100k) даёт r(favored, realWR)≈0.094, MAE 8.68 п.п., ±7 coverage 46.5%. Ремикс тех же весов (S1/S2/S3) раньше уже умер.
+
+**Прод сейчас** всё ещё считает фазовое взвешенное среднее 13 осей. Shadow не подключён, пока `DOTADRAFT_BATTLE_SHADOW` пуст.
+
+**Кандидат, не влитый:** `r2_f_farm` в `server/src/battle/battle-shadow.ts`. Пять combat-осей (burst, scaling, objectives, teamfight, durability) схлопнуты в один PC1; у `summon_based` durability/objectives внутри PC1 ×0.7; пропущенный ключ веса = 0, не 1; `resource_efficiency` = 0; вход scaling в PC1 заменён на `clamp(5 + scaling − tempo)`. На том же пуле: r 0.186, MAE 8.11, ±7 51.2%, ≥10 п.п. = 43. Full с 11 hidden-тегами всё ещё сильнее (r 0.381, MAE 6.39, ±7 61.4%). Hidden не умер: MAE героев с тегом 12.2 п.п. против 5.6 без тега.
+
+Mirage Tax снят (Naga/TB на голой формуле около нуля). Остальные hidden не трогать без нового approve. Recap боя (`axisDeltas`, explanation, story) всё ещё называет 13 осей Eval — если f вливать, текст врёт. Это отдельный пункт бэклога, не эта формула.
+
+Цифры, хвост и запреты для внешнего разбора: `14-analytical-handoff.md`. Артефакты прогонов: `artifacts/self-play/r0-2026-09-21`, `r1-2026-09-21`, `r2-2026-09-21`, `r2-farm-2026-09-21`, `r2-residual-farm-2026-09-21`.
+
 ## Important
 
 Battle Engine does NOT use:
 Draft Score
 
-Evaluation Engine and Battle Engine are independent. The Resolution mechanic above is Battle Engine's own internal weighting, not a reuse of Evaluation Engine's Draft Score.
+Evaluation Engine and Battle Engine are independent. The Resolution mechanic above is Battle Engine's own internal weighting, not a reuse of Evaluation Engine's Draft Score. Sharing `axis-weights.json` mid weights with Eval Total Score is a historical coupling, not a requirement that the two scores match.
 
 ## Future Calibration (post-MVP)
 

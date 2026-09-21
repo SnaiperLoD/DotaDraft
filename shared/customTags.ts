@@ -434,15 +434,6 @@ export const CUSTOM_TAG_DEFINITIONS: CustomTagDefinition[] = [
     heroNames: ['Spectre'],
   },
   {
-    name: 'Mirage Tax',
-    rarity: 'rare',
-    visible: false,
-    revealable: false, // always-hidden — calibration only
-    description:
-      'Illusion farm and body-count inflate objectives/mobility without a matching real-body fight presence. -15% personal power, always active. Never shown to the player.',
-    heroNames: ['Naga Siren', 'Terrorblade'],
-  },
-  {
     name: 'Paper Utility',
     rarity: 'rare',
     visible: false,

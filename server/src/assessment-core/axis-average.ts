@@ -22,23 +22,29 @@ import type { TeamPick } from './team-pick';
 // optional and only matters for phaseHeroPowerMultiplier (The Button's
 // late-game-only boost) — omitted, that dimension is a no-op, matching
 // every pre-existing caller that doesn't pass a phase at all.
+export function pickAxisValue(
+  pick: TeamPick,
+  axis: keyof HeroEvaluationValues,
+  tagEffects?: CustomTagEffects,
+  phase?: GamePhase,
+): number {
+  const base =
+    roleAwareAxisValue(axis, pick.hero, pick.assignedRole, utilityStackBreadth(pick.hero)) *
+    supportMiscastMultiplier(pick.hero, pick.assignedRole) *
+    coreMiscastMultiplier(pick.hero, pick.assignedRole);
+  const heroMult = tagEffects?.heroPowerMultiplier.get(pick.hero.id) ?? 1;
+  const heroAxisMult = tagEffects?.heroAxisMultiplier.get(pick.hero.id)?.[axis] ?? 1;
+  const phaseHeroMult = (phase && tagEffects?.phaseHeroPowerMultiplier.get(phase)?.get(pick.hero.id)) ?? 1;
+  return base * heroMult * heroAxisMult * phaseHeroMult;
+}
+
 export function axisAverage(
   team: TeamPick[],
   axis: keyof HeroEvaluationValues,
   tagEffects?: CustomTagEffects,
   phase?: GamePhase,
 ): number {
-  const raw =
-    team.reduce((sum, p) => {
-      const base =
-        roleAwareAxisValue(axis, p.hero, p.assignedRole, utilityStackBreadth(p.hero)) *
-        supportMiscastMultiplier(p.hero, p.assignedRole) *
-        coreMiscastMultiplier(p.hero, p.assignedRole);
-      const heroMult = tagEffects?.heroPowerMultiplier.get(p.hero.id) ?? 1;
-      const heroAxisMult = tagEffects?.heroAxisMultiplier.get(p.hero.id)?.[axis] ?? 1;
-      const phaseHeroMult = (phase && tagEffects?.phaseHeroPowerMultiplier.get(phase)?.get(p.hero.id)) ?? 1;
-      return sum + base * heroMult * heroAxisMult * phaseHeroMult;
-    }, 0) / team.length;
+  const raw = team.reduce((sum, p) => sum + pickAxisValue(p, axis, tagEffects, phase), 0) / team.length;
   const axisMult = tagEffects?.axisMultiplier[axis] ?? 1;
   return raw * axisMult;
 }

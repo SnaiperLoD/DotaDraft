@@ -625,18 +625,13 @@ describe('Haunt Absolute', () => {
   });
 });
 
-describe('Mirage Tax', () => {
-  it('penalises Naga Siren by 15% personal power', () => {
+describe('Mirage Tax retired', () => {
+  it('Naga and Terrorblade keep Army of Clones only', () => {
     const naga = makeHero({ id: 1, name: 'Naga Siren' });
-    const effects = blessingEffectsFor([naga], {});
-    // Army of Clones +6% composed with Mirage Tax -15%: 1.06 * 0.85
-    expect(effects.heroPowerMultiplier.get(naga.id)).toBeCloseTo(1.06 * 0.85);
-  });
-
-  it('penalises Terrorblade the same way (also Army of Clones)', () => {
-    const tb = makeHero({ id: 1, name: 'Terrorblade' });
-    const effects = blessingEffectsFor([tb], {});
-    expect(effects.heroPowerMultiplier.get(tb.id)).toBeCloseTo(1.06 * 0.85);
+    const tb = makeHero({ id: 2, name: 'Terrorblade' });
+    const effects = blessingEffectsFor([naga, tb], {});
+    expect(effects.heroPowerMultiplier.get(naga.id)).toBeCloseTo(1.06);
+    expect(effects.heroPowerMultiplier.get(tb.id)).toBeCloseTo(1.06);
   });
 });
 

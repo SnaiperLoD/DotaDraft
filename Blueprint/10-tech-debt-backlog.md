@@ -4,7 +4,8 @@ Slim open list. Calibration history lives in `09-hero-knowledge-base.md`,
 `05-evaluation-engine.md`, `06-battle-engine.md`. Session order lives in
 `12-next-session-priorities.md`.
 
-Last slim: 2026-09-21 (Captains/TI RTL + health/telemetry HTTP).
+Last slim: 2026-09-21 (`b993ae0` Captains/TI RTL + health/telemetry HTTP;
+next session is launch ops or one calibration hypothesis).
 Statuses: `open` | `partial` | `parked` | `rejected`.
 Shipped items live in the footnote, not this list.
 
@@ -153,7 +154,31 @@ revisit only as one isolated hypothesis.
 ### New predictors (farm-dependence, lane gold@10) — `open`
 Axis reshuffles (S1/S2/S3) failed. Next upside is new predictors, not weight
 remix. `lane gold@10` as a new axis was **`rejected`** (redundant with
-`skirmish_rate`).
+`skirmish_rate`). R1/R2 Battle shadows (PC1 combat collapse, body-in-PC1,
+explicit missing=0) live under `DOTADRAFT_BATTLE_SHADOW`. Production
+`resource_efficiency` weight written to 0 (mid/early/late) 2026-09-21.
+Eval Total Score drops it too — shared mid skeleton. Radar axis stays.
+External review packet: `14-analytical-handoff.md`. Do not treat the shadow as production.
+
+### Hidden residual after r2_f_farm — `open`
+Offline on Naked+open `r2_f_farm` (2026-09-21): tagged MAE 12.2 vs
+untagged 5.6 — hidden still mops structured error. 8 flat tags still
+earn their sign. **Mirage Tax retired 2026-09-21** (mean div ≈ 0, n=2):
+definition, Battle −15%, Eval mirror, locales. Naga/TB keep Army of Clones.
+Biggest f-holes without a hidden tag:
+Sand King, Pugna, Pangolier. Do not write a 12th named crutch; freeze f
+first. Recap copy is a separate item below.
+
+### Battle recap vs collapsed Battle features — `open`
+Separate from the scorer. `buildExplanation` / `buildBattleStory` /
+`axisDeltas` / Q2 “#1 driver” still speak the 13 Eval axes (`AXIS_LABEL`,
+`maxByAxes`, burst/scaling/objectives/durability as separate reasons).
+R1/R2 `overallPower` collapses combat into PC1, damps `summon_based`
+inside that blob, and zeros missing JSON keys. If the shadow f ships,
+the fight recap will name the wrong axis for a decision that was one
+combat spectrum. Recalibrate recap beats, driver ranking, and axis
+labels to the Battle feature set **after f is frozen**. Do not retune
+coefficients to make the story “feel fair.” Not this calibration wave.
 
 ### T_camp0 (`camp_stacking` → 0) — `partial`
 Offline evidence green (+0.028 r). Production weights **not** written —
@@ -202,8 +227,8 @@ fallback already handles that.
 Visage Support plugged (aggregate copy + presumed Support 0.605 /
 Offlane 0.395). Carry/Mid still `no_info` on purpose. Tiny / Sand King /
 Night Stalker / Naga Support eval copied; their presumed Support share
-is still 0 (miscast still fires). Don't rewrite those shares without
-Nick.
+is still 0, so Battle still fires the support-miscast −10% on 4/5.
+Don't rewrite those shares without Nick — next-session fork **1b**.
 ### Captains friend lobby — `parked`
 CM vs AI shipped on isolated `/captains` (Valve pick-screen HUD).
 Don't also build a lobby unless Nick picks that shape.

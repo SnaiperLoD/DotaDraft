@@ -14,6 +14,8 @@ Battle Engine отвечает на вопрос:
 
 Они не должны смешиваться.
 
+Практическое следствие (2026-09-21, калибровка R0–R2): общий Hero Knowledge Base — да. Общая вин-формула — нет. `evaluation_values` остаются описательным радаром Eval. Battle в проде всё ещё считает `overallPower` как взвешенное среднее тех же осей, и честный self-play это не оправдывает (r≈0.09). Кандидат замены живёт только в shadow (`DOTADRAFT_BATTLE_SHADOW=r2_f_farm`) и в прод не влит. Не «выровнять» Eval Total Score и Battle, подкрутив общие веса. Детали и цифры: `14-analytical-handoff.md`, `06-battle-engine.md`.
+
 ---
 
 ## Draft Score Rule

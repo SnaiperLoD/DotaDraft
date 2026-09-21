@@ -1,22 +1,20 @@
 # Next Session Priorities
 
-Updated 2026-09-21 after Captains/TI RTL + health/telemetry HTTP on `master`.
-Handoff / triage; `10-tech-debt-backlog.md` is the detailed source of
-truth. Deploy notes: `13-deploy.md`.
+Updated 2026-09-21 after leftover engineering landed on `master`
+(`b993ae0`). Handoff / triage; `10-tech-debt-backlog.md` is the detailed
+source of truth. Deploy notes: `13-deploy.md`.
 
 **Status check:** three isolated modes on `master` (`/draft`,
 `/captains`, `/ti-run`). **Optional accounts shipped** (email+password;
-Google off until Console secrets). **Valve CM draft shipped** (7.40
-order, `HeroOrderID` grid, coin-flip first pick — client layout, not a
-screenshot). **Pre-release automation shipped**. **P0/P1 engineering
-hygiene shipped** (2026-09-18). **CaptainsPage / TiRunPage RTL +
-`/health` `/telemetry` HTTP integration shipped** (2026-09-21).
-**Soft-launch code-ready** — link share blocked on Nick manual (URL,
-Docker Desktop currently **off** on the session machine, backup
-destination, Ko-fi confirm). Local `.env` has `TELEMETRY_READ_TOKEN`
-set; other knobs still come from compose / `.env.example`. Playoff
-attach **116/116**. Pro snapshot **2374** rows (no new OpenDota pull).
-Tunnel OFF. Calibration pause on.
+Google off until Console secrets). **Valve CM draft shipped**.
+**Pre-release automation shipped**. **P0/P1 engineering hygiene
+shipped** (2026-09-18). **Captains/TI RTL + `/health` `/telemetry` HTTP
+shipped** (`b993ae0`). **Soft-launch code-ready** — link share blocked
+on Nick manual (URL, Docker Desktop was **off** last pass, backup
+destination, Ko-fi confirm). Local `.env` has `TELEMETRY_READ_TOKEN`;
+other knobs still come from compose / `.env.example`. Playoff attach
+**116/116**. Pro snapshot **2374** rows (no new OpenDota pull). Tunnel
+OFF. Calibration pause on.
 
 **Session working rules:** one invariant per session before UI. Don't
 mix Stryker into the same commit as a new client spectacle. Don't
@@ -28,45 +26,43 @@ three modes.
 
 ## Next session — priorities in order
 
-Pre-release **code** is done. Auth is done. Valve CM draft is done.
-Eval/Battle no longer import each other. Captains/TI RTL and
-health/telemetry HTTP are in. Don't start another coverage sweep unless
-Nick names a page. Don't retune coefficients. Don't refetch OpenDota.
+Leftover engineering (Captains/TI RTL, health/telemetry HTTP) is
+**closed** on `b993ae0`. Don't start another coverage sweep. Don't
+rewrite the CM HUD. Don't retag Medusa. Don't move `AXIS_NARRATIVE`.
+Don't stamp a versioned `BattleResultResponse`. Don't retune
+coefficients. Don't refetch OpenDota.
 
-Before sharing a link, Nick manual only — see **Soft launch — manual
-blockers** in `10-tech-debt-backlog.md` and **Pre-launch checklist** in
-`13-deploy.md`. Dual-role Support shares still need Nick's ask — not P0.
+Two forks — pick **one**, not both:
 
-### 0. Optional leftover engineering — mostly shipped (2026-09-21)
+### 1. Launch manual — URL + ops — `open` (Nick, not code)
 
-Not P0. Shared assessment hygiene was already done. This pass closed the
-display/coverage leftovers worth a regression net:
+See **Soft launch — manual blockers** in `10-tech-debt-backlog.md` and
+**Pre-launch checklist** in `13-deploy.md`. `TELEMETRY_READ_TOKEN` is
+already set locally. Still needed: Docker Desktop up, URL (quick tunnel
+vs VPS + named tunnel), Ko-fi confirm or `VITE_TIP_JAR_URL`/`"false"`,
+`npm run backup:compose` once + off-box destination. Optional Google:
+`GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` / `AUTH_PUBLIC_ORIGIN` and
+Console redirect `{origin}/api/auth/google/callback`. Fast gate:
+`npm run pre-release:check`. Don't share a link until Docker is up.
 
-- **CaptainsPage / TiRunPage RTL — shipped.** Splash skip, Valve HUD
-  (4 attrs / 5+7 slots / First Pick / Bonus / no search), type-to-filter,
-  one-fight READY/COMPLETED, TI jersey + resume + eval/fight split +
-  champion/elim. Don't rewrite the HUD. Don't retag Medusa.
-- **HTTP `/health` + `/telemetry` — shipped** (integration). Live sqlite
-  ping, pool-disabled without 503, ingest 201, funnel 404/401/200 +
-  `Cache-Control: no-store`, unified envelope on bad ingest.
-- `AXIS_NARRATIVE` English copy stays in `evaluation/score-narrative`.
-  Axis brackets already live in `assessment-core`. Don't move copy
-  "for completeness."
-- Battle History still has no versioned full `BattleResultResponse`
-  (deferred). Don't stamp a payload without Nick.
+### 1b. Calibration C — `open` (ask first, one hypothesis)
 
-If Nick wants product instead of tests: launch manual (#1) or an
-isolated calibration hypothesis — ask first, don't "fix" WR
-divergence by retuning.
+Coding fork if Nick is not launching. **One** isolated hypothesis per
+session, explicit approve, no OpenDota refetch:
 
-### 1. Launch manual — URL + ops — `open` (Nick)
+- **Dual-role Support shares** — Tiny / Sand King / Night Stalker /
+  Naga already have Support eval copy; `hero-meta` Support share is
+  still 0, so Battle still fires the support-miscast −10% on 4/5.
+  Visage Support is already plugged (0.605 / 0.395). Visage Carry/Mid
+  stay `no_info`.
+- **Heterogeneous tags** — `Army of Clones` / `Unseen` /
+  `Prone To Burst`: one multiplier still pulls members opposite ways.
+  Flavor tradeoff accepted once; revisit only as one isolated
+  hypothesis (`10-tech-debt-backlog.md`).
 
-Pick quick tunnel vs VPS + named tunnel. Set `TELEMETRY_READ_TOKEN`.
-Confirm Ko-fi or `VITE_TIP_JAR_URL`. Run `npm run backup:compose` once;
-store `./backups/` off-box. Fast gate: `npm run pre-release:check`.
-If you want the Google button, add `GOOGLE_CLIENT_ID` /
-`GOOGLE_CLIENT_SECRET` / `AUTH_PUBLIC_ORIGIN` and the Console redirect
-`{origin}/api/auth/google/callback`.
+Not C: `realWinRateWeight` stays 2. `T_camp0` still needs a separate
+«пиши в axis-weights» approve. Don't "fix WR divergence" by remixing
+weights.
 
 ### 2. TI occupy-slot: optional eyes-on — `partial`
 
@@ -84,13 +80,13 @@ run draft → fight → GF if you want to see the fight screen yourself.
 Pick/ban order is 7.40. Grid is Valve `HeroOrderID`, two portraits wide,
 splash crops, type-to-filter (no search box). First pick is a coin flip;
 player stays Radiant. Bonus 130s. Client layout, not a screenshot overlay.
-Tests: client Vitest (`cmFilter`, `valveHeroOrder`, 2-wide grid), server
-captains Jest (3-2-2 / 4-1-2, coin flip, inverted finish), e2e filter +
-Bonus (Chromium install still local-machine). Don't rewrite AI unless a
-concrete draft looks wrong. Don't retag Medusa. Don't call the old
+Tests: client Vitest (`cmFilter`, `valveHeroOrder`, 2-wide grid,
+`CaptainsPage.spec.tsx` RTL), server captains Jest (3-2-2 / 4-1-2, coin
+flip, inverted finish), e2e filter + Bonus (Chromium install still
+local-machine). Don't rewrite AI unless a concrete draft looks wrong. Don't retag Medusa. Don't call the old
 alphabetical+search HUD 1:1.
 
-### 5. Dual-role Support presumed shares — ask first
+### 5. Dual-role Support presumed shares — see 1b (C)
 
 Visage Support `no_info` is plugged (aggregate copy + hero-meta Support
 0.605 / Offlane 0.395). Tiny / Sand King / Night Stalker / Naga got the
@@ -143,7 +139,8 @@ shape.
   shipped; Steam ids recycled. Don't map Oversight onto T1.
 - Full-suite Stryker / CI mutation job — `copiedDraft` scoped ~95% is
   enough until the next isolated server change.
-- Calibration / `realWinRateWeight` / heterogeneous tags — ask first.
+- Calibration / `realWinRateWeight` / a second C hypothesis in the
+  same session — pick one in 1b, not both.
 
 ## Still true, not this session's P0
 
@@ -152,12 +149,27 @@ shape.
   Axis bracket types live in `assessment-core`. Battle History still
   has no versioned full payload. Captains/TI RTL shipped 2026-09-21.
   Don't retune coefficients.
+- **Battle recap vs axis collapse** — after R1/R2 f (PC1 / body-in-PC1)
+  freeze, retune `buildExplanation` / `buildBattleStory` / `axisDeltas`
+  so the fight write-up names the compressed Battle features, not the
+  13 Eval axes. Do not mix into the current scorer wave. See
+  `10-tech-debt-backlog.md`.
 - Calibration pause: don't change coefficients / tags / weights without
   asking; don't refetch unless asked. `realWinRateWeight` stays 2.
 - Named tunnel / domain / VPS — later, when a stable URL is actually
   needed (`13-deploy.md`).
 - Heterogeneous tags (`Army of Clones` / `Unseen` / `Prone To Burst`) —
   still the calibration leftover, still needs an isolated hypothesis.
+
+## Completed this pass (2026-09-21, calibration R0–R2)
+
+Honest KPI only (`realWinRateWeight=0` during runs, restored to 2). Open tags stayed ON. Hidden tags stayed OFF for the naked measurement. No OpenDota refetch.
+
+- Naked 13-axis Battle: r 0.094, MAE 8.68 п.п., ±7 46.5%. Full + hidden: r 0.381, MAE 6.39, ±7 61.4%.
+- Shipped to production, with approve: `resource_efficiency` weight 0 (mid/early/late); Mirage Tax removed (Battle, Eval mirror, definition, locales). Naga/TB keep Army of Clones.
+- Not shipped: `DOTADRAFT_BATTLE_SHADOW=r2_f_farm` (PC1 combat collapse + body-in-PC1 + missing weight 0 + farm-need inside PC1). r 0.186, ±7 51.2%. H-DIS helps disable supports and burns the far tail — not stacked.
+- Hidden tags still earn their sign except the retired Mirage Tax. Untagged holes that got worse: Sand King, Pugna, Pangolier.
+- Docs: `01-core-rules.md`, `05-evaluation-engine.md`, `06-battle-engine.md`, `14-analytical-handoff.md`. Fight recap still speaks 13 Eval axes; do not retune copy in the same pass as the scorer.
 
 ## Completed this pass (2026-09-21, leftover engineering)
 
@@ -460,17 +472,17 @@ User's request (2026-08-06): heroes who genuinely play both a core and a support
 - **Vite's `optimizeDeps` cache for the `shared` workspace package doesn't auto-invalidate** on a `shared/dist` rebuild — if a shared-package change doesn't seem to reach the client, `rm -rf client/node_modules/.vite` before restarting, not just restart alone.
 - **`calibrate-evaluation-values.ts` only writes `heroes.json`** — the running server reads SQLite. Always follow with `npm run seed`.
 - **The Browser pane sometimes reports "not displayed" and `requestAnimationFrame` genuinely stops firing** while it's in that state (confirmed this session — not just a screenshot-tool quirk, real app rendering pauses too). A workaround that worked repeatedly: grab a `renderer`/`scene`/`camera` (or whatever's needed) via a temporary `window.__debugHook`, call the render/action manually and synchronously, read the result, then remove the hook before finishing. Small `canvas.toDataURL('image/jpeg', 0.5-0.6)` at a downscaled size (~90-130px) transcribes reliably through the tool round-trip; the full-size PNG capture got corrupted more than once.
-- **`axisWeightForPhase()` default for a missing axis key is 1, not 0** — why `resource_efficiency` and custom tags stay out of Battle Engine's real `AXES`/`WEIGHTS`.
+- **`axisWeightForPhase()` default for a missing axis key is 1, not 0.** `resource_efficiency` is now an explicit 0 in every phase (2026-09-21). `control` / `mobility` / `initiating` still inherit 1 wherever a phase block omits them. Shadow `r2_f` treats a missing key as 0; production does not, until that shadow is approved into the live path.
 - **`resize_window` with custom pixel dimensions renders broken** — only `preset` values are reliable.
 
 ## Where to start
 
-Leftover Captains/TI RTL and health/telemetry HTTP are closed. Next is
-either Nick launch ops (`13-deploy.md` — Docker is off on this machine)
-or one isolated calibration hypothesis (dual-role Support shares **or**
-heterogeneous tags — ask first, not both). 89 nameless pro rows are a
-display fallback, not a refetch. Tick log stays research. Lobby stays
-parked. Don't share a link until Docker is up and a URL exists.
+`b993ae0` closed leftover engineering. Next session is **launch ops**
+(#1, Nick-manual, Docker first) **or** **one** calibration hypothesis
+(#1b) after Nick names Support shares vs heterogeneous tags. 89
+nameless pro rows are a display fallback, not a refetch. Tick log stays
+research. Lobby stays parked. Don't share a link until Docker is up
+and a URL exists. Don't open a coverage sweep.
 
 ---
 
@@ -490,8 +502,8 @@ locked.
 **HTTP.** `/health` live sqlite; empty `POOL_DATABASE_URL` stays 200
 `pool: disabled`. `/telemetry` ingest + funnel token gate + envelope.
 
-**Launch.** `pre-release:check` OK. Local `.env` only has
-`TELEMETRY_READ_TOKEN`. Docker Desktop not running — URL / compose
+**Launch.** `pre-release:check` OK. Landed `b993ae0`. Local `.env` only
+has `TELEMETRY_READ_TOKEN`. Docker Desktop not running — URL / compose
 health / `backup:compose` still Nick-manual.
 
 ---

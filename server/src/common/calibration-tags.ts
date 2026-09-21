@@ -18,8 +18,6 @@ const TEMPO_MONSTER_PENALTY = 0.75;
 const TEMPO_MONSTER_HARD_CARRY_PENALTY = 0.9;
 const SUMMONING_SICKNESS = heroNameSetForTag('Summoning Sickness');
 const SUMMONING_SICKNESS_PENALTY = 0.7;
-const MIRAGE_TAX = heroNameSetForTag('Mirage Tax');
-const MIRAGE_TAX_PENALTY = 0.85;
 const PAPER_UTILITY = heroNameSetForTag('Paper Utility');
 const PAPER_UTILITY_PENALTY = 0.75;
 const SHOWSTOPPER_TAX = heroNameSetForTag('Showstopper Tax');
@@ -71,9 +69,6 @@ export function calibrationMultipliersForTeam(team: Hero[]): Map<number, Calibra
     if (SUMMONING_SICKNESS.has(h.name)) {
       m.power *= SUMMONING_SICKNESS_PENALTY;
     }
-    if (MIRAGE_TAX.has(h.name)) {
-      m.power *= MIRAGE_TAX_PENALTY;
-    }
     if (PAPER_UTILITY.has(h.name)) {
       m.power *= PAPER_UTILITY_PENALTY;
     }
@@ -118,7 +113,6 @@ export function teamHasHiddenCalibrationTags(team: Hero[]): boolean {
       DIVIDED_ATTENTION.has(h.name) ||
       SUMMONING_SICKNESS.has(h.name) ||
       TEMPO_MONSTER.has(h.name) ||
-      MIRAGE_TAX.has(h.name) ||
       PAPER_UTILITY.has(h.name) ||
       SHOWSTOPPER_TAX.has(h.name) ||
       FALSE_IMMORTAL.has(h.name) ||
