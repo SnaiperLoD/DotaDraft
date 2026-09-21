@@ -4,7 +4,7 @@ Slim open list. Calibration history lives in `09-hero-knowledge-base.md`,
 `05-evaluation-engine.md`, `06-battle-engine.md`. Session order lives in
 `12-next-session-priorities.md`.
 
-Last slim: 2026-09-11 (Valve CM draft + tests; optional accounts).
+Last slim: 2026-09-21 (Captains/TI RTL + health/telemetry HTTP).
 Statuses: `open` | `partial` | `parked` | `rejected`.
 Shipped items live in the footnote, not this list.
 
@@ -115,6 +115,8 @@ not an early close) · Anonymous draft ownership (`ownerToken` / `X-Owner-Token`
   replaces localStorage and drops CM/TI persist keys. Cookie
   `dotadraft.sid` wins over `X-Owner-Token`. `GET /auth/me` is 200 for
   guests. Google button hidden until `GOOGLE_CLIENT_ID`/`SECRET` exist.
+· CaptainsPage + TiRunPage client RTL (2026-09-21)
+· HTTP integration `/health` + `/telemetry` ingest/funnel (2026-09-21)
 
 ---
 
@@ -126,8 +128,8 @@ Code path is **ready for a friends-alpha link**. Still manual before share:
    Runbook: `13-deploy.md`.
 2. **Optional eyes-on** — one full TI Run (draft → fight → GF). Automated
    coverage is already in e2e + service specs.
-3. **`TELEMETRY_READ_TOKEN`** in `.env`; after ~10 sessions:
-   `scripts/telemetry-funnel.sh`.
+3. **`TELEMETRY_READ_TOKEN`** in `.env` — already set locally (2026-09-21);
+   after ~10 sessions: `scripts/telemetry-funnel.sh`.
 4. **Ko-fi** — confirm default or set `VITE_TIP_JAR_URL` / `"false"` to hide.
 5. **Off-box backup** — pick destination; `npm run backup:compose` once to
    verify.
@@ -317,6 +319,10 @@ coin path + captains/TI gaps. **Client Vitest shipped** (2026-09-01):
 Challenge sanitize, coin visibility, TeamCrest slugs, `submitterToken`
 identity-switch — `npm test --workspace client`. Auth unit specs
 (`password` / cookie / register-claim / login) shipped 2026-09-11.
+**CaptainsPage + TiRunPage RTL** (2026-09-21). **HTTP `/health` +
+`/telemetry` integration** (2026-09-21). Remaining display leftover:
+`AXIS_NARRATIVE` copy stays in evaluation; Battle History versioned
+payload still deferred.
 ### Server narrative i18n — `partial`
 Product chrome + Eval/Battle live copy go through client i18n (`eval.*`,
 `battle.explain.*`, `battle.highlight.*`, axes/tags/badges). Remaining:
@@ -346,8 +352,9 @@ Docker Compose + Dockerfiles + `.env.example` + `Blueprint/13-deploy.md` +
 (`docker-compose.tunnel.yml`) shipped; **tunnel stopped 2026-08-18**,
 volumes kept (no `down -v`). Pre-launch checklist + backup runbook +
 **`npm run pre-release:check`** gate (2026-09-01). **Soft-launch
-code-ready** — remaining work is manual (URL, telemetry token, backup
-destination, Ko-fi confirm). Google sign-in also needs Console secrets +
+code-ready** — remaining work is manual (URL, Docker Desktop was off
+2026-09-21, backup destination, Ko-fi confirm). Local `.env` already
+has `TELEMETRY_READ_TOKEN`. Google sign-in also needs Console secrets +
 `AUTH_PUBLIC_ORIGIN` if you want that button. Named tunnel + domain +
 VPS when a stable URL is needed.
 ### CI hardening — `partial`

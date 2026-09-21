@@ -1,6 +1,6 @@
 # Next Session Priorities
 
-Updated 2026-09-18 after P0/P1 engineering hygiene on `master`.
+Updated 2026-09-21 after Captains/TI RTL + health/telemetry HTTP on `master`.
 Handoff / triage; `10-tech-debt-backlog.md` is the detailed source of
 truth. Deploy notes: `13-deploy.md`.
 
@@ -9,12 +9,14 @@ truth. Deploy notes: `13-deploy.md`.
 Google off until Console secrets). **Valve CM draft shipped** (7.40
 order, `HeroOrderID` grid, coin-flip first pick — client layout, not a
 screenshot). **Pre-release automation shipped**. **P0/P1 engineering
-hygiene shipped** (2026-09-18) — `assessment-core`, eval
-`schemaVersion`, persist retry, request-id envelope, HTTP + Account/
-History RTL. **Soft-launch code-ready** — link share blocked only on
-Nick manual (URL, telemetry token, backup destination, Ko-fi confirm).
-Playoff attach **116/116**. Pro snapshot **2374** rows (no new OpenDota
-pull). Tunnel OFF. Calibration pause on.
+hygiene shipped** (2026-09-18). **CaptainsPage / TiRunPage RTL +
+`/health` `/telemetry` HTTP integration shipped** (2026-09-21).
+**Soft-launch code-ready** — link share blocked on Nick manual (URL,
+Docker Desktop currently **off** on the session machine, backup
+destination, Ko-fi confirm). Local `.env` has `TELEMETRY_READ_TOKEN`
+set; other knobs still come from compose / `.env.example`. Playoff
+attach **116/116**. Pro snapshot **2374** rows (no new OpenDota pull).
+Tunnel OFF. Calibration pause on.
 
 **Session working rules:** one invariant per session before UI. Don't
 mix Stryker into the same commit as a new client spectacle. Don't
@@ -27,28 +29,31 @@ three modes.
 ## Next session — priorities in order
 
 Pre-release **code** is done. Auth is done. Valve CM draft is done.
-Eval/Battle no longer import each other. Don't start another coverage
-sweep unless Nick names a page. Don't retune coefficients. Don't
-refetch OpenDota.
+Eval/Battle no longer import each other. Captains/TI RTL and
+health/telemetry HTTP are in. Don't start another coverage sweep unless
+Nick names a page. Don't retune coefficients. Don't refetch OpenDota.
 
 Before sharing a link, Nick manual only — see **Soft launch — manual
 blockers** in `10-tech-debt-backlog.md` and **Pre-launch checklist** in
 `13-deploy.md`. Dual-role Support shares still need Nick's ask — not P0.
 
-### 0. Optional leftover engineering — pick one, or skip
+### 0. Optional leftover engineering — mostly shipped (2026-09-21)
 
-Not P0. Hygiene for the shared assessment path is done. Remaining
-bits are display/coverage, not battle math:
+Not P0. Shared assessment hygiene was already done. This pass closed the
+display/coverage leftovers worth a regression net:
 
-- CaptainsPage / TiRunPage RTL — large (timers, Valve grid, splash).
-  Skip unless a concrete bug needs a regression net.
+- **CaptainsPage / TiRunPage RTL — shipped.** Splash skip, Valve HUD
+  (4 attrs / 5+7 slots / First Pick / Bonus / no search), type-to-filter,
+  one-fight READY/COMPLETED, TI jersey + resume + eval/fight split +
+  champion/elim. Don't rewrite the HUD. Don't retag Medusa.
+- **HTTP `/health` + `/telemetry` — shipped** (integration). Live sqlite
+  ping, pool-disabled without 503, ingest 201, funnel 404/401/200 +
+  `Cache-Control: no-store`, unified envelope on bad ingest.
 - `AXIS_NARRATIVE` English copy stays in `evaluation/score-narrative`.
   Axis brackets already live in `assessment-core`. Don't move copy
   "for completeness."
 - Battle History still has no versioned full `BattleResultResponse`
   (deferred). Don't stamp a payload without Nick.
-- HTTP still thin on `/health` and `/telemetry`. Health already has
-  unit specs. Not blocking.
 
 If Nick wants product instead of tests: launch manual (#1) or an
 isolated calibration hypothesis — ask first, don't "fix" WR
@@ -145,7 +150,7 @@ shape.
 - Architectural leftover: Eval tactical copy (`AXIS_NARRATIVE`) still
   lives in `evaluation/score-narrative` (display, not battle math).
   Axis bracket types live in `assessment-core`. Battle History still
-  has no versioned full payload. CaptainsPage / TiRunPage have no RTL.
+  has no versioned full payload. Captains/TI RTL shipped 2026-09-21.
   Don't retune coefficients.
 - Calibration pause: don't change coefficients / tags / weights without
   asking; don't refetch unless asked. `realWinRateWeight` stays 2.
@@ -153,6 +158,20 @@ shape.
   needed (`13-deploy.md`).
 - Heterogeneous tags (`Army of Clones` / `Unseen` / `Prone To Burst`) —
   still the calibration leftover, still needs an isolated hypothesis.
+
+## Completed this pass (2026-09-21, leftover engineering)
+
+- **CaptainsPage RTL** — splash delay, resume skip, Valve HUD contract,
+  type-to-filter + Escape, one-fight READY mock, COMPLETED History note.
+  `client/src/pages/CaptainsPage.spec.tsx`.
+- **TiRunPage RTL** — jersey pick, localStorage + `?resume=`, draft pool,
+  eval/fight split, champion/elim finale. `client/src/pages/TiRunPage.spec.tsx`.
+- **HTTP `/health` + `/telemetry`** — integration: sqlite ping, pool
+  disabled without 503, ingest + funnel token 404/401/200, envelope on
+  junk ingest. `server/test/integration/health.integration-spec.ts`,
+  `telemetry.integration-spec.ts`.
+- **`npm run pre-release:check`** green (client 66, server unit 595).
+  Docker Desktop was **off**; no compose health / backup / tunnel this pass.
 
 ## Completed this pass (2026-09-18, engineering hygiene)
 
@@ -446,12 +465,34 @@ User's request (2026-08-06): heroes who genuinely play both a core and a support
 
 ## Where to start
 
-Valve CM draft is closed. Next coding session is leftover product only
-if Nick is not launching: dual-role Support shares still need an ask
-(calibration-adjacent). 89 nameless pro rows are a display fallback, not
-a refetch. Tick log stays research. Lobby stays parked. Soft-launch
-URL/ops stays Nick-manual — don't share a link this pass. Remaining
-fork track if telemetry exists: opponent difficulty brackets.
+Leftover Captains/TI RTL and health/telemetry HTTP are closed. Next is
+either Nick launch ops (`13-deploy.md` — Docker is off on this machine)
+or one isolated calibration hypothesis (dual-role Support shares **or**
+heterogeneous tags — ask first, not both). 89 nameless pro rows are a
+display fallback, not a refetch. Tick log stays research. Lobby stays
+parked. Don't share a link until Docker is up and a URL exists.
+
+---
+
+## Session log — 2026-09-21 (RTL + launch gate)
+
+Scoped **out**: coefficients / tags / weights; OpenDota refetch;
+`AXIS_NARRATIVE` move; versioned Battle History payload; tick log;
+lobby; Stryker.
+
+**Captains RTL.** Client Vitest net over splash, resume, Valve HUD,
+filter, one fight. Did not rewrite the HUD or AI.
+
+**TI RTL.** Resume loads the attached draft (fresh `startTiRun` does
+not — that's the real boot path). Champion/elim finale attributes
+locked.
+
+**HTTP.** `/health` live sqlite; empty `POOL_DATABASE_URL` stays 200
+`pool: disabled`. `/telemetry` ingest + funnel token gate + envelope.
+
+**Launch.** `pre-release:check` OK. Local `.env` only has
+`TELEMETRY_READ_TOKEN`. Docker Desktop not running — URL / compose
+health / `backup:compose` still Nick-manual.
 
 ---
 
