@@ -11,6 +11,7 @@ import type {
 } from 'shared';
 import { bestMatchupEdge, bestSynergyPair, type BattlePick, type MatchupLookup } from './battle-resolution';
 import {
+  HUNT_FLOOR,
   INITIATING_FLOOR,
   MATCHUP_FLOOR,
   SAVING_FLOOR,
@@ -98,6 +99,7 @@ export function buildBattleStory(input: {
     input.lookup,
   );
   const usableMatchup = matchup && matchup.winRate > MATCHUP_FLOOR ? matchup : null;
+  const huntMatchup = usableMatchup != null && usableMatchup.winRate >= HUNT_FLOOR;
   const matchupWinnerHero = usableMatchup
     ? winners.find((pick) => pick.hero.name === usableMatchup.hero)
     : undefined;
@@ -113,8 +115,8 @@ export function buildBattleStory(input: {
   const comboAHero = usableCombo ? findByName(winners, usableCombo.heroA) : undefined;
   const comboBHero = usableCombo ? findByName(winners, usableCombo.heroB) : undefined;
 
-  const driver = maxByAxes(winners, 'initiating', 'skirmish_rate');
-  const theirDriverPick = maxByAxes(losers, 'initiating', 'skirmish_rate');
+  const driver = maxByAxes(winners, 'initiating');
+  const theirDriverPick = maxByAxes(losers, 'initiating');
   const theirDriver =
     theirDriverPick && axisOf(theirDriverPick, 'initiating') >= INITIATING_FLOOR
       ? theirDriverPick.hero.name
@@ -178,8 +180,10 @@ export function buildBattleStory(input: {
         : 'openingAhead';
 
   let turnKey: BattleStoryBeatKey;
-  if (usableMatchup && usableCombo) turnKey = 'turningCatchCombo';
-  else if (usableMatchup) turnKey = 'turningCatch';
+  if (huntMatchup && usableCombo) turnKey = 'turningCatchCombo';
+  else if (huntMatchup) turnKey = 'turningCatch';
+  else if (usableMatchup && usableCombo) turnKey = 'turningEdgeCombo';
+  else if (usableMatchup) turnKey = 'turningEdge';
   else if (usableCombo) turnKey = 'turningCombo';
   else if (isUpset && swingHero) turnKey = 'turningUpsetHighSkill';
   else turnKey = 'turningAxis';
@@ -217,6 +221,8 @@ export function buildBattleStory(input: {
     openingPairHero: standout?.topPair?.hero ?? '',
     openingPairVs: standout?.topPair?.vs ?? '',
     openingPairWinRate: pct(standout?.topPair?.winRate),
+    openingPairTone: (standout?.topPair?.winRate ?? 0) >= HUNT_FLOOR ? 'hunt' : 'edge',
+    carryTone: carryWinRate && Number(carryWinRate) >= HUNT_FLOOR * 100 ? 'hunt' : carryWinRate ? 'edge' : '',
     openingLead: leads.opening,
     turnLead: leads.turn,
     conversionLead: leads.conversion,

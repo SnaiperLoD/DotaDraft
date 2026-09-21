@@ -24,14 +24,14 @@ export const AXIS_LABEL: Record<keyof HeroEvaluationValues, string> = {
   tempo: 'tempo',
   scaling: 'late-game scaling',
   mobility: 'mobility',
-  objectives: 'objective pressure',
+  objectives: 'tower pressure',
   control: 'control',
   durability: 'durability',
   burst: 'burst damage',
   map_control: 'map control',
   saving: 'ally saving power',
   initiating: 'initiation potential',
-  skirmish_rate: 'skirmish rate',
+  skirmish_rate: 'how often they fight',
   camp_stacking: 'camp stacking',
   // Not in AXES below (Evaluation Engine-only axis, see
   // calibrate-evaluation-values.ts). Entry exists only because AXIS_LABEL's

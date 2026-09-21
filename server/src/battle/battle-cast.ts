@@ -13,6 +13,9 @@ import type { BattlePick } from './battle-resolution';
 // returns the max even when it's a losing matchup — that's useful for
 // upsets, but stuffing it into "X gets onto Y" is fanfic.
 export const MATCHUP_FLOOR = 0.5;
+// Above a coin flip is "a bit ahead in the pair". Hunt language ("gets on",
+// "catches") starts here. 54% is not a pickoff.
+export const HUNT_FLOOR = 0.6;
 // Don't call someone a fight-turner at saving 3 (or 1.2). Axes are ~1–10;
 // 6 is actually high.
 export const SAVING_FLOOR = 6;

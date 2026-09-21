@@ -113,7 +113,7 @@ function translateBag(t: TFunction, key: string, params: Record<string, string>)
     bag.axis = storyLabel !== storyPath ? storyLabel : axisLabel(t, bag.axis);
   }
   if (bag.confidence) {
-    const tierPath = `battle.tier.${bag.confidence}`;
+    const tierPath = `battle.confidenceVoice.${bag.confidence}`;
     const tier = t(tierPath);
     bag.confidence = tier !== tierPath ? tier : bag.confidence;
   }

@@ -317,7 +317,7 @@
     "advantages": "Advantages",
     "disadvantages": "Disadvantages",
     "explanation": "Explanation",
-    "explanationBlurb": "Why this matchup resolved this way — lanes, pairs, axes, tags, and the carry late from this fight. Not a reconstructed replay.",
+    "explanationBlurb": "Who came in ahead, one lane, one hero. The rest of the telling is above.",
     "tagChipsTitle": "Custom Tags in this fight",
     "tagChipsMine": "Yours",
     "tagChipsOpponent": "Opponent",
@@ -325,17 +325,17 @@
     "laneWinnerOpponent": "Opponent",
     "laneEven": "Even",
     "story": {
-      "title": "How the match may have unfolded",
-      "disclaimer": "A read from this fight's lanes, pairs, and axes — not a reconstructed replay.",
+      "title": "How this might have gone",
+      "disclaimer": "One way this fight could have played out. Not a replay.",
       "phases": {
         "opening": "Opening",
-        "turn": "Turning point",
-        "conversion": "Conversion",
-        "finish": "Finish"
+        "turn": "The turn",
+        "conversion": "After that",
+        "finish": "The end"
       },
-      "yourSide": "Your draft",
-      "opponentSide": "The opponent",
-      "winningDraft": "the winning core",
+      "yourSide": "You",
+      "opponentSide": "They",
+      "winningDraft": "the side that won",
       "lanes": {
         "safe": "Safe",
         "mid": "Mid",
@@ -343,57 +343,61 @@
       },
       "laneFull": {
         "safe": "safe lane",
-        "mid": "mid",
+        "mid": "mid lane",
         "off": "offlane"
       },
       "posture": {
-        "behind": "They're playing from behind. ",
-        "upset": "They're the pre-fight underdog. "
+        "behind": "They're coming from behind. ",
+        "upset": "They weren't supposed to win this. "
       },
-      "turnerLine": "{{turner}} is the one who turns a lost fight — the save, not the first jump in.",
-      "answerLine": "{{theirDriver}} is who has to answer.",
-      "openingLaneHook": "It actually breaks in the {{openingLane}}: {{openingPairHero}} into {{openingPairVs}} ({{openingPairWinRate}}%) is a real hole, not just a lane score.",
-      "carryLateMatchup": "Late, the argument is {{myCarry}} vs {{theirCarry}} — {{lateMatchupWinner}} owns that matchup ({{carryWinRate}}%).",
-      "carryLate": "Late, it's {{myCarry}} against {{theirCarry}}.",
-      "carryScale": "The longer this lives, the more dangerous {{scaleLeader}} gets.",
-      "openingAhead": "{{winner}} takes the lanes {{winnerLanes}}–{{loserLanes}}. {{driver}} is first into every fight — that's whose tempo the opening is on.",
-      "openingComeback": "The lanes went {{loserLanes}}–{{winnerLanes}} against the side that still wins. {{driver}} is the one who has to drag the map back.",
-      "openingEven": "Nobody takes the lanes clean. From here it's fights, and {{driver}} is the one who starts them.",
-      "openingUpset": "The favorite closed the lanes {{winnerLanes}}–{{loserLanes}}. If this flips, it starts with who walks into the fights first: {{driver}}.",
-      "turningCatchCombo": "{{posture}}{{matchupWinner}} gets onto {{matchupLoser}} ({{matchupWinRate}}%). {{comboA}} + {{comboB}} ({{comboWinRate}}%) is the pairing that actually wins games together — that's the turn.",
-      "turningCatch": "{{posture}}{{matchupWinner}} gets onto {{matchupLoser}} ({{matchupWinRate}}%). That's the matchup the other side doesn't solve while it's on the map.",
-      "turningCombo": "{{posture}}{{comboA}} + {{comboB}} ({{comboWinRate}}%) is not a vibe. Together they win games, and the turn is tied to that pair.",
-      "turningAxis": "{{posture}}There's no pretty catch on the sheet. The winning side's real edge is {{topAxis}} — the thing the other draft doesn't answer.",
-      "turningUpsetHighSkill": "{{swingHero}} is the kind of hero who steals games the sheet can't price. This one went the wrong way for the favorite.",
-      "conversionRoshanEarly": "This is a tempo draft. The prize in the {{roshanBand}} window is the pit — this read does not resolve who took Roshan.",
-      "conversionRoshanMid": "Neither side has a sharp clock. In the {{roshanBand}} window the pit is the place that matters. This read does not resolve a take.",
-      "conversionRoshanLate": "This draft is playing for the {{roshanBand}} window. If the game gets there, the late game is the win condition. The pit is still a window, not a recorded kill.",
-      "finishHeld": "The pre-fight read held. This was their game if they didn't give the clock away.",
-      "finishComeback": "The lanes lied about the ending. They didn't win the lane phase — they won the game anyway.",
-      "finishUpset": "The underdog closed it. The pre-fight favorite was supposed to be the story. They weren't.",
-      "pitWindowOnly": "Lead is unchanged here: we do not simulate walking into the pit.",
-      "thinHere": "This is the thinnest beat the sheet can name — the invert, or the lanes that didn't decide.",
-      "noRamp": "This read does not walk high ground. The game ends when the sheet says it ends.",
+      "turnerLine": "{{turner}} is the one who saves the fight, not the one who jumps first.",
+      "answerLine": "{{theirDriver}} is the one who has to answer that.",
+      "openingLaneHook": "It actually breaks in the {{openingLane}}: {{openingPairHero}} gets onto {{openingPairVs}} ({{openingPairWinRate}}%).",
+      "openingLaneSoft": "In the {{openingLane}}, {{openingPairHero}} is a bit ahead of {{openingPairVs}} ({{openingPairWinRate}}%).",
+      "carryLateMatchup": "Late it's {{myCarry}} against {{theirCarry}}, and {{lateMatchupWinner}} gets onto the other one ({{carryWinRate}}%).",
+      "carryLateSoft": "Late it's {{myCarry}} against {{theirCarry}}. {{lateMatchupWinner}} is a bit ahead in that pair ({{carryWinRate}}%).",
+      "carryLate": "Late it's {{myCarry}} against {{theirCarry}}.",
+      "carryScale": "The longer it goes, the scarier {{scaleLeader}} gets.",
+      "openingAhead": "{{winner}} came out of the lanes ahead, {{winnerLanes}}–{{loserLanes}}. {{driver}} is first into the fights.",
+      "openingComeback": "The lanes went {{loserLanes}}–{{winnerLanes}} the wrong way, and they still win. {{driver}} has to drag it back.",
+      "openingEven": "The lanes don't pick a winner. From here it's fights, and {{driver}} starts them.",
+      "openingUpset": "The favorite took the lanes {{winnerLanes}}–{{loserLanes}}. If this flips, it starts with {{driver}} walking in first.",
+      "turningCatchCombo": "{{posture}}{{matchupWinner}} gets onto {{matchupLoser}} ({{matchupWinRate}}%). And {{comboA}} with {{comboB}} ({{comboWinRate}}%) is the pair that actually wins games. That's the turn.",
+      "turningCatch": "{{posture}}{{matchupWinner}} gets onto {{matchupLoser}} ({{matchupWinRate}}%). The other side doesn't have an answer while that hero is on the map.",
+      "turningEdgeCombo": "{{posture}}{{matchupWinner}} is a bit ahead of {{matchupLoser}} ({{matchupWinRate}}%). The real pair is {{comboA}} with {{comboB}} ({{comboWinRate}}%).",
+      "turningEdge": "{{posture}}{{matchupWinner}} is a bit ahead of {{matchupLoser}} ({{matchupWinRate}}%). A pair edge, not a hunt.",
+      "turningCombo": "{{posture}}{{comboA}} with {{comboB}} ({{comboWinRate}}%) win games together. The turn hangs on that pair.",
+      "turningAxis": "{{posture}}No clean catch. What they actually have is {{topAxis}}.",
+      "turningUpsetHighSkill": "{{swingHero}} steals games the numbers can't price. This one went against the favorite.",
+      "conversionRoshanEarly": "They want this over early. The window is around {{roshanBand}} minutes. We don't play out Roshan from here.",
+      "conversionRoshanMid": "Nobody is purely early or purely late. If it lives to {{roshanBand}} minutes, that's when it gets decided. Roshan isn't played out.",
+      "conversionRoshanLate": "They need the game to go long. The window is {{roshanBand}}. If they get there, the late game pays. Roshan isn't played out.",
+      "finishHeld": "That's how it was supposed to end.",
+      "finishComeback": "The lanes lost. The game didn't.",
+      "finishUpset": "The favorite was supposed to close this. They didn't.",
+      "pitWindowOnly": "We don't walk into the pit from here.",
+      "thinHere": "This is the thin bit — the flip, or the lanes that didn't decide.",
+      "noRamp": "We don't walk high ground. The telling stops when the fight does.",
       "lead": {
-        "yours": "Lead after this beat: yours.",
-        "theirs": "Lead after this beat: theirs.",
-        "even": "Lead after this beat: still even."
+        "yours": "After this, it's yours.",
+        "theirs": "After this, it's theirs.",
+        "even": "After this, still even."
       },
       "axes": {
-        "teamfight": "damage output",
+        "teamfight": "damage",
         "tempo": "tempo",
-        "scaling": "late-game scaling",
+        "scaling": "late game",
         "mobility": "mobility",
-        "objectives": "objective pressure",
+        "objectives": "towers",
         "control": "control",
         "durability": "durability",
-        "burst": "burst damage",
+        "burst": "burst",
         "map_control": "map control",
-        "saving": "ally saving",
+        "saving": "saves",
         "initiating": "initiation",
-        "skirmish_rate": "skirmish rate",
-        "camp_stacking": "camp stacking",
-        "resource_efficiency": "resource efficiency"
+        "skirmish_rate": "fights",
+        "camp_stacking": "stacks",
+        "resource_efficiency": "efficiency"
       }
     },
     "fightAgain": "Fight Again",
@@ -411,114 +415,121 @@
       "Moderate": "Moderate",
       "High": "High"
     },
-    "advantageEdge": "Your draft has an edge in {{axis}}.",
-    "advantageDeficit": "Your draft has a deficit in {{axis}}.",
+    "confidenceVoice": {
+      "Low": "shaky",
+      "Moderate": "real, not a lock",
+      "High": "pretty sure"
+    },
+    "advantageEdge": "You've got the better {{axis}}.",
+    "advantageDeficit": "You're short on {{axis}}.",
     "highlight": {
-      "matchup": "{{hero}}'s matchup into {{vs}} worked in {{perspective}}'s favor.",
-      "synergy": "The {{hero}} + {{vs}} combination gave {{perspective}} a real, data-backed edge."
+      "matchup": "{{hero}} into {{vs}} worked out for {{perspective}}.",
+      "synergy": "{{hero}} + {{vs}} is a pair that actually wins games for {{perspective}}."
     },
     "explain": {
       "axisHero": "{{axis}} ({{hero}})",
       "edge": {
-        "edge": "an edge in",
-        "deficit": "a deficit in"
+        "edge": "that's your plus",
+        "deficit": "that's the hole"
       },
       "side": {
         "yours": {
-          "subject": "Your draft",
-          "object": "your draft"
+          "subject": "You",
+          "object": "you"
         },
         "opponent": {
-          "subject": "The opponent's draft",
-          "object": "the opponent"
+          "subject": "They",
+          "object": "them"
         }
       },
       "frame": {
-        "even": "This is a close matchup with no clear favorite ({{confidence}} confidence) — {{edgePhrase}} {{axis}} for your draft was the closest thing to an edge.",
-        "ahead": "{{side}} leaned ahead overall ({{confidence}} confidence), with {{edgePhrase}} {{axis}} standing out."
+        "even": "Nobody's the favorite. I'd call the read {{confidence}}. Closest thing you've got is {{axis}} — {{edgePhrase}}.",
+        "ahead": "{{side}} came in ahead. I'd call the read {{confidence}}. What sticks out is {{axis}} — {{edgePhrase}}."
       },
-      "highSkill": "{{hero}}'s own play was the deciding swing here — real match data shows outcomes around this hero carry more variance than the stat sheet alone suggests, and this game landed on the wrong side of it for the favorite.",
+      "highSkill": "{{hero}} stole this one. Games around that hero swing harder than the numbers, and the favorite ate it.",
       "clock": {
-        "split": "{{faster}} wants this over now; {{scaler}} is the one that gets paid if the game lives. That split points at a {{band}} minute window — whose clock this matchup is on, not a reconstructed Roshan take.",
-        "early": "The winning side is a tempo draft, not a scaler — this matchup wants to be decided in the {{band}} minute window, before the other roster's late game comes online.",
-        "late": "The winning side scales harder than it plays early — this matchup is playing for the {{band}} minute window. If it gets there, the late game is the actual win condition."
+        "split": "{{faster}} wants this over now. {{scaler}} gets scarier if the game lives. The window is {{band}} minutes. We don't play out Roshan.",
+        "early": "They want this decided in the {{band}} minute window, before the other late game shows up.",
+        "late": "They need to reach the {{band}} minute window. If they do, the late game pays."
       },
       "shape": {
-        "duel": "{{mine}} is the one who starts fights on your side; {{theirs}} is the one who has to answer.",
-        "mineStarts": "{{hero}} is the one who actually starts fights on your side.",
-        "oppStarts": "{{hero}} is the one who starts fights for the opponent.",
-        "savesBoth": "{{mine}} is the save on your side; {{theirs}} is theirs — both actually clear a real saving bar, not a token 3 on the sheet.",
-        "saveMine": "{{hero}} is the only one on the board who actually saves people at a real level.",
-        "saveOpp": "{{hero}} is the save the opponent brought — your side doesn't have one at that level."
+        "duel": "{{mine}} starts the fights. {{theirs}} is the one who has to answer.",
+        "mineStarts": "{{hero}} is the one who starts the fights for you.",
+        "oppStarts": "{{hero}} is the one who starts the fights for them.",
+        "savesBoth": "{{mine}} saves yours. {{theirs}} saves theirs.",
+        "saveMine": "{{hero}} is the one who actually saves people.",
+        "saveOpp": "{{hero}} is their save. You didn't bring one."
       },
       "sheet": {
-        "both": "On the sheet, your draft leads in {{yours}}; the hole is {{hole}}.",
-        "yours": "On the sheet, your draft's real pull is {{yours}}.",
-        "theirs": "On the sheet, the opponent's draft is the one leading in {{theirs}}."
+        "both": "You're ahead on {{yours}}. The hole is {{hole}}.",
+        "yours": "What you actually have is {{yours}}.",
+        "theirs": "What they actually have is {{theirs}}."
       },
       "lanes": {
-        "even": "Lanes stood even.",
-        "wash": "Lanes weren't a wash.",
-        "uneven": "Lanes weren't even."
+        "even": "The lanes are a wash.",
+        "wash": "One lane actually moved.",
+        "uneven": "The lanes didn't sit even."
       },
       "lane": {
-        "mineLean": "Your {{lane}} was a {{chance}}% lean because {{hero}} into {{vs}} ({{pairPct}}%) is a real matchup.",
-        "mineEdge": "Your {{lane}} leans this way because {{hero}} into {{vs}} is a real matchup edge.",
-        "oppHole": "The {{lane}} went the other way — {{hero}} into {{vs}} is a {{pairPct}}% hole from your side.",
-        "oppEdge": "The {{lane}} went the other way because {{hero}} into {{vs}} is a real matchup edge."
+        "mineHunt": "In the {{lane}} you run them over: {{hero}} gets onto {{vs}} ({{pairPct}}%).",
+        "mineLean": "In the {{lane}} you're a bit ahead, {{hero}} against {{vs}} ({{pairPct}}%).",
+        "mineEdge": "In the {{lane}} you're a bit ahead: {{hero}} against {{vs}}.",
+        "oppHunt": "The {{lane}} is where they hunt you: {{hero}} gets onto {{vs}} ({{pairPct}}%).",
+        "oppHole": "The {{lane}} leans their way, {{hero}} against {{vs}} ({{pairPct}}%).",
+        "oppEdge": "The {{lane}} leans their way: {{hero}} against {{vs}}."
       },
       "catch": {
-        "first": "The catch that actually matters for {{winner}} is {{hero}} into {{vs}} ({{pct}}%).",
-        "second": "{{hero}} into {{vs}} ({{pct}}%) is a second real hole."
+        "first": "The pair that matters for {{winner}} is {{hero}} into {{vs}} ({{pct}}%).",
+        "second": "{{hero}} into {{vs}} ({{pct}}%) is another one."
       },
       "combo": {
-        "win": "{{heroA}} + {{heroB}} is a real pairing on the winning side ({{pct}}%) — not a vibe, a co-pick that actually wins games together.",
-        "leftover": "{{loser}} still had {{heroA}} + {{heroB}} ({{pct}}%) — a real combo that didn't carry the rest of the sheet."
+        "win": "{{heroA}} + {{heroB}} ({{pct}}%) win games together.",
+        "leftover": "{{loser}} still had {{heroA}} + {{heroB}} ({{pct}}%). Real pair. Didn't carry the game."
       },
       "carry": {
-        "late": "Late, it's {{mine}} against {{theirs}}.",
-        "noRow": "There isn't a real individual matchup row for {{mine}} into {{theirs}}.",
-        "mineOwns": "{{hero}} owns that matchup at {{pct}}%.",
-        "oppOwns": "{{hero}} owns that matchup at {{pct}}%.",
-        "flip": "The individual matchup is a coin flip ({{pct}}%).",
-        "scaleSame": "And they scale harder on the sheet too.",
-        "scaleTension": "But {{scaler}} is the one who actually scales harder — if this lives, that tension is the late game.",
-        "scaleAlso": "And {{scaler}} is the one who scales harder.",
-        "scaleOnly": "{{scaler}} is still the one who scales harder on the sheet."
+        "late": "Late it's {{mine}} against {{theirs}}.",
+        "noRow": "There's no separate pair for {{mine}} against {{theirs}}.",
+        "mineOwns": "{{hero}} is on {{pct}}% in that pair.",
+        "oppOwns": "{{hero}} is on {{pct}}% in that pair.",
+        "flip": "That pair is a coin flip ({{pct}}%).",
+        "scaleSame": "And they get scarier late too.",
+        "scaleTension": "But {{scaler}} is the one who gets scarier if this goes long.",
+        "scaleAlso": "And {{scaler}} gets scarier if this goes long.",
+        "scaleOnly": "{{scaler}} is the one who gets scarier if this goes long."
       },
       "tags": {
-        "both": "On the board: your side is running {{mine}}; theirs has {{theirs}}.",
-        "mine": "On the board, your side is running {{tags}} — that's a real draft mechanic, not flavor text.",
-        "opp": "On the board, the opponent is running {{tags}} — that's a real draft mechanic, not flavor text."
+        "both": "You've got {{mine}} on the board. They've got {{theirs}}.",
+        "mine": "You've got {{tags}} on the board.",
+        "opp": "They've got {{tags}} on the board."
       },
       "shutdown": {
-        "mine_one": "{{names}} is in shutdown into this lineup — every individual matchup sits below their own average.",
-        "mine_other": "{{names}} are in shutdown into this lineup — every individual matchup sits below their own average.",
-        "opp_one": "{{names}} on the other side is similarly boxed in.",
-        "opp_other": "{{names}} on the other side are similarly boxed in."
+        "mine_one": "{{names}} walks into this draft badly — every matchup sits under their own average.",
+        "mine_other": "{{names}} walk into this draft badly — every matchup sits under their own average.",
+        "opp_one": "{{names}} on their side has the same problem.",
+        "opp_other": "{{names}} on their side have the same problem."
       },
       "hardCarry": {
-        "mine": "{{count}} hard-carries on your side is a farm-split the sheet already discounts — more late-game bodies, less of everything else.",
-        "opp": "The opponent stacked {{count}} hard-carries, same tax."
+        "mine": "{{count}} carries on your side, and there isn't enough farm for all of them.",
+        "opp": "They stacked {{count}} carries. Same problem, not enough farm."
       },
       "close": {
-        "evenWin": "Your draft came out on top in what was essentially a coin flip.",
-        "evenLose": "Your draft came up just short in what was essentially a coin flip.",
-        "favoredHeld": "That advantage held up.",
-        "favoredUpset": "That advantage should have held up — this loss runs against the grain.",
-        "underdogWin": "The opponent's edge should have held up — this win runs against the grain.",
-        "underdogHeld": "That edge held up here."
+        "evenWin": "You won a coin flip.",
+        "evenLose": "You lost a coin flip.",
+        "favoredHeld": "The favorite held.",
+        "favoredUpset": "You were supposed to hold this. You didn't.",
+        "underdogWin": "They were supposed to hold this. You took it anyway.",
+        "underdogHeld": "They were the favorite, and they held."
       },
       "upset": {
         "lead": {
           "top": "On top of that, ",
           "but": "But "
         },
-        "reasons": "{{lead}}{{underdog}} had real advantages of its own — {{reasons}} — enough to make this upset plausible even against a stronger overall draft.",
-        "odds": "Every draft carries some risk even in a clear matchup, and at {{confidence}} confidence the odds still had to break exactly right for {{underdog}} — this time they did.",
-        "matchup": "{{hero}}'s individual matchup into {{vs}} favored {{underdog}} directly",
-        "synergy": "the {{heroA}} + {{heroB}} combination gave {{underdog}} a real, data-backed edge",
-        "axis": "{{underdog}} actually led in {{axis}} despite trailing on the overall picture"
+        "reasons": "{{lead}}the underdog still had something — {{reasons}}.",
+        "odds": "I'd call the read {{confidence}}, and the underdog still needed the coin to land. It did.",
+        "matchup": "{{hero}} into {{vs}} favored {{underdog}}",
+        "synergy": "{{heroA}} + {{heroB}} is a pair that wins games for {{underdog}}",
+        "axis": "still ahead on {{axis}}, even from behind"
       }
     }
   },

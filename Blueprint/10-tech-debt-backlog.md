@@ -173,16 +173,18 @@ on the naked f dropped r 0.186→0.122 — do not ablate it. Untagged holes
 got worse once other heroes' multipliers moved the pool: Pugna +16→+22,
 Sand King, Pangolier, Ringmaster slightly worse. No 12th named crutch.
 
-### Battle recap vs the live scorer — `open`
-`r2_f_farm` is not shipping, so the recap does not grow a PC1 label.
-`buildExplanation` / `buildBattleStory` / Q2 “#1 driver” still rank
-`axisDeltas` from a mid-phase snapshot times the phase-blended weight,
-while `overallPower` averages phase-specific values. Weight-0 axes
-(`map_control`, `camp_stacking`, `resource_efficiency`) already
-contribute delta 0. The fix is to rank the driver the way production
-power is actually blended. Do not retune coefficients to make the story
-“feel fair.” Do not rename burst/scaling/objectives/teamfight/durability
-into one combat word until a collapsed f is the live path.
+### Battle recap vs the live scorer — `done` (voice + ranking, 2026-09-21)
+`axisDeltas` are now each axis's share of phase-blended `overallPower`
+(per-phase gap × weight / phase total, then phase mix). Advantage
+bullets use the same `ADVANTAGE_THRESHOLD` (0.15) as the fight. The
+card is one voice: favorite, one lane, one hero (save, else initiator).
+The four-beat telling does not repeat that card. A pair is a hunt only
+at ≥60%; below that it's "a bit ahead." Fight starter is initiating
+only. Roshan stays a timing window, said once. `r2_f_farm` is still not
+shipping, so the recap still has no PC1 label. Do not retune
+coefficients so the story feels fair. Do not rename
+burst/scaling/objectives/teamfight/durability into one combat word
+until a collapsed f is the live path.
 
 ### T_camp0 (`camp_stacking` → 0) — `partial`
 Offline evidence green (+0.028 r). Production weights **not** written —
@@ -250,6 +252,21 @@ Copy + GF self-vs-self fix shipped. Playoff match ids attached (incl.
 TI10 holes + TI 2026 QF). Next: real browser QA win → upper / loss →
 lower / champ / elim. Attach still mixes some **group** games into the
 same pair as the playoff series — don't treat that as empty nodes.
+### Eval fold: headline vs detail — `open`
+`EvaluationPanel` always dumps the full axis table (`evaluation-breakdown`)
+under the score, verdict, good/bad columns, and active combos. First
+screen should be that main read only. The per-axis explanations sit
+behind a disclosure. Same numbers and copy — only what is open by
+default changes.
+### Eval table / dashboard toggle — `open`
+A button switches the same Evaluation from the long axis table to a
+dashboard (radar plus a few cards) and back. One result, two layouts.
+Not a second scoring pass and not a coefficient change.
+### Battle narrative fold — `open`
+The four-beat telling and the short card in `BattlePanel` are always
+fully open. Default to a short result (who came in ahead, confidence,
+one line). The full telling expands on click. Don't retune coefficients
+so the collapsed line feels fair.
 ### Battle result narrative (honest four-beat recap) — shipped (2026-09-01)
 Sheet grammar only: lane tally → lead after opening; invert lives on
 `turn`; conversion does **not** resolve Roshan; finish does **not** walk

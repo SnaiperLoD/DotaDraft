@@ -678,6 +678,14 @@ describe('resolveBattle', () => {
       expect(axisDeltas.find((d) => d.axis === 'map_control')!.delta).toBe(0);
     });
 
+    it('sums to the phase-blended power gap', () => {
+      const teamA = team(5, { tempo: 8, saving: 7 });
+      const teamB = team(5, { scaling: 9, burst: 8 }, 11);
+      const assessed = assessBattle(teamA, teamB, noData);
+      const sum = assessed.axisDeltas.reduce((total, row) => total + row.delta, 0);
+      expect(sum).toBeCloseTo(assessed.rawDiff, 6);
+    });
+
     it('is sorted by absolute delta magnitude, largest first', () => {
       const teamA: BattlePick[] = [
         { hero: hero(9001, 'A', { tempo: 9, saving: 6 }), assignedRole: null },

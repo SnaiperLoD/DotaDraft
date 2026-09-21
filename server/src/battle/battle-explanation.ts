@@ -10,20 +10,8 @@ import type {
 import { activeCustomTagsForTeam, i18nLine } from 'shared';
 import { isHardCarry } from '../common/hard-carry';
 import { bestMatchupEdge, bestSynergyPair, type BattlePick, type MatchupLookup } from './battle-resolution';
-import {
-  INITIATING_FLOOR,
-  MATCHUP_FLOOR,
-  SAVING_FLOOR,
-  axisOf,
-  isBattleUpset,
-  maxByAxes,
-  pickByRole,
-  roshanBand,
-  teamAvg,
-} from './battle-cast';
+import { HUNT_FLOOR, INITIATING_FLOOR, SAVING_FLOOR, axisOf, isBattleUpset, maxByAxes } from './battle-cast';
 
-const AXIS_DELTA_FLOOR = 0.3;
-const TEMPO_SPLIT_FLOOR = 0.75;
 const TAG_SKIP = new Set(['High Skill', 'Mechanical']);
 
 type Side = 'yours' | 'opponent';
@@ -42,34 +30,6 @@ function namesOf(picks: BattlePick[]): string[] {
 
 function pipeNames(names: string[]): string {
   return names.join('|');
-}
-
-function leaderOn(picks: BattlePick[], axis: keyof HeroEvaluationValues): BattlePick | undefined {
-  return maxByAxes(picks, axis);
-}
-
-function usableCombo(
-  pair: { heroA: string; heroB: string; winRate: number } | null,
-): { heroA: string; heroB: string; winRate: number } | null {
-  return pair && pair.winRate > MATCHUP_FLOOR ? pair : null;
-}
-
-function topMatchups(
-  team: Hero[],
-  opponent: Hero[],
-  lookup: MatchupLookup,
-  limit: number,
-): { hero: string; vs: string; winRate: number }[] {
-  const edges: { hero: string; vs: string; winRate: number }[] = [];
-  for (const hero of team) {
-    for (const vs of opponent) {
-      const winRate = lookup.getMatchupWinRate(hero.id, vs.id);
-      if (winRate !== null && winRate > MATCHUP_FLOOR) {
-        edges.push({ hero: hero.name, vs: vs.name, winRate });
-      }
-    }
-  }
-  return edges.sort((a, b) => b.winRate - a.winRate).slice(0, limit);
 }
 
 function visibleTags(picks: BattlePick[]): string[] {
@@ -115,109 +75,43 @@ function frameLine(ctx: BattleExplanationContext): LocalizedLine {
   });
 }
 
-function clockLine(mine: BattlePick[], opponent: BattlePick[], winners: BattlePick[]): LocalizedLine | null {
-  const myTempo = teamAvg(mine, 'tempo');
-  const theirTempo = teamAvg(opponent, 'tempo');
-  const myScaling = teamAvg(mine, 'scaling');
-  const theirScaling = teamAvg(opponent, 'scaling');
-  const faster: Side | null =
-    myTempo - theirTempo >= TEMPO_SPLIT_FLOOR
-      ? 'yours'
-      : theirTempo - myTempo >= TEMPO_SPLIT_FLOOR
-        ? 'opponent'
-        : null;
-  const scaler: Side | null =
-    myScaling - theirScaling >= TEMPO_SPLIT_FLOOR
-      ? 'yours'
-      : theirScaling - myScaling >= TEMPO_SPLIT_FLOOR
-        ? 'opponent'
-        : null;
-  const { band, key } = roshanBand(winners);
-
-  if (faster && scaler && faster !== scaler) {
-    return i18nLine('battle.explain.clock.split', { faster, scaler, band });
-  }
-  if (key === 'conversionRoshanEarly') {
-    return i18nLine('battle.explain.clock.early', { band });
-  }
-  if (key === 'conversionRoshanLate') {
-    return i18nLine('battle.explain.clock.late', { band });
-  }
-  return null;
-}
-
-function fightShapeLines(mine: BattlePick[], opponent: BattlePick[]): LocalizedLine[] {
-  const myDriver = maxByAxes(mine, 'initiating', 'skirmish_rate');
-  const theirDriver = maxByAxes(opponent, 'initiating', 'skirmish_rate');
+function heroFactLine(mine: BattlePick[], opponent: BattlePick[]): LocalizedLine | null {
   const mySaver = maxByAxes(mine, 'saving');
   const theirSaver = maxByAxes(opponent, 'saving');
+  const mySave = mySaver && axisOf(mySaver, 'saving') >= SAVING_FLOOR ? mySaver : undefined;
+  const theirSave = theirSaver && axisOf(theirSaver, 'saving') >= SAVING_FLOOR ? theirSaver : undefined;
+  if (mySave && theirSave && mySave.hero.id !== theirSave.hero.id) {
+    return i18nLine('battle.explain.shape.savesBoth', {
+      mine: mySave.hero.name,
+      theirs: theirSave.hero.name,
+    });
+  }
+  if (mySave) return i18nLine('battle.explain.shape.saveMine', { hero: mySave.hero.name });
+  if (theirSave) return i18nLine('battle.explain.shape.saveOpp', { hero: theirSave.hero.name });
+
+  const myDriver = maxByAxes(mine, 'initiating');
+  const theirDriver = maxByAxes(opponent, 'initiating');
   const myInit = myDriver ? axisOf(myDriver, 'initiating') : 0;
   const theirInit = theirDriver ? axisOf(theirDriver, 'initiating') : 0;
-  const lines: LocalizedLine[] = [];
-
   if (
     myDriver &&
     theirDriver &&
     myDriver.hero.id !== theirDriver.hero.id &&
-    (myInit >= INITIATING_FLOOR || theirInit >= INITIATING_FLOOR)
+    myInit >= INITIATING_FLOOR &&
+    theirInit >= INITIATING_FLOOR
   ) {
-    lines.push(
-      i18nLine('battle.explain.shape.duel', { mine: myDriver.hero.name, theirs: theirDriver.hero.name }),
-    );
-  } else if (myDriver && myInit >= INITIATING_FLOOR) {
-    lines.push(i18nLine('battle.explain.shape.mineStarts', { hero: myDriver.hero.name }));
-  } else if (theirDriver && theirInit >= INITIATING_FLOOR) {
-    lines.push(i18nLine('battle.explain.shape.oppStarts', { hero: theirDriver.hero.name }));
+    return i18nLine('battle.explain.shape.duel', { mine: myDriver.hero.name, theirs: theirDriver.hero.name });
   }
-
-  const mySave = mySaver && axisOf(mySaver, 'saving') >= SAVING_FLOOR ? mySaver : undefined;
-  const theirSave = theirSaver && axisOf(theirSaver, 'saving') >= SAVING_FLOOR ? theirSaver : undefined;
-  if (mySave && theirSave && mySave.hero.id !== theirSave.hero.id) {
-    lines.push(
-      i18nLine('battle.explain.shape.savesBoth', { mine: mySave.hero.name, theirs: theirSave.hero.name }),
-    );
-  } else if (mySave) {
-    lines.push(i18nLine('battle.explain.shape.saveMine', { hero: mySave.hero.name }));
-  } else if (theirSave) {
-    lines.push(i18nLine('battle.explain.shape.saveOpp', { hero: theirSave.hero.name }));
+  if (myDriver && myInit >= INITIATING_FLOOR) {
+    return i18nLine('battle.explain.shape.mineStarts', { hero: myDriver.hero.name });
   }
-
-  return lines;
+  if (theirDriver && theirInit >= INITIATING_FLOOR) {
+    return i18nLine('battle.explain.shape.oppStarts', { hero: theirDriver.hero.name });
+  }
+  return null;
 }
 
-function axisNamed(delta: { axis: keyof HeroEvaluationValues }, side: BattlePick[]): string {
-  const hero = leaderOn(side, delta.axis);
-  return hero ? `${delta.axis}:${hero.hero.name}` : delta.axis;
-}
-
-function axisPictureLine(
-  axisDeltas: BattleExplanationContext['axisDeltas'],
-  mine: BattlePick[],
-  opponent: BattlePick[],
-): LocalizedLine | null {
-  const leads = axisDeltas.filter((delta) => Math.abs(delta.delta) >= AXIS_DELTA_FLOOR).slice(0, 3);
-  if (leads.length === 0) return null;
-
-  const yours = leads.filter((delta) => delta.delta > 0);
-  const theirs = leads.filter((delta) => delta.delta < 0);
-
-  if (yours.length > 0 && theirs.length > 0) {
-    return i18nLine('battle.explain.sheet.both', {
-      yours: yours.map((d) => axisNamed(d, mine)).join('|'),
-      hole: theirs.map((d) => axisNamed(d, opponent)).join('|'),
-    });
-  }
-  if (yours.length > 0) {
-    return i18nLine('battle.explain.sheet.yours', {
-      yours: yours.map((d) => axisNamed(d, mine)).join('|'),
-    });
-  }
-  return i18nLine('battle.explain.sheet.theirs', {
-    theirs: theirs.map((d) => axisNamed(d, opponent)).join('|'),
-  });
-}
-
-// Copy-only: a lane is even when |winRate − 0.5| × 100 ≤ 3.5 (max abs from 50%, not max−min across lanes).
+/** A lane score within 3.5pp of 50% reads as even on the card. */
 const LANE_COPY_EVEN_SPREAD_PP = 3.5;
 
 function isLaneCopyEven(lane: BattleLaneResult): boolean {
@@ -232,145 +126,32 @@ function laneLines(lanes: BattleLaneResult[] | undefined): LocalizedLine[] {
   const decided = lanes
     .filter((lane) => lane.winner !== 'even' && lane.topPair && !isLaneCopyEven(lane))
     .slice()
-    .sort((a, b) => Math.abs((b.topPair?.winRate ?? 0.5) - 0.5) - Math.abs((a.topPair?.winRate ?? 0.5) - 0.5))
-    .slice(0, 3);
+    .sort(
+      (a, b) => Math.abs((b.topPair?.winRate ?? 0.5) - 0.5) - Math.abs((a.topPair?.winRate ?? 0.5) - 0.5),
+    );
   if (allNumericEven && decided.length === 0) {
     return [i18nLine('battle.explain.lanes.even')];
   }
-  if (decided.length === 0) return [];
+  const lane = decided[0];
+  if (!lane?.topPair) return [];
 
-  const intro = i18nLine(decided.length === 1 ? 'battle.explain.lanes.wash' : 'battle.explain.lanes.uneven');
-  const bits = decided.map((lane) => {
-    const pair = lane.topPair!;
-    const chance =
-      lane.winRate === null ? '' : lane.winner === 'opponent' ? pct(1 - lane.winRate) : pct(lane.winRate);
-    const pairPct = pct(pair.winRate);
-    const params: Record<string, string> = {
-      lane: lane.lane,
-      hero: pair.hero,
-      vs: pair.vs,
-      pairPct,
-    };
-    if (chance) params.chance = chance;
-    if (lane.winner === 'mine') {
-      return i18nLine(chance ? 'battle.explain.lane.mineLean' : 'battle.explain.lane.mineEdge', params);
-    }
-    return i18nLine(chance ? 'battle.explain.lane.oppHole' : 'battle.explain.lane.oppEdge', params);
-  });
-
-  return [intro, ...bits];
-}
-
-function catchAndComboLines(
-  winners: Hero[],
-  losers: Hero[],
-  lookup: MatchupLookup,
-  winner: Side,
-  loser: Side,
-  lanePairKeys: Set<string>,
-): LocalizedLine[] {
-  const catches = topMatchups(winners, losers, lookup, 3).filter(
-    (row) => !lanePairKeys.has(`${row.hero}|${row.vs}`),
-  );
-  const combo = usableCombo(bestSynergyPair(winners, lookup));
-  const leftoverCombo = usableCombo(bestSynergyPair(losers, lookup));
-  const lines: LocalizedLine[] = [];
-
-  if (catches.length > 0) {
-    const first = catches[0];
-    lines.push(
-      i18nLine('battle.explain.catch.first', {
-        winner,
-        hero: first.hero,
-        vs: first.vs,
-        pct: pct(first.winRate),
-      }),
-    );
-    if (catches[1]) {
-      lines.push(
-        i18nLine('battle.explain.catch.second', {
-          hero: catches[1].hero,
-          vs: catches[1].vs,
-          pct: pct(catches[1].winRate),
-        }),
-      );
-    }
+  const pair = lane.topPair;
+  const chance =
+    lane.winRate === null ? '' : lane.winner === 'opponent' ? pct(1 - lane.winRate) : pct(lane.winRate);
+  const params: Record<string, string> = {
+    lane: lane.lane,
+    hero: pair.hero,
+    vs: pair.vs,
+    pairPct: pct(pair.winRate),
+  };
+  if (chance) params.chance = chance;
+  const hunt = pair.winRate >= HUNT_FLOOR;
+  if (lane.winner === 'mine') {
+    if (hunt) return [i18nLine('battle.explain.lane.mineHunt', params)];
+    return [i18nLine(chance ? 'battle.explain.lane.mineLean' : 'battle.explain.lane.mineEdge', params)];
   }
-  if (combo) {
-    lines.push(
-      i18nLine('battle.explain.combo.win', {
-        heroA: combo.heroA,
-        heroB: combo.heroB,
-        pct: pct(combo.winRate),
-      }),
-    );
-  }
-  if (
-    leftoverCombo &&
-    (!combo || leftoverCombo.heroA !== combo.heroA || leftoverCombo.heroB !== combo.heroB)
-  ) {
-    lines.push(
-      i18nLine('battle.explain.combo.leftover', {
-        loser,
-        heroA: leftoverCombo.heroA,
-        heroB: leftoverCombo.heroB,
-        pct: pct(leftoverCombo.winRate),
-      }),
-    );
-  }
-
-  return lines;
-}
-
-function carryLateLines(mine: BattlePick[], opponent: BattlePick[], lookup: MatchupLookup): LocalizedLine[] {
-  const myCarry = pickByRole(mine, 'Carry');
-  const theirCarry = pickByRole(opponent, 'Carry');
-  if (!myCarry || !theirCarry) return [];
-  const carryMatchup = lookup.getMatchupWinRate(myCarry.hero.id, theirCarry.hero.id);
-  const myScale = axisOf(myCarry, 'scaling');
-  const theirScale = axisOf(theirCarry, 'scaling');
-  const scaleLeader =
-    myScale !== theirScale ? (myScale > theirScale ? myCarry.hero.name : theirCarry.hero.name) : '';
-
-  const lines: LocalizedLine[] = [
-    i18nLine('battle.explain.carry.late', { mine: myCarry.hero.name, theirs: theirCarry.hero.name }),
-  ];
-
-  if (carryMatchup === null) {
-    lines.push(
-      i18nLine('battle.explain.carry.noRow', { mine: myCarry.hero.name, theirs: theirCarry.hero.name }),
-    );
-  } else if (carryMatchup > MATCHUP_FLOOR) {
-    lines.push(
-      i18nLine('battle.explain.carry.mineOwns', { hero: myCarry.hero.name, pct: pct(carryMatchup) }),
-    );
-  } else if (carryMatchup < 1 - MATCHUP_FLOOR) {
-    lines.push(
-      i18nLine('battle.explain.carry.oppOwns', { hero: theirCarry.hero.name, pct: pct(1 - carryMatchup) }),
-    );
-  } else {
-    lines.push(i18nLine('battle.explain.carry.flip', { pct: pct(carryMatchup) }));
-  }
-
-  if (scaleLeader && carryMatchup !== null) {
-    const matchupWinner =
-      carryMatchup > MATCHUP_FLOOR
-        ? myCarry.hero.name
-        : carryMatchup < 1 - MATCHUP_FLOOR
-          ? theirCarry.hero.name
-          : '';
-    if (matchupWinner && scaleLeader === matchupWinner) {
-      lines.push(i18nLine('battle.explain.carry.scaleSame'));
-    } else if (matchupWinner && scaleLeader !== matchupWinner) {
-      lines.push(i18nLine('battle.explain.carry.scaleTension', { scaler: scaleLeader }));
-    } else {
-      lines.push(i18nLine('battle.explain.carry.scaleAlso', { scaler: scaleLeader }));
-    }
-  } else if (scaleLeader) {
-    lines.push(i18nLine('battle.explain.carry.scaleOnly', { scaler: scaleLeader }));
-  }
-
-  return lines;
+  if (hunt) return [i18nLine('battle.explain.lane.oppHunt', params)];
+  return [i18nLine(chance ? 'battle.explain.lane.oppHole' : 'battle.explain.lane.oppEdge', params)];
 }
 
 function tagsLine(mine: BattlePick[], opponent: BattlePick[]): LocalizedLine | null {
@@ -480,26 +261,7 @@ function upsetReasonLines(
 export function buildExplanation(ctx: BattleExplanationContext): LocalizedLine[] {
   const mine = ctx.teamA;
   const opponent = ctx.teamB;
-  const won = ctx.resolvedOutcome === 'Win';
-  const winners = won ? mine : opponent;
-  const losers = won ? opponent : mine;
-  const winnerHeroes = heroesOf(winners);
-  const loserHeroes = heroesOf(losers);
   const isUpset = isBattleUpset(ctx.advantageDirection, ctx.resolvedOutcome);
-  const winner: Side = won ? 'yours' : 'opponent';
-  const loser: Side = won ? 'opponent' : 'yours';
-
-  const lanePairKeys = new Set(
-    (ctx.lanes ?? [])
-      .filter((lane) => lane.topPair)
-      .map((lane) => `${lane.topPair!.hero}|${lane.topPair!.vs}`),
-  );
-  const myCarry = pickByRole(mine, 'Carry');
-  const theirCarry = pickByRole(opponent, 'Carry');
-  if (myCarry && theirCarry) {
-    lanePairKeys.add(`${myCarry.hero.name}|${theirCarry.hero.name}`);
-    lanePairKeys.add(`${theirCarry.hero.name}|${myCarry.hero.name}`);
-  }
 
   const lines: LocalizedLine[] = [frameLine(ctx)];
 
@@ -507,19 +269,10 @@ export function buildExplanation(ctx: BattleExplanationContext): LocalizedLine[]
     lines.push(i18nLine('battle.explain.highSkill', { hero: ctx.highSkillSwingHero.name }));
   }
 
-  const clock = clockLine(mine, opponent, winners);
-  if (clock) lines.push(clock);
-
-  lines.push(...fightShapeLines(mine, opponent));
-
-  const axes = axisPictureLine(ctx.axisDeltas, mine, opponent);
-  if (axes) lines.push(axes);
+  const heroFact = heroFactLine(mine, opponent);
+  if (heroFact) lines.push(heroFact);
 
   lines.push(...laneLines(ctx.lanes));
-
-  lines.push(...catchAndComboLines(winnerHeroes, loserHeroes, ctx.lookup, winner, loser, lanePairKeys));
-
-  lines.push(...carryLateLines(mine, opponent, ctx.lookup));
 
   const tags = tagsLine(mine, opponent);
   if (tags) lines.push(tags);

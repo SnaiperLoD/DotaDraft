@@ -251,7 +251,11 @@ function BattleStory({ result, heroNames }: { result: BattleResultResponse; hero
           };
           const chunks: string[] = [t(`battle.story.${beat.key}`, interpolated)];
           if (beat.phase === 'opening' && interpolated.openingPairHero && interpolated.openingPairVs) {
-            chunks.push(t('battle.story.openingLaneHook', interpolated));
+            const hook =
+              interpolated.openingPairTone === 'hunt'
+                ? 'battle.story.openingLaneHook'
+                : 'battle.story.openingLaneSoft';
+            chunks.push(t(hook, interpolated));
           }
           if (beat.phase === 'opening' && interpolated.theirDriver) {
             chunks.push(t('battle.story.answerLine', interpolated));
@@ -259,27 +263,18 @@ function BattleStory({ result, heroNames }: { result: BattleResultResponse; hero
           if (beat.phase === 'opening' && interpolated.turner) {
             chunks.push(t('battle.story.turnerLine', interpolated));
           }
-          const leadKey = `${beat.phase}Lead`;
-          const lead = beat.params[leadKey];
-          if (beat.phase === 'conversion') {
-            chunks.push(t('battle.story.pitWindowOnly'));
-          } else if (lead === 'yours' || lead === 'theirs' || lead === 'even') {
-            chunks.push(t(`battle.story.lead.${lead}`));
-          }
-          if (story.thinPhase && story.thinPhase === beat.phase) {
-            chunks.push(t('battle.story.thinHere'));
-          }
-          if (beat.phase === 'finish') {
-            chunks.push(t('battle.story.noRamp'));
-            if (interpolated.myCarry && interpolated.theirCarry) {
-              if (interpolated.lateMatchupWinner && interpolated.carryWinRate) {
-                chunks.push(t('battle.story.carryLateMatchup', interpolated));
-              } else {
-                chunks.push(t('battle.story.carryLate', interpolated));
-              }
-              if (interpolated.scaleLeader) {
-                chunks.push(t('battle.story.carryScale', interpolated));
-              }
+          if (beat.phase === 'finish' && interpolated.myCarry && interpolated.theirCarry) {
+            if (interpolated.lateMatchupWinner && interpolated.carryWinRate) {
+              const lateKey =
+                interpolated.carryTone === 'hunt'
+                  ? 'battle.story.carryLateMatchup'
+                  : 'battle.story.carryLateSoft';
+              chunks.push(t(lateKey, interpolated));
+            } else {
+              chunks.push(t('battle.story.carryLate', interpolated));
+            }
+            if (interpolated.scaleLeader) {
+              chunks.push(t('battle.story.carryScale', interpolated));
             }
           }
           return (

@@ -100,6 +100,8 @@ export type BattleStoryBeatKey =
   | 'openingUpset'
   | 'turningCatchCombo'
   | 'turningCatch'
+  | 'turningEdgeCombo'
+  | 'turningEdge'
   | 'turningCombo'
   | 'turningAxis'
   | 'turningUpsetHighSkill'

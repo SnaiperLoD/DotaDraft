@@ -122,6 +122,24 @@ describe('buildBattleStory', () => {
     expect(story.beats[1].evidence.matchup).toEqual({ winnerId: 12, loserId: 1 });
   });
 
+  it('calls a 54% pair an edge, not a hunt', () => {
+    const lookup: MatchupLookup = {
+      getMatchupWinRate: (heroId, vsId) => (heroId === 12 && vsId === 1 ? 0.54 : 0.48),
+      getSynergyWinRate: () => null,
+      getWinRate: () => 0.5,
+    };
+    const story = buildBattleStory({
+      resolvedOutcome: 'Lose',
+      advantageDirection: 'B',
+      lanes: aheadLanes,
+      mine,
+      opponent,
+      lookup,
+    });
+    expect(story.beats[1].key).toBe('turningEdge');
+    expect(story.beats[1].params.matchupWinRate).toBe('54');
+  });
+
   it('does not narrate a catch when the best matchup is still ≤50%', () => {
     const lookup: MatchupLookup = {
       getMatchupWinRate: () => 0.47,
@@ -210,10 +228,10 @@ describe('buildBattleStory', () => {
     expect(withSkill.beats[1].params.swingHero).toBe('Dire Mid');
   });
 
-  it('names the highest initiating winner as fight driver, skirmish as tiebreak', () => {
+  it('names the highest initiating winner as fight driver, not skirmish', () => {
     const drivenMine = [
-      pick(1, 'Radiant Carry', 'Carry', { initiating: 8 }),
-      pick(2, 'Radiant Mid', 'Mid', { initiating: 8, skirmish_rate: 7 }),
+      pick(1, 'Radiant Carry', 'Carry', { initiating: 8, skirmish_rate: 2 }),
+      pick(2, 'Radiant Mid', 'Mid', { initiating: 4, skirmish_rate: 9 }),
       pick(3, 'Radiant Offlane', 'Offlane'),
       pick(4, 'Radiant Soft', 'Soft Support'),
       pick(5, 'Radiant Hard', 'Hard Support'),
@@ -226,7 +244,7 @@ describe('buildBattleStory', () => {
       opponent,
       lookup: noData,
     });
-    expect(story.beats[0].params.driver).toBe('Radiant Mid');
+    expect(story.beats[0].params.driver).toBe('Radiant Carry');
   });
 
   it('names a high-saving winner as turner and ignores a default saving 3', () => {

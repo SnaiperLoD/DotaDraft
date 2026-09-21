@@ -48,7 +48,7 @@ describe('buildExplanation', () => {
     pick(15, 'Lion', 'Hard Support', { saving: 4 }),
   ];
 
-  it('pulls lanes, carry late, fight shape, and real pair % into one write-up', () => {
+  it('names one lane and prefers a save over who starts fights', () => {
     const lookup: MatchupLookup = {
       getMatchupWinRate: (heroId, vsId) => {
         if (heroId === 1 && vsId === 11) return 0.58;
@@ -107,23 +107,18 @@ describe('buildExplanation', () => {
       }),
     );
 
-    expect(text).toMatch(/battle.explain.lane.mineLean/);
-    expect(text).toMatch(/Anti-Mage/);
-    expect(text).toMatch(/Axe/);
-    expect(text).toMatch(/70/);
-    expect(text).toMatch(/battle.explain.lane.oppHole/);
+    expect(text).toMatch(/battle.explain.lane.oppHunt/);
+    expect(text).not.toMatch(/battle.explain.lane.mineLean/);
     expect(text).toMatch(/Phantom Assassin/);
     expect(text).toMatch(/Tidehunter/);
     expect(text).toMatch(/71/);
-    expect(text).not.toMatch(/mid was/);
-    expect(text).toMatch(/battle.explain.shape.duel/);
-    expect(text).toMatch(/Storm Spirit/);
+    expect(text).not.toMatch(/battle.explain.shape.duel/);
     expect(text).toMatch(/battle.explain.shape.saveMine/);
     expect(text).toMatch(/Dazzle/);
-    expect(text).toMatch(/battle.explain.carry.late/);
-    expect(text).toMatch(/battle.explain.carry.mineOwns/);
-    expect(text).toMatch(/58/);
-    expect(text).toMatch(/battle.explain.combo.win/);
+    expect(text).not.toMatch(/battle.explain.carry/);
+    expect(text).not.toMatch(/battle.explain.combo/);
+    expect(text).not.toMatch(/battle.explain.clock/);
+    expect(text).not.toMatch(/battle.explain.sheet/);
     expect(text).toMatch(/battle.explain.close.favoredHeld/);
     expect(text.toLowerCase()).not.toMatch(/took roshan|aegis|buyback|catapult/);
   });
@@ -229,7 +224,7 @@ describe('buildExplanation', () => {
     expect(text).toMatch(/initiating/);
   });
 
-  it('describes tempo-vs-scaling clock split and early tempo winners', () => {
+  it('keeps the Roshan window off the card', () => {
     const tempoMine = mine.map((p, i) =>
       pick(p.hero.id, p.hero.name, p.assignedRole, {
         tempo: 8,
@@ -263,13 +258,13 @@ describe('buildExplanation', () => {
       }),
     );
 
-    expect(text).toMatch(/battle.explain.clock.split/);
-    expect(text).toMatch(/yours/);
-    expect(text).toMatch(/opponent/);
-    expect(text).toMatch(/15–20/);
+    expect(text).not.toMatch(/battle.explain.clock/);
+    expect(text).toMatch(/battle.explain.frame.ahead/);
+    expect(text).toMatch(/battle.explain.close.favoredHeld/);
+    expect(text).not.toMatch(/15–20/);
   });
 
-  it('describes a late-scaling winning side when tempos are tied', () => {
+  it('does not paste the axis sheet onto the card', () => {
     const scaleMine = mine.map((p) =>
       pick(p.hero.id, p.hero.name, p.assignedRole, { tempo: 4, scaling: 9, initiating: 3, saving: 3 }),
     );
@@ -290,9 +285,9 @@ describe('buildExplanation', () => {
       }),
     );
 
-    expect(text).toMatch(/battle.explain.clock.late/);
-    expect(text).toMatch(/30\+/);
-    expect(text).toMatch(/battle.explain.sheet.yours/);
+    expect(text).not.toMatch(/battle.explain.clock/);
+    expect(text).not.toMatch(/battle.explain.sheet/);
+    expect(text).toMatch(/battle.explain.frame.ahead/);
     expect(text).toMatch(/scaling/);
   });
 
@@ -328,12 +323,10 @@ describe('buildExplanation', () => {
       }),
     );
 
-    expect(text).toMatch(/battle.explain.shape.duel/);
-    expect(text).toMatch(/Anti-Mage/);
-    expect(text).toMatch(/Axe/);
+    expect(text).not.toMatch(/battle.explain.shape.duel/);
     expect(text).toMatch(/battle.explain.shape.saveOpp/);
     expect(text).toMatch(/Dazzle/);
-    expect(text).toMatch(/battle.explain.sheet.theirs/);
+    expect(text).not.toMatch(/battle.explain.sheet/);
     expect(text).toMatch(/battle.explain.close.underdogHeld/);
   });
 
@@ -362,8 +355,7 @@ describe('buildExplanation', () => {
       }),
     );
 
-    expect(text).toMatch(/battle.explain.carry.flip/);
-    expect(text).toMatch(/50/);
+    expect(text).not.toMatch(/battle.explain.carry/);
     expect(text).toMatch(/battle.explain.tags/);
     expect(text).toMatch(/battle.explain.shutdown.mine/);
     expect(text).toMatch(/Anti-Mage/);
@@ -376,7 +368,7 @@ describe('buildExplanation', () => {
     expect(text).toMatch(/4/);
   });
 
-  it('covers opponent-owned carry matchup and a second catch plus leftover combo', () => {
+  it('does not retell catches and combos on the card', () => {
     const lookup: MatchupLookup = {
       getMatchupWinRate: (a, b) => {
         if (a === 1 && b === 11) return 0.35;
@@ -405,19 +397,12 @@ describe('buildExplanation', () => {
       }),
     );
 
-    expect(text).toMatch(/battle.explain.carry.oppOwns/);
-    expect(text).toMatch(/65/);
-    expect(text).toMatch(/battle.explain.catch.first/);
-    expect(text).toMatch(/Storm Spirit/);
-    expect(text).toMatch(/Axe/);
-    expect(text).toMatch(/72/);
-    expect(text).toMatch(/battle.explain.catch.second/);
-    expect(text).toMatch(/Tidehunter/);
-    expect(text).toMatch(/Lion/);
-    expect(text).toMatch(/68/);
-    expect(text).toMatch(/battle.explain.combo.win/);
+    expect(text).not.toMatch(/battle.explain.catch/);
+    expect(text).not.toMatch(/battle.explain.combo/);
+    expect(text).not.toMatch(/battle.explain.carry/);
+    expect(text).toMatch(/battle.explain.shape.saveMine/);
     expect(text).toMatch(/Dazzle/);
-    expect(text).toMatch(/battle.explain.combo.leftover/);
+    expect(text).toMatch(/battle.explain.close.favoredHeld/);
   });
 
   it('joins three shutdown names with an oxford comma', () => {
@@ -468,9 +453,7 @@ describe('buildExplanation', () => {
     );
 
     expect(text).not.toMatch(/battle.explain.catch/);
-    expect(text).toMatch(/battle.explain.carry.noRow/);
-    expect(text).toMatch(/Anti-Mage/);
-    expect(text).toMatch(/Phantom Assassin/);
+    expect(text).not.toMatch(/battle.explain.carry/);
     expect(text).toMatch(/battle.explain.close.evenWin/);
   });
 
@@ -502,13 +485,13 @@ describe('buildExplanation', () => {
       }),
     );
 
-    expect(text).toMatch(/battle.explain.lanes.wash/);
-    expect(text).toMatch(/battle.explain.lane.mineEdge/);
+    expect(text).not.toMatch(/battle.explain.lanes.wash/);
+    expect(text).toMatch(/battle.explain.lane.mineHunt/);
     expect(text).toMatch(/Storm Spirit/);
     expect(text).toMatch(/Shadow Fiend/);
   });
 
-  it('covers solo initiator / solo save and carry scale-vs-matchup tension', () => {
+  it('prefers the save over who starts the fights', () => {
     const soloInitMine = [
       pick(1, 'Anti-Mage', 'Carry', { scaling: 9, initiating: 2 }),
       pick(2, 'Storm Spirit', 'Mid', { initiating: 9, tempo: 8 }),
@@ -542,13 +525,10 @@ describe('buildExplanation', () => {
       }),
     );
 
-    expect(text).toMatch(/battle.explain.shape.duel/);
-    expect(text).toMatch(/Storm Spirit/);
+    expect(text).not.toMatch(/battle.explain.shape.duel/);
     expect(text).toMatch(/battle.explain.shape.saveMine/);
     expect(text).toMatch(/Dazzle/);
-    expect(text).toMatch(/battle.explain.carry.mineOwns/);
-    expect(text).toMatch(/70/);
-    expect(text).toMatch(/battle.explain.carry.scaleSame/);
+    expect(text).not.toMatch(/battle.explain.carry/);
   });
 
   it('covers carry matchup owner differing from the scaler', () => {
@@ -571,10 +551,8 @@ describe('buildExplanation', () => {
       }),
     );
 
-    expect(text).toMatch(/battle.explain.carry.oppOwns/);
-    expect(text).toMatch(/65/);
-    expect(text).toMatch(/battle.explain.carry.scaleTension/);
-    expect(text).toMatch(/Anti-Mage/);
+    expect(text).not.toMatch(/battle.explain.carry/);
+    expect(text).toMatch(/battle.explain.close.favoredHeld/);
   });
 
   function explainLanes(lanes: BattleLaneResult[]): string {
@@ -645,7 +623,7 @@ describe('buildExplanation', () => {
       laneAt('off', 0.536, 'Tidehunter', 'Phantom Assassin'),
     ]);
 
-    expect(text).toMatch(/battle.explain.lanes.uneven/);
+    expect(text).not.toMatch(/battle.explain.lanes.uneven/);
     expect(text).toMatch(/battle.explain.lane.mineLean/);
     expect(text).not.toMatch(/battle.explain.lanes.even/);
   });
@@ -658,10 +636,10 @@ describe('buildExplanation', () => {
     ]);
 
     expect(text).not.toMatch(/battle.explain.lanes.even/);
-    expect(text).toMatch(/battle.explain.lanes.uneven/);
-    expect(text).toMatch(/battle.explain.lane.mineLean/);
-    expect(text).toMatch(/battle.explain.lane.oppHole/);
+    expect(text).not.toMatch(/battle.explain.lanes.uneven/);
+    expect(text).toMatch(/battle.explain.lane.mineHunt/);
+    expect(text).not.toMatch(/battle.explain.lane.oppHole/);
     expect(text).toMatch(/Storm Spirit/);
-    expect(text).toMatch(/Tidehunter/);
+    expect(text).not.toMatch(/Tidehunter/);
   });
 });

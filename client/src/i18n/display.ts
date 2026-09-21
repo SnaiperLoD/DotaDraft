@@ -177,6 +177,8 @@ export function parseFundamentalsAxesFromDescription(description: string): strin
     scaling: 'scaling',
     mobility: 'mobility',
     'objective pressure': 'objectives',
+    'tower pressure': 'objectives',
+    towers: 'objectives',
     objectives: 'objectives',
     control: 'control',
     durability: 'durability',
@@ -190,6 +192,8 @@ export function parseFundamentalsAxesFromDescription(description: string): strin
     'initiation potential': 'initiating',
     initiating: 'initiating',
     'skirmish rate': 'skirmish_rate',
+    'how often they fight': 'skirmish_rate',
+    fights: 'skirmish_rate',
     'camp stacking': 'camp_stacking',
     'resource efficiency': 'resource_efficiency',
   };

@@ -159,13 +159,30 @@ function axisWeightForPhase(axis: keyof HeroEvaluationValues, phase: GamePhase):
   return axisWeightsConfig.phaseWeights?.[phase]?.[axis] ?? axisWeight(axis);
 }
 
-// Blend of an axis's weight across the 3 phases, by phaseDistribution — the
-// single number that axisDeltas (advantages/disadvantages narrative) uses,
-// so "how much did this axis matter" reflects the same phase blend as the
-// score itself. Safe to collapse into one linear blend here (unlike
-// overallPower below) because axisDeltas has no per-axis normalization step.
-function blendedAxisWeight(axis: keyof HeroEvaluationValues): number {
-  return PHASES.reduce((sum, phase) => sum + axisWeightForPhase(axis, phase) * phaseDistribution[phase], 0);
+// Share of blendedOverallPower(A) − blendedOverallPower(B) that belongs to
+// one axis. Each phase divides by its own weight sum, then the phase scores
+// are blended — the same normalization as overallPower. A raw gap times the
+// blended weight skips that denominator and lets a default-1 axis narrate
+// like a heavy late axis. Sum of these deltas equals the tagged power gap
+// while the scorer is the production blend (shadow off).
+function axisPowerDeltas(
+  teamA: BattlePick[],
+  teamB: BattlePick[],
+  tagEffectsA: CustomTagEffects | undefined,
+  tagEffectsB: CustomTagEffects | undefined,
+): { axis: keyof HeroEvaluationValues; delta: number }[] {
+  return AXES.map((axis) => {
+    let delta = 0;
+    for (const phase of PHASES) {
+      const weight = axisWeightForPhase(axis, phase);
+      if (weight === 0) continue;
+      const total = AXES.reduce((sum, other) => sum + axisWeightForPhase(other, phase), 0);
+      if (total === 0) continue;
+      const gap = axisAverage(teamA, axis, tagEffectsA, phase) - axisAverage(teamB, axis, tagEffectsB, phase);
+      delta += phaseDistribution[phase] * gap * (weight / total);
+    }
+    return { axis, delta };
+  }).sort((x, y) => Math.abs(y.delta) - Math.abs(x.delta));
 }
 
 // Breakpoint (Blueprint/10-tech-debt-backlog.md): real OpenDota winRate must
@@ -558,16 +575,7 @@ export function assessBattle(
   const advantageDirection: AdvantageDirection =
     diff > ADVANTAGE_THRESHOLD ? 'A' : diff < -ADVANTAGE_THRESHOLD ? 'B' : 'Even';
 
-  // Weighted the same (phase-blended) as overallPower — a discounted axis
-  // should be proportionally less likely to drive advantages/disadvantages
-  // or the headline explanation, not just the aggregate score. Tag-adjusted
-  // (tagEffectsA/B), same reasoning as taggedPowerA/B above.
-  const axisDeltas = AXES.map((axis) => ({
-    axis,
-    delta:
-      (axisAverage(teamA, axis, tagEffectsA) - axisAverage(teamB, axis, tagEffectsB)) *
-      blendedAxisWeight(axis),
-  })).sort((x, y) => Math.abs(y.delta) - Math.abs(x.delta));
+  const axisDeltas = axisPowerDeltas(teamA, teamB, tagEffectsA, tagEffectsB);
 
   return {
     powerA,
@@ -669,12 +677,14 @@ export function resolveBattle(
   const baselineOutcome: ResolvedOutcome = roll < basePWinA ? 'Win' : 'Lose';
   const highSkillSwing = resolvedOutcome !== baselineOutcome;
 
+  // Same bar as the fight itself, in power points. The old 0.3 lived on an
+  // un-normalized gap×weight scale and named axes that barely moved the score.
   const advantages = axisDeltas
-    .filter((d) => d.delta > 0.3)
+    .filter((d) => d.delta > ADVANTAGE_THRESHOLD)
     .slice(0, 2)
     .map((d) => d.axis);
   const disadvantages = axisDeltas
-    .filter((d) => d.delta < -0.3)
+    .filter((d) => d.delta < -ADVANTAGE_THRESHOLD)
     .slice(0, 2)
     .map((d) => d.axis);
 

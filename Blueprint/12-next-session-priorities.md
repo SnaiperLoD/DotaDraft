@@ -149,11 +149,10 @@ shape.
   Axis bracket types live in `assessment-core`. Battle History still
   has no versioned full payload. Captains/TI RTL shipped 2026-09-21.
   Don't retune coefficients.
-- **Battle recap vs the live scorer** — `r2_f_farm` stays a shadow, so
-  do not relabel the fight as PC1. `axisDeltas` / #1 driver still use a
-  mid snapshot; `overallPower` is phase-blended. Align the write-up
-  with production power. Do not retune coefficients so the story feels
-  fair. See `10-tech-debt-backlog.md`.
+- **Battle recap** — ranking and the conversational telling landed
+  2026-09-21. `r2_f_farm` stays a shadow: do not relabel the fight as
+  PC1. Do not retune coefficients so the story feels fair. See
+  `10-tech-debt-backlog.md`.
 - Calibration pause: don't change coefficients / tags / weights without
   asking; don't refetch unless asked. `realWinRateWeight` stays 2.
 - Named tunnel / domain / VPS — later, when a stable URL is actually
