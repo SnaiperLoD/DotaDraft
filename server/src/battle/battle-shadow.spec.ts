@@ -209,4 +209,19 @@ describe('shadowOverallPowerForPhase', () => {
     expect(farmLow).toBeGreaterThan(farmHigh);
     expect(r2High).toBeGreaterThan(r2Low);
   });
+
+  it('r2_f_farm_save0: saving does not move early or mid power', () => {
+    const low: BattlePick[] = [pick(1, 'Low', null, { saving: 0 })];
+    const high: BattlePick[] = [pick(2, 'High', null, { saving: 10 })];
+    for (const phase of ['early', 'mid', 'late'] as const) {
+      const farmDelta =
+        shadowOverallPowerForPhase(high, phase, undefined, 'r2_f_farm') -
+        shadowOverallPowerForPhase(low, phase, undefined, 'r2_f_farm');
+      const cutDelta =
+        shadowOverallPowerForPhase(high, phase, undefined, 'r2_f_farm_save0') -
+        shadowOverallPowerForPhase(low, phase, undefined, 'r2_f_farm_save0');
+      expect(farmDelta).toBeGreaterThan(0.05);
+      expect(Math.abs(cutDelta)).toBeLessThan(0.001);
+    }
+  });
 });

@@ -165,20 +165,24 @@ Offline on Naked+open `r2_f_farm` (2026-09-21): tagged MAE 12.2 vs
 untagged 5.6 — hidden still mops structured error. 8 flat tags still
 earn their sign. **Mirage Tax retired 2026-09-21** (mean div ≈ 0, n=2):
 definition, Battle −15%, Eval mirror, locales. Naga/TB keep Army of Clones.
-Biggest f-holes without a hidden tag:
-Sand King, Pugna, Pangolier. Do not write a 12th named crutch; freeze f
-first. Recap copy is a separate item below.
+Same tags turned ON on `r2_f_farm` (magnitudes untouched, same seed):
+r 0.372, MAE 6.80, ±7 55.1%, ≥10 = 31. No flat-tag sign flip. That loses
+to the current formula + the same tags (r 0.381, MAE 6.39, ±7 61.4%,
+≥10 = 27). Do not replace production `overallPower`. Saving weight 0
+on the naked f dropped r 0.186→0.122 — do not ablate it. Untagged holes
+got worse once other heroes' multipliers moved the pool: Pugna +16→+22,
+Sand King, Pangolier, Ringmaster slightly worse. No 12th named crutch.
 
-### Battle recap vs collapsed Battle features — `open`
-Separate from the scorer. `buildExplanation` / `buildBattleStory` /
-`axisDeltas` / Q2 “#1 driver” still speak the 13 Eval axes (`AXIS_LABEL`,
-`maxByAxes`, burst/scaling/objectives/durability as separate reasons).
-R1/R2 `overallPower` collapses combat into PC1, damps `summon_based`
-inside that blob, and zeros missing JSON keys. If the shadow f ships,
-the fight recap will name the wrong axis for a decision that was one
-combat spectrum. Recalibrate recap beats, driver ranking, and axis
-labels to the Battle feature set **after f is frozen**. Do not retune
-coefficients to make the story “feel fair.” Not this calibration wave.
+### Battle recap vs the live scorer — `open`
+`r2_f_farm` is not shipping, so the recap does not grow a PC1 label.
+`buildExplanation` / `buildBattleStory` / Q2 “#1 driver” still rank
+`axisDeltas` from a mid-phase snapshot times the phase-blended weight,
+while `overallPower` averages phase-specific values. Weight-0 axes
+(`map_control`, `camp_stacking`, `resource_efficiency`) already
+contribute delta 0. The fix is to rank the driver the way production
+power is actually blended. Do not retune coefficients to make the story
+“feel fair.” Do not rename burst/scaling/objectives/teamfight/durability
+into one combat word until a collapsed f is the live path.
 
 ### T_camp0 (`camp_stacking` → 0) — `partial`
 Offline evidence green (+0.028 r). Production weights **not** written —

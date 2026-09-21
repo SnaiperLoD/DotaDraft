@@ -168,11 +168,15 @@ Eval answers «что это за драфт» and keeps the 13-axis radar, syne
 
 **Прод сейчас** всё ещё считает фазовое взвешенное среднее 13 осей. Shadow не подключён, пока `DOTADRAFT_BATTLE_SHADOW` пуст.
 
-**Кандидат, не влитый:** `r2_f_farm` в `server/src/battle/battle-shadow.ts`. Пять combat-осей (burst, scaling, objectives, teamfight, durability) схлопнуты в один PC1; у `summon_based` durability/objectives внутри PC1 ×0.7; пропущенный ключ веса = 0, не 1; `resource_efficiency` = 0; вход scaling в PC1 заменён на `clamp(5 + scaling − tempo)`. На том же пуле: r 0.186, MAE 8.11, ±7 51.2%, ≥10 п.п. = 43. Full с 11 hidden-тегами всё ещё сильнее (r 0.381, MAE 6.39, ±7 61.4%). Hidden не умер: MAE героев с тегом 12.2 п.п. против 5.6 без тега.
+**Лучшая голая формула, не влитая:** `r2_f_farm` в `server/src/battle/battle-shadow.ts`. Пять combat-осей (burst, scaling, objectives, teamfight, durability) схлопнуты в один PC1; у `summon_based` durability/objectives внутри PC1 ×0.7; пропущенный ключ веса = 0, не 1; `resource_efficiency` = 0; вход scaling в PC1 заменён на `clamp(5 + scaling − tempo)`. На том же пуле, hidden OFF: r 0.186, MAE 8.11, ±7 51.2%, ≥10 п.п. = 43. Hidden на голой формуле всё ещё тащат хвост: MAE героев с тегом 12.2 п.п. против 5.6 без тега.
 
-Mirage Tax снят (Naga/TB на голой формуле около нуля). Остальные hidden не трогать без нового approve. Recap боя (`axisDeltas`, explanation, story) всё ещё называет 13 осей Eval — если f вливать, текст врёт. Это отдельный пункт бэклога, не эта формула.
+**Вечер того же дня, hidden ON поверх `r2_f_farm`, величины не менялись.** r 0.372, MAE 6.80, ±7 55.1%, ≥10 = 31. Знаки плоских тегов не перевернулись, ошибка сжалась (Summoning Sickness и Showstopper около нуля; Paper Utility +15→+7, Raid Boss −14→−8, Disable Battery −15→−7). Это проходит порог против голой `r2_f_farm` и проигрывает старой формуле с теми же тегами (r 0.381, MAE 6.39, ±7 61.4%, ≥10 = 27). Прод-`overallPower` из-за этого не меняется. Бестеговые дыры от чужих множителей стали хуже: Pugna +16→+22, Sand King −18→−19, Pangolier −15→−17, Ringmaster −12→−13.
 
-Цифры, хвост и запреты для внешнего разбора: `14-analytical-handoff.md`. Артефакты прогонов: `artifacts/self-play/r0-2026-09-21`, `r1-2026-09-21`, `r2-2026-09-21`, `r2-farm-2026-09-21`, `r2-residual-farm-2026-09-21`.
+**Убито после заморозки f, без записи весов.** Обнуление saving (вес 1.7 в базе, и в early он наследуется, потому что в блоке early ключа нет): кластер saving≥6 сел с +10.4 до +2.7 п.п., но r 0.186→0.122. Ось несёт и смещение, и сигнал. Фазовый микс (late−early против div) на бестеговых r −0.045. Tempo снаружи тегов r 0.013. Initiating на бестеговых r −0.311: обнуление добило бы Sand King и Pangolier.
+
+Mirage Tax снят (Naga/TB на голой формуле около нуля). Остальные hidden не трогать без нового approve. Recap боя по-прежнему говорит осями Eval. PC1 в текст не переносить: эта формула в прод не идёт. Живой баг текста — #1 driver считается с mid-снимка, а `overallPower` фазовый. Это отдельный пункт бэклога.
+
+Цифры и запреты: `14-analytical-handoff.md`. Артефакты: `artifacts/self-play/r0-2026-09-21`, `r1-2026-09-21`, `r2-2026-09-21`, `r2-farm-2026-09-21`, `r2-residual-farm-2026-09-21`, `r2-noncombat-2026-09-21`, `r2-save0-2026-09-21`, `r2-farm-hidden-2026-09-21`.
 
 ## Important
 

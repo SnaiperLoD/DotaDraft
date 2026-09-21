@@ -22,7 +22,8 @@ export type BattleShadowMode =
   | 'r2_f'
   | 'farm_need_v2'
   | 'r2_f_dis'
-  | 'r2_f_farm';
+  | 'r2_f_farm'
+  | 'r2_f_farm_save0';
 
 const rawMode = (process.env.DOTADRAFT_BATTLE_SHADOW ?? 'off').trim();
 const ALLOWED: BattleShadowMode[] = [
@@ -36,6 +37,7 @@ const ALLOWED: BattleShadowMode[] = [
   'farm_need_v2',
   'r2_f_dis',
   'r2_f_farm',
+  'r2_f_farm_save0',
 ];
 export const BATTLE_SHADOW: BattleShadowMode = ALLOWED.includes(rawMode as BattleShadowMode)
   ? (rawMode as BattleShadowMode)
@@ -76,6 +78,11 @@ function explicitWeight(axis: keyof HeroEvaluationValues, phase: GamePhase): num
 function r2Weight(axis: keyof HeroEvaluationValues, phase: GamePhase): number {
   if (axis === 'resource_efficiency') return 0;
   return explicitWeight(axis, phase);
+}
+
+function r2FarmSave0Weight(axis: keyof HeroEvaluationValues, phase: GamePhase): number {
+  if (axis === 'saving') return 0;
+  return r2Weight(axis, phase);
 }
 
 // Restore control's production silent default (missing key → 1) as an
@@ -390,6 +397,10 @@ export function shadowOverallPowerForPhase(
 
   if (mode === 'r2_f_farm') {
     return collapseCombatPower(team, phase, tagEffects, r2Weight, true, axisAverage, true);
+  }
+
+  if (mode === 'r2_f_farm_save0') {
+    return collapseCombatPower(team, phase, tagEffects, r2FarmSave0Weight, true, axisAverage, true);
   }
 
   if (mode === 'r2_f_dis') {

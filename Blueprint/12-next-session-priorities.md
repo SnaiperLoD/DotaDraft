@@ -149,11 +149,11 @@ shape.
   Axis bracket types live in `assessment-core`. Battle History still
   has no versioned full payload. Captains/TI RTL shipped 2026-09-21.
   Don't retune coefficients.
-- **Battle recap vs axis collapse** — after R1/R2 f (PC1 / body-in-PC1)
-  freeze, retune `buildExplanation` / `buildBattleStory` / `axisDeltas`
-  so the fight write-up names the compressed Battle features, not the
-  13 Eval axes. Do not mix into the current scorer wave. See
-  `10-tech-debt-backlog.md`.
+- **Battle recap vs the live scorer** — `r2_f_farm` stays a shadow, so
+  do not relabel the fight as PC1. `axisDeltas` / #1 driver still use a
+  mid snapshot; `overallPower` is phase-blended. Align the write-up
+  with production power. Do not retune coefficients so the story feels
+  fair. See `10-tech-debt-backlog.md`.
 - Calibration pause: don't change coefficients / tags / weights without
   asking; don't refetch unless asked. `realWinRateWeight` stays 2.
 - Named tunnel / domain / VPS — later, when a stable URL is actually
@@ -167,9 +167,9 @@ Honest KPI only (`realWinRateWeight=0` during runs, restored to 2). Open tags st
 
 - Naked 13-axis Battle: r 0.094, MAE 8.68 п.п., ±7 46.5%. Full + hidden: r 0.381, MAE 6.39, ±7 61.4%.
 - Shipped to production, with approve: `resource_efficiency` weight 0 (mid/early/late); Mirage Tax removed (Battle, Eval mirror, definition, locales). Naga/TB keep Army of Clones.
-- Not shipped: `DOTADRAFT_BATTLE_SHADOW=r2_f_farm` (PC1 combat collapse + body-in-PC1 + missing weight 0 + farm-need inside PC1). r 0.186, ±7 51.2%. H-DIS helps disable supports and burns the far tail — not stacked.
-- Hidden tags still earn their sign except the retired Mirage Tax. Untagged holes that got worse: Sand King, Pugna, Pangolier.
-- Docs: `01-core-rules.md`, `05-evaluation-engine.md`, `06-battle-engine.md`, `14-analytical-handoff.md`. Fight recap still speaks 13 Eval axes; do not retune copy in the same pass as the scorer.
+- Not shipped: `DOTADRAFT_BATTLE_SHADOW=r2_f_farm` (PC1 combat collapse + body-in-PC1 + missing weight 0 + farm-need inside PC1). Naked r 0.186, ±7 51.2%. H-DIS helps disable supports and burns the far tail — not stacked. Saving weight 0 on that f: r 0.122, cluster saving≥6 +10.4→+2.7 — not stacked. Hidden ON, same magnitudes: r 0.372, ±7 55.1%, which loses to the current formula + hidden (r 0.381, ±7 61.4%). Production `overallPower` stays the 13-axis blend.
+- Hidden tags still earn their sign except the retired Mirage Tax. With tags on, untagged holes got worse: Pugna +16→+22, Sand King, Pangolier, Ringmaster.
+- Docs: `01-core-rules.md`, `05-evaluation-engine.md`, `06-battle-engine.md`, `14-analytical-handoff.md`. Fight recap still ranks a mid snapshot; PC1 copy is not the next edit.
 
 ## Completed this pass (2026-09-21, leftover engineering)
 
@@ -472,7 +472,7 @@ User's request (2026-08-06): heroes who genuinely play both a core and a support
 - **Vite's `optimizeDeps` cache for the `shared` workspace package doesn't auto-invalidate** on a `shared/dist` rebuild — if a shared-package change doesn't seem to reach the client, `rm -rf client/node_modules/.vite` before restarting, not just restart alone.
 - **`calibrate-evaluation-values.ts` only writes `heroes.json`** — the running server reads SQLite. Always follow with `npm run seed`.
 - **The Browser pane sometimes reports "not displayed" and `requestAnimationFrame` genuinely stops firing** while it's in that state (confirmed this session — not just a screenshot-tool quirk, real app rendering pauses too). A workaround that worked repeatedly: grab a `renderer`/`scene`/`camera` (or whatever's needed) via a temporary `window.__debugHook`, call the render/action manually and synchronously, read the result, then remove the hook before finishing. Small `canvas.toDataURL('image/jpeg', 0.5-0.6)` at a downscaled size (~90-130px) transcribes reliably through the tool round-trip; the full-size PNG capture got corrupted more than once.
-- **`axisWeightForPhase()` default for a missing axis key is 1, not 0.** `resource_efficiency` is now an explicit 0 in every phase (2026-09-21). `control` / `mobility` / `initiating` still inherit 1 wherever a phase block omits them. Shadow `r2_f` treats a missing key as 0; production does not, until that shadow is approved into the live path.
+- **`axisWeightForPhase()` default for a missing axis key is 1, not 0.** `resource_efficiency` is now an explicit 0 in every phase (2026-09-21). `control` / `mobility` / `initiating` still inherit 1 wherever a phase block omits them. Shadow `r2_f` treats a missing key as 0; production does not. The shadow was measured with hidden tags on and does not replace the live path.
 - **`resize_window` with custom pixel dimensions renders broken** — only `preset` values are reliable.
 
 ## Where to start
