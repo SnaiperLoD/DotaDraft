@@ -45,7 +45,7 @@ test('captains board resumes after leaving for Home', async ({ page }) => {
   await page.goto('/captains');
   await expect(page.getByTestId('cm-splash')).toBeVisible();
   await expect(page.getByTestId('cm-board')).toBeVisible({ timeout: 20_000 });
-  await page.locator('a.wordmark').click();
+  await page.locator('a.wordmark.cm-exit').click();
   await expect(page).toHaveURL('/');
   await page.goto('/captains');
   await expect(page.getByTestId('cm-board')).toBeVisible({ timeout: 10_000 });

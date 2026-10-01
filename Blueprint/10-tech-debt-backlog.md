@@ -194,6 +194,9 @@ needs explicit “пиши в axis-weights” approve.
 Shared mid skeleton shipped; absolute Eval card weights still not
 outcome-calibrated.
 
+### Percentile reference lags the weights — `open`
+Radar/Total Score percentiles (`server/data/axis-percentile-distributions.json`, 2026-08-17) were generated with `resource_efficiency` mid weight 0.5; it is now 0 (2026-09-21), so the `totalScore` list is stale (generation weights recorded in the `.weights.json` sidecar; drift pinned by `axis-percentile-reference.spec.ts`). Recompute needs a real-data refetch (`compute-axis-percentiles`) — only on the author's explicit request, planned after weights stabilize (after the variance-lab session). The spec fails on any new drift; update sidecar + expected list on regeneration.
+
 ### map_control / vision CSV restore — `partial`
 Weight 0 + no Eval card. Restore only after `vision_ability_tier` → ability CSV.
 

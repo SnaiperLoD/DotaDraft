@@ -10,12 +10,16 @@ export function mulberry32(seed: number): () => number {
   };
 }
 
-export function seededShuffle<T>(items: T[], seed: number): T[] {
-  const rand = mulberry32(seed);
+// Unbiased Fisher-Yates shuffle; rand must return a value in [0, 1).
+export function shuffleWith<T>(items: readonly T[], rand: () => number = Math.random): T[] {
   const result = [...items];
   for (let i = result.length - 1; i > 0; i--) {
     const j = Math.floor(rand() * (i + 1));
     [result[i], result[j]] = [result[j], result[i]];
   }
   return result;
+}
+
+export function seededShuffle<T>(items: T[], seed: number): T[] {
+  return shuffleWith(items, mulberry32(seed));
 }

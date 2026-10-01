@@ -1,0 +1,37 @@
+{
+  "_note": "Weights behind the totalScore list in axis-percentile-distributions.json (generatedAt 2026-08-17T19:41:05Z). Reconstructed from git: compute-axis-percentiles.ts uses buildEvaluationScoreWeights() (live), so weights = server/data/axis-weights.json axisWeights (mid) + EVAL_ONLY_WEIGHTS/EVAL_AXIS_BUDGET of axis-weights-config.ts as of the generating commit. Do not edit unless the reference is regenerated. See Blueprint/10-tech-debt-backlog.md.",
+  "sourceCommit": "2a9ddf9",
+  "sourceDate": "2026-08-17",
+  "referenceGeneratedAt": "2026-08-17T19:41:05.201Z",
+  "midAxisWeights": {
+    "teamfight": 0.27,
+    "tempo": 1.2,
+    "scaling": 0.27,
+    "objectives": 0.22,
+    "burst": 0.22,
+    "control": 1,
+    "durability": 0.22,
+    "mobility": 1,
+    "saving": 1.7,
+    "initiating": 1,
+    "skirmish_rate": 1.3,
+    "resource_efficiency": 0.5
+  },
+  "evalAxisBudget": 0.55,
+  "effectiveTotalScoreWeights": {
+    "synergy": 0.25,
+    "proSimilarity": 0.05,
+    "teamfight": 0.016685,
+    "tempo": 0.074157,
+    "scaling": 0.016685,
+    "objectives": 0.013596,
+    "burst": 0.013596,
+    "control": 0.061798,
+    "durability": 0.013596,
+    "mobility": 0.061798,
+    "saving": 0.105056,
+    "initiating": 0.061798,
+    "skirmish_rate": 0.080337,
+    "resource_efficiency": 0.030899
+  }
+}

@@ -1,7 +1,8 @@
 // Always-hidden calibration tags that must affect Evaluation Total Score
 // as well as Battle (user: balance crutches are part of the model, not
-// flavour). Magnitudes kept in sync by hand with battle/custom-tags.ts —
-// Core Rules Separation: Evaluation must not import Battle.
+// flavour). Single source of truth: battle/custom-tags.ts imports these
+// sets and magnitudes from here (Core Rules Separation: Evaluation must not
+// import Battle, so the shared direction is Battle -> common).
 // Opponent-only curses (Agility Crusher, etc.) stay Battle-only.
 import type { Hero, HeroEvaluationValues } from 'shared';
 import { heroNameSetForTag } from 'shared';
@@ -9,29 +10,29 @@ import { isHardCarry } from './hard-carry';
 
 type Axis = keyof HeroEvaluationValues;
 
-const DIVIDED_ATTENTION = heroNameSetForTag('Divided Attention');
-const DIVIDED_ATTENTION_PENALTY = 0.9;
-const TEMPO_MONSTER = heroNameSetForTag('Tempo Monster');
-const TEMPO_MONSTER_THRESHOLD = 8;
-const TEMPO_MONSTER_BUFF = 1.03;
-const TEMPO_MONSTER_PENALTY = 0.75;
-const TEMPO_MONSTER_HARD_CARRY_PENALTY = 0.9;
-const SUMMONING_SICKNESS = heroNameSetForTag('Summoning Sickness');
-const SUMMONING_SICKNESS_PENALTY = 0.7;
-const PAPER_UTILITY = heroNameSetForTag('Paper Utility');
-const PAPER_UTILITY_PENALTY = 0.75;
-const SHOWSTOPPER_TAX = heroNameSetForTag('Showstopper Tax');
-const SHOWSTOPPER_TAX_PENALTY = 0.75;
-const FALSE_IMMORTAL = heroNameSetForTag('False Immortal');
-const FALSE_IMMORTAL_PENALTY = 0.82;
-const RAID_BOSS = heroNameSetForTag('Raid Boss');
-const RAID_BOSS_BUFF = 1.18;
-const DISABLE_BATTERY = heroNameSetForTag('Disable Battery');
-const DISABLE_BATTERY_BUFF = 1.25;
-const HAUNT_ABSOLUTE = heroNameSetForTag('Haunt Absolute');
-const HAUNT_ABSOLUTE_BUFF = 1.12;
-const SIEGE_VOLTAGE = heroNameSetForTag('Siege Voltage');
-const SIEGE_VOLTAGE_BUFF = 1.12;
+export const DIVIDED_ATTENTION = heroNameSetForTag('Divided Attention');
+export const DIVIDED_ATTENTION_PENALTY = 0.9;
+export const TEMPO_MONSTER = heroNameSetForTag('Tempo Monster');
+export const TEMPO_MONSTER_THRESHOLD = 8;
+export const TEMPO_MONSTER_BUFF = 1.03;
+export const TEMPO_MONSTER_PENALTY = 0.75;
+export const TEMPO_MONSTER_HARD_CARRY_PENALTY = 0.9;
+export const SUMMONING_SICKNESS = heroNameSetForTag('Summoning Sickness');
+export const SUMMONING_SICKNESS_PENALTY = 0.7;
+export const PAPER_UTILITY = heroNameSetForTag('Paper Utility');
+export const PAPER_UTILITY_PENALTY = 0.75;
+export const SHOWSTOPPER_TAX = heroNameSetForTag('Showstopper Tax');
+export const SHOWSTOPPER_TAX_PENALTY = 0.75;
+export const FALSE_IMMORTAL = heroNameSetForTag('False Immortal');
+export const FALSE_IMMORTAL_PENALTY = 0.82;
+export const RAID_BOSS = heroNameSetForTag('Raid Boss');
+export const RAID_BOSS_BUFF = 1.18;
+export const DISABLE_BATTERY = heroNameSetForTag('Disable Battery');
+export const DISABLE_BATTERY_BUFF = 1.25;
+export const HAUNT_ABSOLUTE = heroNameSetForTag('Haunt Absolute');
+export const HAUNT_ABSOLUTE_BUFF = 1.12;
+export const SIEGE_VOLTAGE = heroNameSetForTag('Siege Voltage');
+export const SIEGE_VOLTAGE_BUFF = 1.12;
 
 export interface CalibrationTagMultipliers {
   /** Flat multiplier on every axis value for this hero. */

@@ -2,6 +2,31 @@ import type { Hero, HeroEvaluationValues } from 'shared';
 import { MANA_BOOSTER_BENEFICIARIES, heroNameSetForTag, activeCustomTagsForTeam } from 'shared';
 import type { GamePhase } from './battle-resolution';
 import { isHardCarry } from '../common/hard-carry';
+import {
+  DISABLE_BATTERY,
+  DISABLE_BATTERY_BUFF,
+  DIVIDED_ATTENTION,
+  DIVIDED_ATTENTION_PENALTY,
+  FALSE_IMMORTAL,
+  FALSE_IMMORTAL_PENALTY,
+  HAUNT_ABSOLUTE,
+  HAUNT_ABSOLUTE_BUFF,
+  PAPER_UTILITY,
+  PAPER_UTILITY_PENALTY,
+  RAID_BOSS,
+  RAID_BOSS_BUFF,
+  SHOWSTOPPER_TAX,
+  SHOWSTOPPER_TAX_PENALTY,
+  SIEGE_VOLTAGE,
+  SIEGE_VOLTAGE_BUFF,
+  SUMMONING_SICKNESS,
+  SUMMONING_SICKNESS_PENALTY,
+  TEMPO_MONSTER,
+  TEMPO_MONSTER_BUFF,
+  TEMPO_MONSTER_HARD_CARRY_PENALTY,
+  TEMPO_MONSTER_PENALTY,
+  TEMPO_MONSTER_THRESHOLD,
+} from '../common/calibration-tags';
 import type { CustomTagEffects } from '../assessment-core/analyzer-types';
 import {
   fundamentalsTargetAxes,
@@ -160,8 +185,6 @@ export const HIGH_SKILL = heroNameSetForTag('High Skill');
 // (extra pooled HP, simultaneous multi-body pushing), without the offsetting
 // real weakness — split power is easier to pick apart piece by piece than
 // the raw stat sheet implies.
-const DIVIDED_ATTENTION = heroNameSetForTag('Divided Attention');
-const DIVIDED_ATTENTION_PENALTY = 0.9;
 
 // Tempo Monster — hidden, always-active (no reveal state at all, per spec).
 // Rewards a genuinely tempo-built team (+3% final power) and punishes a
@@ -171,11 +194,6 @@ const DIVIDED_ATTENTION_PENALTY = 0.9;
 // Lone Druid/Lycan/Broodmother) — flagged as a real stacking risk before
 // building this (Blueprint/10-tech-debt-backlog.md), implementing as
 // specified to observe the actual measured effect rather than guessing.
-const TEMPO_MONSTER = heroNameSetForTag('Tempo Monster');
-const TEMPO_MONSTER_THRESHOLD = 8;
-const TEMPO_MONSTER_BUFF = 1.03;
-const TEMPO_MONSTER_PENALTY = 0.75;
-const TEMPO_MONSTER_HARD_CARRY_PENALTY = 0.9;
 
 // Summoning Sickness — hidden, always-active, unconditional (no team-state
 // branch like Tempo Monster's tempo threshold, no reveal count). Targets the
@@ -207,8 +225,6 @@ const TEMPO_MONSTER_HARD_CARRY_PENALTY = 0.9;
 // tag they ran +13.9..+21.4pp. Going deeper keeps improving the GLOBAL
 // numbers slightly (r 0.241 -> 0.251, flagged 45 -> 44 at 0.65) but does it
 // by pushing this pool negative, which just trades one anomaly for another.
-const SUMMONING_SICKNESS = heroNameSetForTag('Summoning Sickness');
-const SUMMONING_SICKNESS_PENALTY = 0.7;
 
 const STATSTEALER_MIN_COUNT = 2;
 export const HIGH_SKILL_DEBUFF_MIN_COUNT = 2;
@@ -291,19 +307,15 @@ const PRONE_TO_BURST_PENALTY = 0.8;
 // Axes tax them via skirmish (deaths / low LH); real win condition is disable
 // + nuke from the fog. Solo-active flat power buff. Starting magnitude.
 // Always-hidden; Evaluation mirrors this via common/calibration-tags.ts.
-const DISABLE_BATTERY = heroNameSetForTag('Disable Battery');
 // Was 1.10 (+10%): pool mean −18.3→−14.6, almost all still flagged.
 // Bumped 2026-08-16 user "дожми" → 1.25 (+25%). Rough linear read from the
 // first step (~3.7pp per +10%) projects another ~5–6pp toward zero; residual
 // under likely remains until a second measure.
-const DISABLE_BATTERY_BUFF = 1.25;
 
 // Haunt Absolute — Spectre's Haunt is global presence that Global's
 // map_control buff cannot express while map_control weight is 0. Flat
 // power buff instead. Starting magnitude.
 // Always-hidden; Evaluation mirrors this via common/calibration-tags.ts.
-const HAUNT_ABSOLUTE = heroNameSetForTag('Haunt Absolute');
-const HAUNT_ABSOLUTE_BUFF = 1.12;
 
 // Mirage Tax retired 2026-09-21. On r2_f_farm (hidden OFF) Naga/TB mean
 // div ≈ 0, so the −15% was a dead crutch. Army of Clones stays.
@@ -312,28 +324,18 @@ const HAUNT_ABSOLUTE_BUFF = 1.12;
 // sky-high on utility axes that don't convert. Flat power penalty, same
 // shape as Summoning Sickness. Starting magnitude (milder than 0.70 — pool
 // is mixed with other tags).
-const PAPER_UTILITY = heroNameSetForTag('Paper Utility');
-const PAPER_UTILITY_PENALTY = 0.75;
 
 // Raid Boss — under late/space cores (post tag-batch measure). Flat power.
 // Always-hidden; Evaluation mirrors this via common/calibration-tags.ts.
-const RAID_BOSS = heroNameSetForTag('Raid Boss');
-const RAID_BOSS_BUFF = 1.18;
 
 // Showstopper Tax — hidden. Overrated initiate/flashy cores. Same shape as
 // Paper Utility; magnitude matched to that pool's closer.
-const SHOWSTOPPER_TAX = heroNameSetForTag('Showstopper Tax');
-const SHOWSTOPPER_TAX_PENALTY = 0.75;
 
 // False Immortal — hidden unconditional sustain-overrate (Necro/MK/Phoenix).
 // Stacks with Prone To Burst when opponent burst clears the threshold.
-const FALSE_IMMORTAL = heroNameSetForTag('False Immortal');
-const FALSE_IMMORTAL_PENALTY = 0.82;
 
 // Siege Voltage — under mid push/nuke (DP/Lina/OD).
 // Always-hidden; Evaluation mirrors this via common/calibration-tags.ts.
-const SIEGE_VOLTAGE = heroNameSetForTag('Siege Voltage');
-const SIEGE_VOLTAGE_BUFF = 1.12;
 
 // Healer — ally-sustain heroes (2026-08-12, user-approved research batch).
 // Team durability buff, same count-growing per-hero shape as Mass Buffer

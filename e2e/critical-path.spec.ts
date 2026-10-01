@@ -48,7 +48,8 @@ test('run streak updates only after the result reveal', async ({ page }) => {
   await expect(page.getByTestId('battle-run-chip')).toBeVisible();
   await expect(page.getByTestId('battle-run-chip')).not.toContainText('Win streak');
 
-  await page.getByRole('button', { name: 'Fight Again' }).click();
+  // BattlePanel renders Fight Again twice by design (header + bottom actions); use the header one.
+  await page.getByRole('button', { name: 'Fight Again' }).first().click();
   await expect(page.getByTestId('battle-verdict')).toBeHidden();
   await expect(page.getByTestId('battle-run-chip')).not.toContainText('Win streak');
   await expect(page.getByTestId('battle-verdict')).toBeVisible({ timeout: 20_000 });

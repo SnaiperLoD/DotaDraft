@@ -95,6 +95,42 @@ module.exports = tseslint.config(
     },
   },
   {
+    // Evaluation <-> Battle wall: neither side may import the other.
+    // Shared code lives in server/src/assessment-core and server/src/common.
+    files: ['server/src/evaluation/**/*.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              regex: '(^|/)battle(/|$)',
+              message:
+                'evaluation/ must not import from battle/. Put shared code in assessment-core/ or common/.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    files: ['server/src/battle/**/*.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              regex: '(^|/)evaluation(/|$)',
+              message:
+                'battle/ must not import from evaluation/. Put shared code in assessment-core/ or common/.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
     // Plain CommonJS config files (this file included) — not part of any
     // app tsconfig, and intentionally use require()/module.exports.
     files: [

@@ -9,6 +9,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { DraftService } from '../draft/draft.service';
 import { OpponentPoolService } from '../opponent-pool/opponent-pool.service';
 import { persistWithRetry } from '../common/persist-retry';
+import { shuffleWith } from '../common/random';
 import {
   TI_BRACKETS,
   advanceBracket,
@@ -48,7 +49,7 @@ export class TiRunService {
       throw new ServiceUnavailableException('No TI playoff drafts in the opponent pool');
     }
     const picked = eligible[Math.floor(Math.random() * eligible.length)];
-    const shuffled = [...picked.teams].sort(() => Math.random() - 0.5);
+    const shuffled = shuffleWith(picked.teams);
     const teams = shuffled.slice(0, Math.min(5, shuffled.length));
     const row = await this.prisma.tiRun.create({
       data: {
