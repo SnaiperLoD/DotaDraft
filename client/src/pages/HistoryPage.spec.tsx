@@ -71,7 +71,7 @@ function mockAuth(overrides: Partial<ReturnType<typeof useAuth>> = {}) {
     refresh: vi.fn(),
     ...overrides,
   };
-  vi.mocked(useAuth).mockReturnValue(value as ReturnType<typeof useAuth>);
+  vi.mocked(useAuth).mockReturnValue(value);
   return value;
 }
 

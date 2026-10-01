@@ -23,6 +23,7 @@ module.exports = tseslint.config(
       'server/.stryker-tmp/**',
       'server/test/integration/**',
       '.cursor/**',
+      '.claude/**',
     ],
   },
   js.configs.recommended,

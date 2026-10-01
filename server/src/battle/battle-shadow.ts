@@ -249,7 +249,7 @@ function loadDisableByHeroId(): Map<number, number> {
     const ids = rows.map((r) => r.heroId);
     const scaled = percentileRankScale(rows.map((r) => r.control_strength));
     ids.forEach((id, i) => {
-      if (scaled[i] != null) out.set(id, scaled[i] as number);
+      if (scaled[i] != null) out.set(id, scaled[i]);
     });
   } catch {
     return out;
@@ -272,7 +272,7 @@ function loadFarmNeedByHeroId(): Map<number, number> {
     const lh = meta.heroes.map((h) => medianBenchmarkValue(h.benchmarks?.last_hits_per_min));
     const scaled = percentileRankScale(lh);
     ids.forEach((id, i) => {
-      if (scaled[i] != null) out.set(id, scaled[i] as number);
+      if (scaled[i] != null) out.set(id, scaled[i]);
     });
   } catch {
     return out;

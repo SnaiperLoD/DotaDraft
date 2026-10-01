@@ -410,6 +410,7 @@ PR trigger, full monorepo build, **client Vitest**, Playwright cache,
 and Prettier are blocking for production source (`server/scripts`, Blueprint,
 generated data, gltf ignored). Dependabot weekly + `npm audit` in CI
 (`continue-on-error`).
+2026-10-01: CI on `master` had been red at Lint since 2026-09-21 (client specs outside `client/tsconfig.json`, two stray `as` in `battle-shadow.ts`) — fixed; client build now uses `client/tsconfig.build.json`. Battle math golden snapshot `server/src/battle/battle-golden.spec.ts` (600 seeded `assessBattle` rows; regenerate only after an approved calibration change with `UPDATE_GOLDEN=1`). Open: two e2e failures that predate the fix — `critical-path.spec.ts:43` (two "Fight Again" buttons) and `shell.spec.ts:44` (two `a.wordmark`).
 ### Mutation testing — `partial`
 Full suite (2026-08-17): **69.92%** total. Re-run on
 `battle-explanation.ts` after deeper Jest: **~65%** on that file alone

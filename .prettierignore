@@ -3,6 +3,7 @@ node_modules
 dist
 server/generated
 server/data
+server/test/golden
 server/scripts
 server/.stryker-tmp
 shared/dist

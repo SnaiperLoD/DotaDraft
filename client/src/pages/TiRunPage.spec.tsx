@@ -137,7 +137,9 @@ describe('TiRunPage', () => {
     vi.mocked(api.getDraftPool).mockResolvedValue({ seed: 7, pool: fivePoolHeroes() });
     vi.mocked(api.getDraft).mockResolvedValue(completedDraft());
     vi.mocked(api.getSynergyPreview).mockResolvedValue([]);
-    vi.mocked(api.attachTiRunDraft).mockImplementation(async (_runId, draftId) => playingRun({ draftId }));
+    vi.mocked(api.attachTiRunDraft).mockImplementation((_runId, draftId) =>
+      Promise.resolve(playingRun({ draftId })),
+    );
   });
 
   afterEach(() => {

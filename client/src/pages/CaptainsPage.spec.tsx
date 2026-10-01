@@ -88,7 +88,7 @@ function completedSides() {
   });
 }
 
-async function renderCaptains(route = '/captains') {
+function renderCaptains(route = '/captains') {
   renderWithRouter(<CaptainsPage />, { route });
 }
 
@@ -105,11 +105,13 @@ describe('CaptainsPage', () => {
     vi.mocked(api.getHeroes).mockResolvedValue(ROSTER);
     vi.mocked(api.startCaptains).mockResolvedValue(captainsState());
     vi.mocked(api.getCaptains).mockResolvedValue(captainsState());
-    vi.mocked(api.actCaptains).mockImplementation(async (_id, heroId) =>
-      captainsState({
-        bannedHeroIds: heroId != null ? [heroId] : [],
-        slots: emptySlots().map((slot, i) => (i === 0 && heroId != null ? { ...slot, heroId } : slot)),
-      }),
+    vi.mocked(api.actCaptains).mockImplementation((_id, heroId) =>
+      Promise.resolve(
+        captainsState({
+          bannedHeroIds: heroId != null ? [heroId] : [],
+          slots: emptySlots().map((slot, i) => (i === 0 && heroId != null ? { ...slot, heroId } : slot)),
+        }),
+      ),
     );
     vi.mocked(api.getDraft).mockResolvedValue(completedSides());
   });
@@ -121,7 +123,7 @@ describe('CaptainsPage', () => {
 
   it('shows splash, then starts a session after the ceremonial delay', async () => {
     vi.useFakeTimers();
-    await renderCaptains();
+    renderCaptains();
 
     expect(screen.getByTestId('cm-splash')).toBeInTheDocument();
     expect(api.startCaptains).not.toHaveBeenCalled();
@@ -136,7 +138,7 @@ describe('CaptainsPage', () => {
 
   it('resumes a live session without splash and without starting a new draft', async () => {
     localStorage.setItem(CAPTAINS_SESSION_KEY, 'cm-live');
-    await renderCaptains();
+    renderCaptains();
 
     await waitFor(() => {
       expect(api.getCaptains).toHaveBeenCalledWith('cm-live');
@@ -148,7 +150,7 @@ describe('CaptainsPage', () => {
 
   it('renders Valve HUD: four attributes, 5/7 slots, first pick, bonus, no search box', async () => {
     localStorage.setItem(CAPTAINS_SESSION_KEY, 'cm-1');
-    await renderCaptains();
+    renderCaptains();
 
     const board = await screen.findByTestId('cm-board');
     expect(screen.getByTestId('cm-draft')).toBeInTheDocument();
@@ -179,7 +181,7 @@ describe('CaptainsPage', () => {
         acting: 'ai',
       }),
     );
-    await renderCaptains();
+    renderCaptains();
 
     const board = await screen.findByTestId('cm-board');
     expect(board.querySelector('.cm-hud-side--dire .cm-hud-fp')).toHaveTextContent('First Pick');
@@ -189,7 +191,7 @@ describe('CaptainsPage', () => {
   it('acts on a hero click and marks the portrait banned', async () => {
     const user = userEvent.setup();
     localStorage.setItem(CAPTAINS_SESSION_KEY, 'cm-1');
-    await renderCaptains();
+    renderCaptains();
     await screen.findByTestId('cm-board');
 
     await user.click(screen.getByTestId('cm-hero-2'));
@@ -203,7 +205,7 @@ describe('CaptainsPage', () => {
   it('type-to-filter dims non-matches; Escape clears then focuses HUD exit', async () => {
     const user = userEvent.setup();
     localStorage.setItem(CAPTAINS_SESSION_KEY, 'cm-1');
-    await renderCaptains();
+    renderCaptains();
     await screen.findByTestId('cm-board');
 
     const cursor = document.querySelector('.cm-hero[tabindex="0"]');
@@ -235,15 +237,17 @@ describe('CaptainsPage', () => {
         aiDraftId: 'draft-ai',
       }),
     );
-    vi.mocked(api.getDraft).mockImplementation(async (id) =>
-      draftState({
-        ...completedSides(),
-        id,
-        mode: 'captains',
-      }),
+    vi.mocked(api.getDraft).mockImplementation((id) =>
+      Promise.resolve(
+        draftState({
+          ...completedSides(),
+          id,
+          mode: 'captains',
+        }),
+      ),
     );
 
-    await renderCaptains();
+    renderCaptains();
     expect(await screen.findAllByTestId('evaluation-panel-mock')).toHaveLength(2);
     expect(screen.queryByTestId('battle-panel-mock')).not.toBeInTheDocument();
 
@@ -263,7 +267,7 @@ describe('CaptainsPage', () => {
       }),
     );
 
-    await renderCaptains();
+    renderCaptains();
     await advanceSplash();
     vi.useRealTimers();
     expect(await screen.findByText(/This match is in History/)).toBeInTheDocument();
