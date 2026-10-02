@@ -31,15 +31,32 @@ describe('LaneMatchups', () => {
     expect(within(mid).getByText('60%')).toHaveClass('battle-matchup-wr--good');
   });
 
-  it('captions the lane number as the average real matchup win rate (OpenDota)', () => {
-    render(<LaneMatchups lanes={[lane('safe', 'opponent', 0.4), lane('off', 'even', null)]} />);
+  it('captions the lane number as the real lane win rate (STRATZ) when it comes from lane data', () => {
+    render(
+      <LaneMatchups
+        lanes={[{ ...lane('safe', 'opponent', 0.4), rateSource: 'lane' }, lane('off', 'even', null)]}
+      />,
+    );
     const [withNumber, withoutNumber] = screen.getAllByTestId('battle-lane-card');
 
     expect(within(withNumber).getByText('60%')).toBeInTheDocument();
-    expect(within(withNumber).getByTestId('battle-lane-note')).toHaveTextContent(
-      'average real matchup win rate in this lane (OpenDota)',
-    );
+    const note = within(withNumber).getByTestId('battle-lane-note');
+    expect(note).toHaveAttribute('data-source', 'lane');
+    expect(note).toHaveTextContent('real lane win rate, draws excluded (STRATZ, Legend–Immortal pubs)');
     expect(within(withoutNumber).queryByTestId('battle-lane-note')).toBeNull();
+  });
+
+  it('says so when a lane fell back to the game-matchup proxy, or was stored before lane data', () => {
+    render(
+      <LaneMatchups
+        lanes={[{ ...lane('safe', 'mine', 0.58), rateSource: 'matchup' }, lane('mid', 'mine', 0.6)]}
+      />,
+    );
+    for (const card of screen.getAllByTestId('battle-lane-card')) {
+      const note = within(card).getByTestId('battle-lane-note');
+      expect(note).toHaveAttribute('data-source', 'matchup');
+      expect(note).toHaveTextContent('no lane data: average real game matchup win rate (OpenDota)');
+    }
   });
 });
 
@@ -59,6 +76,19 @@ describe('story lane copy (T1.3)', () => {
     for (const key of lanesAndPairs) {
       expect(ru.battle.story[key]).not.toMatch(/Ломается|садится на|Перелом/);
       expect(en.battle.story[key]).not.toMatch(/breaks in|gets onto|That's the turn|turn hangs/i);
+    }
+  });
+
+  it('quotes lane numbers as lanes won, not as game win rates', () => {
+    const numbered = ['mineHunt', 'mineLean', 'oppHunt', 'oppHole'] as const;
+    for (const key of numbered) {
+      expect(ru.battle.explain.lane[key]).toMatch(/{{pairPct}}% линий/);
+      expect(en.battle.explain.lane[key]).toMatch(/{{pairPct}}% of lanes/);
+      expect(ru.battle.explain.lane[key]).not.toMatch(/садится на/);
+    }
+    for (const key of ['openingLaneHook', 'openingLaneSoft'] as const) {
+      expect(ru.battle.story[key]).toMatch(/выигранных линий/);
+      expect(en.battle.story[key]).toMatch(/lanes/);
     }
   });
 });

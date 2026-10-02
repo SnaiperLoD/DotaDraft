@@ -26,22 +26,32 @@ export interface BattleLaneTopPair {
   winRate: number;
 }
 
+// Where a lane's numbers come from: 'lane' = real lane win rate per hero pair
+// (STRATZ laneOutcome, server/data/lane-outcomes.json); 'matchup' = fallback
+// proxy, the average pro GAME matchup win rate (OpenDota hero-meta).
+export type BattleLaneRateSource = 'lane' | 'matchup';
+
 export interface BattleLaneResult {
   lane: BattleLaneId;
   mine: string[];
   opponent: string[];
-  // 'even' when the average matchup sits within LANE_EVEN_SPREAD_PP of 50%
+  // 'even' when the average pair rate sits within LANE_EVEN_SPREAD_PP of 50%
   // (server/src/battle/battle-lanes.ts) — the single even-lane flag every
   // surface reads (lane card, Explanation, story).
   winner: BattleLaneWinner;
-  // Mine's implied chance from the already-computed average matchup edge
-  // (0.5 + averageEdge). null when the lane had no real pair data.
+  // Mine's average pair rate in this lane (0.5 + averageEdge): the real
+  // lane win rate when rateSource is 'lane', the game-matchup proxy when
+  // 'matchup'. null when the lane had no pair data at all.
   winRate: number | null;
   mineIds: number[];
   opponentIds: number[];
-  // Best real matchup pair for the winning side in this lane. null when
-  // the lane is even or no pair data exists for the winner.
+  // Best pair for the winning side in this lane (same source as winRate).
+  // null when the lane is even or no pair data exists for the winner.
   topPair: BattleLaneTopPair | null;
+  // Additive (2026-10-02). Absent on payloads built before then, which all
+  // used the 'matchup' proxy — readers treat absent as 'matchup'. null when
+  // winRate is null.
+  rateSource?: BattleLaneRateSource | null;
 }
 
 export interface BattleOpponent {

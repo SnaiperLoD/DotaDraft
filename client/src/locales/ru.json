@@ -325,7 +325,8 @@
     "laneWinnerYours": "Ваши",
     "laneWinnerOpponent": "Их",
     "laneEven": "Ничья",
-    "laneChanceNote": "средний реальный винрейт матчапов на линии (OpenDota)",
+    "laneChanceNote": "реальный винрейт на линии, без учёта ничьих (STRATZ, пабы Легенда–Титан)",
+    "laneChanceNoteProxy": "нет данных по линии: средний реальный винрейт матчапов в игре (OpenDota)",
     "story": {
       "title": "Как это могло пройти",
       "disclaimer": "Так это могло сложиться. Не реплей.",
@@ -354,8 +355,8 @@
       },
       "turnerLine": "{{turner}} — тот, кто спасает драку, а не тот, кто прыгает первым.",
       "answerLine": "{{theirDriver}} — тот, кто должен на это ответить.",
-      "openingLaneHook": "На {{openingLane}} выделяется пара {{openingPairHero}} против {{openingPairVs}}: в реальных играх {{openingPairWinRate}}%.",
-      "openingLaneSoft": "На {{openingLane}} {{openingPairHero}} чуть впереди {{openingPairVs}} ({{openingPairWinRate}}%).",
+      "openingLaneHook": "На {{openingLane}} выделяется пара {{openingPairHero}} против {{openingPairVs}}: в реальных пабах это {{openingPairWinRate}}% выигранных линий.",
+      "openingLaneSoft": "На {{openingLane}} {{openingPairHero}} впереди {{openingPairVs}}: {{openingPairWinRate}}% выигранных линий.",
       "carryLateMatchup": "В лейте {{myCarry}} против {{theirCarry}}, и в этой паре заметно сильнее {{lateMatchupWinner}} ({{carryWinRate}}%).",
       "carryLateSoft": "В лейте {{myCarry}} против {{theirCarry}}. {{lateMatchupWinner}} в этой паре чуть впереди ({{carryWinRate}}%).",
       "carryLate": "В лейте это {{myCarry}} против {{theirCarry}}.",
@@ -456,11 +457,11 @@
         "uneven": "Линии ровно не стояли."
       },
       "lane": {
-        "mineHunt": "На {{lane}} ты их продавливаешь: {{hero}} садится на {{vs}} ({{pairPct}}%).",
-        "mineLean": "На {{lane}} ты чуть впереди, {{hero}} против {{vs}} ({{pairPct}}%).",
+        "mineHunt": "На {{lane}} ты их продавливаешь: {{hero}} против {{vs}} выигрывает {{pairPct}}% линий.",
+        "mineLean": "На {{lane}} ты впереди: {{hero}} против {{vs}} выигрывает {{pairPct}}% линий.",
         "mineEdge": "На {{lane}} ты чуть впереди: {{hero}} против {{vs}}.",
-        "oppHunt": "На {{lane}} они тебя ловят: {{hero}} садится на {{vs}} ({{pairPct}}%).",
-        "oppHole": "На {{lane}} чуть их, {{hero}} против {{vs}} ({{pairPct}}%).",
+        "oppHunt": "На {{lane}} они тебя продавливают: {{hero}} против {{vs}} выигрывает {{pairPct}}% линий.",
+        "oppHole": "На {{lane}} перевес у них: {{hero}} против {{vs}} выигрывает {{pairPct}}% линий.",
         "oppEdge": "На {{lane}} чуть их: {{hero}} против {{vs}}."
       },
       "catch": {

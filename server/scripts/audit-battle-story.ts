@@ -9,6 +9,8 @@ import { HeroMetaService } from '../src/hero-meta/hero-meta.service';
 import { assessBattle, resolveBattle, bestMatchupEdge, type BattlePick } from '../src/battle/battle-resolution';
 import { buildBattleStory } from '../src/battle/battle-story';
 import { buildLaneResults } from '../src/battle/battle-lanes';
+import { defaultLaneOutcomes, NO_LANE_OUTCOMES } from '../src/battle/lane-outcomes';
+import { HUNT_FLOOR, LANE_HUNT_FLOOR } from '../src/battle/battle-cast';
 
 const HEROES_PATH = path.join(__dirname, '..', 'data', 'heroes.json');
 const RU_LOCALE_PATH = path.join(__dirname, '..', '..', 'client', 'src', 'locales', 'ru.json');
@@ -17,6 +19,9 @@ const CAUSAL_COPY = /Ломается|садится на|Перелом/;
 // Same spread the Explanation and lane cards call "even" (T1.2).
 const NEAR_EVEN_SPREAD = 0.035 + 1e-9;
 const SAMPLE = Number(process.argv[2] ?? 10000);
+// AUDIT_LANE_SOURCE=proxy re-runs the audit on the pre-2026-10-02 lane source
+// (game-matchup proxy only) for a before/after comparison.
+const LANE_OUTCOMES = process.env.AUDIT_LANE_SOURCE === 'proxy' ? NO_LANE_OUTCOMES : defaultLaneOutcomes();
 const ROLES_LIST = [...ROLES] as DraftRole[];
 
 function mulberry32(seed: number): () => number {
@@ -65,7 +70,7 @@ function byRole(picks: BattlePick[]): Map<string, Hero> {
 }
 
 function buildLanes(mine: BattlePick[], opponent: BattlePick[], lookup: HeroMetaService): BattleLaneResult[] {
-  return buildLaneResults(byRole(mine), byRole(opponent), lookup);
+  return buildLaneResults(byRole(mine), byRole(opponent), lookup, LANE_OUTCOMES);
 }
 
 function main() {
@@ -90,6 +95,11 @@ function main() {
     storyTallyVsExplanationEven: 0,
     causalLaneCopy: 0,
   };
+  // Lane-level shape (per lane, 3 per battle): how many cards are even, where
+  // the numbers come from, and how often the named pair clears HUNT_FLOOR.
+  const laneStats = { lanes: 0, even: 0, fromLane: 0, fromMatchup: 0, noData: 0, decided: 0, topPairHunt: 0 };
+  const absEdges: number[] = [];
+  const topPairRates: number[] = [];
   const ruStory = (JSON.parse(fs.readFileSync(RU_LOCALE_PATH, 'utf-8')) as {
     battle: { story: Record<string, unknown> };
   }).battle.story;
@@ -160,6 +170,18 @@ function main() {
     if (turning === 'turningAxis') counts.turningUsesAxisNotCatch += 1;
     const winnerSign = result.resolvedOutcome === 'Win' ? 1 : -1;
     if (turning === 'turningAxis' && !(topAxisDelta * winnerSign > 0)) counts.turningAxisNotWinnersAxis += 1;
+    for (const l of lanes) {
+      laneStats.lanes += 1;
+      if (l.winner === 'even') laneStats.even += 1;
+      else laneStats.decided += 1;
+      if (l.rateSource === 'lane') laneStats.fromLane += 1;
+      else if (l.rateSource === 'matchup') laneStats.fromMatchup += 1;
+      else laneStats.noData += 1;
+      const huntFloor = l.rateSource === 'lane' ? LANE_HUNT_FLOOR : HUNT_FLOOR;
+      if (l.topPair && l.topPair.winRate >= huntFloor) laneStats.topPairHunt += 1;
+      if (l.topPair) topPairRates.push(l.topPair.winRate * 100);
+      if (l.winRate !== null) absEdges.push(Math.abs(l.winRate - 0.5) * 100);
+    }
     counts.nearEvenLaneGivenAWinner += lanes.filter(
       (l) => l.winRate !== null && Math.abs(l.winRate - 0.5) <= NEAR_EVEN_SPREAD && l.winner !== 'even',
     ).length;
@@ -182,7 +204,27 @@ function main() {
   }
 
   const pct = (k: keyof typeof counts) => ((counts[k] / counts.n) * 100).toFixed(1);
-  console.log(JSON.stringify({ sample: counts.n, counts, pct: {
+  absEdges.sort((a, b) => a - b);
+  topPairRates.sort((a, b) => a - b);
+  const quantile = (xs: number[], p: number) => xs[Math.min(xs.length - 1, Math.floor(p * xs.length))]?.toFixed(1);
+  const q = (p: number) => quantile(absEdges, p);
+  const lanePct = (k: keyof typeof laneStats) => ((laneStats[k] / laneStats.lanes) * 100).toFixed(1);
+  const lanesSummary = {
+    source: process.env.AUDIT_LANE_SOURCE === 'proxy' ? 'proxy' : 'lane-outcomes',
+    evenPct: lanePct('even'),
+    fromLanePct: lanePct('fromLane'),
+    fromMatchupPct: lanePct('fromMatchup'),
+    noDataPct: lanePct('noData'),
+    topPairHuntOfDecidedPct: ((laneStats.topPairHunt / Math.max(1, laneStats.decided)) * 100).toFixed(1),
+    absEdgePpQuantiles: { p25: q(0.25), p50: q(0.5), p75: q(0.75), p90: q(0.9) },
+    topPairPctQuantiles: {
+      p25: quantile(topPairRates, 0.25),
+      p50: quantile(topPairRates, 0.5),
+      p68: quantile(topPairRates, 0.68),
+      p75: quantile(topPairRates, 0.75),
+    },
+  };
+  console.log(JSON.stringify({ sample: counts.n, lanes: lanesSummary, counts, pct: {
     evenLanesSoldAsAhead: pct('evenLanesSoldAsAhead'),
     matchupFallbackInvented: pct('matchupFallbackInvented'),
     matchupUsedAtOrBelow50: pct('matchupUsedAtOrBelow50'),

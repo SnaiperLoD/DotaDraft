@@ -10,7 +10,15 @@ import type {
 import { activeCustomTagsForTeam, i18nLine } from 'shared';
 import { isHardCarry } from '../common/hard-carry';
 import { bestMatchupEdge, bestSynergyPair, type BattlePick, type MatchupLookup } from './battle-resolution';
-import { HUNT_FLOOR, INITIATING_FLOOR, SAVING_FLOOR, axisOf, isBattleUpset, maxByAxes } from './battle-cast';
+import {
+  LANE_HUNT_FLOOR,
+  INITIATING_FLOOR,
+  SAVING_FLOOR,
+  axisOf,
+  isBattleUpset,
+  maxByAxes,
+} from './battle-cast';
+import { laneRateSource } from './battle-lanes';
 
 const TAG_SKIP = new Set(['High Skill', 'Mechanical']);
 
@@ -146,16 +154,23 @@ function laneLines(lanes: BattleLaneResult[] | undefined): LocalizedLine[] {
   if (!lane?.topPair) return [];
 
   const pair = lane.topPair;
+  // Numbers in lane copy are real lane win rates. A lane that fell back to the
+  // game-matchup proxy gets the number-free Edge line instead.
+  const realLane = laneRateSource(lane) === 'lane';
   const chance =
-    lane.winRate === null ? '' : lane.winner === 'opponent' ? pct(1 - lane.winRate) : pct(lane.winRate);
+    lane.winRate === null || !realLane
+      ? ''
+      : lane.winner === 'opponent'
+        ? pct(1 - lane.winRate)
+        : pct(lane.winRate);
   const params: Record<string, string> = {
     lane: lane.lane,
     hero: pair.hero,
     vs: pair.vs,
-    pairPct: pct(pair.winRate),
   };
+  if (realLane) params.pairPct = pct(pair.winRate);
   if (chance) params.chance = chance;
-  const hunt = pair.winRate >= HUNT_FLOOR;
+  const hunt = realLane && pair.winRate >= LANE_HUNT_FLOOR;
   if (lane.winner === 'mine') {
     if (hunt) return [i18nLine('battle.explain.lane.mineHunt', params)];
     return [i18nLine(chance ? 'battle.explain.lane.mineLean' : 'battle.explain.lane.mineEdge', params)];

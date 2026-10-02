@@ -66,6 +66,7 @@ Battle Engine may consider:
 - Hero matchups: `/api/heroes/{id}/matchups` — direct hero-vs-hero win rate, returned by OpenDota already aggregated. No custom querying needed.
 - Strategic conflicts / synergy fit: OpenDota Explorer SQL over `player_matches` (self-joined on `match_id` + team side) for ally win-rate-together data. No built-in endpoint exists for this — queries must be anchored on a specific `hero_id` to stay fast (~1-2s); unfiltered scans over `player_matches`/`public_matches` time out on the shared Explorer.
 - Role matchups / power spikes / scaling / objectives: derived from Hero Knowledge Base `evaluation_values`. **Production** `overallPower` still consumes the shared `AXES` list (13 descriptive axes, including `resource_efficiency`) via `axis-weights.json`. That is the live fight. It is no longer the intended win model. See the split below. `map_control` and `camp_stacking` weights are 0. `resource_efficiency` weight is 0 as of 2026-09-21 (all phases). A missing phase/base key still defaults to weight **1**, not 0 — `control` / `mobility` / `initiating` still ride that default wherever a phase block omits them.
+- Lane cards (display only): real hero-vs-hero lane results from STRATZ `heroStats.laneOutcome`, frozen in `server/data/lane-outcomes.json`. See "Lane cards: real lane win rates (2026-10-02)" below.
 - No reliable Immortal/6000+ MMR-only data exists in OpenDota's public sample — `public_matches.avg_rank_tier >= 80` returned effectively zero rows in testing, most likely because high-MMR players commonly keep match history private. Practical proxy: average `heroStats` brackets 6+7 (Ancient + Divine) rather than Divine alone, for a larger and still high-skill sample.
 
 ## Non-Linearity Rule
@@ -195,5 +196,37 @@ Text-only changes; the roll and the golden snapshot (`server/src/battle/battle-g
 
 - **One "even lane" boundary.** `LANE_EVEN_SPREAD_PP = 3.5` and `laneWinnerFor()` live in `server/src/battle/battle-lanes.ts`; a lane within 3.5pp of 50% is `winner: 'even'` for the lane card, Explanation, cast `laneTally` and the story opening. Before, ~2/3 of lanes in that band still got a winner and 28.5% of recaps gave a lane score that Explanation contradicted. Side effect: `openingEven` now opens 26.7% of recaps (was 1.9%).
 - **Turning beat owns its side.** `turningAxis` names the top axis only when its signed gap (`topAxisDelta`) belongs to the winner; otherwise the neutral `turningAxisSplit`.
-- **Lanes are a detail, not the cause.** Causal lane verbs removed from the story; the lane-card number is captioned as the average real matchup winrate (OpenDota). Explanation `mineHunt`/`oppHunt` still say "садится на" — open.
+- **Lanes are a detail, not the cause.** Causal lane verbs removed from the story. Since 2026-10-02 the lane-card number is the real lane win rate (STRATZ) — see the next section; Explanation `mineHunt`/`oppHunt` no longer say "садится на".
 - **Axis contributions add up.** `battle-axis-deltas.spec.ts` checks that `axisPowerDeltas` sums to the tagged power gap (max error 2e-15 over 5000 drafts). `assessBattle` also reports `taggedPowerA/B` and `multiplierRemainder = diff − tagged gap` (reporting only). When the remainder favors the favorite and outweighs the best axis, Explanation adds `battle.explain.pairsDecided` — this fires in ~62% of favored battles, i.e. synergy/matchup/real-winrate multipliers usually outweigh any single axis. Handed to the variance-lab session.
+
+## Lane cards: real lane win rates (2026-10-02)
+
+Display and story only. `assessBattle` and the roll are unchanged; `battle-golden.spec.ts` is green and `server/test/golden` has no diff. Why: the Variance Lab (`16-variance-lab.md`, T2) found that the old lane-card number — the average pro *game* matchup win rate (OpenDota `hero-meta.json`) — has Spearman 0.02 with real lane outcomes.
+
+**Data.** `server/data/lane-outcomes.json`, built by `server/scripts/build-lane-outcomes.ts` from the lab STRATZ pull (`artifacts/lab/stratz/lanes/w<week>/laneOutcome/*-vs.json`). The script never calls the network.
+
+- Source: `heroStats.laneOutcome`, `isWith=false`, week 1789344000 (Mon 2026-09-14), brackets LEGEND_ANCIENT + DIVINE_IMMORTAL summed. The payload is pair-level only: no position split.
+- A lane win is `winCount + stompWinCount`; losses likewise. Draws are 25.7% of lanes.
+- (a, b) and (b, a) are near-mirrors (r = 0.998). Each unordered pair stores `[wins, draws, losses]` from the lower hero id's side, the mean of both perspectives.
+- Min-count policy: pairs with < 30 lanes are dropped. 7 819 of 8 001 pairs are kept (97.7%); all 127 heroes are covered.
+- Rate: decided-lane win rate, draws excluded, shrunk toward 0.5: `(wins + K/2) / (wins + losses + K)` with **K = 20** (`meta.shrinkageK`, read by the loader). The empirical-Bayes estimate is K ≈ 11; 20 is deliberately conservative. Pair SD of the raw rate is 15.4pp.
+
+**Code.** `server/src/battle/lane-outcomes.ts` loads the file (missing/malformed → no data). `buildLaneResults(mine, opp, matchupLookup, laneLookup)` in `battle-lanes.ts` averages the lane rates of the pairs that have data. Only when **no** pair in a lane has lane data does that lane fall back to the old game-matchup proxy. The two scales are never mixed in one lane. Each lane carries the additive `rateSource: 'lane' | 'matchup' | null` (`shared/types/battle.ts`); an absent field reads as `'matchup'`.
+
+**Thresholds.**
+
+- `LANE_EVEN_SPREAD_PP` stays **3.5pp** — one source, `laneWinnerFor()`. On real lane rates 3.5pp of decided lanes is ≈ 2.6 lanes in 100 between wins and losses, well above the ~1pp shrunk-pair noise. In the audit, 25.4% of lane cards are even (68.6% on the proxy). `openingEven` opens 14.8% of recaps (was 26.7%).
+- New `LANE_HUNT_FLOOR = 0.7` (`battle-cast.ts`) for hunt-tone lane copy (Explanation `mineHunt`/`oppHunt`, story `openingPairTone`). At the old `HUNT_FLOOR = 0.6`, 83% of decided lanes would hunt; at 0.7 it is 43.5% (the proxy gave 31.8%). `HUNT_FLOOR` still governs game-matchup copy.
+
+**What the player sees.**
+
+- Card caption `battle.laneChanceNote`: "real lane win rate, draws excluded (STRATZ, Legend–Immortal pubs)". A fallback lane shows `battle.laneChanceNoteProxy` instead.
+- Explanation lane lines say "{{hero}} против {{vs}} выигрывает N% линий". A fallback lane gets the number-free `mineEdge`/`oppEdge`.
+- Story `openingLaneHook`/`openingLaneSoft` quote "% выигранных линий". The story never names a fallback lane as the standout.
+- The carry late-game line (`carryLateMatchup`) is a game matchup and still reads `hero-meta.json`.
+
+**Refresh.**
+
+1. Re-pull a newer week: `LAB_STRATZ_TABLE=lanes` with `server/scripts/lab/fetch-stratz-tables.ts`. This is a network pull and needs a Real-Data Recompute "ok".
+2. `npm run build-lane-outcomes --workspace server [-- <week>]` (local only; defaults to the latest `w<week>` folder).
+3. `npm run audit-battle-story --workspace server` (`AUDIT_LANE_SOURCE=proxy` reproduces the old source for comparison).

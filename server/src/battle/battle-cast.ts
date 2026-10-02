@@ -16,6 +16,11 @@ export const MATCHUP_FLOOR = 0.5;
 // Above a coin flip is "a bit ahead in the pair". Hunt language ("gets on",
 // "catches") starts here. 54% is not a pickoff.
 export const HUNT_FLOOR = 0.6;
+// Lane copy reads real lane win rates (STRATZ laneOutcome, draws excluded),
+// which spread ~15pp per pair against a few pp for game matchups. At 0.6, 83%
+// of decided lanes would "hunt"; 0.7 (7 of 10 decided lanes) keeps hunt lane
+// copy rare (audit-battle-story, 2026-10-02). Display-only.
+export const LANE_HUNT_FLOOR = 0.7;
 // Don't call someone a fight-turner at saving 3 (or 1.2). Axes are ~1–10;
 // 6 is actually high.
 export const SAVING_FLOOR = 6;

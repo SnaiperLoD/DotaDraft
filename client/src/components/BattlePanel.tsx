@@ -155,7 +155,10 @@ function MatchupList({ heading, rows, good }: { heading: string; rows: BattleMat
 
 // `lane.winner` is the server's single even-lane flag (battle-lanes.ts,
 // laneWinnerFor) — read as-is so the card never disagrees with Explanation
-// or the story. The number is the lane's average real matchup win rate.
+// or the story. The number is the lane's average real LANE win rate (STRATZ
+// laneOutcome, draws excluded) when `rateSource === 'lane'`; otherwise it is
+// the game-matchup fallback (and every lane stored before 2026-10-02), and the
+// caption says so.
 export function LaneMatchups({ lanes }: { lanes: BattleLaneResult[] }) {
   const { t } = useTranslation();
   if (lanes.length === 0) return null;
@@ -212,8 +215,12 @@ export function LaneMatchups({ lanes }: { lanes: BattleLaneResult[] }) {
               {chance !== null && <span className={chanceClass}>{chance}</span>}
             </div>
             {chance !== null && (
-              <div className="battle-lane-note" data-testid="battle-lane-note">
-                {t('battle.laneChanceNote')}
+              <div
+                className="battle-lane-note"
+                data-testid="battle-lane-note"
+                data-source={lane.rateSource === 'lane' ? 'lane' : 'matchup'}
+              >
+                {t(lane.rateSource === 'lane' ? 'battle.laneChanceNote' : 'battle.laneChanceNoteProxy')}
               </div>
             )}
           </div>

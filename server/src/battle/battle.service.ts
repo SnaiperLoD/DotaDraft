@@ -9,6 +9,7 @@ import { resolveBattle, type BattlePick } from './battle-resolution';
 import { alignOpponentToRoles } from './opponent-alignment';
 import { buildBattleStory } from './battle-story';
 import { buildLaneResults } from './battle-lanes';
+import { defaultLaneOutcomes } from './lane-outcomes';
 import { ROLES, resolveCopiedDraft, displayProPlayerName, opponentTeamCaption } from 'shared';
 import type { BattleResultResponse, Hero, PooledDraftSummary, PooledHeroRole, ResolvedOutcome } from 'shared';
 import { logPersistenceFailure } from '../common/log';
@@ -131,7 +132,7 @@ export class BattleService {
         .map((pick) => [pick.assignedRole, pick.hero]),
     );
     const opponentByRole = new Map(teamBAligned.map((hero, index) => [ROLES[index], hero]));
-    const lanes = buildLaneResults(mineByRole, opponentByRole, this.heroMetaService);
+    const lanes = buildLaneResults(mineByRole, opponentByRole, this.heroMetaService, defaultLaneOutcomes());
     const opponentPicks: BattlePick[] = teamBAligned.map((hero, index) => ({
       hero,
       assignedRole: ROLES[index],

@@ -325,7 +325,8 @@
     "laneWinnerYours": "Yours",
     "laneWinnerOpponent": "Opponent",
     "laneEven": "Even",
-    "laneChanceNote": "average real matchup win rate in this lane (OpenDota)",
+    "laneChanceNote": "real lane win rate, draws excluded (STRATZ, Legend–Immortal pubs)",
+    "laneChanceNoteProxy": "no lane data: average real game matchup win rate (OpenDota)",
     "story": {
       "title": "How this might have gone",
       "disclaimer": "One way this fight could have played out. Not a replay.",
@@ -354,8 +355,8 @@
       },
       "turnerLine": "{{turner}} is the one who saves the fight, not the one who jumps first.",
       "answerLine": "{{theirDriver}} is the one who has to answer that.",
-      "openingLaneHook": "In the {{openingLane}}, one pair stands out: {{openingPairHero}} into {{openingPairVs}}, {{openingPairWinRate}}% in real games.",
-      "openingLaneSoft": "In the {{openingLane}}, {{openingPairHero}} is a bit ahead of {{openingPairVs}} ({{openingPairWinRate}}%).",
+      "openingLaneHook": "In the {{openingLane}}, one pair stands out: {{openingPairHero}} into {{openingPairVs}} wins {{openingPairWinRate}}% of real pub lanes.",
+      "openingLaneSoft": "In the {{openingLane}}, {{openingPairHero}} is ahead of {{openingPairVs}}: {{openingPairWinRate}}% of lanes won.",
       "carryLateMatchup": "Late it's {{myCarry}} against {{theirCarry}}, and {{lateMatchupWinner}} is clearly the stronger side of that pair ({{carryWinRate}}%).",
       "carryLateSoft": "Late it's {{myCarry}} against {{theirCarry}}. {{lateMatchupWinner}} is a bit ahead in that pair ({{carryWinRate}}%).",
       "carryLate": "Late it's {{myCarry}} against {{theirCarry}}.",
@@ -456,11 +457,11 @@
         "uneven": "The lanes didn't sit even."
       },
       "lane": {
-        "mineHunt": "In the {{lane}} you run them over: {{hero}} gets onto {{vs}} ({{pairPct}}%).",
-        "mineLean": "In the {{lane}} you're a bit ahead, {{hero}} against {{vs}} ({{pairPct}}%).",
+        "mineHunt": "In the {{lane}} you run them over: {{hero}} wins {{pairPct}}% of lanes against {{vs}}.",
+        "mineLean": "In the {{lane}} you're ahead: {{hero}} wins {{pairPct}}% of lanes against {{vs}}.",
         "mineEdge": "In the {{lane}} you're a bit ahead: {{hero}} against {{vs}}.",
-        "oppHunt": "The {{lane}} is where they hunt you: {{hero}} gets onto {{vs}} ({{pairPct}}%).",
-        "oppHole": "The {{lane}} leans their way, {{hero}} against {{vs}} ({{pairPct}}%).",
+        "oppHunt": "The {{lane}} is where they run you over: {{hero}} wins {{pairPct}}% of lanes against {{vs}}.",
+        "oppHole": "The {{lane}} leans their way: {{hero}} wins {{pairPct}}% of lanes against {{vs}}.",
         "oppEdge": "The {{lane}} leans their way: {{hero}} against {{vs}}."
       },
       "catch": {

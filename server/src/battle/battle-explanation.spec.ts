@@ -70,6 +70,7 @@ describe('buildExplanation', () => {
         mineIds: [1, 5],
         opponentIds: [14, 12],
         topPair: { hero: 'Anti-Mage', heroId: 1, vs: 'Axe', vsId: 14, winRate: 0.7 },
+        rateSource: 'lane',
       },
       {
         lane: 'mid',
@@ -80,6 +81,7 @@ describe('buildExplanation', () => {
         mineIds: [2],
         opponentIds: [13],
         topPair: null,
+        rateSource: 'lane',
       },
       {
         lane: 'off',
@@ -90,6 +92,7 @@ describe('buildExplanation', () => {
         mineIds: [3, 4],
         opponentIds: [11, 15],
         topPair: { hero: 'Phantom Assassin', heroId: 11, vs: 'Tidehunter', vsId: 3, winRate: 0.71 },
+        rateSource: 'lane',
       },
     ];
 
@@ -487,9 +490,19 @@ describe('buildExplanation', () => {
     );
 
     expect(text).not.toMatch(/battle.explain.lanes.wash/);
-    expect(text).toMatch(/battle.explain.lane.mineHunt/);
+    // No lane number to stand on: the number-free Edge line, never Hunt.
+    expect(text).toMatch(/battle.explain.lane.mineEdge/);
+    expect(text).not.toMatch(/battle.explain.lane.mineHunt/);
     expect(text).toMatch(/Storm Spirit/);
     expect(text).toMatch(/Shadow Fiend/);
+  });
+
+  it('uses the number-free Edge line for a lane on the game-matchup fallback', () => {
+    const text = explainLanes([
+      { ...laneAt('mid', 0.75, 'Storm Spirit', 'Shadow Fiend'), rateSource: 'matchup' },
+    ]);
+    expect(text).toMatch(/battle.explain.lane.mineEdge/);
+    expect(text).not.toMatch(/75/);
   });
 
   it('prefers the save over who starts the fights', () => {
@@ -598,6 +611,7 @@ describe('buildExplanation', () => {
               vsId: 11,
               winRate: winner === 'mine' ? winRate : 1 - winRate,
             },
+      rateSource: 'lane',
     };
   }
 
@@ -632,7 +646,7 @@ describe('buildExplanation', () => {
   it('does not use the all-even phrase when only some lanes are within 3.5pp', () => {
     const text = explainLanes([
       laneAt('safe', 0.512, 'Anti-Mage', 'Axe'),
-      laneAt('mid', 0.62, 'Storm Spirit', 'Shadow Fiend'),
+      laneAt('mid', 0.72, 'Storm Spirit', 'Shadow Fiend'),
       laneAt('off', 0.41, 'Tidehunter', 'Phantom Assassin'),
     ]);
 

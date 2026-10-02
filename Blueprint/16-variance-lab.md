@@ -759,3 +759,585 @@ Production code, all tags, `rwr=0`. OFF is the reference.
 - Synergy carries most of the damage; matchups carry less.
 - In the shipped configuration, `rwr=2` hides the loss: SHIPPED ≈ OFF, because the real-winRate channel offsets it.
 - Following the author's decision, the pairs are **not switched off**. The next step is the follow-up planned above: pair statistics from public data. It needs a separate "ok" for about 3 600 calls (~300k matches, ≥ 14 days, Ancient+Divine; window A to build, a later window B to evaluate). The `hero-meta.json` write needs its own Real-Data Recompute "ok".
+
+## Pre-registration: public pair stats — FROZEN 2026-10-02, BEFORE the window-A pull
+
+The author gave the "ok" for the pull on 2026-10-02.
+
+### Windows
+
+- **Window A (build):** 2026-09-11 01:54 → 2026-09-25 01:54 UTC, 14 days.
+  - It ends 1 h before the oldest match of the wide pull.
+  - Pulled by `server/scripts/lab/fetch-public-pairs.ts`: `min_rank=60&max_rank=75`, 336 hourly anchors × 11 pages = 3 696 calls, hard cap 3 800, about 283k usable matches expected.
+- **Window B (check):** the existing wide pull, 2026-09-25 → 2026-10-02. That is 100 078 matches, already filtered and with the 2026-10-01 pull excluded, and it costs no new calls.
+  - B was used once, for the pro-pair verdict (ON vs OFF). It was **never** used to build pair statistics, and public pairs are built from A only. A is strictly earlier than B, so there is no overlap.
+- **Guards:**
+  - assert max(start_time in A) < min(start_time in B);
+  - drop from A any `match_id` that also appears in B or in the 2026-10-01 pull.
+- **If the pull runs short:**
+  - A < 150k usable matches, or < 10 distinct days → stop and report "underpowered".
+  - Empty pages (OpenDota retention edge) are logged in `state.json` and counted.
+
+### Public pair statistics, built from A only
+
+Filters are the same as for B: ranked All Pick, 60 ≤ tier ≤ 75, no broken rows, deduplicated.
+
+**Synergy.** For every pair of teammates (h₁, h₂), on both sides of every match:
+
+- `games` += 1;
+- `wins` += 1 if their team won.
+
+Both directions are stored: `heroes[h₁].synergy[h₂]` and `heroes[h₂].synergy[h₁]`. Unlike the current file (top-15 allies from pro data), **all pairs** are kept.
+
+**Matchups.** For every ordered enemy pair (h, o):
+
+- `games` += 1;
+- `wins` += 1 if h's team won.
+
+They are stored in `heroes[h].matchups[o]`.
+
+**Shrinkage.** Unchanged and production-identical: `HeroMetaService` shrinks every rate toward 0.5 with `shrinkageK` = 20 (`battle-diff-inputs.json`):
+
+`rate = w·wins/games + (1−w)·0.5`, where `w = games/(games+20)`.
+
+No other prior, no `MIN_GAMES` cut, and pairs with 0 games stay absent (null).
+
+**Everything else stays as is:**
+
+- `winRate`, `positions` and `benchmarks` are untouched.
+- `synergyCoeff` 2, `matchupCoeff` 3 and all thresholds are unchanged and **not tuned on B**.
+- Shutdown reads the same lookup, so it follows the new matchups, exactly as production would after the write.
+
+**Lab mechanics:**
+
+- A lab `hero-meta` copy is built in `artifacts/lab/pairs/hero-meta.public.json`.
+- A lab cache build swaps the lookup's entries in memory. Production `HeroMetaService` and the file on disk are untouched.
+
+### Acceptance test on window B (one pass)
+
+All rows run on the same B cache pipeline: production code, all tags, `rwr=0`.
+
+| Row | Pair channels |
+|---|---|
+| **OFF** | `synergyCoeff = matchupCoeff = 0` |
+| **PRO** | current `hero-meta.json` pairs (production) |
+| **PUB** | public pairs from A |
+| PUB-SYN | public synergy only (attribution) |
+| PUB-MAT | public matchups only (attribution) |
+
+**Primary metric:** ΔAUC(PUB − PRO) and ΔAUC(PUB − OFF), each with a paired bootstrap by match (2 000 resamples).
+
+**Secondary metrics:**
+
+- Δlog-loss and ΔBrier, with leave-one-day-out logistic calibration;
+- splits by bracket (Ancient < 70 / Divine ≥ 70);
+- splits by UTC day, over the 7 dates with ≥ 1 000 matches.
+
+**Decision (fixed):**
+
+- **Ready for a `hero-meta.json` proposal** — all of the following:
+  - the lower bound of the ΔAUC(PUB − PRO) CI > 0;
+  - the upper bound of the Δlog-loss(PUB − PRO) CI < 0;
+  - ΔAUC(PUB − OFF) has a lower CI bound ≥ −0.002, i.e. not worse than switching pairs off, within about the MDE;
+  - PUB − PRO > 0 in both brackets and on at least 5 of 7 days.
+- **Better than pro, worse than off:** the first two conditions hold, but the lower bound of ΔAUC(PUB − OFF) is below −0.002. Report it. The author then chooses between public pairs with the current coefficients and a separately pre-registered coefficient check. No coefficient is tuned on B.
+- **No improvement:** the lower bound of ΔAUC(PUB − PRO) is ≤ 0. Pairs stay as they are, and the finding is recorded.
+- **After acceptance (secondary, not decisive):** a self-play rerun (seed 1 × 100k) on the lab `hero-meta` copy, reporting r / Spearman / SD ratio, so that the KPI shift is known before any write.
+
+### What the `hero-meta.json` write would look like (proposal format only, NOT applied)
+
+- Path: `artifacts/lab/proposals/public-pairs/`.
+  - `hero-meta.public.json`: the full file. `generatedAt` and a new `pairSource` set to `"opendota publicMatches 60–75, <A window>, n=<matches>"`; only `heroes[*].synergy` and `heroes[*].matchups` replaced.
+  - `hero-meta.diff`: a structural summary, not a 10 MB text diff. Per hero, the count of pairs before and after, the median games before and after, and the 20 largest |Δ shrunk rate| for synergy and for matchups.
+  - `proposal.md`: what changes, rule class, the acceptance-test result, story/explanation impact (`bestPairs` / `bestMatchups` / highlight lines would cite public pairs) and i18n risk (none).
+- Applying the change is a Real-Data Recompute plus a Calibration Change. It needs the author's explicit "ok" and is done in a normal session, not by the lab.
+
+**Status:** the window-A OpenDota pull was stopped by the author after 55 pages (kept in `artifacts/lab/opendota-pairsA/`, unused). The source is replaced by STRATZ, below.
+
+## Pre-registration: STRATZ pair stats — FROZEN 2026-10-02, BEFORE the STRATZ pull
+
+### Source
+
+STRATZ GraphQL `heroStats.heroVsHeroMatchup(heroId, bracketBasicIds)` → `advantage { with[], vs[] }`, pulled by `server/scripts/lab/fetch-stratz-pairs.ts`.
+
+- **Calls:** one per hero per bracket, for `LEGEND_ANCIENT` and `DIVINE_IMMORTAL` = 254 calls, ≥ 1.5 s apart, about 6.5 min.
+- The token is read from `.env` and is never logged.
+- Raw responses go to `artifacts/lab/stratz/raw/<bracket>/<heroId>.json`.
+- The `synergy` field returned by STRATZ is **not used**. Rates are computed from `winCount / matchCount`.
+
+### Time window (gate before the test)
+
+1. Run `LAB_STRATZ_INTROSPECT=1` first: one call that returns the argument docs for `heroVsHeroMatchup`, saved to `introspection-heroVsHeroMatchup.json`.
+2. If `week` can select weeks that end **before 2026-09-25 02:54 UTC** (the start of window B), the pull uses the latest such week(s). The test is then disjoint in time from B.
+3. If it cannot, or if the default window overlaps B, the B evaluation is still run but labelled **"overlapping window — optimistic, not acceptance evidence"**. Acceptance would then need a new public window C pulled after the STRATZ snapshot (~1 345 OpenDota calls, separate ok).
+
+### Sanity checks on the data (decide orientation; no tuning)
+
+1. **Symmetry of synergy:** `with` matchCount(h, a) = matchCount(a, h) within ±1%, and the same for winCount.
+2. **Orientation of matchups:** winCount(h vs o) + winCount(o vs h) ≈ matchCount(h, o), within ±1%.
+   - If instead winCount(h vs o) ≈ winCount(o vs h), winCount is from the opponent's side and gets flipped.
+   - If neither holds, stop and report.
+3. **Coverage:** ≥ 95% of the 8 001 hero pairs have matchCount > 0 in the combined brackets.
+
+### Building the pairs
+
+- **Primary:** the sum of the `LEGEND_ANCIENT` + `DIVINE_IMMORTAL` counts. Rationale: window B is Ancient+Divine (tier 61–75), and STRATZ only offers those two buckets.
+- **Diagnostic only:** `DIVINE_IMMORTAL` alone.
+- **Synergy:** `heroes[h].synergy[a] = {games: matchCount, wins: winCount}` for all allies.
+- **Matchups:** `heroes[h].matchups[o]`, oriented per the sanity check above.
+- **Shrinkage:** production `HeroMetaService` shrinkage toward 0.5 with `shrinkageK` = 20.
+- **Unchanged:** coefficients 2/3, `winRate`, `positions` and thresholds. Nothing is tuned on B.
+- Shutdown follows the new lookup.
+- **Output:** a lab copy, `artifacts/lab/stratz/hero-meta.stratz.json`. Production files are not touched.
+
+### Acceptance test
+
+Window B: 100 078 public Ancient+Divine matches, 2026-09-25 → 10-02.
+
+- **Rows:** OFF / PRO (current) / STZ (STRATZ pairs), plus the attribution rows STZ-SYN and STZ-MAT.
+- **Metrics, splits and the decision rule** are exactly those pre-registered for PUB above, with PUB → STZ:
+  - "Ready for a `hero-meta.json` proposal" needs all of the following:
+    - the lower bound of the ΔAUC(STZ − PRO) CI > 0;
+    - the upper bound of the Δlog-loss(STZ − PRO) CI < 0;
+    - the lower bound of the ΔAUC(STZ − OFF) CI ≥ −0.002;
+    - STZ − PRO > 0 in both brackets and on at least 5 of 7 days.
+  - The other outcomes are as for PUB.
+- The diagnostic Divine-only build is reported alongside and does not enter the decision.
+
+### Known mismatches (stated before data, reported with the result)
+
+- **Bracket:** STRATZ `LEGEND_ANCIENT` includes Legend (5x); `DIVINE_IMMORTAL` includes Immortal (80). B has neither.
+- **Time window:** see the gate above. If the windows overlap, that is leakage in the population sense: the same pubs, possibly the same matches.
+- **Sample:** STRATZ counts are its own processed sample, not OpenDota's, so the match sets differ even inside the same week.
+
+### Proposal format if accepted
+
+The same format as the PUB proposal, under `artifacts/lab/proposals/stratz-pairs/`, with `pairSource: "STRATZ heroVsHeroMatchup, <brackets>, <week>"`. Not applied. Applying it needs the author's Real-Data Recompute + Calibration Change "ok".
+
+## Result: STRATZ pairs — **pre-check FAILED → no verdict (stopped per rule)** (2026-10-02)
+
+Data: `artifacts/lab/stratz/raw/`, week 1789344000 (from Mon 2026-09-14), 254/254 files, 126 `with` + 126 `vs` entries per hero. Script: `stratz-pairs-build.ts`.
+
+| Pre-check (frozen) | Result | Pass |
+|---|---|---|
+| Synergy symmetry: matchCount(h, a) = matchCount(a, h) within ±1% | 12.8% of 8 001 pairs (winCount 12.4%) | ✗ |
+| Matchup orientation: wins(h vs o) + wins(o vs h) ≈ games within ±1% | 29.2%; "wins equal" 5.0% | ✗ (neither) |
+| Coverage ≥ 95% of pairs | 100% | ✓ |
+| Games per pair (both brackets) | vs: min 21 / p10 409 / median 2 066 / p90 8 289; with: min 17 / median 1 545 | — |
+
+The frozen rule says "neither → stop and report". **The acceptance test on B was NOT run.**
+
+### Diagnostic (read after stopping; it does not change the rule)
+
+- Counts are not mirror-exact:
+  - Legend–Ancient: the median ratio matchCount(h, o) / matchCount(o, h) is 1.00, with p10–p90 at 0.94–1.07;
+  - Divine–Immortal: 0.90–1.11.
+- Rates *are* consistent with the hero's own orientation:
+
+  | Bracket | r(wr(h vs o), 1 − wr(o vs h)) | mean \|wr(h, o) + wr(o, h) − 1\| | synergy r(wr(h, a), wr(a, h)) |
+  |---|---:|---:|---:|
+  | Legend–Ancient | 0.952 | 1.2 pp | 0.935 |
+  | Divine–Immortal | 0.928 | 2.0 pp | 0.892 |
+
+- The most likely reading is that STRATZ samples each hero's query separately, so mirror counts differ by sampling and are not mis-oriented. The ±1% tolerance was too strict for a sampled source. That was a pre-registration error on my side.
+- **Proposed amendment** (needs the author's ok, because it is a rule change after seeing data):
+  - Pre-checks pass when:
+    - the median mirror count ratio is within 1.00 ± 0.02;
+    - the rate-level r(wr(h, o), 1 − wr(o, h)) is ≥ 0.9;
+    - the mean |wr + wr − 1| is ≤ 2.5 pp.
+  - Orientation is "own".
+  - Mirror counts are combined by averaging both directions.
+  - The acceptance rule on B is unchanged.
+- **Ready to run on an ok:**
+  - lab hero-meta copies: `artifacts/lab/stratz/hero-meta.stratz-{both,divine}.json` (orientation "own", per-direction counts);
+  - the builder supports `LAB_HERO_META`;
+  - the test is `kt5-stratz.ts`.
+
+## STRATZ pairs — amended pre-check and result (2026-10-02)
+
+**Rule change after seeing data (author-approved 2026-10-02).** The pre-check was changed from count-level ±1% to a share-level rule. A pair passes when:
+
+- the median mirror count ratio is within 1.00 ± 0.02;
+- r(wr(h, o), 1 − wr(o, h)) is ≥ 0.9;
+- the mean |wr(h, o) + wr(o, h) − 1| is ≤ 2.5 pp.
+
+With the rule passing, orientation is "own", and mirror counts are averaged over both directions (`stratz-pairs-build.ts`). The acceptance rule itself is unchanged.
+
+On both brackets combined the share-level check gives median ratio 1.002, r 0.980 and mean deviation 1.11 pp → **pass**.
+
+The lookup swap was verified: 300 234 of 500 390 side values differ from the production cache.
+
+**Acceptance test on window B** (`kt5-stratz.ts`, `artifacts/lab/kt5/kt5-stratz.json`; 100 078 matches; `rwr=0`, all tags):
+
+| Row | AUC | Log-loss |
+|---|---:|---:|
+| OFF | 0.5276 | 0.6901 |
+| PRO (current) | 0.5154 | 0.6910 |
+| **STZ** | **0.5754** | **0.6823** |
+| STZ-SYN | 0.5576 | 0.6860 |
+| STZ-MAT | 0.5698 | 0.6836 |
+| DIV (diagnostic) | 0.5738 | 0.6827 |
+
+| Comparison | ΔAUC [95% CI] | Δlog-loss [95% CI] |
+|---|---|---|
+| STZ − PRO | **+0.0600 [+0.0558, +0.0643]** | −0.0087 [−0.0095, −0.0079] |
+| STZ − OFF | +0.0479 [+0.0449, +0.0508] | −0.0078 [−0.0085, −0.0071] |
+
+- By bracket, STZ − PRO is +0.061 (Ancient) and +0.059 (Divine).
+- It is positive on 7 of 7 full days, ranging from +0.055 to +0.072.
+- **Verdict per the frozen rule: READY for a `hero-meta.json` proposal.**
+
+### Leakage / channel check (required by the "result too good" rule)
+
+- The gain is the size of the plain public hero-WR prior. Team mean of STRATZ hero WR for the same week (`stats` time=0), no pairs at all: **AUC 0.5738** on B. That is about the same as STZ at 0.5754.
+- The matchup and synergy rates carry each hero's overall strength, because a strong hero wins most of its pairs. So the STZ improvement is mostly **real hero win rate entering the score through the pair channels**. That is class C in effect, comparable to raising `realWinRateWeight`. It is not new pair-specific information.
+- The week is disjoint from B, so this is not temporal leakage, but it is a rule-class issue.
+
+**Before any proposal** (needs an author decision, not run):
+
+- Pre-register a *debiased* STZ variant: the pair rate relative to both heroes' base WR, e.g. `0.5 + (wr(h, o) − 0.5) − (WR_h − WR_o)/2` for matchups and the analogous form for synergy.
+- Test it on B against PRO and OFF with the same rule. That will show whether pairs add anything beyond hero strength.
+- The author also has to decide whether a WR-carrying pair channel is acceptable at all.
+
+### Pre-registration: CLEANED STRATZ pairs — FROZEN 2026-10-02, before the cleaned run
+
+**Honesty note.** Window B was already used to evaluate the raw STZ pairs, and the "carries hero strength" finding came from that run. This test is therefore **not blind to B**. The cleaning recipe below was fixed before any cleaned result was computed, and it has no tuned parameters.
+
+**Cleaning recipe.**
+
+- Base WR W_h comes from STRATZ `stats` time=0, for the same week and both brackets.
+- Expected pair rate with no interaction (logit-additive):
+  - matchup: e = σ(logit W_h − logit W_o);
+  - synergy: e = σ(logit W_h + logit W_a).
+- Cleaned rate = clamp(0.5 + (observed − e), 0.01, 0.99).
+- It is stored as `wins = rate × games`, so production shrinkage (K = 20) applies unchanged. Coefficients 2/3 are unchanged, and shutdown follows the lookup.
+
+**Rows.** Window B, `rwr=0`, all tags:
+
+- STZC (cleaned), STZC-SYN, STZC-MAT;
+- PRO, OFF;
+- HEROWR: a descriptive baseline, the team mean of W_h, which is not a Battle row.
+
+**Decision.**
+
+- The PUB/STZ acceptance rule applies unchanged with STZ → STZC: vs PRO, vs OFF with the −0.002 bound, both brackets, at least 5 of 7 days.
+- On top of that, **STZC − HEROWR** and **STZC − OFF** are reported with paired-bootstrap CIs. That shows whether the cleaned pairs carry interaction information beyond hero strength; STZC − OFF > 0 is the interaction signal.
+
+### Role-fit calibration — pre-registered plan (to run only after the lane-card change lands; NOT run)
+
+**Magnitudes in scope** (`server/src/common/role-fit.ts`), measured as they are today:
+
+- the role-fit boost per (role, axis) via `roleAwareAxisValue`;
+- `supportMiscastMultiplier`;
+- `coreMiscastMultiplier`.
+
+Three parameter families get one global scale each: role-fit boost, support miscast, core miscast. Optionally there is one scale per role (5). That is ≤ 8 parameters in total. Per-hero edits are out of scope.
+
+**Target.** Δ_pos = WR(h, pos) − WR(h), from STRATZ `stats` time=0. It must be patch-matched: the pulled week has to sit on the same game version as the Battle data in use (patch 181 once enough matches exist). Cells need ≥ 1 000 matches; brackets are LEGEND_ANCIENT + DIVINE_IMMORTAL.
+
+**Model.** Δ_rf(h, pos; θ) is the production single-hero power by role (as in T1(b)) under scales θ.
+
+- Fit θ to maximise r(Δ_rf, Δ_pos), with a penalty pulling the scales toward 1.
+- Use 10×5 cross-validation **by hero**: every cell of a hero is in the same fold.
+- The null is 200 permutations of Δ_pos within hero.
+
+**Acceptance — all of the following:**
+
+1. The out-of-fold r beats the current θ (scales = 1, T1(b): r 0.338). The paired cluster-bootstrap Δr has CI lower > 0 and Δr ≥ 0.05.
+2. It is above the null's 95th percentile.
+3. Self-play (seed 1 × 100k, rwr 0) does not get worse: Δr vs B-full CI includes or exceeds 0, and Spearman does not get worse.
+4. On window B (match level, pairs as in production), ΔAUC CI lower ≥ −0.002.
+5. The golden snapshot (`battle-golden.spec.ts`) diff is reviewed by the author. Story text stays valid, because role names do not change.
+
+If accepted: an unapplied proposal goes to `artifacts/lab/proposals/role-fit/`. Applying it is a Calibration Change "ok".
+
+## STRATZ tables T1–T3 — analysis plan
+
+**Recorded AFTER the pulls finished but BEFORE any payload was opened.** I did not get the plan down before the data arrived, so this is weaker than a true pre-registration; I state that openly.
+
+Brackets for every table: LEGEND_ANCIENT + DIVINE_IMMORTAL. Positions: POSITION_1..5 = Carry / Mid / Offlane / Soft Support / Hard Support.
+
+### T1 — `winWeek` / `winGameVersion` (hero × position × bracket)
+
+**(a) Ceiling (public pick counts).** Per hero, sum matchCount over positions and brackets for the latest full week before 2026-09-25.
+
+- Binomial reliability of hero WR and r with hero-meta `winRate`.
+- Also patch-to-patch r of hero WR (latest two game versions).
+
+**(b) Role-fit direction.** For hero × position cells with ≥ 1 000 matches:
+
+- Δ_pos = WR(h, pos) − WR(h).
+- Δ_rf = the production single-hero power in that role minus the hero's match-share-weighted mean over its positions. Single-hero power is the phase-weighted mean of tagged-free `pickAxisValue` (role-fit + miscast) under production weights.
+- Statistic: r(Δ_rf, Δ_pos) across cells, with a 95% CI from a cluster bootstrap by hero (2 000 resamples).
+
+| Verdict | Condition |
+|---|---|
+| Direction validated | CI lower > 0 |
+| Contradicted | CI upper < 0 |
+| Not supported | otherwise |
+
+Measurement only. Any role-fit change is a Calibration Change.
+
+**(c) Patch stability.** Cells with ≥ 1 000 matches in both of the latest two versions: r of position WR between versions, plus week-to-week r over the last weeks available.
+
+### T2 — `laneOutcome` (isWith true/false)
+
+- **(a) Payload audit:** do rows identify hero pairs (hero vs hero, hero with hero), positions or lanes, and win/draw/loss counts? If only per-hero aggregates exist, the pair-level test is impossible. Report that and the query a pair breakdown would need.
+- **(b) If pairs exist:** lane win rate (wins / (wins + losses), draws reported separately) per (hero, opponent), for pairs with ≥ 200 lanes.
+  - Compare it with the lane-card proxy (`battle-lanes.ts` → `getMatchupWinRate` = pro *game* matchup WR) using Spearman over pairs.
+  - Also compare it with the STRATZ *game* matchup WR from the pairs pull.
+  - Verdict: if Spearman(proxy, lane WR) < 0.3, the lane cards do not describe lanes, and a lane-specific source is proposed. No match-outcome test.
+
+### T3 — `stats` (per-minute by position / time)
+
+- Measurement only; **outcome-contaminated**, since winners post better per-minute numbers.
+- For each hero in its main position, compare STRATZ stats with the matching eval axis by Spearman across heroes:
+  - kills + assists per minute ↔ `skirmish_rate`;
+  - early (≤ 10 min) networth/xp ↔ `tempo`;
+  - late-minus-early networth growth ↔ `scaling`;
+  - tower/building damage ↔ `objectives`;
+  - healing ↔ `saving`;
+  - hero damage ↔ `burst`/`teamfight`.
+
+  The exact mapping depends on the fields that exist.
+- Report heroes with |z(stat) − z(axis)| ≥ 2 as candidate axis mismatches. No WR test.
+- No change proposals from T3 alone.
+
+## Result: STRATZ tables T1–T3 (2026-10-02, `artifacts/lab/kt6/kt6-stratz-tables.json`, script `kt6-stratz-tables.ts`)
+
+**Calls made by the coordinator:**
+
+| Table | Introspection calls | Data calls |
+|---|---:|---:|
+| positions | 8 | 4 |
+| lanes | 2 | 4 |
+| stats | 1 | 2 |
+
+With `heroIds` omitted, one call returned all heroes.
+
+**Deviations forced by the payload shape:**
+
+- `winWeek` / `winGameVersion` return only `week|gameVersionId, heroId, durationMinute, winCount, matchCount`. They carry **no position or bracket label**: 12 unlabelled rows per hero per week. They are therefore used at hero level only.
+- Position WR for T1(b) comes from `stats` time=0 rows (matchCount/winCount per hero × position, week 1789344000).
+- `laneOutcome` has one row per (heroId1, heroId2), and its `position` field is constant, so it is pair-level only.
+
+### T1(a) — ceiling
+
+Latest full week before B (week of 2026-09-10), Ancient+Divine plus Legend/Immortal per the STRATZ buckets.
+
+- Picks per hero: min 7 533 / median 108 758 / max 511 008. Binomial reliability **0.994**.
+- r with August hero-meta 0.936, with October heroStats 0.867, with window B 0.836.
+- **The target is reliable. The hero-level noise ceiling is ≈ 0.99 within a week.**
+
+### T1(c) — stability
+
+- Week-to-week r 0.990–0.994, within patch 180.
+- **Across the patch** (gameVersion 180 → 181, 126 heroes): r **0.69**. Patch 181 is young (≈ 152k matches per hero vs 3.6M for 180).
+- The patch boundary moves hero WR far more than anything the lab tested. The August hero-meta and the STRATZ pair week (09-14) predate it, and window B (09-25 → 10-02) probably sits mostly on 181. Every safe in this journal mixes patches. That is noted as a caveat on KT3 / KT4 / KT5.
+
+### T1(b) — role-fit direction
+
+- Δ_rf (production single-hero power by role) vs Δ_pos (position WR − hero WR), over 416 cells with ≥ 1 000 matches (122 heroes): r **0.338**, 95% CI [0.231, 0.443] (cluster bootstrap by hero); Spearman 0.316.
+- **Verdict: direction validated.**
+- Magnitudes are not checked. The SD of Δ_pos is 2.8 pp. The largest conflicts:
+  - **Marci** as Soft/Hard Support: role-fit +0.39, real −5.5 pp; as Mid: −0.22 vs +4.9 pp.
+  - **Leshrac** as Carry: −0.13 vs +10.1 pp.
+  - **Slark** as Mid: −0.38 vs +2.9 pp.
+  - **Legion Commander** as Carry and **Mirana** as Carry: role-fit positive, real −7 / −8 pp.
+
+### T2 — lanes
+
+- 16 002 pairs; 12 093 have ≥ 200 lanes (median 926). Draws are 25.6% of lanes. SD of lane WR: 13.6 pp.
+- Spearman(lane-card proxy = pro game-matchup WR, lane WR) = **0.019**. Coverage of the proxy: 99.95%.
+- Spearman(STRATZ game matchup, lane WR) = 0.130; game WR from the same rows vs lane WR = 0.159.
+- **Verdict: the lane cards do not describe lanes.** The game-matchup proxy is essentially uncorrelated with real lane outcomes, and laning barely predicts the game.
+
+### T3 — stats vs axes (outcome-contaminated, measurement only)
+
+Spearman across heroes in their main position:
+
+| Axis | Stat | Spearman |
+|---|---|---:|
+| objectives | tower damage at 30 min | 0.92 |
+| teamfight | hero damage at 30 min | 0.82 |
+| scaling | networth growth 10→30 | 0.73 |
+| burst | hero damage | 0.62 |
+| control | stun + disable duration | 0.62 |
+| durability | deaths | −0.60 |
+| saving | ally healing | 0.47 |
+| skirmish_rate | kills + assists / min | 0.43 |
+| tempo | networth at 10 min | **0.27** |
+
+Notable mismatches, |z(stat) − z(axis)| ≥ 2:
+
+| Axis | Stat higher than the axis | Axis higher than the stat |
+|---|---|---|
+| control | Silencer (5.0), Bloodseeker 3.4, Slardar, Riki, Puck | Magnus |
+| tempo | Medusa, Alchemist | Pugna, Winter Wyvern, Io, Treant |
+| skirmish_rate | KotL (3.0), Ember 2.6 | — |
+| saving | Io, Oracle, Abaddon | — |
+| durability (deaths) | — | **Tinker** (−9.9, likely a data artifact; check before use) |
+
+### What this suggests for production (proposals only; each needs the author's ok)
+
+1. **Lane cards.** Replace the pro game-matchup proxy in `battle-lanes.ts` with STRATZ lane WR per pair (pair-level, Ancient+Divine, ≥ 200 lanes, shrunk), plus draws.
+   - This is a display/narrative change; Battle math is untouched.
+   - It needs a new data file (a Real-Data Recompute "ok") and a story/i18n review, because "won the lane" would become literal.
+2. **Role-fit.** The direction is validated; the magnitudes are eyeballed.
+   - Pre-register a calibration of the role-fit multipliers against STRATZ position WR, by fit on A weeks and check on later weeks.
+   - Start from the conflict cells (Marci support, Leshrac / LC / Mirana carry). This is a Calibration Change "ok".
+3. **Patch refresh beats formula work.** r = 0.69 across the latest patch.
+   - Recommend a scheduled refresh of `winRate` and pair data after each patch.
+   - This is a Real-Data Recompute "ok"; a STRATZ source makes it ~6 calls for hero/position tables and 254 for pairs.
+4. **HKB review list** (no automatic change): `control` (Silencer, Bloodseeker, Magnus), `tempo` (Pugna, Treant, Io, Wyvern vs Medusa/Alchemist) and `saving` (Io, Oracle, Abaddon), cross-checked against `hero-abilities.json` before any edit.
+5. **STRATZ pairs:** blocked on the pre-check amendment above.
+
+**Update (STRATZ pairs):**
+
+- Introspection showed that `week` is the epoch timestamp of a single week.
+- The pull runs with `week=1789344000`, the week of Mon 2026-09-14. That week ends before window B (which starts 09-25), so the gate passes and the test is disjoint in time.
+- Output is now week-aware: `raw/w<week>/<bracket>/`. The legacy `raw/<bracket>/` files from this first run are honoured through their stored `week` field.
+
+## Pre-registration: STRATZ tables (LAB ONLY) — FROZEN 2026-10-02, BEFORE these pulls
+
+**Script:** `server/scripts/lab/fetch-stratz-tables.ts` (`LAB_STRATZ_TABLE=positions|lanes|stats`).
+
+**Brackets:** `LEGEND_ANCIENT` and `DIVINE_IMMORTAL`, fetched separately.
+
+**How the queries are built:**
+
+- The query is assembled from cached introspection (`artifacts/lab/stratz/schema/`), so no field name is guessed.
+- The script loops only over dimensions the API cannot group: heroes if the hero argument is required, positions if no `groupBy` covers position, and `isWith` for lanes.
+- `week=1789344000` is passed to `laneOutcome` and `stats`, which keeps them disjoint from window B. `winWeek` and `winGameVersion` are time series and get no week filter.
+
+Nothing from these tables touches production. Every use below is a lab measurement; any production change needs its own "ok".
+
+**Call budgets** (upper bounds before introspection; introspection itself is 3–8 calls per table):
+
+| Table | Fields | Calls (max) |
+|---|---|---:|
+| positions | `winWeek` + `winGameVersion` | 508 (as few as 4 if `groupBy` covers hero × position) |
+| lanes | `laneOutcome` | 508 |
+| stats | `stats` | 254 |
+
+### T1 — positions (hero × position × bracket, by week and by game version)
+
+**(a) Ceiling.** Public pick counts per hero for Ancient+Divine, as the sum of `matchCount` over the latest complete week.
+
+- Report the binomial reliability of the hero WR and the r ceiling.
+- Compare with the KT3 `heroStats` figures: reliability 0.99, August→October test-retest r 0.88.
+
+**(b) Role-fit validation (descriptive).** Unit: a hero × position cell with ≥ 500 matches, for heroes that have ≥ 2 such cells.
+
+- Compare:
+  - **Δpos** = position WR − hero all-position WR (from T1);
+  - **Δfit** = the change in the hero's mean axis contribution under `roleAwareAxisValue` × miscast multipliers for that role, against the hero's mean over roles (`common/role-fit.ts`, no changes).
+- **Metric:** r(Δfit, Δpos) with a bootstrap over heroes (2000×).
+- **Verdict:**
+  - "role-fit direction supported" if the lower bound of the CI is > 0;
+  - "unsupported" if the CI includes 0;
+  - "inverted" if the upper bound is < 0.
+- This validates direction only. Replacing role-fit magnitudes with Δpos would be a new pre-registered match-level test on window B.
+
+**(c) Patch stability.** For each cell, r(WR in game version N−1, WR in N) for the last two versions with ≥ 300 matches per cell, plus the share of cells whose WR sign around the hero mean flips. This is reported only, as a reliability figure for any position-WR use.
+
+### T2 — lanes (`laneOutcome` per hero, `isWith` true/false)
+
+**Goal:** real lane results for the lane cards. Today `battle-lanes.ts › buildLaneResults` uses the game matchup winRate as a proxy.
+
+**(a) Coverage:** the share of hero pairs with ≥ 50 lane matches.
+
+**(b) Proxy validity.** For each enemy pair:
+
+- **lane score** = (wins − losses) / matches, from STRATZ;
+- **proxy** = the shrunk matchup rate − 0.5, from current `hero-meta.json`.
+
+Report Spearman over pairs with ≥ 50 lane matches, with a bootstrap CI.
+
+| Spearman | Reading |
+|---|---|
+| < 0.3 | the lane cards misreport lanes |
+| ≥ 0.6 | the proxy is acceptable |
+| in between | partial |
+
+**(c) Match level, descriptive only.** On window B, a lane-advantage score: the sum over the 3 lanes of the lane score for the role-assigned laners (roles assigned as in KT3).
+
+- Report its AUC alone and alongside the BASE score.
+- This is not a Battle change. A lane channel in the score would need its own pre-registration.
+
+### T3 — per-minute stats by position (MEASUREMENT ONLY)
+
+**Outcome contamination is flagged up front:** a winning hero posts better per-minute numbers *because* it wins. Full-game stats are never used as a predictor of WR or of match outcome.
+
+**Allowed uses:**
+
+- **(a) Axis cross-check.** Correlate STRATZ early-game stats per hero × position (time buckets ≤ 10 min, where contamination is smallest) with the existing `evaluation_values` axes they should track:
+  - deaths/kills ↔ `skirmish_rate`;
+  - last hits / GPM ↔ `scaling` / `farm`-like axes;
+  - hero damage ↔ `burst` / `teamfight`.
+
+  Report r per pair and list the axes that disagree. This is an input to Hero Knowledge Base review, not to calibration.
+- **(b) Candidate features.** Early-minute stats can be listed as candidate class-B features for a *future* pre-registered test. No test is run in this pass.
+
+- Решения автора (2026-10-02, после теста пар STRATZ): `LANE_HUNT_FLOOR = 0.7` принят; пары берутся только как взаимодействие героев — «очищенные» (доля пары относительно базовых винрейтов обоих героев), если пройдут проверку; канал реального винрейта не усиливаем.
+
+## Result: CLEANED STRATZ pairs (2026-10-02, `artifacts/lab/kt5/kt5-stratz-clean.json`)
+
+Run according to the pre-registration above. Window B was **not blind**: it had already been used for the raw STZ result.
+
+| Row (window B, 100 078 matches) | AUC | Log-loss |
+|---|---:|---:|
+| OFF | 0.5276 | 0.6901 |
+| PRO (current) | 0.5154 | 0.6910 |
+| raw STZ (earlier run) | 0.5754 | 0.6823 |
+| **STZC (cleaned)** | **0.5448** | **0.6881** |
+| STZC-SYN | 0.5311 | 0.6898 |
+| STZC-MAT | 0.5410 | 0.6887 |
+| HEROWR (team mean of the week's hero WR, not a Battle row) | 0.5738 | 0.6829 |
+
+| Comparison | ΔAUC [95% CI] | Δlog-loss [95% CI] |
+|---|---|---|
+| STZC − PRO | +0.0294 [+0.0253, +0.0339] | −0.0029 [−0.0034, −0.0024] |
+| STZC − OFF (interaction signal) | **+0.0172 [+0.0158, +0.0187]** | −0.0020 [−0.0023, −0.0018] |
+| STZC − HEROWR | −0.0290 [−0.0334, −0.0246] | +0.0053 |
+| STZC-SYN − OFF | +0.0035 [+0.0025, +0.0047] | −0.0004 |
+| STZC-MAT − OFF | +0.0135 [+0.0121, +0.0149] | −0.0015 |
+
+- STZC − PRO by bracket: Ancient +0.030, Divine +0.028. Positive on 7 of 7 days.
+- **Verdict (frozen rule): READY for a `hero-meta.json` proposal.**
+- After the hero strength is removed, the pairs still carry real interaction information: +0.017 AUC over pairs-off. Most of it is in the matchups; synergy adds little.
+- The cleaned pairs do not, and should not, reach the plain hero-WR prior. That is the intended outcome of the author's decision not to strengthen the real-winrate channel.
+- **Caveat:** B is not blind for this question, and the STRATZ week (09-14, patch 180) and B (09-25 → 10-02, mostly patch 181) are on different patches.
+- Proposal, unapplied: `artifacts/lab/proposals/stratz-pairs-clean/`. Applying it needs a Real-Data Recompute plus a Calibration Change "ok".
+
+## Result: role-fit calibration (2026-10-02, `artifacts/lab/kt7/kt7-rolefit.json`, script `kt7-rolefit.ts`)
+
+**Declared deviation from the plan.** r(Δ_rf, Δ_pos) does not change when every role-fit term is scaled by the same factor. So the per-role *data* term is the anchor (s_data ≡ 1), and only three relative scales are fitted:
+
+- `s_heur`: the heuristic boost/dampen fallback;
+- `s_sup`: the support-miscast −10%;
+- `s_core`: the core-miscast −10%.
+
+The grid is 0…3, and the bounded grid replaces a penalty.
+
+**Data.** 416 cells (122 heroes) with ≥ 1 000 matches; 163 heuristic cells and 128 miscast cells.
+
+| Measure | Result |
+|---|---|
+| Current (all scales = 1) | r 0.338 |
+| OOF 10×5 by hero | r 0.344 (repeats 0.313–0.367) |
+| Paired Δr vs current, cluster bootstrap | −0.004 [−0.058, +0.052] |
+| Null (200 within-hero permutations) | p95 0.135; procedure OOF 0.308, p 0.005 |
+| In-sample optimum | s_heur 0, s_sup 2.5, s_core 2.0, r 0.382 |
+| Most frequent fold optima | s_heur 0 in every one of the top-5; s_sup 2–3, s_core 1.5–2.5 |
+
+**Verdict: FAIL at steps 1–2.**
+
+- The Δr CI includes 0, and Δr is below the 0.05 floor. Production role-fit stays as it is, and there is no proposal.
+- Steps 3–5 (self-play, window B, golden) were not run.
+- The procedure does find signal (p 0.005 against the null), but the gain over current role-fit cannot be told from noise on 122 heroes.
+
+**Hypothesis for a future, separately pre-registered check (not a finding):**
+
+- the heuristic boost/dampen fallback does not help;
+- the miscast penalties might be harsher, about −20% to −25%.

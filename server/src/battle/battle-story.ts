@@ -13,6 +13,7 @@ import { bestMatchupEdge, bestSynergyPair, type BattlePick, type MatchupLookup }
 import {
   HUNT_FLOOR,
   INITIATING_FLOOR,
+  LANE_HUNT_FLOOR,
   MATCHUP_FLOOR,
   SAVING_FLOOR,
   axisOf,
@@ -25,6 +26,7 @@ import {
   pickByRole,
   roshanBand,
 } from './battle-cast';
+import { laneRateSource } from './battle-lanes';
 
 export { cameFromBehindLanes, isBattleUpset } from './battle-cast';
 
@@ -33,8 +35,14 @@ function standoutWonLane(
   resolvedOutcome: ResolvedOutcome,
 ): BattleLaneResult | undefined {
   const winner = resolvedOutcome === 'Win' ? 'mine' : 'opponent';
+  // Only real lane win rates are quoted as a lane number; a lane that fell
+  // back to the game-matchup proxy is never the standout.
   const won = lanes.filter(
-    (lane) => lane.winner === winner && lane.topPair && lane.topPair.winRate > MATCHUP_FLOOR,
+    (lane) =>
+      lane.winner === winner &&
+      laneRateSource(lane) === 'lane' &&
+      lane.topPair &&
+      lane.topPair.winRate > MATCHUP_FLOOR,
   );
   if (won.length === 0) return undefined;
   return won.reduce((best, lane) =>
@@ -210,7 +218,7 @@ export function buildBattleStory(input: {
     openingPairHero: standout?.topPair?.hero ?? '',
     openingPairVs: standout?.topPair?.vs ?? '',
     openingPairWinRate: pct(standout?.topPair?.winRate),
-    openingPairTone: (standout?.topPair?.winRate ?? 0) >= HUNT_FLOOR ? 'hunt' : 'edge',
+    openingPairTone: (standout?.topPair?.winRate ?? 0) >= LANE_HUNT_FLOOR ? 'hunt' : 'edge',
     carryTone: carryWinRate && Number(carryWinRate) >= HUNT_FLOOR * 100 ? 'hunt' : carryWinRate ? 'edge' : '',
     openingLead: leads.opening,
     turnLead: leads.turn,

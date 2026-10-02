@@ -143,6 +143,10 @@ tick log. Email+Google accounts already shipped.
 ## Calibration & model
 
 ### Pro pair channels hurt on public matches — `open`
+Update 2026-10-03: STRATZ (week 2026-09-14, Legend–Immortal) pairs tested on window B. Raw pairs AUC 0.575 but equal to a plain hero-winrate mean (0.574) — they carry hero strength. Cleaned pairs (base winrates of both heroes removed, logit-additive) AUC 0.545: +0.029 vs pro pairs, +0.017 vs pairs off, READY by the frozen rule; window B was not blind and STRATZ week is patch 180 vs B mostly 181. Proposal (not applied): `artifacts/lab/proposals/stratz-pairs-clean/`; applying needs the author OK, `rankedMatchupsByDelta` baseline 0.5, a current-patch week and a fresh disjoint check window.
+
+### Lane cards on STRATZ lane win rates — `done` (2026-10-03)
+Lane cards, lane winners, story and Explanation use real lane win rates (`server/data/lane-outcomes.json`, built by `server/scripts/build-lane-outcomes.ts` from the lab STRATZ `laneOutcome` pull; K=20 shrinkage; fallback to the old matchup proxy is flagged). New text threshold `LANE_HUNT_FLOOR = 0.7` (author OK). Data is one pre-patch-181 week without positions — refresh after patches. Role-fit calibration against STRATZ position winrates: no gain (Δr −0.004 [−0.058, +0.052]); role-fit unchanged. Axis-vs-stats outliers for manual review: `Blueprint/hkb-review-2026-10.md`.
 Variance Lab (2026-10-02, `Blueprint/16-variance-lab.md`): on 100k public Ancient+Divine matches over 7 days, the pro-sourced synergy/matchup channels lower match-level AUC by 0.012 [−0.016, −0.008] (synergy −0.009, matchups −0.005), in both brackets and on every full day; the real-winrate channel masks the loss in the shipped formula. Author decision: keep pairs but rebuild them from public match lineups (lab pull, window A build / window B check); writing `hero-meta.json` needs a separate OK. Also: formula frozen, hidden tags stay, old MAE/±7/≥10 KPIs no longer used for decisions.
 
 

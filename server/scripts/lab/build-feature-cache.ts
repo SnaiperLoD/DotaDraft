@@ -143,6 +143,14 @@ function build(label: string): void {
   const t0 = Date.now();
   const { heroes, positionsById } = loadHeroes();
   const lookup = new HeroMetaService();
+  // LAB_HERO_META: lab-only copy of hero-meta.json (e.g. STRATZ pairs). Swapped IN MEMORY on
+  // this lookup instance; production file and HeroMetaService code untouched.
+  if (process.env.LAB_HERO_META) {
+    const alt = JSON.parse(fs.readFileSync(process.env.LAB_HERO_META, 'utf-8')) as { heroes: { heroId: number }[] };
+    const map = (lookup as unknown as { byHeroId: Map<number, unknown> }).byHeroId;
+    map.clear();
+    for (const e of alt.heroes) map.set(e.heroId, e);
+  }
   const H = heroes.length;
   const heroIdx = new Int16Array(N * 10);
   const roleIdx = new Int8Array(N * 10);

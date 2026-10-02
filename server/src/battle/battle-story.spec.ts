@@ -405,6 +405,7 @@ describe('buildBattleStory', () => {
       lane.lane === 'safe'
         ? {
             ...lane,
+            rateSource: 'lane' as const,
             topPair: { hero: 'Radiant Carry', heroId: 1, vs: 'Dire Offlane', vsId: 13, winRate: 0.67 },
           }
         : lane,
@@ -422,6 +423,33 @@ describe('buildBattleStory', () => {
       openingPairHero: 'Radiant Carry',
       openingPairVs: 'Dire Offlane',
       openingPairWinRate: '67',
+      // 67% of decided lanes is under LANE_HUNT_FLOOR (0.7): the soft line.
+      openingPairTone: 'edge',
+    });
+  });
+
+  it('never quotes a lane number from the game-matchup fallback', () => {
+    const proxyPair: BattleLaneResult[] = aheadLanes.map((lane) =>
+      lane.lane === 'safe'
+        ? {
+            ...lane,
+            rateSource: 'matchup' as const,
+            topPair: { hero: 'Radiant Carry', heroId: 1, vs: 'Dire Offlane', vsId: 13, winRate: 0.67 },
+          }
+        : { ...lane, rateSource: 'matchup' as const },
+    );
+    const story = buildBattleStory({
+      resolvedOutcome: 'Win',
+      advantageDirection: 'A',
+      lanes: proxyPair,
+      mine,
+      opponent,
+      lookup: noData,
+    });
+    expect(story.beats[0].params).toMatchObject({
+      openingLane: '',
+      openingPairHero: '',
+      openingPairWinRate: '',
     });
   });
 
