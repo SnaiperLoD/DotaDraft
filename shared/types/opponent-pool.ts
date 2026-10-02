@@ -83,6 +83,10 @@ export interface RunLeaderboardEntry {
   wins: number;
   losses: number;
   winRate: number;
+  // Share (0..1) of this run's counted fights (coin flips excluded) whose
+  // opponent was a pro-team composition (BattleResult.opponentSource === 'pro');
+  // the remainder faced player-pool drafts.
+  proOpponentShare: number;
 }
 
 // GET /leaderboard: `globalRuns` (every qualifying run), `runs` (caller's

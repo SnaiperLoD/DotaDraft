@@ -142,6 +142,10 @@ tick log. Email+Google accounts already shipped.
 
 ## Calibration & model
 
+### Pro pair channels hurt on public matches — `open`
+Variance Lab (2026-10-02, `Blueprint/16-variance-lab.md`): on 100k public Ancient+Divine matches over 7 days, the pro-sourced synergy/matchup channels lower match-level AUC by 0.012 [−0.016, −0.008] (synergy −0.009, matchups −0.005), in both brackets and on every full day; the real-winrate channel masks the loss in the shipped formula. Author decision: keep pairs but rebuild them from public match lineups (lab pull, window A build / window B check); writing `hero-meta.json` needs a separate OK. Also: formula frozen, hidden tags stay, old MAE/±7/≥10 KPIs no longer used for decisions.
+
+
 ### Confidence tier / synergy×2 / matchup×3 / shrinkage K — `open`
 Low/Mod/High still don't stratify real favorite win rate cleanly. Don't retune
 without a holdout + explicit approve.
@@ -159,6 +163,12 @@ explicit missing=0) live under `DOTADRAFT_BATTLE_SHADOW`. Production
 `resource_efficiency` weight written to 0 (mid/early/late) 2026-09-21.
 Eval Total Score drops it too — shared mid skeleton. Radar axis stays.
 External review packet: `14-analytical-handoff.md`. Do not treat the shadow as production.
+
+### Hidden tags manual parity — `done` (2026-10)
+Hidden calibration tags now have a single source in
+`server/src/common/calibration-tags.ts`, with
+`server/src/battle/calibration-tags-parity.spec.ts` guarding Eval vs Battle
+parity. The old manual mirroring is closed.
 
 ### Hidden residual after r2_f_farm — `open`
 Offline on Naked+open `r2_f_farm` (2026-09-21): tagged MAE 12.2 vs

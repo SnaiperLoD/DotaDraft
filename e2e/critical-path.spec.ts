@@ -160,6 +160,8 @@ test('Tapalka stays static on a narrow viewport', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/draft');
   await expect(page.getByTestId('hero-card')).toHaveCount(5);
+  await expect(page.getByTestId('draft-waiting-room')).not.toHaveAttribute('open', '');
+  await page.getByTestId('draft-waiting-room').locator('summary').click();
   await expect(page.getByTestId('tapalka-static')).toBeVisible();
   await expect(page.getByTestId('tapalka-3d')).toHaveCount(0);
 });
@@ -168,6 +170,8 @@ test('Tapalka stays static when reduced motion is preferred', async ({ page }) =
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/draft');
   await expect(page.getByTestId('hero-card')).toHaveCount(5);
+  await expect(page.getByTestId('draft-waiting-room')).not.toHaveAttribute('open', '');
+  await page.getByTestId('draft-waiting-room').locator('summary').click();
   await expect(page.getByTestId('tapalka-static')).toBeVisible();
   await expect(page.getByTestId('tapalka-3d')).toHaveCount(0);
 });

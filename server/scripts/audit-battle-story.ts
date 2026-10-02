@@ -6,11 +6,16 @@ import * as path from 'path';
 import type { Hero, DraftRole, BattleLaneResult } from 'shared';
 import { ROLES } from 'shared';
 import { HeroMetaService } from '../src/hero-meta/hero-meta.service';
-import { resolveBattle, bestMatchupEdge, type BattlePick } from '../src/battle/battle-resolution';
+import { assessBattle, resolveBattle, bestMatchupEdge, type BattlePick } from '../src/battle/battle-resolution';
 import { buildBattleStory } from '../src/battle/battle-story';
 import { buildLaneResults } from '../src/battle/battle-lanes';
 
 const HEROES_PATH = path.join(__dirname, '..', 'data', 'heroes.json');
+const RU_LOCALE_PATH = path.join(__dirname, '..', '..', 'client', 'src', 'locales', 'ru.json');
+// Lanes are a detail of the picture, not the cause (Blueprint/15-dev-plan-2026-10.md, T1.3).
+const CAUSAL_COPY = /Ломается|садится на|Перелом/;
+// Same spread the Explanation and lane cards call "even" (T1.2).
+const NEAR_EVEN_SPREAD = 0.035 + 1e-9;
 const SAMPLE = Number(process.argv[2] ?? 10000);
 const ROLES_LIST = [...ROLES] as DraftRole[];
 
@@ -80,6 +85,17 @@ function main() {
     legacyEvenSoldAsAhead: 0,
     legacyMatchupInvented: 0,
     legacyFinishCinematic: 0,
+    turningAxisNotWinnersAxis: 0,
+    nearEvenLaneGivenAWinner: 0,
+    storyTallyVsExplanationEven: 0,
+    causalLaneCopy: 0,
+  };
+  const ruStory = (JSON.parse(fs.readFileSync(RU_LOCALE_PATH, 'utf-8')) as {
+    battle: { story: Record<string, unknown> };
+  }).battle.story;
+  const storyText = (key: string): string => {
+    const value = ruStory[key];
+    return typeof value === 'string' ? value : '';
   };
 
   for (let i = 0; i < SAMPLE; i++) {
@@ -88,11 +104,16 @@ function main() {
     const opponentHeroes = pool.slice(5, 10);
     const mine = picks(mineHeroes);
     const opponent = picks(opponentHeroes);
-    const result = resolveBattle(mine, opponent, lookup, rand);
     const lanes = buildLanes(mine, opponent, lookup);
+    // Lanes are display-side extras: passing them changes no roll, only the
+    // Explanation lines (same call shape as BattleService.fight()).
+    const result = resolveBattle(mine, opponent, lookup, rand, { lanes });
+    const topAxisDelta = assessBattle(mine, opponent, lookup).axisDeltas[0]?.delta ?? 0;
     const story = buildBattleStory({
       resolvedOutcome: result.resolvedOutcome,
       advantageDirection: result.advantageDirection,
+      confidenceTier: result.confidenceTier,
+      topAxisDelta: result.topAxisDelta,
       lanes,
       mine,
       opponent,
@@ -137,6 +158,24 @@ function main() {
     if ((finish as string) === 'finishText') counts.finishIsCinematicKey += 1;
     counts.legacyFinishCinematic += 1;
     if (turning === 'turningAxis') counts.turningUsesAxisNotCatch += 1;
+    const winnerSign = result.resolvedOutcome === 'Win' ? 1 : -1;
+    if (turning === 'turningAxis' && !(topAxisDelta * winnerSign > 0)) counts.turningAxisNotWinnersAxis += 1;
+    counts.nearEvenLaneGivenAWinner += lanes.filter(
+      (l) => l.winRate !== null && Math.abs(l.winRate - 0.5) <= NEAR_EVEN_SPREAD && l.winner !== 'even',
+    ).length;
+    const explanationSaysEven = result.explanation.some(
+      (line) => typeof line !== 'string' && line.key === 'battle.explain.lanes.even',
+    );
+    const storyTally = story.beats[0].params;
+    if (explanationSaysEven && storyTally.winnerLanes !== storyTally.loserLanes) {
+      counts.storyTallyVsExplanationEven += 1;
+    }
+    const openingParams = story.beats[0].params;
+    const usedKeys: string[] = [opening, turning];
+    if (openingParams.openingPairHero && openingParams.openingPairVs) {
+      usedKeys.push(openingParams.openingPairTone === 'hunt' ? 'openingLaneHook' : 'openingLaneSoft');
+    }
+    if (usedKeys.some((key) => CAUSAL_COPY.test(storyText(key)))) counts.causalLaneCopy += 1;
     if (finish === 'finishHeld' || finish === 'finishComeback' || finish === 'finishUpset') {
       counts.finishHeldComebackUpset += 1;
     }
@@ -154,6 +193,9 @@ function main() {
     legacyEvenSoldAsAhead: pct('legacyEvenSoldAsAhead'),
     legacyMatchupInvented: pct('legacyMatchupInvented'),
     legacyFinishCinematic: pct('legacyFinishCinematic'),
+    turningAxisNotWinnersAxis: pct('turningAxisNotWinnersAxis'),
+    storyTallyVsExplanationEven: pct('storyTallyVsExplanationEven'),
+    causalLaneCopy: pct('causalLaneCopy'),
   } }, null, 2));
 }
 

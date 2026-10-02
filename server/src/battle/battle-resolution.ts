@@ -74,6 +74,9 @@ export interface BattleResult {
   // Largest |axis delta| this fight, winner-agnostic. Story names it
   // instead of inventing a catch/smoke/Roshan sequence.
   topAxis: keyof HeroEvaluationValues | null;
+  // Signed gap of topAxis from teamA's side (>0 teamA ahead on it). Lets the
+  // story tell whose axis it was instead of crediting it to the winner.
+  topAxisDelta: number | null;
   tagChips: BattleTagChip[];
 }
 
@@ -431,6 +434,14 @@ export interface BattleAssessment {
   rawDiff: number;
   rawAdvantageDirection: AdvantageDirection;
   axisDeltas: { axis: keyof HeroEvaluationValues; delta: number }[];
+  // Phase-blended power with custom tags applied, BEFORE the synergy /
+  // matchup / real-winRate multipliers. axisDeltas sum to their gap (shadow
+  // off). Reporting only — nothing below reads these back.
+  taggedPowerA: number;
+  taggedPowerB: number;
+  // diff − (taggedPowerA − taggedPowerB): the part of the decisive gap that
+  // the multipliers add on top of the axes (Blueprint/15-dev-plan-2026-10.md, T1.5).
+  multiplierRemainder: number;
   // Shutdown (common/shutdown.ts) — heroes on each side uniformly countered
   // by all 5 opponents (every real matchup winRate at least 1.5pp below
   // their own overall winRate). Rare by design.
@@ -593,6 +604,9 @@ export function assessBattle(
     rawDiff,
     rawAdvantageDirection,
     axisDeltas,
+    taggedPowerA,
+    taggedPowerB,
+    multiplierRemainder: diff - (taggedPowerA - taggedPowerB),
     shutdownHeroesA,
     shutdownHeroesB,
   };
@@ -625,6 +639,7 @@ export function resolveBattle(
     shutdownHeroesB,
     hardCarryCountA,
     hardCarryCountB,
+    multiplierRemainder,
   } = assessBattle(teamA, teamB, lookup);
 
   // Shutdown notes — phrased from the calling player's own perspective
@@ -721,6 +736,7 @@ export function resolveBattle(
     shutdownHeroesB,
     hardCarryCountA,
     hardCarryCountB,
+    multiplierRemainder,
   });
 
   const winnerIsA = resolvedOutcome === 'Win';
@@ -760,6 +776,7 @@ export function resolveBattle(
     shutdownNotes,
     highSkillSwingHeroName: highSkillSwingHero?.name ?? null,
     topAxis: axisDeltas[0]?.axis ?? null,
+    topAxisDelta: axisDeltas[0]?.delta ?? null,
     tagChips: publicBattleTagChips(heroesA, heroesB, rawAxisAveragesA, rawAxisAveragesB),
   };
 }

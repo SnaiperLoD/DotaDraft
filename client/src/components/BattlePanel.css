@@ -545,6 +545,22 @@
   color: var(--ink);
 }
 
+.battle-lane-note {
+  margin-top: 2px;
+  font-size: 10px;
+  line-height: 1.3;
+  color: var(--ink-faint);
+}
+
+.battle-confidence-note {
+  margin: 0 auto var(--sp-2);
+  max-width: 52ch;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--ink-faint);
+}
+
 .battle-lane-result .battle-matchup-wr--good,
 .battle-lane-result .battle-matchup-wr--bad {
   font-variant-numeric: tabular-nums;

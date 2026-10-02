@@ -54,6 +54,8 @@ export interface BattleExplanationContext {
   shutdownHeroesB?: Hero[];
   hardCarryCountA?: number;
   hardCarryCountB?: number;
+  /** diff − tagged power gap: what synergy / matchup / real winRate add on top of the axes. */
+  multiplierRemainder?: number;
 }
 
 function frameLine(ctx: BattleExplanationContext): LocalizedLine {
@@ -73,6 +75,20 @@ function frameLine(ctx: BattleExplanationContext): LocalizedLine {
     axis: topAxisDelta.axis,
     edge: axisFavorsFavoredSide ? 'edge' : 'deficit',
   });
+}
+
+// T1.5 (D2 a): the frame names the biggest axis, but the decisive gap also
+// carries the synergy / matchup / real-winRate multipliers. When that
+// remainder backs the favorite and outweighs the best axis, say so instead of
+// letting the axis read as the reason. Deliberately shallow — the formula may
+// change after the analytical session.
+function pairsDecidedLine(ctx: BattleExplanationContext): LocalizedLine | null {
+  const remainder = ctx.multiplierRemainder;
+  if (remainder === undefined || ctx.advantageDirection === 'Even') return null;
+  const favoredSign = ctx.advantageDirection === 'A' ? 1 : -1;
+  if (remainder * favoredSign <= 0) return null;
+  if (Math.abs(remainder) <= Math.abs(ctx.topAxisDelta.delta)) return null;
+  return i18nLine('battle.explain.pairsDecided');
 }
 
 function heroFactLine(mine: BattlePick[], opponent: BattlePick[]): LocalizedLine | null {
@@ -111,20 +127,14 @@ function heroFactLine(mine: BattlePick[], opponent: BattlePick[]): LocalizedLine
   return null;
 }
 
-/** A lane score within 3.5pp of 50% reads as even on the card. */
-const LANE_COPY_EVEN_SPREAD_PP = 3.5;
-
-function isLaneCopyEven(lane: BattleLaneResult): boolean {
-  if (lane.winRate === null) return false;
-  return Math.abs(lane.winRate - 0.5) * 100 <= LANE_COPY_EVEN_SPREAD_PP + 1e-9;
-}
-
+// "Even" is decided once in battle-lanes.ts (laneWinnerFor) — read the flag,
+// don't re-derive it, so this line never disagrees with the card or the story.
 function laneLines(lanes: BattleLaneResult[] | undefined): LocalizedLine[] {
   if (!lanes || lanes.length === 0) return [];
   const numeric = lanes.filter((lane) => lane.winRate !== null);
-  const allNumericEven = numeric.length > 0 && numeric.every(isLaneCopyEven);
+  const allNumericEven = numeric.length > 0 && numeric.every((lane) => lane.winner === 'even');
   const decided = lanes
-    .filter((lane) => lane.winner !== 'even' && lane.topPair && !isLaneCopyEven(lane))
+    .filter((lane) => lane.winner !== 'even' && lane.topPair)
     .slice()
     .sort(
       (a, b) => Math.abs((b.topPair?.winRate ?? 0.5) - 0.5) - Math.abs((a.topPair?.winRate ?? 0.5) - 0.5),
@@ -264,6 +274,9 @@ export function buildExplanation(ctx: BattleExplanationContext): LocalizedLine[]
   const isUpset = isBattleUpset(ctx.advantageDirection, ctx.resolvedOutcome);
 
   const lines: LocalizedLine[] = [frameLine(ctx)];
+
+  const pairsDecided = pairsDecidedLine(ctx);
+  if (pairsDecided) lines.push(pairsDecided);
 
   if (ctx.highSkillSwingHero) {
     lines.push(i18nLine('battle.explain.highSkill', { hero: ctx.highSkillSwingHero.name }));

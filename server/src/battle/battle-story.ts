@@ -65,18 +65,6 @@ function sheetLeads(opening: SheetLead, final: 'yours' | 'theirs'): Record<Battl
   };
 }
 
-function thinPhaseOf(input: {
-  opening: SheetLead;
-  final: 'yours' | 'theirs';
-  advantageDirection: AdvantageDirection;
-  confidenceTier: ConfidenceTier;
-}): BattleStoryPhase | '' {
-  if (input.opening === 'even') return 'opening';
-  if (input.opening !== input.final) return 'turn';
-  if (input.advantageDirection === 'Even' || input.confidenceTier === 'Low') return 'opening';
-  return '';
-}
-
 export function buildBattleStory(input: {
   resolvedOutcome: ResolvedOutcome;
   advantageDirection: AdvantageDirection;
@@ -87,6 +75,8 @@ export function buildBattleStory(input: {
   lookup: MatchupLookup;
   highSkillSwingHeroName?: string | null;
   topAxis?: keyof HeroEvaluationValues | null;
+  /** Signed gap of `topAxis` from your draft's side (>0 yours, <0 theirs). */
+  topAxisDelta?: number | null;
 }): BattleStory {
   const won = input.resolvedOutcome === 'Win';
   const winners = won ? input.mine : input.opponent;
@@ -157,19 +147,17 @@ export function buildBattleStory(input: {
   const cameFromBehind = cameFromBehindLanes(input.lanes, input.resolvedOutcome);
   const isUpset = isBattleUpset(input.advantageDirection, input.resolvedOutcome);
   const topAxis = input.topAxis ?? '';
+  const topAxisDelta = input.topAxisDelta ?? 0;
+  const topAxisSide = topAxisDelta > 0 ? 'yours' : topAxisDelta < 0 ? 'opponent' : '';
+  // The largest axis gap is winner-agnostic: on an upset it usually belongs to
+  // the favorite. Name it as the winner's only when it really is theirs.
+  const topAxisIsWinners = topAxisSide === (won ? 'yours' : 'opponent');
   const lanesEven = tally.winnerWins === tally.loserWins;
   const roshan = roshanBand(winners);
   const standout = standoutWonLane(input.lanes, input.resolvedOutcome);
   const openingLead = openingLeadFromLanes(input.lanes);
   const finalLead: 'yours' | 'theirs' = won ? 'yours' : 'theirs';
   const leads = sheetLeads(openingLead, finalLead);
-  const hingePhase: BattleStoryPhase = 'turn';
-  const thinPhase = thinPhaseOf({
-    opening: openingLead,
-    final: finalLead,
-    advantageDirection: input.advantageDirection,
-    confidenceTier: input.confidenceTier ?? 'Moderate',
-  });
 
   const openingKey: BattleStoryBeatKey = isUpset
     ? 'openingUpset'
@@ -186,7 +174,7 @@ export function buildBattleStory(input: {
   else if (usableMatchup) turnKey = 'turningEdge';
   else if (usableCombo) turnKey = 'turningCombo';
   else if (isUpset && swingHero) turnKey = 'turningUpsetHighSkill';
-  else turnKey = 'turningAxis';
+  else turnKey = topAxisIsWinners ? 'turningAxis' : 'turningAxisSplit';
 
   const finishKey: BattleStoryBeatKey = isUpset
     ? 'finishUpset'
@@ -202,6 +190,7 @@ export function buildBattleStory(input: {
     winnerSide: won ? 'yours' : 'opponent',
     swingHero,
     topAxis,
+    topAxisSide,
     winnerLanes: String(tally.winnerWins),
     loserLanes: String(tally.loserWins),
     driver: driver?.hero.name ?? '',
@@ -227,8 +216,6 @@ export function buildBattleStory(input: {
     turnLead: leads.turn,
     conversionLead: leads.conversion,
     finishLead: leads.finish,
-    hingePhase,
-    thinPhase,
   };
 
   const heroIds = idsOf(
@@ -275,5 +262,5 @@ export function buildBattleStory(input: {
     },
   ];
 
-  return { cameFromBehind, isUpset, hingePhase, thinPhase, beats };
+  return { cameFromBehind, isUpset, beats };
 }

@@ -81,7 +81,7 @@
       },
       "evaluate": {
         "title": "Get an honest read",
-        "text": "Your lineup is scored on synergy, tempo, control, scaling and more, each axis ranked against 50,000 unique Ancient + Divine drafts from OpenDota so a number actually means something."
+        "text": "Your lineup is scored on synergy, tempo, control, scaling and more, each axis ranked against 50,000 unique Ancient + Divine drafts from OpenDota, so the number tells you where your draft sits among them (a percentile), not how the game will go."
       },
       "battle": {
         "title": "Send it into battle",
@@ -146,7 +146,7 @@
     "title": "How This Works",
     "intro": "DotaDraft isn't a full match simulator — there's no lane phase, no item builds, no player skill. It's an honest statistical model built on real match data, and it's upfront about what that can and can't tell you.",
     "evaluationTitle": "Evaluation",
-    "evaluationText": "Your draft gets scored on things like synergy, tempo, control, and scaling — each axis is calibrated against real win-rate data from thousands of matches, not just a hand-picked formula.",
+    "evaluationText": "Your draft gets scored on things like synergy, tempo, control, and scaling. The axes are calibrated against real win-rate data from thousands of matches; the weights and thresholds of some cards and combos are set by hand.",
     "battleTitle": "Battle Mode",
     "battleText": "Your draft faces another lineup. The outcome uses DotaDraft axes and tags — and real OpenDota hero win rates plus head-to-head pairs. The post-fight story names lanes, lead, and turning matchups; it does not walk high ground or invent a game clock.",
     "ceilingTitle": "What we don't claim",
@@ -231,7 +231,7 @@
     "verdict": {
       "dire": "Dire",
       "weak": "Shaky",
-      "even": "Weak",
+      "even": "Mediocre",
       "strong": "Workable",
       "elite": "Elite"
     },
@@ -297,6 +297,7 @@
     "youLose": "YOU LOSE",
     "coinFlipNote": "Same five heroes. The sheet is a wash — the coin decides.",
     "confidence": "{{tier}} Confidence",
+    "confidenceNote": "This is how far apart the drafts landed on our scale. In this game a High favourite wins; real matches don't work like that.",
     "vs": "vs.",
     "sideYours": "Your draft",
     "sideOpponent": "Opponent",
@@ -324,6 +325,7 @@
     "laneWinnerYours": "Yours",
     "laneWinnerOpponent": "Opponent",
     "laneEven": "Even",
+    "laneChanceNote": "average real matchup win rate in this lane (OpenDota)",
     "story": {
       "title": "How this might have gone",
       "disclaimer": "One way this fight could have played out. Not a replay.",
@@ -352,9 +354,9 @@
       },
       "turnerLine": "{{turner}} is the one who saves the fight, not the one who jumps first.",
       "answerLine": "{{theirDriver}} is the one who has to answer that.",
-      "openingLaneHook": "It actually breaks in the {{openingLane}}: {{openingPairHero}} gets onto {{openingPairVs}} ({{openingPairWinRate}}%).",
+      "openingLaneHook": "In the {{openingLane}}, one pair stands out: {{openingPairHero}} into {{openingPairVs}}, {{openingPairWinRate}}% in real games.",
       "openingLaneSoft": "In the {{openingLane}}, {{openingPairHero}} is a bit ahead of {{openingPairVs}} ({{openingPairWinRate}}%).",
-      "carryLateMatchup": "Late it's {{myCarry}} against {{theirCarry}}, and {{lateMatchupWinner}} gets onto the other one ({{carryWinRate}}%).",
+      "carryLateMatchup": "Late it's {{myCarry}} against {{theirCarry}}, and {{lateMatchupWinner}} is clearly the stronger side of that pair ({{carryWinRate}}%).",
       "carryLateSoft": "Late it's {{myCarry}} against {{theirCarry}}. {{lateMatchupWinner}} is a bit ahead in that pair ({{carryWinRate}}%).",
       "carryLate": "Late it's {{myCarry}} against {{theirCarry}}.",
       "carryScale": "The longer it goes, the scarier {{scaleLeader}} gets.",
@@ -362,12 +364,13 @@
       "openingComeback": "The lanes went {{loserLanes}}–{{winnerLanes}} the wrong way, and they still win. {{driver}} has to drag it back.",
       "openingEven": "The lanes don't pick a winner. From here it's fights, and {{driver}} starts them.",
       "openingUpset": "The favorite took the lanes {{winnerLanes}}–{{loserLanes}}. If this flips, it starts with {{driver}} walking in first.",
-      "turningCatchCombo": "{{posture}}{{matchupWinner}} gets onto {{matchupLoser}} ({{matchupWinRate}}%). And {{comboA}} with {{comboB}} ({{comboWinRate}}%) is the pair that actually wins games. That's the turn.",
-      "turningCatch": "{{posture}}{{matchupWinner}} gets onto {{matchupLoser}} ({{matchupWinRate}}%). The other side doesn't have an answer while that hero is on the map.",
+      "turningCatchCombo": "{{posture}}Two pairs stand out on their side: {{matchupWinner}} into {{matchupLoser}} ({{matchupWinRate}}% in real games) and {{comboA}} with {{comboB}} ({{comboWinRate}}%), who win games together.",
+      "turningCatch": "{{posture}}The other side's worst matchup is {{matchupWinner}} into {{matchupLoser}}: {{matchupWinRate}}% in real games.",
       "turningEdgeCombo": "{{posture}}{{matchupWinner}} is a bit ahead of {{matchupLoser}} ({{matchupWinRate}}%). The real pair is {{comboA}} with {{comboB}} ({{comboWinRate}}%).",
       "turningEdge": "{{posture}}{{matchupWinner}} is a bit ahead of {{matchupLoser}} ({{matchupWinRate}}%). A pair edge, not a hunt.",
-      "turningCombo": "{{posture}}{{comboA}} with {{comboB}} ({{comboWinRate}}%) win games together. The turn hangs on that pair.",
+      "turningCombo": "{{posture}}{{comboA}} with {{comboB}} ({{comboWinRate}}%) win games together — the standout pair on their side.",
       "turningAxis": "{{posture}}No clean catch. What they actually have is {{topAxis}}.",
+      "turningAxisSplit": "{{posture}}No clean catch. Where the drafts differed most: {{topAxis}}.",
       "turningUpsetHighSkill": "{{swingHero}} steals games the numbers can't price. This one went against the favorite.",
       "conversionRoshanEarly": "They want this over early. The window is around {{roshanBand}} minutes. We don't play out Roshan from here.",
       "conversionRoshanMid": "Nobody is purely early or purely late. If it lives to {{roshanBand}} minutes, that's when it gets decided. Roshan isn't played out.",
@@ -375,14 +378,6 @@
       "finishHeld": "That's how it was supposed to end.",
       "finishComeback": "The lanes lost. The game didn't.",
       "finishUpset": "The favorite was supposed to close this. They didn't.",
-      "pitWindowOnly": "We don't walk into the pit from here.",
-      "thinHere": "This is the thin bit — the flip, or the lanes that didn't decide.",
-      "noRamp": "We don't walk high ground. The telling stops when the fight does.",
-      "lead": {
-        "yours": "After this, it's yours.",
-        "theirs": "After this, it's theirs.",
-        "even": "After this, still even."
-      },
       "axes": {
         "teamfight": "damage",
         "tempo": "tempo",
@@ -427,7 +422,6 @@
       "synergy": "{{hero}} + {{vs}} is a pair that actually wins games for {{perspective}}."
     },
     "explain": {
-      "axisHero": "{{axis}} ({{hero}})",
       "edge": {
         "edge": "that's your plus",
         "deficit": "that's the hole"
@@ -446,12 +440,8 @@
         "even": "Nobody's the favorite. I'd call the read {{confidence}}. Closest thing you've got is {{axis}} — {{edgePhrase}}.",
         "ahead": "{{side}} came in ahead. I'd call the read {{confidence}}. What sticks out is {{axis}} — {{edgePhrase}}."
       },
+      "pairsDecided": "More than any single axis, pairs and matchups carried this one: synergy, matchups and the heroes' real win rates.",
       "highSkill": "{{hero}} stole this one. Games around that hero swing harder than the numbers, and the favorite ate it.",
-      "clock": {
-        "split": "{{faster}} wants this over now. {{scaler}} gets scarier if the game lives. The window is {{band}} minutes. We don't play out Roshan.",
-        "early": "They want this decided in the {{band}} minute window, before the other late game shows up.",
-        "late": "They need to reach the {{band}} minute window. If they do, the late game pays."
-      },
       "shape": {
         "duel": "{{mine}} starts the fights. {{theirs}} is the one who has to answer.",
         "mineStarts": "{{hero}} is the one who starts the fights for you.",
@@ -459,11 +449,6 @@
         "savesBoth": "{{mine}} saves yours. {{theirs}} saves theirs.",
         "saveMine": "{{hero}} is the one who actually saves people.",
         "saveOpp": "{{hero}} is their save. You didn't bring one."
-      },
-      "sheet": {
-        "both": "You're ahead on {{yours}}. The hole is {{hole}}.",
-        "yours": "What you actually have is {{yours}}.",
-        "theirs": "What they actually have is {{theirs}}."
       },
       "lanes": {
         "even": "The lanes are a wash.",
@@ -635,7 +620,8 @@
     "evaluation": "Evaluation",
     "wins": "Wins",
     "losses": "Losses",
-    "winRate": "Win Rate"
+    "winRate": "Win Rate",
+    "proShare": "Pro opponents"
   },
   "axes": {
     "teamfight": "Damage Output",

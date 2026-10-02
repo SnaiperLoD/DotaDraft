@@ -21,6 +21,7 @@ interface Row {
   teamName?: string | null;
   leagueName?: string | null;
   isMine?: boolean;
+  proOpponentShare?: number;
 }
 
 function LeaderboardTable({ rows }: { rows: Row[] }) {
@@ -35,6 +36,9 @@ function LeaderboardTable({ rows }: { rows: Row[] }) {
             <th className="col-num col-eval">{t('leaderboard.evaluation')}</th>
             <th className="col-num col-wins">{t('leaderboard.wins')}</th>
             <th className="col-num col-losses">{t('leaderboard.losses')}</th>
+            {rows.some((r) => r.proOpponentShare !== undefined) && (
+              <th className="col-num col-pro">{t('leaderboard.proShare')}</th>
+            )}
             <th className="col-rate">{t('leaderboard.winRate')}</th>
           </tr>
         </thead>
@@ -70,6 +74,11 @@ function LeaderboardTable({ rows }: { rows: Row[] }) {
               <td className="col-num col-losses leaderboard-losses" data-label={t('leaderboard.losses')}>
                 {row.losses}
               </td>
+              {rows.some((r) => r.proOpponentShare !== undefined) && (
+                <td className="col-num col-pro" data-label={t('leaderboard.proShare')}>
+                  {row.proOpponentShare !== undefined ? `${Math.round(row.proOpponentShare * 100)}%` : '—'}
+                </td>
+              )}
               <td className="col-rate" data-label={t('leaderboard.winRate')}>
                 <div className="leaderboard-rate">
                   <span className="leaderboard-rate-value">{Math.round(row.winRate * 100)}%</span>
@@ -97,6 +106,7 @@ function runRows(runs: RunLeaderboardEntry[]): Row[] {
     wins: r.wins,
     losses: r.losses,
     winRate: r.winRate,
+    proOpponentShare: r.proOpponentShare,
     isMine: r.isMine,
   }));
 }

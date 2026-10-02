@@ -4,6 +4,15 @@ Updated 2026-09-21 after leftover engineering landed on `master`
 (`b993ae0`). Handoff / triage; `10-tech-debt-backlog.md` is the detailed
 source of truth. Deploy notes: `13-deploy.md`.
 
+## Now (2026-10-01)
+
+Calibration pause after `74f517b`, `d995b17`, `3b290cf`. Current work:
+`15-dev-plan-2026-10.md` (fixes) and the separate variance-lab session
+(`prompts/02-variance-lab-session.md`). CI green again since `f03c4cf`.
+Older content below is history.
+
+---
+
 **Status check:** three isolated modes on `master` (`/draft`,
 `/captains`, `/ti-run`). **Optional accounts shipped** (email+password;
 Google off until Console secrets). **Valve CM draft shipped**.

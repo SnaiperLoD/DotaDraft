@@ -1,4 +1,11 @@
-import type { BattleLaneId, BattleLaneResult, BattleLaneTopPair, DraftRole, Hero } from 'shared';
+import type {
+  BattleLaneId,
+  BattleLaneResult,
+  BattleLaneTopPair,
+  BattleLaneWinner,
+  DraftRole,
+  Hero,
+} from 'shared';
 import type { MatchupLookup } from './battle-resolution';
 
 const LANE_ROLES: {
@@ -16,6 +23,22 @@ export const LANE_LABEL: Record<BattleLaneId, string> = {
   mid: 'mid',
   off: 'offlane',
 };
+
+/**
+ * The one "even lane" boundary (Blueprint/15-dev-plan-2026-10.md, T1.2): an
+ * average matchup within 3.5pp of 50% is nobody's lane. Decided here once;
+ * the lane card, Explanation, story tally and comeback check all read
+ * `BattleLaneResult.winner` instead of re-deriving it. Display-only — lanes
+ * never feed the fight roll.
+ */
+export const LANE_EVEN_SPREAD_PP = 3.5;
+
+export function laneWinnerFor(winRate: number | null): BattleLaneWinner {
+  if (winRate === null) return 'even';
+  const edge = winRate - 0.5;
+  if (Math.abs(edge) * 100 <= LANE_EVEN_SPREAD_PP + 1e-9) return 'even';
+  return edge > 0 ? 'mine' : 'opponent';
+}
 
 function bestPair(pairs: BattleLaneTopPair[]): BattleLaneTopPair | null {
   if (pairs.length === 0) return null;
@@ -61,7 +84,8 @@ export function buildLaneResults(
       }
     }
     const averageEdge = edges.length > 0 ? edges.reduce((sum, edge) => sum + edge, 0) / edges.length : 0;
-    const winner = averageEdge > 0 ? 'mine' : averageEdge < 0 ? 'opponent' : 'even';
+    const winRate = edges.length > 0 ? 0.5 + averageEdge : null;
+    const winner = laneWinnerFor(winRate);
     const topPair =
       winner === 'mine' ? bestPair(minePairs) : winner === 'opponent' ? bestPair(opponentPairs) : null;
     return {
@@ -69,24 +93,10 @@ export function buildLaneResults(
       mine: mine.map((hero) => hero.name),
       opponent: opponent.map((hero) => hero.name),
       winner,
-      winRate: edges.length > 0 ? 0.5 + averageEdge : null,
+      winRate,
       mineIds: mine.map((hero) => hero.id),
       opponentIds: opponent.map((hero) => hero.id),
       topPair,
     };
-  });
-}
-
-export function buildLaneExplanation(lanes: BattleLaneResult[]): string[] {
-  const won = lanes
-    .filter((lane) => lane.winner !== 'even' && lane.topPair)
-    .slice()
-    .sort(
-      (a, b) => Math.abs((b.topPair?.winRate ?? 0.5) - 0.5) - Math.abs((a.topPair?.winRate ?? 0.5) - 0.5),
-    );
-  return won.slice(0, 3).map((lane) => {
-    const side = lane.winner === 'mine' ? 'Your' : "The opponent's";
-    const pair = lane.topPair!;
-    return `${side} ${LANE_LABEL[lane.lane]} leans this way because ${pair.hero} into ${pair.vs} is a real matchup edge.`;
   });
 }

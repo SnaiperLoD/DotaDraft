@@ -86,8 +86,6 @@ export const battleFixture: BattleResultResponse = {
   story: {
     cameFromBehind: false,
     isUpset: false,
-    hingePhase: 'turn',
-    thinPhase: '',
     beats: [
       {
         phase: 'opening',

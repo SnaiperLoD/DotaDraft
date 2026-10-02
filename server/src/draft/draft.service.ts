@@ -265,7 +265,7 @@ export class DraftService {
     if (scope === 'mine' && !caller) return [];
 
     const grouped = await this.prisma.battleResult.groupBy({
-      by: ['draftId', 'resolvedOutcome'],
+      by: ['draftId', 'resolvedOutcome', 'opponentSource'],
       where: {
         coinFlip: false,
         draft: {
@@ -276,11 +276,14 @@ export class DraftService {
       _count: { _all: true },
     });
 
-    const tally = new Map<string, { wins: number; losses: number }>();
+    // proFights: fights against opponentSource === 'pro' (pro-team
+    // compositions) — the rest are 'player' pool drafts. Share = proFights / total.
+    const tally = new Map<string, { wins: number; losses: number; proFights: number }>();
     for (const g of grouped) {
-      const rec = tally.get(g.draftId) ?? { wins: 0, losses: 0 };
+      const rec = tally.get(g.draftId) ?? { wins: 0, losses: 0, proFights: 0 };
       if (g.resolvedOutcome === 'Win') rec.wins += g._count._all;
       else rec.losses += g._count._all;
+      if (g.opponentSource === 'pro') rec.proFights += g._count._all;
       tally.set(g.draftId, rec);
     }
 
@@ -291,6 +294,7 @@ export class DraftService {
         losses: r.losses,
         total: r.wins + r.losses,
         winRate: r.wins / (r.wins + r.losses),
+        proOpponentShare: r.proFights / (r.wins + r.losses),
       }))
       .filter((r) => r.total >= minFights)
       .sort((a, b) => b.winRate - a.winRate || b.wins - a.wins)
@@ -327,6 +331,7 @@ export class DraftService {
         wins: r.wins,
         losses: r.losses,
         winRate: r.winRate,
+        proOpponentShare: r.proOpponentShare,
       };
     });
   }

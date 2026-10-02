@@ -55,11 +55,7 @@
 .draft-waiting-room {
   position: relative;
   overflow: hidden;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 300px;
-  align-items: center;
-  gap: var(--sp-6);
-  padding: var(--sp-5) var(--sp-6);
+  padding: 0;
   background:
     radial-gradient(circle at 85% 50%, color-mix(in srgb, var(--gold) 12%, transparent), transparent 30%),
     var(--panel);
@@ -73,6 +69,46 @@
   left: 0;
   width: 3px;
   background: linear-gradient(180deg, transparent, var(--gold), transparent);
+}
+
+/* Collapsed by default (R12): one line keeps the hero choice first on screen. */
+.draft-waiting-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-6);
+  cursor: pointer;
+  list-style: none;
+}
+
+.draft-waiting-summary::-webkit-details-marker {
+  display: none;
+}
+
+.draft-waiting-title {
+  font-size: 15px;
+}
+
+.draft-waiting-chevron {
+  margin-left: auto;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--gold-bright);
+  border-bottom: 2px solid var(--gold-bright);
+  transform: rotate(45deg);
+  transition: transform 0.15s;
+}
+
+.draft-waiting-room[open] .draft-waiting-chevron {
+  transform: rotate(-135deg);
+}
+
+.draft-waiting-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  align-items: center;
+  gap: var(--sp-6);
+  padding: var(--sp-2) var(--sp-6) var(--sp-5);
 }
 
 .draft-waiting-copy {
@@ -162,9 +198,9 @@
 }
 
 @media (max-width: 760px) {
-  .draft-waiting-room {
+  .draft-waiting-body {
     grid-template-columns: minmax(0, 1fr);
-    padding: var(--sp-5);
+    padding: var(--sp-2) var(--sp-5) var(--sp-5);
   }
 
   .ti-form-list {

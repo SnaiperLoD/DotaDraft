@@ -1,6 +1,11 @@
+import type { BattlePick } from './battle-resolution';
 import { makeHero } from '../test-utils/hero-factory';
-import { buildLaneExplanation, buildLaneResults } from './battle-lanes';
+import { flattenLocalized } from '../test-utils/localized-text';
+import { laneTally } from './battle-cast';
+import { buildExplanation } from './battle-explanation';
+import { buildLaneResults, laneWinnerFor } from './battle-lanes';
 import type { MatchupLookup } from './battle-resolution';
+import { buildBattleStory } from './battle-story';
 
 const noData: MatchupLookup = {
   getMatchupWinRate: () => null,
@@ -66,45 +71,70 @@ describe('buildLaneResults', () => {
     expect(mid.winRate).toBeNull();
     expect(mid.topPair).toBeNull();
   });
+
+  it('reads a lane within 3.5pp of 50% as even, and a lean past it as won (T1.2)', () => {
+    expect(laneWinnerFor(0.5)).toBe('even');
+    expect(laneWinnerFor(0.51)).toBe('even');
+    expect(laneWinnerFor(0.49)).toBe('even');
+    expect(laneWinnerFor(0.535)).toBe('even');
+    expect(laneWinnerFor(0.465)).toBe('even');
+    expect(laneWinnerFor(0.536)).toBe('mine');
+    expect(laneWinnerFor(0.464)).toBe('opponent');
+    expect(laneWinnerFor(null)).toBe('even');
+  });
 });
 
-describe('buildLaneExplanation', () => {
-  it('explains won lanes from real pairs and skips even lanes', () => {
-    const lines = buildLaneExplanation([
-      {
-        lane: 'safe',
-        mine: ['Anti-Mage', 'Crystal Maiden'],
-        opponent: ['Axe', 'Earthshaker'],
-        winner: 'mine',
-        winRate: 0.62,
-        mineIds: [1, 5],
-        opponentIds: [14, 7],
-        topPair: { hero: 'Anti-Mage', heroId: 1, vs: 'Axe', vsId: 14, winRate: 0.64 },
-      },
-      {
-        lane: 'mid',
-        mine: ['Storm Spirit'],
-        opponent: ['Shadow Fiend'],
-        winner: 'even',
-        winRate: 0.5,
-        mineIds: [17],
-        opponentIds: [11],
-        topPair: null,
-      },
-      {
-        lane: 'off',
-        mine: ['Tidehunter', 'Earth Spirit'],
-        opponent: ['Phantom Assassin', 'Lion'],
-        winner: 'opponent',
-        winRate: 0.41,
-        mineIds: [29, 107],
-        opponentIds: [44, 26],
-        topPair: { hero: 'Phantom Assassin', heroId: 44, vs: 'Tidehunter', vsId: 29, winRate: 0.71 },
-      },
-    ]);
-    expect(lines).toEqual([
-      "The opponent's offlane leans this way because Phantom Assassin into Tidehunter is a real matchup edge.",
-      'Your safe lane leans this way because Anti-Mage into Axe is a real matchup edge.',
-    ]);
+describe('one even-lane boundary across lanes, Explanation and story (T1.2)', () => {
+  const roles = ['Carry', 'Mid', 'Offlane', 'Soft Support', 'Hard Support'];
+  const minePicks: BattlePick[] = roles.map((role, i) => ({
+    hero: hero(i + 1, `Radiant ${role}`),
+    assignedRole: role,
+  }));
+  const opponentPicks: BattlePick[] = roles.map((role, i) => ({
+    hero: hero(i + 11, `Dire ${role}`),
+    assignedRole: role,
+  }));
+  const byRole = (picks: BattlePick[]) => new Map(picks.map((p) => [p.assignedRole!, p.hero]));
+  // Every pair 51/49 for Radiant: a lean on paper, nobody's lane in the copy.
+  const lookup: MatchupLookup = {
+    getMatchupWinRate: (heroId) => (heroId <= 5 ? 0.51 : 0.49),
+    getSynergyWinRate: () => null,
+    getWinRate: () => 0.5,
+  };
+
+  it('51/49 lanes are even on the card, in Explanation and in the story tally', () => {
+    const lanes = buildLaneResults(byRole(minePicks), byRole(opponentPicks), lookup);
+    expect(lanes.map((lane) => lane.winner)).toEqual(['even', 'even', 'even']);
+    expect(lanes.every((lane) => lane.topPair === null)).toBe(true);
+
+    expect(laneTally(lanes, 'Win')).toEqual({ winnerWins: 0, loserWins: 0 });
+
+    const explanation = flattenLocalized(
+      buildExplanation({
+        advantageDirection: 'A',
+        confidenceTier: 'Moderate',
+        resolvedOutcome: 'Win',
+        teamA: minePicks,
+        teamB: opponentPicks,
+        lookup,
+        topAxisDelta: { axis: 'tempo', delta: 0.1 },
+        axisDeltas: [{ axis: 'tempo', delta: 0.1 }],
+        highSkillSwingHero: null,
+        lanes,
+      }),
+    );
+    expect(explanation).toMatch(/battle.explain.lanes.even/);
+
+    const story = buildBattleStory({
+      resolvedOutcome: 'Win',
+      advantageDirection: 'A',
+      lanes,
+      mine: minePicks,
+      opponent: opponentPicks,
+      lookup,
+    });
+    expect(story.beats[0].key).toBe('openingEven');
+    expect(story.beats[0].params).toMatchObject({ winnerLanes: '0', loserLanes: '0', openingLead: 'even' });
+    expect(story.cameFromBehind).toBe(false);
   });
 });

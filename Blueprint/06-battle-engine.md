@@ -174,7 +174,7 @@ Eval answers «что это за драфт» and keeps the 13-axis radar, syne
 
 **Убито после заморозки f, без записи весов.** Обнуление saving (вес 1.7 в базе, и в early он наследуется, потому что в блоке early ключа нет): кластер saving≥6 сел с +10.4 до +2.7 п.п., но r 0.186→0.122. Ось несёт и смещение, и сигнал. Фазовый микс (late−early против div) на бестеговых r −0.045. Tempo снаружи тегов r 0.013. Initiating на бестеговых r −0.311: обнуление добило бы Sand King и Pangolier.
 
-Mirage Tax снят (Naga/TB на голой формуле около нуля). Остальные hidden не трогать без нового approve. Recap боя по-прежнему говорит осями Eval. PC1 в текст не переносить: эта формула в прод не идёт. Живой баг текста — #1 driver считается с mid-снимка, а `overallPower` фазовый. Это отдельный пункт бэклога.
+Mirage Tax снят (Naga/TB на голой формуле около нуля). Остальные hidden не трогать без нового approve. Recap боя по-прежнему говорит осями Eval. PC1 в текст не переносить: эта формула в прод не идёт. Баг текста (#1 driver считался с mid-снимка, а `overallPower` фазовый) закрыт в `3b290cf`: `axisPowerDeltas` в `battle-resolution.ts` теперь считает долю каждой оси в фазово-смешанном `overallPower` (каждая фаза делится на свою сумму весов), а recap ранжирует по ней. Детали: `10-tech-debt-backlog.md`, «Battle recap vs the live scorer».
 
 Цифры и запреты: `14-analytical-handoff.md`. Артефакты: `artifacts/self-play/r0-2026-09-21`, `r1-2026-09-21`, `r2-2026-09-21`, `r2-farm-2026-09-21`, `r2-residual-farm-2026-09-21`, `r2-noncombat-2026-09-21`, `r2-save0-2026-09-21`, `r2-farm-hidden-2026-09-21`.
 
@@ -188,3 +188,12 @@ Evaluation Engine and Battle Engine are independent. The Resolution mechanic abo
 ## Future Calibration (post-MVP)
 
 Once professional matches are imported (see 07-development-plan.md), Battle Engine's confidence tiers *and* resolution weighting should be checked against real outcomes: matches predicted "High confidence" should win noticeably more often than "Low confidence" ones, and the resolved Win/Lose rate at each tier should roughly track the tier's real-world win rate. If not, tiers and weighting must be recalibrated — this matters more than raw accuracy.
+
+## Story and Explanation honesty (2026-10-01)
+
+Text-only changes; the roll and the golden snapshot (`server/src/battle/battle-golden.spec.ts`) are unchanged.
+
+- **One "even lane" boundary.** `LANE_EVEN_SPREAD_PP = 3.5` and `laneWinnerFor()` live in `server/src/battle/battle-lanes.ts`; a lane within 3.5pp of 50% is `winner: 'even'` for the lane card, Explanation, cast `laneTally` and the story opening. Before, ~2/3 of lanes in that band still got a winner and 28.5% of recaps gave a lane score that Explanation contradicted. Side effect: `openingEven` now opens 26.7% of recaps (was 1.9%).
+- **Turning beat owns its side.** `turningAxis` names the top axis only when its signed gap (`topAxisDelta`) belongs to the winner; otherwise the neutral `turningAxisSplit`.
+- **Lanes are a detail, not the cause.** Causal lane verbs removed from the story; the lane-card number is captioned as the average real matchup winrate (OpenDota). Explanation `mineHunt`/`oppHunt` still say "садится на" — open.
+- **Axis contributions add up.** `battle-axis-deltas.spec.ts` checks that `axisPowerDeltas` sums to the tagged power gap (max error 2e-15 over 5000 drafts). `assessBattle` also reports `taggedPowerA/B` and `multiplierRemainder = diff − tagged gap` (reporting only). When the remainder favors the favorite and outweighs the best axis, Explanation adds `battle.explain.pairsDecided` — this fires in ~62% of favored battles, i.e. synergy/matchup/real-winrate multipliers usually outweigh any single axis. Handed to the variance-lab session.

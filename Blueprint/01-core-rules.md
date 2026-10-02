@@ -60,6 +60,8 @@ Analyzer не должен напрямую обращаться к другим
 - микросервисы;
 - сложную инфраструктуру.
 
+Исключение (2026-09-11, коммит `4ac6b63`): опциональные аккаунты (email+password, Google) и персистентный прогресс shipped — гостевая игра без аккаунта остаётся полной. Правило «не добавлять авторизацию» больше не абсолютно; дальше аккаунты не расширять без запроса.
+
 Исключение: Opponent Pool для Battle Mode (см. Data Rule ниже и `06-battle-engine.md`) — по своей природе требует общего хранилища. Это единственная осознанная брешь в правиле, не прецедент для остальных подсистем.
 
 ---
@@ -70,7 +72,15 @@ Analyzer не должен напрямую обращаться к другим
 
 Основное хранилище: SQLite.
 
+Исключение (2026-09-11, `4ac6b63`): опциональные аккаунты и персистентный прогресс хранятся в БД сервера (Prisma), а не только локально; гость по-прежнему играет без аккаунта.
+
 Исключение: Opponent Pool (драфты других игроков + импортированные про-драфты, из которых Battle Mode асинхронно подтягивает оппонента) требует общего хранилища, обновляемого динамически — оно не может быть локальным по определению задачи. Это единственное исключение из правила; проектировать его нужно осознанно и изолированно, не как повод постепенно тащить остальные подсистемы в облако.
+
+---
+
+## Hidden Calibration Disclosure Rule (decision 2026-10-01)
+
+Always-hidden calibration tags (`server/src/common/calibration-tags.ts`) correct Evaluation Total Score and set `hiddenCalibrationApplied` in the evaluation result. The player is NOT told when these corrections were applied: no line in the UI, no tag names, no hero names. The flag is internal (history parsing, tests, analysis) and must not be surfaced as player-facing text.
 
 ---
 

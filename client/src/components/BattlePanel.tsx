@@ -153,7 +153,10 @@ function MatchupList({ heading, rows, good }: { heading: string; rows: BattleMat
   );
 }
 
-function LaneMatchups({ lanes }: { lanes: BattleLaneResult[] }) {
+// `lane.winner` is the server's single even-lane flag (battle-lanes.ts,
+// laneWinnerFor) — read as-is so the card never disagrees with Explanation
+// or the story. The number is the lane's average real matchup win rate.
+export function LaneMatchups({ lanes }: { lanes: BattleLaneResult[] }) {
   const { t } = useTranslation();
   if (lanes.length === 0) return null;
 
@@ -208,10 +211,26 @@ function LaneMatchups({ lanes }: { lanes: BattleLaneResult[] }) {
               <span>{winnerLabel}</span>
               {chance !== null && <span className={chanceClass}>{chance}</span>}
             </div>
+            {chance !== null && (
+              <div className="battle-lane-note" data-testid="battle-lane-note">
+                {t('battle.laneChanceNote')}
+              </div>
+            )}
           </div>
         );
       })}
     </div>
+  );
+}
+
+// Confidence is a gap on our own scale, not a real-match prediction: the
+// High tier here always wins, which real matches never do.
+export function ConfidenceNote() {
+  const { t } = useTranslation();
+  return (
+    <p className="battle-confidence-note" data-testid="battle-confidence-note">
+      {t('battle.confidenceNote')}
+    </p>
   );
 }
 
@@ -927,6 +946,7 @@ export default function BattlePanel({
               {t('battle.confidence', { tier: t(`battle.tier.${result.confidenceTier}`) })}
             </span>
           </div>
+          <ConfidenceNote />
 
           <p className="battle-vs">
             {t('battle.vs')} {tiFinals && <TiFinalsMark />}

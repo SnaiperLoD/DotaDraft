@@ -139,7 +139,9 @@ export class BattleService {
 
     // Fight math still uses pool-stored teamB roles. Lanes and the aligned
     // opponent roster are display-side only — passed so Explanation talks
-    // about the same lane cards the client renders.
+    // about the same lane cards the client renders. Lanes never move the
+    // roll, so story/Explanation copy treats them as a detail of the
+    // picture, not as the cause of the result.
     const result = resolveBattle(teamA, teamB, this.heroMetaService, Math.random, {
       lanes,
       narrativeOpponent: opponentPicks,
@@ -155,6 +157,7 @@ export class BattleService {
       lookup: this.heroMetaService,
       highSkillSwingHeroName: result.highSkillSwingHeroName,
       topAxis: result.topAxis,
+      topAxisDelta: result.topAxisDelta,
     });
 
     // Persisted for History (Blueprint/10-tech-debt-backlog.md, "Сохранять

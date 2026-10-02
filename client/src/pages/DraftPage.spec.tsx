@@ -87,6 +87,15 @@ describe('DraftPage', () => {
     expect(await screen.findAllByTestId('hero-card')).toHaveLength(5);
   });
 
+  it('keeps the TI/Tapalka waiting room collapsed so the hero choice stays first', async () => {
+    renderWithRouter(<DraftPage />, { route: '/draft' });
+
+    await screen.findAllByTestId('hero-card');
+    const room = screen.getByTestId('draft-waiting-room');
+    expect(room.tagName).toBe('DETAILS');
+    expect(room).not.toHaveAttribute('open');
+  });
+
   it('creates a draft on the first pick', async () => {
     const user = userEvent.setup();
     renderWithRouter(<DraftPage />, { route: '/draft' });

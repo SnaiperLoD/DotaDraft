@@ -36,23 +36,6 @@ function composeAxisNarrative(t: TFunction, params: Record<string, string>): str
   return bodyText ? `${lede} ${bodyText}` : lede;
 }
 
-function formatAxisHeroList(t: TFunction, spec: string): string {
-  if (!spec) return '';
-  const parts = spec
-    .split('|')
-    .filter(Boolean)
-    .map((part) => {
-      const colon = part.indexOf(':');
-      const axisKey = colon === -1 ? part : part.slice(0, colon);
-      const hero = colon === -1 ? '' : part.slice(colon + 1);
-      const storyPath = `battle.story.axes.${axisKey}`;
-      const storyLabel = t(storyPath);
-      const label = storyLabel !== storyPath ? storyLabel : axisLabel(t, axisKey);
-      return hero ? t('battle.explain.axisHero', { axis: label, hero }) : label;
-    });
-  return joinAnd(t, parts);
-}
-
 function formatTagList(t: TFunction, spec: string): string {
   return joinAnd(
     t,
@@ -156,12 +139,6 @@ function translateBag(t: TFunction, key: string, params: Record<string, string>)
     }
   }
 
-  if (key.startsWith('battle.explain.sheet.')) {
-    if (bag.yours) bag.yours = formatAxisHeroList(t, params.yours);
-    if (bag.hole) bag.hole = formatAxisHeroList(t, params.hole);
-    if (bag.theirs) bag.theirs = formatAxisHeroList(t, params.theirs);
-  }
-
   if (key.startsWith('battle.explain.tags.')) {
     if (bag.mine) bag.mine = formatTagList(t, params.mine);
     if (bag.theirs) bag.theirs = formatTagList(t, params.theirs);
@@ -175,11 +152,6 @@ function translateBag(t: TFunction, key: string, params: Record<string, string>)
   if (key === 'battle.explain.frame.even' || key === 'battle.explain.frame.ahead') {
     bag.edgePhrase = edgePhrase(t, params.edge);
     if (params.side) bag.side = sidePhrase(t, params.side, 'subject');
-  }
-
-  if (key === 'battle.explain.clock.split') {
-    bag.faster = sidePhrase(t, params.faster, 'subject');
-    bag.scaler = sidePhrase(t, params.scaler, 'object');
   }
 
   for (const field of ['winner', 'loser', 'underdog', 'perspective'] as const) {

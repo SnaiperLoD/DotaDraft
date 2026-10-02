@@ -30,6 +30,9 @@ export interface BattleLaneResult {
   lane: BattleLaneId;
   mine: string[];
   opponent: string[];
+  // 'even' when the average matchup sits within LANE_EVEN_SPREAD_PP of 50%
+  // (server/src/battle/battle-lanes.ts) — the single even-lane flag every
+  // surface reads (lane card, Explanation, story).
   winner: BattleLaneWinner;
   // Mine's implied chance from the already-computed average matchup edge
   // (0.5 + averageEdge). null when the lane had no real pair data.
@@ -104,6 +107,8 @@ export type BattleStoryBeatKey =
   | 'turningEdge'
   | 'turningCombo'
   | 'turningAxis'
+  // Largest axis gap did not belong to the winner — name it without crediting a side.
+  | 'turningAxisSplit'
   | 'turningUpsetHighSkill'
   | 'conversionRoshanEarly'
   | 'conversionRoshanMid'
@@ -140,10 +145,6 @@ export interface BattleStoryBeat {
 export interface BattleStory {
   cameFromBehind: boolean;
   isUpset: boolean;
-  /** Phase where the named invert lives. Always a real beat we already emit. */
-  hingePhase?: BattleStoryPhase;
-  /** Thinnest beat we can name without a tick log. Empty if the favorite held lanes. */
-  thinPhase?: BattleStoryPhase | '';
   beats: BattleStoryBeat[];
 }
 

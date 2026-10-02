@@ -266,40 +266,45 @@ export default function DraftPage() {
               <DraftLedger heroes={heroes} totalSlots={5} layout="rail" />
             </div>
 
-            <section className="panel draft-waiting-room">
-              <div className="draft-waiting-copy">
-                <div className="draft-waiting-kicker">
+            <details className="panel draft-waiting-room" data-testid="draft-waiting-room">
+              <summary className="draft-waiting-summary">
+                <span className="draft-waiting-kicker">
                   {tiForm?.leagueName ?? t('tapalka.tournamentWatch')}
-                </div>
-                <h3>{t('tapalka.tiFormHeading')}</h3>
-                <p>{t('tapalka.tiFormNote', { count: tiForm?.matchCount ?? 0 })}</p>
-                <div className="ti-form-list">
-                  {(tiForm?.heroes ?? []).map((hero, index) => (
-                    <div key={hero.heroId} className="ti-form-hero">
-                      <span className="ti-form-rank">{String(index + 1).padStart(2, '0')}</span>
-                      <img
-                        src={heroPortraitUrl(hero.heroId)}
-                        alt={hero.heroName}
-                        width={112}
-                        height={70}
-                        loading="lazy"
-                      />
-                      <div className="ti-form-hero-copy">
-                        <strong>{hero.heroName}</strong>
-                        <span>
-                          {t('tapalka.tiRecord', {
-                            wins: hero.wins,
-                            losses: hero.losses,
-                            rate: Math.round(hero.winRate * 100),
-                          })}
-                        </span>
+                </span>
+                <strong className="draft-waiting-title">{t('tapalka.tiFormHeading')}</strong>
+                <span className="draft-waiting-chevron" aria-hidden="true" />
+              </summary>
+              <div className="draft-waiting-body">
+                <div className="draft-waiting-copy">
+                  <p>{t('tapalka.tiFormNote', { count: tiForm?.matchCount ?? 0 })}</p>
+                  <div className="ti-form-list">
+                    {(tiForm?.heroes ?? []).map((hero, index) => (
+                      <div key={hero.heroId} className="ti-form-hero">
+                        <span className="ti-form-rank">{String(index + 1).padStart(2, '0')}</span>
+                        <img
+                          src={heroPortraitUrl(hero.heroId)}
+                          alt={hero.heroName}
+                          width={112}
+                          height={70}
+                          loading="lazy"
+                        />
+                        <div className="ti-form-hero-copy">
+                          <strong>{hero.heroName}</strong>
+                          <span>
+                            {t('tapalka.tiRecord', {
+                              wins: hero.wins,
+                              losses: hero.losses,
+                              rate: Math.round(hero.winRate * 100),
+                            })}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
+                <TapalkaWidget embedded />
               </div>
-              <TapalkaWidget embedded />
-            </section>
+            </details>
           </div>
         </>
       )}

@@ -62,6 +62,7 @@ describe('buildBattleStory', () => {
       opponent,
       lookup: noData,
       topAxis: 'tempo',
+      topAxisDelta: 0.4,
     });
 
     expect(story.isUpset).toBe(false);
@@ -154,6 +155,7 @@ describe('buildBattleStory', () => {
       opponent,
       lookup,
       topAxis: 'control',
+      topAxisDelta: 0.3,
     });
     expect(story.beats[1].key).toBe('turningAxis');
     expect(story.beats[1].params.matchupWinner).toBe('');
@@ -169,6 +171,7 @@ describe('buildBattleStory', () => {
       opponent,
       lookup: noData,
       topAxis: 'scaling',
+      topAxisDelta: 0.2,
     });
 
     expect(story.cameFromBehind).toBe(true);
@@ -207,6 +210,7 @@ describe('buildBattleStory', () => {
       opponent,
       lookup: noData,
       topAxis: 'burst',
+      topAxisDelta: 0.25,
     });
     expect(withoutSkill.isUpset).toBe(true);
     expect(withoutSkill.cameFromBehind).toBe(true);
@@ -310,6 +314,8 @@ describe('buildBattleStory', () => {
       mine,
       opponent,
       lookup: weak,
+      topAxis: 'tempo',
+      topAxisDelta: 0.2,
     });
     expect(weakStory.beats[1].key).toBe('turningAxis');
     expect(weakStory.beats[1].params.comboA).toBe('');
@@ -429,8 +435,6 @@ describe('buildBattleStory', () => {
       opponent,
       lookup: noData,
     });
-    expect(held.hingePhase).toBe('turn');
-    expect(held.thinPhase).toBe('');
     expect(held.beats[0].params).toMatchObject({
       openingLead: 'yours',
       turnLead: 'yours',
@@ -446,7 +450,6 @@ describe('buildBattleStory', () => {
       opponent,
       lookup: noData,
     });
-    expect(invert.thinPhase).toBe('turn');
     expect(invert.beats[0].params).toMatchObject({
       openingLead: 'theirs',
       turnLead: 'yours',
@@ -462,32 +465,70 @@ describe('buildBattleStory', () => {
       opponent,
       lookup: noData,
     });
-    expect(even.thinPhase).toBe('opening');
     expect(even.beats[0].params.openingLead).toBe('even');
     expect(even.beats[0].params.turnLead).toBe('yours');
   });
+  describe('turningAxis names an axis only on the winner’s side (T1.1)', () => {
+    it('credits the winner when the largest gap is theirs', () => {
+      const won = buildBattleStory({
+        resolvedOutcome: 'Win',
+        advantageDirection: 'A',
+        lanes: aheadLanes,
+        mine,
+        opponent,
+        lookup: noData,
+        topAxis: 'tempo',
+        topAxisDelta: 0.4,
+      });
+      expect(won.beats[1].key).toBe('turningAxis');
+      expect(won.beats[1].params.topAxisSide).toBe('yours');
+      expect(won.beats[1].params.topAxisSide).toBe(won.beats[1].params.winnerSide);
 
-  it('marks opening as thin when the favorite is Even or Low even if lanes held', () => {
-    const evenFav = buildBattleStory({
-      resolvedOutcome: 'Win',
-      advantageDirection: 'Even',
-      confidenceTier: 'High',
-      lanes: aheadLanes,
-      mine,
-      opponent,
-      lookup: noData,
+      const lost = buildBattleStory({
+        resolvedOutcome: 'Lose',
+        advantageDirection: 'B',
+        lanes: behindLanes,
+        mine,
+        opponent,
+        lookup: noData,
+        topAxis: 'scaling',
+        topAxisDelta: -0.4,
+      });
+      expect(lost.beats[1].key).toBe('turningAxis');
+      expect(lost.beats[1].params.winnerSide).toBe('opponent');
+      expect(lost.beats[1].params.topAxisSide).toBe('opponent');
     });
-    expect(evenFav.thinPhase).toBe('opening');
 
-    const low = buildBattleStory({
-      resolvedOutcome: 'Win',
-      advantageDirection: 'A',
-      confidenceTier: 'Low',
-      lanes: aheadLanes,
-      mine,
-      opponent,
-      lookup: noData,
+    it('stays neutral on an upset where the largest gap belonged to the favorite', () => {
+      const story = buildBattleStory({
+        resolvedOutcome: 'Lose',
+        advantageDirection: 'A',
+        lanes: aheadLanes,
+        mine,
+        opponent,
+        lookup: noData,
+        topAxis: 'control',
+        topAxisDelta: 0.5,
+      });
+      expect(story.isUpset).toBe(true);
+      expect(story.beats[1].key).toBe('turningAxisSplit');
+      expect(story.beats[1].params.winnerSide).toBe('opponent');
+      expect(story.beats[1].params.topAxisSide).toBe('yours');
+      expect(story.beats[1].params.topAxisSide).not.toBe(story.beats[1].params.winnerSide);
     });
-    expect(low.thinPhase).toBe('opening');
+
+    it('stays neutral when the side of the gap is unknown', () => {
+      const story = buildBattleStory({
+        resolvedOutcome: 'Win',
+        advantageDirection: 'A',
+        lanes: aheadLanes,
+        mine,
+        opponent,
+        lookup: noData,
+        topAxis: 'tempo',
+      });
+      expect(story.beats[1].key).toBe('turningAxisSplit');
+      expect(story.beats[1].params.topAxisSide).toBe('');
+    });
   });
 });

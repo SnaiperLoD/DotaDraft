@@ -39,6 +39,10 @@ Breakdown:
 
 Burst/Control/Durability добавлены вместе с Role-fit модификатором (см. ниже) — были откалиброваны в `evaluation_values` с самого начала (`server/scripts/calibrate-evaluation-values.ts`), но не выведены как отдельные строки breakdown до того, как Role-fit понадобилось их бустить для Carry/Mid/Offlane. Initiating добавлена тем же путём позже. Skirmish Rate/Camp Stacking — переименованы из aggression/farm_priority (`10-tech-debt-backlog.md`, self-play outlier investigation) после уточнения, что они реально измеряют (deaths_per_min+инвертированный last_hits_per_min и camps_stacked_per_min соответственно) — см. `09-hero-knowledge-base.md`. Resource Efficiency — новая ось (2026-08-05, по запросу пользователя): damage per team-networth-share вместо сырого урона/мин, см. `09-hero-knowledge-base.md` и weights ниже.
 
+## Hidden calibration corrections
+
+Always-hidden tags (`server/src/common/calibration-tags.ts`, single source for Eval and Battle) adjust Total Score; the result carries `hiddenCalibrationApplied` (`evaluation.service.ts`). Rule (decision 2026-10-01): the player is NOT told when hidden calibration was applied in Evaluation — no line, no tag or hero names. See `01-core-rules.md`, Hidden Calibration Disclosure Rule.
+
 ## Initial Weights
 
 - Synergy: 30%

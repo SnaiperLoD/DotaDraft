@@ -1,6 +1,7 @@
 import type { BattleLaneResult, Hero, HeroEvaluationValues } from 'shared';
 import { makeHero, DEFAULT_EVALUATION_VALUES } from '../test-utils/hero-factory';
 import { buildExplanation } from './battle-explanation';
+import { laneWinnerFor } from './battle-lanes';
 import type { BattlePick, MatchupLookup } from './battle-resolution';
 import { flattenLocalized } from '../test-utils/localized-text';
 
@@ -578,7 +579,7 @@ describe('buildExplanation', () => {
     pairHero: string,
     pairVs: string,
   ): BattleLaneResult {
-    const winner: BattleLaneResult['winner'] = winRate > 0.5 ? 'mine' : winRate < 0.5 ? 'opponent' : 'even';
+    const winner = laneWinnerFor(winRate);
     return {
       lane,
       mine: [pairHero],
@@ -641,5 +642,50 @@ describe('buildExplanation', () => {
     expect(text).not.toMatch(/battle.explain.lane.oppHole/);
     expect(text).toMatch(/Storm Spirit/);
     expect(text).not.toMatch(/Tidehunter/);
+  });
+});
+
+describe('buildExplanation — when pairs and matchups outweigh the axes (T1.5, D2 a)', () => {
+  const picks = (start: number, prefix: string): BattlePick[] =>
+    [0, 1, 2, 3, 4].map((i) => ({
+      hero: makeHero({ id: start + i, name: `${prefix} ${i}` }),
+      assignedRole: null,
+    }));
+  const noLookup: MatchupLookup = {
+    getMatchupWinRate: () => null,
+    getSynergyWinRate: () => null,
+    getWinRate: () => null,
+  };
+  function explain(
+    advantageDirection: 'A' | 'B' | 'Even',
+    topDelta: number,
+    multiplierRemainder: number | undefined,
+  ): string {
+    return flattenLocalized(
+      buildExplanation({
+        advantageDirection,
+        confidenceTier: 'Moderate',
+        resolvedOutcome: advantageDirection === 'B' ? 'Lose' : 'Win',
+        teamA: picks(100, 'Radiant'),
+        teamB: picks(200, 'Dire'),
+        lookup: noLookup,
+        topAxisDelta: { axis: 'tempo', delta: topDelta },
+        axisDeltas: [{ axis: 'tempo', delta: topDelta }],
+        highSkillSwingHero: null,
+        multiplierRemainder,
+      }),
+    );
+  }
+
+  it('says pairs and matchups decided it when the remainder for the favorite beats the best axis', () => {
+    expect(explain('A', 0.1, 0.3)).toMatch(/battle.explain.pairsDecided/);
+    expect(explain('B', -0.1, -0.3)).toMatch(/battle.explain.pairsDecided/);
+  });
+
+  it('stays silent when the best axis is larger, the remainder points the other way, or nobody is favored', () => {
+    expect(explain('A', 0.4, 0.3)).not.toMatch(/battle.explain.pairsDecided/);
+    expect(explain('A', 0.1, -0.3)).not.toMatch(/battle.explain.pairsDecided/);
+    expect(explain('Even', 0.01, 0.03)).not.toMatch(/battle.explain.pairsDecided/);
+    expect(explain('A', 0.1, undefined)).not.toMatch(/battle.explain.pairsDecided/);
   });
 });
