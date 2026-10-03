@@ -63,8 +63,7 @@ Battle Engine may consider:
 
 ## Data Sources (verified against OpenDota)
 
-- Hero matchups: `/api/heroes/{id}/matchups` — direct hero-vs-hero win rate, returned by OpenDota already aggregated. No custom querying needed.
-- Strategic conflicts / synergy fit: OpenDota Explorer SQL over `player_matches` (self-joined on `match_id` + team side) for ally win-rate-together data. No built-in endpoint exists for this — queries must be anchored on a specific `hero_id` to stay fast (~1-2s); unfiltered scans over `player_matches`/`public_matches` time out on the shared Explorer.
+- Hero matchups and synergy (since 2026-10-03): STRATZ `heroVsHeroMatchup`, Legend–Immortal pubs, one week, **cleaned** (hero strength removed). See "Pair data" below. Until 2026-10-02 they were OpenDota pro data (`/api/heroes/{id}/matchups`, Explorer SQL for allies).
 - Role matchups / power spikes / scaling / objectives: derived from Hero Knowledge Base `evaluation_values`. **Production** `overallPower` still consumes the shared `AXES` list (13 descriptive axes, including `resource_efficiency`) via `axis-weights.json`. That is the live fight. It is no longer the intended win model. See the split below. `map_control` and `camp_stacking` weights are 0. `resource_efficiency` weight is 0 as of 2026-09-21 (all phases). A missing phase/base key still defaults to weight **1**, not 0 — `control` / `mobility` / `initiating` still ride that default wherever a phase block omits them.
 - Lane cards (display only): real hero-vs-hero lane results from STRATZ `heroStats.laneOutcome`, frozen in `server/data/lane-outcomes.json`. See "Lane cards: real lane win rates (2026-10-02)" below.
 - No reliable Immortal/6000+ MMR-only data exists in OpenDota's public sample — `public_matches.avg_rank_tier >= 80` returned effectively zero rows in testing, most likely because high-MMR players commonly keep match history private. Practical proxy: average `heroStats` brackets 6+7 (Ancient + Divine) rather than Divine alone, for a larger and still high-skill sample.
@@ -216,17 +215,78 @@ Display and story only. `assessBattle` and the roll are unchanged; `battle-golde
 **Thresholds.**
 
 - `LANE_EVEN_SPREAD_PP` stays **3.5pp** — one source, `laneWinnerFor()`. On real lane rates 3.5pp of decided lanes is ≈ 2.6 lanes in 100 between wins and losses, well above the ~1pp shrunk-pair noise. In the audit, 25.4% of lane cards are even (68.6% on the proxy). `openingEven` opens 14.8% of recaps (was 26.7%).
-- New `LANE_HUNT_FLOOR = 0.7` (`battle-cast.ts`) for hunt-tone lane copy (Explanation `mineHunt`/`oppHunt`, story `openingPairTone`). At the old `HUNT_FLOOR = 0.6`, 83% of decided lanes would hunt; at 0.7 it is 43.5% (the proxy gave 31.8%). `HUNT_FLOOR` still governs game-matchup copy.
+- New `LANE_HUNT_FLOOR = 0.7` (`battle-cast.ts`) for hunt-tone lane copy (Explanation `mineHunt`/`oppHunt`, story `openingPairTone`). At the then `HUNT_FLOOR = 0.6`, 83% of decided lanes would hunt; at 0.7 it is 43.5% (the proxy gave 31.8%). `HUNT_FLOOR` (0.54 since 2026-10-03, see "Pair data") still governs game-matchup copy.
 
 **What the player sees.**
 
 - Card caption `battle.laneChanceNote`: "real lane win rate, draws excluded (STRATZ, Legend–Immortal pubs)". A fallback lane shows `battle.laneChanceNoteProxy` instead.
 - Explanation lane lines say "{{hero}} против {{vs}} выигрывает N% линий". A fallback lane gets the number-free `mineEdge`/`oppEdge`.
 - Story `openingLaneHook`/`openingLaneSoft` quote "% выигранных линий". The story never names a fallback lane as the standout.
-- The carry late-game line (`carryLateMatchup`) is a game matchup and still reads `hero-meta.json`.
+- The carry late-game line (`carryLateMatchup`) is a game matchup and reads `hero-meta.json` (a cleaned pair edge in pp since 2026-10-03, see "Pair data").
 
 **Refresh.**
 
-1. Re-pull a newer week: `LAB_STRATZ_TABLE=lanes` with `server/scripts/lab/fetch-stratz-tables.ts`. This is a network pull and needs a Real-Data Recompute "ok".
-2. `npm run build-lane-outcomes --workspace server [-- <week>]` (local only; defaults to the latest `w<week>` folder).
+1. Production path: `npm run refresh-stratz:fetch` then `refresh-stratz:build` (`Blueprint/13-deploy.md`, "After a patch: refresh real data"). The fetch is a network pull and needs a Real-Data Recompute "ok"; the build rewrites `lane-outcomes.json` from `artifacts/stratz-refresh/<week>/laneOutcome/`.
+2. Standalone: `npm run build-lane-outcomes --workspace server [-- <week>] [--dir <laneOutcome dir>] [--out <file>]` (local only; defaults to the latest lab `w<week>` folder).
 3. `npm run audit-battle-story --workspace server` (`AUDIT_LANE_SOURCE=proxy` reproduces the old source for comparison).
+
+## Pair data: cleaned STRATZ pairs (2026-10-03)
+
+Author-approved Calibration Change + Real-Data Recompute. `server/data/hero-meta.json` `winRate`, `synergy` and `matchups` come from STRATZ week 1790208000 (2026-09-24..30, patch 181), brackets LEGEND_ANCIENT + DIVINE_IMMORTAL. Applied with `refresh-stratz.ts apply --week 1790208000 --author-ok --parts winRate,pairs` (`Blueprint/13-deploy.md`). Evidence: blind window C, `Blueprint/16-variance-lab.md`.
+
+**Semantics.** Each pair stores `wins = rate × games` with `rate = clamp(0.5 + (observed − e), 0.01, 0.99)`. Here `e` is the logit-additive expectation from both heroes' own win rates (matchup σ(logit W_h − logit W_o), synergy σ(logit W_h + logit W_a)). `HeroMetaService` shrinkage (K = 20) is unchanged. With ~1.5–2k games per pair it barely moves the rate. A pair share of 0.5 means "as both heroes' strength predicts". It is **not** a game win rate. Spread is narrow: matchups p10–p90 0.475–0.525, synergy 0.476–0.521. Before, with pro data, it was 0.43–0.57. Synergy coverage went from 1 818 to 16 002 entries.
+
+**Consumers: every one reads the share against 0.5.**
+
+| Consumer | Rule |
+|---|---|
+| `matchupEdge` / `synergyBonus` (×3 / ×2) | `rate − 0.5`. Unchanged code; now interaction only |
+| `rankedMatchupsByDelta` (best/worst rows) | `rate − 0.5`. Was `rate − baseWinRate`, which would count hero strength twice |
+| `isShutdown` (`common/shutdown.ts`) | all 5 matchups `≤ 0.5 − margin`. Was `≤ own winRate − 0.015`, which would flag 440 vs 236 heroes per 600 golden battles on the new data |
+| `realSynergyDelta` (Evaluation synergy + live synergy preview) | `rate − 0.5`. Was `rate − mean(W_a, W_b)` |
+| `bestMatchupEdge` / `bestSynergyPair` / `topMatchupEdges` / `topSynergyPairs` / highlights / story floors | absolute vs 0.5. Unchanged |
+| Lane proxy (`battle-lanes.ts`, no lane data) | `0.5 + mean(rate − 0.5)`. Unchanged; caption reworded |
+| Captains AI `bestMatchupEdge` | `rate ≥ MATCHUP_FLOOR`, edge `rate − 0.5` |
+
+`BattleMatchup.baseWinRate` is still sent but is informational only.
+
+**What the player sees.** Pair numbers are shown as signed percentage-point edges: `battle.pairEdge` gives "+4.0 pp" / "+4.0 п.п.", for best pairs and best/worst matchups. The "overall → matchup" arrow is gone. `battle.realWinRateNote` explains the edge. Story params are `matchupEdge`, `comboEdge` and `carryEdge` (pp, one decimal; they were `matchupWinRate`/`comboWinRate`/`carryWinRate` in %). `battle.laneChanceNoteProxy` says the fallback lane number is a matchup edge centred on 50%.
+
+**Thresholds rescaled by firing frequency** (author "ok", 2026-10-03, option a). Formula, coefficients (synergy ×2, matchup ×3, `realWinRateWeight`, cap) and tier roll probabilities (0.53/0.62/1.0) are unchanged; only cut-offs moved.
+
+Method:
+
+- Draw: 20 600 golden-style seeded drafts (mulberry32 seed 20261001, random 10 heroes, shuffled roles; the first 600 are the golden rows).
+- "Old" is the pre-apply backup `hero-meta.before-apply.json` with the old shutdown rule. It reproduces the old golden 600 exactly.
+- "New" is the applied `hero-meta.json`.
+- Each new cut is the quantile of the new distribution at the old firing share, rounded.
+- The derivation script was temporary and is not kept.
+
+| Threshold (single source) | Old → new | Old share | New share |
+|---|---|---:|---:|
+| Even on final \|diff\| (`evenAbsDiff`, `battle-diff-inputs.json`; new key, `ADVANTAGE_THRESHOLD` 0.15 still gates rawDiff and axis deltas) | 0.15 → **0.12** | 18.8% | 19.4% |
+| Moderate (`moderateAbsDiff`) | 0.5 → **0.39** | Moderate 37.0% | 36.9% |
+| High (`highAbsDiff`) | 1.3 → **0.95** | 4.7% | 4.7% |
+| `HUNT_FLOOR` (`battle-cast.ts`; story best matchup) | 0.6 → **0.54** | 53.2% | 53.5% |
+| ″ also gates `carryTone` (same constant) | | 7.7% | 9.3% |
+| Captains `MATCHUP_FLOOR` (`captains-ai.ts`; candidate has a qualifying matchup) | 0.55 → **0.518** | 55.9% | 56.4% |
+| `SHUTDOWN_WINRATE_MARGIN` (hero slots flagged) | 0.015 → **0** | 3.70% | 3.17% |
+| Evaluation bonus `REAL_SYNERGY_BONUS_MIN` (team's best pair) | 0.035 → **0.027** | 42.8% | 42.6% |
+| Evaluation penalty `REAL_SYNERGY_PENALTY_MIN` (team's worst pair) | 0.035 → **0.037** | 34.6% | 34.6% |
+| Tag dampening `UNDERPERFORM_THRESHOLD` (team pairs) | −0.048 → **−0.042** | 3.23% | 3.22% |
+
+Notes on three of these:
+
+- **Shutdown.** An exact match would need a negative margin, that is, flagging a hero who is slightly above expected in every matchup. 0 is the floor.
+- **Synergy bonus and penalty.** The old single 0.035 served both. Two cut-offs are needed to keep both shares.
+- **`carryTone`.** It shares `HUNT_FLOOR`, so it lands at 9.3% instead of 7.7%.
+
+**Effect** (golden vs pre-apply):
+
+- 299 of 600 rows changed direction, 131 of them A↔B (that is the pair data itself); 291 changed tier.
+- Tiers: High 24 → 28, Moderate 210 → 228, Low 255 → 235, Even 111 → 109.
+- Without rescaling the result was High 4 / Moderate 178 / Low 262 / Even 156.
+- Self-play (seed 1 × 100k, `rwr=0`): Full r 0.396 / ρ 0.381 against the new `winRate`, 0.370 / 0.355 against the old one. Base 0.403 [0.25, 0.54] / 0.394. Naked r 0.193. The Even cut moves `favoredRate` slightly.
+- `audit-battle-story` honesty counters are 0.
+
+Lane proxy `LANE_EVEN_SPREAD_PP` 3.5 was not rescaled. It is a single lane-scale constant, and proxy lanes are 0.9% of lanes.

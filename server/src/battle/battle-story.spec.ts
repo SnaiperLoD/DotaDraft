@@ -118,14 +118,16 @@ describe('buildBattleStory', () => {
       winnerSide: 'opponent',
       matchupWinner: 'Dire Mid',
       matchupLoser: 'Radiant Carry',
-      matchupWinRate: '72',
+      matchupEdge: '22.0',
     });
+    // Cleaned pair shares are interaction edges, not game win rates.
+    expect(story.beats[0].params).not.toHaveProperty('matchupWinRate');
     expect(story.beats[1].evidence.matchup).toEqual({ winnerId: 12, loserId: 1 });
   });
 
-  it('calls a 54% pair an edge, not a hunt', () => {
+  it('calls a 53% pair share an edge, not a hunt (HUNT_FLOOR 0.54)', () => {
     const lookup: MatchupLookup = {
-      getMatchupWinRate: (heroId, vsId) => (heroId === 12 && vsId === 1 ? 0.54 : 0.48),
+      getMatchupWinRate: (heroId, vsId) => (heroId === 12 && vsId === 1 ? 0.53 : 0.48),
       getSynergyWinRate: () => null,
       getWinRate: () => 0.5,
     };
@@ -138,7 +140,7 @@ describe('buildBattleStory', () => {
       lookup,
     });
     expect(story.beats[1].key).toBe('turningEdge');
-    expect(story.beats[1].params.matchupWinRate).toBe('54');
+    expect(story.beats[1].params.matchupEdge).toBe('3.0');
   });
 
   it('does not narrate a catch when the best matchup is still ≤50%', () => {
@@ -299,7 +301,7 @@ describe('buildBattleStory', () => {
     expect(story.beats[1].params).toMatchObject({
       comboA: 'Radiant Carry',
       comboB: 'Radiant Mid',
-      comboWinRate: '62',
+      comboEdge: '12.0',
     });
 
     const weak: MatchupLookup = {
@@ -395,9 +397,11 @@ describe('buildBattleStory', () => {
       myCarry: 'Radiant Carry',
       theirCarry: 'Dire Carry',
       lateMatchupWinner: 'Radiant Carry',
-      carryWinRate: '61',
+      carryEdge: '11.0',
+      carryTone: 'hunt',
       scaleLeader: 'Radiant Carry',
     });
+    expect(story.beats[3].params).not.toHaveProperty('carryWinRate');
   });
 
   it('hooks the opening to the winning side’s strongest real lane pair', () => {

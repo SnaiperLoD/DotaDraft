@@ -302,6 +302,25 @@ docker compose exec api npx ts-node --transpile-only scripts/seed-opponent-pool.
 
 Existing volumes do **not** auto-reseed pro rows on image rebuild alone.
 
+## After a patch: refresh real data (STRATZ)
+
+Author-approved tooling (2026-10-02): `server/scripts/refresh-stratz.ts`, pure math in `server/src/hero-meta/stratz-refresh.ts` (unit-tested). One STRATZ week, brackets LEGEND_ANCIENT + DIVINE_IMMORTAL. Lab background: `Blueprint/16-variance-lab.md` ("CLEANED STRATZ pairs", T2, proposal 3 "Patch refresh beats formula work").
+
+```bash
+cd server
+npm run refresh-stratz:fetch -- --dry-run [--week <epoch|YYYY-MM-DD>]   # plan only, no calls (258 calls)
+npm run refresh-stratz:fetch -- [--week ...] [--gap-ms 1500]           # NETWORK: Real-Data Recompute "ok"
+npm run refresh-stratz:build -- [--week ...] [--lanes-out <file>]      # offline
+npx ts-node scripts/refresh-stratz.ts apply --week <week> --author-ok [--parts winRate|pairs|winRate,pairs]
+```
+
+- **Week.** STRATZ buckets `week` as Unix weeks (start Thursday 00:00 UTC); any date inside is normalised to the bucket start. Default: the latest fully ended bucket. If STRATZ has not aggregated it yet, fetch stops after the 2 `stats` calls; pass an earlier `--week`.
+- **Fetch** (2 `stats` + 2 `laneOutcome` + 254 `heroVsHeroMatchup` calls, ~6.5 min) writes raw responses to the gitignored `artifacts/stratz-refresh/<week>/`. Resumable: re-running skips saved files. Token: `STRATZ_API_TOKEN` (env or `.env`), never printed.
+- **Build** writes `server/data/lane-outcomes.json` (display only, via `build-lane-outcomes.ts`) and, in the staging dir, `hero-meta.proposed.json` (winRate = STRATZ wins / matches; synergy/matchups = cleaned STRATZ pairs, the frozen STZC recipe), `summary.json` and `summary.md` (pre-checks, winRate movers > 1 pp, pick counts, pair coverage, top pair movers). It **never** writes `server/data/hero-meta.json`.
+- **Apply needs the author's explicit "ok"** (Real-Data Recompute + Calibration Change). It refuses without `--author-ok`, when the build pre-checks failed, or when `hero-meta.json` changed since the build; it keeps a backup in the staging dir.
+- **Pairs are cleaned shares centred on 0.5.** Every consumer reads them against 0.5 (done 2026-10-03; `Blueprint/06-battle-engine.md`, "Pair data"). A new consumer must not compare a pair rate with the hero's `winRate`. Either part changes the golden snapshot; regenerate it with `UPDATE_GOLDEN=1 npx jest src/battle/battle-golden.spec.ts` only under the same "ok". First applied: week 1790208000, `--parts winRate,pairs`, 2026-10-03.
+- After apply or a new `lane-outcomes.json`: `npx jest` (expect golden updates, review them), `npm run audit-battle-story --workspace server`.
+
 ## Still manual after this prep
 
 - Off-box backup schedule for the SQLite volume **and** the Postgres pool

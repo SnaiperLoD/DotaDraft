@@ -1341,3 +1341,130 @@ The grid is 0…3, and the bounded grid replaces a penalty.
 
 - the heuristic boost/dampen fallback does not help;
 - the miscast penalties might be harsher, about −20% to −25%.
+
+## Pre-registration: blind window C — cleaned STRATZ pairs, week 1790208000 — FROZEN 2026-10-03, BEFORE the window-C pull
+
+**Why.** The STZC verdict on B was not blind (B had already scored raw STZ), and the STRATZ week (09-14, patch 180) did not match B's patch. A fresh STRATZ week **1790208000** (2026-09-24 → 09-30, patch 181) was pulled and built by the production refresh tool. Its proposal, `artifacts/stratz-refresh/1790208000/hero-meta.proposed.json`, holds refreshed `winRate` and cleaned pairs (logit-additive base WR removed). `positions` and `benchmarks` are identical to production. This test runs that file once, on a window nobody has scored.
+
+### Data — window C
+
+- **Window:** 2026-10-01 00:00 UTC (`start_time` ≥ 1790812800, the end of the STRATZ week) → the newest match at pull time.
+- **Pull:** `server/scripts/lab/fetch-public-matches-c.ts`, same endpoint and anchor sampling as the wide pull (`min_rank=60&max_rank=75`). Anchors are evenly spaced over the window, 8 contiguous pages each. The default plan is 119 anchors × 8 pages + 1 head = 953 calls, hard cap 1 000. Output goes to `artifacts/lab/opendota-c/` only.
+- **Filters:** the same as B. Ranked All Pick (22/7), duration > 0, no hero 0, 60 ≤ `avg_rank_tier` ≤ 75, dedup by `match_id`.
+- **Exclusions by `match_id`:**
+  - every match in the 2026-10-01 8-hour pull (`artifacts/lab/opendota/`);
+  - every match in the wide pull B (`artifacts/lab/opendota-wide/`, which reaches 2026-10-02 01:32).
+- **Guard:** abort if any kept match has `start_time` < 1790812800.
+- **Roles:** the same rule as KT3/KT4. Per side, the argmax of Σ log(blended position weight).
+- **Minimums for a verdict:**
+  - ≥ 40 000 usable matches;
+  - ≥ 5 000 in each bracket;
+  - ≥ 2 UTC dates with ≥ 1 000 matches.
+
+  If they are not met, `kt8-c-prepare.ts` reports **"underpowered"** from counts alone, with nothing scored. One resumable top-up pull with the same script is then allowed, decided on counts only.
+- **Expected power:** about 66k usable after exclusions (dry run: 72.9k before exclusions), so SE(ΔAUC) ≈ 0.0025. On B the STZC effects were +0.029 against PRO and +0.017 against OFF.
+
+### Rows (fixed)
+
+Production code, all tags, `rwr=0`. `rwr=0` means the refreshed `winRate` does not enter the Battle rows.
+
+| Row | Pair channels |
+|---|---|
+| **OFF** | `synergyCoeff = matchupCoeff = 0` |
+| **PRO** | current `server/data/hero-meta.json` pairs |
+| **STZC** | pairs from `hero-meta.proposed.json`, swapped into the lookup in memory (`LAB_HERO_META`) |
+| STZC-SYN / STZC-MAT | attribution only |
+| **HEROWR** | team-mean difference of the **refreshed** `winRate`, no pairs. Descriptive, not a Battle row, not decisive |
+
+Coefficients 2/3 and shrinkage K = 20 are unchanged. Nothing is tuned on C.
+
+### Metrics
+
+- ΔAUC with a paired bootstrap by match (2 000 resamples, rng seed 8080).
+- Δlog-loss and ΔBrier with leave-one-day-out logistic calibration.
+- Comparisons:
+  - STZC − PRO, STZC − OFF, PRO − OFF;
+  - STZC − HEROWR, STZC-SYN − OFF, STZC-MAT − OFF.
+- Splits:
+  - by bracket (Ancient < 70 / Divine ≥ 70);
+  - by UTC date;
+  - by 6-hour UTC blocks (descriptive only).
+
+### Decision rule (fixed; the STZC rule on B)
+
+**READY** requires all five:
+
+1. The lower bound of the ΔAUC(STZC − PRO) CI is > 0.
+2. The upper bound of the Δlog-loss(STZC − PRO) CI is < 0.
+3. The lower bound of the ΔAUC(STZC − OFF) CI is ≥ −0.002.
+4. STZC − PRO is > 0 in both brackets.
+5. STZC − PRO is > 0 on at least ⌈5/7 · D⌉ of the D UTC dates with ≥ 1 000 matches, with D ≥ 2.
+
+**Declared adaptation.** C spans about 2.5 days, so "5 of 7 days" becomes the same 5/7 share of the full dates. With D = 2 or 3, that means every full date.
+
+**Recommendation that follows:**
+
+| Outcome | Recommendation |
+|---|---|
+| **READY** | Apply the pairs from `hero-meta.proposed.json` (`--parts pairs`) **together with** the code change: `rankedMatchupsByDelta` (`server/src/battle/battle-resolution.ts`) compares pair rates with **0.5** instead of `baseWinRate` (a prerequisite, `Blueprint/13-deploy.md`), plus the golden-snapshot update. This is a Real-Data Recompute plus a Calibration Change, so it needs the author's "ok". |
+| Not READY, and the upper bound of the ΔAUC(PRO − OFF) CI is < 0 (the pro-pair harm replicates) | Recommend pairs **OFF** (`synergyCoeff = matchupCoeff = 0`) as a Calibration Change proposal |
+| Not READY otherwise | **Keep the pro pairs**; no change |
+
+- STZC − OFF and STZC − HEROWR are reported in every case, as the interaction-signal check that was used on B.
+- The `winRate` part (`--parts winRate`) is **not** decided by this test. HEROWR is reported for information only.
+- **One pass.** The scripts (`fetch-public-matches-c.ts`, `kt8-c-prepare.ts`, `kt8-c-stzc.ts`, `kt8-c-run.ts`) were written and smoke-tested on 3 000 matches of B (output deleted) **before** any C page existed. No other filters, roles or re-runs.
+
+## Result: blind window C — cleaned STRATZ pairs (2026-10-03, `artifacts/lab/kt8/kt8-c-stzc.json`)
+
+One pass, by the frozen rule above. 58 715 usable matches, 2026-10-01 → 10-03. Ancient 37 678, Divine 21 037.
+
+| Row | AUC | Log-loss |
+|---|---:|---:|
+| OFF | 0.5276 | 0.6901 |
+| PRO (current) | 0.5208 | 0.6907 |
+| **STZC** | **0.5404** | **0.6886** |
+| STZC-SYN | 0.5274 | 0.6900 |
+| STZC-MAT | 0.5365 | 0.6891 |
+| HEROWR (descriptive) | 0.5780 | 0.6816 |
+
+| Comparison | ΔAUC [95% CI] | Δlog-loss [95% CI] |
+|---|---|---|
+| STZC − PRO | +0.0195 [+0.0144, +0.0254] | −0.0020 [−0.0027, −0.0015] |
+| STZC − OFF | +0.0127 [+0.0108, +0.0146] | −0.0015 [−0.0018, −0.0012] |
+| PRO − OFF | −0.0068 [−0.0122, −0.0019] | +0.0006 |
+| STZC − HEROWR | −0.0377 [−0.0435, −0.0319] | +0.0070 |
+| STZC-SYN − OFF | −0.0002 [−0.0016, +0.0012] | −0.0001 |
+| STZC-MAT − OFF | +0.0088 [+0.0069, +0.0107] | −0.0010 |
+
+- STZC − PRO by bracket: Ancient +0.022, Divine +0.015. By date: 10-01 +0.016, 10-02 +0.023, 10-03 +0.021 (3 422 matches).
+- **Verdict: READY** (all five conditions).
+- The pro-pair harm replicates blind: PRO − OFF < 0.
+- The interaction signal is almost entirely in the matchups. Cleaned synergy is neutral on C.
+
+**Applied 2026-10-03** (author "ok", Calibration Change + Real-Data Recompute): `refresh-stratz.ts apply --week 1790208000 --author-ok --parts winRate,pairs`; backup `artifacts/stratz-refresh/1790208000/hero-meta.before-apply.json`.
+
+- Consumers moved to the 0.5 baseline, and pair copy now quotes edges in pp (`Blueprint/06-battle-engine.md`, "Pair data").
+- Golden regenerated: 312/600 direction changes, 115 of them A↔B.
+- Self-play seed 1 × 100k, `rwr=0`:
+  - Full: r 0.402 / ρ 0.386 vs the new `winRate`; 0.377 / 0.360 vs the old one. Base 0.403 / 0.394.
+  - Naked+open: r 0.199 (base 0.121).
+  - `reproduce-r0.ts` reports FAIL against the stale 09-21 rows, as expected: the data changed.
+
+**Threshold rescale, same day** (author "ok", option a). Cut-offs were tuned on the pro-pair scale, so they were moved by quantile matching to keep their old firing shares. The draw is 20 600 seeded golden-style drafts; "old" is the pre-apply backup plus the old shutdown rule, which reproduces the old golden exactly. Formula, coefficients and tier roll probabilities are unchanged.
+
+| Threshold | Old → new |
+|---|---|
+| Even on final diff | 0.15 → 0.12 |
+| Moderate | 0.5 → 0.39 |
+| High | 1.3 → 0.95 |
+| `HUNT_FLOOR` | 0.6 → 0.54 |
+| Captains floor | 0.55 → 0.518 |
+| Shutdown margin | 0.015 → 0 |
+| Synergy bonus | 0.035 → 0.027 |
+| Synergy penalty | 0.035 → 0.037 |
+| Tag dampening | −0.048 → −0.042 |
+
+Shares and the derivation are in `06-battle-engine.md` "Pair data". Results:
+
+- Golden vs pre-apply: 299/600 direction changes (131 A↔B). Tiers High 28 / Moderate 228 / Low 235 / Even 109; before the apply they were 24 / 210 / 255 / 111.
+- Self-play seed 1 × 100k, `rwr=0`: Full r 0.396 / ρ 0.381 (new `winRate`), 0.370 / 0.355 (old). Naked 0.193.

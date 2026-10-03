@@ -27,8 +27,11 @@
 //   K = 20 is ~2× the empirical-Bayes estimate this script prints
 //   (binomial noise vs between-pair variance), i.e. deliberately conservative.
 //
-// Refresh: re-run the lab pull for a newer week (Real-Data Recompute "ok"
-// needed), then `npm run build-lane-outcomes --workspace server [-- <week>]`.
+// Refresh: `npm run refresh-stratz:fetch` + `refresh-stratz:build` (see
+// scripts/refresh-stratz.ts; Real-Data Recompute "ok" needed for the fetch),
+// which calls buildLaneOutcomes() on the staging dir. Standalone:
+// `npm run build-lane-outcomes --workspace server [-- <week>] [--dir <laneOutcome dir>] [--out <file>]`
+// (default dir: the lab pull under artifacts/lab/stratz/lanes/w<week>/laneOutcome).
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -67,9 +70,25 @@ function latestWeek(): number {
   return weeks[weeks.length - 1];
 }
 
-function main(): void {
-  const week = process.argv[2] ? Number(process.argv[2]) : latestWeek();
-  const dir = path.join(LANES_ROOT, `w${week}`, 'laneOutcome');
+export interface LaneOutcomesReport {
+  week: number;
+  rows: number;
+  orderedPairs: number;
+  keptPairs: number;
+  droppedBelowMinLanes: number;
+  drawShare: number;
+  decidedRateSdPp: number;
+  empiricalBayesK: number;
+  usedK: number;
+  bytes: number;
+  out: string;
+}
+
+/**
+ * Converts `<dir>/<BRACKET>-all-allpos-vs.json` (laneOutcome, isWith=false) into
+ * the lane-outcomes.json format and writes it to `outPath`.
+ */
+export function buildLaneOutcomes(dir: string, week: number, outPath: string = OUT_PATH): LaneOutcomesReport {
   const ordered = new Map<string, Counts>();
   const fetchedAt: string[] = [];
   let rows = 0;
@@ -160,7 +179,7 @@ function main(): void {
       weekStart: new Date(week * 1000).toISOString().slice(0, 10),
       brackets: [...BRACKETS],
       fetchedAt: fetchedAt.sort()[fetchedAt.length - 1],
-      counts: '[wins, draws, losses] from the LOWER hero id's side; wins include stomps; mean of both perspectives',
+      counts: '[wins, draws, losses] from the LOWER hero id’s side; wins include stomps; mean of both perspectives',
       rate: 'decided-lane win rate shrunk toward 0.5: (wins + K/2) / (wins + losses + K); draws excluded',
       minLanes: MIN_LANES,
       shrinkageK: SHRINKAGE_K,
@@ -178,11 +197,9 @@ function main(): void {
     .join(',\n');
   const text = `{\n  "meta": ${JSON.stringify(out.meta, null, 2).replace(/\n/g, '\n  ')},\n  "pairs": {\n${body}\n  }\n}\n`;
   JSON.parse(text); // sanity
-  fs.writeFileSync(OUT_PATH, text);
+  fs.writeFileSync(outPath, text);
 
-  console.log(
-    JSON.stringify(
-      {
+  return {
         week,
         rows,
         orderedPairs: ordered.size,
@@ -193,12 +210,23 @@ function main(): void {
         empiricalBayesK: +ebK.toFixed(1),
         usedK: SHRINKAGE_K,
         bytes: Buffer.byteLength(text),
-        out: path.relative(REPO_ROOT, OUT_PATH),
-      },
-      null,
-      2,
-    ),
-  );
+        out: path.relative(REPO_ROOT, outPath),
+  };
+}
+
+function argValue(name: string): string | undefined {
+  const i = process.argv.indexOf(name);
+  return i >= 0 ? process.argv[i + 1] : undefined;
+}
+
+function main(): void {
+  const positional = process.argv.slice(2).filter((a, i, all) => !a.startsWith('--') && !all[i - 1]?.startsWith('--'));
+  const dirArg = argValue('--dir');
+  const weekArg = positional[0] ?? argValue('--week');
+  const week = weekArg ? Number(weekArg) : latestWeek();
+  const dir = dirArg ? path.resolve(dirArg) : path.join(LANES_ROOT, `w${week}`, 'laneOutcome');
+  const out = argValue('--out');
+  console.log(JSON.stringify(buildLaneOutcomes(dir, week, out ? path.resolve(out) : OUT_PATH), null, 2));
 }
 
 if (require.main === module) main();

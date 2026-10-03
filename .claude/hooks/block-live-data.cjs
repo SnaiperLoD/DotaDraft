@@ -16,6 +16,8 @@ const LIVE_DATA = [
   'fetch-deaths-camps-data',
   'fetch-farm-elasticity-data',
   'fetch-lane-fight-data',
+  'refresh-stratz',
+  'api.stratz.com',
   'api.opendota.com',
 ];
 

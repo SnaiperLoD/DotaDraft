@@ -1,7 +1,7 @@
 import { render, screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import type { BattleLaneResult } from 'shared';
-import { ConfidenceNote, LaneMatchups } from './BattlePanel';
+import { ConfidenceNote, LaneMatchups, MatchupList } from './BattlePanel';
 import en from '../locales/en.json';
 import ru from '../locales/ru.json';
 
@@ -55,7 +55,9 @@ describe('LaneMatchups', () => {
     for (const card of screen.getAllByTestId('battle-lane-card')) {
       const note = within(card).getByTestId('battle-lane-note');
       expect(note).toHaveAttribute('data-source', 'matchup');
-      expect(note).toHaveTextContent('no lane data: average real game matchup win rate (OpenDota)');
+      expect(note).toHaveTextContent(
+        'no lane data: average game matchup edge from real pubs (STRATZ); 50% = as both heroes’ strength predicts',
+      );
     }
   });
 });
@@ -89,6 +91,46 @@ describe('story lane copy (T1.3)', () => {
     for (const key of ['openingLaneHook', 'openingLaneSoft'] as const) {
       expect(ru.battle.story[key]).toMatch(/выигранных линий/);
       expect(en.battle.story[key]).toMatch(/lanes/);
+    }
+  });
+});
+
+describe('pair rows (cleaned STRATZ pair shares, 2026-10-03)', () => {
+  it('shows the edge over what the heroes strength predicts, not a game win rate or the hero baseline', () => {
+    render(
+      <MatchupList
+        heading="Best"
+        good
+        rows={[
+          { hero: 'Axe', heroId: 2, vs: 'Lina', vsId: 25, winRate: 0.54, baseWinRate: 0.52 },
+          { hero: 'Zeus', heroId: 22, vs: 'Lion', vsId: 26, winRate: 0.479, baseWinRate: 0.5 },
+        ]}
+      />,
+    );
+    expect(screen.getByText('+4.0 pp')).toHaveClass('battle-matchup-wr--good');
+    expect(screen.getByText('−2.1 pp')).toBeInTheDocument();
+    expect(screen.queryByText(/52%|54%|→/)).toBeNull();
+  });
+
+  it('captions the pair rows as interaction edges in both locales', () => {
+    expect(en.battle.realWinRateNote).toMatch(/STRATZ/);
+    expect(en.battle.realWinRateNote).not.toMatch(/OpenDota|overall →/);
+    expect(ru.battle.realWinRateNote).toMatch(/STRATZ/);
+    expect(ru.battle.realWinRateNote).not.toMatch(/OpenDota|→/);
+    expect(en.battle.pairEdge).toBe('{{edge}} pp');
+    expect(ru.battle.pairEdge).toBe('{{edge}} п.п.');
+  });
+
+  it('quotes game pair numbers in story copy as edges, never as "% in real games"', () => {
+    const matchupKeys = ['turningCatchCombo', 'turningCatch', 'turningEdgeCombo', 'turningEdge'] as const;
+    const comboKeys = ['turningCatchCombo', 'turningEdgeCombo', 'turningCombo'] as const;
+    for (const locale of [en, ru]) {
+      for (const key of matchupKeys) expect(locale.battle.story[key]).toMatch(/\+{{matchupEdge}}/);
+      for (const key of comboKeys) expect(locale.battle.story[key]).toMatch(/\+{{comboEdge}}/);
+      for (const key of ['carryLateMatchup', 'carryLateSoft'] as const) {
+        expect(locale.battle.story[key]).toMatch(/\+{{carryEdge}}/);
+      }
+      expect(JSON.stringify(locale.battle.story)).not.toMatch(/matchupWinRate|comboWinRate|carryWinRate/);
     }
   });
 });

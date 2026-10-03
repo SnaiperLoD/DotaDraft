@@ -131,6 +131,12 @@ const DIFF_INPUTS_PATH = path.join(__dirname, '..', '..', 'data', 'battle-diff-i
 export interface DiffInputCoeffs {
   synergyCoeff: number;
   matchupCoeff: number;
+  // Cut-offs on the FINAL |diff| (after pair / real-winRate multipliers).
+  // Rescaled 2026-10-03 for cleaned STRATZ pairs so the Even / Low / Moderate /
+  // High shares match the pre-apply ones (Blueprint/06-battle-engine.md, "Pair
+  // data"). evenAbsDiff is optional only for old sweep scripts; absent, the
+  // final diff falls back to ADVANTAGE_THRESHOLD.
+  evenAbsDiff?: number;
   moderateAbsDiff: number;
   highAbsDiff: number;
 }
@@ -144,6 +150,7 @@ const battleDiffInputsFile: BattleDiffInputsFile = JSON.parse(fs.readFileSync(DI
 export const DEFAULT_DIFF_INPUTS: DiffInputCoeffs = {
   synergyCoeff: battleDiffInputsFile.synergyCoeff,
   matchupCoeff: battleDiffInputsFile.matchupCoeff,
+  evenAbsDiff: battleDiffInputsFile.evenAbsDiff,
   moderateAbsDiff: battleDiffInputsFile.moderateAbsDiff,
   highAbsDiff: battleDiffInputsFile.highAbsDiff,
 };
@@ -345,14 +352,14 @@ function topSynergyPairs(team: Hero[], lookup: MatchupLookup, limit: number): Ba
   return pairs.sort((a, b) => b.winRate - a.winRate).slice(0, limit);
 }
 
-// Best/worst matchups for the client display, ranked by how far the hero's
-// matchup win rate sits ABOVE or BELOW its OWN overall win rate (baseWinRate),
-// not by absolute win rate. A 51% lane for a 52% hero is a worse-than-usual
-// matchup even though it clears 50%, so it must not read as a "best" one
-// (user bug: "Spirit Breaker vs Beastmaster 52% -> 51%" was listed as best).
-// Falls back to the neutral 0.5 point when the hero has no overall win rate in
-// the snapshot. Kept separate from topMatchupEdges (absolute >0.5), which
-// winningHighlights still uses for "what actually won this fight".
+// Best/worst matchups for the client display, ranked by how far the pair
+// share sits above or below 0.5. hero-meta pairs are CLEANED STRATZ shares
+// (2026-10-03, Blueprint/06-battle-engine.md "Pair data"): the logit-additive
+// expectation from both heroes' own win rates is already removed, so 0.5 is
+// "as expected" for every hero and the hero's baseWinRate must NOT be
+// subtracted again (that would double-count hero strength). Kept separate
+// from topMatchupEdges (absolute >0.5), which winningHighlights still uses
+// for "what actually won this fight".
 function rankedMatchupsByDelta(
   team: Hero[],
   opponent: Hero[],
@@ -367,7 +374,7 @@ function rankedMatchupsByDelta(
       if (wr !== null) rows.push(matchupRow(h, o, wr, lookup));
     }
   }
-  const delta = (r: BattleMatchup) => r.winRate - (r.baseWinRate ?? 0.5);
+  const delta = (r: BattleMatchup) => r.winRate - 0.5;
   const kept = rows.filter((r) => (mode === 'best' ? delta(r) > 0 : delta(r) < 0));
   kept.sort((a, b) => (mode === 'best' ? delta(b) - delta(a) : delta(a) - delta(b)));
   return kept.slice(0, limit);
@@ -407,8 +414,10 @@ export interface BattleResolveExtras {
   narrativeOpponent?: BattlePick[];
 }
 
-// Magnitude `diff` (post synergy/matchup multipliers) must clear before a
-// side counts as favored at all — below this, it's 'Even'.
+// Power-scale bar: rawDiff (no multipliers) and per-axis power deltas must
+// clear it before a side / an axis counts as favored. The FINAL diff (post
+// synergy/matchup/real-winRate multipliers) uses DiffInputCoeffs.evenAbsDiff
+// instead — pairs changed that scale on 2026-10-03, the axis scale did not.
 export const ADVANTAGE_THRESHOLD = 0.15;
 
 export interface BattleAssessment {
@@ -583,8 +592,9 @@ export function assessBattle(
       : Math.abs(diff) > diffInputs.moderateAbsDiff
         ? 'Moderate'
         : 'Low';
+  const evenAbsDiff = diffInputs.evenAbsDiff ?? ADVANTAGE_THRESHOLD;
   const advantageDirection: AdvantageDirection =
-    diff > ADVANTAGE_THRESHOLD ? 'A' : diff < -ADVANTAGE_THRESHOLD ? 'B' : 'Even';
+    diff > evenAbsDiff ? 'A' : diff < -evenAbsDiff ? 'B' : 'Even';
 
   const axisDeltas = axisPowerDeltas(teamA, teamB, tagEffectsA, tagEffectsB);
 

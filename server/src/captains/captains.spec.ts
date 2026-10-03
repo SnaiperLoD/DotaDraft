@@ -1,6 +1,13 @@
 import { CM_BAN_PHASE1_MS, CM_STEP_MS, CM_STEPS } from 'shared';
 import { makeHero } from '../test-utils/hero-factory';
-import { chooseAiBan, chooseAiPick, heroPower, remainingRoleSlots, tagCounterHits } from './captains-ai';
+import {
+  bestMatchupEdge,
+  chooseAiBan,
+  chooseAiPick,
+  heroPower,
+  remainingRoleSlots,
+  tagCounterHits,
+} from './captains-ai';
 import { cmStepsForPlayer, currentCmStep, emptyCmSlots } from './captains-sequence';
 
 describe('Captains Mode sequence (7.40)', () => {
@@ -147,5 +154,15 @@ describe('captains AI', () => {
       tags: ['illusion_based'],
     });
     expect(tagCounterHits(razor, [naga])).toBe(1);
+  });
+});
+
+describe('captains AI matchup floor (cleaned pair shares, 2026-10-03)', () => {
+  it('counts a matchup share from 0.518 up, frequency-matched to the old 0.55 pro-rate floor', () => {
+    const candidate = makeHero({ id: 1, name: 'A' });
+    const opponents = [makeHero({ id: 2, name: 'B' })];
+    const at = (wr: number) => ({ getMatchupWinRate: () => wr });
+    expect(bestMatchupEdge(candidate, opponents, at(0.52))).toBeCloseTo(0.02);
+    expect(bestMatchupEdge(candidate, opponents, at(0.517))).toBe(0);
   });
 });

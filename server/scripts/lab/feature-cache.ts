@@ -86,7 +86,8 @@ export function productionParams(rwr = axisWeightsConfig.realWinRateWeight): Rep
     rwr,
     synergyCoeff: DEFAULT_DIFF_INPUTS.synergyCoeff,
     matchupCoeff: DEFAULT_DIFF_INPUTS.matchupCoeff,
-    threshold: ADVANTAGE_THRESHOLD,
+    // Final-diff Even cut-off (battle-diff-inputs.json evenAbsDiff since 2026-10-03).
+    threshold: DEFAULT_DIFF_INPUTS.evenAbsDiff ?? ADVANTAGE_THRESHOLD,
   };
 }
 

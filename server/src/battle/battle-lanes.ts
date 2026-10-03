@@ -85,9 +85,10 @@ function collectPairs(
 /**
  * Lane cards read real lane win rates (STRATZ `laneOutcome`, lane-outcomes.ts)
  * per hero pair. Only when NO pair in a lane has lane data does the lane fall
- * back to the old proxy — the average pro game-matchup win rate — and it is
- * flagged `rateSource: 'matchup'`. The two scales are never mixed in one lane
- * (lane WR spreads ~15pp per pair, game matchups a few pp).
+ * back to the proxy — the average game-matchup pair share (cleaned STRATZ,
+ * centred on 0.5 since 2026-10-03) — and it is flagged `rateSource: 'matchup'`.
+ * The two scales are never mixed in one lane (lane WR spreads ~15pp per pair,
+ * cleaned game matchups ~2.5pp).
  */
 export function buildLaneResults(
   mineByRole: Map<string, Hero>,

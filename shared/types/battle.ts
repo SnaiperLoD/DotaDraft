@@ -76,10 +76,12 @@ export interface BattleRequest {
   tiRunId?: string;
 }
 
-// Real (OpenDota) win-rate rows surfaced in the battle result, always from
-// the calling player's own draft perspective (teamA), win or lose. Unlike the
-// narrative `winningHighlights`, these carry the raw winRate so the client can
-// show the number — a deliberate exception to the file's usual "no raw
+// Real pair rows surfaced in the battle result, always from the calling
+// player's own draft perspective (teamA), win or lose. `winRate` is a cleaned
+// STRATZ pub pair share since 2026-10-03 (0.5 + edge over what both heroes'
+// strength predicts), shown by the client as a signed pp edge. Unlike the
+// narrative `winningHighlights`, these carry the number so the client can
+// show it — a deliberate exception to the file's usual "no raw
 // percentage" convention, by direct user request ("show real best pairs by
 // win rate, best/worst matchups vs the opponent's draft").
 export interface BattlePair {
@@ -95,12 +97,15 @@ export interface BattleMatchup {
   heroId: number;
   vs: string;
   vsId: number;
-  // Real matchup win rate of `hero` into `vs` (confidence-shrunk toward 0.5
-  // by sample size, HeroMetaService).
+  // Cleaned STRATZ pair share of `hero` into `vs` (2026-10-03): 0.5 + how far
+  // the pair beats what both heroes' own strength predicts, confidence-shrunk
+  // toward 0.5 by sample size (HeroMetaService). NOT a game win rate; the
+  // client shows the edge over 0.5 in percentage points.
   winRate: number;
-  // `hero`'s overall real win rate, for the "baseline → matchup" delta the
-  // client shows (e.g. 49% overall → 60% into this opponent). null when the
-  // snapshot has no overall win rate for the hero.
+  // `hero`'s overall real win rate. Informational only since 2026-10-03: the
+  // pair share above already has hero strength removed, so it is neither the
+  // ranking baseline nor shown next to the pair edge. null when the snapshot
+  // has no overall win rate for the hero.
   baseWinRate: number | null;
 }
 

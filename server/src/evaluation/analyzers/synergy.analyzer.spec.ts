@@ -1,5 +1,12 @@
 import { isI18nLine } from 'shared';
-import { createSynergyAnalyzer, type SynergyLookup } from './synergy.analyzer';
+import {
+  createSynergyAnalyzer,
+  realSynergyDelta,
+  REAL_SYNERGY_BONUS_MIN,
+  REAL_SYNERGY_PENALTY_MIN,
+  UNDERPERFORM_THRESHOLD,
+  type SynergyLookup,
+} from './synergy.analyzer';
 import { makeHero, DEFAULT_EVALUATION_VALUES, picks } from '../../test-utils/hero-factory';
 import { flattenLocalized } from '../../test-utils/localized-text';
 
@@ -143,6 +150,28 @@ describe('createSynergyAnalyzer (real win-rate data blending)', () => {
     expect(flattenLocalized([result.explanation[0]])).toContain('Axe');
     expect(flattenLocalized([result.explanation[0]])).toContain('Sven');
     expect(flattenLocalized([result.explanation[0]])).toMatch(/eval.synergy.realStrong/);
+  });
+
+  it('reads the cleaned synergy share against 0.5, not against the heroes own win rates', () => {
+    // hero-meta synergy is a cleaned STRATZ share (2026-10-03): both heroes'
+    // strength is already removed, so two 56% heroes at 0.54 together are
+    // +4pp above expected (realStrong), not -2pp below their average.
+    const heroA = makeHero({ id: 1, name: 'Axe' });
+    const heroB = makeHero({ id: 2, name: 'Sven' });
+    const lookup: SynergyLookup = {
+      getWinRate: () => 0.56,
+      getSynergyWinRate: (a, b) => ([a, b].sort().join() === '1,2' ? 0.54 : null),
+    };
+    expect(realSynergyDelta(heroA, heroB, lookup)).toBeCloseTo(0.04);
+    const result = createSynergyAnalyzer(lookup).analyze(picks([heroA, heroB]));
+    expect(flattenLocalized(result.explanation)).toMatch(/eval.synergy.realStrong/);
+  });
+
+  it('does not need the heroes own win rates on record', () => {
+    const heroA = makeHero({ id: 1, name: 'Axe' });
+    const heroB = makeHero({ id: 2, name: 'Sven' });
+    const lookup: SynergyLookup = { getWinRate: () => null, getSynergyWinRate: () => 0.45 };
+    expect(realSynergyDelta(heroA, heroB, lookup)).toBeCloseTo(-0.05);
   });
 
   it('ignores small real-data deltas as noise (below the significance threshold)', () => {
@@ -314,5 +343,27 @@ describe('createSynergyAnalyzer (game-plan conflict / anti-synergy rules)', () =
 
     const result = createSynergyAnalyzer(noRealData).analyze(picks([tinker, medusa]));
     expect(flattenLocalized(result.explanation)).not.toMatch(/eval.synergy.anti/);
+  });
+});
+
+describe('real-synergy cut-offs (frequency-matched to the old pro-pair scale, 2026-10-03)', () => {
+  it('pins bonus +2.7pp, penalty -3.7pp and tag dampening -4.2pp', () => {
+    expect(REAL_SYNERGY_BONUS_MIN).toBe(0.027);
+    expect(REAL_SYNERGY_PENALTY_MIN).toBe(0.037);
+    expect(UNDERPERFORM_THRESHOLD).toBe(-0.042);
+  });
+
+  it('applies the bonus and the penalty at their own cut-offs', () => {
+    // Two high-mobility heroes give a +1 base so a penalty is visible above the 0 floor.
+    const mobile = { ...DEFAULT_EVALUATION_VALUES, mobility: 6 };
+    const heroA = makeHero({ id: 1, name: 'Axe', evaluation_values: mobile });
+    const heroB = makeHero({ id: 2, name: 'Sven', evaluation_values: mobile });
+    const at = (rate: number): SynergyLookup => ({ getWinRate: () => 0.5, getSynergyWinRate: () => rate });
+    const score = (rate: number) => createSynergyAnalyzer(at(rate)).analyze(picks([heroA, heroB])).score ?? 0;
+    const neutral = score(0.5);
+    expect(score(0.528)).toBeGreaterThan(neutral); // +2.8pp clears the bonus cut
+    expect(score(0.526)).toBe(neutral); // +2.6pp does not
+    expect(score(0.462)).toBeLessThan(neutral); // -3.8pp clears the penalty cut
+    expect(score(0.464)).toBe(neutral); // -3.6pp is shown but not punished
   });
 });

@@ -109,10 +109,18 @@ function shatterPaths(heroId: number): string[] {
 }
 
 // Real win rate as a whole percent. Battle Mode normally avoids surfacing raw
-// percentages (Accuracy Ceiling), but the matchup/pair rows and lane cards
-// exist precisely to show the number, by user request — so this is the one
-// place it's shown.
+// percentages (Accuracy Ceiling), but the lane cards exist precisely to show
+// the number, by user request — so this is the one place it's shown.
 const pct = (winRate: number) => `${Math.round(winRate * 100)}%`;
+
+// Game pair rows (synergy + matchups) carry CLEANED STRATZ pair shares
+// (2026-10-03, Blueprint/06-battle-engine.md "Pair data"): 0.5 + how far the
+// pair beats what both heroes' own strength predicts. Not a game win rate, so
+// the row shows the signed edge in percentage points ("+4.0 pp").
+const pairEdgeValue = (share: number) => {
+  const edge = Math.round((share - 0.5) * 1000) / 10;
+  return `${edge > 0 ? '+' : edge < 0 ? '−' : ''}${Math.abs(edge).toFixed(1)}`;
+};
 
 function HeroChip({ heroId, name }: { heroId: number; name: string }) {
   return (
@@ -123,11 +131,17 @@ function HeroChip({ heroId, name }: { heroId: number; name: string }) {
   );
 }
 
-// One column of your-hero vs their-hero rows with the real win rate. `good`
-// colours the number (a matchup you win vs one you lose). Each row shows the
-// hero's overall real win rate then the matchup one — "49% → 60%" — so the
-// swing into this specific opponent is visible, not just the absolute number.
-function MatchupList({ heading, rows, good }: { heading: string; rows: BattleMatchup[]; good: boolean }) {
+// One column of your-hero vs their-hero rows with the pair edge. `good`
+// colours the number (a matchup you win vs one you lose).
+export function MatchupList({
+  heading,
+  rows,
+  good,
+}: {
+  heading: string;
+  rows: BattleMatchup[];
+  good: boolean;
+}) {
   const { t } = useTranslation();
   return (
     <div className="battle-matchup-col">
@@ -141,9 +155,8 @@ function MatchupList({ heading, rows, good }: { heading: string; rows: BattleMat
               <HeroChip heroId={m.vsId} name={m.vs} />
             </span>
             <span className="battle-matchup-wr">
-              {m.baseWinRate !== null && <span className="battle-matchup-base">{pct(m.baseWinRate)} → </span>}
               <span className={good ? 'battle-matchup-wr--good' : 'battle-matchup-wr--bad'}>
-                {pct(m.winRate)}
+                {t('battle.pairEdge', { edge: pairEdgeValue(m.winRate) })}
               </span>
             </span>
           </li>
@@ -290,7 +303,7 @@ function BattleStory({ result, heroNames }: { result: BattleResultResponse; hero
             chunks.push(t('battle.story.turnerLine', interpolated));
           }
           if (beat.phase === 'finish' && interpolated.myCarry && interpolated.theirCarry) {
-            if (interpolated.lateMatchupWinner && interpolated.carryWinRate) {
+            if (interpolated.lateMatchupWinner && interpolated.carryEdge) {
               const lateKey =
                 interpolated.carryTone === 'hunt'
                   ? 'battle.story.carryLateMatchup'
@@ -1073,7 +1086,7 @@ export default function BattlePanel({
             </div>
           </div>
 
-          {/* Real (OpenDota) win-rate rows, always from your draft's own
+          {/* Real pair-edge rows (cleaned STRATZ pub pairs), always from your draft's own
               perspective — your best synergy pairs, and your best/worst
               individual matchups into this opponent. Only shown when real
               data covers the heroes in play. */}
@@ -1094,7 +1107,9 @@ export default function BattlePanel({
                             <span className="battle-matchup-vs">+</span>
                             <HeroChip heroId={p.heroBId} name={p.heroB} />
                           </span>
-                          <span className="battle-matchup-wr battle-matchup-wr--good">{pct(p.winRate)}</span>
+                          <span className="battle-matchup-wr battle-matchup-wr--good">
+                            {t('battle.pairEdge', { edge: pairEdgeValue(p.winRate) })}
+                          </span>
                         </li>
                       ))}
                     </ul>

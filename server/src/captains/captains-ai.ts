@@ -20,7 +20,10 @@ const COUNTER_TO_STYLE: Record<string, string[]> = {
   counters_summons: ['summon_based'],
 };
 
-const MATCHUP_FLOOR = 0.55;
+// Cleaned STRATZ pair share (2026-10-03). Was 0.55 on raw pro rates; 0.518
+// keeps the old share of candidates with a qualifying matchup (55.9% → 56.4%,
+// Blueprint/06-battle-engine.md, "Pair data").
+const MATCHUP_FLOOR = 0.518;
 const MATCHUP_WEIGHT = 50;
 const TAG_HIT = 5;
 const COUNTER_LOCK = 8;

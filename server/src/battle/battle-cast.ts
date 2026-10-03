@@ -14,8 +14,11 @@ import type { BattlePick } from './battle-resolution';
 // upsets, but stuffing it into "X gets onto Y" is fanfic.
 export const MATCHUP_FLOOR = 0.5;
 // Above a coin flip is "a bit ahead in the pair". Hunt language ("gets on",
-// "catches") starts here. 54% is not a pickoff.
-export const HUNT_FLOOR = 0.6;
+// "catches") starts here. Game pair rates are cleaned STRATZ shares since
+// 2026-10-03 (spread ~2.5pp, not ~7pp): 0.6 on the old pro scale became 0.54
+// by matching how often the story's best matchup clears it (53.2% → 53.5% on
+// 20.6k seeded drafts; Blueprint/06-battle-engine.md, "Pair data").
+export const HUNT_FLOOR = 0.54;
 // Lane copy reads real lane win rates (STRATZ laneOutcome, draws excluded),
 // which spread ~15pp per pair against a few pp for game matchups. At 0.6, 83%
 // of decided lanes would "hunt"; 0.7 (7 of 10 decided lanes) keeps hunt lane

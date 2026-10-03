@@ -27,7 +27,7 @@ function loadDefaultShrinkageK(): number {
 
 const DEFAULT_SHRINKAGE_K = loadDefaultShrinkageK();
 
-function shrinkTowardNeutral(winRate: number, games: number, shrinkageK: number): number {
+export function shrinkTowardNeutral(winRate: number, games: number, shrinkageK: number): number {
   const weight = games / (games + shrinkageK);
   return weight * winRate + (1 - weight) * 0.5;
 }
@@ -39,8 +39,12 @@ interface HeroMetaEntry {
   matchups: { opponentHeroId: number; games: number; wins: number }[];
 }
 
-// Loads server/data/hero-meta.json (the Milestone 3 OpenDota snapshot) once
-// and exposes hero-vs-hero / ally win-rate lookups for Battle Engine, per
+// Loads server/data/hero-meta.json once and exposes hero-vs-hero / ally pair
+// lookups for Battle Engine. Since 2026-10-03 `winRate` and the pairs come from
+// STRATZ pubs (scripts/refresh-stratz.ts); pair rates are CLEANED shares
+// centred on 0.5 (both heroes' strength removed), so consumers read them
+// against 0.5, never against getWinRate() (Blueprint/06-battle-engine.md
+// "Pair data"). Originally the Milestone 3 OpenDota snapshot, per
 // Blueprint/06-battle-engine.md: "hero-matchup factor should read from data
 // collected during Milestone 3's import... not be queried live."
 @Injectable()

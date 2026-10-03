@@ -22,6 +22,10 @@ function lookupFrom(winRates: Record<number, number>, matchups: Record<string, n
 }
 
 describe('isShutdown', () => {
+  it('uses margin 0 on cleaned shares (frequency-matched, 2026-10-03)', () => {
+    expect(SHUTDOWN_WINRATE_MARGIN).toBe(0);
+  });
+
   const hero = makeHero(1);
   const opponents = [makeHero(2), makeHero(3), makeHero(4), makeHero(5), makeHero(6)];
 
@@ -33,7 +37,7 @@ describe('isShutdown', () => {
   it('does not flag when even one opponent falls short of the margin', () => {
     const lookup = lookupFrom(
       { 1: 0.5 },
-      { '1:2': 0.48, '1:3': 0.47, '1:4': 0.4, '1:5': 0.3, '1:6': 0.487 }, // 0.487 > 0.5 - 0.015
+      { '1:2': 0.48, '1:3': 0.47, '1:4': 0.4, '1:5': 0.3, '1:6': 0.501 }, // 0.501 > 0.5 - margin
     );
     expect(isShutdown(hero, opponents, lookup)).toBe(false);
   });
@@ -62,9 +66,26 @@ describe('isShutdown', () => {
     expect(isShutdown(hero, opponents, lookup)).toBe(false);
   });
 
-  it('returns false when the hero has no own winRate on record', () => {
+  it('compares cleaned pair shares with 0.5, not with the hero own winRate', () => {
+    // hero-meta pairs are cleaned STRATZ shares (2026-10-03): hero strength is
+    // already removed, so a strong hero (56%) slightly above expected everywhere
+    // is NOT shut down, while a weak hero (44%) slightly below expected in every
+    // matchup IS.
+    const strong = lookupFrom(
+      { 1: 0.56 },
+      { '1:2': 0.501, '1:3': 0.501, '1:4': 0.501, '1:5': 0.501, '1:6': 0.501 },
+    );
+    expect(isShutdown(hero, opponents, strong)).toBe(false);
+    const weak = lookupFrom(
+      { 1: 0.44 },
+      { '1:2': 0.499, '1:3': 0.499, '1:4': 0.499, '1:5': 0.499, '1:6': 0.499 },
+    );
+    expect(isShutdown(hero, opponents, weak)).toBe(true);
+  });
+
+  it('does not need the hero own winRate on record', () => {
     const lookup = lookupFrom({}, { '1:2': 0.1, '1:3': 0.1, '1:4': 0.1, '1:5': 0.1, '1:6': 0.1 });
-    expect(isShutdown(hero, opponents, lookup)).toBe(false);
+    expect(isShutdown(hero, opponents, lookup)).toBe(true);
   });
 
   it('returns false for an empty opponent list', () => {

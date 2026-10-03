@@ -984,14 +984,6 @@
   white-space: nowrap;
 }
 
-/* The hero's overall win rate, shown before the matchup one as the baseline
-   the "→ 60%" is a swing away from. Muted so the matchup figure stays the
-   focus. */
-.battle-matchup-base {
-  color: var(--ink-faint);
-  font-weight: 400;
-}
-
 .battle-matchup-wr--good {
   color: var(--win-bright);
 }

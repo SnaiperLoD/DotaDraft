@@ -54,6 +54,15 @@ function pct(winRate: number | null | undefined): string {
   return typeof winRate === 'number' ? String(Math.round(winRate * 100)) : '';
 }
 
+// Game pair rates (hero-meta matchups/synergy) are CLEANED STRATZ shares
+// (2026-10-03, Blueprint/06-battle-engine.md "Pair data"): 0.5 + how far the
+// pair beats the expectation from both heroes' own strength. They are not
+// game win rates, so copy quotes the edge over 0.5 in percentage points
+// ("4.0"), never "54%". Lane rates (pct above) are real lane win rates.
+function edgePp(share: number | null | undefined): string {
+  return typeof share === 'number' ? (Math.round(Math.abs(share - 0.5) * 1000) / 10).toFixed(1) : '';
+}
+
 type SheetLead = 'yours' | 'theirs' | 'even';
 
 function openingLeadFromLanes(lanes: BattleLaneResult[]): SheetLead {
@@ -131,17 +140,14 @@ export function buildBattleStory(input: {
   const carryMatchup =
     myCarry && theirCarry ? input.lookup.getMatchupWinRate(myCarry.hero.id, theirCarry.hero.id) : null;
   let lateMatchupWinner = '';
-  let carryWinRate = '';
+  let carryEdge = '';
+  let carryTone = '';
   if (myCarry && theirCarry && carryMatchup !== null) {
-    if (carryMatchup > 0.5) {
-      lateMatchupWinner = myCarry.hero.name;
-      carryWinRate = String(Math.round(carryMatchup * 100));
-    } else if (carryMatchup < 0.5) {
-      lateMatchupWinner = theirCarry.hero.name;
-      carryWinRate = String(Math.round((1 - carryMatchup) * 100));
-    } else {
-      carryWinRate = '50';
-    }
+    if (carryMatchup > 0.5) lateMatchupWinner = myCarry.hero.name;
+    else if (carryMatchup < 0.5) lateMatchupWinner = theirCarry.hero.name;
+    carryEdge = edgePp(carryMatchup);
+    carryTone =
+      Math.round(Math.max(carryMatchup, 1 - carryMatchup) * 100) >= HUNT_FLOOR * 100 ? 'hunt' : 'edge';
   }
   const myScale = myCarry ? axisOf(myCarry, 'scaling') : 0;
   const theirScale = theirCarry ? axisOf(theirCarry, 'scaling') : 0;
@@ -194,7 +200,7 @@ export function buildBattleStory(input: {
   const params: Record<string, string> = {
     matchupWinner: usableMatchup?.hero ?? '',
     matchupLoser: usableMatchup?.vs ?? '',
-    matchupWinRate: pct(usableMatchup?.winRate),
+    matchupEdge: edgePp(usableMatchup?.winRate),
     winnerSide: won ? 'yours' : 'opponent',
     swingHero,
     topAxis,
@@ -206,12 +212,12 @@ export function buildBattleStory(input: {
     turner: turnerName,
     comboA: usableCombo?.heroA ?? '',
     comboB: usableCombo?.heroB ?? '',
-    comboWinRate: pct(usableCombo?.winRate),
+    comboEdge: edgePp(usableCombo?.winRate),
     posture,
     myCarry: myCarry?.hero.name ?? '',
     theirCarry: theirCarry?.hero.name ?? '',
     lateMatchupWinner,
-    carryWinRate,
+    carryEdge,
     scaleLeader,
     roshanBand: roshan.band,
     openingLane: standout?.lane ?? '',
@@ -219,7 +225,7 @@ export function buildBattleStory(input: {
     openingPairVs: standout?.topPair?.vs ?? '',
     openingPairWinRate: pct(standout?.topPair?.winRate),
     openingPairTone: (standout?.topPair?.winRate ?? 0) >= LANE_HUNT_FLOOR ? 'hunt' : 'edge',
-    carryTone: carryWinRate && Number(carryWinRate) >= HUNT_FLOOR * 100 ? 'hunt' : carryWinRate ? 'edge' : '',
+    carryTone,
     openingLead: leads.opening,
     turnLead: leads.turn,
     conversionLead: leads.conversion,

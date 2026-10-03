@@ -12,12 +12,19 @@ export interface SynergyLookup {
 // archetype signal is treated as contradicted by data, not confirmed by it —
 // halved rather than zeroed, since a hand-authored tag can still be
 // pointing at something real even when the numbers are softer than assumed.
-const UNDERPERFORM_THRESHOLD = -0.048;
+// Cut-offs below were set on the raw pro co-pick scale and rescaled 2026-10-03
+// for cleaned STRATZ shares by matching firing frequencies on 20.6k seeded
+// drafts (Blueprint/06-battle-engine.md, "Pair data"): dampening was -0.048.
+export const UNDERPERFORM_THRESHOLD = -0.042;
 const DAMPENING_FACTOR = 0.5;
 
 // Minimum edge before real data is treated as its own positive signal,
 // independent of any tag match — small deltas are noise.
-const REAL_SYNERGY_SIGNIFICANCE = 0.035;
+// One old constant (0.035) served both directions; on the cleaned scale the
+// bonus and the penalty need different cut-offs to keep their old shares
+// (42.8% / 34.6% of teams).
+export const REAL_SYNERGY_BONUS_MIN = 0.027;
+export const REAL_SYNERGY_PENALTY_MIN = 0.037;
 
 interface TagPairRule {
   tagA: string;
@@ -129,13 +136,16 @@ function findArchetypePair(heroes: Hero[], tagA: string, tagB: string): [Hero, H
   return null;
 }
 
-// Real co-pick win rate minus the expected rate (average of each hero's own
-// individual win rate) — positive means the pair overperforms what you'd
-// predict from their solo strength alone, negative means it underperforms.
-// Null when either side of the comparison lacks enough real data. Exported
-// for reuse by the live synergy-preview endpoint (HeroController,
-// Blueprint/10-tech-debt-backlog.md "Живая подсветка синергичного пика") —
-// same real-data formula, not a second hand-rolled copy of it.
+// Real co-pick share minus 0.5 — positive means the pair overperforms what
+// you'd predict from their solo strength alone, negative means it
+// underperforms. hero-meta synergy is a CLEANED STRATZ share (2026-10-03,
+// Blueprint/06-battle-engine.md "Pair data"): the logit-additive expectation
+// from both heroes' own win rates is already removed, so the expected level is
+// 0.5. (Before 2026-10-03 the stored rate was a raw pro co-pick win rate and
+// this subtracted the mean of the two heroes' win rates.) Null when the pair
+// has no real data. Exported for reuse by the live synergy-preview endpoint
+// (HeroController, Blueprint/10-tech-debt-backlog.md "Живая подсветка
+// синергичного пика") — same real-data formula, not a second copy of it.
 //
 // Checks both call directions on the lookup — hero-meta.json's per-hero
 // `synergy` arrays are NOT symmetric (each hero's own list is whatever
@@ -150,10 +160,7 @@ function findArchetypePair(heroes: Hero[], tagA: string, tagB: string): [Hero, H
 export function realSynergyDelta(heroA: Hero, heroB: Hero, lookup: SynergyLookup): number | null {
   const actual = lookup.getSynergyWinRate(heroA.id, heroB.id) ?? lookup.getSynergyWinRate(heroB.id, heroA.id);
   if (actual === null) return null;
-  const winRateA = lookup.getWinRate(heroA.id);
-  const winRateB = lookup.getWinRate(heroB.id);
-  if (winRateA === null || winRateB === null) return null;
-  return actual - (winRateA + winRateB) / 2;
+  return actual - 0.5;
 }
 
 function bestRealSynergyPair(
@@ -231,7 +238,7 @@ export function createSynergyAnalyzer(lookup: SynergyLookup): Analyzer {
       }
 
       const realPair = bestRealSynergyPair(heroes, lookup);
-      if (realPair && realPair.delta >= REAL_SYNERGY_SIGNIFICANCE) {
+      if (realPair && realPair.delta >= REAL_SYNERGY_BONUS_MIN) {
         const bonus = Math.min(3, realPair.delta * 15);
         score += bonus;
         explanation.push(pairLine('eval.synergy.realStrong', realPair.heroA, realPair.heroB));
@@ -250,11 +257,11 @@ export function createSynergyAnalyzer(lookup: SynergyLookup): Analyzer {
       // "I didn't see bad pairs displayed" — the old code only surfaced it above
       // the -0.035 significance line, which a measured 5000-draft check found
       // fires in just ~37% of drafts). The SCORE penalty still only applies at
-      // the significance threshold; a marginally-negative pair is reported but
+      // REAL_SYNERGY_PENALTY_MIN; a marginally-negative pair is reported but
       // not punished.
       const worstPair = worstRealSynergyPair(heroes, lookup);
       if (worstPair && worstPair.delta < 0) {
-        if (worstPair.delta <= -REAL_SYNERGY_SIGNIFICANCE) {
+        if (worstPair.delta <= -REAL_SYNERGY_PENALTY_MIN) {
           score -= Math.min(3, Math.abs(worstPair.delta) * 15);
         }
         explanation.push(pairLine('eval.synergy.realWeak', worstPair.heroA, worstPair.heroB));

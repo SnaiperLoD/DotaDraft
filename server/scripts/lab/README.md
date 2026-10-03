@@ -110,3 +110,13 @@ npx ts-node scripts/lab/kt3-safe.ts         # ceiling, hidden-tag OOS, shortlist
 The shortlist is frozen in `Blueprint/16-variance-lab.md` **before** the safe. Do not re-run the safe to choose between variants; a new safe needs a new public window.
 
 Unapplied proposals live in `artifacts/lab/proposals/<id>/`.
+
+## 6. Blind window C — cleaned STRATZ pairs (week 1790208000)
+
+Pre-registration: `Blueprint/16-variance-lab.md`, "Pre-registration: blind window C".
+
+```
+LAB_OD_DRY_RUN=1 npx ts-node scripts/lab/fetch-public-matches-c.ts  # plan, no network
+npx ts-node scripts/lab/fetch-public-matches-c.ts                   # ONLY with the author's ok; ~953 calls, cap 1000 → artifacts/lab/opendota-c/
+npx ts-node scripts/lab/kt8-c-run.ts                                # prepare + minimums → 2 cache builds → kt8-c-stzc → artifacts/lab/kt8/kt8-c-stzc.json
+```

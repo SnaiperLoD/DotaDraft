@@ -3,6 +3,7 @@ import {
   assessBattle,
   bestSynergyPair,
   bestMatchupEdge,
+  DEFAULT_DIFF_INPUTS,
   AXIS_LABEL,
   AXES,
   type MatchupLookup,
@@ -227,8 +228,7 @@ describe('resolveBattle', () => {
         heroBId: 2,
         winRate: 0.62,
       });
-      // Carries the hero ids (for icons) and the hero's overall win rate (for
-      // the baseline -> matchup delta the client shows).
+      // Carries the hero ids (for icons) and the hero's overall win rate.
       expect(result.bestMatchups[0]).toEqual({
         hero: 'Hero1',
         heroId: 1,
@@ -247,25 +247,26 @@ describe('resolveBattle', () => {
       });
     });
 
-    it("ranks by delta from the hero's baseline, not absolute win rate", () => {
-      // Reported bug: a 51% lane for a 52% hero was listed as a BEST matchup
-      // because 51% clears 50%. Relative to that hero's own 52% norm it's a
-      // worse-than-usual matchup, so it must rank as worst, not best.
+    it('ranks cleaned pair shares around 0.5, not around the hero baseline', () => {
+      // hero-meta pairs are cleaned STRATZ shares (2026-10-03): each hero's own
+      // strength is already removed, so 0.5 means "as expected" for ANY hero.
+      // A 51% share for a 52% hero is a better-than-expected matchup (best);
+      // a 49% share for a 45% hero is worse than expected (worst). Comparing
+      // with baseWinRate would double-count the hero's strength.
       const teamA = team(5, {}, 1);
       const teamB = team(5, {}, 6);
       const lookup: MatchupLookup = {
         getSynergyWinRate: () => null,
         getMatchupWinRate: (h, o) => {
-          if (h === 1 && o === 6) return 0.51; // > 50% but BELOW Hero1's 52% baseline
-          if (h === 2 && o === 7) return 0.58; // above Hero2's 50% baseline
+          if (h === 1 && o === 6) return 0.51;
+          if (h === 2 && o === 7) return 0.49;
           return null;
         },
-        getWinRate: (h) => (h === 1 ? 0.52 : h === 2 ? 0.5 : null),
+        getWinRate: (h) => (h === 1 ? 0.52 : h === 2 ? 0.45 : null),
       };
       const result = resolveBattle(teamA, teamB, lookup, () => 0.4);
-      expect(result.bestMatchups.some((m) => m.heroId === 1)).toBe(false);
-      expect(result.worstMatchups.some((m) => m.heroId === 1)).toBe(true);
-      expect(result.bestMatchups[0].heroId).toBe(2);
+      expect(result.bestMatchups.map((m) => m.heroId)).toEqual([1]);
+      expect(result.worstMatchups.map((m) => m.heroId)).toEqual([2]);
     });
 
     it('returns empty rows when no real matchup data covers the heroes', () => {
@@ -706,5 +707,26 @@ describe('resolveBattle', () => {
     }
     const labels = AXES.map((axis) => AXIS_LABEL[axis]);
     expect(new Set(labels).size).toBe(labels.length);
+  });
+});
+
+describe('Even / tier cut-offs (rescaled for cleaned pairs, 2026-10-03)', () => {
+  it('reads the frequency-matched cut-offs from battle-diff-inputs.json', () => {
+    expect(DEFAULT_DIFF_INPUTS.evenAbsDiff).toBe(0.12);
+    expect(DEFAULT_DIFF_INPUTS.moderateAbsDiff).toBe(0.39);
+    expect(DEFAULT_DIFF_INPUTS.highAbsDiff).toBe(0.95);
+  });
+
+  it('decides Even on the final diff with evenAbsDiff; rawDiff keeps ADVANTAGE_THRESHOLD', () => {
+    const teamA = team(5, { teamfight: 5 });
+    const teamB = team(5, {}, 6);
+    const base = assessBattle(teamA, teamB, noData);
+    const d = Math.abs(base.diff);
+    expect(d).toBeGreaterThan(0);
+    const wide = assessBattle(teamA, teamB, noData, { ...DEFAULT_DIFF_INPUTS, evenAbsDiff: d + 0.01 });
+    const narrow = assessBattle(teamA, teamB, noData, { ...DEFAULT_DIFF_INPUTS, evenAbsDiff: d - 0.01 });
+    expect(wide.advantageDirection).toBe('Even');
+    expect(narrow.advantageDirection).not.toBe('Even');
+    expect(wide.rawAdvantageDirection).toBe(narrow.rawAdvantageDirection);
   });
 });
