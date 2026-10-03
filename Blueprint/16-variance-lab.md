@@ -1468,3 +1468,21 @@ Shares and the derivation are in `06-battle-engine.md` "Pair data". Results:
 
 - Golden vs pre-apply: 299/600 direction changes (131 A↔B). Tiers High 28 / Moderate 228 / Low 235 / Even 109; before the apply they were 24 / 210 / 255 / 111.
 - Self-play seed 1 × 100k, `rwr=0`: Full r 0.396 / ρ 0.381 (new `winRate`), 0.370 / 0.355 (old). Naked 0.193.
+
+## KPI snapshot after applying STRATZ data (2026-10-03) — analytics paused here
+
+Self-play seed 1 × 100k, rwr=0, 127 heroes, target = STRATZ winRate week 2026-09-24..30.
+
+| | hidden tags OFF | hidden tags ON |
+|---|---:|---:|
+| r [95% CI] | 0.193 [−0.01, 0.39] | 0.396 [0.26, 0.53] |
+| r² | 0.037 | 0.156 |
+| Spearman | 0.205 | 0.381 |
+| SD system / real (pp) | 12.3 / 2.55 (×4.8) | 12.3 / 2.55 (×4.8) |
+| MAE raw / after affine (pp) | 9.46 / 1.94 | 9.13 / 1.89 |
+| heroes ≥10pp raw | 51 | 52 |
+| real WR variance → affine residual (pp²) | 6.52 → 6.28 | 6.52 → 5.50 |
+
+Constant "everyone 49.7%" MAE = 1.99pp. Affine-residual anomalies (|z| ≥ 2, tags ON): Shadow Fiend −8.8pp (patch drop), Meepo +6.1, Kez −5.2, Nature's Prophet −5.0, Visage +5.0. Meepo/Visage-style specialist heroes are not draft-explainable — don't chase them with tags.
+
+Assessment: measurement is now sound and data matches the target; the draft-only ceiling (AUC ≈0.55–0.58) and weak axis rank signal (formula uses axes worse than a linear read, r 0.19 vs ≈0.32) cap further gains. Biggest practical risk is patch drift (hero strength r 0.69 between patches 180→181). Decision: freeze the formula; refresh data per patch; manual axis review; ship.

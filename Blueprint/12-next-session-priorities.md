@@ -4,6 +4,18 @@ Updated 2026-09-21 after leftover engineering landed on `master`
 (`b993ae0`). Handoff / triage; `10-tech-debt-backlog.md` is the detailed
 source of truth. Deploy notes: `13-deploy.md`.
 
+## Now (2026-10-03)
+
+Analytics paused (author decision 2026-10-03). Plan 15 (fixes, phases 0–5) is done;
+the variance lab is closed — summary and frozen KPI at the top/end of `16-variance-lab.md`.
+Battle pairs and hero win rates now come from public STRATZ data (cleaned pairs, 0.5 baseline,
+thresholds rescaled to previous firing rates; see `06-battle-engine.md` “Pair data”).
+Formula is frozen. Next, in order:
+1. After every patch: `refresh-stratz` fetch → build → apply (apply only with the author’s OK; `13-deploy.md`).
+2. Manual hero-axis review from `hkb-review-2026-10.md` (no auto edits).
+3. Ship to players (friends-alpha prep: `friends-alpha-invite.md`); funnel gap: TI Run/Captains don’t emit draft events.
+Any further formula change: one pre-registered attempt that keeps the narrative axes.
+
 ## Now (2026-10-01)
 
 Calibration pause after `74f517b`, `d995b17`, `3b290cf`. Current work:
